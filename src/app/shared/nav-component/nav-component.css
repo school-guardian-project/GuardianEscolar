@@ -1,0 +1,14 @@
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.toolbar-start, .toolbar-end {
+    display: flex;
+    align-items: center;
+}
+
+.spacer {
+    flex: 1;
+}

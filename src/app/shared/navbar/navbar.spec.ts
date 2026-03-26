@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MenuLandingPage } from './navbar';
+import { Navbar } from './navbar';
 
-describe('MenuLandingPage', () => {
-  let component: MenuLandingPage;
-  let fixture: ComponentFixture<MenuLandingPage>;
+describe('navbar', () => {
+  let component: Navbar;
+  let fixture: ComponentFixture<Navbar>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MenuLandingPage],
+      imports: [Navbar],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(MenuLandingPage);
+    fixture = TestBed.createComponent(Navbar);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

@@ -4,9 +4,9 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 
 @Component({
-  selector: 'app-menu-landing-page',
+  selector: 'app-navbar',
   imports: [MatToolbarModule, MatButtonModule, MatIconModule],
-  templateUrl: './menu-landing-page.html',
-  styleUrl: './menu-landing-page.css',
+  templateUrl: './navbar.html',
+  styleUrl: './navbar.css',
 })
-export class MenuLandingPage {}
+export class Navbar {}

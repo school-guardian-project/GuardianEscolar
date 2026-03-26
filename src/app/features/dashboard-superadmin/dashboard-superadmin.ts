@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
-import { Navbar } from '../../shared/navbar/navbar';
 
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { NavbarDashboard } from '../../shared/navbar-dashboard/navbar-dashboard';
+
+
 
 @Component({
   selector: 'app-dashboard-superadmin',
-  imports: [Navbar, MatToolbarModule, MatButtonModule, MatIconModule],
+  imports: [NavbarDashboard, MatToolbarModule, MatButtonModule, MatIconModule],
   templateUrl: './dashboard-superadmin.html',
   styleUrl: './dashboard-superadmin.css',
 })
-export class DashboardSuperadmin {}
+export class DashboardSuperadmin {} 

@@ -1,0 +1,262 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;          
+    width: 100%; /* Evita scroll en todo el cuerpo */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f4f4;
+}
+
+
+.container {
+    width: 100vw;          
+    height: 100vh;          
+    background: white;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: none;    
+}
+
+
+header {
+    background: #f1f1f1;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ddd;
+    flex-shrink: 0;         
+    height: 60px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-left button {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+}
+
+.header-left h1 {
+    font-size: 22px;
+    font-weight: 600;
+    color: #333;
+    margin: 0;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.header-right button {
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+
+.content-wrapper {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+}
+
+
+.sidebar {
+    width: 240px;                  
+    background: #f8f8f8;
+    border-right: 1px solid #ddd;
+    padding: 20px 10px;
+    overflow-y: auto;
+    flex-shrink: 0;
+}
+
+.admin-section h3 {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 10px;
+    padding-left: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 15px;
+    margin: 4px 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 15px;
+}
+
+.menu-item:hover {
+    background: #e0e0e0;
+}
+
+.menu-item.active {
+    background: #d0d0d0;
+    font-weight: 600;
+}
+
+/* CONTENIDO PRINCIPAL*/
+
+.commenta{
+    background: #666;
+}
+.main {
+    flex: 1;
+    padding: 30px;
+    overflow-y: auto;
+    background: #ffffff;
+    
+}
+
+
+
+.welcome {
+    font-size: 32px;
+    font-weight: 600;
+    color: #222;
+    margin-bottom: 4px;
+    align-items: center;
+    text-align: center;
+}
+
+.welcome-role {
+    color: #666;
+    font-size: 17px;
+    text-align: center;
+}
+
+
+.comments-section {
+    margin-top: 40px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+}
+
+.comments-container {
+    width: 100%;
+    max-width: 680px;      
+    background: #ffffff;
+    border-radius: 20px;
+    border: solid 20px;
+    border-color: #e0e0e0;
+    padding: 25px 30px;
+}
+
+
+.comments-section h2 {
+    color: rgb(20, 20, 20);
+    font-size: 22px;
+    font-weight: 600;
+    margin-bottom: 22px;
+    text-align: center;                
+}
+
+
+.comment-card {
+
+    background: #e0e0e0;             
+    border-radius: 14px;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 12px;              
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.comment-card:last-child {
+    margin-bottom: 0;
+}
+
+
+.comment-icon {
+    width: 50px;
+    height: 50px;
+    background: #ffffff;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+    border: 2px solid #eee;
+}
+
+.comment-content {
+    flex: 1;
+}
+
+.comment-title {
+    font-weight: 600;
+    font-size: 16.5px;
+    color: #1f1f1f;
+}
+
+.comment-time {
+    font-size: 13.5px;
+    color: #666;
+    margin-top: 2px;
+}
+
+.comment-info {
+    font-size: 14.5px;
+    color: #444;
+    margin-top: 6px;
+    line-height: 1.4;
+}
+
+
+.right-sidebar {
+    width: 75px;
+    background: #f8f8f8;
+    border-left: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 30px;
+    gap: 35px;
+    flex-shrink: 0;
+}
+
+.right-icon {
+    width: 52px;
+    height: 52px;
+    background: #e8e8e8;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+
+.right-icon:hover {
+    background: #d0d0d0;
+    transform: scale(1.08);
+}
+
+
+

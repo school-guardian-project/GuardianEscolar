@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { MenuLandingPage } from './menu-landing-page';
+import { MenuLandingPage } from './navbar';
 
 describe('MenuLandingPage', () => {
   let component: MenuLandingPage;

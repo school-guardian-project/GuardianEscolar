@@ -1,0 +1,44 @@
+footer {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    box-sizing: border-box;
+    gap: 20px;
+    background-color: #4BB14B;
+    padding-top: 40px;
+}
+
+.col1 {
+    width: 50%;
+    padding-left: 30px;
+}
+
+.col1 mat-icon {
+    font-size: 70px;
+    width: 70px;
+    height: 70px;
+    color: black;
+}
+
+.col2 {
+    width: 25%;
+}
+
+.col2 div {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}
+
+.col3 {
+    width: 25%;
+    flex-direction: column;
+}
+
+.col3 .icons-contact {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 10px 0;
+}

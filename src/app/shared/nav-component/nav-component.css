@@ -2,6 +2,7 @@ mat-toolbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    background-color: #4BB14B;
 }
 
 .toolbar-start, .toolbar-end {

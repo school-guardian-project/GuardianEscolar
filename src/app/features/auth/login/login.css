@@ -48,9 +48,14 @@ input {
 a {
     text-decoration: none;
     color: black;
+    cursor: pointer;
 }
 
 .btn {
     display: flex;
     justify-content: center;
+}
+
+h1 {
+    font-size: 2.5rem;
 }

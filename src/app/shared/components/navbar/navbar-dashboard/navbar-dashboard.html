@@ -15,15 +15,15 @@
   <span class="title">Guardian Escolar</span>
 
   <!-- DERECHA -->
-   
+
   <div class="toolbar-end">
-    <button mat-icon-button>
+    <button (click)="goToAdmin()"mat-icon-button>
       <mat-icon>person</mat-icon>
     </button>
 
-    <button mat-icon-button>
-      <mat-icon>lock_person</mat-icon>
-    </button>
+      <button (click)="goToSuperAdmin()"mat-icon-button>
+        <mat-icon>lock_person</mat-icon>
+      </button>
   </div>
 
 </mat-toolbar>

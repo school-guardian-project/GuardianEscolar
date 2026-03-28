@@ -6,11 +6,25 @@ import { DashboardSuperadmin } from './features/dashboard/dashboard-superadmin/d
 import { DashboardAdmin } from './features/dashboard/dashboard-admin/dashboard-admin';
 import { routes as forgotPasswordRoutes } from './features/public/auth/forgot-password/forgot-password.routes'
 
+
 export const routes: Routes = [
     { path: "", component: Home },
     { path: "auth/login", component: Login },
     { path: "auth/forgot-password", component: ForgotPassword, children: forgotPasswordRoutes },
     { path: "login", component: Login },
     { path: "dashboard-superadmin", component: DashboardSuperadmin },
-    { path: "dashboard-admin", component: DashboardAdmin }
+    { path: "dashboard-admin", component: DashboardAdmin },
+    {
+    path: 'dashboard/admin',
+    component: DashboardAdmin
+  },
+  {
+    path: 'dashboard/super-admin',
+    component: DashboardSuperadmin
+  },
+  {
+    path: '',
+    redirectTo: 'dashboard/admin',
+    pathMatch: 'full'
+  }
 ];

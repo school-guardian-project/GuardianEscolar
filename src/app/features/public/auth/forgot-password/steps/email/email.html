@@ -1,0 +1,20 @@
+<app-nav-component></app-nav-component>
+
+<main>
+  <h1>Restablecer Contraseña</h1>
+
+  <p>Ingrese su correo para verificar su identidad</p>
+
+  <form>
+    <label for="">Correo</label>
+    <input type="email" placeholder="@gmail.com" />
+
+    <p>Enviaremos un código de confirmación a su correo.</p>
+
+    <div class="btn">
+      <button type="button" (click)="onSubmit()">Verificar</button>
+    </div>
+  </form>
+</main>
+
+<app-footer></app-footer>

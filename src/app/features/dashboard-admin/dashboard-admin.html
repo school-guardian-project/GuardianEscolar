@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-<p>dashboard-admin works!</p>
-=======
 <div class="container">
 
   <!-- NAVBAR -->
@@ -14,82 +11,85 @@
         <h3>Administrar</h3>
 
         <button mat-button class="menu-item active">
-          Usuarios
+          <mat-icon>person_add</mat-icon> Usuarios
         </button>
 
         <button mat-button class="menu-item">
-          Rutas
+          <mat-icon>directions_bus</mat-icon> Rutas
         </button>
       </div>
     </div>
 
     <!-- MAIN -->
     <div class="main">
-      <h1 class="welcome">¡Bienvenido!</h1>
-      <p class="welcome-role">administrador</p>
+      <div class="main-content">
+        <!-- Bienvenida -->
+        <h1 class="welcome">¡Bienvenido!</h1>
+        <p class="welcome-role">administrador</p>
 
-      <div class="alerts-section">
-        <div class="alerts-container">
-
-          <h2>Últimas alertas</h2>
-
-          <!-- ALERTA 1 -->
-          <div class="alert-card">
-            <div class="alert-icon">⚠️</div>
-
-            <div class="alert-content">
-              <div class="alert-title">Bus fuera de ruta</div>
-              <div class="alert-time">6:45 am</div>
-              <div class="alert-info">
-                Conductor Jose Suarez<br>
-                Ruta LOL85<br>
-                PP8 52F
+        <!-- alertas -->
+        <div class="alerts-section">
+          <div class="alerts-container">
+            <h2>Últimas alertas</h2>
+            <!-- ALERTA 1 -->
+            <div class="alert-card">
+              <mat-icon>warning</mat-icon>
+              <div class="alert-content">
+                <div class="alert-title">Bus fuera de ruta</div>
+                <div class="alert-time">6:45 am</div>
+                <div class="alert-info">
+                  Conductor Jose Suarez<br>
+                  Ruta LOL85<br>
+                  PP8 52F
+                </div>
               </div>
+
+              <button mat-icon-button>
+                <mat-icon>bookmark</mat-icon>
+              </button>
             </div>
 
-            <button mat-icon-button>
-              <mat-icon>bookmark</mat-icon>
-            </button>
-          </div>
-
-          <!-- ALERTA 2 -->
-          <div class="alert-card">
-            <div class="alert-icon">
-              <mat-icon>account_circle</mat-icon>
-            </div>
-
-            <div class="alert-content">
-              <div class="alert-title">Frenó brusco</div>
-              <div class="alert-time">6:45 am</div>
-              <div class="alert-info">
-                Conductor Juan Ramirez<br>
-                Ruta AB123<br>
-                111ZZZ
+            <!-- ALERTA 2 -->
+            <div class="alert-card">
+              <div class="alert-icon">
+                <mat-icon>bus_alert</mat-icon>
               </div>
+
+              <div class="alert-content">
+                <div class="alert-title">Frenó brusco</div>
+                <div class="alert-time">6:45 am</div>
+                <div class="alert-info">
+                  Conductor Juan Ramirez<br>
+                  Ruta AB123<br>
+                  111ZZZ
+                </div>
+              </div>
+
+              <button mat-icon-button>
+                <mat-icon>bookmark</mat-icon>
+              </button>
             </div>
 
-            <button mat-icon-button>
-              <mat-icon>bookmark</mat-icon>
-            </button>
           </div>
-
         </div>
+
       </div>
+
+
     </div>
 
-    <!-- SIDEBAR DERECHA  -->
+    <!-- SIDEBAR DERECHA -->
     <div class="right-sidebar">
-      <button mat-icon-button>
+      <div class="icon-circle">
         <mat-icon>chat</mat-icon>
-      </button>
-      <button mat-icon-button>
+      </div>
+      <div class="icon-circle">
         <mat-icon>info</mat-icon>
-      </button>
-      <button mat-icon-button>
+      </div>
+      <div class="icon-circle">
         <mat-icon>edit</mat-icon>
-      </button>
+      </div>
     </div>
 
   </div>
 </div>
->>>>>>> bacffb8 (feat: implementation of the admin dashboard)

@@ -1,6 +1,11 @@
 .custom-toolbar{
     background-color: rgb(252, 249, 103);
 }
+.title {
+    font-size: 24px;
+    font-weight: bold;
+    color: #000;
+}
 mat-toolbar {
     display: flex;
     justify-content: space-between;

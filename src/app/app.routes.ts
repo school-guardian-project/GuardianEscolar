@@ -8,23 +8,32 @@ import { routes as forgotPasswordRoutes } from './features/public/auth/forgot-pa
 
 
 export const routes: Routes = [
-    { path: "", component: Home },
-    { path: "auth/login", component: Login },
+  { path: "", component: Home },
+  { path: "auth/login", component: Login },
     { path: "auth/forgot-password", component: ForgotPassword, children: forgotPasswordRoutes },
     { path: "login", component: Login },
     { path: "dashboard-superadmin", component: DashboardSuperadmin },
     { path: "dashboard-admin", component: DashboardAdmin },
-    {
-    path: 'dashboard/admin',
-    component: DashboardAdmin
-  },
+
   {
-    path: 'dashboard/super-admin',
-    component: DashboardSuperadmin
+    path: 'auth',
+    children: [
+      { path: 'login', component: Login },
+      { path: 'forgot-password', component: ForgotPassword }
+    ]
   },
+
+  {
+    path: 'dashboard',
+    children: [
+      { path: 'admin', component: DashboardAdmin },
+      { path: 'super-admin', component: DashboardSuperadmin }
+    ]
+  },
+
   {
     path: '',
-    redirectTo: 'dashboard/admin',
+    redirectTo: 'auth/login',
     pathMatch: 'full'
   }
 ];

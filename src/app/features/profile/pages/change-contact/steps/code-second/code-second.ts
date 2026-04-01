@@ -8,6 +8,4 @@ import { PinInput } from "../../../../../../shared/components/pin-input/pin-inpu
   templateUrl: './code-second.html',
   styleUrl: './code-second.css',
 })
-export class CodeSecond {
-  
-}
+export class CodeSecond {}

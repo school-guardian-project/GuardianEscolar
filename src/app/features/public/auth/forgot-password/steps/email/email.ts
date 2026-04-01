@@ -21,7 +21,6 @@ export class Email {
   }
 
   onSubmit() {
-    console.log('Click funcionando');
     this.router.navigate(['../code'], { relativeTo: this.route });
   }
 }

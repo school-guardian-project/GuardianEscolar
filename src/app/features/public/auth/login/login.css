@@ -5,6 +5,7 @@ main {
     justify-content: center;
     align-items: center;
     margin: 60px 0;
+    color: var(--text-color);
 }
 
 form {
@@ -47,7 +48,7 @@ input {
 
 a {
     text-decoration: none;
-    color: black;
+    color: var(--text-color);
     cursor: pointer;
 }
 

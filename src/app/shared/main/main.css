@@ -46,6 +46,10 @@ section .title {
     background-color: #4BB14B;
 }
 
+.dark-mode {
+    color: var(--text-color);
+}
+
 section .download {
     font-size: 3rem;
     text-align: center;

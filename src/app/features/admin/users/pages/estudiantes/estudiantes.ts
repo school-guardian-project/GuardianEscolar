@@ -6,6 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavbarManage } from '../../../../../shared/components/navbar/navbar-manage/navbar-manage';
 import { CardRegister } from '../../../../../shared/components/cards/card-register/card-register';
 import { CardList } from '../../../../../shared/components/cards/card-list/card-list';
+import { NavbarAdmin } from '../../../../../shared/components/navbar/navbar-admin/navbar-admin';
 
 @Component({
   selector: 'app-estudiantes',
@@ -18,6 +19,7 @@ import { CardList } from '../../../../../shared/components/cards/card-list/card-
     NavbarManage,
     CardRegister,
     CardList,
+    NavbarAdmin,
   ],
   templateUrl: './estudiantes.html',
   styleUrl: './estudiantes.css',

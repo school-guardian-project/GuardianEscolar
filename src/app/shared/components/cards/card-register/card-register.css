@@ -1,0 +1,128 @@
+.card-register {
+  margin-left: 60px;
+  margin-right: 100px;
+  margin-top: 20px;
+  background-color: #fce67c;
+  border-radius: 20px;
+  padding: 28px 24px 24px;
+  width: 500px;
+  box-sizing: border-box;
+}
+
+.card-register__title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  text-align: center;
+  color: #1a1a1a;
+  margin: 0 0 20px;
+}
+
+/* Fila para campos halfWidth */
+.card-register__row {
+  display: flex;
+  gap: 10px;
+}
+
+.card-register__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 14px;
+}
+
+.card-register__field--half {
+  flex: 1;
+}
+
+.card-register__label {
+  font-size: 0.78rem;
+  font-weight: 590;
+  color: #000000;
+
+}
+
+/* Wrap para input + botón "+" */
+.card-register__input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-register__input {
+  flex: 1;
+  height: 32px;
+  padding: 10px 12px;
+  border: 1px solid #000000;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  background-color: #fff;
+  color: #1a1a1a;
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.card-register__input--select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24'%3E%3Cpath fill='%231a1a1a' d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  padding-right: 30px;
+  cursor: pointer;
+}
+
+.card-register__input:focus {
+  border-color: #f0b429;
+  box-shadow: 0 0 0 3px rgba(240, 180, 41, 0.3);
+}
+
+.card-register__input::placeholder {
+  color: #bbb;
+}
+
+/* Botón "+" */
+.card-register__add-btn {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  background-color: #1a1a1a;
+  color: #fce67c;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.card-register__add-btn:hover {
+  background-color: #333;
+}
+
+/* Botón submit */
+.card-register__btn {
+  margin-top: 8px;
+  width: 100%;
+  padding: 12px;
+  background-color: #000000;
+  color: #ffffff;
+  font-size: 1rem;
+  font-weight: 450;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.card-register__btn:hover {
+  background-color: #333;
+}
+
+.card-register__btn:active {
+  transform: scale(0.98);
+}

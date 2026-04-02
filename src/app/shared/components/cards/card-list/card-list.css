@@ -1,0 +1,148 @@
+
+
+/* --- CONTENEDOR PRINCIPAL --- */
+.card-list {
+  margin-left: 60px;
+  margin-right: 100px;
+  margin-top: 20px;
+  background-color: #fce67c;
+  border-radius: 20px;
+  padding: 24px 20px;
+  width: 500px;
+  box-sizing: border-box;
+}
+
+/* --- HEADER: título + total --- */
+.card-list__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 14px;
+}
+
+.card-list__title {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin: 0;
+  text-align: center;
+}
+
+/* Número total de registros */
+.card-list__total {
+  font-size: 2.2rem;
+  font-weight: 900;
+  color: #1a1a1a;
+  line-height: 1;
+  margin-top: 4px;
+}
+
+/* --- BUSCADOR --- */
+.card-list__search {
+  height: 20px;
+  margin-left: 250px;
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 6px 10px;
+  margin-bottom: 12px;
+  gap: 6px;
+}
+
+.card-list__search-input {
+
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 0.85rem;
+  background: transparent;
+  color: #1a1a1a;
+}
+
+.card-list__search-icon {
+  font-size: 0.9rem;
+  color: #1a1a1a99;
+}
+
+/* --- LISTA DE ITEMS --- */
+.card-list__items {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+/* Scrollbar discreta */
+.card-list__items::-webkit-scrollbar {
+  width: 4px;
+}
+.card-list__items::-webkit-scrollbar-thumb {
+  background: #1a1a1a33;
+  border-radius: 4px;
+}
+
+/* --- ITEM INDIVIDUAL --- */
+.card-list__item {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border-radius: 12px;
+  padding: 10px 12px;
+  gap: 10px;
+}
+
+/* --- AVATAR --- */
+.card-list__avatar {
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+/* --- INFO --- */
+.card-list__info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  min-width: 0;
+}
+
+.card-list__name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-list__detail {
+  font-size: 0.72rem;
+  color: #1a1a1a99;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* --- BOTONES DE ACCIÓN --- */
+.card-list__actions {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+}
+
+.card-list__btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  padding: 4px;
+  border-radius: 6px;
+  transition: background 0.2s;
+  color: #1a1a1a;
+}
+
+.card-list__btn:hover {
+  background-color: #FFE56633;
+}

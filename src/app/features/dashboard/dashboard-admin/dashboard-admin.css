@@ -57,7 +57,7 @@
   margin-top: 20px;
   width: 170px;
   height: 150px;
-  background: rgb(252, 250, 139);
+  background: #fce67c;
   padding: 20px 10px;
   border-top-right-radius: 50px;
   border-bottom-right-radius: 50px;
@@ -139,7 +139,7 @@
   max-width: 650px;
   background: #fff;
   border-radius: 20px;
-  border: 10px solid rgb(252, 249, 103);;
+  border: 10px solid #fce67c;
   padding: 20px;
 }
 
@@ -150,7 +150,7 @@
 
 /* CARD */
 .alert-card {
-  background: rgb(252, 250, 139);;
+  background: rgb(255, 254, 197);;
   border-radius: 12px;
   padding: 15px;
   display: flex;
@@ -205,7 +205,7 @@
 .icon-circle {
   width: 52px;
   height: 52px;
-  background:rgb(252, 250, 139);            
+  background:#fce67c;         
   border-radius: 50%;
   display: flex;
   align-items: center;

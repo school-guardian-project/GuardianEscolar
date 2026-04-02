@@ -18,8 +18,8 @@ export const routes: Routes = [
   },
 
   { path: 'dashboard-admin', component: DashboardAdmin },
-  { path: 'admin/usuarios', component: Estudiantes },  
-  // { path: 'admin/rutas', component: Rutas },         // cuando exista
+  { path: 'admin/usuarios', component: Estudiantes }, 
+
   {
     path: 'dashboard-superadmin',
     component: DashboardSuperadmin

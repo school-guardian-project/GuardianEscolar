@@ -1,0 +1,68 @@
+<div class="card-register">
+  <h2 class="card-register__title">{{ title }}</h2>
+
+  <form (ngSubmit)="onSubmit()">
+
+    <ng-container *ngFor="let group of groupedFields">
+
+      <!-- Fila de dos campos (halfWidth) -->
+      <div class="card-register__row" *ngIf="isArray(group)">
+        <ng-container *ngFor="let field of $any(group)">
+          <div class="card-register__field card-register__field--half">
+            <label class="card-register__label" [for]="field.name">{{ field.label }}</label>
+
+            <div class="card-register__input-wrap">
+              <!-- Select -->
+              <select *ngIf="field.type === 'select'"
+                class="card-register__input card-register__input--select"
+                [id]="field.name" [name]="field.name"
+                [(ngModel)]="formData[field.name]">
+                <option value="" disabled selected></option>
+                <option *ngFor="let opt of field.options" [value]="opt">{{ opt }}</option>
+              </select>
+
+              <!-- Otros inputs -->
+              <input *ngIf="field.type !== 'select'"
+                class="card-register__input"
+                [id]="field.name" [name]="field.name"
+                [type]="field.type"
+                [placeholder]="field.placeholder || ''"
+                [(ngModel)]="formData[field.name]" />
+
+              <button *ngIf="field.hasButton" type="button" class="card-register__add-btn">+</button>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+
+      <!-- Campo completo (ancho normal) -->
+      <div class="card-register__field" *ngIf="!isArray(group)">
+        <label class="card-register__label" [for]="$any(group).name">{{ $any(group).label }}</label>
+
+        <div class="card-register__input-wrap">
+          <!-- Select -->
+          <select *ngIf="$any(group).type === 'select'"
+            class="card-register__input card-register__input--select"
+            [id]="$any(group).name" [name]="$any(group).name"
+            [(ngModel)]="formData[$any(group).name]">
+            <option value="" disabled selected></option>
+            <option *ngFor="let opt of $any(group).options" [value]="opt">{{ opt }}</option>
+          </select>
+
+          <!-- Otros inputs -->
+          <input *ngIf="$any(group).type !== 'select'"
+            class="card-register__input"
+            [id]="$any(group).name" [name]="$any(group).name"
+            [type]="$any(group).type"
+            [placeholder]="$any(group).placeholder || ''"
+            [(ngModel)]="formData[$any(group).name]" />
+
+          <button *ngIf="$any(group).hasButton" type="button" class="card-register__add-btn">+</button>
+        </div>
+      </div>
+
+    </ng-container>
+
+    <button class="card-register__btn" type="submit">Registrar</button>
+  </form>
+</div>

@@ -8,7 +8,7 @@ import { PinInput } from "../../../../../../shared/components/pin-input/pin-inpu
   templateUrl: './code-second.html',
   styleUrl: './code-second.css',
 })
-
+  // fix
 export class CodeSecond {
 
   

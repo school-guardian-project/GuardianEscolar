@@ -115,14 +115,14 @@ export class CardRegister implements OnInit {
   @Input() type: RegisterType = 'estudiante';
 
   formData: Record<string, string> = {};
-  groupedFields: Array<Field | [Field, Field]> = []; // ← ya no es getter
+  groupedFields: Array<Field | [Field, Field]> = []; //  ya no es getter
 
   get title(): string {
     return TITLES[this.type];
   }
 
   ngOnInit(): void {
-    this.groupedFields = this.buildGroupedFields(); // ← se calcula solo una vez
+    this.groupedFields = this.buildGroupedFields(); //  se calcula solo una vez
   }
 
   private buildGroupedFields(): Array<Field | [Field, Field]> {

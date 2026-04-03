@@ -5,6 +5,7 @@
 
     <ng-container *ngFor="let group of groupedFields">
 
+      
       <!-- Fila de dos campos (halfWidth) -->
       <div class="card-register__row" *ngIf="isArray(group)">
         <ng-container *ngFor="let field of $any(group)">
@@ -62,6 +63,9 @@
       </div>
 
     </ng-container>
+
+     <div style="flex: 1"></div>  
+
 
     <button class="card-register__btn" type="submit">Registrar</button>
   </form>

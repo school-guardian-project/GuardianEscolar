@@ -1,15 +1,39 @@
+:host {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
 .card-register {
+  display: flex;
+  flex-direction: column;
   border: 1px solid #000000;
-  margin-left: 60px;
-  margin-right: 100px;
-  margin-top: 20px;
+  margin-top: 0;
   background-color: #fce67c;
   border-radius: 20px;
   padding: 28px 24px 24px;
-  width: 500px;
+  flex: 1;              /* ← ocupa espacio disponible */
+  min-width: 300px;     /* ← mínimo antes de apilarse */
+  max-width: 600px;   /* ← máximo para no estirarse demasiado */
   box-sizing: border-box;
   box-shadow: 5px 5px 5px rgb(194, 194, 194);
+
 }
+
+
+.card-register form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 0; /*  este es el truco, fuerza al form a respetar el flex */
+  min-height: 0;
+}
+/*Esto hace que el último campo se quede en su lugar y empuje el botón hasta el fondo sin necesitar que el form tenga altura fija.*/
+.card-register__field:last-of-type {
+  margin-bottom: auto;
+}
+
 
 .card-register:hover{
   transform: translateY(-2px);
@@ -17,6 +41,7 @@
 }
 
 .card-register__title {
+  flex-shrink: 0; 
   font-size: 1.3rem;
   font-weight: 800;
   text-align: center;
@@ -113,7 +138,7 @@
 
 /* Botón submit */
 .card-register__btn {
-  margin-top: 8px;
+  margin-top: auto;
   width: 100%;
   padding: 12px;
   background-color: #000000;

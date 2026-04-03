@@ -1,18 +1,27 @@
-
+:host {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+}
 
 /* --- CONTENEDOR PRINCIPAL --- */
 .card-list {
-  margin-left: 60px;
-  margin-right: 100px;
-  margin-top: 20px;
+  margin-top: 0;
   background-color: #fce67c;
   border: 1px solid #000000;
   border-radius: 20px;
   padding: 24px 20px;
-  width: 500px;
+  flex: 1;              /* ← ocupa espacio disponible */
+  min-width: 300px;     /* ← mínimo antes de apilarse */
+  max-width: 640px;   /* ← máximo para no estirarse demasiado */
   box-sizing: border-box;
   box-shadow: 5px 5px 5px rgb(194, 194, 194);
+  display: flex;
+  flex-direction: column;
 }
+
+
+
 
 .card-list:hover{
   transform: translateY(-2px);
@@ -47,7 +56,6 @@
 /* --- BUSCADOR --- */
 .card-list__search {
   height: 20px;
-  margin-left: 250px;
   display: flex;
   align-items: center;
   background-color: #ffffff;
@@ -55,6 +63,9 @@
   padding: 6px 10px;
   margin-bottom: 12px;
   gap: 6px;
+  width: 100%;       /*  ocupa todo el ancho */
+  max-width: 200px;  /*  pero se limita */
+  margin-left: auto; /* se alinea a la derecha */
 }
 
 .card-list__search-input {
@@ -74,10 +85,13 @@
 
 /* --- LISTA DE ITEMS --- */
 .card-list__items {
+  flex: 1;
+  overflow-y: auto;
+  max-height: unset;    /* ← quita el max-height fijo anterior */
+  margin-bottom: 30px;
   display: flex;
   flex-direction: column;
   gap: 8px;
-  max-height: 340px;
   overflow-y: auto;
 }
 

@@ -5,6 +5,10 @@ import { ForgotPassword } from './features/public/auth/forgot-password/forgot-pa
 import { DashboardSuperadmin } from './features/dashboard/dashboard-superadmin/dashboard-superadmin';
 import { DashboardAdmin } from './features/dashboard/dashboard-admin/dashboard-admin';
 import { Estudiantes } from './features/admin/users/pages/estudiantes/estudiantes';
+import { Padres } from './features/admin/users/pages/padres/padres';
+import { Conductores } from './features/admin/users/pages/conductores/conductores';
+import { Familia } from './features/admin/users/pages/familias/familia';
+import { Buses } from './features/admin/routes-buses/pages/buses/buses';
 import { routes as forgotPasswordRoutes } from './features/public/auth/forgot-password/forgot-password.routes';
 
 export const routes: Routes = [
@@ -19,6 +23,10 @@ export const routes: Routes = [
 
   { path: 'dashboard-admin', component: DashboardAdmin },
   { path: 'admin/usuarios', component: Estudiantes }, 
+  { path: 'admin/padres', component: Padres },
+  { path: 'admin/conductores', component: Conductores },
+  { path: 'admin/familias',    component: Familia },    
+  { path: 'admin/buses',       component: Buses },
 
   {
     path: 'dashboard-superadmin',

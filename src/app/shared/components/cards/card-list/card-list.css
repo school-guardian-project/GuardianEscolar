@@ -167,3 +167,13 @@
 .card-list__btn:hover {
   background-color: #FFE56633;
 }
+
+/*  FILA DE CAMPOS (halfWidth)  */
+.card-list__row {
+  display: flex;
+  gap: 8px;
+}
+
+.card-list__row .card-list__detail {
+  flex: 1;
+}

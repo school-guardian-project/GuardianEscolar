@@ -1,87 +1,55 @@
-
 <div class="card-list">
-
   <!-- Título + total -->
   <div class="card-list__header">
     <h2 class="card-list__title">{{ title }}</h2>
-    <span class="card-list__total">50</span>
+    <span class="card-list__total">{{ items.length }}</span>
   </div>
 
   <!-- Buscador -->
   <div class="card-list__search">
-    <input class="card-list__search-input" type="text" placeholder="Buscar..." />
+    <input
+      class="card-list__search-input"
+      type="text"
+      placeholder="Buscar..."
+      [(ngModel)]="searchText" />
     <span class="card-list__search-icon">
-        <mat-icon>search</mat-icon>
+      <mat-icon>search</mat-icon>
     </span>
   </div>
 
-  <!-- Lista de items (hardcodeada por ahora) -->
+  <!-- Lista de items -->
   <div class="card-list__items">
+    <div class="card-list__item" *ngFor="let item of items">
 
-    <div class="card-list__item">
+      <!-- Avatar -->
       <div class="card-list__avatar">
-        <mat-icon>person</mat-icon>
+        <mat-icon>{{ icon }}</mat-icon>
       </div>
+
+      <!-- Info dinámica -->
       <div class="card-list__info">
-        <span class="card-list__name">Nombre completo</span>
-        <span class="card-list__detail">Identificación</span>
-        <span class="card-list__detail">+57 *** *** ****</span>
+        <!-- Campos de ancho completo -->
+        <span class="card-list__name">{{ item[itemFields[0].key] }}</span>
+        <ng-container *ngFor="let field of itemFields.slice(1)">
+          <span class="card-list__detail" *ngIf="!field.halfWidth">
+            {{ field.label ? field.label + ': ' : '' }}{{ item[field.key] }}
+          </span>
+        </ng-container>
+
+        <!-- Campos en fila (halfWidth) -->
+        <div class="card-list__row" *ngFor="let row of rowFields">
+          <span class="card-list__detail">{{ item[row[0].key] }}</span>
+          <span class="card-list__detail">{{ item[row[1].key] }}</span>
+        </div>
       </div>
+
+      <!-- Acciones -->
       <div class="card-list__actions">
         <button class="card-list__btn" title="Eliminar"><mat-icon>delete</mat-icon></button>
         <button class="card-list__btn" title="Ver"><mat-icon>visibility</mat-icon></button>
         <button class="card-list__btn" title="Editar"><mat-icon>edit</mat-icon></button>
       </div>
-    </div>
 
-    <div class="card-list__item">
-      <div class="card-list__avatar">
-        <mat-icon>person</mat-icon>
-      </div>
-      <div class="card-list__info">
-        <span class="card-list__name">Nombre completo</span>
-        <span class="card-list__detail">Identificación</span>
-        <span class="card-list__detail">+57 *** *** ****</span>
-      </div>
-      <div class="card-list__actions">
-        <button class="card-list__btn" title="Eliminar"><mat-icon>delete</mat-icon></button>
-        <button class="card-list__btn" title="Ver"><mat-icon>visibility</mat-icon></button>
-        <button class="card-list__btn" title="Editar"><mat-icon>edit</mat-icon></button>
-      </div>
     </div>
-
-     <div class="card-list__item">
-      <div class="card-list__avatar">
-        <mat-icon>person</mat-icon>
-      </div>
-      <div class="card-list__info">
-        <span class="card-list__name">Nombre completo</span>
-        <span class="card-list__detail">Identificación</span>
-        <span class="card-list__detail">+57 *** *** ****</span>
-      </div>
-      <div class="card-list__actions">
-        <button class="card-list__btn" title="Eliminar"><mat-icon>delete</mat-icon></button>
-        <button class="card-list__btn" title="Ver"><mat-icon>visibility</mat-icon></button>
-        <button class="card-list__btn" title="Editar"><mat-icon>edit</mat-icon></button>
-      </div>
-    </div>
-    
-     <div class="card-list__item">
-      <div class="card-list__avatar">
-        <mat-icon>person</mat-icon>
-      </div>
-      <div class="card-list__info">
-        <span class="card-list__name">Nombre completo</span>
-        <span class="card-list__detail">Identificación</span>
-        <span class="card-list__detail">+57 *** *** ****</span>
-      </div>
-      <div class="card-list__actions">
-        <button class="card-list__btn" title="Eliminar"><mat-icon>delete</mat-icon></button>
-        <button class="card-list__btn" title="Ver"><mat-icon>visibility</mat-icon></button>
-        <button class="card-list__btn" title="Editar"><mat-icon>edit</mat-icon></button>
-      </div>
-    </div>
-
   </div>
-
 </div>

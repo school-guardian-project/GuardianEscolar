@@ -6,6 +6,6 @@
   align-items: stretch;
   justify-content: center;
   height: calc(100vh - 140px);
-  width: 100%;           /* ← agrega esto */
-  box-sizing: border-box; /* ← y esto */
+  width: 100%;           
+  box-sizing: border-box; 
 }

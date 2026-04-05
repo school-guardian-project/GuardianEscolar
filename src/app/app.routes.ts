@@ -9,6 +9,8 @@ import { Padres } from './features/admin/users/pages/padres/padres';
 import { Conductores } from './features/admin/users/pages/conductores/conductores';
 import { Familia } from './features/admin/users/pages/familias/familia';
 import { Buses } from './features/admin/routes-buses/pages/buses/buses';
+import { Paradas } from './features/admin/routes-buses/pages/paradas/paradas';
+import { Rutas } from './features/admin/routes-buses/pages/rutas/rutas';
 import { routes as forgotPasswordRoutes } from './features/public/auth/forgot-password/forgot-password.routes';
 
 export const routes: Routes = [
@@ -27,6 +29,9 @@ export const routes: Routes = [
   { path: 'admin/conductores', component: Conductores },
   { path: 'admin/familias',    component: Familia },    
   { path: 'admin/buses',       component: Buses },
+  { path: 'admin/paradas',     component: Paradas },
+  { path: 'admin/rutas',       component: Rutas }, 
+
 
   {
     path: 'dashboard-superadmin',

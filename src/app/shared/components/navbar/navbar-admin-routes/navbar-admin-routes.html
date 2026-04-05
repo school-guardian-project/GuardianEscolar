@@ -1,0 +1,17 @@
+<mat-toolbar class="custom-toolbar">
+  <div class="nav-items">
+    <button
+      mat-icon-button
+      class="nav-btn"
+      [class.active]="isActive(item.route)"
+      *ngFor="let item of navItems"
+      (click)="navigate(item.route)">
+      <mat-icon>{{ item.icon }}</mat-icon>
+    </button>
+  </div>
+  <div class="spacer"></div>
+  <button mat-icon-button class="user-btn" (click)="navigate('/admin/usuarios')">
+    <mat-icon>person</mat-icon>
+  </button>
+
+</mat-toolbar>

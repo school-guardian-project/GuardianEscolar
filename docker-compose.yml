@@ -26,9 +26,6 @@ services:
     container_name: app-backend
     ports:
       - 5000:80
-    depends_on:
-      liquibase:
-        condition: service_completed_successfully
     networks:
       - default
     environment:
@@ -37,6 +34,9 @@ services:
       - DB_NAME=${DB_NAME}
       - DB_USER=${LIQUIBASE_USER}
       - DB_PASS=${LIQUIBASE_PASS}
+    # depends_on:
+    #   liquibase:
+    #     condition: service_completed_successfully
 
 
 volumes:

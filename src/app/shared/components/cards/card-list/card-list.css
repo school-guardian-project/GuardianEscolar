@@ -5,10 +5,20 @@
 }
 
 /* --- CONTENEDOR PRINCIPAL --- */
+
+.card-list__content {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 12px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+
 .card-list {
   margin-top: 0;
-  background-color: #fce67c;
-  border: 1px solid #000000;
+  background-color: #fce67c;;
   border-radius: 20px;
   padding: 24px 20px;
   flex: 1;              /* ← ocupa espacio disponible */
@@ -105,7 +115,7 @@
 .card-list__item {
   display: flex;
   align-items: center;
-  background-color: #ffffff;
+  background-color: #faeeaa;
   border-radius: 12px;
   padding: 10px 12px;
   gap: 10px;

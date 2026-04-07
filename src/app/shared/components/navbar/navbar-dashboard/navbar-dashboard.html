@@ -2,7 +2,7 @@
 
   <!-- IZQUIERDA -->
   <div class="toolbar-start">
-    <button mat-icon-button>
+    <button (click)="logout()" mat-icon-button>
       <mat-icon>logout</mat-icon>
     </button>
 
@@ -17,13 +17,13 @@
   <!-- DERECHA -->
 
   <div class="toolbar-end">
-    <button (click)="goToAdmin()"mat-icon-button>
+    <button (click)="goToAdmin()" mat-icon-button>
       <mat-icon>person</mat-icon>
     </button>
 
-      <button (click)="goToSuperAdmin()"mat-icon-button>
-        <mat-icon>lock_person</mat-icon>
-      </button>
+    <button (click)="goToSuperAdmin()" mat-icon-button>
+      <mat-icon>lock_person</mat-icon>
+    </button>
   </div>
 
 </mat-toolbar>

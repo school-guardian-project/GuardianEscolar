@@ -12,9 +12,9 @@ import { Buses } from './features/admin/routes-buses/pages/buses/buses';
 import { Paradas } from './features/admin/routes-buses/pages/paradas/paradas';
 import { Rutas } from './features/admin/routes-buses/pages/rutas/rutas';
 import { routes as forgotPasswordRoutes } from './features/public/auth/forgot-password/forgot-password.routes';
-
 export const routes: Routes = [
   { path: '', component: Home },
+
   {
     path: 'auth',
     children: [
@@ -24,19 +24,16 @@ export const routes: Routes = [
   },
 
   { path: 'dashboard-admin', component: DashboardAdmin },
+
   { path: 'admin/usuarios', component: Estudiantes }, 
   { path: 'admin/padres', component: Padres },
   { path: 'admin/conductores', component: Conductores },
-  { path: 'admin/familias',    component: Familia },    
-  { path: 'admin/buses',       component: Buses },
-  { path: 'admin/paradas',     component: Paradas },
-  { path: 'admin/rutas',       component: Rutas }, 
+  { path: 'admin/familias', component: Familia },    
+  { path: 'admin/buses', component: Buses },
+  { path: 'admin/paradas', component: Paradas },
+  { path: 'admin/rutas', component: Rutas }, 
 
+  { path: 'dashboard-superadmin', component: DashboardSuperadmin },
 
-  {
-    path: 'dashboard-superadmin',
-    component: DashboardSuperadmin
-  },
-  { path: 'login', redirectTo: 'auth/login', pathMatch: 'full' },
-  { path: '', redirectTo: 'auth/login', pathMatch: 'full' }
+  { path: 'login', redirectTo: 'auth/login', pathMatch: 'full' }
 ];

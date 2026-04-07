@@ -8,7 +8,6 @@
 .card-register {
   display: flex;
   flex-direction: column;
-  border: 1px solid #000000;
   margin-top: 0;
   background-color: #fce67c;
   border-radius: 20px;

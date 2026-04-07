@@ -26,7 +26,6 @@ export class DashboardAdmin {
   navegarUsuarios() {
     this.router.navigate(['/dashboard-admin/usuarios']);
   }
-  
 
   isChildRouteActive(): boolean {  
     return this.router.url !== '/dashboard-admin';

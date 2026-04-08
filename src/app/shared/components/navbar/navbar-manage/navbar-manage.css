@@ -8,6 +8,7 @@
     padding-right: 120px;
 }
 mat-toolbar {
+
     display: flex;
     justify-content: space-between;
     align-items: center;

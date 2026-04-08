@@ -7,8 +7,8 @@
     color: #000;
     padding-right: 120px;
 }
-mat-toolbar {
 
+mat-toolbar {
     display: flex;
     justify-content: space-between;
     align-items: center;

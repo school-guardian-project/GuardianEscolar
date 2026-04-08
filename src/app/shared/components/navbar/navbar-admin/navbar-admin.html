@@ -1,4 +1,5 @@
 <mat-toolbar class="custom-toolbar">
+  <!-- Botones centrales -->
   <div class="nav-items">
     <button
       mat-icon-button
@@ -8,20 +9,13 @@
       (click)="navigate(item.route)">
       <mat-icon>{{ item.icon }}</mat-icon>
     </button>
-
-    <button mat-icon-button class="nav-btn">
-      <mat-icon>escalator_warning</mat-icon>
-    </button>
-    <button mat-icon-button class="nav-btn">
-      <mat-icon>engineering</mat-icon>
-    </button>
-    <button mat-icon-button class="nav-btn">
-      <mat-icon>family_restroom</mat-icon>
-    </button>
-    
   </div>
-  <div class="spacer"></div>
-  <button mat-icon-button class="bus-btn" (click)="navigate('/admin/buses')">
+
+  <!-- Botón del bus a la derecha -->
+  <button 
+    mat-icon-button 
+    class="bus-btn" 
+    (click)="navigate('/admin/buses')">
     <mat-icon>directions_bus</mat-icon>
   </button>
 

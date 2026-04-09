@@ -1,1 +1,5 @@
 .env
+
+./liquibase/liquibase.properties
+
+./dvlp-back/src/backend/.vs/*

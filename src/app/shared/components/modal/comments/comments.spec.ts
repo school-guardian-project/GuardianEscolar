@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DataTable } from './data-table';
+import { Comments } from './comments';
 
-describe('DataTable', () => {
-  let component: DataTable;
-  let fixture: ComponentFixture<DataTable>;
+describe('Comments', () => {
+  let component: Comments;
+  let fixture: ComponentFixture<Comments>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DataTable],
+      imports: [Comments],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(DataTable);
+    fixture = TestBed.createComponent(Comments);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

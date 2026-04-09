@@ -140,6 +140,7 @@
   background: #fff;
   border-radius: 20px;
   border: 10px solid #fce67c;
+  border: 10px solid rgb(252, 249, 103);;
   padding: 20px;
 }
 
@@ -151,6 +152,7 @@
 /* CARD */
 .alert-card {
   background: rgb(255, 254, 197);;
+  background: rgb(252, 250, 139);;
   border-radius: 12px;
   padding: 15px;
   display: flex;
@@ -206,6 +208,7 @@
   width: 52px;
   height: 52px;
   background:#fce67c;         
+  background:rgb(252, 250, 139);            
   border-radius: 50%;
   display: flex;
   align-items: center;

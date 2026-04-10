@@ -18,11 +18,16 @@ import { Router } from '@angular/router';
 export class NavbarDashboard {
   constructor(private router: Router) {}
 
-  goToAdmin() {
-    this.router.navigate(['/dashboard/admin']);
-  }
+logout() {
+  //alternativa para evitar que el usuario vuelva a la página del dashboard después de cerrar sesión
+  //volver al inicio
+  this.router.navigateByUrl('/', { replaceUrl: true });
+}
+goToAdmin() {
+  this.router.navigate(['/dashboard-admin']);
+}
 
-  goToSuperAdmin() {
-    this.router.navigate(['/dashboard/super-admin']);
-  }
+goToSuperAdmin() {
+  this.router.navigate(['/dashboard-superadmin']);
+}
 }

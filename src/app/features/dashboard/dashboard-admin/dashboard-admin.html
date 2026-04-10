@@ -1,49 +1,79 @@
 <div class="container">
   <!-- NAVBAR -->
   <app-navbar-dashboard></app-navbar-dashboard>
+
   <div class="content-wrapper">
+
+    <!-- SIDEBAR IZQUIERDO -->
     <div class="sidebar">
       <div class="admin-section">
         <h3>Administrar</h3>
-        <a routerLink="/admin/usuarios" class="menu-item">
-          <mat-icon>person_add</mat-icon> Usuarios
-        </a>
-        <a routerLink="/dashboard-admin/rutas" class="menu-item">
+
         <a routerLink="/admin/usuarios" class="menu-item" routerLinkActive="active">
-          <mat-icon>person_add</mat-icon> Usuarios
+          <mat-icon>group</mat-icon> Usuarios
         </a>
+
         <a routerLink="/dashboard-admin/rutas" class="menu-item" routerLinkActive="active">
           <mat-icon>directions_bus</mat-icon> Rutas
         </a>
+
+        <a routerLink="/admin/buses" class="menu-item" routerLinkActive="active">
+          <mat-icon>directions_bus</mat-icon> Buses
+        </a>
+
       </div>
     </div>
+
     <!-- MAIN -->
     <div class="main">
       <div class="main-content">
 
-        <!-- Contenido por defecto: solo se ve en /dashboard-admin -->
         <ng-container *ngIf="!isChildRouteActive()">
-          <h1 class="welcome">¡Bienvenido!</h1>
-          <p class="welcome-role">administrador</p>
+
+          <h1 class="welcome">Bienvenido</h1>
+          <p class="welcome-role">Panel de administración · Guardian Escolar</p>
+
+          <!-- Métricas -->
+          <div class="metrics">
+            <div class="metric-card">
+              <p class="metric-label">Estudiantes</p>
+              <p class="metric-value">248</p>
+              <p class="metric-sub">+12 este mes</p>
+            </div>
+            <div class="metric-card">
+              <p class="metric-label">Rutas activas</p>
+              <p class="metric-value">18</p>
+              <p class="metric-sub">Todas operando</p>
+            </div>
+            <div class="metric-card">
+              <p class="metric-label">Alertas hoy</p>
+              <p class="metric-value danger">3</p>
+              <p class="metric-sub danger">Requieren atención</p>
+            </div>
+          </div>
+
+          <!-- Alertas -->
           <div class="alerts-section">
             <div class="alerts-container">
               <h2>Últimas alertas</h2>
+
               <div class="alert-card">
-                <mat-icon>warning</mat-icon>
+                <div class="alert-icon">
+                  <mat-icon>warning</mat-icon>
+                </div>
                 <div class="alert-content">
                   <div class="alert-title">Bus fuera de ruta</div>
                   <div class="alert-time">6:45 am</div>
                   <div class="alert-info">
-                    Conductor Jose Suarez<br>
-                    Ruta LOL85<br>
-                    PP8 52F
+                    Conductor Jose Suarez · Ruta LOL85 · PP8 52F
                   </div>
                 </div>
                 <button mat-icon-button>
-                  <mat-icon>bookmark</mat-icon>
+                  <mat-icon>bookmark_border</mat-icon>
                 </button>
               </div>
-              <div class="alert-card">
+
+              <div class="alert-card warning">
                 <div class="alert-icon">
                   <mat-icon>bus_alert</mat-icon>
                 </div>
@@ -51,29 +81,29 @@
                   <div class="alert-title">Frenó brusco</div>
                   <div class="alert-time">6:45 am</div>
                   <div class="alert-info">
-                    Conductor Juan Ramirez<br>
-                    Ruta AB123<br>
-                    111ZZZ
+                    Conductor Juan Ramirez · Ruta AB123 · 111ZZZ
                   </div>
                 </div>
                 <button mat-icon-button>
-                  <mat-icon>bookmark</mat-icon>
+                  <mat-icon>bookmark_border</mat-icon>
                 </button>
               </div>
+
             </div>
           </div>
+
         </ng-container>
 
-        <!-- Aquí se renderizan las rutas hijas -->
         <router-outlet></router-outlet>
-
       </div>
     </div>
+
     <!-- SIDEBAR DERECHA -->
     <div class="right-sidebar">
       <div class="icon-circle"><mat-icon>chat</mat-icon></div>
       <div class="icon-circle"><mat-icon>info</mat-icon></div>
       <div class="icon-circle"><mat-icon>edit</mat-icon></div>
     </div>
+
   </div>
 </div>

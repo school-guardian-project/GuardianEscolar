@@ -1,11 +1,60 @@
+:host {
+  display: block;
+  height: 100vh;
+}
+
+/* Layout General */
+.layout {
+  display: flex;
+  height: 100%;
+}
+
+/* SIDEBAR */
+app-navbar-admin {
+  width: 260px;
+  flex-shrink: 0;
+  background-color: #1A2E4A;
+  height: 100%;
+}
+
+/*  CONTENIDO PRINCIPAL  */
+.main {
+  flex: 1;
+  background-color: #f8fafc;
+  overflow-y: auto;
+  padding: 32px 40px 24px 40px;   
+}
+
+/* Título o barra como "Registrar" */
+.register-header {
+  background-color: #1e40af;     
+  color: white;
+  padding: 18px 24px;
+  border-radius: 12px;
+  margin-bottom: 28px;           
+  font-size: 20px;
+  font-weight: 600;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+/* Contenedor de las cards */
 .container {
   display: flex;
   flex-wrap: wrap;
   gap: 24px;
-  padding: 24px;
-  align-items: stretch;
   justify-content: center;
-  height: calc(100vh - 140px);
-  width: 100%;           /* ← agrega esto */
-  box-sizing: border-box; /* ← y esto */
+  max-width: 1300px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .main {
+    padding: 20px 16px;
+  }
+  
+  .register-header {
+    margin-bottom: 20px;
+  }
 }

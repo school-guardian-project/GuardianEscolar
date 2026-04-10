@@ -1,22 +1,55 @@
 <mat-toolbar class="custom-toolbar">
-  <!-- Botones centrales -->
-  <div class="nav-items">
-    <button
-      mat-icon-button
-      class="nav-btn"
-      [class.active]="isActive(item.route)"
-      *ngFor="let item of navItems"
-      (click)="navigate(item.route)">
-      <mat-icon>{{ item.icon }}</mat-icon>
-    </button>
-  </div>
 
-  <!-- Botón del bus a la derecha -->
-  <button 
-    mat-icon-button 
-    class="bus-btn" 
-    (click)="navigate('/admin/buses')">
-    <mat-icon>directions_bus</mat-icon>
-  </button>
+  <div class="sidebar">
+
+    <!-- ADMIN -->
+    <div class="admin-section">
+      <h3>Administrar</h3>
+
+      <a routerLink="/admin/usuarios" class="menu-item" routerLinkActive="active">
+        <mat-icon>person</mat-icon>
+        <span>Estudiante</span>
+      </a>
+
+      <a routerLink="/admin/padres" class="menu-item" routerLinkActive="active">
+        <mat-icon>escalator_warning</mat-icon>
+        <span>Acudiente</span>
+      </a>
+
+      <a routerLink="/admin/conductores" class="menu-item" routerLinkActive="active">
+        <mat-icon>engineering</mat-icon>
+        <span>Conductor</span>
+      </a>
+
+      <a routerLink="/admin/familias" class="menu-item" routerLinkActive="active">
+        <mat-icon>family_restroom</mat-icon>
+        <span>Familia</span>
+      </a>
+    </div>
+
+    <!-- DIVISOR -->
+    <div class="sidebar-divider"></div>
+
+    <!-- TRANSPORTE -->
+    <div class="admin-section">
+      <h3>Transporte</h3>
+
+      <a routerLink="/admin/buses" class="menu-item" routerLinkActive="active">
+        <mat-icon>directions_bus</mat-icon>
+        <span>Buses</span>
+      </a>
+
+      <a routerLink="/admin/rutas" class="menu-item" routerLinkActive="active">
+        <mat-icon>route</mat-icon>
+        <span>Rutas</span>
+      </a>
+
+      <a routerLink="/admin/paradas" class="menu-item" routerLinkActive="active">
+        <mat-icon>location_on</mat-icon>
+        <span>Paradas</span>
+      </a>
+    </div>
+
+  </div>
 
 </mat-toolbar>

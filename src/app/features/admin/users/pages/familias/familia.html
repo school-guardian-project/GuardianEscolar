@@ -1,7 +1,17 @@
 <!-- NAVBAR -->
 <app-navbar-manage backRoute="/dashboard-admin"></app-navbar-manage>
+
+<div class="layout">
+  
+  <!-- SIDEBAR -->
   <app-navbar-admin></app-navbar-admin>
-<div class="container">
-  <app-card-register type="familia"></app-card-register>
-  <app-card-list type="familia"></app-card-list>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <div class="main">
+    <div class="container">
+      <app-card-register type="familia"></app-card-register>
+      <app-card-list type="familia"></app-card-list>
+    </div>
+  </div>
+
 </div>

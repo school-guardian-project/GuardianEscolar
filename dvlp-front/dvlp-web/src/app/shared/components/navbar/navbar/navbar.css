@@ -1,25 +1,76 @@
 mat-toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #4BB14B;
+    width: 100%;
+    height: 80px;
 }
 
-.toolbar-start, .toolbar-end {
+mat-toolbar,
+.navbar-start,
+.navbar-center,
+.navbar-end {
     display: flex;
+    flex-direction: row;
+    justify-content: center;
     align-items: center;
+}
+
+.navbar-start,
+.navbar-end {
+    margin: 0 30px 0 30px;
+}
+
+.shield {
+    color: white;
+    background-color: #1c2c4c;
+    border-radius: 15px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.inColumn {
+    display: flex;
+    flex-direction: column;
+}
+
+.person,
+.download {
+    transition: transform 0.9s ease;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.person:hover, .download:hover {
+    color: white;
+    background-color: #1c2c4c;
+    border-radius: 15px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: scale(1.1);
 }
 
 .spacer {
     flex: 1;
 }
 
-button {
-    display: flex;
-    align-items: center;
-    margin: 0 10px;
+.space {
+    margin: 0 20px;
 }
 
-mat-icon {
-    color: black;
+.spaces {
+    margin: 0 40px;
+    color: #7f8590;
+}
+
+.spaces:hover {
+    color: #1c2c4c;
+    transition: 0.5s;
+    cursor: pointer;
 }

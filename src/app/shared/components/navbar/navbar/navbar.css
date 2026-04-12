@@ -70,7 +70,7 @@ mat-toolbar,
 }
 
 .spaces:hover {
-    color: #1c2c4c;
-    transition: 0.5s;
+    color: #1d55dc;
+    transition: 0.1s;
     cursor: pointer;
 }

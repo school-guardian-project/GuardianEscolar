@@ -5,3 +5,5 @@
 ./liquibase/liquibase.properties
 
 ./dvlp-back/src/backend/.vs/*
+
+./dvlp-back/src/backend/obj/*

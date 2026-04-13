@@ -26,18 +26,18 @@ footer {
     padding: 5px 15px;
     border-radius: 15px;
     color: white;
-    margin-left: 50px;
     cursor: pointer;
 }
 
 .link {
     color: #b5b9b9;
-    font-size: 1rem;
+    font-size: 1.2rem;
     cursor: pointer;
 }
 
 .down-right {
     display: flex;
+    gap: 50px;
     flex-direction: row;
 }
 
@@ -51,19 +51,29 @@ footer {
 .description {
     color: #686968;
     font-size: 1.4rem;
+    line-height: 1.3;
 }
 
 .col1 {
     width: 40%;
 }
 
+.cols {
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
 .col {
     width: 20%;
+    display: flex;
+    flex-direction: column;
 }
 
 .title {
     color: white;
-    font-size: 1.2rem;
+    font-size: 1.5rem;
     margin-bottom: 30px;
 }
 
@@ -97,4 +107,38 @@ footer {
 .down-left {
     color: #686968;
     font-size: 1rem;
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    .footer-header {
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .col1 {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .cols {
+        width: 100%;
+        display: flex;
+    }
+
+    .down-right {
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        order: 1;
+        margin-bottom: 20px;
+    }
+
+    .down-left {
+        order: 2;
+    }
+
+    .footer-down {
+        display: flex;
+        flex-direction: column;
+    }
 }

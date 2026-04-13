@@ -21,9 +21,8 @@ export class Comments {
     this.closed.emit();
   }
 
-  enviar(): void {
-    if (this.comentario.trim()) {
-      this.enviado = true;
-    }
-  }
+enviar(): void {
+  console.log('click en enviar');
+  this.enviado = true; 
+}
 }

@@ -1,16 +1,6 @@
-<!-- Overlay -->
 <div class="modal-overlay" (click)="cerrar()">
-
-  <!-- Modal -->
   <div class="modal" (click)="$event.stopPropagation()">
 
-    <!-- Header -->
-<!-- Vista del formulario -->
-<ng-container *ngIf="!enviado">
-  <div class="modal-overlay" (click)="cerrar()">
-  <div class="modal" (click)="$event.stopPropagation()">
-
-    <!-- Formulario -->
     <div *ngIf="!enviado">
       <div class="modal__header">
         <h2 class="modal__title">¿Tienes algún inconveniente?</h2>
@@ -18,8 +8,7 @@
       </div>
       <div class="modal__body">
         <label class="modal__label">Coméntanos tu problema</label>
-        <textarea class="modal__textarea" placeholder="Insertar texto"
-          [(ngModel)]="comentario" rows="5"></textarea>
+        <textarea class="modal__textarea" placeholder="Insertar texto" [(ngModel)]="comentario" rows="5"></textarea>
       </div>
       <div class="modal__footer">
         <button class="modal__btn modal__btn--cancel" (click)="cerrar()">Cancelar</button>
@@ -27,21 +16,16 @@
       </div>
     </div>
 
-    <!-- Confirmación -->
     <div *ngIf="enviado">
       <div class="modal__header">
         <h2 class="modal__title">¡Mensaje enviado!</h2>
-        <p class="modal__subtitle">Gracias por comentarnos tu inconveniente. Haremos lo posible por solucionarlo cuanto antes</p>
+        <p class="modal__subtitle">Gracias por comentarnos tu inconveniente. Haremos lo posible por solucionarlo cuanto
+          antes</p>
       </div>
-      <div class="modal__footer">
+      <div class="modal__footer modal__footer--center">
         <button class="modal__btn modal__btn--submit" type="button" (click)="cerrar()">Salir</button>
       </div>
     </div>
-
-  </div>
-</div>
-</ng-container>
-
 
   </div>
 </div>

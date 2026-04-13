@@ -16,7 +16,7 @@ export class Comments {
 
   comentario: string = '';
   enviado: boolean = false;
-  mostrandoError: boolean = false;   // ← Esta propiedad faltaba
+  mostrandoError: boolean = false;   
 
   enviar(): void {
     if (this.comentario.trim() === '') {

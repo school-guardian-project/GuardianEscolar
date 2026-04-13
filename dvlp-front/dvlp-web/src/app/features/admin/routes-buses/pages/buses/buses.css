@@ -23,10 +23,9 @@
   overflow-y: auto;
 }
 
-
 /* SIDEBAR */
 app-navbar-admin {
-  width: 260px;
+  width: 200px;
   flex-shrink: 0;
   background-color: #1A2E4A;
   height: 100%;

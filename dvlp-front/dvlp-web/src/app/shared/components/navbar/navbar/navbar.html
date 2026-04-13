@@ -7,27 +7,23 @@
         </div>
     </div>
 
-    <span class="spacer"></span>
+    <button class="btn-menu" mat-icon-button (click)="toggleMenu()">
+        <mat-icon>menu</mat-icon>
+    </button>
 
-    <div class="navbar-center">
+    
+    <div class="navbar-end" [class.active]="menuOpen">
         <div class="spaces">Funcionalidades</div>
-
-        <div class="spaces">Precios</div>
     
         <div class="inColumn spaces">
             <span>Como</span>
             <span>Funciona</span>
         </div>
-
+        
+        <div class="spaces">Precios</div>
+    
         <div class="spaces">Contacto</div>
     </div>
-
-    <span class="spacer"></span>
-
-    <div class="navbar-end">
-        <mat-icon class="person space">person</mat-icon>
     
-        <mat-icon class="download space">download</mat-icon>
-    </div>
 
 </mat-toolbar>

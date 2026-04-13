@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavbarDashboard } from '../../../shared/components/navbar/navbar-dashboard/navbar-dashboard';
+import { Comments } from '../../../shared/components/modal/comments/comments'; // ← agrega
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -15,12 +16,15 @@ import { NavbarDashboard } from '../../../shared/components/navbar/navbar-dashbo
     MatToolbarModule,
     MatButtonModule,
     MatIconModule,
-    RouterModule
+    RouterModule,
+    Comments, 
   ],
   templateUrl: './dashboard-admin.html',
   styleUrls: ['./dashboard-admin.css'],
 })
 export class DashboardAdmin {
+  showModal = false; 
+
   constructor(private router: Router) {}
 
   navegarUsuarios() {

@@ -1,16 +1,9 @@
 <app-navbar-manage backRoute="/dashboard-admin"></app-navbar-manage>
-
-<div class="layout">
-  
-  <!-- SIDEBAR -->
-  <app-navbar-admin></app-navbar-admin>
-
   <!-- CONTENIDO PRINCIPAL -->
-  <div class="main">
-    <div class="container">
-      <app-card-register type="conductor"></app-card-register>
-      <app-card-list type="conductor"></app-card-list>
-    </div>
+<div class="page-wrapper">
+  <app-navbar-admin></app-navbar-admin>
+  <div class="container">
+    <app-card-register type="conductor"></app-card-register>
+    <app-card-list type="conductor"></app-card-list>
   </div>
-
 </div>

@@ -1,0 +1,143 @@
+/* OVERLAY */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 46, 74, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+/* MODAL */
+.modal {
+  background: white;
+  border-radius: 16px;
+  padding: 32px 28px 24px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 20px 40px rgba(26, 46, 74, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: slideUp 0.2s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* HEADER */
+.modal__header {
+  text-align: center;
+}
+
+.modal__title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1A2E4A;
+  margin: 0 0 4px;
+}
+
+.modal__subtitle {
+  font-size: 0.85rem;
+  color: #64748B;
+  margin: 0;
+}
+
+/* BODY */
+.modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.modal__label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: #64748B;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.modal__textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 0.5px solid #E2E8F0;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: #1A2E4A;
+  background: #F8FAFC;
+  outline: none;
+  resize: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+}
+
+.modal__textarea:focus {
+  border-color: #2D6BE4;
+  background: white;
+  box-shadow: 0 0 0 3px rgba(45, 107, 228, 0.12);
+}
+
+.modal__textarea::placeholder {
+  color: #CBD5E1;
+}
+
+/* FOOTER */
+.modal__footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.modal__btn {
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.modal__btn--cancel {
+  background: transparent;
+  border: 0.5px solid #E2E8F0;
+  color: #64748B;
+}
+
+.modal__btn--cancel:hover {
+  background: #F8FAFC;
+  border-color: #CBD5E1;
+}
+
+.modal__btn--submit {
+  background: #2D6BE4;
+  color: white;
+}
+
+.modal__btn--submit:hover {
+  background: #1A5CD4;
+}
+
+.modal__btn--submit:active {
+  transform: scale(0.98);
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .modal {
+    margin: 16px;
+    padding: 24px 20px 20px;
+  }
+}

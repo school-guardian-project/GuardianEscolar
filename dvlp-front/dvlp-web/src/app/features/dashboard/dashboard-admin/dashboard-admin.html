@@ -1,39 +1,31 @@
 <div class="container">
+  <!-- MODAL -->
+  <app-comments *ngIf="showModal" (closed)="showModal = false"></app-comments>
+
   <!-- NAVBAR -->
   <app-navbar-dashboard></app-navbar-dashboard>
 
   <div class="content-wrapper">
-
     <!-- SIDEBAR IZQUIERDO -->
     <div class="sidebar">
       <div class="admin-section">
         <h3>Administrar</h3>
-
         <a routerLink="/admin/usuarios" class="menu-item" routerLinkActive="active">
           <mat-icon>group</mat-icon> Usuarios
         </a>
-
-        <a routerLink="/dashboard-admin/rutas" class="menu-item" routerLinkActive="active">
-          <mat-icon>directions_bus</mat-icon> Rutas
-        </a>
-
         <a routerLink="/admin/buses" class="menu-item" routerLinkActive="active">
           <mat-icon>directions_bus</mat-icon> Buses
         </a>
-
       </div>
     </div>
 
     <!-- MAIN -->
     <div class="main">
       <div class="main-content">
-
         <ng-container *ngIf="!isChildRouteActive()">
-
           <h1 class="welcome">Bienvenido</h1>
           <p class="welcome-role">Panel de administración · Guardian Escolar</p>
 
-          <!-- Métricas -->
           <div class="metrics">
             <div class="metric-card">
               <p class="metric-label">Estudiantes</p>
@@ -52,11 +44,9 @@
             </div>
           </div>
 
-          <!-- Alertas -->
           <div class="alerts-section">
             <div class="alerts-container">
               <h2>Últimas alertas</h2>
-
               <div class="alert-card">
                 <div class="alert-icon">
                   <mat-icon>warning</mat-icon>
@@ -72,7 +62,6 @@
                   <mat-icon>bookmark_border</mat-icon>
                 </button>
               </div>
-
               <div class="alert-card warning">
                 <div class="alert-icon">
                   <mat-icon>bus_alert</mat-icon>
@@ -88,10 +77,8 @@
                   <mat-icon>bookmark_border</mat-icon>
                 </button>
               </div>
-
             </div>
           </div>
-
         </ng-container>
 
         <router-outlet></router-outlet>
@@ -100,9 +87,15 @@
 
     <!-- SIDEBAR DERECHA -->
     <div class="right-sidebar">
-      <div class="icon-circle"><mat-icon>chat</mat-icon></div>
-      <div class="icon-circle"><mat-icon>info</mat-icon></div>
-      <div class="icon-circle"><mat-icon>edit</mat-icon></div>
+      <div class="icon-circle" (click)="showModal = true">
+        <mat-icon>chat</mat-icon>
+      </div>
+      <div class="icon-circle">
+        <mat-icon>info</mat-icon>
+      </div>
+      <div class="icon-circle">
+        <mat-icon>edit</mat-icon>
+      </div>
     </div>
 
   </div>

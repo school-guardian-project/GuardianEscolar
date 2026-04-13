@@ -42,3 +42,20 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# Visual Studio
+.vs/
+
+# .NET build output
+**/obj/
+**/bin/
+*.user
+
+# Logs
+*.log
+
+# Docker
+*.env
+
+# Liquibase
+liquibase/*.properties

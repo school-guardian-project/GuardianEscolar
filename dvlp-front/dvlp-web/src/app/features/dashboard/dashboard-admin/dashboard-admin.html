@@ -1,6 +1,7 @@
 <div class="container">
-  <!-- MODAL -->
-  <app-comments *ngIf="showModal" (closed)="showModal = false"></app-comments>
+  <!-- MODALES -->
+  <app-comments *ngIf="showComments" (closed)="showComments = false"></app-comments>
+  <app-information *ngIf="showInformation" (closed)="showInformation = false"></app-information>
 
   <!-- NAVBAR -->
   <app-navbar-dashboard></app-navbar-dashboard>
@@ -87,16 +88,14 @@
 
     <!-- SIDEBAR DERECHA -->
     <div class="right-sidebar">
-      <div class="icon-circle" (click)="showModal = true">
-        <mat-icon>chat</mat-icon>
-      </div>
-      <div class="icon-circle">
-        <mat-icon>info</mat-icon>
-      </div>
-      <div class="icon-circle">
-        <mat-icon>edit</mat-icon>
-      </div>
+    <div class="icon-circle" (click)="showComments = true">
+      <mat-icon>chat</mat-icon>
     </div>
-
+    <div class="icon-circle" (click)="showInformation = true">
+      <mat-icon>info</mat-icon>
+    </div>
+    <div class="icon-circle">
+      <mat-icon>edit</mat-icon>
+    </div>
   </div>
 </div>

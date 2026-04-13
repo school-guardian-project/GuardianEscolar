@@ -1,36 +1,37 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'app-comments',
+  selector: 'app-information',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule],
-  templateUrl: './comments.html',
-  styleUrl: './comments.css',
+  imports: [CommonModule, FormsModule, MatIconModule], 
+  templateUrl: './information.html',
+  styleUrl: './information.css',
 })
-export class Comments {
 
-  @Output() closed = new EventEmitter<void>();
+export class Information {
 
   comentario: string = '';
   enviado: boolean = false;
-  mostrandoError: boolean = false;   // ← Esta propiedad faltaba
+  mostrandoError: boolean = false;
+
+  @Output() closed = new EventEmitter<void>();
 
   enviar(): void {
     if (this.comentario.trim() === '') {
       this.mostrandoError = true;
-
+      
       // Oculta el mensaje de error después de 3 segundos
       setTimeout(() => {
         this.mostrandoError = false;
       }, 3000);
-
+      
       return;
     }
 
-    // Si todo está bien, muestra pantalla de éxito
+    // Si todo está bien → mostramos pantalla de éxito
     this.enviado = true;
     this.mostrandoError = false;
   }
@@ -39,6 +40,6 @@ export class Comments {
     this.enviado = false;
     this.comentario = '';
     this.mostrandoError = false;
-    this.closed.emit();
+    this.closed.emit();        // Cierra el modal desde el padre
   }
 }

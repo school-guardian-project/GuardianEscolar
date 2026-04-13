@@ -1,5 +1,6 @@
 :host {
   width: 200px;
+  min-width: 200px;
   background: #1A2E4A;
   display: flex;
   flex-direction: column;
@@ -11,10 +12,12 @@
   background-color: #1A2E4A !important;
   flex-direction: column !important;
   height: 100% !important;
-  width: 100%;
-  padding: 20px 10px !important;
+  width: 200px !important;
+  min-width: 200px !important;
+  padding: 16px 10px !important;
   align-items: flex-start !important;
   justify-content: flex-start !important;
+  overflow-y: auto;
 }
 
 /* SIDEBAR IZQUIERDO */

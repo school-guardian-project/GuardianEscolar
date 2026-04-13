@@ -5,7 +5,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavbarDashboard } from '../../../shared/components/navbar/navbar-dashboard/navbar-dashboard';
-import { Comments } from '../../../shared/components/modal/comments/comments'; // ← agrega
+import { Comments } from '../../../shared/components/modal/comments/comments'; 
+import { Information } from '../../../shared/components/modal/information/information';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -18,12 +19,14 @@ import { Comments } from '../../../shared/components/modal/comments/comments'; /
     MatIconModule,
     RouterModule,
     Comments, 
+    Information,
   ],
   templateUrl: './dashboard-admin.html',
   styleUrls: ['./dashboard-admin.css'],
 })
 export class DashboardAdmin {
-  showModal = false; 
+  showComments = false;
+  showInformation = false;
 
   constructor(private router: Router) {}
 

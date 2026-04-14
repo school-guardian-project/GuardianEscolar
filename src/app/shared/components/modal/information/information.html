@@ -1,0 +1,52 @@
+<div class="modal-overlay" (click)="cerrar()">
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <!-- Header -->
+    <div class="modal__header">
+      <h2 class="modal__title">Información de la escuela</h2>
+    </div>
+
+    <!-- Logo y nombre -->
+    <div class="modal__school">
+      <div class="modal__logo">
+        <mat-icon>school</mat-icon>
+      </div>
+      <p class="modal__school-name">Nombre</p>
+      <p class="modal__school-type">Escuela</p>
+    </div>
+
+    <!-- Info en grid -->
+    <div class="modal__info-grid">
+      <div class="modal__info-item">
+        <p class="modal__info-label">Correo electrónico</p>
+        <p class="modal__info-value">correoejemplo@gmail.com</p>
+      </div>
+      <div class="modal__info-item">
+        <p class="modal__info-label">Teléfono</p>
+        <p class="modal__info-value">+57 *** *** ****</p>
+      </div>
+      <div class="modal__info-item">
+        <p class="modal__info-label">Dirección</p>
+        <p class="modal__info-value">Centro</p>
+      </div>
+      <div class="modal__info-item">
+        <p class="modal__info-label">Ciudad</p>
+        <p class="modal__info-value">Neiva</p>
+      </div>
+    </div>
+
+    <!-- Página web -->
+    <div class="modal__website">
+      <p class="modal__info-label">Página Web</p>
+      <p class="modal__info-value">www.colegio.com</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="modal__footer">
+      <button class="modal__btn modal__btn--submit" type="button" (click)="cerrar()">
+        Salir
+      </button>
+    </div>
+
+  </div>
+</div>

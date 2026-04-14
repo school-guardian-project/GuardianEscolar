@@ -163,7 +163,7 @@
 
 .alerts-container {
   width: 100%;
-  max-width: 650px;
+  max-width: 800px;
   background: #fff;
   border-radius: 20px;
   border: 10px solid #fce67c;
@@ -267,8 +267,8 @@
 }
 
 .icon-circle {
-  width: 52px;
-  height: 52px;
+  width: 60px;
+  height: 60px;
   background:#fce67c;         
   background:rgb(252, 250, 139);            
   width: 36px;

@@ -1,6 +1,6 @@
 
 .custom-toolbar {
-  background-color: #1A2E4A !important;
+  background-color: var(--color-navbar);
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
   height: 56px;
 

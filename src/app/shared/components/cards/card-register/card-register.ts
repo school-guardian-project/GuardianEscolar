@@ -26,7 +26,7 @@ const FIELDS: Record<RegisterType, Field[]> = {
   estudiante: [
     { label: 'Nombres',              name: 'nombres',        type: 'text' },
     { label: 'Apellidos',            name: 'apellidos',      type: 'text' },
-    { label: 'Tipo Identificación',  name: 'tipoId',         type: 'select', options: ['CC', 'TI', 'CE', 'Pasaporte'] },
+    { label: 'Tipo Identificación',  name: 'tipoId',         type: 'select', options: ['CC', 'TI', 'CE', 'Pasaporte', 'Registro Civil'] },
     { label: 'Identificación',       name: 'identificacion', type: 'text' },
     { label: 'Fecha nacimiento',     name: 'fechaNac',       type: 'date' },
     { label: 'Curso',                name: 'curso',          type: 'select', options: ['1°', '2°', '3°', '4°', '5°', '6°', '7°', '8°', '9°', '10°', '11°'], halfWidth: true },

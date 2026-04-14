@@ -1,4 +1,5 @@
 using backend.Entities;
+using backend.Migrations;
 using Microsoft.EntityFrameworkCore;
 
 namespace backend.Db
@@ -17,6 +18,10 @@ namespace backend.Db
 
             modelBuilder.HasDefaultSchema("public");
             modelBuilder.Entity<Person>().ToTable("Person", schema: "app");
+            modelBuilder.Entity<Ejemplo>().ToTable("Entity", schema: "app");
+
+            // Una manera de indicar el id de la tabla es PK
+            modelBuilder.Entity<Person>().HasKey(p => p.Id);
         }
 
         protected AppDbContext()

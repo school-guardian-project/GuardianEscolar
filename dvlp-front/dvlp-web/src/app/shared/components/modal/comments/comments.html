@@ -21,13 +21,13 @@
       </div>
     </div>
 
-    <div *ngIf="enviado">
+    <div *ngIf="enviado" class="modal-overlay">
+      <div class="modal">
       <div class="modal__header">
         <h2 class="modal__title">¡Mensaje enviado!</h2>
         <p class="modal__subtitle">Gracias por comentarnos tu inconveniente. Haremos lo posible por solucionarlo cuanto
           antes</p>
       </div>
-
 
       <div class="modal__footer modal__footer--center">
         <button class="modal__btn modal__btn--submit" type="button" (click)="cerrar()">Salir</button>

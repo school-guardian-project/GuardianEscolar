@@ -23,6 +23,11 @@ logout() {
   //volver al inicio
   this.router.navigateByUrl('/', { replaceUrl: true });
 }
+
+goToInfo() {
+  this.router.navigate(['/admin/informacion']);
+}
+
 goToAdmin() {
   this.router.navigate(['/dashboard-admin']);
 }

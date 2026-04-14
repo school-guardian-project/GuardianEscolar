@@ -1,7 +1,7 @@
 :host {
   width: 200px;
   min-width: 200px;
-  background: #1A2E4A;
+  background-color: var(--color-navbar-admin) !important;
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
@@ -9,7 +9,6 @@
 }
 
 .custom-toolbar {
-  background-color: #1A2E4A !important;
   flex-direction: column !important;
   height: 100% !important;
   width: 200px !important;
@@ -23,7 +22,7 @@
 /* SIDEBAR IZQUIERDO */
 .sidebar {
   width: 200px;
-  background: #1A2E4A;
+  background-color: var(--color-navbar-admin);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;

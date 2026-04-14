@@ -1,28 +1,29 @@
 <mat-toolbar>
-    <div class="toolbar-start">
-        <button mat-icon-button (click)="toggleDarkMode()">
-            <mat-icon>
-                {{isDarkMode() ? 'light_mode' : 'dark_mode'}}
-            </mat-icon>
-        </button>
+    <div class="navbar-start">
+        <mat-icon class="shield space">shield</mat-icon>
+        <div class="inColumn space">
+            <span>Guardian</span>
+            <span>Escolar</span>
+        </div>
+    </div>
+
+    <button class="btn-menu" mat-icon-button (click)="toggleMenu()">
+        <mat-icon>menu</mat-icon>
+    </button>
+
+    
+    <div class="navbar-end" [class.active]="menuOpen">
+        <div class="spaces">Funcionalidades</div>
+    
+        <div class="inColumn spaces">
+            <span>Como</span>
+            <span>Funciona</span>
+        </div>
         
-        <button mat-icon-button>
-            <mat-icon>translate</mat-icon>
-        </button>
-    </div>
-
-    <span class="spacer"></span>
+        <div class="spaces">Precios</div>
     
-    <a class="title">
-        Guardian Escolar
-    </a>
-
-    <span class="spacer"></span>
-
-    <div class="toolbar-end">
-        <button routerLink="/auth/login" mat-icon-button>
-            <mat-icon>person</mat-icon>
-        </button>
+        <div class="spaces">Contacto</div>
     </div>
     
+
 </mat-toolbar>

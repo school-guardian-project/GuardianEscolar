@@ -6,8 +6,5 @@
 
 ./dvlp-back/src/backend/.vs/*
 
-dvlp-back/src/backend/bin/
-dvlp-back/src/backend/obj/
-
-bin/
-obj/
+./dvlp-back/src/backend/bin/*
+./dvlp-back/src/backend/obj/*

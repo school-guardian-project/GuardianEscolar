@@ -20,7 +20,7 @@ namespace backend.Db
             modelBuilder.Entity<Person>().ToTable("Person", schema: "app");
             modelBuilder.Entity<Ejemplo>().ToTable("Entity", schema: "app");
 
-            // Una manera de indicar el id de la tabla es PK
+            // Una manera de indicar el id de la tabla es PK. Metodo aplifuente
             modelBuilder.Entity<Person>().HasKey(p => p.Id);
         }
 

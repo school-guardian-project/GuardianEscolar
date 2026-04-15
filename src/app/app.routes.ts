@@ -14,9 +14,10 @@ import { Paradas } from './features/admin/routes-buses/pages/paradas/paradas';
 import { Rutas } from './features/admin/routes-buses/pages/rutas/rutas';
 import { routes as forgotPasswordRoutes } from './features/public/auth/forgot-password/forgot-password.routes';
 
-
 export const routes: Routes = [
-  { path: '', redirectTo: 'auth/login', pathMatch: 'full' },
+  { path: '', redirectTo: 'home', pathMatch: 'full' },
+
+  { path: 'home', component: Home },
 
   {
     path: 'auth',
@@ -42,5 +43,5 @@ export const routes: Routes = [
   { path: 'admin/informacion', component: InformationAdmin },
 
   /* fallback */
-  { path: '**', redirectTo: 'auth/login' }
+  { path: '**', redirectTo: 'home' }
 ];

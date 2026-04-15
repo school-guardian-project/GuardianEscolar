@@ -1,62 +1,185 @@
-main {
+.layout {
     display: flex;
     flex-direction: column;
+    height: 100vh;
+}
+
+app-nav-component {
+    flex: 0 0 auto;
+}
+
+main {
+    flex: 1;
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #ecf4fc;
+    box-sizing: border-box;
+}
+
+.container-session {
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    
+}
+
+.sesion-left {
+    width: 40%;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    background: linear-gradient(135deg, #102d7d, #366fea);
+}
+
+.sesion-right {
+    width: 60%;
+    background-color: white;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+.sesion-left,
+.sesion-right {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+.panel-sesion {
+    color: white;
+}
+
+.shield {
+    color: white;
+    background-color: #1c54dc;
+    border-radius: 15px;
+    width: 55px;
+    height: 55px;
+    display: flex;
     justify-content: center;
     align-items: center;
-    margin: 60px 0;
-    color: var(--text-color);
+    font-size: 2.1rem;
+    margin-bottom: 20px;
 }
 
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-button {
-    margin-top: 30px;
-    background-color: #048c04;
+.session-description {
     color: white;
+    line-height: 1.5;
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+}
+
+.GPS,
+.alerts,
+.report {
+    padding: 10px;
+    background-color: #346ce4;
     border-radius: 10px;
-    width: 50%;
-    height: 35px;
-    cursor: pointer;
-    border: none;
+    margin-bottom: 12px;
+    color: white;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+}
+.icon {
+    margin: 0 10px;
 }
 
-label {
-    margin-top: 30px;
-    font-size: 20px;
+.report {
+    margin-bottom: 30px;
 }
 
-input {
-    border-radius: 30px;
-    width: 300px;
-    height: 45px;
-    background-color: #dcdcdc;
-    border: none;
-    outline: none;
-    box-shadow: none;
-    padding: 0 15px;
-    font-size: 20px;
+.edu {
+    color: white;
 }
 
-label, 
-input {
+h2,
+h1 {
+    font-size: 3rem;
+    line-height: 1;
     margin-bottom: 10px;
 }
 
-a {
-    text-decoration: none;
-    color: var(--text-color);
+.login-description {
+    color: #68768e;
+    margin-bottom: 30px;
+    line-height: 1;
+    font-size: 1.1rem;
+}
+
+input {
+    padding: 10px;
+    border-radius: 5px;
+    border: #68768e 1px solid;
+}
+
+input[type = "text"] {
+    margin-bottom: 30px;
+}
+
+label {
+    margin-bottom: 7px;
+    font-size: 1rem;
+}
+
+.password {
+    margin-bottom: 30px;
+    margin-right: 8px;
+    color: #366fea;
     cursor: pointer;
 }
 
-.btn {
+button {
+    width: 50%;
+    color: white;
+    background-color: #366fea;
+    border-radius: 50px;
+    height: 40px;
+    font-size: 1.2rem;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.olvid {
+    width: 100%;
     display: flex;
+    justify-content: flex-end;
+}
+
+.btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
     justify-content: center;
 }
 
-h1 {
-    font-size: 2.5rem;
+.line {
+    height: 2px;
+    width: 100%;
+    border: 10px;
+    background-color: #eaeaea;
+    margin-bottom: 20px;
+}
+
+.terms {
+    color: #366fea;
+}
+
+.condition {
+    font-size: 0.8rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.term {
+    margin-right: 2px;
+}
+
+.politic {
+    margin-left: 2px;
 }

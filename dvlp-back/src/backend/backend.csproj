@@ -18,6 +18,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="API\Controllers\" />
+    <Folder Include="Application\Interfaces\" />
+    <Folder Include="Application\DTOs\" />
+    <Folder Include="Application\Services\" />
+    <Folder Include="Infrastructure\IRepositories\" />
+    <Folder Include="Infrastructure\Persistence\Configuration\Academic\" />
     <Folder Include="Migrations\" />
   </ItemGroup>
 

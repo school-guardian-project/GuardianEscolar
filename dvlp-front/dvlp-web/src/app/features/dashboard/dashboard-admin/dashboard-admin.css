@@ -23,67 +23,7 @@
   overflow: hidden;
 }
 
-/* SIDEBAR IZQUIERDO */
-.sidebar {
-  width: 200px;
-  background-color: var(--color-navbar-admin);
-  display: flex;
-  flex-direction: column;
-  flex-shrink: 0;
-}
 
-.admin-section {
-  padding: 20px 10px;
-  flex: 1;
-}
-
-.admin-section h3 {
-  font-size: 10px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.35);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin: 0 0 10px 8px;
-  padding: 0;
-}
-
-.menu-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 9px 10px;
-  font-size: 13px;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.5) !important;
-  text-decoration: none;
-  border-radius: 8px;
-  margin-bottom: 2px;
-  transition: background 0.2s ease, color 0.2s ease;
-}
-
-.menu-item mat-icon {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
-  color: rgba(255, 255, 255, 0.5);
-  transition: color 0.2s ease;
-}
-
-.menu-item:hover {
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.8) !important;
-}
-
-.menu-item.active,
-.menu-item:active {
-  background: #2D6BE4;
-  color: white !important;
-  font-weight: 500;
-}
-
-.menu-item.active mat-icon {
-  color: white;
-}
 
 /* MAIN */
 .main {
@@ -167,7 +107,8 @@
   background: #fff;
   border-radius: 20px;
   border: 10px solid #fce67c;
-  border: 10px solid rgb(252, 249, 103);;
+  border: 10px solid rgb(252, 249, 103);
+  ;
   background: white;
   border-radius: 12px;
   border: 0.5px solid #E2E8F0;
@@ -184,8 +125,10 @@
 
 /* ALERT CARD */
 .alert-card {
-  background: rgb(255, 254, 197);;
-  background: rgb(252, 250, 139);;
+  background: rgb(255, 254, 197);
+  ;
+  background: rgb(252, 250, 139);
+  ;
   border-radius: 12px;
   padding: 15px;
   background: #FEF2F2;
@@ -269,8 +212,8 @@
 .icon-circle {
   width: 60px;
   height: 60px;
-  background:#fce67c;         
-  background:rgb(252, 250, 139);            
+  background: #fce67c;
+  background: rgb(252, 250, 139);
   width: 36px;
   height: 36px;
   background: white;

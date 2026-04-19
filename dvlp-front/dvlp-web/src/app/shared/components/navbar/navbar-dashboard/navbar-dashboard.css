@@ -16,12 +16,6 @@ mat-toolbar {
   color: white;
 }
 
-mat-toolbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
 .toolbar-start,
 .toolbar-end {
   display: flex;

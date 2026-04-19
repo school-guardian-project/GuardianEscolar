@@ -40,11 +40,17 @@ main {
     border-top-right-radius: 30px;
 }
 
+form {
+    display: flex;
+    flex-direction: column  ;
+}
+
 .sesion-left,
 .sesion-right {
     padding: 40px;
     display: flex;
     flex-direction: column;
+    justify-content: center;
     
 }
 
@@ -167,6 +173,7 @@ button {
 
 .terms {
     color: #366fea;
+    cursor: pointer;
 }
 
 .condition {

@@ -8,6 +8,8 @@ import { NavbarDashboard } from '../../../shared/components/navbar/navbar-dashbo
 import { Comments } from '../../../shared/components/modal/comments/comments'; 
 import { Information } from '../../../shared/components/modal/information/information';
 import { UpdateInformation } from '../../../shared/components/modal/update-information/update-information';
+import { SidebarAdmin } from '../../../shared/components/navbar/sidebar-admin/sidebar-admin';
+
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -22,6 +24,7 @@ import { UpdateInformation } from '../../../shared/components/modal/update-infor
     Comments, 
     Information,
     UpdateInformation,
+    SidebarAdmin,
   ],
   templateUrl: './dashboard-admin.html',
   styleUrls: ['./dashboard-admin.css'],

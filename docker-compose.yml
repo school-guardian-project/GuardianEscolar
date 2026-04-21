@@ -1,59 +1,6 @@
 services:
-  # liquibase: 
-  #   container_name: liquibase
-  #   build:
-  #     context: ./liquibase
-  #     dockerfile: Dockerfile
-  #   volumes:
-  #     - ./liquibase/logs:/liquibase/logs
-  #   networks:
-  #     - default
-  #   environment:
-  #     - DB_HOST=${DB_HOST}
-  #     - DB_PORT=${DB_PORT}
-  #     - DB_NAME=${DB_NAME}
-  #     - DB_USER=${LIQUIBASE_USER}
-  #     - DB_PASS=${LIQUIBASE_PASS}
-  
-  # app-web-frontend:
-  #   build: ./dvlp-front/dvlp-web
-  #   container_name: app
-  #   ports:
-  #     - 4200:80
-
-  # app-backend:
-  #   build: ./dvlp-back
-  #   container_name: app-backend
-  #   ports:
-  #     - 5000:80
-  #   networks:
-  #     - default
-  #   environment:
-  #     - DB_HOST=${DB_HOST}
-  #     - DB_PORT=${DB_PORT}
-  #     - DB_NAME=${DB_NAME}
-  #     - DB_USER=${LIQUIBASE_USER}
-  #     - DB_PASS=${LIQUIBASE_PASS}
-  #   # depends_on:
-  #   #   liquibase:
-  #   #     condition: service_completed_successfully
-
-  jenkins:
-    container_name: jenkins
-    image: jenkins/jenkins:2.555.1-lts-jdk25
-    restart: unless-stopped
-    user: root
+  api-backend:
+    container_name: backend_container
+    image: schoolguardian123/backend-app:1.0.0
     ports:
-      - 9090:8080
-      - 50000:50000
-    volumes:
-      - jenkins_home:/var/jenkins_home
-      - /var/run/docker.sock:/var/run/docker.sock
-
-
-volumes:
-  jenkins_home:
-
-# networks:
-#   default:
-#     name: school-guardian-network
+      - 8080:8080

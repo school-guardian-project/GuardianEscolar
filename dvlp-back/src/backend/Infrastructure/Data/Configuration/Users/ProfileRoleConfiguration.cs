@@ -1,5 +1,5 @@
-using backend.Model.Entities.Users;
-using backend.Model.Entities.Security;
+using backend.Domain.Entities.Users;
+using backend.Domain.Entities.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

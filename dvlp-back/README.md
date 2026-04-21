@@ -41,3 +41,9 @@ Directorio temporal de compilacion (archivos intermedios de build).
 
 ### Properties/
 Configuraciones de inicio (launchSettings.json). -->
+
+## Dockerfile
+
+Dentro de la `src/backend` se encuentra una imagen personalizada para dockerizar el backend del proyecto, esta imagen se usara unicamente para llevar a produccion.
+
+Se debe tenre en cuenta que cuando se realiacen cambios dentro de la carpeta del backend 

@@ -1,4 +1,4 @@
-using backend.Model.Entities.Security;
+using backend.Domain.Entities.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

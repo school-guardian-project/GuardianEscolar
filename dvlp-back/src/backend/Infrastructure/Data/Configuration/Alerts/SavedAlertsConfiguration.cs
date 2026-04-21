@@ -1,4 +1,4 @@
-using backend.Model.Entities.Alerts;
+using backend.Domain.Entities.Alerts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

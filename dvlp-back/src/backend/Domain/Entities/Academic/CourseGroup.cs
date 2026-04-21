@@ -1,5 +1,4 @@
 ﻿using backend.Domain.Entities.Users;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Domain.Entities.Academic
 {

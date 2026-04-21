@@ -1,7 +1,6 @@
 using backend.Domain.Entities.Exceptions;
 using backend.Domain.Entities.School;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using backend.Domain.Entities.Transport;
 
 namespace backend.Domain.Entities.Transport
 {

@@ -3,9 +3,6 @@
     --color-navbar: #102d7d;
     --color-navbar-admin:#112b72;
     --text-color: black;
-    
-    --font-tittle: 'Poppins', sans-serif;
-    --font-body: 'Roboto', sans-serif;
 }
 
 *{
@@ -21,5 +18,5 @@
 
 body {
     background-color: var(--bg-color);
-    font-family: var(--font-body);
+    font-family: "Segoe UI", Arial, sans-serif;
 }

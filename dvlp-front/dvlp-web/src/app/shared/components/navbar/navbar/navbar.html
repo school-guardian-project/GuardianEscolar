@@ -1,9 +1,7 @@
 <mat-toolbar>
     <div class="navbar-start">
         <mat-icon class="shield space">shield</mat-icon>
-        <div class="inColumn space">
-            <span class="title-guardian">Guardian Escolar</span>
-        </div>
+        <div class="title space">Guardian Escolar</div>
     </div>
 
     <button class="btn-menu" mat-icon-button (click)="toggleMenu()">
@@ -12,7 +10,7 @@
 
     
     <div class="navbar-end" [class.active]="menuOpen">
-        <div class="spaces">Funcionalidades</div>
+        <div class="spaces" (click)="scrollToSection('funcionalidades')">Funcionalidades</div>
     
         <div class="inColumn spaces">
             <span>Como funciona</span>
@@ -22,6 +20,4 @@
     
         <div class="spaces">Contacto</div>
     </div>
-    
-
 </mat-toolbar>

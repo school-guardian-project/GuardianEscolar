@@ -8,6 +8,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Infrastructure\IRepositories\**" />
+    <Compile Remove="Infrastructure\Persistence\**" />
+    <Compile Remove="Migrations\**" />
+    <Content Remove="Infrastructure\IRepositories\**" />
+    <Content Remove="Infrastructure\Persistence\**" />
+    <Content Remove="Migrations\**" />
+    <EmbeddedResource Remove="Infrastructure\IRepositories\**" />
+    <EmbeddedResource Remove="Infrastructure\Persistence\**" />
+    <EmbeddedResource Remove="Migrations\**" />
+    <None Remove="Infrastructure\IRepositories\**" />
+    <None Remove="Infrastructure\Persistence\**" />
+    <None Remove="Migrations\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.5">
@@ -22,9 +37,6 @@
     <Folder Include="Application\Interfaces\" />
     <Folder Include="Application\DTOs\" />
     <Folder Include="Application\Services\" />
-    <Folder Include="Infrastructure\IRepositories\" />
-    <Folder Include="Infrastructure\Persistence\Configuration\Academic\" />
-    <Folder Include="Migrations\" />
   </ItemGroup>
 
 </Project>

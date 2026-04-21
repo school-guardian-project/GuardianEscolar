@@ -1,8 +1,6 @@
 using backend.Domain.Entities.Academic;
 using backend.Domain.Entities.Transport;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using RouteEntity = backend.Model.Entities.Transport.RouteEntity;
+using RouteEntity = backend.Domain.Entities.Transport.RouteEntity;
 
 namespace backend.Domain.Entities.School
 {

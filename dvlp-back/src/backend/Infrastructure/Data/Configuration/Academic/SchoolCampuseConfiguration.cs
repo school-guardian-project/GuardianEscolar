@@ -1,5 +1,5 @@
-using backend.Model.Entities.Academic;
-using backend.Model.Entities.School;
+using backend.Domain.Entities.Academic;
+using backend.Domain.Entities.School;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

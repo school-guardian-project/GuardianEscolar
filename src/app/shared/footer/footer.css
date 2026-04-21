@@ -12,6 +12,7 @@ footer {
     display: flex;
     flex-direction: row;
     margin-bottom: 60px;
+    gap: 20px;
 }
 
 .footer-down {
@@ -56,7 +57,7 @@ footer {
 }
 
 .col1 {
-    width: 40%;
+    width: 40%;   
 }
 
 .cols {
@@ -92,7 +93,7 @@ footer {
 
 .guardian {
     color: white;
-    font-weight: 800;
+    font-weight: 500;
     font-size: 1.5rem;
 }
 
@@ -109,7 +110,7 @@ footer {
     font-size: 1rem;
 }
 
-@media (min-width: 768px) and (max-width: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 1024px) {
     .footer-header {
         display: flex;
         flex-direction: column;
@@ -122,7 +123,8 @@ footer {
 
     .cols {
         width: 100%;
-        display: flex;
+        gap: 50px;
+        justify-content: center;
     }
 
     .down-right {
@@ -140,5 +142,74 @@ footer {
     .footer-down {
         display: flex;
         flex-direction: column;
+    }
+}
+
+@media screen and (min-width: 480px) and (max-width: 768px) {
+    footer {
+        padding: 40px;
+    }
+
+    .footer-header {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .col1 {
+        width: 100%;
+    }
+
+    .cols {
+        width: 100%;
+        flex-direction: row;
+        margin-bottom: 10px;
+        gap: 50px;
+        justify-content: center;
+    }
+
+    .col {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 10px;
+    }
+
+    .down-left {
+        margin-top: 20px;
+        order: 2;
+    }
+
+    .down-right {
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        order: 1;
+        margin-bottom: 20px;
+    }
+
+    .footer-down {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    footer {
+        padding: 40px;
+    }
+
+    .cols {
+        flex-direction: column;
+        margin-top: 10px;
+        gap: 20px;
+    }
+
+    .col {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+    .footer-down {
+        flex-direction: column;
+        text-align: center;
     }
 }

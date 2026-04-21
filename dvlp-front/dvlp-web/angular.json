@@ -7,7 +7,7 @@
   },
   "newProjectRoot": "projects",
   "projects": {
-    "dvlp-web": {
+    "school-guardian": {
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -63,10 +63,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "dvlp-web:build:production"
+              "buildTarget": "school-guardian:build:production"
             },
             "development": {
-              "buildTarget": "dvlp-web:build:development"
+              "buildTarget": "school-guardian:build:development"
             }
           },
           "defaultConfiguration": "development"

@@ -1,0 +1,278 @@
+Table Person {
+    personId int [primary key]
+    name varchar(255)
+    lastName varchar(255)
+    identificacionType varchar(255)
+    identificationNumber varchar(255)
+    email varchar(255)
+    phone int
+    residenceAddress varchar(255)
+    password varchar(255)
+}
+
+Table Role {
+    roleId int [primary key]
+    name varchar(255)
+    description varchar(255)
+    permissions varchar(255)
+}
+
+Table Action {
+    actionId int [primary key]
+    name varchar(255)
+    description text
+}
+
+Table View {
+    viewId int [primary key]
+    name varchar(255)
+    description text
+}
+
+Table Module {
+    moduleId int [primary key]
+    name varchar(255)
+    description text
+}
+
+Table RoleModule {
+    roleModuleId int [primary key]
+    roleId int
+    moduleId int
+}
+
+Table ViewModule {
+    viewModuleId int [primary key] 
+    viewId int
+    moduleId int
+}
+
+Table ViewAction {
+    viewActionId int [primary key]
+    viewId int
+    actionId int
+}
+
+// ----------------------------------
+Table Family {
+    familyId int [primary key]
+    name varchar(255)
+    observations TEXT
+}
+
+Table FamilyMember {
+    familyId int [primary key]
+    profileId int [primary key]
+}
+
+Table School {
+  schoolId int [primary key]
+  cityId int 
+  logo TINYBLOB
+  name varchar(255)
+  address varchar(255)
+  phone int
+  email varchar(255)
+  website varchar(255)
+  theme varchar(255)
+}
+
+Table Boarding {
+  profileId int [primary key]
+  busId int [primary key]
+  stopId int
+  dateTime timestamp
+  action boolean
+}
+
+
+Table SavedAlert {
+    profileId int [primary key]
+    alertId int [primary key]
+  }
+
+Table AlertType {
+    alertTypeId int [primary key]
+    name varchar(255)
+    description varchar(255)
+    urgencyLevel int
+  }
+
+Table Alert {
+    alertId int [primary key]
+    alertTypeId int [primary key]
+    busId int [primary key]
+    dateTime datetime 
+  }
+
+
+Table Bus {
+  busId int [primary key]
+  driverId int
+  schoolId int
+  brand varchar(255)
+  model varchar(255)
+  capacity int
+  soatValidity mediumblob
+  gpsStatus boolean
+}
+
+Table Stop {
+  stopId int [primary key]
+  cityId int [primary key]
+  schoolId int [primary key]
+  address varchar(255)
+  longitude decimal
+  latitude decimal
+}
+
+Table Route {
+  routeId int [primary key]
+  schoolId int [primary key]
+  name varchar(255)
+  targetSector varchar(255) unique
+  startTime time [not null]
+  endTime time [not null]
+}
+
+
+Table Cities {
+  cityId int [primary key]
+  name VARCHAR(255) [not null]
+  country VARCHAR(255) [not null]
+}
+
+Table RouteStudentAssignments {
+  profileId int [primary key]
+  routeId int [primary key]
+}
+
+Table RouteStop {
+  routeId int [primary key]
+  stopId int [primary key]
+}
+
+Table RouteBusAssignments {
+  busId int [primary key]
+  routeId int [primary key]
+}
+
+Table SchoolCampuse {
+  campusId int [primary key]
+  schoolId int [not null]
+  name varchar(255) [not null]
+  address varchar(255) [not null]
+}
+
+Table Course {
+  courseId int [primary key]
+  campusId int [not null]
+  name varchar(255) [not null]
+}
+
+Table CourseGroup {
+  profileId int [primary key]
+  courseId int [primary key]
+}
+
+Table DriverLicense {
+  licenseId int [primary key]
+  profileId int [not null]
+  licenseNumber varchar(255)
+  drivingLicense mediumblob [not null]
+  licenseExpirationDate date [not null]
+}
+
+Table ProfileRol {
+  profileId int [primary key]
+  roleId int [primary key]
+}
+
+Table Profile {
+    profileId int [primary key]
+    personId int [not null]
+    // userName varchar(255) [not null]
+    password varchar(255) [not null]
+}
+
+Table ExceptionalDriverUsage {
+  usageId int [primary key]
+  busId int [not null]
+  profileId int [not null]
+  startDateTime datetime [not null]
+  endDateTime datetime [not null]
+  reason varchar(255) [not null]
+}
+
+Table ExceptionalRouteUsage {
+  usageId int [primary key]
+  profileId int [not null]
+  routeId int [not null]
+  dateTime datetime [not null]
+  reason varchar(255)
+}
+
+
+
+
+
+// Relationships
+
+Ref person_profile: Profile.personId > Person.personId
+Ref profile_rol: ProfileRol.profileId > Profile.profileId
+Ref profile_rol: ProfileRol.roleId > Role.roleId
+
+Ref saved_alert: SavedAlert.profileId > Profile.profileId
+Ref saved_alert: SavedAlert.alertId > Alert.alertId
+
+Ref alert: Alert.alertTypeId > AlertType.alertTypeId
+Ref alert: Alert.busId > Bus.busId
+
+Ref school_campuse: SchoolCampuse.schoolId > School.schoolId
+
+Ref family_member: FamilyMember.familyId > Family.familyId
+Ref family_member: FamilyMember.profileId > Profile.profileId
+
+Ref boarding: Boarding.profileId > Profile.profileId
+Ref boarding: Boarding.busId > Bus.busId
+Ref boarding: Boarding.stopId > Stop.stopId
+
+Ref cities: Stop.cityId > Cities.cityId
+Ref cities: School.cityId > Cities.cityId
+
+Ref route_student_assignments: RouteStudentAssignments.routeId > Route.routeId
+Ref route_student_assignments: RouteStudentAssignments.profileId > Profile.profileId
+
+Ref route_stop: RouteStop.routeId > Route.routeId
+Ref route_stop: RouteStop.stopId > Stop.stopId
+
+Ref route_bus_assignments: RouteBusAssignments.busId > Bus.busId
+Ref route_bus_assignments: RouteBusAssignments.routeId > Route.routeId
+
+Ref bus: Bus.schoolId > School.schoolId
+Ref bus: Bus.driverId > Profile.profileId
+
+Ref stop_school: Stop.schoolId > School.schoolId
+
+Ref route_school: Route.schoolId > School.schoolId
+
+Ref course_group: CourseGroup.profileId > Profile.profileId
+Ref course_group: CourseGroup.courseId > Course.courseId
+
+Ref driver_license: DriverLicense.profileId - Profile.profileId
+
+Ref exception_driver_usage: ExceptionalDriverUsage.busId > Bus.busId
+Ref exception_driver_usage: ExceptionalDriverUsage.profileId > Profile.profileId
+
+Ref exceptional_route_usage: ExceptionalRouteUsage.profileId > Profile.profileId
+Ref exceptional_route_usage: ExceptionalRouteUsage.routeId > Route.routeId
+
+// Modulo de seguridad
+Ref role_module: RoleModule.roleId > Role.roleId
+Ref role_module: RoleModule.moduleId > Module.moduleId
+
+Ref view_module: ViewModule.viewId > View.viewId
+Ref view_module: ViewModule.moduleId > Module.moduleId
+
+Ref view_action: ViewAction.viewId > View.viewId
+Ref view_action: ViewAction.actionId > Action.actionId

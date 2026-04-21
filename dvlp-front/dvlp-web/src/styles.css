@@ -1,1 +1,22 @@
 /* You can add global styles to this file, and also import other style files */
+:root{ 
+    --color-navbar: #102d7d;
+    --color-navbar-admin:#112b72;
+    --text-color: black;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.dark-theme {
+    --bg-color:  #2c2c2c;
+    --text-color: white;
+}
+
+body {
+    background-color: var(--bg-color);
+    font-family: "Segoe UI", Arial, sans-serif;
+}

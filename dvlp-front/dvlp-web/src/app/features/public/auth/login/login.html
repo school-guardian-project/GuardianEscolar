@@ -1,25 +1,46 @@
-<app-nav-component></app-nav-component>
+<div class="layout">
+    <app-nav-component></app-nav-component>
+    
+    <main>
+        <div class="container-session">
+            <div class="sesion-left">
+                <mat-icon class="shield">shield</mat-icon>
+    
+                <h1 class="panel-sesion">Bienvenido de nuevo</h1>
+    
+                <p class="session-description">Accede al sistema completo de monitoreo de rutas escolares.</p>
+    
+                <div class="GPS"><mat-icon class="icon">satellite_alt</mat-icon> GPS en tiempo real</div>
+                <div class="alerts"><mat-icon class="icon">notifications</mat-icon> Alertas instantáneas</div>
+                <div class="report"><mat-icon class="icon">insert_chart</mat-icon> Reportes y métricas</div>
+    
+                <div class="edu">guardian.edu · Soporte 24/7</div>
+            </div>
+        
+            <div class="sesion-right">
+                <form action="">
+                    <h2>Iniciar sesión</h2>
+                    <div class="login-description">Ingresa tus credenciales para acceder al panel</div>
+        
+                    <label for="">Correo electrónico</label>
+                    <input type="text" placeholder="tu-usuario@gmail.com" required>
+        
+                    <label for="">Contraseña</label>
+                    <input type="password" required>
+        
+                    <div class="olvid">
+                        <div class="password">¿Olvidaste tu contraseña?</div>
+                    </div>
+        
+                    <div class="btn">
+                        <button>Iniciar sesión</button>
+                    </div>
+                </form>
 
-<main>
-    <div mat-icon-button>
-        <mat-icon>person</mat-icon>
-    </div>
-
-    <h1>Iniciar Sesion</h1>
-
-    <form action="">
-        <label for="">Correo Electronico</label>
-        <input type="email" placeholder="@gmail.com">
-
-        <label for="">Contraseña</label>
-        <input type="password" placeholder="contraseña">
-
-        <a routerLink="/auth/forgot-password" >¿Olvido la contraseña?</a>
-
-        <div class="btn">
-            <button>Ingresar</button>
+                <div class="line"></div>
+    
+                <div class="condition">Al ingresar aceptas nuestros <span class="terms term"> Términos de uso </span> y <span class="terms politic"> Política de privacidad</span></div>
+            </div>
         </div>
-    </form>
-</main>
-
-<app-footer></app-footer>
+    </main>
+</div>

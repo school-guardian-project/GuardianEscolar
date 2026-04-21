@@ -1,0 +1,104 @@
+<!-- Formulario principal -->
+<div class="modal-overlay" (click)="cerrar()">
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <!-- Header -->
+    <div class="modal_header">
+      <h2 class="modal__title">Actualizar información de la Escuela</h2>
+    </div>
+
+    <!-- Formulario -->
+    <div class="modal_form">
+
+      <!-- Nombre -->
+      <div>
+        <label class="modal_form-label">Nombre completo</label>
+        <input type="text" class="modal_form-input"
+          placeholder="Ingrese el nombre de la escuela"
+          [(ngModel)]="nombreEscuela">
+      </div>
+
+      <!-- Ciudad + Dirección -->
+      <div class="modal_form-row">
+        <div>
+          <label class="modal_form-label">Ciudad</label>
+          <select [(ngModel)]="ciudad">
+            <option value="">Seleccione una ciudad</option>
+            <option>Neiva</option>
+            <option>Bogotá</option>
+            <option>Medellín</option>
+            <option>Cali</option>
+          </select>
+        </div>
+        <div>
+          <label class="modal_form-label">Dirección</label>
+          <input type="text" class="modal_form-input"
+            placeholder="Ingrese la dirección"
+            [(ngModel)]="direccion">
+        </div>
+      </div>
+
+      <!-- Teléfono + Logo -->
+      <div class="modal_form-row">
+        <div>
+          <label class="modal_form-label">Teléfono</label>
+          <input type="text" class="modal_form-input"
+            placeholder="Ingrese el teléfono"
+            [(ngModel)]="telefono">
+        </div>
+        <div class="modal_form-upload">
+          <label class="modal_form-label">Logo</label>
+          <img src="assets/images/escuela.png" alt="Logo" class="modal_form-logo">
+          <label for="logo" class="modal_form-upload-label">Subir nuevo logo</label>
+          <input type="file" id="logo" class="modal_form-upload-input">
+        </div>
+      </div>
+
+      <!-- Correo -->
+      <div>
+        <label class="modal_form-label">Correo electrónico</label>
+        <input type="email" class="modal_form-input"
+          placeholder="Ingrese el correo"
+          [(ngModel)]="email">
+      </div>
+
+      <!-- Web -->
+      <div>
+        <label class="modal_form-label">Página Web</label>
+        <input type="text" class="modal_form-input"
+          placeholder="Ingrese la página web"
+          [(ngModel)]="website">
+      </div>
+
+      <!-- Error -->
+      <div *ngIf="mostrandoError" class="error-message">
+        <mat-icon>error_outline</mat-icon>
+        Por favor completa al menos un campo antes de actualizar
+      </div>
+
+      <!-- Footer -->
+      <div class="modal_footer">
+        <button class="modal_btn modal_btn--submit" type="button" (click)="cerrar()">
+          Cancelar
+        </button>
+        <button class="modal_btn modal_btn--cancel" type="button" (click)="actualizar()">
+          Actualizar
+        </button>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Modal de confirmación -->
+<div *ngIf="enviado" class="modal-overlay">
+  <div class="modal modal--small">
+    <div class="modal_header">
+      <h2 class="modal__title">¡Información actualizada!</h2>
+      <p class="modal__subtitle">Los cambios han sido guardados correctamente</p>
+    </div>
+    <div class="modal_footer modal__footer--center">
+      <button class="modal_btn modal_btn--cancel" type="button" (click)="cerrar()">Salir</button>
+    </div>
+  </div>
+</div>

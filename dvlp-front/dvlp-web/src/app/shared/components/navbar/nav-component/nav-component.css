@@ -1,15 +1,49 @@
 mat-toolbar {
+    width: 100%;
+    height: 80px;
+    background-color: white;
+}
+
+mat-toolbar,
+.navbar-start,
+.navbar-end {
     display: flex;
     justify-content: space-between;
+    flex-direction: row;
     align-items: center;
-    background-color: #4BB14B;
 }
 
-.toolbar-start, .toolbar-end {
+.navbar-end,
+.navbar-start {
+    cursor: pointer;
+}
+
+.shield {
+    color: white;
+    background-color: #1c54dc;
+    border-radius: 15px;
+    width: 55px;
+    height: 55px;
     display: flex;
+    justify-content: center;
     align-items: center;
+    font-size: 2.1rem;
+    margin-left: 30px;
+    margin-right: 20px;
 }
 
-.spacer {
-    flex: 1;
+.title-guardian {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 2rem;
+}
+
+.not-account {
+    color: #68768e;
+    margin-right: 15px;
+}
+
+.contact {
+    color: #1c54dc;
+    margin-right: 30px;
 }

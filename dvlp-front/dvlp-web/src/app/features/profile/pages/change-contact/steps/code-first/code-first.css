@@ -1,0 +1,33 @@
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 100px 0;
+    color: var(--text-color);
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+p {
+    font-size: 1.2rem;
+}
+
+button {
+    margin-top: 30px;
+    background-color: #048c04;
+    color: white;
+    border-radius: 10px;
+    width: 170px;
+    height: 45px;
+    cursor: pointer;
+    border: none;
+    font-size: 1.5rem;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+}

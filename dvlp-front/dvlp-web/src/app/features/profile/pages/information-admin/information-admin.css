@@ -56,9 +56,9 @@
   width: 100%;
   max-width: 960px;
   background: white;
-  border-radius: 16px;
+  border-radius: 9px;
   padding: 36px 40px;
-    box-shadow: 0 4px 24px rgba(26, 46, 74, 0.08);
+  box-shadow: 0 4px 24px rgba(26, 46, 74, 0.08);
   border: 0.5px solid #505050;
 }
 
@@ -88,7 +88,7 @@
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  border: 0.5px solid #E2E8F0;
+  border: 0.5px solid #4d4d4d;
   background: #F8FAFC;
   display: flex;
   align-items: center;
@@ -101,7 +101,7 @@
   font-size: 19px;
   width: 19px;
   height: 19px;
-  color: #64748B;
+  color: #151627;
   margin: 0;
 }
 
@@ -175,7 +175,7 @@
 .user-name {
   font-size: 1rem;
   font-weight: 600;
-  color: #1A2E4A;
+  color: #0d1827;
   text-align: center;
   margin: 0;
 }
@@ -217,7 +217,7 @@
 /* DIVISOR VERTICAL */
 .divider-vertical {
   width: 0.5px;
-  background: #E2E8F0;
+  background: #5c5c66;
   align-self: stretch;
   flex-shrink: 0;
 }
@@ -248,7 +248,7 @@
   gap: 5px;
   font-size: 0.78rem;
   font-weight: 600;
-  color: #64748B;
+  color: #2d3541;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin: 0;
@@ -258,17 +258,17 @@
   font-size: 14px !important;
   width: 14px !important;
   height: 14px !important;
-  color: #94A3B8 !important;
+  color: #160e44 !important;
   margin: 0;
 }
 
 .info-value {
   font-size: 0.95rem;
-  color: #1A2E4A;
+  color: #000000;
   margin: 0;
   font-weight: 400;
   padding: 8px 0;
-  border-bottom: 0.5px solid #F1F5F9;
+  border-bottom: 0.5px solid #e8e8f1;
 }
 
 /* BOTÓN EDITAR */
@@ -276,7 +276,7 @@
   width: 28px;
   height: 28px;
   border-radius: 7px;
-  border: 0.5px solid #E2E8F0;
+  border: 0.5px solid #4d4d4d;
   background: transparent;
   display: flex;
   align-items: center;
@@ -290,7 +290,7 @@
   font-size: 14px !important;
   width: 14px !important;
   height: 14px !important;
-  color: #94A3B8 !important;
+  color: #000000 !important;
   margin: 0;
 }
 
@@ -303,23 +303,30 @@
   color: #2D6BE4 !important;
 }
 
-/* RESPONSIVE */
 @media (max-width: 768px) {
+
+  .information-container {
+    width: 100%;
+    padding: 16px;
+    min-width: 0; 
+  }
+
   .card {
-    padding: 24px 20px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    border-radius: 12px;
   }
 
   .content {
     flex-direction: column;
     align-items: center;
-  }
-
-  .divider-vertical {
-    display: none;
+    gap: 20px;
   }
 
   .section-info {
     grid-template-columns: 1fr;
     width: 100%;
   }
+
 }

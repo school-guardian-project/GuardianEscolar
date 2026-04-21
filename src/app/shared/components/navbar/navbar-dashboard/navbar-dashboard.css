@@ -1,0 +1,42 @@
+
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.custom-toolbar {
+  background-color: var(--color-navbar);
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
+  height: 56px;
+}
+
+.title {
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+}
+
+.toolbar-start,
+.toolbar-end {
+  display: flex;
+  align-items: center;
+}
+
+.spacer {
+  flex: 1;
+}
+
+button {
+  display: flex;
+  align-items: center;
+  margin: 0 4px;
+  color: rgba(255, 255, 255, 0.6) !important;
+}
+
+button:hover {
+  color: white !important;
+}
+
+mat-icon {
+  color: rgba(255, 255, 255, 0.6);
+}

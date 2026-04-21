@@ -4,6 +4,7 @@ main {
     align-items: center;
     flex-direction: column;
     padding: 100px 0;
+    color: var(--text-color);
 }
 
 form {

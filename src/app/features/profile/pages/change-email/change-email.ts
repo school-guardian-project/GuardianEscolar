@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { RouterOutlet } from "@angular/router";
 
 @Component({
   selector: 'app-change-email',
-  imports: [],
+  imports: [RouterOutlet],
   templateUrl: './change-email.html',
   styleUrl: './change-email.css',
 })

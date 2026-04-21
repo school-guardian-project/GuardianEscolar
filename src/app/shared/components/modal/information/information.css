@@ -1,0 +1,163 @@
+/* OVERLAY */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(26, 46, 74, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(2px);
+}
+
+/* MODAL */
+.modal {
+  background: white;
+  border-radius: 16px;
+  padding: 32px 28px 24px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 40px rgba(26, 46, 74, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  animation: slideUp 0.2s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* HEADER */
+.modal__header {
+  text-align: center;
+}
+
+.modal__title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #1A2E4A;
+  margin: 0;
+}
+
+/* LOGO Y NOMBRE */
+.modal__school {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.modal__logo {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #EFF6FF;
+  border: 2px solid #BFDBFE;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+.modal__logo mat-icon {
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+  color: #2D6BE4;
+}
+
+.modal__school-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1A2E4A;
+  margin: 0;
+}
+
+.modal__school-type {
+  font-size: 0.8rem;
+  color: #64748B;
+  margin: 0;
+}
+
+/* INFO GRID */
+.modal__info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  border-top: 0.5px solid #E2E8F0;
+  border-bottom: 0.5px solid #E2E8F0;
+  padding: 16px 0;
+}
+
+.modal__info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.modal__info-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: #1A2E4A;
+  margin: 0;
+}
+
+.modal__info-value {
+  font-size: 0.8rem;
+  color: #64748B;
+  margin: 0;
+}
+
+/* PÁGINA WEB */
+.modal__website {
+  text-align: center;
+}
+
+/* FOOTER */
+.modal__footer {
+  display: flex;
+  justify-content: center;
+}
+
+.modal__btn {
+  padding: 10px 48px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+}
+
+.modal__btn--submit {
+  background: #2D6BE4;
+  color: white;
+}
+
+.modal__btn--submit:hover {
+  background: #1A5CD4;
+}
+
+.modal__btn--submit:active {
+  transform: scale(0.98);
+}
+
+/* RESPONSIVE */
+@media (max-width: 480px) {
+  .modal {
+    margin: 16px;
+    padding: 24px 20px 20px;
+  }
+
+  .modal__info-grid {
+    grid-template-columns: 1fr;
+  }
+}

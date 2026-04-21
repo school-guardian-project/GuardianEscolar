@@ -1,20 +1,42 @@
-<app-nav-component></app-nav-component>
+<div class="layout">
+  <app-nav-component></app-nav-component>
 
-<main>
-  <h1>Restablecer Contraseña</h1>
+  <main>
+    <div class="container-session">
+      <div class="sesion-left">
+        <mat-icon class="lock">lock</mat-icon>
 
-  <p>Ingrese su correo para verificar su identidad</p>
+        <h1 class="panel-sesion">Recupera tu acceso</h1>
 
-  <form>
-    <label for="">Correo</label>
-    <input type="email" placeholder="@gmail.com" />
+        <p class="session-description">Te enviaremos un código de verificación a tu correo registrado.</p>
 
-    <p>Enviaremos un código de confirmación a su correo.</p>
+        <span class="spacer"></span>
 
-    <div class="btn">
-      <button type="button" (click)="onSubmit()">Verificar</button>
+        <div class="edu"><span class="aplycolor">¿Necesitas ayuda? Escríbenos a</span> guardianescolar0@gmail.com <span class="aplycolor">o llama al</span>  +57 314 4308274</div>
+      </div>
+
+      <div class="sesion-right">
+        <span class="progres">
+          <div class="bars bar"></div>
+          <div class="bars bar2"></div>
+          <div class="bars bar3"></div>
+          <div class="color">Paso 1 de 3</div>
+        </span>
+        <form action="">
+          <h2>Restablecer contraseña</h2>
+          <div class="login-description">Ingresa el correo con el que te registraste</div>
+
+          <label for="">Correo electrónico</label>
+          <input type="email" placeholder="tu@correo.com" required>
+          <p>Recibiras un codifo de 6 digitos</p>
+
+          <div class="btn">
+            <button>Enviar codigo</button>
+          </div>
+
+          <div class="return">← Volver al inicio de sesion</div>
+        </form>
+      </div>
     </div>
-  </form>
-</main>
-
-<app-footer></app-footer>
+  </main>
+</div>

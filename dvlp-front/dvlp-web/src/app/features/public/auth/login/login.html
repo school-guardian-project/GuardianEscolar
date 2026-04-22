@@ -18,22 +18,35 @@
             </div>
         
             <div class="sesion-right">
-                <form action="">
+                <form #form="ngForm" (ngSubmit)="login(form)">
                     <h2>Iniciar sesión</h2>
                     <div class="login-description">Ingresa tus credenciales para acceder al panel</div>
         
                     <label for="">Correo electrónico</label>
-                    <input type="text" placeholder="tu-usuario@gmail.com" required>
+                    <input 
+                        type="text" 
+                        [(ngModel)]="email"
+                        name="email"
+                        required
+                        placeholder="tu-usuario@email.com"
+                        (input)="emailError = ''">
+                    <div *ngIf="emailError" class="error1">{{ emailError }}</div>
         
                     <label for="">Contraseña</label>
-                    <input type="password" required>
+                    <input 
+                        type="password" 
+                        [(ngModel)]="password"
+                        name="password"
+                        required
+                        (input)="passwordError = ''">
         
                     <div class="olvid">
-                        <div class="password">¿Olvidaste tu contraseña?</div>
+                        <div *ngIf="passwordError" class="error">{{ passwordError }}</div>
+                        <div class="password" (click)="forgot()">¿Olvidaste tu contraseña?</div>
                     </div>
         
                     <div class="btn">
-                        <button>Iniciar sesión</button>
+                        <button type="submit">Iniciar sesión</button>
                     </div>
                 </form>
 

@@ -74,7 +74,11 @@
               "buildTarget": "school-guardian:build:development"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "development",
+          "options": {
+            "host": "0.0.0.0",
+            "allowedHosts": ["localhost", ".localhost"]
+          }
         },
         "test": {
           "builder": "@angular/build:unit-test"

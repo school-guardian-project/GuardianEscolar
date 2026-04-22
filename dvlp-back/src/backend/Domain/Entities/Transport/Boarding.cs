@@ -1,5 +1,4 @@
 ﻿using backend.Domain.Entities.Users;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Domain.Entities.Transport
 {
@@ -15,10 +14,10 @@ namespace backend.Domain.Entities.Transport
 
         public bool action { get; set; }
 
-        public Profile profile { get; set; }
+        public required Profile profile { get; set; }
 
-        public Bus bus { get; set; }
+        public required Bus bus { get; set; }
 
-        public Stop stop { get; set; }
+        public required Stop stop { get; set; }
     }
 }

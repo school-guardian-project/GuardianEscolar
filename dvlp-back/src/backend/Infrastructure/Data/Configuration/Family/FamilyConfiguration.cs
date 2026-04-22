@@ -1,7 +1,7 @@
-using backend.Model.Entities.Family;
+using backend.Domain.Entities.Family;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using FamilyEntity = backend.Model.Entities.Family.Family;
+using FamilyEntity = backend.Domain.Entities.Family.Family;
 
 namespace backend.Infrastructure.Persistence.Configuration.Family
 {

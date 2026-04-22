@@ -1,0 +1,67 @@
+services:
+  backend:
+    container_name: backend-container-dev
+    image: mcr.microsoft.com/dotnet/sdk:10.0
+    working_dir: /app
+    ports:
+      - "8080:8080"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - AllowedOrigins=http://localhost:4200
+    volumes:
+      - ./dvlp-back/src/backend:/app
+    command: dotnet watch run
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+
+  # Contenedor de desarrollo para el frontend
+  frontend-web:
+    container_name: frontend-container-dev
+    build:
+      context: ./dvlp-front/dvlp-web/
+      dockerfile: dev.Dockerfile
+    ports:
+      - "4201:4200"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - ./dvlp-front/dvlp-web:/app
+      - /app/node_modules
+  
+  # liquibase:
+  #   image: liquibase/liquibase:5.0.1
+  #   container_name: liquibase_container
+  #   volumes:
+  #     - ./dvlp-back/liquibase/changelogs:/liquibase/changelogs
+  #     - ./dvlp-back/liquibase/master.xml:/liquibase/master.xml
+  #     - ./dvlp-back/liquibase/drivers/postgresql-42.7.10.jar:/liquibase/lib/postgresql.jar
+  #   networks:
+  #     - default
+  #   environment:
+  #     - DB_HOST=${DB_HOST}
+  #     - DB_PORT=${DB_PORT}
+  #     - DB_NAME=${DB_NAME}
+  #     - DB_USER=${DB_USER}
+  #     - DB_PASS=${DB_PASS}
+  #   command: >
+  #     --url=jdbc:postgresql://${DB_URL}:${DB_PORT}/${DB_NAME}
+  #     --username=${DB_USER}
+  #     --password=${DB_PASS}
+  #     --changeLogFile=/dvlp-back/liquibase/master.xml
+  #     update
+
+  # jenkins:
+  #   container_name: jenkins_container
+  #   image: jenkins/jenkins:2.555.1-lts-jdk25
+  #   restart: unless-stopped
+  #   user: root
+  #   ports:
+  #     - 9090:8080
+  #     - 50000:50000
+  #   volumes:
+  #     - jenkins_home:/var/jenkins_home
+  #     - /var/run/docker.sock:/var/run/docker.sock
+
+volumes:
+  jenkins_home:

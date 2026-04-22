@@ -3,8 +3,6 @@ using backend.Domain.Entities.Alerts;
 using backend.Domain.Entities.Exceptions;
 using backend.Domain.Entities.Family;
 using backend.Domain.Entities.Transport;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace backend.Domain.Entities.Users
 {

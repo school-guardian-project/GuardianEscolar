@@ -1,11 +1,11 @@
-using backend.Model.Entities.Academic;
-using backend.Model.Entities.Alerts;
-using backend.Model.Entities.Exceptions;
-using backend.Model.Entities.Family;
-using backend.Model.Entities.School;
-using backend.Model.Entities.Security;
-using backend.Model.Entities.Transport;
-using backend.Model.Entities.Users;
+using backend.Domain.Entities.Academic;
+using backend.Domain.Entities.Alerts;
+using backend.Domain.Entities.Exceptions;
+using backend.Domain.Entities.Family;
+using backend.Domain.Entities.School;
+using backend.Domain.Entities.Security;
+using backend.Domain.Entities.Transport;
+using backend.Domain.Entities.Users;
 using backend.Infrastructure.Persistence.Configuration.Academic;
 using backend.Infrastructure.Persistence.Configuration.Alerts;
 using backend.Infrastructure.Persistence.Configuration.Exceptions;
@@ -15,9 +15,9 @@ using backend.Infrastructure.Persistence.Configuration.Security;
 using backend.Infrastructure.Persistence.Configuration.Transport;
 using backend.Infrastructure.Persistence.Configuration.Users;
 using Microsoft.EntityFrameworkCore;
-using RouteEntity = backend.Model.Entities.Transport.RouteEntity;
-using ActionEntity = backend.Model.Entities.Security.Action;
-using FamilyEntity = backend.Model.Entities.Family.Family;
+using RouteEntity = backend.Domain.Entities.Transport.RouteEntity;
+using ActionEntity = backend.Domain.Entities.Security.Action;
+using FamilyEntity = backend.Domain.Entities.Family.Family;
 
 namespace backend.Infrastructure.Persistence.Context
 {

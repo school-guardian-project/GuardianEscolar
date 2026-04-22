@@ -1,5 +1,5 @@
-using backend.Model.Entities.Transport;
-using backend.Model.Entities.Users;
+using backend.Domain.Entities.Transport;
+using backend.Domain.Entities.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

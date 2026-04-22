@@ -1,4 +1,4 @@
-using backend.Model.Entities.Academic;
+using backend.Domain.Entities.Academic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

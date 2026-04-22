@@ -1,4 +1,4 @@
-using backend.Model.Entities.Exceptions;
+using backend.Domain.Entities.Exceptions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

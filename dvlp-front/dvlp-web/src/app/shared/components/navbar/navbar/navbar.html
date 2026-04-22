@@ -2,12 +2,12 @@
     <mat-sidenav #sidenav mode="over">
         
         <button mat-icon-button>
-            <mat-icon class="person" >person</mat-icon>
+            <mat-icon class="person" (click)="login()">person</mat-icon>
         </button>
     
-        <div class="spaces" (click)="sidenav.close()">Funcionalidades</div>
+        <div class="spaces" (click)="sidenav.close()" (click)="scrollToSection('funcionalidades')">Funcionalidades</div>
         
-        <div class="spaces" (click)="sidenav.close()">Como funciona</div>
+        <div class="spaces" (click)="sidenav.close()" (click)="scrollToSection('como-funciona')">Como funciona</div>
                 
         <div class="spaces" (click)="sidenav.close()">Precios</div>
             

@@ -9,15 +9,19 @@
     </button>
 
     
-    <div class="navbar-end" [class.active]="menuOpen">
+    <div class="navbar-center" [class.active]="menuOpen">
         <div class="spaces" (click)="scrollToSection('funcionalidades')">Funcionalidades</div>
     
-        <div class="inColumn spaces">
-            <span>Como funciona</span>
-        </div>
+        <div class="spaces">Como funciona</div>
         
         <div class="spaces">Precios</div>
     
         <div class="spaces">Contacto</div>
+    </div>
+
+    <div class="navbar-end">
+        <button mat-icon-button>
+            <mat-icon class="person">person</mat-icon>
+        </button>
     </div>
 </mat-toolbar>

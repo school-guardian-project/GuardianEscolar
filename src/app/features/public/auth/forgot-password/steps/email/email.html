@@ -31,11 +31,11 @@
           <p>Recibiras un codifo de 6 digitos</p>
 
           <div class="btn">
-            <button>Enviar codigo</button>
+            <button (click)="onSubmit()">Enviar codigo</button>
           </div>
-
-          <div class="return">← Volver al inicio de sesion</div>
         </form>
+
+        <div class="return" (click)="login()">← Volver al inicio de sesion</div>
       </div>
     </div>
   </main>

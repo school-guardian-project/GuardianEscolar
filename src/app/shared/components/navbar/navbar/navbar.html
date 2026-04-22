@@ -1,27 +1,47 @@
-<mat-toolbar>
-    <div class="navbar-start">
-        <mat-icon class="shield space">shield</mat-icon>
-        <div class="title space">Guardian Escolar</div>
-    </div>
-
-    <button class="btn-menu" mat-icon-button (click)="toggleMenu()">
-        <mat-icon>menu</mat-icon>
-    </button>
-
-    
-    <div class="navbar-center" [class.active]="menuOpen">
-        <div class="spaces" (click)="scrollToSection('funcionalidades')">Funcionalidades</div>
-    
-        <div class="spaces">Como funciona</div>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="over">
         
-        <div class="spaces">Precios</div>
-    
-        <div class="spaces">Contacto</div>
-    </div>
-
-    <div class="navbar-end">
         <button mat-icon-button>
-            <mat-icon class="person">person</mat-icon>
+            <mat-icon class="person" >person</mat-icon>
         </button>
-    </div>
-</mat-toolbar>
+    
+        <div class="spaces" (click)="sidenav.close()">Funcionalidades</div>
+        
+        <div class="spaces" (click)="sidenav.close()">Como funciona</div>
+                
+        <div class="spaces" (click)="sidenav.close()">Precios</div>
+            
+        <div class="spaces" (click)="sidenav.close()">Contacto</div>
+        
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <mat-toolbar>
+            <div class="navbar-start">
+                <img src="../../../../../../public/assets/logo-blue.svg" alt="Guardian Escolar" class="logo">
+                <div class="title space">Guardian Escolar</div>
+            </div>
+    
+            <div class="navbar-center">
+                <div class="spaces" (click)="scrollToSection('funcionalidades')">Funcionalidades</div>
+            
+                <div class="spaces" (click)="scrollToSection('como-funciona')">Como funciona</div>
+                
+                <div class="spaces">Precios</div>
+            
+                <div class="spaces">Contacto</div>
+            </div>
+    
+            <div class="navbar-end">
+                <button mat-icon-button>
+                    <mat-icon class="person">person</mat-icon>
+                </button>
+            </div>
+    
+            <button class="btn-menu" mat-icon-button (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </mat-toolbar>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>

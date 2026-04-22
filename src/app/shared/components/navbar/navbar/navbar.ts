@@ -1,20 +1,29 @@
-import { Component} from '@angular/core';
+import { Component, computed, HostListener, input, output, signal, ViewChild} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-navbar',
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule],
+  imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
 
 export class Navbar {
-  menuOpen = false;
 
-  toggleMenu() {
-    this.menuOpen = !this.menuOpen;
+  @ViewChild('sidenav') sidenav!: MatSidenav;
+
+  // Ejecuta este método cada vez que cambie el tamaño de la ventana
+  @HostListener('window:resize')
+  // Cierra el sidenav si el ancho de la ventana es mayor a 1024px
+  onResize() {
+    // this.sidenav Valida si el sidenav está abierto y el ancho de la ventana es mayor a 1024px, entonces cierra el sidenav
+    if (window.innerWidth > 1024 && this.sidenav?.opened) {
+      // Cierra el sidenav si la condicion se cumple
+      this.sidenav.close();
+    }
   }
 
   scrollToSection(sectionId: string) {

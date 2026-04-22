@@ -1,8 +1,9 @@
 using backend.Domain.Entities.School;
+using backend.Domain.Entities.Transport;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace backend.Model.Entities.Transport
+namespace backend.Domain.Entities.Transport
 {
     public class Stop
     {

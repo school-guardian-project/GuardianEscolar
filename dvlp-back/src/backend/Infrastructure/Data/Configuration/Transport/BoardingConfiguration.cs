@@ -1,4 +1,4 @@
-using backend.Model.Entities.Transport;
+using backend.Domain.Entities.Transport;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

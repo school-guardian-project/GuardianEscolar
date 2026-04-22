@@ -1,6 +1,6 @@
-using backend.Model.Entities.Users;
+using backend.Domain.Entities.Users;
 
-namespace backend.Model.Entities.Transport
+namespace backend.Domain.Entities.Transport
 {
     public class RouteStudentAssignments
     {

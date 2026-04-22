@@ -11,6 +11,9 @@ services:
     volumes:
       - ./dvlp-back/src/backend:/app
     command: dotnet watch run
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
 
   # liquibase:
   #   image: liquibase/liquibase:5.0.1

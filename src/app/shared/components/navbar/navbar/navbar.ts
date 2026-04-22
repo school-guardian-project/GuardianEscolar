@@ -3,6 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -12,6 +13,8 @@ import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
 })
 
 export class Navbar {
+
+  constructor(private router: Router) {}
 
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
@@ -31,5 +34,9 @@ export class Navbar {
     if (el) {
       el.scrollIntoView({ behavior: 'smooth' });
     }
+  }
+
+  login() {
+    this.router.navigate(['/auth/login'])
   }
 }

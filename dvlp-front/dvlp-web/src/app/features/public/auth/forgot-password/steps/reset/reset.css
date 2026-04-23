@@ -19,6 +19,12 @@ main {
     box-sizing: border-box;
 }
 
+.confirm {
+    color: #059669;
+    margin-top: -30px;
+    margin-bottom: 20px;
+}
+
 .container-session {
     display: flex;
     flex-direction: row;

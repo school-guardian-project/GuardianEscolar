@@ -18,12 +18,14 @@ export class Reset {
   newPasswordError = '';
   confirmPassword: string = '';
   confirmPasswordError = '';
+  confirmPasswordGood = '';
 
   constructor(private router: Router) {}
 
   onSubmit() {
     this.newPasswordError = '';
     this.confirmPasswordError = '';
+    this.confirmPasswordGood = '';
 
     if (!this.newPassword || !this.confirmPassword) {
       if (!this.newPassword) {
@@ -38,6 +40,7 @@ export class Reset {
       this.confirmPasswordError = '*Las contraseñas no coinciden';
       return;
     } else {
+      // this.confirmPasswordGood = '✓ las constraseñas coinciden';
       this.router.navigate(['/auth/login']);
     }
   }

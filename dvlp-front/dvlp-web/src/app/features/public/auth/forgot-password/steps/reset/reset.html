@@ -51,7 +51,8 @@
                 required
                 (input)="confirmPasswordError = ''">
 
-            <div *ngIf="confirmPasswordError" class="error">{{ confirmPasswordError }}</div> 
+            <div *ngIf="confirmPasswordError" class="error">{{ confirmPasswordError }}</div>
+            <div *ngIf="confirmPasswordGood" class="confirm">{{ confirmPasswordGood }}</div>
 
             <div class="btn">
             <button (click)="onSubmit()">Guardar nueva contraseña</button>

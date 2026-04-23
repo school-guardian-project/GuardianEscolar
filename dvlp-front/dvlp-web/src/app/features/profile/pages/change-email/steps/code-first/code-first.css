@@ -1,33 +1,220 @@
+.layout {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+app-nav-component {
+    flex: 0 0 auto;
+}
+
 main {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #ecf4fc;
+    box-sizing: border-box;
+}
+
+.mail {
+    color: white;
+    background-color: #1c54dc;
+    border-radius: 15px;
+    width: 55px;
+    height: 55px;
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: column;
-    padding: 100px 0;
-    color: var(--text-color);
+    font-size: 2.1rem;
+    margin-bottom: 20px;
 }
 
+.session-description {
+    color: white;
+    line-height: 1.5;
+    margin-bottom: 25px;
+    font-size: 1.1rem;
+}
+
+.container-session {
+    display: flex;
+    flex-direction: row;
+    width: 60%;
+    height: 100%;
+    max-height: 560px;
+}
+
+.sesion-left {
+    width: 40%;
+    justify-content: space-between;
+    border-top-left-radius: 30px;
+    border-bottom-left-radius: 30px;
+    background: linear-gradient(135deg, #102d7d, #366fea);
+}
+
+.sesion-right {
+    width: 60%;
+    justify-content: space-between;
+    background-color: white;
+    border-bottom-right-radius: 30px;
+    border-top-right-radius: 30px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.sesion-left,
+.sesion-right {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+.panel-sesion {
+    color: white;
+}
+
+.edu {
+    border-radius: 15px;
+    background-color: #346ce4;
+    padding: 20px;
+    color: white;
+    line-height: 1.5;
+}
+
+.spacer {
+    flex: 1;
+}
+.aplycolor {
+    color: black;
+}
+
+h2,
 h1 {
     font-size: 2.5rem;
+    line-height: 1;
+    margin-bottom: 10px;
+}
+
+.login-description {
+    background-color: #D4EAFF;
+    color: #366fea;
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 50px;
+    word-wrap: break-word;
+    line-height: 1.4;
+    max-width: 360px;
+    margin-top: 10px;
+}
+.login-description mat-icon {
+    flex-shrink: 0;
+}
+mat-icon {
+    margin-right: 14px;
+}
+b {
+    margin-left: 4px;
+}
+
+label {
+    margin-bottom: 7px;
+    font-size: 1rem;
 }
 
 p {
-    font-size: 1.2rem;
+    color: #68768e;
+    margin-bottom: 50px;
+    text-align: center;
 }
 
 button {
-    margin-top: 30px;
-    background-color: #048c04;
+    width: 50%;
     color: white;
-    border-radius: 10px;
-    width: 170px;
-    height: 45px;
-    cursor: pointer;
+    background-color: #366fea;
+    border-radius: 50px;
+    height: 40px;
+    font-size: 1.2rem;
     border: none;
-    font-size: 1.5rem;
+    cursor: pointer;
+    margin-bottom: 20px;
 }
 
 .btn {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.return {
+    color: #366fea;
+    text-align: center;
+    cursor: pointer;
+}
+
+.bar {
+    background-color: #366fea;
+}
+.bar3,
+.bar4 {
+    background-color: #dcecfc;
+}
+.bars {
+    border-radius: 5px;
+    width: 40px;
+    height: 3px;
+}
+.progres {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.reenviar {
+    color: #366fea;
+}
+
+.pin-inputs {
     display: flex;
     justify-content: center;
+    gap: 20px;
+    flex-direction: row;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.pin-input {
+    width: 50px;
+    height: 60px;
+    border-radius: 11px;
+    border: 1px solid #366fea;
+    text-align: center;
+    font-size: 1.5rem;
+    background-color: #D4EAFF;
+}
+
+.pin-input:focus {
+    outline: none;
+    border: 2px solid #366fea;
+}
+
+.error {
+    color: red;
+    text-align: center;
+}
+input {
+    transition: border 0.2s ease;
+}
+input.ng-invalid.ng-touched {
+    border: 2px red solid;
 }

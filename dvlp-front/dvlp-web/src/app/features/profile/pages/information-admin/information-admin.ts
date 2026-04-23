@@ -25,17 +25,21 @@ export class InformationAdmin {
 
   imageUrl: string | ArrayBuffer | null = null;
 
-onFileSelected(event: any) {
-  const file = event.target.files[0];
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
 
-  if (file) {
-    const reader = new FileReader();
+    if (file) {
+      const reader = new FileReader();
 
-    reader.onload = () => {
-      this.imageUrl = reader.result;
-    };
+      reader.onload = () => {
+        this.imageUrl = reader.result;
+      };
 
-    reader.readAsDataURL(file);
+      reader.readAsDataURL(file);
+    }
   }
-}
+
+  changeEmail() {
+    this.router.navigate(['admin/change-email/email']);
+  }
 }

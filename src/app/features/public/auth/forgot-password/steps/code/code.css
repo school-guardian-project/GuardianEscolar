@@ -102,10 +102,26 @@ h1 {
 }
 
 .login-description {
-    color: #68768e;
+    background-color: #D4EAFF;
+    color: #366fea;
+    padding: 15px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
     margin-bottom: 50px;
-    line-height: 1;
-    font-size: 1.1rem;
+    word-wrap: break-word;
+    line-height: 1.4;
+    max-width: 360px;
+    margin-top: 10px;
+}
+.login-description mat-icon {
+    flex-shrink: 0;
+}
+mat-icon {
+    margin-right: 14px;
+}
+b {
+    margin-left: 4px;
 }
 
 label {

@@ -24,7 +24,10 @@
         </span>
         <form action="">
           <h2>Ingresa el codigo</h2>
-          <div class="login-description">Ingresa el correo con el que te registraste</div>
+          <div class="login-description">
+            <mat-icon>mail</mat-icon> 
+            <span>Código enviado a <b> tu@correo.com</b>. Válido por 10 minutos.</span>
+          </div>
 
           <div class="pin-inputs">
             <input class="pin-input" type="text" maxlength="1" [(ngModel)]="pin" name="pin" (input)="pinError = ''" required>

@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { NavComponent } from '../../../../../../shared/components/navbar/nav-component/nav-component';
 import { FormsModule } from '@angular/forms';
 import { NgIf } from '@angular/common';

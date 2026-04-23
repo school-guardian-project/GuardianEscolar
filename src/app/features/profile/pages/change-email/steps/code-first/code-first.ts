@@ -1,23 +1,33 @@
 import { Component } from '@angular/core';
 import { NavComponent } from "../../../../../../shared/components/navbar/nav-component/nav-component";
-import { PinInput } from "../../../../../../shared/components/pin-input/pin-input";
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { NgIf } from '@angular/common';
+import { MatIcon } from '@angular/material/icon';
 
 @Component({
   selector: 'app-code-first',
-  imports: [NavComponent, PinInput],
+  imports: [NavComponent, FormsModule, NgIf, MatIcon],
   templateUrl: './code-first.html',
   styleUrl: './code-first.css',
 })
 export class CodeFirst {
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
-    
-  }
+  pinError: string = '';
+  pin: string = '';
+
+  constructor(private router: Router) {}
 
   onSubmit() {
-    this.router.navigate(['../reset'], { relativeTo: this.route });
+    this.pinError = '';
+
+    if (!this.pin) {
+      this.pinError = '*El codigo es requerido'
+    } else {
+      this.router.navigate(['../reset']);
+    }
+  }
+
+  return() {
+    this.router.navigate(['./email'])
   }
 }

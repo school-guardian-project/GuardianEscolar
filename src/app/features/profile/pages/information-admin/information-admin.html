@@ -5,7 +5,7 @@
     <button (click)="logout()" mat-icon-button>
       <mat-icon class="button-icon">logout</mat-icon>
     </button>
-    <h1 class="title">Guardian Escolar</h1>
+    <span class="title">Guardian Escolar</span>
     <div class="spacer"></div>
   </div>
 
@@ -24,12 +24,12 @@
           <h3 class="subtitle">Información del Administrador</h3>
 
           <div class="header-actions">
-            <button class="icon-action" title="Idioma">
+            <div class="icon-action" ()click="changeLanguage()=true" title="Idioma">
               <mat-icon>translate</mat-icon>
-            </button>
-            <button class="icon-action" title="Tema">
+            </div>
+            <div class="icon-action" ()click="changeTheme()=true" title="Tema">
               <mat-icon>palette</mat-icon>
-            </button>
+            </div>
           </div>
         </div>
 

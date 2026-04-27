@@ -1,50 +1,18 @@
-<div class="layout">
-  <app-nav-component></app-nav-component>
+<app-change-information iconHead="mail" title="Cambia tu correo"
+  sessionDescription="Te enviaremos un código de verificación a tu correo registrado."
+  titleStep="Cambiar correo" loginDescription="Ingresa el correo con el que te registraste"
+  buttonText="Validar" returnStep="Volver al panel de información" (return)="return()"
+  [showProgress]="true" [currentStep]="1" stepText="1 de 4" (submit)="onSubmit()">
 
-  <main>
-    <div class="container-session">
-      <div class="sesion-left">
-        <mat-icon class="lock">lock</mat-icon>
-
-        <h1 class="panel-sesion">Recupera tu acceso</h1>
-
-        <p class="session-description">Te enviaremos un código de verificación a tu correo registrado.</p>
-
-        <span class="spacer"></span>
-
-        <div class="edu"><span class="aplycolor">¿Necesitas ayuda? Escríbenos a</span> guardianescolar0@gmail.com <span class="aplycolor">o llama al</span>  +57 314 4308274</div>
-      </div>
-
-      <div class="sesion-right">
-        <span class="progres">
-          <div class="bars bar"></div>
-          <div class="bars bar2"></div>
-          <div class="bars bar3"></div>
-          <div class="bars bar4"></div>
-          <div class="color">Paso 1 de 4</div>
-        </span>
-        <form action="">
-          <h2>Actualizar correo electrónico</h2>
-          <div class="login-description">Actualizar correo electronico</div>
-
-          <label for="">Correo electrónico</label>
-          <input 
-            type="email" 
-            [(ngModel)]="email"
-            name="email"
-            placeholder="tu@correo.com" 
-            required
-            (input)="emailError = ''">
-          <div *ngIf="emailError" class="error">{{ emailError }}</div>
-          <p>Recibiras un codifo de 6 digitos</p>
-
-          <div class="btn">
-            <button (click)="onSubmit()">Enviar codigo</button>
-          </div>
-        </form>
-
-        <div class="return" (click)="adminInfo()">← Volver panel de informacion</div>
-      </div>
-    </div>
-  </main>
-</div>
+  <form action="" [formGroup]="form">
+    <label for="email">Correo electrónico</label>
+    <input type="email" id="email" formControlName="email">
+    @if (form.get('email')?.touched && form.get('email')?.invalid) {
+      <small class="error">*Debe ser un email valido</small>
+    } @if (form.get('email')?.touched && form.get('email')?.errors?.['required']) {
+      <small class="error">*El email es requerido</small>
+    }
+    <p>Recibirás un código de 6 dígitos</p>
+  </form>
+  
+</app-change-information>

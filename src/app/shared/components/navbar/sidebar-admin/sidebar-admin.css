@@ -1,7 +1,7 @@
 /* SIDEBAR IZQUIERDO */
 .sidebar {
   width: 200px;
-  background-color: var(--color-navbar-admin);
+  background-color: var(--color-navbar); /* 🔥 usa variable */
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -12,17 +12,16 @@
   padding: 20px 10px;
 }
 
-.admin-section h3 {
-  font-size: 10px;
-  font-weight: bold;
-  color: rgba(255, 255, 255, 0.35);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  margin: 0 0 10px 8px;
-  padding: 0;
-}
+  .admin-section h3 {
+    font-size: 10px;
+    font-weight: bold;
+    color: rgba(255, 255, 255, 0.4);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 0 0 10px 8px;
+  }
 
-/* ITEMS DEL MENÚ */
+/* ITEMS */
 .menu-item {
   display: flex;
   align-items: center;
@@ -30,64 +29,66 @@
   padding: 9px 10px;
   font-size: 13px;
   font-weight: 400;
-  color: rgba(255, 255, 255, 0.5) !important;
+  color: rgba(255, 255, 255, 0.6) !important;
   text-decoration: none;
   border-radius: 8px;
   margin-bottom: 2px;
   transition: background 0.2s ease, color 0.2s ease;
 }
 
-.menu-item mat-icon {
-  font-size: 18px;
-  width: 18px;
-  height: 18px;
-  color: rgba(255, 255, 255, 0.5);
-  transition: color 0.2s ease;
-}
+  .menu-item mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+    color: rgba(255, 255, 255, 0.6);
+    transition: color 0.2s ease;
+  }
 
-.menu-item:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.85) !important;
-}
+  .menu-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: white !important;
+  }
 
-.menu-item:hover mat-icon {
-  color: rgba(255, 255, 255, 0.85);
-}
+    .menu-item:hover mat-icon {
+      color: white;
+    }
 
-.menu-item.active {
-  background: #2D6BE4;
-  color: white !important;
-  font-weight: 500;
-}
 
-.menu-item.active mat-icon {
-  color: white;
-}
+  .menu-item.active {
+    background: rgba(255, 255, 255, 0.15); 
+    color: white !important;
+    font-weight: 500;
+  }
 
-/* SECCIÓN INFERIOR — perfil */
+    .menu-item.active mat-icon {
+      color: white;
+    }
+
+/* SECCIÓN INFERIOR */
 .bottom-section {
   margin-top: auto;
   padding: 12px 10px;
   border-top: 0.5px solid rgba(255, 255, 255, 0.08);
 }
 
-.bottom-section .menu-item {
-  background: rgba(255, 255, 255, 0.06);
-  color: rgba(255, 255, 255, 0.7) !important;
-  border-radius: 10px;
-  padding: 10px 12px;
-}
+  .bottom-section .menu-item {
+    background: rgba(255, 255, 255, 0.06);
+    color: rgba(255, 255, 255, 0.7) !important;
+    border-radius: 10px;
+    padding: 10px 12px;
+  }
 
-.bottom-section .menu-item mat-icon {
-  color: rgba(255, 255, 255, 0.7);
-}
+    .bottom-section .menu-item mat-icon {
+      color: rgba(255, 255, 255, 0.7);
+    }
 
-.bottom-section .menu-item:hover {
-  background: rgba(255, 255, 255, 0.12);
-  color: white !important;
-}
+    .bottom-section .menu-item:hover {
+      background: rgba(255, 255, 255, 0.12);
+      color: white !important;
+    }
 
-.bottom-section .menu-item.active {
-  background: #2D6BE4;
-  color: white !important;
-}
+
+    .bottom-section .menu-item.active {
+      background: rgba(255, 255, 255, 0.2);
+      color: white !important;
+    }

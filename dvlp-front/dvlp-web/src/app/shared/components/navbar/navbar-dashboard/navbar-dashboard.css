@@ -1,21 +1,24 @@
-
 mat-toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
+
+/* Toolbar principal */
 .custom-toolbar {
   background-color: var(--color-navbar);
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
   height: 56px;
 }
 
+/* Título */
 .title {
   font-size: 16px;
   font-weight: 500;
-  color: white;
+  color: white; 
 }
 
+/* Contenedores */
 .toolbar-start,
 .toolbar-end {
   display: flex;
@@ -26,17 +29,25 @@ mat-toolbar {
   flex: 1;
 }
 
+/* Botones */
 button {
   display: flex;
   align-items: center;
   margin: 0 4px;
-  color: rgba(255, 255, 255, 0.6) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
+  transition: color 0.2s ease;
 }
 
-button:hover {
-  color: white !important;
-}
+  button:hover {
+    color: white !important;
+  }
 
+/* Iconos */
 mat-icon {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s ease;
+}
+
+button:hover mat-icon {
+  color: white;
 }

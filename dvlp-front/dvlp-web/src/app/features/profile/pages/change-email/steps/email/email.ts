@@ -1,32 +1,32 @@
 import { Component } from '@angular/core';
-import { NavComponent } from "../../../../../../shared/components/navbar/nav-component/nav-component";
 import { Router } from '@angular/router';
-import { MatIcon, MatIconModule } from "@angular/material/icon";
-import { FormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangeInformation } from "../../../../../../shared/components/change-information/change-information/change-information";
 
 @Component({
   selector: 'app-email',
-  imports: [NavComponent, MatIcon, MatIconModule, FormsModule, NgIf],
+  imports: [ChangeInformation, ReactiveFormsModule],
   templateUrl: './email.html',
   styleUrl: './email.css',
 })
 export class Email {
-  email: string = '';
-  emailError: string = '';
-  constructor(private router: Router) {}
+  form: FormGroup;
+
+  constructor(private router: Router, private fb: FormBuilder) {
+    this.form = this.fb.group({
+      email: ['', [Validators.required, Validators.email]]
+    });
+  }
 
   onSubmit() {
-    this.emailError = '';
-    
-    if (!this.email) {
-      this.emailError = '*El correo es requerido'
+    if (this.form.valid) {
+      this.router.navigate(['/admin/change-email/code-first']);
     } else {
-      this.router.navigate(['../code-first']);
+      this.form.markAllAsTouched();
     }
   }
 
-  adminInfo() {
-    this.router.navigate(['/admin/informacion'])
+  return() {
+    this.router.navigate(['/admin/informacion']);
   }
 }

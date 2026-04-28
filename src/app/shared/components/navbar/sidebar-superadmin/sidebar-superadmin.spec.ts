@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NavbarGestion } from './navbar-gestion';
+import { SidebarSuperadmin } from './sidebar-superadmin';
 
-describe('NavbarGestion', () => {
-  let component: NavbarGestion;
-  let fixture: ComponentFixture<NavbarGestion>;
+describe('SidebarSuperadmin', () => {
+  let component: SidebarSuperadmin;
+  let fixture: ComponentFixture<SidebarSuperadmin>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NavbarGestion],
+      imports: [SidebarSuperadmin],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(NavbarGestion);
+    fixture = TestBed.createComponent(SidebarSuperadmin);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

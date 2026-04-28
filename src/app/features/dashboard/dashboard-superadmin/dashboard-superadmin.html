@@ -1,157 +1,78 @@
-<app-navbar-dashboard></app-navbar-dashboard>
-<div class="content-wrapper">
+<div class="container">
+    <!-- NAVBAR -->
+    <app-navbar-dashboard></app-navbar-dashboard>
 
-    <!-- Sidebar Izquierdo --> 
-    <div class="sidebar">
-        <div class="admin-section">
-            <h3>Administrar</h3>
-            <div class="menu-item">
-                Administradores
-                <mat-icon>supervisor_account</mat-icon>
-            </div>
-            <div class="menu-item">
-                Escuelas <mat-icon>school</mat-icon>
-            </div>
-        </div>
-    </div>
+    <div class="content-wrapper">
+        <!-- SIDEBAR IZQUIERDO -->
+        <app-sidebar-superadmin></app-sidebar-superadmin>
 
-    <!-- Contenido Principal -->
 
-    <div class="main">
-        <h1 class="welcome">¡Bienvenido!</h1>
-        <p class="welcome-role">superadmin</p>
+        <div class="main">
+            <div class="main-content">
+                <ng-container *ngIf="!isChildRouteActive()">
+                <h1 class="welcome">Bienvenido</h1>
+                <p class="welcome-role">Panel de administración · Guardian Escolar</p>
 
-        <div class="comments-section">
-            <div class="comments-container" id="commentsContainer">
-                <h2>Últimos comentarios</h2>
-                <!-- commenta 1 -->
-                <div class="comment-card">
-                    <div class="comment-icon">
-                        <mat-icon>account_circle</mat-icon>
+                <div class="metrics">
+                    <div class="metric-card">
+                        <p class="metric-label">ADMINISTRADORES</p>
+                        <p class="metric-value">248</p>
+                        <p class="metric-sub">+12 este mes</p>
                     </div>
-                    <div class="comment-content">
-                        <div class="comment-title">Mal funcionamiento</div>
-                        <div class="comment-time">6:45 am</div>
-                        <div class="comment-info">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut ea saepe, recusandae minima
-                            harum quidem incidunt labore, at assumenda officia ullam minus provident voluptates corporis
-                            atque! Labore animi error quod.
-                        </div>
+                    <div class="metric-card">
+                        <p class="metric-label">COLEGIOS REGISTRADOS</p>
+                        <p class="metric-value">18</p>
+                        <p class="metric-sub">Todas operando</p>
                     </div>
-                    <div class="bookmark">
-                        <button mat-icon-button>
-                            <mat-icon>bookmark</mat-icon>
-                        </button>
-                    </div>
-                </div>
-                <div class="comment-card">
-                    <div class="comment-icon">
-                        <mat-icon>account_circle</mat-icon>
-                    </div>
-                    <div class="comment-content">
-                        <div class="comment-title">Mal funcionamiento</div>
-                        <div class="comment-time">6:45 am</div>
-                        <div class="comment-info">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut ea saepe, recusandae minima
-                            harum quidem incidunt labore, at assumenda officia ullam minus provident voluptates corporis
-                            atque! Labore animi error quod.
-                        </div>
-                    </div>
-                    <div class="bookmark">
-                        <button mat-icon-button>
-                            <mat-icon>bookmark</mat-icon>
-                        </button>
-                    </div>
-                </div>
-                <div class="comment-card">
-                    <div class="comment-icon">
-                        <mat-icon>account_circle</mat-icon>
-                    </div>
-                    <div class="comment-content">
-                        <div class="comment-title">Mal funcionamiento</div>
-                        <div class="comment-time">6:45 am</div>
-                        <div class="comment-info">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut ea saepe, recusandae minima
-                            harum quidem incidunt labore, at assumenda officia ullam minus provident voluptates corporis
-                            atque! Labore animi error quod.
-                        </div>
-                    </div>
-                    <div class="bookmark">
-                        <button mat-icon-button>
-                            <mat-icon>bookmark</mat-icon>
-                        </button>
-                    </div>
-                </div>
-                <div class="comment-card">
-                    <div class="comment-icon">
-                        <mat-icon>account_circle</mat-icon>
-                    </div>
-                    <div class="comment-content">
-                        <div class="comment-title">Mal funcionamiento</div>
-                        <div class="comment-time">6:45 am</div>
-                        <div class="comment-info">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut ea saepe, recusandae minima
-                            harum quidem incidunt labore, at assumenda officia ullam minus provident voluptates corporis
-                            atque! Labore animi error quod.
-                        </div>
-                    </div>
-                    <div class="bookmark">
-                        <button mat-icon-button>
-                            <mat-icon>bookmark</mat-icon>
-                        </button>
-                    </div>
-                </div>
-                <div class="comment-card">
-                    <div class="comment-icon">
-                        <mat-icon>account_circle</mat-icon>
-                    </div>
-                    <div class="comment-content">
-                        <div class="comment-title">Mal funcionamiento</div>
-                        <div class="comment-time">6:45 am</div>
-                        <div class="comment-info">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut ea saepe, recusandae minima
-                            harum quidem incidunt labore, at assumenda officia ullam minus provident voluptates corporis
-                            atque! Labore animi error quod.
-                        </div>
-                    </div>
-                    <div class="bookmark">
-                        <button mat-icon-button>
-                            <mat-icon>bookmark</mat-icon>
-                        </button>
-                    </div>
-                </div>
-                <div class="comment-card">
-                    <div class="comment-icon">
-                        <mat-icon>account_circle</mat-icon>
-                    </div>
-                    <div class="comment-content">
-                        <div class="comment-title">Mal funcionamiento</div>
-                        <div class="comment-time">6:45 am</div>
-                        <div class="comment-info">
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut ea saepe, recusandae minima
-                            harum quidem incidunt labore, at assumenda officia ullam minus provident voluptates corporis
-                            atque! Labore animi error quod.
-                        </div>
-                    </div>
-                    <div class="bookmark">
-                        <button mat-icon-button>
-                            <mat-icon>bookmark</mat-icon>
-                        </button>
+                    <div class="metric-card">
+                        <p class="metric-label">COMENTARIOS HOY</p>
+                        <p class="metric-value danger">3</p>
+                        <p class="metric-sub danger">Requieren atención</p>
                     </div>
                 </div>
 
+                <div class="alerts-section">
+                    <div class="alerts-container">
+                        <h2>Últimas alertas</h2>
 
+                        <div class="alert-card">
+                            <div class="alert-icon">
+                                <mat-icon>person</mat-icon>
+                            </div>
+                            <div class="alert-content">
+                                <div class="alert-title">Bus fuera de ruta</div>
+                                <div class="alert-time">6:45 am</div>
+                                <div class="alert-info">
+                                    Conductor Jose Suarez · Ruta LOL85 · PP8 52F
+                                </div>
+                            </div>
+                            <button mat-icon-button>
+                                <mat-icon>bookmark_border</mat-icon>
+                            </button>
+                        </div>
 
+                        <div class="alert-card warning">
+                            <div class="alert-icon">
+                                <mat-icon>person</mat-icon>
+                            </div>
+                            <div class="alert-content">
+                                <div class="alert-title">Frenó brusco</div>
+                                <div class="alert-time">6:45 am</div>
+                                <div class="alert-info">
+                                    Conductor Juan Ramirez · Ruta AB123 · 111ZZZ
+                                </div>
+                            </div>
+                            <button mat-icon-button>
+                                <mat-icon>bookmark_border</mat-icon>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                </ng-container>
+
+                <router-outlet></router-outlet>
             </div>
         </div>
+
+
     </div>
-
-
-    <!-- Barra lateral derecha -->
-    <div class="right-sidebar">
-        <button mat-icon-button>
-            <mat-icon>chat_paste_go</mat-icon>
-        </button>
-    </div>
-
-</div>

@@ -10,7 +10,9 @@ export type CardType =
   | 'familia'
   | 'bus'
   | 'parada'
-  | 'ruta';
+  | 'ruta'
+  | 'admins'
+  | 'schools';
 
 // Campos que se muestran en cada item de la lista
 export interface ItemField {
@@ -22,22 +24,26 @@ export interface ItemField {
 // Icono del avatar por tipo
 const ICONS: Record<CardType, string> = {
   estudiante: 'person',
-  acudiente:  'escalator_warning',
-  conductor:  'engineering',
-  familia:    'family_restroom',
-  bus:        'directions_bus',
-  parada:     'location_on',
-  ruta:       'route',
+  acudiente: 'escalator_warning',
+  conductor: 'engineering',
+  familia: 'family_restroom',
+  bus: 'directions_bus',
+  parada: 'location_on',
+  ruta: 'route',
+  schools: 'school',
+  admins: 'admin_panel_settings',
 };
 
 const TITLES: Record<CardType, string> = {
   estudiante: 'Estudiantes registrados',
-  acudiente:  'Acudientes registrados',
-  conductor:  'Conductores registrados',
-  familia:    'Familias registradas',
-  bus:        'Buses registrados',
-  parada:     'Paradas registradas',
-  ruta:       'Rutas registradas',
+  acudiente: 'Acudientes registrados',
+  conductor: 'Conductores registrados',
+  familia: 'Familias registradas',
+  bus: 'Buses registrados',
+  parada: 'Paradas registradas',
+  ruta: 'Rutas registradas',
+  admins: 'Administradores registrados',
+  schools: 'Escuelas registradas',
 };
 
 // Qué campos muestra cada item en la lista
@@ -45,7 +51,7 @@ const ITEM_FIELDS: Record<CardType, ItemField[]> = {
   estudiante: [
     { key: 'nombre' },
     { key: 'identificacion' },
-    { key: 'curso',    halfWidth: true },
+    { key: 'curso', halfWidth: true },
     { key: 'telefono', halfWidth: true },
   ],
   acudiente: [
@@ -67,20 +73,30 @@ const ITEM_FIELDS: Record<CardType, ItemField[]> = {
   bus: [
     { key: 'matricula', label: 'Placa' },
     { key: 'conductor', label: 'Nombre conductor' },
-    { key: 'marca',     halfWidth: true },
-    { key: 'modelo',    halfWidth: true },
+    { key: 'marca', halfWidth: true },
+    { key: 'modelo', halfWidth: true },
   ],
   parada: [
     { key: 'nombre' },
     { key: 'direccion', label: 'Dirección' },
-    { key: 'latitud',   halfWidth: true },
-    { key: 'longitud',  halfWidth: true },
+    { key: 'latitud', halfWidth: true },
+    { key: 'longitud', halfWidth: true },
   ],
   ruta: [
     { key: 'nombre' },
-    { key: 'destino',    label: 'Destino final' },
+    { key: 'destino', label: 'Destino final' },
     { key: 'horaInicio', label: 'Hora inicio', halfWidth: true },
-    { key: 'horaFin',    label: 'Hora final',  halfWidth: true },
+    { key: 'horaFin', label: 'Hora final', halfWidth: true },
+  ],
+  admins: [
+    { key: 'nombre' },
+    { key: 'identificacion' },
+    { key: 'correo', label: 'Correo electrónico', halfWidth: true },
+    { key: 'telefono', halfWidth: true },
+  ],
+  schools: [
+    { key: 'nombre' },
+    { key: 'direccion', label: 'Dirección' },
   ],
 };
 
@@ -116,6 +132,14 @@ const MOCK_DATA: Record<CardType, any[]> = {
   ruta: [
     { nombre: 'Nombre', destino: 'Destino final', horaInicio: 'Hora inicio', horaFin: 'Hora final' },
     { nombre: 'Nombre', destino: 'Destino final', horaInicio: 'Hora inicio', horaFin: 'Hora final' },
+  ],
+  schools: [
+    { nombre: 'Nombre', direccion: 'Dirección' },
+    { nombre: 'Nombre', direccion: 'Dirección' },
+  ],
+  admins: [
+    { nombre: 'Nombre completo', identificacion: 'Identificación', correo: 'Correo electrónico', telefono: 'Teléfono' },
+    { nombre: 'Nombre completo', identificacion: 'Identificación', correo: 'Correo electrónico', telefono: 'Teléfono' },
   ],
 };
 

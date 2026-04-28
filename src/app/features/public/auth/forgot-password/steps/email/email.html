@@ -27,15 +27,22 @@
           <div class="login-description">Ingresa el correo con el que te registraste</div>
 
           <label for="">Correo electrónico</label>
-          <input type="email" placeholder="tu@correo.com" required>
+          <input 
+            type="email" 
+            [(ngModel)]="email"
+            name="email"
+            placeholder="tu@correo.com" 
+            required
+            (input)="emailError = ''">
+          <div *ngIf="emailError" class="error">{{ emailError }}</div>
           <p>Recibiras un codifo de 6 digitos</p>
 
           <div class="btn">
-            <button>Enviar codigo</button>
+            <button (click)="onSubmit()">Enviar codigo</button>
           </div>
-
-          <div class="return">← Volver al inicio de sesion</div>
         </form>
+
+        <div class="return" (click)="login()">← Volver al inicio de sesion</div>
       </div>
     </div>
   </main>

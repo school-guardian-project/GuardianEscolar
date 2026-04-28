@@ -21,7 +21,7 @@
   flex: 1;
   font-size: 16px;
   font-weight: 500;
-  color: #ffffff;
+  color: white;
   text-align: center;
 }
 
@@ -56,7 +56,7 @@
   background: var(--card-bg);
   border-radius: 9px;
   padding: 36px 40px;
-  box-shadow: 0 4px 24px rgba(26, 46, 74, 0.08);
+  box-shadow: var(--shadow-modal);
   border: 0.5px solid var(--border-color);
 }
 
@@ -86,7 +86,7 @@
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  border: 0.5px solid var(--border-color);
+  border: 0.5px solid var(--border-icon);
   background: var(--bg-color);
   display: flex;
   align-items: center;
@@ -99,8 +99,13 @@
   font-size: 19px;
   width: 19px;
   height: 19px;
-  color: var(--text-color);
+  color: var(--color-icon) !important;
   margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transform: translateY(1px);
 }
 
 .icon-action:hover {
@@ -119,7 +124,7 @@
   align-items: flex-start;
 }
 
-/* PERFIL IZQUIERDO */
+/* PERFIL */
 .profile-container {
   display: flex;
   flex-direction: column;
@@ -138,8 +143,9 @@
   width: 120px !important;
   height: 120px !important;
   color: var(--border-color) !important;
-  display: block;
-  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .avatar-edit-btn {
@@ -155,19 +161,19 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.2s ease;
 }
 
 .avatar-edit-btn mat-icon {
   font-size: 15px !important;
-  width: 15px !important;
-  height: 15px !important;
   color: white !important;
-  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 .avatar-edit-btn:hover {
-  background: var(--hover-color);
+  filter: brightness(0.95);
 }
 
 .user-name {
@@ -175,7 +181,6 @@
   font-weight: 600;
   color: var(--text-color);
   text-align: center;
-  margin: 0;
 }
 
 .user-role-badge {
@@ -185,6 +190,7 @@
   background: var(--bg-color);
   border-radius: 20px;
   padding: 3px 12px;
+  border: 0.5px solid var(--border-color);
 }
 
 .user-meta {
@@ -201,26 +207,24 @@
   gap: 6px;
   font-size: 0.82rem;
   color: var(--text-secondary);
-  margin: 0;
 }
 
 .user-meta-item mat-icon {
   font-size: 15px !important;
-  width: 15px !important;
-  height: 15px !important;
   color: var(--text-secondary) !important;
-  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* DIVISOR VERTICAL */
+/* DIVISOR */
 .divider-vertical {
   width: 0.5px;
   background: var(--border-color);
   align-self: stretch;
-  flex-shrink: 0;
 }
 
-/* INFO DERECHA */
+/* INFO */
 .section-info {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -248,48 +252,44 @@
   font-weight: 600;
   color: var(--title-color);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin: 0;
 }
 
 .info-label mat-icon {
   font-size: 14px !important;
-  width: 14px !important;
-  height: 14px !important;
-  color: var(--title-color) !important;
-  margin: 0;
+  color: var(--text-secondary) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .info-value {
   font-size: 0.95rem;
   color: var(--text-color);
-  margin: 0;
-  font-weight: 400;
   padding: 8px 0;
   border-bottom: 0.5px solid var(--border-color);
 }
 
-/* BOTÓN EDITAR */
+/* EDIT */
 .edit-btn {
   width: 28px;
   height: 28px;
   border-radius: 7px;
-  border: 0.5px solid var(--border-color);
+  border: 0.5px solid var(--border-icon);
   background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
 }
 
 .edit-btn mat-icon {
   font-size: 14px !important;
-  width: 14px !important;
-  height: 14px !important;
-  color: var(--text-color) !important;
-  margin: 0;
+  color: var(--color-icon) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transform: translateY(1px);
 }
 
 .edit-btn:hover {
@@ -301,18 +301,20 @@
   color: var(--hover-color) !important;
 }
 
+/* AJUSTE GLOBAL ICONOS */
+mat-icon {
+  vertical-align: middle;
+}
+
 /* RESPONSIVE */
 @media (max-width: 768px) {
   .information-container {
     width: 100%;
     padding: 16px;
-    min-width: 0;
   }
 
   .card {
-    width: 100%;
     max-width: 100%;
-    margin: 0;
     border-radius: 12px;
   }
 

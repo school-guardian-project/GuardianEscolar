@@ -187,8 +187,8 @@
 }
 
 .icon-circle mat-icon {
-  font-size: 20px;
-  color: var(--text-color); 
+  font-size: 24px;
+  color: var(--color-icon); 
 }
 
 .icon-circle:hover {

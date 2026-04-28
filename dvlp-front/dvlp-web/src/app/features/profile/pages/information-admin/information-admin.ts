@@ -5,7 +5,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { SidebarAdmin } from '../../../../shared/components/navbar/sidebar-admin/sidebar-admin';
 import { Themes } from '../../../../shared/components/modal/themes/themes';
 import { Router } from '@angular/router';
-import { NgIf } from '@angular/common';
+import { NgIf } from '@angular/common'; 
+import { NavbarManage } from '../../../../shared/components/navbar/navbar-manage/navbar-manage';
 
 @Component({
   selector: 'app-information-admin',
@@ -16,7 +17,8 @@ import { NgIf } from '@angular/common';
     MatIconModule,
     SidebarAdmin,
     Themes,
-    NgIf
+    NgIf,
+    NavbarManage,
   ],
   templateUrl: './information-admin.html',
   styleUrls: ['./information-admin.css'],
@@ -29,10 +31,6 @@ export class InformationAdmin {
   imageUrl: string | ArrayBuffer | null = null;
 
   constructor(private router: Router) { }
-
-  logout() {
-    this.router.navigate(['/dashboard-admin']);
-  }
 
   onFileSelected(event: any) {
     const file = event.target.files[0];

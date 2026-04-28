@@ -1,56 +1,54 @@
-
+/* Toolbar principal */
 .custom-toolbar {
   background-color: var(--color-navbar);
   border-bottom: 0.5px solid rgba(255, 255, 255, 0.08);
   height: 56px;
-
-}
-.title {
-    font-size: 24px;
-    font-weight: bold;
-    color: #000;
-    padding-right: 120px;
-}
-mat-toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
 }
 
-.title {
-  font-size: 16px;
-  font-weight: 500;
-  color: white;
-  padding-right: 0;
-}
-
+/* Contenedor */
 mat-toolbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
+/* Título */
+.title {
+  font-size: 16px;
+  font-weight: 500;
+  color: white;
+}
+
+/* Sección izquierda */
 .toolbar-start {
   display: flex;
   align-items: center;
 }
 
+/* Espaciador */
 .spacer {
   flex: 1;
 }
 
+/* Botones */
 button {
   display: flex;
   align-items: center;
   margin: 0 4px;
-  color: rgba(255, 255, 255, 0.6) !important;
+  color: rgba(255, 255, 255, 0.7) !important;
   transition: color 0.2s ease;
 }
 
-button:hover {
-  color: white !important;
+  button:hover {
+    color: white !important;
+  }
+
+/* Iconos */
+mat-icon {
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s ease;
 }
 
-mat-icon {
-  color: rgba(255, 255, 255, 0.6);
+button:hover mat-icon {
+  color: white;
 }

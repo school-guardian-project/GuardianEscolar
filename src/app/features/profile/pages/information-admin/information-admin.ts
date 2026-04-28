@@ -47,4 +47,8 @@ export class InformationAdmin {
       reader.readAsDataURL(file);
     }
   }
+
+  changeEmail() {
+    this.router.navigate(['admin/change-email/email']);
+  }
 }

@@ -10,8 +10,10 @@ import { ChangeInformation } from "../../../../../../shared/components/change-in
   styleUrl: './email.css',
 })
 export class Email {
+  // Represena un grupo de contenido dentro de un formulario, un objeto que representa todo el formulario
   form: FormGroup;
 
+  
   constructor(private router: Router, private fb: FormBuilder) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]]

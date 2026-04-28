@@ -1,33 +1,59 @@
 import { Component } from '@angular/core';
-import { NavComponent } from "../../../../../../shared/components/navbar/nav-component/nav-component";
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
-import { MatIcon } from '@angular/material/icon';
+import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule, FormArray } from '@angular/forms';
+import { ChangeInformation } from "../../../../../../shared/components/change-information/change-information/change-information";
+import { CommonModule } from '@angular/common';
+import { MatIcon } from "@angular/material/icon";
 
 @Component({
   selector: 'app-code-first',
-  imports: [NavComponent, FormsModule, NgIf, MatIcon],
+  imports: [ChangeInformation, ReactiveFormsModule, CommonModule, MatIcon],
   templateUrl: './code-first.html',
   styleUrl: './code-first.css',
 })
 export class CodeFirst {
-  pinError: string = '';
-  pin: string = '';
+  form: FormGroup
+  constructor(private router: Router, private fb: FormBuilder) {
+    this.form = this.fb.group({
+      pin: this.fb.array(
+        Array.from({ length: 6 }, () =>
+          this.fb.control('', [
+            Validators.required,
+            Validators.pattern('^[a-zA-Z0-9]$')
+          ])
+        )
+      )
+    })
+  }
 
-  constructor(private router: Router) {}
+  get pinControls() {
+    return this.form.get('pin') as any;
+  }
+
+  onInput(event: any, index: number) {
+    const value = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+
+    const control = this.pinControls.at(index);
+    control.setValue(value, { emitEvent: false });
+
+    // mover al siguiente input
+    if (value && index < 5) {
+      const inputs = document.querySelectorAll('input');
+      (inputs[index + 1] as HTMLElement)?.focus();
+    }
+  }
 
   onSubmit() {
-    this.pinError = '';
-
-    if (!this.pin) {
-      this.pinError = '*El codigo es requerido'
-    } else {
-      this.router.navigate(['../reset']);
+    const pin = this.pinControls.value.join('');
+    if (this.form.valid) {
+      this.router.navigate(['/admin/change-email/reset']);
+    }
+    else {
+      this.form.markAllAsTouched();
     }
   }
 
   return() {
-    this.router.navigate(['./email'])
+    this.router.navigate(['/admin/change-email/email'])
   }
 }

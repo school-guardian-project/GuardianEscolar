@@ -1,21 +1,15 @@
 <div class="layout">
 
   <!-- NAVBAR -->
-  <div class="navbar-information">
-    <button (click)="logout()" mat-icon-button>
-      <mat-icon class="button-icon">logout</mat-icon>
-    </button>
-    <h1 class="title">Guardian Escolar</h1>
-    <div class="spacer"></div>
-  </div>
+  <app-navbar-manage backRoute="/dashboard-admin"></app-navbar-manage>
 
   <!-- CONTENIDO PRINCIPAL -->
   <div class="main-container">
 
-    <!-- SIDEBAR IZQUIERDO -->
+    <!-- SIDEBAR -->
     <app-sidebar-admin></app-sidebar-admin>
 
-    <!-- CONTENIDO DERECHO -->
+    <!-- CONTENIDO -->
     <div class="information-container">
       <div class="card">
 
@@ -24,12 +18,15 @@
           <h3 class="subtitle">Información del Administrador</h3>
 
           <div class="header-actions">
-            <button class="icon-action" title="Idioma">
+            <!-- Idioma -->
+            <div class="icon-action" (click)="changeLanguage = true" title="languaje">
               <mat-icon>translate</mat-icon>
-            </button>
-            <button class="icon-action" title="Tema">
+            </div>
+
+            <!-- Tema -->
+            <div class="icon-action" (click)="changeTheme = true" title="Theme">
               <mat-icon>palette</mat-icon>
-            </button>
+            </div>
           </div>
         </div>
 
@@ -39,13 +36,27 @@
           <!-- PERFIL -->
           <div class="profile-container">
             <div class="avatar-wrapper">
-              <mat-icon class="photo-icon">account_circle</mat-icon>
 
+              <!-- Imagen o icono -->
+              <ng-container *ngIf="imageUrl; else defaultAvatar">
+                <img [src]="imageUrl" class="avatar-img" />
+              </ng-container>
+
+              <ng-template #defaultAvatar>
+                <mat-icon class="photo-icon">account_circle</mat-icon>
+              </ng-template>
+
+              <!-- Botón editar -->
               <button class="avatar-edit-btn" (click)="fileInput.click()" type="button">
                 <mat-icon>photo_camera</mat-icon>
               </button>
 
-              <input type="file" #fileInput hidden accept="image/*" (change)="onFileSelected($event)">
+              <!-- Input oculto -->
+              <input type="file"
+                     #fileInput
+                     hidden
+                     accept="image/*"
+                     (change)="onFileSelected($event)">
             </div>
 
             <p class="user-name">Nombre del Administrador</p>
@@ -73,7 +84,7 @@
                 <p class="info-label">
                   <mat-icon>email</mat-icon> Correo electrónico
                 </p>
-                <button class="edit-btn">
+                <button class="edit-btn" (click)="changeEmail()">
                   <mat-icon>edit</mat-icon>
                 </button>
               </div>
@@ -144,3 +155,8 @@
 
   </div>
 </div>
+
+<!-- MODAL TEMA -->
+<app-themes *ngIf="changeTheme"
+            (close)="changeTheme = false">
+</app-themes>

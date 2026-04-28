@@ -9,12 +9,15 @@ export type RegisterType =
   | 'familia'
   | 'bus'
   | 'parada'
-  | 'ruta';
+  | 'ruta'
+  | 'admins'
+  | 'schools';
 
 export interface Field {
   label: string;
   name: string;
-  type: 'text' | 'date' | 'select' | 'tel' | 'email';
+  type: 'text' | 'date' | 'select' | 'tel' | 'email' | 'file';
+  acceppt?: 'image/*';
   placeholder?: string;
   options?: string[];
   halfWidth?: boolean;
@@ -91,6 +94,26 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { label: 'Lugar destino',             name: 'destino',    type: 'text' },
     { label: 'Sector',                    name: 'sectorRuta', type: 'select', options: [] },
   ],
+  admins: [
+    { label: 'Nombre',               name: 'nombre',         type: 'text' },
+    { label: 'Apellidos',            name: 'apellidos',      type: 'text' },
+    { label: 'Correo electrónico',   name: 'correo',         type: 'email' },
+    { label: 'Identificación',       name: 'identificacion', type: 'text' },
+    { label: 'Fecha nacimiento',     name: 'fechaNac',       type: 'date' },
+    { label: 'Teléfono',             name: 'telefono',       type: 'tel' },
+    { label: 'Dirección residencia', name: 'direccion',      type: 'text' },
+  ],
+  schools: [
+    { label: 'Nombre',               name: 'nombre',         type: 'text' },
+    { label: 'Logo',                 name: 'Logo',           type: 'file', acceppt: 'image/*'},
+    { label: 'Ciudad',               name: 'ciudad',         type: 'select', halfWidth: true, options: ['Neiva', 'Medellín', 'Bogotá', 'Cali'] },
+    { label: 'Dirección',            name: 'direccion',      type: 'text', halfWidth: true },
+    { label: 'Telefono',             name: 'telefono',       type: 'tel', halfWidth: true },
+    { label: 'Escolaridad',          name: 'escolaridad',    type: 'select', halfWidth: true, options: ['Primaria', 'Bachillerato', 'Primaria y Bachillerato'] },
+    { label: 'Correo Electronico',   name: 'correo',         type: 'text'},
+    { label: 'Pagina web',           name: 'web',            type: 'text' },
+    
+  ],
 
 };
 
@@ -102,6 +125,8 @@ const TITLES: Record<RegisterType, string> = {
   bus:        'Registrar buses',
   parada:     'Registrar paradas',
   ruta:       'Registrar ruta',
+  admins:     'Registrar administradores',
+  schools:    'Registrar escuelas',
 };
 
 @Component({

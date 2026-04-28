@@ -13,6 +13,10 @@ import { Buses } from './features/admin/routes-buses/pages/buses/buses';
 import { Paradas } from './features/admin/routes-buses/pages/paradas/paradas';
 import { Rutas } from './features/admin/routes-buses/pages/rutas/rutas';
 import { routes as forgotPasswordRoutes } from './features/public/auth/forgot-password/forgot-password.routes';
+import { ChangeEmail } from './features/profile/pages/change-email/change-email';
+import { routes as changeEmailRoutes } from './features/profile/pages/change-email/change-email.routes';
+import { Admins } from './features/superadmin/admins/pages/admins/admins';
+import { Schools } from './features/superadmin/schools/pages/schools/schools';  
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -41,6 +45,15 @@ export const routes: Routes = [
 
   /* INFORMATION */
   { path: 'admin/informacion', component: InformationAdmin },
+
+  { path: 'admin',
+    children: [
+      { path: 'change-email', component: ChangeEmail, children: changeEmailRoutes }
+    ]
+  },
+  /* SUPERADMIN */
+  { path: 'superadmin/admins', component: Admins },
+  { path: 'superadmin/schools', component: Schools },
 
   /* fallback */
   { path: '**', redirectTo: 'home' }

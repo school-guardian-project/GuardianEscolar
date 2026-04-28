@@ -3,7 +3,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
-import {  Input } from '@angular/core';
+import { Input } from '@angular/core';
+import { Location } from '@angular/common';
+
 
 @Component({
   selector: 'app-navbar-manage',
@@ -14,13 +16,11 @@ import {  Input } from '@angular/core';
 })
 export class NavbarManage {
 
-  @Input() backRoute: string = ''; 
+  @Input() backRoute: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private location: Location) { }
 
   goBack() {
-    if (this.backRoute) {
-      this.router.navigate([this.backRoute]);
-    }
+    this.location.back();
   }
 }

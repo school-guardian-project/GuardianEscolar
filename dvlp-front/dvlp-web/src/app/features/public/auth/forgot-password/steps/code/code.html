@@ -1,20 +1,55 @@
-<app-nav-component></app-nav-component>
+<div class="layout">
+  <app-nav-component></app-nav-component>
 
-<main>
-    <h1>Restablecer Contraseña</h1>
+  <main>
+    <div class="container-session">
+      <div class="sesion-left">
+        <mat-icon class="mail">mail</mat-icon>
 
-    <p>Hemos enviado un código de confirmación a su correo.</p>
-    <p>Por favor ingréselo</p>
+        <h1 class="panel-sesion">Revisa tu correo</h1>
 
-    <app-pin-input></app-pin-input>
+        <p class="session-description">Enviamos un código de 6 dígitos a tu correo. Puede tardar hasta 2 minutos</p>
 
-    <p>En caso de no haber recibido ningún código, solicítelo nuevamente</p>
+        <span class="spacer"></span>
 
-    <p>Nuevo código (20)</p>
+        <div class="edu">¿No lo encuentras? Revisa la carpeta de spam o <span class="aplycolor">reenvia el código.</span></div>
+      </div>
 
-    <div class="btn">
-      <button type="button" (click)="onSubmit()">Verificar</button>
+      <div class="sesion-right">
+        <span class="progres">
+          <div class="bars bar"></div>
+          <div class="bars bar"></div>
+          <div class="bars bar3"></div>
+          <div class="color">Paso 2 de 3</div>
+        </span>
+        <form action="">
+          <h2>Ingresa el codigo</h2>
+          <div class="login-description">
+            <mat-icon>mail</mat-icon> 
+            <span>Código enviado a <b> tu@correo.com</b>. Válido por 10 minutos.</span>
+          </div>
+
+          <div class="pin-inputs">
+            <input class="pin-input" type="text" maxlength="1" [(ngModel)]="pin" name="pin" (input)="pinError = ''" required>
+            <input class="pin-input" type="text" maxlength="1" [(ngModel)]="pin" name="pin" (input)="pinError = ''" required>
+            <input class="pin-input" type="text" maxlength="1" [(ngModel)]="pin" name="pin" (input)="pinError = ''" required>
+            <input class="pin-input" type="text" maxlength="1" [(ngModel)]="pin" name="pin" (input)="pinError = ''" required>
+            <input class="pin-input" type="text" maxlength="1" [(ngModel)]="pin" name="pin" (input)="pinError = ''" required>
+            <input class="pin-input" type="text" maxlength="1" [(ngModel)]="pin" name="pin" (input)="pinError = ''" required>
+          </div>
+          <div *ngIf="pinError" class="error">{{ pinError }}</div>
+
+
+          
+          <p>¿No recibiste el codigo? <span class="reenviar">Reenviar (20s)</span></p> 
+
+          <div class="btn">
+            <button (click)="onSubmit()">Validar</button>
+          </div>
+        </form>
+
+        <div class="return" (click)="login()">← Volver al inicio de sesion</div>
+      </div>
     </div>
-</main>
-
-<app-footer></app-footer>
+  </main>
+</div>

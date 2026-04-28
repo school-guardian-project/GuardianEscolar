@@ -12,7 +12,7 @@
 
 /* MODAL */
 .modal {
-  background: white;
+  background: var(--modal-bg);
   border-radius: 16px;
   padding: 32px 28px 24px;
   width: 100%;
@@ -29,6 +29,7 @@
     opacity: 0;
     transform: translateY(16px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -43,7 +44,7 @@
 .modal__title {
   font-size: 1.2rem;
   font-weight: 600;
-  color: #1A2E4A;
+  color: var(--modal-title);
   margin: 0;
 }
 
@@ -59,31 +60,31 @@
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: #EFF6FF;
-  border: 2px solid #BFDBFE;
+  background: var(--bg-color);
+  border: 2px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 4px;
 }
 
-.modal__logo mat-icon {
-  font-size: 36px;
-  width: 36px;
-  height: 36px;
-  color: #2D6BE4;
-}
+  .modal__logo mat-icon {
+    font-size: 36px;
+    width: 36px;
+    height: 36px;
+    color: var(--color-navbar);
+  }
 
 .modal__school-name {
   font-size: 1rem;
   font-weight: 600;
-  color: #1A2E4A;
+  color: var(--title-color);
   margin: 0;
 }
 
 .modal__school-type {
   font-size: 0.8rem;
-  color: #64748B;
+  color: var(--text-secondary);
   margin: 0;
 }
 
@@ -92,8 +93,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
-  border-top: 0.5px solid #E2E8F0;
-  border-bottom: 0.5px solid #E2E8F0;
+  border-top: 0.5px solid var(--border-color);
+  border-bottom: 0.5px solid var(--border-color);
   padding: 16px 0;
 }
 
@@ -106,19 +107,21 @@
 .modal__info-label {
   font-size: 0.78rem;
   font-weight: 600;
-  color: #1A2E4A;
+  color: var(--title-color);
   margin: 0;
 }
 
 .modal__info-value {
   font-size: 0.8rem;
-  color: #64748B;
+  color: var(--text-secondary);
   margin: 0;
 }
 
 /* PÁGINA WEB */
 .modal__website {
   text-align: center;
+  color: var(--hover-color);
+  font-size: 0.85rem;
 }
 
 /* FOOTER */
@@ -138,17 +141,17 @@
 }
 
 .modal__btn--submit {
-  background: #2D6BE4;
+  background: var(--button-apply);
   color: white;
 }
 
-.modal__btn--submit:hover {
-  background: #1A5CD4;
-}
+  .modal__btn--submit:hover {
+    filter: brightness(0.95);
+  }
 
-.modal__btn--submit:active {
-  transform: scale(0.98);
-}
+  .modal__btn--submit:active {
+    transform: scale(0.98);
+  }
 
 /* RESPONSIVE */
 @media (max-width: 480px) {

@@ -3,7 +3,7 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  background: #F0F4F8;
+  background: var(--bg-color);
 }
 
 /* NAVBAR */
@@ -21,7 +21,7 @@
   flex: 1;
   font-size: 16px;
   font-weight: 500;
-  color: #ffffff;
+  color: white;
   text-align: center;
 }
 
@@ -35,13 +35,11 @@
 }
 
 /* CONTENEDOR */
-
 .main-container {
   display: flex;
   flex: 1;
   height: 100%;
 }
-
 
 .information-container {
   display: flex;
@@ -55,11 +53,11 @@
 .card {
   width: 100%;
   max-width: 960px;
-  background: white;
+  background: var(--card-bg);
   border-radius: 9px;
   padding: 36px 40px;
-  box-shadow: 0 4px 24px rgba(26, 46, 74, 0.08);
-  border: 0.5px solid #505050;
+  box-shadow: var(--shadow-modal);
+  border: 0.5px solid var(--border-color);
 }
 
 /* CARD HEADER */
@@ -69,13 +67,13 @@
   justify-content: space-between;
   margin-bottom: 28px;
   padding-bottom: 20px;
-  border-bottom: 0.5px solid #E2E8F0;
+  border-bottom: 0.5px solid var(--border-color);
 }
 
 .subtitle {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #1A2E4A;
+  color: var(--title-color);
   margin: 0;
 }
 
@@ -88,8 +86,8 @@
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  border: 0.5px solid #4d4d4d;
-  background: #F8FAFC;
+  border: 0.5px solid var(--border-icon);
+  background: var(--bg-color);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -101,13 +99,18 @@
   font-size: 19px;
   width: 19px;
   height: 19px;
-  color: #151627;
+  color: var(--color-icon) !important;
   margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transform: translateY(1px);
 }
 
 .icon-action:hover {
-  background: #2D6BE4;
-  border-color: #2D6BE4;
+  background: var(--hover-color);
+  border-color: var(--hover-color);
 }
 
 .icon-action:hover mat-icon {
@@ -121,7 +124,7 @@
   align-items: flex-start;
 }
 
-/* PERFIL IZQUIERDO */
+/* PERFIL */
 .profile-container {
   display: flex;
   flex-direction: column;
@@ -139,9 +142,10 @@
   font-size: 120px !important;
   width: 120px !important;
   height: 120px !important;
-  color: #CBD5E1 !important;
-  display: block;
-  margin: 0;
+  color: var(--border-color) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .avatar-edit-btn {
@@ -151,42 +155,42 @@
   width: 30px;
   height: 30px;
   border-radius: 50%;
-  background: #2D6BE4;
-  border: 2px solid white;
+  background: var(--button-apply);
+  border: 2px solid var(--card-bg);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.2s ease;
 }
 
 .avatar-edit-btn mat-icon {
   font-size: 15px !important;
-  width: 15px !important;
-  height: 15px !important;
   color: white !important;
-  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
 }
 
 .avatar-edit-btn:hover {
-  background: #1A5CD4;
+  filter: brightness(0.95);
 }
 
 .user-name {
   font-size: 1rem;
   font-weight: 600;
-  color: #0d1827;
+  color: var(--text-color);
   text-align: center;
-  margin: 0;
 }
 
 .user-role-badge {
   font-size: 0.75rem;
   font-weight: 500;
-  color: #2D6BE4;
-  background: #EFF6FF;
+  color: var(--hover-color);
+  background: var(--bg-color);
   border-radius: 20px;
   padding: 3px 12px;
+  border: 0.5px solid var(--border-color);
 }
 
 .user-meta {
@@ -202,27 +206,25 @@
   align-items: center;
   gap: 6px;
   font-size: 0.82rem;
-  color: #64748B;
-  margin: 0;
+  color: var(--text-secondary);
 }
 
 .user-meta-item mat-icon {
   font-size: 15px !important;
-  width: 15px !important;
-  height: 15px !important;
-  color: #94A3B8 !important;
-  margin: 0;
+  color: var(--text-secondary) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* DIVISOR VERTICAL */
+/* DIVISOR */
 .divider-vertical {
   width: 0.5px;
-  background: #5c5c66;
+  background: var(--border-color);
   align-self: stretch;
-  flex-shrink: 0;
 }
 
-/* INFO DERECHA */
+/* INFO */
 .section-info {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -248,73 +250,71 @@
   gap: 5px;
   font-size: 0.78rem;
   font-weight: 600;
-  color: #2d3541;
+  color: var(--title-color);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin: 0;
 }
 
 .info-label mat-icon {
   font-size: 14px !important;
-  width: 14px !important;
-  height: 14px !important;
-  color: #160e44 !important;
-  margin: 0;
+  color: var(--text-secondary) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .info-value {
   font-size: 0.95rem;
-  color: #000000;
-  margin: 0;
-  font-weight: 400;
+  color: var(--text-color);
   padding: 8px 0;
-  border-bottom: 0.5px solid #e8e8f1;
+  border-bottom: 0.5px solid var(--border-color);
 }
 
-/* BOTÓN EDITAR */
+/* EDIT */
 .edit-btn {
   width: 28px;
   height: 28px;
   border-radius: 7px;
-  border: 0.5px solid #4d4d4d;
+  border: 0.5px solid var(--border-icon);
   background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.2s ease;
-  flex-shrink: 0;
 }
 
 .edit-btn mat-icon {
   font-size: 14px !important;
-  width: 14px !important;
-  height: 14px !important;
-  color: #000000 !important;
-  margin: 0;
+  color: var(--color-icon) !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  transform: translateY(1px);
 }
 
 .edit-btn:hover {
-  background: #EFF6FF;
-  border-color: #BFDBFE;
+  background: var(--bg-color);
+  border-color: var(--hover-color);
 }
 
 .edit-btn:hover mat-icon {
-  color: #2D6BE4 !important;
+  color: var(--hover-color) !important;
 }
 
-@media (max-width: 768px) {
+/* AJUSTE GLOBAL ICONOS */
+mat-icon {
+  vertical-align: middle;
+}
 
+/* RESPONSIVE */
+@media (max-width: 768px) {
   .information-container {
     width: 100%;
     padding: 16px;
-    min-width: 0; 
   }
 
   .card {
-    width: 100%;
     max-width: 100%;
-    margin: 0;
     border-radius: 12px;
   }
 
@@ -328,5 +328,4 @@
     grid-template-columns: 1fr;
     width: 100%;
   }
-
 }

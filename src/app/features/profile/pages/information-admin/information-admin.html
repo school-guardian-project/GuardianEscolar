@@ -1,7 +1,13 @@
 <div class="layout">
 
   <!-- NAVBAR -->
-  <app-navbar-manage backRoute="/dashboard-admin"></app-navbar-manage>
+  <div class="navbar-information">
+    <button (click)="logout()" mat-icon-button>
+      <mat-icon class="button-icon">logout</mat-icon>
+    </button>
+    <span class="title">Guardian Escolar</span>
+    <div class="spacer"></div>
+  </div>
 
   <!-- CONTENIDO PRINCIPAL -->
   <div class="main-container">
@@ -18,20 +24,13 @@
           <h3 class="subtitle">Información del Administrador</h3>
 
           <div class="header-actions">
-<<<<<<< HEAD
             <!-- Idioma -->
-            <div class="icon-action" (click)="changeLanguage = true" title="languaje">
+            <div class="icon-action" (click)="changeLanguage = true" title="language">
               <mat-icon>translate</mat-icon>
             </div>
 
             <!-- Tema -->
             <div class="icon-action" (click)="changeTheme = true" title="Theme">
-=======
-            <div class="icon-action" title="Idioma">
-              <mat-icon>translate</mat-icon>
-            </div>
-            <div class="icon-action" title="Tema">
->>>>>>> style/change-information
               <mat-icon>palette</mat-icon>
             </div>
           </div>
@@ -104,7 +103,7 @@
                 <p class="info-label">
                   <mat-icon>phone</mat-icon> Teléfono
                 </p>
-                <button class="edit-btn" (click)="changeContact()">
+                <button class="edit-btn">
                   <mat-icon>edit</mat-icon>
                 </button>
               </div>
@@ -147,7 +146,7 @@
                 <p class="info-label">
                   <mat-icon>lock</mat-icon> Contraseña
                 </p>
-                <button class="edit-btn" (click)="changePassword()">
+                <button class="edit-btn">
                   <mat-icon>edit</mat-icon>
                 </button>
               </div>
@@ -167,3 +166,7 @@
 <app-themes *ngIf="changeTheme"
             (close)="changeTheme = false">
 </app-themes>
+
+<app-language *ngIf="changeLanguage"
+            (close)="changeLanguage = false">
+</app-language>

@@ -248,10 +248,10 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  font-size: 0.78rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--title-color);
-  text-transform: uppercase;
+
 }
 
 .info-label mat-icon {

@@ -48,7 +48,7 @@ section {
     padding: 7px 20px;
     line-height: 1.4;
     color: white;
-    opacity: 50%;
+    background-color: rgba(255, 255, 255, 0.2);
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -59,7 +59,7 @@ section {
 .section-first {
   flex-direction: row;
   background: linear-gradient(135deg, #102d7d, #366fea);
-  min-height: 100vh;
+  /* min-height: 100vh; */
   position: relative;
   overflow: hidden;
   padding-right: 50px;
@@ -75,11 +75,25 @@ section {
 }
 
 .box {
+    display: flex;
     padding: 50px;
     border-radius: 30px;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
+    background-color: rgba(255, 255, 255, 0.2);
+    border: white 1px solid;
+    color: white;
+}
 
+.box-title {
+    font-size: 4rem;
+    font-weight: 800;
+    line-height: 1.2;
+}
+.box-paragraph {
+    font-size: 1.3rem;
+    font-weight: 600;
 }
 
 /* Le indica al los elementos que queden en la capa
@@ -114,3 +128,6 @@ section {
   bottom: -150px;
   left: 200px;
 }
+
+/* ------- */
+

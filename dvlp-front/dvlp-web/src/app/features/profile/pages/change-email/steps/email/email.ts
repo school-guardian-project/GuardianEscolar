@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ChangeInformation } from "../../../../../../shared/components/change-information/change-information/change-information";
+import { ChangeInformation } from "../../../../../../shared/components/change/change-information/change-information";
 
 @Component({
   selector: 'app-email',
@@ -13,7 +13,6 @@ export class Email {
   // Represena un grupo de contenido dentro de un formulario, un objeto que representa todo el formulario
   form: FormGroup;
 
-  
   constructor(private router: Router, private fb: FormBuilder) {
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.email]]

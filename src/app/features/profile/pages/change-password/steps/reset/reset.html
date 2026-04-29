@@ -1,17 +1,23 @@
-<app-nav-component></app-nav-component>
-
-<main>
-    <h1>Actualizar contraseña</h1>
-
-    <form action="">
-        <label for="">Ingrese su nueva contraseña</label>
-        <input type="text">
-
-        <label for="">Confirmar contraseña</label>
-        <input type="text">
+<app-change-password iconHead="lock" title="Crea una contraseña segura"
+  sessionDescription="Ten en cuenta las recomendaciones de seguridad." titleStep="Nueva Contraseña"
+  loginDescription="Elige una contraseña que no hayas usado antes" buttonText="Guardar nueva contraseña"
+  returnStep="Volver" (return)="return()" [showProgress]="true" [currentStep]="3" stepText="3 de 3"
+  (submit)="onSubmit()">
+  
+  <form action="" [formGroup]="form">
+    <label for="email">Nueva contraseña</label>
+    <input type="password" id="password" formControlName="password">
     
-        <div class="btn">
-            <button type="button" (click)="onSubmit()">Verificar</button>
-        </div>
-    </form>
-</main>
+    <label for="email">Confirmar contraseña</label>
+    <input type="password" id="password" formControlName="confirmPassword">
+
+    @if (form.errors && form.errors['passwordNoMatch']) {
+      <small class="error">*Las contraseñas no son iguales.</small>
+    }
+
+    @if (form.errors?.['required']) {
+      <small class="error">*Estos pasos son obligatorios.</small>
+    }
+  </form>
+
+</app-change-password>

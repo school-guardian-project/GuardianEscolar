@@ -1,33 +1,59 @@
-main {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 100px 0;
-    color: var(--text-color);
+.pin-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 50px;
 }
 
-h1 {
-    font-size: 2.5rem;
+.login-description {
+  background-color: #D4EAFF;
+  color: #366fea;
+  padding: 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 50px;
+  word-wrap: break-word;
+  line-height: 1.4;
+  max-width: 360px;
+  margin-top: -40px;
 }
 
-p {
-    font-size: 1.2rem;
+.pin-input {
+  width: 40px;
+  height: 50px;
+  border-radius: 5px;
+  border: 1px solid #366fea;
+  text-align: center;
+  font-size: 1.5rem;
+  background-color: #D4EAFF;
+  text-transform: uppercase;
 }
 
-button {
-    margin-top: 30px;
-    background-color: #048c04;
-    color: white;
-    border-radius: 10px;
-    width: 170px;
-    height: 45px;
-    cursor: pointer;
-    border: none;
-    font-size: 1.5rem;
+.pin-input:focus {
+  outline: none;
+  border: 2px solid #366fea;
 }
 
-.btn {
-    display: flex;
-    justify-content: center;
+.error {
+  color: red;
+  text-align: center;
+  margin-bottom: 40px;
+  margin-top: -50px;
+}
+
+input {
+  transition: border 0.2s ease;
+}
+
+input.ng-invalid.ng-touched {
+  border: 2px red solid;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }

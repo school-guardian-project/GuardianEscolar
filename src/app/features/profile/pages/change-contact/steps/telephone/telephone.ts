@@ -1,22 +1,33 @@
 import { Component } from '@angular/core';
-import { NavComponent } from "../../../../../../shared/components/navbar/nav-component/nav-component";
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { ChangeInformation } from "../../../../../../shared/components/change/change-information/change-information";
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-telephone',
-  imports: [NavComponent],
+  imports: [ChangeInformation, ReactiveFormsModule],
   templateUrl: './telephone.html',
   styleUrl: './telephone.css',
 })
 export class Telephone {
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
-    
+  form: FormGroup;
+
+  constructor(private router: Router, private fb: FormBuilder) {
+    const patternNumber = /^\+?[1-9]\d{1,14}$/;
+    this.form = this.fb.group({
+      telephone: ['', [Validators.required, Validators.pattern(patternNumber)]]
+    });
   }
 
   onSubmit() {
-    this.router.navigate(['../code-first'], { relativeTo: this.route });
+    if (this.form.valid) {
+      this.router.navigate(['/admin/change-contact/code-first']);
+    } else {
+      this.form.markAllAsTouched();
+    }
+  }
+
+  return() {
+    this.router.navigate(['/admin/informacion']);
   }
 }

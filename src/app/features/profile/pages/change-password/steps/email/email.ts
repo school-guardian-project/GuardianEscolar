@@ -1,22 +1,32 @@
 import { Component } from '@angular/core';
-import { NavComponent } from "../../../../../../shared/components/navbar/nav-component/nav-component";
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangePassword } from '../../../../../../shared/components/change/change-password/change-password';
 
 @Component({
   selector: 'app-email',
-  imports: [NavComponent],
+  imports: [ReactiveFormsModule, ChangePassword],
   templateUrl: './email.html',
   styleUrl: './email.css',
 })
 export class Email {
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
-    
+  form: FormGroup;
+   
+  constructor(private router: Router, private fb: FormBuilder) {
+    this.form = this.fb.group({
+      email: ['', [Validators.required, Validators.email]]
+    });
   }
 
   onSubmit() {
-    this.router.navigate(['../code'], { relativeTo: this.route });
+    if (this.form.valid) {
+      this.router.navigate(['/admin/change-password/code']);
+    } else {
+      this.form.markAllAsTouched();
+    }
+  }
+
+  return() {
+    this.router.navigate(['/admin/informacion']);
   }
 }

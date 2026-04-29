@@ -21,6 +21,7 @@ import { ChangePassword } from './features/profile/pages/change-password/change-
 import { routes as changePasswordRoutes } from './features/profile/pages/change-password/change-password.routes';
 import {routes as changeContactRoutes } from './features/profile/pages/change-contact/change-contact.routes'
 import { ChangeContact } from './features/profile/pages/change-contact/change-contact';
+import { Contact } from './features/public/contact/contact';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -72,6 +73,8 @@ export const routes: Routes = [
       { path: 'change-contact', component: ChangeContact, children: changeContactRoutes }
     ]
   },
+
+  { path: 'contact', component: Contact},
 
   /* fallback */
   { path: '**', redirectTo: 'home' }

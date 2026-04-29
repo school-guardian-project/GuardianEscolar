@@ -1,13 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule, FormArray } from '@angular/forms';
-import { ChangeInformation } from "../../../../../../shared/components/change-information/change-information/change-information";
+import { ChangeInformation } from "../../../../../../shared/components/change/change-information/change-information";
 import { CommonModule } from '@angular/common';
-import { MatIcon } from "@angular/material/icon";
 
 @Component({
   selector: 'app-code-first',
-  imports: [ChangeInformation, ReactiveFormsModule, CommonModule, MatIcon],
+  imports: [ChangeInformation, ReactiveFormsModule, CommonModule],
   templateUrl: './code-first.html',
   styleUrl: './code-first.css',
 })

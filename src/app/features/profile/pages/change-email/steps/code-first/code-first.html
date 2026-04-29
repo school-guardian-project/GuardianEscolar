@@ -1,14 +1,14 @@
 <app-change-information iconHead="lock" title="Revisa tu correo"
   sessionDescription="Enviamos un código de 6 dígitos a tu correo. Puede tardar hasta 2 minutos"
-  titleStep="Ingresa el codigo" buttonText="Validar" returnStep="Volver al paso anterior"
-  (return)="return()" [showProgress]="true" [currentStep]="2" buttonText="Validar" (submit)="onSubmit()"
-  stepText="2 de 4">
+  titleStep="Ingresa el codigo" buttonText="Validar" returnStep="Volver al paso anterior" (return)="return()"
+  [showProgress]="true" [currentStep]="2" buttonText="Validar" (submit)="onSubmit()" stepText="2 de 4">
   <div class="login-description">
     <span>Código enviado a <b> tu@correo.com</b>. Válido por 10 minutos.</span>
   </div>
   <form action="" [formGroup]="form">
     <div class="pin-inputs">
-      <input class="pin-input" *ngFor="let ctrl of pinControls.controls; let i = index" [formControl]="ctrl" maxlength="1" (input)="onInput($event, i)">
+      <input class="pin-input" *ngFor="let ctrl of pinControls.controls; let i = index" [formControl]="ctrl"
+        maxlength="1" (input)="onInput($event, i)">
     </div>
     @if (form.invalid && form.touched) {
     <small class="error">*Ingresa los 6 digitos del codigo</small>

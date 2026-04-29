@@ -1,49 +1,22 @@
-<div class="layout">
-  <app-nav-component></app-nav-component>
-
-  <main>
-    <div class="container-session">
-      <div class="sesion-left">
-        <mat-icon class="lock">lock</mat-icon>
-
-        <h1 class="panel-sesion">Recupera tu acceso</h1>
-
-        <p class="session-description">Te enviaremos un código de verificación a tu correo registrado.</p>
-
-        <span class="spacer"></span>
-
-        <div class="edu"><span class="aplycolor">¿Necesitas ayuda? Escríbenos a</span> guardianescolar0@gmail.com <span class="aplycolor">o llama al</span>  +57 314 4308274</div>
-      </div>
-
-      <div class="sesion-right">
-        <span class="progres">
-          <div class="bars bar"></div>
-          <div class="bars bar2"></div>
-          <div class="bars bar3"></div>
-          <div class="color">Paso 1 de 3</div>
-        </span>
-        <form action="">
-          <h2>Restablecer contraseña</h2>
-          <div class="login-description">Ingresa el correo con el que te registraste</div>
-
-          <label for="">Correo electrónico</label>
-          <input 
-            type="email" 
-            [(ngModel)]="email"
-            name="email"
-            placeholder="tu@correo.com" 
-            required
-            (input)="emailError = ''">
-          <div *ngIf="emailError" class="error">{{ emailError }}</div>
-          <p>Recibiras un codigo de 6 digitos</p>
-
-          <div class="btn">
-            <button (click)="onSubmit()">Enviar codigo</button>
-          </div>
-        </form>
-
-        <div class="return" (click)="login()">← Volver al inicio de sesion</div>
-      </div>
-    </div>
-  </main>
-</div>
+<app-change-password iconHead="mail" title="Recupera tu acceso"
+  sessionDescription="Te enviaremos un código de verificación a tu correo registrado."
+  titleStep="Restablecer contraseña" loginDescription="Ingresa el correo con el que te registraste"
+  buttonText="Enviar código" returnStep="Volver al inicio de sesión" (return)="return()" [showProgress]="true" [currentStep]="1" stepText="1 de 3" (submit)="onSubmit()">
+ 
+  <form action="" [formGroup]="form">
+    <label for="email">Correo electrónico</label>
+    <input type="email" id="email" formControlName="email">
+    <!-- Muestra mensaje si el usuario entro y salio del campo -->
+    <!-- y si el formato de email es invalido -->
+    @if (form.get('email')?.touched && form.get('email')?.errors?.['email']) {
+    <small class="error">*Debe ser un email valido</small>
+    }
+    <!-- Muestrra el mensaje si el usuarios toco el campo -->
+    <!-- y si lo dejo vacio -->
+    @if (form.get('email')?.touched && form.get('email')?.errors?.['required']) {
+    <small class="error">*El email es requerido</small>
+    }
+    <p>Recibirás un código de 6 dígitos</p>
+  </form>
+  
+</app-change-password>

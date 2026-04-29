@@ -42,4 +42,12 @@ export class InformationAdmin {
   changeEmail() {
     this.router.navigate(['admin/change-email/email']);
   }
+
+  changePassword() {
+    this.router.navigate(['admin/change-password/email'])
+  }
+
+  changeContact() {
+    this.router.navigate(['admin/change-contact/telephone'])
+  }
 }

@@ -1,14 +1,22 @@
-<app-nav-component></app-nav-component>
-
-<main>
-    <h1>Actualizar número telefónico</h1>
-
-    <form action="">
-        <label for="">Ingrese su nuevo numero telefónico</label>
-        <input type="text">
-    
-        <div class="btn">
-            <button type="button" (click)="onSubmit()">Verificar</button>
-        </div>
-    </form>
-</main>
+<app-change-information iconHead="phone" title="Casi terminamos"
+  sessionDescription="Ingresa tu nuevo número de teléfono."
+  titleStep="Nuevo teléfono" loginDescription="" buttonText="Enviar código"
+  returnStep="Volver" (return)="return()" [showProgress]="true" [currentStep]="3" stepText="3 de 4" (submit)="onSubmit()">
+  
+  <form action="" [formGroup]="form">
+    <label for="email">Telefono</label>
+    <input type="tel" id="telephone" formControlName="telephone">
+    <!-- Muestra mensaje si el usuario entro y salio del campo -->
+    <!-- y si el formato de email es invalido -->
+    @if (form.get('telephone')?.touched && form.get('telephone')?.errors?.['pattern']) {
+      <small class="error">*Debe ser un telefono valido</small>
+    }
+    <!-- Muestrra el mensaje si el usuarios toco el campo -->
+    <!-- y si lo dejo vacio -->
+    @if (form.get('telephone')?.touched && form.get('telephone')?.errors?.['required']) {
+      <small class="error">*El telefono es requerido</small>
+    }
+    <p>Recibirás un código de 6 dígitos</p>
+  </form>
+  
+</app-change-information>

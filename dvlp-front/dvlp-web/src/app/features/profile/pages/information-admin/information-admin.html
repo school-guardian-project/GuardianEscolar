@@ -18,6 +18,7 @@
           <h3 class="subtitle">Información del Administrador</h3>
 
           <div class="header-actions">
+<<<<<<< HEAD
             <!-- Idioma -->
             <div class="icon-action" (click)="changeLanguage = true" title="languaje">
               <mat-icon>translate</mat-icon>
@@ -25,6 +26,12 @@
 
             <!-- Tema -->
             <div class="icon-action" (click)="changeTheme = true" title="Theme">
+=======
+            <div class="icon-action" title="Idioma">
+              <mat-icon>translate</mat-icon>
+            </div>
+            <div class="icon-action" title="Tema">
+>>>>>>> style/change-information
               <mat-icon>palette</mat-icon>
             </div>
           </div>
@@ -97,7 +104,7 @@
                 <p class="info-label">
                   <mat-icon>phone</mat-icon> Teléfono
                 </p>
-                <button class="edit-btn">
+                <button class="edit-btn" (click)="changeContact()">
                   <mat-icon>edit</mat-icon>
                 </button>
               </div>
@@ -140,7 +147,7 @@
                 <p class="info-label">
                   <mat-icon>lock</mat-icon> Contraseña
                 </p>
-                <button class="edit-btn">
+                <button class="edit-btn" (click)="changePassword()">
                   <mat-icon>edit</mat-icon>
                 </button>
               </div>

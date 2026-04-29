@@ -1,22 +1,32 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NavComponent } from "../../../../../../shared/components/navbar/nav-component/nav-component";
+import { Router } from '@angular/router';
+import { ChangeInformation } from "../../../../../../shared/components/change/change-information/change-information";
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-reset',
-  imports: [NavComponent],
+  imports: [ChangeInformation, ReactiveFormsModule],
   templateUrl: './reset.html',
   styleUrl: './reset.css',
 })
 export class Reset {
-  constructor(
-    private router: Router,
-    private route: ActivatedRoute
-  ) {
-    
+  form: FormGroup;
+
+  constructor(private router: Router, private fb: FormBuilder) {
+    this.form = this.fb.group({
+      email: ['', [Validators.required, Validators.email]]
+    });
   }
 
   onSubmit() {
-    this.router.navigate(['../code-second'], { relativeTo: this.route });
+    if (this.form.valid) {
+      this.router.navigate(['/admin/change-email/second-first']);
+    } else {
+      this.form.markAllAsTouched();
+    }
+  }
+
+  return() {
+    this.router.navigate(['/admin/change-email/code-first']);
   }
 }

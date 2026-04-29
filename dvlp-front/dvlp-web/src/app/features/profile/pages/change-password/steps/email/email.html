@@ -1,17 +1,22 @@
-<app-nav-component></app-nav-component>
+<app-change-password iconHead="mail" title="Cambia tu contraseña"
+  sessionDescription="Ingresa tu correo para verificar tu identidad." titleStep="Cambiar contraseña" loginDescription="Ingresa el correo con el que te registraste"
+  buttonText="Enviar código" returnStep="Volver al panel de información" (return)="return()" [showProgress]="true"
+  [currentStep]="1" stepText="1 de 3" (submit)="onSubmit()">
+  
+  <form action="" [formGroup]="form">
+    <label for="email">Correo electrónico</label>
+    <input type="email" id="email" formControlName="email">
+    <!-- Muestra mensaje si el usuario entro y salio del campo -->
+    <!-- y si el formato de email es invalido -->
+    @if (form.get('email')?.touched && form.get('email')?.errors?.['email']) {
+    <small class="error">*Debe ser un email valido</small>
+    }
+    <!-- Muestrra el mensaje si el usuarios toco el campo -->
+    <!-- y si lo dejo vacio -->
+    @if (form.get('email')?.touched && form.get('email')?.errors?.['required']) {
+    <small class="error">*El email es requerido</small>
+    }
+    <p>Recibirás un código de 6 dígitos</p>
+  </form>
 
-<main>
-    <h1>Actualizar contraseña</h1>
-
-    <p>Ingrese su correo actual</p>
-
-    <form action="">
-        <input type="text">
-    
-        <div class="btn">
-            <button type="button" (click)="onSubmit()">
-                Verificar
-            </button>
-        </div>
-    </form>
-</main>
+</app-change-password>

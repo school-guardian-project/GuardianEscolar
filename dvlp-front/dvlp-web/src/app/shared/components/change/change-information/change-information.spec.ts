@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PinInput } from './pin-input';
+import { ChangeInformation } from './change-information';
 
-describe('PinInput', () => {
-  let component: PinInput;
-  let fixture: ComponentFixture<PinInput>;
+describe('ChangeInformation', () => {
+  let component: ChangeInformation;
+  let fixture: ComponentFixture<ChangeInformation>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PinInput],
+      imports: [ChangeInformation],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(PinInput);
+    fixture = TestBed.createComponent(ChangeInformation);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

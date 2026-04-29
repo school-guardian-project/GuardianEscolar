@@ -25,39 +25,24 @@ main {
     width: 100%;
     max-width: 760px;
     height: 100%;
-    max-height: 560px;
+    max-height: 500px;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-}
-
-.error1 {
-    color: red;
-    margin-bottom: 20px;
-    margin-top: -30px;
-}
-
-.error {
-    color: red;
 }
 
 .sesion-left {
     width: 40%;
+    justify-content: space-between;
     border-top-left-radius: 9px;
     border-bottom-left-radius: 9px;
     background: linear-gradient(135deg, #102d7d, #366fea);
-    justify-content: space-between;
 }
 
 .sesion-right {
     width: 60%;
+    justify-content: flex-start;
     background-color: white;
     border-bottom-right-radius: 9px;
     border-top-right-radius: 9px;
-    justify-content: center;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
 }
 
 .sesion-left,
@@ -71,7 +56,7 @@ form {
     color: white;
 }
 
-.shield {
+.icon {
     color: white;
     background-color: #1c54dc;
     border-radius: 15px;
@@ -91,29 +76,19 @@ form {
     font-size: 1rem;
 }
 
-.GPS,
-.alerts,
-.report {
-    padding: 10px;
-    background-color: #346ce4;
-    border-radius: 10px;
-    margin-bottom: 12px;
-    color: white;
-    display: flex;
-    align-items: center;
-    font-size: 0.8rem;
-}
-.icon {
-    margin: 0 10px;
-}
-
-.report {
-    margin-bottom: 30px;
-}
-
 .edu {
+    border-radius: 15px;
+    background-color: #346ce4;
+    padding: 20px;
+    color: black;
+    line-height: 1.5;
+}
+
+.spacer {
+    flex: 1;
+}
+.aplycolor {
     color: white;
-    font-size: 0.8rem;
 }
 
 h2,
@@ -127,92 +102,52 @@ h1 {
     color: #68768e;
     margin-bottom: 50px;
     line-height: 1;
-    font-size: 1rem;
-}
-
-input {
-    padding: 10px;
-    border-radius: 5px;
-    border: #68768e 1px solid;
-    transition: border 0.2s ease;
-}
-
-input[type = "email"] {
-    margin-bottom: 30px;
-}
-
-input:focus {
-    border: #366fea 2px solid;
-    outline: none;
-}
-
-input.ng-invalid.ng-touched {
-    border: 2px red solid;
-}
-
-label {
-    margin-bottom: 7px;
-    font-size: 1rem;
-}
-
-.password {
-    margin-right: 8px;
-    margin-left: auto;
-    color: #366fea;
-    cursor: pointer;
-    font-size: 0.8rem;
+    font-size: 1.1rem;
 }
 
 button {
     color: white;
-    background-color: #366fea;
     border-radius: 50px;
     padding: 10px 30px;
-    height: 40px;
     font-size: 1rem;
     border: none;
     cursor: pointer;
-    margin-bottom: 20px;
-}
-
-.olvid {
-    display: flex;
-    align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 25px;
+    background-color: #366fea;
 }
 
 .btn {
-    width: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
-.line {
-    height: 2px;
-    width: 100%;
-    border: 10px;
-    background-color: #eaeaea;
-    margin-bottom: 20px;
-}
-
-.terms {
+.return {
     color: #366fea;
+    text-align: center;
     cursor: pointer;
 }
 
-.condition {
-    font-size: 0.8rem;
+.color {
+    color: #68768e;
+    margin-left: 5px;
+}
+
+.bars {
+    border-radius: 5px;
+    width: 40px;
+    height: 3px;
+    background-color: #dcecfc;
+}
+
+.bars.bar {
+    background-color: #366fea;
+}
+
+.progres {
     display: flex;
+    justify-content: flex-start;
     align-items: center;
-    justify-content: center;
-}
-
-.term {
-    margin-right: 2px;
-    margin-left: 2px;
-}
-
-.politic {
-    margin-left: 2px;
+    margin-bottom: 10px;
+    gap: 10px;
 }

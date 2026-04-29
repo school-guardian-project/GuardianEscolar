@@ -1,12 +1,13 @@
 <div class="container">
   <!-- MODALES -->
   <app-comments *ngIf="showComments" (closed)="showComments = false"></app-comments>
-  <app-information *ngIf="showInformation" (closed)="showInformation = false"></app-information>
-  <app-update-information *ngIf="showUpdateInformation" (closed)="showUpdateInformation = false">
-  </app-update-information>
+  <app-update-information *ngIf="showUpdateInformation" (closed)="showUpdateInformation = false"></app-update-information>
+  <app-record-information *ngIf="showInformation" type="schools" [record]="schoolSelected" (closed)="showInformation = false">
+  </app-record-information>
 
   <!-- NAVBAR -->
   <app-navbar-dashboard></app-navbar-dashboard>
+
 
   <div class="content-wrapper">
     <!-- SIDEBAR IZQUIERDO -->
@@ -85,12 +86,16 @@
       <div class="icon-circle" (click)="showComments = true">
         <mat-icon>chat</mat-icon>
       </div>
-      <div class="icon-circle" (click)="showInformation = true">
+      <div class="icon-circle" (click)="showDetails(schoolExample)">
         <mat-icon>info</mat-icon>
       </div>
+
       <div class="icon-circle" (click)="showUpdateInformation = true">
         <mat-icon>edit</mat-icon>
       </div>
     </div>
   </div>
 </div>
+
+<!-- 
+ -->

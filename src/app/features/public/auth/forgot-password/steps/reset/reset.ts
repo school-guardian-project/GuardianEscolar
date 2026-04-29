@@ -1,51 +1,38 @@
 import { Component } from '@angular/core';
-import { NavComponent } from '../../../../../../shared/components/navbar/nav-component/nav-component';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
+import { ChangeInformation } from "../../../../../../shared/components/change/change-information/change-information";
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { passwordMatch } from '../../../../../../shared/validator/password-match.validator';
 
 @Component({
   selector: 'app-reset',
-  imports: [NavComponent, MatIconModule, MatButtonModule, MatToolbarModule, FormsModule, NgIf],
+  imports: [ChangeInformation, FormsModule, ReactiveFormsModule],
   templateUrl: './reset.html',
   styleUrl: './reset.css',
 })
 export class Reset {
-  newPassword: string = '';
-  newPasswordError = '';
-  confirmPassword: string = '';
-  confirmPasswordError = '';
-  confirmPasswordGood = '';
+  form: FormGroup;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private fb: FormBuilder) {
+    this.form = this.fb.group({
+      password: ['', [Validators.required, Validators.minLength(8)]],
+      confirmPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16), Validators.pattern('^[a-zA-Z0-9]$/g')]]
+    }, {
+      validators: [
+        passwordMatch('password', 'confirmPassword')
+      ]
+    });
+  }
 
   onSubmit() {
-    this.newPasswordError = '';
-    this.confirmPasswordError = '';
-    this.confirmPasswordGood = '';
-
-    if (!this.newPassword || !this.confirmPassword) {
-      if (!this.newPassword) {
-        this.newPasswordError = '*La nueva contraseña es requerida';
-        return;
-      }
-      if (!this.confirmPassword) {
-        this.confirmPasswordError = '*La confirmación de la contraseña es requerida';
-        return;
-      }
-    } else if (this.newPassword !== this.confirmPassword) {
-      this.confirmPasswordError = '*Las contraseñas no coinciden';
-      return;
+    if (this.form.valid) {
+      this.router.navigate(['/admin/informacion']);
     } else {
-      // this.confirmPasswordGood = '✓ las constraseñas coinciden';
-      this.router.navigate(['/auth/login']);
+      this.form.markAllAsTouched();
     }
   }
 
-  login() {
+  return() {
     this.router.navigate(['/auth/login']);
   }
 }

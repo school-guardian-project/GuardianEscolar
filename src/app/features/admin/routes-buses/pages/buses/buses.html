@@ -4,7 +4,10 @@
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
     <app-card-register type="bus"></app-card-register>
-    <app-card-list type="bus" (viewItem)="showDetails($event)"></app-card-list>
+    <app-card-list type="bus" 
+    (viewItem)="showDetails($event)" 
+    (editItem)="showUpdateDetails($event)">
+    </app-card-list>
   </div>
 </div>
 
@@ -15,3 +18,11 @@
   [record]="busSelected"
   (closed)="closeModal()">
 </app-record-information>
+
+<app-update-record
+  *ngIf="showUpdateModal"
+  type="bus"
+  [record]="busSelected"
+  (saved)="onSaved($event)"
+  (closed)="closeUpdateModal()">
+</app-update-record>

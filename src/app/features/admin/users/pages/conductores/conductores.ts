@@ -8,6 +8,8 @@ import { CardRegister } from '../../../../../shared/components/cards/card-regist
 import { NavbarAdmin } from '../../../../../shared/components/navbar/navbar-admin/navbar-admin';
 import { CardList } from '../../../../../shared/components/cards/card-list/card-list';
 import { RecordInformation, RecordData } from '../../../../../shared/components/modal/record-information/record-information';
+import { UpdateRecord } from '../../../../../shared/components/modal/update-record/update-record';
+
 
 @Component({
   selector: 'app-conductores',
@@ -21,12 +23,14 @@ import { RecordInformation, RecordData } from '../../../../../shared/components/
     CardList,
     NavbarAdmin,
     RecordInformation,
+    UpdateRecord,
   ],
   templateUrl: './conductores.html',
   styleUrl: './conductores.css',
 })
 export class Conductores {
   showModal = false;
+  showUpdateModal = false;
   driverSelected: RecordData = {};
 
   showDetails(driver: RecordData): void {
@@ -34,8 +38,23 @@ export class Conductores {
     this.showModal = true;
   }
 
+  showUpdate(driver: RecordData): void {
+    this.driverSelected = driver;
+    this.showUpdateModal = true;
+  }
+
   closeModal(): void {
     this.showModal = false;
     this.driverSelected = {};
+  }
+
+  closeUpdateModal(): void {
+    this.showUpdateModal = false;
+    this.driverSelected = {};
+  }
+  onSaved(updatedRecord: RecordData): void {
+    console.log('[Conductores] Datos actualizados:', updatedRecord);
+    // this.conductoresService.update(updatedRecord).subscribe(() => { ... });
+    this.closeUpdateModal();
   }
 }

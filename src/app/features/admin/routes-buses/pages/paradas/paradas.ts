@@ -7,8 +7,9 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { NavbarManage } from '../../../../../shared/components/navbar/navbar-manage/navbar-manage';
 import { CardRegister } from '../../../../../shared/components/cards/card-register/card-register';
 import { CardList } from '../../../../../shared/components/cards/card-list/card-list';
-import { NavbarAdmin} from '../../../../../shared/components/navbar/navbar-admin/navbar-admin';
+import { NavbarAdmin } from '../../../../../shared/components/navbar/navbar-admin/navbar-admin';
 import { RecordInformation, RecordData } from '../../../../../shared/components/modal/record-information/record-information';
+import { UpdateRecord } from '../../../../../shared/components/modal/update-record/update-record';
 
 @Component({
   selector: 'app-paradas',
@@ -22,13 +23,15 @@ import { RecordInformation, RecordData } from '../../../../../shared/components/
     CardRegister,
     CardList,
     NavbarAdmin,
-    RecordInformation
+    RecordInformation,
+    UpdateRecord,
   ],
   templateUrl: './paradas.html',
   styleUrl: './paradas.css',
 })
 export class Paradas {
   showModal = false;
+  showUpdateModal = false;
   stopSelected: RecordData = {};
 
   showDetails(stop: RecordData): void {
@@ -36,8 +39,23 @@ export class Paradas {
     this.showModal = true;
   }
 
+  showUpdateDetails(bus: RecordData): void {
+    this.stopSelected = bus;
+    this.showUpdateModal = true;
+  }
+
   closeModal(): void {
     this.showModal = false;
     this.stopSelected = {};
+  }
+
+  closeUpdateModal(): void {
+    this.showUpdateModal = false;
+    this.stopSelected = {};
+  }
+  onSaved(updatedRecord: RecordData): void {
+    console.log('[Paradas] Datos actualizados:', updatedRecord);
+    // this.paradasService.update(updatedRecord).subscribe(() => { ... });
+    this.closeUpdateModal();
   }
 }

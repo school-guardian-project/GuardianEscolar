@@ -9,6 +9,8 @@ import { CardRegister } from '../../../../../shared/components/cards/card-regist
 import { CardList } from '../../../../../shared/components/cards/card-list/card-list';
 import { NavbarAdmin } from '../../../../../shared/components/navbar/navbar-admin/navbar-admin';
 import { RecordInformation, RecordData } from '../../../../../shared/components/modal/record-information/record-information';
+import { UpdateRecord } from '../../../../../shared/components/modal/update-record/update-record';
+
 
 @Component({
   selector: 'app-rutas',
@@ -22,13 +24,15 @@ import { RecordInformation, RecordData } from '../../../../../shared/components/
     CardRegister,
     CardList,
     NavbarAdmin,
-    RecordInformation
+    RecordInformation,
+    UpdateRecord,
   ],
   templateUrl: './rutas.html',
   styleUrl: './rutas.css',
 })
 export class Rutas {
   showModal = false;
+  showUpdateModal = false;
   routeSelected: RecordData = {};
 
   showDetails(route: RecordData): void {
@@ -36,8 +40,22 @@ export class Rutas {
     this.showModal = true;
   }
 
+  showUpdateDetails(bus: RecordData): void {
+    this.routeSelected = bus;
+    this.showUpdateModal = true;
+  }
   closeModal(): void {
     this.showModal = false;
     this.routeSelected = {};
+  }
+
+  closeUpdateModal(): void {
+    this.showUpdateModal = false;
+    this.routeSelected = {};
+  }
+  onSaved(updatedRecord: RecordData): void {
+    console.log('[Rutas] Datos actualizados:', updatedRecord);
+    // this.rutasService.update(updatedRecord).subscribe(() => { ... });
+    this.closeUpdateModal();
   }
 }

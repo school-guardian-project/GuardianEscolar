@@ -8,6 +8,7 @@ import { CardRegister } from '../../../../../shared/components/cards/card-regist
 import { NavbarAdmin } from '../../../../../shared/components/navbar/navbar-admin/navbar-admin';
 import { CardList } from '../../../../../shared/components/cards/card-list/card-list';
 import { RecordInformation, RecordData } from '../../../../../shared/components/modal/record-information/record-information';
+import { UpdateRecord } from '../../../../../shared/components/modal/update-record/update-record';
 
 @Component({
   selector: 'app-padres',
@@ -21,6 +22,7 @@ import { RecordInformation, RecordData } from '../../../../../shared/components/
     CardList,
     NavbarAdmin,
     RecordInformation,
+    UpdateRecord,
   ],
   templateUrl: './padres.html',
   styleUrl: './padres.css',
@@ -37,5 +39,27 @@ export class Padres {
   closeModal(): void {
     this.showModal = false;
     this.attendantSelected = {};
+  }
+
+  showUpdateModal = false;
+
+  showUpdate(student: RecordData): void {
+    this.attendantSelected = student;
+    this.showUpdateModal = true;
+  }
+
+  closeUpdateModal(): void {
+    this.showUpdateModal = false;
+    this.attendantSelected = {};
+  }
+
+  /**
+   * Recibe los datos ya actualizados del formulario.
+   * Aquí puedes llamar a tu servicio para persistirlos.
+   */
+  onSaved(updatedRecord: RecordData): void {
+    console.log('[Estudiantes] Datos actualizados:', updatedRecord);
+    // this.estudiantesService.update(updatedRecord).subscribe(() => { ... });
+    this.closeUpdateModal();
   }
 }

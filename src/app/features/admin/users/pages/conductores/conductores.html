@@ -4,7 +4,10 @@
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
     <app-card-register type="conductor"></app-card-register>
-    <app-card-list type="conductor" (viewItem)="showDetails($event)"></app-card-list>
+    <app-card-list type="conductor" 
+    (viewItem)="showDetails($event)"
+    (editItem)="showUpdate($event)">
+  </app-card-list>
   </div>
 </div>
 
@@ -15,3 +18,12 @@
   [record]="driverSelected"
   (closed)="closeModal()">
 </app-record-information>
+
+<!-- Modal de actualización a nivel de página -->
+<app-update-record 
+  *ngIf="showUpdateModal"
+  type="conductor"
+  [record]="driverSelected"
+  (saved)="onSaved($event)"
+  (closed)="closeUpdateModal()">
+</app-update-record>

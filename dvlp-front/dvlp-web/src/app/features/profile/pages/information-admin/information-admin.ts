@@ -4,9 +4,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SidebarAdmin } from '../../../../shared/components/navbar/sidebar-admin/sidebar-admin';
 import { Themes } from '../../../../shared/components/modal/themes/themes';
+import { Language } from '../../../../shared/components/modal/language/language'
 import { Router } from '@angular/router';
-import { NgIf } from '@angular/common'; 
-import { NavbarManage } from '../../../../shared/components/navbar/navbar-manage/navbar-manage';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-information-admin',
@@ -17,8 +17,8 @@ import { NavbarManage } from '../../../../shared/components/navbar/navbar-manage
     MatIconModule,
     SidebarAdmin,
     Themes,
-    NgIf,
-    NavbarManage,
+    Language,
+    NgIf
   ],
   templateUrl: './information-admin.html',
   styleUrls: ['./information-admin.css'],
@@ -31,6 +31,10 @@ export class InformationAdmin {
   imageUrl: string | ArrayBuffer | null = null;
 
   constructor(private router: Router) { }
+
+  logout() {
+    this.router.navigate(['/dashboard-admin']);
+  }
 
   onFileSelected(event: any) {
     const file = event.target.files[0];
@@ -48,13 +52,5 @@ export class InformationAdmin {
 
   changeEmail() {
     this.router.navigate(['admin/change-email/email']);
-  }
-
-  changePassword() {
-    this.router.navigate(['admin/change-password/email'])
-  }
-
-  changeContact() {
-    this.router.navigate(['admin/change-contact/telephone'])
   }
 }

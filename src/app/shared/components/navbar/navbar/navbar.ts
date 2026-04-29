@@ -1,4 +1,4 @@
-import { Component, computed, HostListener, input, output, signal, ViewChild} from '@angular/core';
+import { Component, computed, HostListener, ViewChild} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -38,5 +38,9 @@ export class Navbar {
 
   login() {
     this.router.navigate(['/auth/login'])
+  }
+
+  contact() {
+    this.router.navigate(['contact']);
   }
 }

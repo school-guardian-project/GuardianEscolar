@@ -6,39 +6,39 @@
 
 .card-list {
   margin-top: 0;
-  background-color: white;
+  background-color: var(--card-bg);
   border-radius: 16px;
   padding: 24px 20px;
   flex: 1;
   min-width: 300px;
   max-width: 640px;
   box-sizing: border-box;
-  border: 0.5px solid #E2E8F0;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  border: 0.5px solid var(--border-color);
+  box-shadow: var(--card-shadow);
   display: flex;
   flex-direction: column;
   transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
 
 .card-list:hover {
+
   transform: translateY(-2px);
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--card-shadow);
 }
 
-/* --- HEADER --- */
 .card-list__header {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 16px;
   padding-bottom: 16px;
-  border-bottom: 0.5px solid #E2E8F0;
+  border-bottom: 0.5px solid var(--border-color);
 }
 
 .card-list__title {
   font-size: 1.1rem;
   font-weight: 600;
-  color: #1A2E4A;
+  color: var(--title-color);
   margin: 0;
   text-align: center;
 }
@@ -46,18 +46,17 @@
 .card-list__total {
   font-size: 2rem;
   font-weight: 700;
-  color: #2D6BE4;
+  color: var(--accent-color);
   line-height: 1;
   margin-top: 4px;
 }
 
-/* --- BUSCADOR --- */
 .card-list__search {
   height: 30px;
   display: flex;
   align-items: center;
-  background-color: #F8FAFC;
-  border: 0.5px solid #E2E8F0;
+  background-color: var(--card-secondary-bg);
+  border: 0.5px solid var(--border-color);
   border-radius: 8px;
   padding: 6px 10px;
   margin-bottom: 14px;
@@ -66,12 +65,12 @@
   max-width: 100%;
   box-sizing: border-box; 
   margin-left: 0;
-  transition: border-color 0.2s;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 .card-list__search:focus-within {
-  border-color: #2D6BE4;
-  box-shadow: 0 0 0 3px rgba(45, 107, 228, 0.12);
+  border-color: var(--accent-color);
+  box-shadow: var(--focus-ring);
 }
 
 .card-list__search-input {
@@ -80,11 +79,11 @@
   outline: none;
   font-size: 0.85rem;
   background: transparent;
-  color: #1A2E4A;
+  color: var(--text-color);
 }
 
 .card-list__search-icon {
-  color: #94A3B8;
+  color: var(--text-secondary);
   display: flex;
   align-items: center;
 }
@@ -95,7 +94,6 @@
   height: 18px;
 }
 
-/* --- LISTA DE ITEMS --- */
 .card-list__content {
   flex: 1;
   display: flex;
@@ -116,16 +114,15 @@
 }
 
 .card-list__items::-webkit-scrollbar-thumb {
-  background: #CBD5E1;
+  background: var(--border-color);
   border-radius: 4px;
 }
 
-/* --- ITEM INDIVIDUAL --- */
 .card-list__item {
   display: flex;
   align-items: center;
-  background-color: #F8FAFC;
-  border: 0.5px solid #E2E8F0;
+  background-color: var(--card-secondary-bg);
+  border: 0.5px solid var(--border-color);
   border-radius: 10px;
   padding: 10px 12px;
   gap: 10px;
@@ -133,17 +130,16 @@
 }
 
 .card-list__item:hover {
-  background-color: #EFF6FF;
-  border-color: #BFDBFE;
+  background-color: var(--hover-color);
+  border-color: var(--accent-color);
 }
 
-/* --- AVATAR --- */
 .card-list__avatar {
   flex-shrink: 0;
   width: 32px;
   height: 32px;
   border-radius: 8px;
-  background: #EFF6FF;
+  background: var(--card-secondary-bg);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -153,10 +149,9 @@
   font-size: 18px;
   width: 18px;
   height: 18px;
-  color: #2D6BE4;
+  color: var(--accent-color);
 }
 
-/* --- INFO --- */
 .card-list__info {
   flex: 1;
   display: flex;
@@ -168,7 +163,7 @@
 .card-list__name {
   font-size: 0.85rem;
   font-weight: 600;
-  color: #1A2E4A;
+  color: var(--title-color);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -176,13 +171,12 @@
 
 .card-list__detail {
   font-size: 0.72rem;
-  color: #64748B;
+  color: var(--title-color);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
-/* --- BOTONES DE ACCIÓN --- */
 .card-list__actions {
   display: flex;
   gap: 2px;
@@ -196,7 +190,7 @@
   padding: 5px;
   border-radius: 6px;
   transition: background 0.2s, color 0.2s;
-  color: #94A3B8;
+  color: var(--title-color);
   display: flex;
   align-items: center;
 }
@@ -208,11 +202,10 @@
 }
 
 .card-list__btn:hover {
-  background-color: #EFF6FF;
-  color: #2D6BE4;
+  background-color: var(--accent-color);
+  color: var(--title-color);
 }
 
-/* --- FILA DE CAMPOS (halfWidth) --- */
 .card-list__row {
   display: flex;
   gap: 8px;

@@ -10,7 +10,13 @@
       <div class="themes-grid">
 
         <!-- Azul claro -->
-        <div class="theme-card">
+        <div class="theme-card"
+          [class.active]="currentTheme === 'light-theme-blue'"
+          (click)="setTheme('light-theme-blue')">
+
+          <div class="active-badge"
+            *ngIf="currentTheme === 'light-theme-blue'">Activo</div>
+
           <div class="theme-preview theme-preview-light">
             <div class="theme-sidebar" style="background: #1A56DB;"></div>
             <div class="theme-content">
@@ -20,21 +26,26 @@
             </div>
           </div>
 
-          <label class="theme-option">
-              <span class="theme-name">Azul</span>
-
-              <span class="radio-wrapper">
-                  <input type="radio" name="theme"
-                         [checked]="currentTheme === 'light-theme-blue'"
-                         (change)="setTheme('light-theme-blue')"/>
-                  <span class="custom-radio"></span>
-              </span>
-          </label>
+          <div class="theme-option">
+            <span class="theme-name">Azul</span>
+            <span class="radio-wrapper">
+              <input type="radio" name="theme"
+                [checked]="currentTheme === 'light-theme-blue'"
+                (click)="$event.stopPropagation()" />
+              <span class="custom-radio"></span>
+            </span>
+          </div>
 
         </div>
 
         <!-- Verde claro -->
-        <div class="theme-card">
+        <div class="theme-card"
+          [class.active]="currentTheme === 'light-theme-green'"
+          (click)="setTheme('light-theme-green')">
+
+          <div class="active-badge"
+            *ngIf="currentTheme === 'light-theme-green'">Activo</div>
+
           <div class="theme-preview theme-preview-light">
             <div class="theme-sidebar" style="background: #16A34A;"></div>
             <div class="theme-content">
@@ -43,16 +54,16 @@
               <div class="theme-line theme-line-light" style="width: 60%;"></div>
             </div>
           </div>
-          <label class="theme-option">
-              <span class="theme-name">Verde</span>
 
-              <span class="radio-wrapper">
-                  <input type="radio" name="theme"
-                          [checked]="currentTheme === 'light-theme-green'"
-                         (change)="setTheme('light-theme-green')" />
-                  <span class="custom-radio"></span>
-              </span>
-          </label>
+          <div class="theme-option">
+            <span class="theme-name">Verde</span>
+            <span class="radio-wrapper">
+              <input type="radio" name="theme"
+                [checked]="currentTheme === 'light-theme-green'"
+                (click)="$event.stopPropagation()" />
+              <span class="custom-radio"></span>
+            </span>
+          </div>
 
         </div>
 
@@ -65,30 +76,42 @@
       <div class="themes-grid">
 
         <!-- Azul oscuro -->
-          <div class="theme-card">
-              <div class="theme-preview theme-preview-dark">
-                  <div class="theme-sidebar" style="background: #3B82F6;"></div>
-                  <div class="theme-content">
-                      <div class="theme-line theme-line-dark" style="width: 70%;"></div>
-                      <div class="theme-line theme-line-dark" style="width: 50%;"></div>
-                      <div class="theme-line theme-line-dark" style="width: 60%;"></div>
-                  </div>
-              </div>
-              <label class="theme-option">
-                  <span class="theme-name">Azul</span>
+        <div class="theme-card"
+          [class.active]="currentTheme === 'dark-theme-blue'"
+          (click)="setTheme('dark-theme-blue')">
 
-                  <span class="radio-wrapper">
-                      <input type="radio" name="theme"
-                             [checked]="currentTheme === 'dark-theme-blue'"
-                             (change)="setTheme('dark-theme-blue')"/>
-                      <span class="custom-radio"></span>
-                  </span>
-              </label>
+          <div class="active-badge"
+            *ngIf="currentTheme === 'dark-theme-blue'">Activo</div>
 
+          <div class="theme-preview theme-preview-dark">
+            <div class="theme-sidebar" style="background: #3B82F6;"></div>
+            <div class="theme-content">
+              <div class="theme-line theme-line-dark" style="width: 70%;"></div>
+              <div class="theme-line theme-line-dark" style="width: 50%;"></div>
+              <div class="theme-line theme-line-dark" style="width: 60%;"></div>
+            </div>
           </div>
 
+          <div class="theme-option">
+            <span class="theme-name">Azul</span>
+            <span class="radio-wrapper">
+              <input type="radio" name="theme"
+                [checked]="currentTheme === 'dark-theme-blue'"
+                (click)="$event.stopPropagation()" />
+              <span class="custom-radio"></span>
+            </span>
+          </div>
+
+        </div>
+
         <!-- Verde oscuro -->
-        <div class="theme-card">
+        <div class="theme-card"
+          [class.active]="currentTheme === 'dark-theme-green'"
+          (click)="setTheme('dark-theme-green')">
+
+          <div class="active-badge"
+            *ngIf="currentTheme === 'dark-theme-green'">Activo</div>
+
           <div class="theme-preview theme-preview-dark">
             <div class="theme-sidebar" style="background: #22C55E;"></div>
             <div class="theme-content">
@@ -97,24 +120,26 @@
               <div class="theme-line theme-line-dark" style="width: 60%;"></div>
             </div>
           </div>
-          <label class="theme-option">
-              <span class="theme-name">Verde</span>
 
-              <span class="radio-wrapper">
-                  <input type="radio" name="theme"
-                         [checked]="currentTheme === 'dark-theme-green'"
-                         (change)="setTheme('dark-theme-green')"/>
-                  <span class="custom-radio"></span>
-              </span>
-          </label>
+          <div class="theme-option">
+            <span class="theme-name">Verde</span>
+            <span class="radio-wrapper">
+              <input type="radio" name="theme"
+                [checked]="currentTheme === 'dark-theme-green'"
+                (click)="$event.stopPropagation()" />
+              <span class="custom-radio"></span>
+            </span>
+          </div>
+
         </div>
 
       </div>
     </div>
 
     <div class="btn-themes">
-    <button class="close-btn" (click)="closeModal()">Cancelar</button>
-    <button class="apply-btn" (click)="closeModal()">Aplicar</button>
+      <button class="close-btn" (click)="closeModal()">Cancelar</button>
+      <button class="apply-btn" (click)="closeModal()">Aplicar</button>
     </div>
+
   </div>
 </div>

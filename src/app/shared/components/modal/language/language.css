@@ -1,0 +1,195 @@
+.lang-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(6px);
+  animation: fadeIn 0.2s ease;
+}
+
+.lang-modal {
+  background: var(--modal-bg);
+  border-radius: 16px;
+  padding: 32px 28px 24px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: var(--shadow-modal);
+  animation: slideUp 0.2s ease;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.lang-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--title-color);
+  margin: 0 0 6px;
+  text-align: center;
+}
+
+.lang-sub {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  margin: 0 0 24px;
+  text-align: center;
+}
+
+.lang-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-bottom: 24px;
+}
+
+.lang-card {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 0.5px solid var(--border-color);
+  background: var(--card-bg);
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.15s ease;
+}
+
+  .lang-card:hover {
+    border-color: var(--hover-color);
+    transform: scale(1.02);
+  }
+
+  .lang-card.active {
+    border: 2px solid var(--color-navbar);
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+    transform: scale(1.02);
+  }
+
+.lang-flag {
+  font-size: 26px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.lang-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--title-color);
+  margin: 0;
+}
+
+.lang-native {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.radio-wrapper {
+  margin-left: auto;
+}
+
+  .radio-wrapper input {
+    opacity: 0;
+    position: absolute;
+    pointer-events: none;
+  }
+
+.custom-radio {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+  .custom-radio::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: var(--color-navbar);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: transform 0.2s ease;
+  }
+
+.radio-wrapper input:checked + .custom-radio {
+  border-color: var(--color-navbar);
+}
+
+  .radio-wrapper input:checked + .custom-radio::after {
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+.lang-btns {
+  display: flex;
+  gap: 10px;
+}
+
+  .lang-btns button {
+    flex: 1;
+  }
+
+.btn-cancel {
+  display: grid;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  border-radius: 10px;
+  background: var(--button-cancel);
+  color: var(--text-secondary);
+  border: 0.5px solid var(--border-color);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+  .btn-cancel:hover {
+    background: var(--border-color);
+  }
+
+.btn-confirm {
+  display: grid;
+  justify-content: center;
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  background: var(--button-apply);
+  color: #ffffff;
+  border: 0.5px solid var(--border-color);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+  .btn-confirm:hover {
+    filter: brightness(0.95);
+  }

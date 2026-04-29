@@ -5,12 +5,8 @@ import { Code } from "./steps/code/code";
 import { ChangePassword } from "./change-password";
 
 export const routes: Routes = [
-    {path: "", component: ChangePassword, 
-        children: [
-            {path: "email", component: Email},
-            {path: "code", component: Code},
-            {path: "reset", component: Reset},
-            {path: "", redirectTo: "email", pathMatch: "full"}
-        ]
-    }
+    { path: "email", component: Email },
+    { path: "code", component: Code },
+    { path: "reset", component: Reset },
+    { path: "", redirectTo: "email", pathMatch: "full" }
 ]

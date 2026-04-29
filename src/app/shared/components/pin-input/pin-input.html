@@ -1,9 +1,0 @@
-<div class="pin-container">
-  <input #hiddenInput type="text" maxlength="6" [(ngModel)]="value" (input)="onInput()" (focus)="focusInput()" />
-
-  <div class="boxes">
-    <div class="box" *ngFor="let box of boxes; let i = index">
-      {{ value[i] || '*' }}
-    </div>
-  </div>
-</div>

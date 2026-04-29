@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChangeInformation } from "../../../../../../shared/components/change/change-information/change-information";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgFor } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { Confirmations } from '../../../../../../shared/components/modal/confirmations/confirmations';
 
 @Component({
   selector: 'app-code-second',
@@ -11,7 +13,9 @@ import { NgFor } from '@angular/common';
   styleUrl: './code-second.css',
 })
 export class CodeSecond {
-  form: FormGroup
+  form: FormGroup;
+  readonly dialog = inject(MatDialog);
+
   constructor(private router: Router, private fb: FormBuilder) {
     this.form = this.fb.group({
       pin: this.fb.array(
@@ -45,11 +49,30 @@ export class CodeSecond {
   onSubmit() {
     const pin = this.pinControls.value.join('');
     if (this.form.valid) {
-      this.router.navigate(['/admin/informacion']);
+      this.openDialog();
     }
     else {
       this.form.markAllAsTouched();
     }
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(Confirmations, {
+      data: {
+        titleDialog: 'Telefono actualizado',
+        descriptionDialog: 'Su telefono ha sido actualizado correctamente.'
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'accept') {
+        this.accept()
+      }
+    })
+  }
+
+  accept() {
+    this.router.navigate(['/admin/informacion']);
   }
 
   return() {

@@ -12,6 +12,7 @@ import { NgFor } from '@angular/common';
 })
 export class Code {
   form: FormGroup
+
   constructor(private router: Router, private fb: FormBuilder) {
     this.form = this.fb.group({
       pin: this.fb.array(

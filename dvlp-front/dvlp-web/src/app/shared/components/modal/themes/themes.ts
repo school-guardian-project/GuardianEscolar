@@ -1,15 +1,16 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-themes',
   standalone: true,
+  imports: [CommonModule],
   templateUrl: './themes.html',
   styleUrl: './themes.css',
 })
 export class Themes {
   @Output() close = new EventEmitter<void>();
   //Variable donde se guard el tema actual
-  currentTheme = "";
+  currentTheme = localStorage.getItem('theme') ?? '';
 
   //Funcion que recibe el tema que se seleccionó
   setTheme(theme: string) {
@@ -20,7 +21,7 @@ export class Themes {
     document.body.className = theme;
 
     //Se guarda el tema
-    localStorage.setItem('theme' , theme)
+    localStorage.setItem('theme', theme)
   }
 
 
@@ -28,4 +29,4 @@ export class Themes {
   closeModal() {
     this.close.emit();
   }
-} 0
+} 

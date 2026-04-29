@@ -25,7 +25,7 @@
 
           <div class="header-actions">
             <!-- Idioma -->
-            <div class="icon-action" (click)="changeLanguage = true" title="languaje">
+            <div class="icon-action" (click)="changeLanguage = true" title="language">
               <mat-icon>translate</mat-icon>
             </div>
 
@@ -166,3 +166,7 @@
 <app-themes *ngIf="changeTheme"
             (close)="changeTheme = false">
 </app-themes>
+
+<app-language *ngIf="changeLanguage"
+            (close)="changeLanguage = false">
+</app-language>

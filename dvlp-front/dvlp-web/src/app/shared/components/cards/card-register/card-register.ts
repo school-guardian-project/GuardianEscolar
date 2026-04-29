@@ -36,7 +36,7 @@ const FIELDS: Record<RegisterType, Field[]> = {
   ],
 
   acudiente: [
-    { label: 'Nombre',               name: 'nombre',         type: 'text' },
+    { label: 'Nombres',               name: 'nombres',         type: 'text' },
     { label: 'Apellidos',            name: 'apellidos',      type: 'text' },
     { label: 'Correo electrónico',   name: 'correo',         type: 'email' },
     { label: 'Tipo Identificación',  name: 'tipoId',         type: 'select', options: ['CC', 'CE', 'Pasaporte'] },

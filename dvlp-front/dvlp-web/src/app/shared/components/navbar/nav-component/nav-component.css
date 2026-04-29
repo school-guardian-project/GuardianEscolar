@@ -1,49 +1,37 @@
 mat-toolbar {
     width: 100%;
-    height: 80px;
+    padding: 10px;
     background-color: white;
-}
-
-mat-toolbar,
-.navbar-start,
-.navbar-end {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     flex-direction: row;
     align-items: center;
-}
-
-.navbar-end,
-.navbar-start {
-    cursor: pointer;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
 .shield {
     color: white;
     background-color: #1c54dc;
-    border-radius: 15px;
-    width: 55px;
-    height: 55px;
+    border-radius: 12px;
+    width: 45px;
+    height: 45px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 2.1rem;
-    margin-left: 30px;
-    margin-right: 20px;
+    font-size: 1.7rem;
 }
 
 .title-guardian {
     font-family: 'Poppins', sans-serif;
     font-weight: 600;
-    font-size: 2rem;
+    font-size: 1.7rem;
 }
 
-.not-account {
-    color: #68768e;
-    margin-right: 15px;
+.content {
+    height: 40px;
+    width: 40px;
 }
 
-.contact {
-    color: #1c54dc;
-    margin-right: 30px;
+.spacer {
+    flex: 1;
 }

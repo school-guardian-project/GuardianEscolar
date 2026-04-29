@@ -8,6 +8,8 @@ import { CardRegister } from '../../../../../shared/components/cards/card-regist
 import { NavbarAdmin } from '../../../../../shared/components/navbar/navbar-admin/navbar-admin';
 import { CardList } from '../../../../../shared/components/cards/card-list/card-list';
 import { RecordInformation, RecordData } from '../../../../../shared/components/modal/record-information/record-information';
+import { UpdateRecord } from '../../../../../shared/components/modal/update-record/update-record';
+
 
 @Component({
   selector: 'app-familia',
@@ -21,12 +23,15 @@ import { RecordInformation, RecordData } from '../../../../../shared/components/
     CardList,
     NavbarAdmin,
     RecordInformation,
+    UpdateRecord,
+
   ],
   templateUrl: './familia.html',
   styleUrl: './familia.css',
 })
 export class Familia {
   showModal = false;
+  showUpdateModal = false;
   familySelected: RecordData = {};
 
   showDetails(family: RecordData): void {
@@ -37,5 +42,19 @@ export class Familia {
   closeModal(): void {
     this.showModal = false;
     this.familySelected = {};
+  }
+  showUpdate(family: RecordData): void {
+    this.familySelected = family;
+    this.showUpdateModal = true;
+  }
+  closeUpdateModal(): void {
+    this.showUpdateModal = false;
+    this.familySelected = {};
+  }
+
+  onSaved(updatedRecord: RecordData): void {
+    console.log('[Familias] Datos actualizados:', updatedRecord);
+    // this.familiasService.update(updatedRecord).subscribe(() => { ... });
+    this.closeUpdateModal();
   }
 }

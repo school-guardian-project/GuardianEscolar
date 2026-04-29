@@ -5,7 +5,7 @@
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
     <app-card-register type="familia"></app-card-register>
-    <app-card-list type="familia" (viewItem)="showDetails($event)"></app-card-list>
+    <app-card-list type="familia" (viewItem)="showDetails($event)" (editItem)="showUpdate($event)"></app-card-list>
   </div>
 </div>
 
@@ -18,3 +18,10 @@
 </app-record-information>
 
 
+<app-update-record
+  *ngIf="showUpdateModal"
+  type="familia"
+  [record]="familySelected"
+  (saved)="onSaved($event)"
+  (closed)="closeUpdateModal()">
+</app-update-record>

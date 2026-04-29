@@ -104,49 +104,49 @@ const ITEM_FIELDS: Record<CardType, ItemField[]> = {
 // Datos de ejemplo hardcodeados para cada tipo
 const MOCK_DATA: Record<CardType, any[]> = {
   estudiante: [
-    { 
-      nombres: 'Juan Carlos García', 
+    {
+      nombres: 'Juan Carlos García',
       apellidos: 'López Martínez',
       nombre: 'Juan Carlos García',
       tipoId: 'CC',
-      identificacion: '1234567890', 
-      curso: '9°', 
+      identificacion: '1234567890',
+      curso: '9°',
       telefono: '+57 321 456 7890',
       fechaNac: '2010-05-15',
       direccion: 'Calle 5 #12-34',
       correo: 'juan.garcia@school.com'
     },
-    { 
-      nombres: 'María Elena Ruiz', 
+    {
+      nombres: 'María Elena Ruiz',
       apellidos: 'Martínez López',
       nombre: 'María Elena Ruiz',
       tipoId: 'TI',
-      identificacion: '9876543210', 
-      curso: '8°', 
+      identificacion: '9876543210',
+      curso: '8°',
       telefono: '+57 312 345 6789',
       fechaNac: '2011-08-22',
       direccion: 'Calle 10 #8-20',
       correo: 'maria.martinez@school.com'
     },
-    { 
-      nombres: 'Carlos Andrés Silva', 
+    {
+      nombres: 'Carlos Andrés Silva',
       apellidos: 'Rodríguez García',
       nombre: 'Carlos Andrés Silva',
       tipoId: 'CC',
-      identificacion: '1111222233', 
-      curso: '10°', 
+      identificacion: '1111222233',
+      curso: '10°',
       telefono: '+57 315 678 9012',
       fechaNac: '2009-12-03',
       direccion: 'Calle 15 #10-40',
       correo: 'carlos.silva@school.com'
     },
-    { 
-      nombres: 'Ana Patricia Gómez', 
+    {
+      nombres: 'Ana Patricia Gómez',
       apellidos: 'López Jiménez',
       nombre: 'Ana Patricia Gómez',
       tipoId: 'CC',
-      identificacion: '4444555566', 
-      curso: '9°', 
+      identificacion: '4444555566',
+      curso: '9°',
       telefono: '+57 318 901 2345',
       fechaNac: '2010-01-20',
       direccion: 'Calle 20 #5-15',
@@ -154,31 +154,31 @@ const MOCK_DATA: Record<CardType, any[]> = {
     },
   ],
   acudiente: [
-    { 
-      nombre: 'Rosa María González', 
+    {
+      nombre: 'Rosa María González',
       apellidos: 'García Martínez',
       tipoId: 'CC',
-      identificacion: '5555666677', 
+      identificacion: '5555666677',
       telefono: '+57 310 111 2222',
       fechaNac: '1985-03-15',
       direccion: 'Calle 5 #12-34',
       correo: 'rosa.gonzalez@email.com'
     },
-    { 
-      nombre: 'Pedro José López', 
+    {
+      nombre: 'Pedro José López',
       apellidos: 'Rodríguez Silva',
       tipoId: 'CC',
-      identificacion: '8888999900', 
+      identificacion: '8888999900',
       telefono: '+57 311 222 3333',
       fechaNac: '1980-07-20',
       direccion: 'Calle 10 #8-20',
       correo: 'pedro.lopez@email.com'
     },
-    { 
-      nombre: 'María Teresa Díaz', 
+    {
+      nombre: 'María Teresa Díaz',
       apellidos: 'Moreno García',
       tipoId: 'CE',
-      identificacion: '1112223334', 
+      identificacion: '1112223334',
       telefono: '+57 312 333 4444',
       fechaNac: '1990-05-10',
       direccion: 'Calle 15 #10-40',
@@ -186,12 +186,12 @@ const MOCK_DATA: Record<CardType, any[]> = {
     },
   ],
   conductor: [
-    { 
-      nombres: 'Pedro Daniel Rodríguez', 
+    {
+      nombres: 'Pedro Daniel Rodríguez',
       apellidos: 'Silva García',
       nombre: 'Pedro Daniel Rodríguez',
       tipoId: 'CC',
-      identificacion: '54321098', 
+      identificacion: '54321098',
       licencia: 'C',
       vencLicencia: '2025-12-31',
       telefono: '+57 310 123 4567',
@@ -199,12 +199,12 @@ const MOCK_DATA: Record<CardType, any[]> = {
       direccion: 'Calle 15 #8-90',
       correo: 'pedro.rodriguez@email.com'
     },
-    { 
-      nombres: 'Luis Fernando García', 
+    {
+      nombres: 'Luis Fernando García',
       apellidos: 'Moreno López',
       nombre: 'Luis Fernando García',
       tipoId: 'CC',
-      identificacion: '77778888', 
+      identificacion: '77778888',
       licencia: 'C',
       vencLicencia: '2026-08-20',
       telefono: '+57 320 234 5678',
@@ -214,22 +214,22 @@ const MOCK_DATA: Record<CardType, any[]> = {
     },
   ],
   familia: [
-    { 
-      nombre: 'Familia García López', 
+    {
+      nombre: 'Familia García López',
       acudiente: 'Rosa María González',
       estudiante: 'Juan Carlos García',
       observaciones: 'Familia con 2 hijos en el colegio'
     },
-    { 
-      nombre: 'Familia López Martínez', 
+    {
+      nombre: 'Familia López Martínez',
       acudiente: 'Pedro José López',
       estudiante: 'María Elena Ruiz',
       observaciones: 'Estudiante becado'
     },
   ],
   bus: [
-    { 
-      matricula: 'CND-2024', 
+    {
+      matricula: 'CND-2024',
       conductor: 'Pedro Daniel Rodríguez',
       marca: 'Mercedes Benz',
       modelo: '2022',
@@ -237,8 +237,8 @@ const MOCK_DATA: Record<CardType, any[]> = {
       gps: 'Activo',
       soat: '2025-06-30'
     },
-    { 
-      matricula: 'MVL-2023', 
+    {
+      matricula: 'MVL-2023',
       conductor: 'Luis Fernando García',
       marca: 'Chevrolet',
       modelo: '2021',
@@ -248,15 +248,15 @@ const MOCK_DATA: Record<CardType, any[]> = {
     },
   ],
   parada: [
-    { 
-      nombre: 'Parada Centro', 
+    {
+      nombre: 'Parada Centro',
       direccion: 'Carrera 7 #5-40',
       ciudad: 'Neiva',
       latitud: '2.9277',
       longitud: '-75.2892'
     },
-    { 
-      nombre: 'Parada Barrio Sur', 
+    {
+      nombre: 'Parada Barrio Sur',
       direccion: 'Calle 50 #10-20',
       ciudad: 'Neiva',
       latitud: '2.9200',
@@ -264,16 +264,16 @@ const MOCK_DATA: Record<CardType, any[]> = {
     },
   ],
   ruta: [
-    { 
-      nombre: 'Ruta Centro - Sur', 
+    {
+      nombre: 'Ruta Centro - Sur',
       sector: 'Centro',
       horaInicio: '06:30',
       horaFin: '08:00',
       destino: 'Colegio Principal',
       sectorRuta: 'Centro - Barrio Sur'
     },
-    { 
-      nombre: 'Ruta Norte - Este', 
+    {
+      nombre: 'Ruta Norte - Este',
       sector: 'Norte',
       horaInicio: '06:45',
       horaFin: '08:15',
@@ -282,8 +282,8 @@ const MOCK_DATA: Record<CardType, any[]> = {
     },
   ],
   schools: [
-    { 
-      nombre: 'Colegio Técnico Neiva', 
+    {
+      nombre: 'Colegio Técnico Neiva',
       direccion: 'Calle 50 #20-30',
       ciudad: 'Neiva',
       escolaridad: 'Primaria y Bachillerato',
@@ -291,8 +291,8 @@ const MOCK_DATA: Record<CardType, any[]> = {
       correo: 'info@colegiotecnico.edu.co',
       web: 'www.colegiotecnico.edu.co'
     },
-    { 
-      nombre: 'Instituto Educativo San Jorge', 
+    {
+      nombre: 'Instituto Educativo San Jorge',
       direccion: 'Carrera 5 #10-50',
       ciudad: 'Neiva',
       escolaridad: 'Primaria',
@@ -302,8 +302,8 @@ const MOCK_DATA: Record<CardType, any[]> = {
     },
   ],
   admins: [
-    { 
-      nombre: 'Carlos Andrés', 
+    {
+      nombre: 'Carlos Andrés',
       apellidos: 'Pérez Gómez',
       correo: 'carlos.perez@admin.com',
       identificacion: '11111111',
@@ -311,8 +311,8 @@ const MOCK_DATA: Record<CardType, any[]> = {
       fechaNac: '1988-09-12',
       direccion: 'Calle 20 #10-50'
     },
-    { 
-      nombre: 'Ana María', 
+    {
+      nombre: 'Ana María',
       apellidos: 'Rodríguez Silva',
       correo: 'ana.rodriguez@admin.com',
       identificacion: '22222222',
@@ -333,6 +333,7 @@ const MOCK_DATA: Record<CardType, any[]> = {
 export class CardList {
   @Input() type: CardType = 'estudiante';
   @Output() viewItem = new EventEmitter<RecordData>();
+  @Output() editItem = new EventEmitter<RecordData>();
 
   searchText = '';
 
@@ -369,5 +370,9 @@ export class CardList {
 
   showDetails(item: RecordData): void {
     this.viewItem.emit(item);
+  }
+
+  editDetails(item: RecordData): void { // ← agregar
+    this.editItem.emit(item);
   }
 }

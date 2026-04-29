@@ -2,12 +2,12 @@
 <div class="modal-overlay" (click)="cerrar()">
   <div class="modal" (click)="$event.stopPropagation()">
 
-    <!-- ── Header ─────────────────────────────────────────────────────────── -->
+    <!-- HEADER -->
     <div class="modal__header">
       <h2 class="modal__title">{{ config.title }}</h2>
     </div>
 
-    <!-- ── Logo e información principal ──────────────────────────────────── -->
+    <!-- HEADER INFO -->
     <div class="modal__header-info">
       <div class="modal__logo">
         <mat-icon>{{ config.icon }}</mat-icon>
@@ -16,82 +16,107 @@
       <p class="modal__type" *ngIf="displayType">{{ displayType }}</p>
     </div>
 
-    <!-- ── Formulario dinámico ────────────────────────────────────────────── -->
-    <div class="modal__form-grid">
+    <!-- GRID DE INFORMACIÓN / FORMULARIO -->
+    <div class="modal__info-grid">
 
       <ng-container *ngFor="let row of groupedFields">
 
-        <!-- ── Par halfWidth ──────────────────────────────────────────────── -->
+        <!-- FILA DE DOS CAMPOS -->
         <ng-container *ngIf="isArray(row); else fullRow">
-          <div class="modal__form-row modal__form-row--half">
 
-            <!-- Campo izquierdo -->
-            <div class="modal__field">
-              <label class="modal__field-label">{{ asArray(row)[0].label }}</label>
+          <!-- Campo izquierdo -->
+          <div class="modal__info-item modal__info-item--half">
+            <label class="modal__info-label">
+              {{ asArray(row)[0].label }}
+            </label>
 
-              <ng-container [ngSwitch]="asArray(row)[0].type">
-                <select *ngSwitchCase="'select'"
-                        class="modal__field-input modal__field-input--select"
-                        [(ngModel)]="formData[asArray(row)[0].name]"
-                        [name]="asArray(row)[0].name">
-                  <option value="" disabled>Seleccionar…</option>
-                  <option *ngFor="let opt of asArray(row)[0].options" [value]="opt">{{ opt }}</option>
-                </select>
+            <ng-container [ngSwitch]="asArray(row)[0].type">
+              <select
+                *ngSwitchCase="'select'"
+                class="modal__info-value"
+                [(ngModel)]="formData[asArray(row)[0].name]"
+                [name]="asArray(row)[0].name">
 
-                <input *ngSwitchDefault
-                       class="modal__field-input"
-                       [type]="asArray(row)[0].type"
-                       [name]="asArray(row)[0].name"
-                       [placeholder]="asArray(row)[0].placeholder || ''"
-                       [(ngModel)]="formData[asArray(row)[0].name]" />
-              </ng-container>
-            </div>
-
-            <!-- Campo derecho -->
-            <div class="modal__field">
-              <label class="modal__field-label">{{ asArray(row)[1].label }}</label>
-
-              <ng-container [ngSwitch]="asArray(row)[1].type">
-                <select *ngSwitchCase="'select'"
-                        class="modal__field-input modal__field-input--select"
-                        [(ngModel)]="formData[asArray(row)[1].name]"
-                        [name]="asArray(row)[1].name">
-                  <option value="" disabled>Seleccionar…</option>
-                  <option *ngFor="let opt of asArray(row)[1].options" [value]="opt">{{ opt }}</option>
-                </select>
-
-                <input *ngSwitchDefault
-                       class="modal__field-input"
-                       [type]="asArray(row)[1].type"
-                       [name]="asArray(row)[1].name"
-                       [placeholder]="asArray(row)[1].placeholder || ''"
-                       [(ngModel)]="formData[asArray(row)[1].name]" />
-              </ng-container>
-            </div>
-
-          </div>
-        </ng-container>
-
-        <!-- ── Campo ancho completo ───────────────────────────────────────── -->
-        <ng-template #fullRow>
-          <div class="modal__field modal__field--full">
-            <label class="modal__field-label">{{ asField(row).label }}</label>
-
-            <ng-container [ngSwitch]="asField(row).type">
-              <select *ngSwitchCase="'select'"
-                      class="modal__field-input modal__field-input--select"
-                      [(ngModel)]="formData[asField(row).name]"
-                      [name]="asField(row).name">
                 <option value="" disabled>Seleccionar…</option>
-                <option *ngFor="let opt of asField(row).options" [value]="opt">{{ opt }}</option>
+                <option
+                  *ngFor="let opt of asArray(row)[0].options"
+                  [value]="opt">
+                  {{ opt }}
+                </option>
               </select>
 
-              <input *ngSwitchDefault
-                     class="modal__field-input"
-                     [type]="asField(row).type"
-                     [name]="asField(row).name"
-                     [placeholder]="asField(row).placeholder || ''"
-                     [(ngModel)]="formData[asField(row).name]" />
+              <input
+                *ngSwitchDefault
+                class="modal__info-value"
+                [type]="asArray(row)[0].type"
+                [name]="asArray(row)[0].name"
+                [placeholder]="asArray(row)[0].placeholder || ''"
+                [(ngModel)]="formData[asArray(row)[0].name]" />
+            </ng-container>
+          </div>
+
+          <!-- Campo derecho -->
+          <div class="modal__info-item modal__info-item--half">
+            <label class="modal__info-label">
+              {{ asArray(row)[1].label }}
+            </label>
+
+            <ng-container [ngSwitch]="asArray(row)[1].type">
+              <select
+                *ngSwitchCase="'select'"
+                class="modal__info-value"
+                [(ngModel)]="formData[asArray(row)[1].name]"
+                [name]="asArray(row)[1].name">
+
+                <option value="" disabled>Seleccionar…</option>
+                <option
+                  *ngFor="let opt of asArray(row)[1].options"
+                  [value]="opt">
+                  {{ opt }}
+                </option>
+              </select>
+
+              <input
+                *ngSwitchDefault
+                class="modal__info-value"
+                [type]="asArray(row)[1].type"
+                [name]="asArray(row)[1].name"
+                [placeholder]="asArray(row)[1].placeholder || ''"
+                [(ngModel)]="formData[asArray(row)[1].name]" />
+            </ng-container>
+          </div>
+
+        </ng-container>
+
+        <!-- CAMPO COMPLETO -->
+        <ng-template #fullRow>
+          <div class="modal__info-item">
+            <label class="modal__info-label">
+              {{ asField(row).label }}
+            </label>
+
+            <ng-container [ngSwitch]="asField(row).type">
+              <select
+                *ngSwitchCase="'select'"
+                class="modal__info-value"
+                [(ngModel)]="formData[asField(row).name]"
+                [name]="asField(row).name">
+
+                <option value="" disabled>Seleccionar…</option>
+                <option
+                  *ngFor="let opt of asField(row).options"
+                  [value]="opt">
+                  {{ opt }}
+                </option>
+              </select>
+
+              <input
+                *ngSwitchDefault
+                class="modal__info-value"
+                [type]="asField(row).type"
+                [name]="asField(row).name"
+                [placeholder]="asField(row).placeholder || ''"
+                [(ngModel)]="formData[asField(row).name]" />
             </ng-container>
           </div>
         </ng-template>
@@ -99,12 +124,12 @@
       </ng-container>
     </div>
 
-    <!-- ── Footer ─────────────────────────────────────────────────────────── -->
+    <!-- FOOTER -->
     <div class="modal__footer">
-      <button class="modal__btn modal__btn--cancel" type="button" (click)="cerrar()">
-        Cancelar
-      </button>
-      <button class="modal__btn modal__btn--submit" type="button" (click)="onSubmit()">
+      <button
+        class="modal__btn modal__btn--submit"
+        type="button"
+        (click)="onSubmit()">
         Guardar cambios
       </button>
     </div>

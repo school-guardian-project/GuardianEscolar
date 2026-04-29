@@ -4,6 +4,14 @@
   <app-sidebar-superadmin></app-sidebar-superadmin>
   <div class="container">
     <app-card-register type="schools"></app-card-register>
-    <app-card-list type="schools"></app-card-list>
+    <app-card-list type="schools" (viewItem)="showDetails($event)"></app-card-list>
   </div>
 </div>
+
+<!-- Modal de detalles a nivel de página -->
+<app-record-information 
+  *ngIf="showModal"
+  type="schools"
+  [record]="schoolSelected"
+  (closed)="closeModal()">
+</app-record-information>

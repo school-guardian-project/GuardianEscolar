@@ -1,9 +1,17 @@
 <app-navbar-manage backRoute="/dashboard-admin"></app-navbar-manage>
-  <!-- CONTENIDO PRINCIPAL -->
+<!-- CONTENIDO PRINCIPAL -->
 <div class="page-wrapper">
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
     <app-card-register type="parada"></app-card-register>
-    <app-card-list type="parada"></app-card-list>
+    <app-card-list type="parada" (viewItem)="showDetails($event)"></app-card-list>
   </div>
 </div>
+
+<!-- Modal de detalles a nivel de página -->
+<app-record-information 
+  *ngIf="showModal"
+  type="parada"
+  [record]="stopSelected"
+  (closed)="closeModal()">
+</app-record-information>

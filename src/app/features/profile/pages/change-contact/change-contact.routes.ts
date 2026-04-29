@@ -6,13 +6,9 @@ import { ChangeContact } from "./change-contact";
 import { Reset } from "./steps/reset/reset";
 
 export const routes: Routes = [
-    {path: "", component: ChangeContact, 
-        children: [
-            {path: "telephone", component: Telephone},
-            {path: "code-first", component: CodeFirst},
-            {path: "reset", component: Reset},
-            {path: "code-second", component: CodeSecond},
-            {path: "", redirectTo: "telephone", pathMatch: "full"}
-        ]
-    }
+    { path: "telephone", component: Telephone },
+    { path: "code-first", component: CodeFirst },
+    { path: "reset", component: Reset },
+    { path: "code-second", component: CodeSecond },
+    { path: "", redirectTo: "telephone", pathMatch: "full" }
 ]

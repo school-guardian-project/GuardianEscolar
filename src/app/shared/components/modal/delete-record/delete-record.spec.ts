@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { InfoDialog } from './info-dialog';
+import { DeleteRecord } from './delete-record';
 
-describe('InfoDialog', () => {
-  let component: InfoDialog;
-  let fixture: ComponentFixture<InfoDialog>;
+describe('DeleteRecord', () => {
+  let component: DeleteRecord;
+  let fixture: ComponentFixture<DeleteRecord>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InfoDialog],
+      imports: [DeleteRecord],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(InfoDialog);
+    fixture = TestBed.createComponent(DeleteRecord);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

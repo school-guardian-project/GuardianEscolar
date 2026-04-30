@@ -6,7 +6,8 @@
     <app-card-register type="acudiente"></app-card-register>
     <app-card-list type="acudiente" 
     (viewItem)="showDetails($event)" 
-    (editItem)="showUpdate($event)">
+    (editItem)="showUpdate($event)"
+    (deleteItem)="showDelete($event)">
   </app-card-list>
   </div>
 </div>
@@ -23,3 +24,13 @@
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()">
 </app-update-record>
+
+<!-- Modal: eliminar registro -->
+<app-delete-record
+  *ngIf="showDeleteModal"
+  type="acudiente"
+  [record]="attendantSelected"
+  (confirm)="onConfirmDelete($event)"
+  (cancel)="closeDeleteModal()">  
+  
+</app-delete-record>

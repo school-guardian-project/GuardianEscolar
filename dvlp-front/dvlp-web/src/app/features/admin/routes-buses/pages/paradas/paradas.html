@@ -6,7 +6,9 @@
     <app-card-register type="parada"></app-card-register>
     <app-card-list type="parada" 
     (viewItem)="showDetails($event)"
-    (editItem)="showUpdateDetails($event)">
+    (editItem)="showUpdateDetails($event)"
+    (deleteItem)="showDelete($event)">
+
     </app-card-list>
   </div>
 </div>
@@ -26,3 +28,12 @@
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()">
 </app-update-record>
+
+<!-- Modal: eliminar registro -->
+<app-delete-record
+  *ngIf="showDeleteModal"
+  type="parada"
+  [record]="stopSelected"
+  (confirm)="onConfirmDelete($event)"
+  (cancel)="closeDeleteModal()">
+</app-delete-record>

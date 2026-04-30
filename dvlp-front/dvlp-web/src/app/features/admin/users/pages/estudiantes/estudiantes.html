@@ -8,7 +8,8 @@
     <app-card-list
       type="estudiante"
       (viewItem)="showDetails($event)"
-      (editItem)="showUpdate($event)">
+      (editItem)="showUpdate($event)"
+      (deleteItem)="showDelete($event)">
     </app-card-list>
   </div>
 </div>
@@ -29,3 +30,12 @@
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()">
 </app-update-record>
+
+<!-- Modal: eliminar registro -->
+<app-delete-record
+  *ngIf="showDeleteModal"
+  type="estudiante"
+  [record]="studentSelected"
+  (confirm)="onConfirmDelete($event)"
+  (cancel)="closeDeleteModal()">  
+</app-delete-record>

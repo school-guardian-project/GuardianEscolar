@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ChangePassword } from '../../../../../../shared/components/change/change-password/change-password';
+import { ChangePassword } from '@shared/components/change/change-password/change-password';
 
 @Component({
   selector: 'app-email',

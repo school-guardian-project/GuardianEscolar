@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIcon } from "@angular/material/icon";
-import { NavComponent } from "../../navbar/nav-component/nav-component";
+import { NavComponent } from "@shared/components/navbar/nav-component/nav-component";
 
 @Component({
   selector: 'app-change-password',

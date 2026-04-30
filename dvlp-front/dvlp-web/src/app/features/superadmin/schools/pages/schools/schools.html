@@ -6,7 +6,8 @@
     <app-card-register type="schools"></app-card-register>
     <app-card-list type="schools" 
     (viewItem)="showDetails($event)" 
-    (editItem)="showUpdate($event)">
+    (editItem)="showUpdate($event)"
+    (deleteItem)="showDelete($event)">
   </app-card-list>
   </div>
 </div>
@@ -26,3 +27,13 @@
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()">
 </app-update-record>
+
+<!-- Modal: eliminar registro -->
+<app-delete-record
+  *ngIf="showDeleteModal"
+  type="schools"
+  [record]="schoolSelected"
+  (confirm)="onConfirmDelete($event)"
+  (cancel)="closeDeleteModal()">  
+  
+</app-delete-record>

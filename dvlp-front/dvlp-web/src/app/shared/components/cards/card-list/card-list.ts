@@ -2,7 +2,7 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RecordData } from '../../modal/record-information/record-information';
+import { RecordData } from '@shared/components/modal/record-information/record-information';
 
 export type CardType =
   | 'estudiante'
@@ -334,6 +334,7 @@ export class CardList {
   @Input() type: CardType = 'estudiante';
   @Output() viewItem = new EventEmitter<RecordData>();
   @Output() editItem = new EventEmitter<RecordData>();
+  @Output() deleteItem = new EventEmitter<RecordData>();
 
   searchText = '';
 
@@ -372,7 +373,11 @@ export class CardList {
     this.viewItem.emit(item);
   }
 
-  editDetails(item: RecordData): void { // ← agregar
+  editDetails(item: RecordData): void {
     this.editItem.emit(item);
+  }
+
+  deleteDetails(item: RecordData): void {
+    this.deleteItem.emit(item);
   }
 }

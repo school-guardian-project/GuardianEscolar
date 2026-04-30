@@ -6,12 +6,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
 
-import { NavbarManage } from '../../../../../shared/components/navbar/navbar-manage/navbar-manage';
-import { CardRegister } from '../../../../../shared/components/cards/card-register/card-register';
-import { CardList } from '../../../../../shared/components/cards/card-list/card-list';
-import { NavbarAdmin } from '../../../../../shared/components/navbar/navbar-admin/navbar-admin';
-import { RecordInformation, RecordData } from '../../../../../shared/components/modal/record-information/record-information';
-import { UpdateRecord } from '../../../../../shared/components/modal/update-record/update-record';
+import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-manage';
+import { CardRegister } from '@shared/components/cards/card-register/card-register';
+import { CardList } from '@shared/components/cards/card-list/card-list';
+import { NavbarAdmin } from '@shared/components/navbar/navbar-admin/navbar-admin';
+import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
+import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
+import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
 
 @Component({
   selector: 'app-estudiantes',
@@ -27,7 +28,8 @@ import { UpdateRecord } from '../../../../../shared/components/modal/update-reco
     CardList,
     NavbarAdmin,
     RecordInformation,
-    UpdateRecord,       // <-- nuevo
+    UpdateRecord,
+    DeleteRecord,
   ],
   templateUrl: './estudiantes.html',
   styleUrl: './estudiantes.css',
@@ -69,5 +71,28 @@ export class Estudiantes {
     console.log('[Estudiantes] Datos actualizados:', updatedRecord);
     // this.estudiantesService.update(updatedRecord).subscribe(() => { ... });
     this.closeUpdateModal();
+  }
+
+  // ── Eliminar registro ───────────────────────────────────────────────────
+  showDeleteModal = false;
+
+  showDelete(student: RecordData): void {
+    this.studentSelected = student;
+    this.showDeleteModal = true;
+  }
+
+  closeDeleteModal(): void {
+    this.showDeleteModal = false;
+    this.studentSelected = {};
+  }
+
+  /**
+   * Confirma la eliminación del registro.
+   * Aquí puedes llamar a tu servicio para eliminar.
+   */
+  onConfirmDelete(record: RecordData): void {
+    console.log('[Estudiantes] Eliminando:', record);
+    // this.estudiantesService.delete(record.id).subscribe(() => { ... });
+    this.closeDeleteModal();
   }
 }

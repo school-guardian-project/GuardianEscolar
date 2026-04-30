@@ -5,7 +5,11 @@
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
     <app-card-register type="familia"></app-card-register>
-    <app-card-list type="familia" (viewItem)="showDetails($event)" (editItem)="showUpdate($event)"></app-card-list>
+    <app-card-list type="familia" 
+    (viewItem)="showDetails($event)" 
+    (editItem)="showUpdate($event)"
+    (deleteItem)="showDelete($event)">
+  </app-card-list>
   </div>
 </div>
 
@@ -25,3 +29,13 @@
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()">
 </app-update-record>
+
+<!-- Modal: eliminar registro -->
+<app-delete-record
+  *ngIf="showDeleteModal"
+  type="familia"
+  [record]="familySelected"
+  (confirm)="onConfirmDelete($event)"
+  (cancel)="closeDeleteModal()">  
+  
+</app-delete-record>

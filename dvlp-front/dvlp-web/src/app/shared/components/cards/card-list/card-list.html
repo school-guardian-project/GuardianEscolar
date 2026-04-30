@@ -42,7 +42,9 @@
 
         <!-- Acciones -->
         <div class="card-list__actions">
-          <button class="card-list__btn"><mat-icon>delete</mat-icon></button>
+          <button class="card-list__btn" (click)="deleteDetails(item)" title="Eliminar">
+            <mat-icon>delete</mat-icon>
+          </button>
           <button class="card-list__btn" (click)="showDetails(item)" title="Ver detalles">
             <mat-icon>visibility</mat-icon>
           </button>

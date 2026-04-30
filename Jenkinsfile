@@ -52,6 +52,7 @@ pipeline {
       when {
         branch 'develop'
       }
+      agent any
       steps {
         dir('dvlp-back') {
           sh 'docker build -f dev.Dockerfile -t guardian-backend .'

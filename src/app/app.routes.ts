@@ -15,6 +15,12 @@ import { Rutas } from './features/admin/routes-buses/pages/rutas/rutas';
 import { routes as forgotPasswordRoutes } from './features/public/auth/forgot-password/forgot-password.routes';
 import { ChangeEmail } from './features/profile/pages/change-email/change-email';
 import { routes as changeEmailRoutes } from './features/profile/pages/change-email/change-email.routes';
+import { Admins } from './features/superadmin/admins/pages/admins/admins';
+import { Schools } from './features/superadmin/schools/pages/schools/schools';
+import { ChangePassword } from './features/profile/pages/change-password/change-password';
+import { routes as changePasswordRoutes } from './features/profile/pages/change-password/change-password.routes';
+import {routes as changeContactRoutes } from './features/profile/pages/change-contact/change-contact.routes'
+import { ChangeContact } from './features/profile/pages/change-contact/change-contact';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -47,6 +53,23 @@ export const routes: Routes = [
   { path: 'admin',
     children: [
       { path: 'change-email', component: ChangeEmail, children: changeEmailRoutes }
+    ]
+  },
+  /* SUPERADMIN */
+  { path: 'superadmin/admins', component: Admins },
+  { path: 'superadmin/schools', component: Schools },
+
+  {
+    path: 'admin',
+    children: [
+      { path: 'change-password', component: ChangePassword, children: changePasswordRoutes }
+    ]
+  },
+
+  {
+    path: 'admin',
+    children: [
+      { path: 'change-contact', component: ChangeContact, children: changeContactRoutes }
     ]
   },
 

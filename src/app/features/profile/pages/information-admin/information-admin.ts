@@ -2,9 +2,9 @@ import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { SidebarAdmin } from '../../../../shared/components/navbar/sidebar-admin/sidebar-admin';
-import { Themes } from '../../../../shared/components/modal/themes/themes';
-import { Language } from '../../../../shared/components/modal/language/language'
+import { SidebarAdmin } from '@shared/components/navbar/sidebar-admin/sidebar-admin';
+import { Themes } from '@shared/components/modal/themes/themes';
+import { Language } from '@shared/components/modal/language/language'
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 

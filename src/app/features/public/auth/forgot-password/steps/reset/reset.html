@@ -1,68 +1,20 @@
-<div class="layout">
-  <app-nav-component></app-nav-component>
+<app-change-information iconHead="lock" title="Crea una contraseña segura"
+  sessionDescription="Ten en cuenta las recomendaciones de seguridad."
+  titleStep="Nueva Contraseña" loginDescription="Elige una contraseña que no hayas usado antes"
+  buttonText="Guardar nueva contraseña" returnStep="Volver" (return)="return()" [showProgress]="true" [currentStep]="3" stepText="3 de 3" (submit)="onSubmit()">
+  
+  <form action="" [formGroup]="form">
+    <label for="email">Nueva contraseña</label>
+    <input type="password" id="password" formControlName="password">
+    
+    <label for="email">Confirmar contraseña</label>
+    <input type="password" id="password" formControlName="confirmPassword">
 
-  <main>
-    <div class="container-session">
-      <div class="sesion-left">
-        <mat-icon class="shield">shield</mat-icon>
+    @if (form.errors && form.errors['passwordNoMatch']) {
+      <small class="error">Las contraseñas no son iguales</small>
+    }
 
-        <h1 class="panel-sesion">Crea una contraseña segura</h1>
-
-        <p class="session-description">Ten en cuenta las recomendaciones de seguridad</p>
-
-        <span class="spacer"></span>
-
-        <div class="edu">
-            La contraseña debe contener:
-            <ul>
-                <li>Mínimo 8 dígitos</li>
-                <li>Números y letras</li>
-                <li>Combinación de minúsculas y mayúsculas</li>
-                <li>Caracteres especiales (. - _ @ *)</li>
-            </ul>
-        </div>
-      </div>
-
-      <div class="sesion-right">
-        <span class="progres">
-          <div class="bars"></div>
-          <div class="bars"></div>
-          <div class="bars"></div>
-          <div class="color">Paso 3 de 3</div>
-        </span>
-        <form action="">
-          <h2>Nueva Contraseña</h2>
-          <div class="login-description">Elige una contraseña que no hayas usado antes</div>
-
-            <label for="">Nueva contraseña</label>
-            <input 
-                type="password" 
-                [(ngModel)]="newPassword"
-                name="newPassword"
-                required
-                (input)="newPasswordError = ''">
-            <div *ngIf="newPasswordError" class="error1">{{ newPasswordError }}</div>
-        
-            <label for="">Confirmar contraseña</label>
-            <input 
-                type="password" 
-                [(ngModel)]="confirmPassword"
-                name="confirmPassword"
-                required
-                (input)="confirmPasswordError = ''">
-
-            <div *ngIf="confirmPasswordError" class="error">{{ confirmPasswordError }}</div>
-            <div *ngIf="confirmPasswordGood" class="confirm">{{ confirmPasswordGood }}</div>
-
-            <div class="btn">
-            <button (click)="onSubmit()">Guardar nueva contraseña</button>
-          </div>
-        </form>
-
-        <div class="returnn">
-          <div class="return" (click)="login()">← Volver</div>
-        </div>
-      </div>
-    </div>
-  </main>
-</div>
+    @if (form.errors?.['pasword'] && form.errors?.['']) {}
+  </form>
+  
+</app-change-information>

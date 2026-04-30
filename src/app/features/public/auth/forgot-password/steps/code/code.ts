@@ -1,38 +1,58 @@
 import { Component } from '@angular/core';
-import {MatIconModule} from '@angular/material/icon';
-import {MatButtonModule} from '@angular/material/button';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import { ActivatedRoute, Router } from '@angular/router';
-import { NavComponent } from '../../../../../../shared/components/navbar/nav-component/nav-component';
-import { FormsModule } from '@angular/forms';
-import { NgIf } from '@angular/common';
-
+import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangePassword } from "@shared/components/change/change-password/change-password";
+import { NgFor } from '@angular/common';
 
 @Component({
   selector: 'app-code',
-  imports: [NavComponent, MatIconModule, MatButtonModule, MatToolbarModule, FormsModule, NgIf],
+  imports: [FormsModule, ChangePassword, ReactiveFormsModule, NgFor],
   templateUrl: './code.html',
   styleUrl: './code.css',
 })
 export class Code {
-  pin: string = '';
-  pinError = '';
+  form: FormGroup
+  constructor(private router: Router, private fb: FormBuilder) {
+    this.form = this.fb.group({
+      pin: this.fb.array(
+        Array.from({ length: 6 }, () =>
+          this.fb.control('', [
+            Validators.required,
+            Validators.pattern('^[a-zA-Z0-9]$')
+          ])
+        )
+      )
+    })
+  }
 
-  constructor(private router: Router) {}
+  get pinControls() {
+    return this.form.get('pin') as any;
+  }
 
-  onSubmit() {
-    this.pinError = '';
+  onInput(event: any, index: number) {
+    const value = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
 
-    if (!this.pin) {
-      this.pinError = '*El codigo es requerido';
-      return;
-    }
-    else {
-      this.router.navigate(['/auth/forgot-password/reset']);
+    const control = this.pinControls.at(index);
+    control.setValue(value, { emitEvent: false });
+
+    // mover al siguiente input
+    if (value && index < 5) {
+      const inputs = document.querySelectorAll('input');
+      (inputs[index + 1] as HTMLElement)?.focus();
     }
   }
 
-  login() {
-    this.router.navigate(['/auth/login']);
+  onSubmit() {
+    const pin = this.pinControls.value.join('');
+    if (this.form.valid) {
+      this.router.navigate(['/auth/forgot-password/reset']);
+    }
+    else {
+      this.form.markAllAsTouched();
+    }
+  }
+
+  return() {
+    this.router.navigate(['/auth/forgot-password/email']);
   }
 }

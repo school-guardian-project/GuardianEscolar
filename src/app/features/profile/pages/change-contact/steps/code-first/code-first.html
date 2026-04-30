@@ -1,17 +1,19 @@
-<app-nav-component></app-nav-component>
-
-<main>
-    <h1>Actualizar numero telefonico</h1>
-
-    <p>Hemos enviado un código de confirmación a su número.</p>
-    <p>Por favor ingréselo</p>
-
-    <app-pin-input></app-pin-input>
-
-    <p>En caso de no haber recibido ningún</p>
-    <p>código, solicítelo nuevamente</p>
-
-    <div class="btn">
-        <button type="button" (click)="onSubmit()">Verificar</button>
+<app-change-information iconHead="lock" title="Verifica tu teléfono"
+  sessionDescription="Enviamos un código de 6 dígitos a tu teléfono actual."
+  titleStep="Código de verificación" loginDescription="" buttonText="Verificar"
+  returnStep="Volver" (return)="return()" [showProgress]="true" [currentStep]="2" stepText="2 de 4" (submit)="onSubmit()">
+  
+  <div class="login-description">
+    <span>Código enviado a tu <b> telefono 314******</b>. Válido por 10 minutos.</span>
+  </div>
+  <form action="" [formGroup]="form">
+    <div class="pin-inputs">
+      <input class="pin-input" *ngFor="let ctrl of pinControls.controls; let i = index" [formControl]="ctrl"
+        maxlength="1" (input)="onInput($event, i)">
     </div>
-</main>
+    @if (form.invalid && form.touched) {
+    <small class="error">*Ingresa los 6 digitos del codigo</small>
+    }
+  </form>
+
+</app-change-information>

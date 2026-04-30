@@ -1,0 +1,45 @@
+<div class="layout">
+    <app-nav-component></app-nav-component>
+
+    <main>
+        <div class="container-session">
+            <div class="sesion-left">
+                <mat-icon class="icon">{{ iconHead }}</mat-icon>
+
+                <h1 class="panel-sesion">{{ title }}</h1>
+
+                <p class="session-description">{{ sessionDescription }}</p>
+
+                <span class="spacer"></span>
+
+                <div class="edu"><span class="aplycolor">¿Necesitas ayuda? Escríbenos a</span>
+                    guardianescolar0@gmail.com
+                    <span class="aplycolor">o llama al</span> +57 314 4308274
+                </div>
+            </div>
+
+            <div class="sesion-right">
+                @if (showProgress) {
+                <span class="progres">
+                    @for (step of getProgressBars(); track step) {
+                    <div class="bars" [class.bar]="isStepActive(step)"></div>
+                    }
+                    <span class="color">{{ stepText }}</span>
+                </span>
+                }
+
+                <h2>{{ titleStep }}</h2>
+                <div class="login-description">{{ loginDescription }}</div>
+
+                <ng-content></ng-content>
+
+                <div class="btn">
+                    <button (click)="submit.emit()">{{ buttonText }}</button>
+                </div>
+
+                <div class="return" (click)="return.emit()">← {{ returnStep }}</div>
+            </div>
+        </div>
+    </main>
+
+</div>

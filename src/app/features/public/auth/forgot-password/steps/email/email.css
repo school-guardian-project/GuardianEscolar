@@ -1,121 +1,17 @@
-.layout {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-}
-
-app-nav-component {
-    flex: 0 0 auto;
-}
-
-main {
-    flex: 1;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background-color: #ecf4fc;
-    box-sizing: border-box;
-}
-
-.container-session {
-    display: flex;
-    flex-direction: row;
-    width: 60%;
-    height: 100%;
-    max-height: 560px;
-}
-
-.sesion-left {
-    width: 40%;
-    justify-content: space-between;
-    border-top-left-radius: 30px;
-    border-bottom-left-radius: 30px;
-    background: linear-gradient(135deg, #102d7d, #366fea);
-}
-
-.sesion-right {
-    width: 60%;
-    justify-content: space-between;
-    background-color: white;
-    border-bottom-right-radius: 30px;
-    border-top-right-radius: 30px;
-}
-
-form {
-    display: flex;
-    flex-direction: column;
-}
-
-.sesion-left,
-.sesion-right {
-    padding: 40px;
-    display: flex;
-    flex-direction: column;
-}
-
-.panel-sesion {
-    color: white;
-}
-
-.lock {
-    color: white;
-    background-color: #1c54dc;
-    border-radius: 15px;
-    width: 55px;
-    height: 55px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 2.1rem;
-    margin-bottom: 20px;
-}
-
-.session-description {
-    color: white;
-    line-height: 1.5;
-    margin-bottom: 25px;
-    font-size: 1.1rem;
-}
-
-.report {
-    margin-bottom: 30px;
-}
-
-.edu {
-    border-radius: 15px;
-    background-color: #346ce4;
-    padding: 20px;
-    color: black;
-    line-height: 1.5;
-}
-
-.spacer {
-    flex: 1;
-}
-.aplycolor {
-    color: white;
-}
-
-h2,
-h1 {
-    font-size: 2.5rem;
-    line-height: 1;
-    margin-bottom: 10px;
-}
-
-.login-description {
-    color: #68768e;
-    margin-bottom: 50px;
-    line-height: 1;
-    font-size: 1.1rem;
-}
-
 input {
     padding: 10px;
     border-radius: 5px;
-    border: #68768e 1px solid;
+    border: #68768e 2px solid;
+    transition: border 0.2s ease;
+}
+
+input:focus {
+    border: #366fea 2px solid;
+    outline: none;
+}
+
+input.ng-invalid.ng-touched {
+    border: 2px red solid;
 }
 
 label {
@@ -127,69 +23,11 @@ p {
     color: #68768e;
     margin-bottom: 50px;
 }
+form {
+    display: flex;
+    flex-direction: column;
+}
 
 .error {
     color: red;
-}
-input {
-    transition: border 0.2s ease;
-}
-input.ng-invalid.ng-touched {
-    border: 2px red solid;
-}
-input:focus {
-    border: #366fea 2px solid;
-    outline: none;
-}
-
-button {
-    width: 50%;
-    color: white;
-    background-color: #366fea;
-    border-radius: 50px;
-    height: 40px;
-    font-size: 1.2rem;
-    border: none;
-    cursor: pointer;
-    margin-bottom: 20px;
-}
-
-.btn {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.return {
-    color: #366fea;
-    text-align: center;
-    cursor: pointer;
-}
-
-.bar {
-    background-color: #366fea;
-}
-
-.color {
-    color: #68768e;
-}
-
-.bars {
-    border-radius: 5px;
-    width: 40px;
-    height: 3px;
-}
-
-.bar2,
-.bar3 {
-    background-color: #dcecfc;
-}
-
-.progres {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 20px;
 }

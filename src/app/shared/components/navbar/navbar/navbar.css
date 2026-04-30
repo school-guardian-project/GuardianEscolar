@@ -73,6 +73,7 @@ mat-toolbar,
     height: 72px;
 }
 
+
 @media (max-width: 1024px) {
     .btn-menu {
         display: block;
@@ -96,9 +97,18 @@ mat-toolbar,
         margin: 15px 0;
         width: 100%;
     }
+
     mat-sidenav-container {
-        width: 100%;
+        width: 100vw;
+        height: 100vh;
+        min-height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 1200;
+        background: transparent;
     }
+
     mat-sidenav {
         box-sizing: border-box;
         background-color: white;
@@ -106,7 +116,13 @@ mat-toolbar,
         width: 300px;
         padding: 20px;
         transition: transform 0.3s ease;
+        height: 100vh;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
     }
+
     mat-sidenav .spaces {
         margin: 20px 0;
         font-size: 1.2rem;

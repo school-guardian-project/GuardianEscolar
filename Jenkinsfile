@@ -54,7 +54,7 @@ pipeline {
       }
       steps {
         dir('dvlp-back') {
-          sh 'docker build -t guardian-backend .'
+          sh 'docker build -f dev.Dockerfile -t guardian-backend .'
         }
       }
     }

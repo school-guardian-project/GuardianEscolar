@@ -33,6 +33,17 @@ pipeline {
       }
     }
 
+    stage('Docker Build Backend') {
+      when {
+        branch 'develop'
+      }
+      steps {
+        dir('dvlp-back') {
+          sh 'docker build -t guardian-backend .'
+        }
+      }
+    }
+
     stage('Frontend') {
       when {
         expression { env.BUILD_FRONT == 'true' }

@@ -1,9 +1,40 @@
 <app-navbar-manage backRoute="/dashboard-admin"></app-navbar-manage>
-  <!-- CONTENIDO PRINCIPAL -->
+<!-- CONTENIDO PRINCIPAL -->
 <div class="page-wrapper">
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
     <app-card-register type="conductor"></app-card-register>
-    <app-card-list type="conductor"></app-card-list>
+    <app-card-list type="conductor" 
+    (viewItem)="showDetails($event)"
+    (editItem)="showUpdate($event)"
+    (deleteItem)="showDelete($event)">
+  </app-card-list>
   </div>
 </div>
+
+<!-- Modal de detalles a nivel de página -->
+<app-record-information 
+  *ngIf="showModal"
+  type="conductor"
+  [record]="driverSelected"
+  (closed)="closeModal()">
+</app-record-information>
+
+<!-- Modal de actualización a nivel de página -->
+<!-- Modal: actualizar registro -->
+<app-update-record
+  *ngIf="showUpdateModal"
+  type="conductor"
+  [record]="driverSelected"
+  (saved)="onSaved($event)"
+  (closed)="closeUpdateModal()">
+</app-update-record>
+
+<app-delete-record
+  *ngIf="showDeleteModal"
+  type="conductor"
+  [record]="driverSelected"
+  (confirm)="onConfirmDelete($event)"
+  (cancel)="closeDeleteModal()">  
+  
+</app-delete-record>

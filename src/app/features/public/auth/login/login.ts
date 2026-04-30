@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavComponent } from '../../../../shared/components/navbar/nav-component/nav-component';
+import { NavComponent } from '@shared/components/navbar/nav-component/nav-component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';

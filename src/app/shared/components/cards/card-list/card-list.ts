@@ -1,7 +1,8 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RecordData } from '@shared/components/modal/record-information/record-information';
 
 export type CardType =
   | 'estudiante'
@@ -103,43 +104,222 @@ const ITEM_FIELDS: Record<CardType, ItemField[]> = {
 // Datos de ejemplo hardcodeados para cada tipo
 const MOCK_DATA: Record<CardType, any[]> = {
   estudiante: [
-    { nombre: 'Nombre completo', identificacion: 'Identificación', curso: 'Curso', telefono: '+57 *** *** ****' },
-    { nombre: 'Nombre completo', identificacion: 'Identificación', curso: 'Curso', telefono: '+57 *** *** ****' },
-    { nombre: 'Nombre completo', identificacion: 'Identificación', curso: 'Curso', telefono: '+57 *** *** ****' },
-    { nombre: 'Nombre completo', identificacion: 'Identificación', curso: 'Curso', telefono: '+57 *** *** ****' },
+    {
+      nombres: 'Juan Carlos García',
+      apellidos: 'López Martínez',
+      nombre: 'Juan Carlos García',
+      tipoId: 'CC',
+      identificacion: '1234567890',
+      curso: '9°',
+      telefono: '+57 321 456 7890',
+      fechaNac: '2010-05-15',
+      direccion: 'Calle 5 #12-34',
+      correo: 'juan.garcia@school.com'
+    },
+    {
+      nombres: 'María Elena Ruiz',
+      apellidos: 'Martínez López',
+      nombre: 'María Elena Ruiz',
+      tipoId: 'TI',
+      identificacion: '9876543210',
+      curso: '8°',
+      telefono: '+57 312 345 6789',
+      fechaNac: '2011-08-22',
+      direccion: 'Calle 10 #8-20',
+      correo: 'maria.martinez@school.com'
+    },
+    {
+      nombres: 'Carlos Andrés Silva',
+      apellidos: 'Rodríguez García',
+      nombre: 'Carlos Andrés Silva',
+      tipoId: 'CC',
+      identificacion: '1111222233',
+      curso: '10°',
+      telefono: '+57 315 678 9012',
+      fechaNac: '2009-12-03',
+      direccion: 'Calle 15 #10-40',
+      correo: 'carlos.silva@school.com'
+    },
+    {
+      nombres: 'Ana Patricia Gómez',
+      apellidos: 'López Jiménez',
+      nombre: 'Ana Patricia Gómez',
+      tipoId: 'CC',
+      identificacion: '4444555566',
+      curso: '9°',
+      telefono: '+57 318 901 2345',
+      fechaNac: '2010-01-20',
+      direccion: 'Calle 20 #5-15',
+      correo: 'ana.gomez@school.com'
+    },
   ],
   acudiente: [
-    { nombre: 'Nombre completo', identificacion: 'Identificación', telefono: '+57 *** *** ****' },
-    { nombre: 'Nombre completo', identificacion: 'Identificación', telefono: '+57 *** *** ****' },
-    { nombre: 'Nombre completo', identificacion: 'Identificación', telefono: '+57 *** *** ****' },
+    {
+      nombre: 'Rosa María González',
+      apellidos: 'García Martínez',
+      tipoId: 'CC',
+      identificacion: '5555666677',
+      telefono: '+57 310 111 2222',
+      fechaNac: '1985-03-15',
+      direccion: 'Calle 5 #12-34',
+      correo: 'rosa.gonzalez@email.com'
+    },
+    {
+      nombre: 'Pedro José López',
+      apellidos: 'Rodríguez Silva',
+      tipoId: 'CC',
+      identificacion: '8888999900',
+      telefono: '+57 311 222 3333',
+      fechaNac: '1980-07-20',
+      direccion: 'Calle 10 #8-20',
+      correo: 'pedro.lopez@email.com'
+    },
+    {
+      nombre: 'María Teresa Díaz',
+      apellidos: 'Moreno García',
+      tipoId: 'CE',
+      identificacion: '1112223334',
+      telefono: '+57 312 333 4444',
+      fechaNac: '1990-05-10',
+      direccion: 'Calle 15 #10-40',
+      correo: 'maria.diaz@email.com'
+    },
   ],
   conductor: [
-    { nombre: 'Nombre completo', identificacion: 'Identificación', licencia: 'Licencia vigente', telefono: '+57 xxx xxx xxxx' },
-    { nombre: 'Nombre completo', identificacion: 'Identificación', licencia: 'Licencia vigente', telefono: '+57 xxx xxx xxxx' },
+    {
+      nombres: 'Pedro Daniel Rodríguez',
+      apellidos: 'Silva García',
+      nombre: 'Pedro Daniel Rodríguez',
+      tipoId: 'CC',
+      identificacion: '54321098',
+      licencia: 'C',
+      vencLicencia: '2025-12-31',
+      telefono: '+57 310 123 4567',
+      fechaNac: '1990-07-10',
+      direccion: 'Calle 15 #8-90',
+      correo: 'pedro.rodriguez@email.com'
+    },
+    {
+      nombres: 'Luis Fernando García',
+      apellidos: 'Moreno López',
+      nombre: 'Luis Fernando García',
+      tipoId: 'CC',
+      identificacion: '77778888',
+      licencia: 'C',
+      vencLicencia: '2026-08-20',
+      telefono: '+57 320 234 5678',
+      fechaNac: '1988-03-15',
+      direccion: 'Calle 25 #12-35',
+      correo: 'luis.garcia@email.com'
+    },
   ],
   familia: [
-    { nombre: 'Nombre', acudiente: 'Acudiente', telefono: 'xxx xxx xxxx' },
-    { nombre: 'Nombre', acudiente: 'Acudiente', telefono: 'xxx xxx xxxx' },
+    {
+      nombre: 'Familia García López',
+      acudiente: 'Rosa María González',
+      estudiante: 'Juan Carlos García',
+      observaciones: 'Familia con 2 hijos en el colegio'
+    },
+    {
+      nombre: 'Familia López Martínez',
+      acudiente: 'Pedro José López',
+      estudiante: 'María Elena Ruiz',
+      observaciones: 'Estudiante becado'
+    },
   ],
   bus: [
-    { matricula: 'Placa', conductor: 'Nombre conductor', marca: 'Marca', modelo: 'Modelo' },
-    { matricula: 'Placa', conductor: 'Nombre conductor', marca: 'Marca', modelo: 'Modelo' },
+    {
+      matricula: 'CND-2024',
+      conductor: 'Pedro Daniel Rodríguez',
+      marca: 'Mercedes Benz',
+      modelo: '2022',
+      capacidad: '45',
+      gps: 'Activo',
+      soat: '2025-06-30'
+    },
+    {
+      matricula: 'MVL-2023',
+      conductor: 'Luis Fernando García',
+      marca: 'Chevrolet',
+      modelo: '2021',
+      capacidad: '48',
+      gps: 'Activo',
+      soat: '2025-09-15'
+    },
   ],
   parada: [
-    { nombre: 'Nombre', direccion: 'Dirección', latitud: 'Latitud', longitud: 'Longitud' },
-    { nombre: 'Nombre', direccion: 'Dirección', latitud: 'Latitud', longitud: 'Longitud' },
+    {
+      nombre: 'Parada Centro',
+      direccion: 'Carrera 7 #5-40',
+      ciudad: 'Neiva',
+      latitud: '2.9277',
+      longitud: '-75.2892'
+    },
+    {
+      nombre: 'Parada Barrio Sur',
+      direccion: 'Calle 50 #10-20',
+      ciudad: 'Neiva',
+      latitud: '2.9200',
+      longitud: '-75.2950'
+    },
   ],
   ruta: [
-    { nombre: 'Nombre', destino: 'Destino final', horaInicio: 'Hora inicio', horaFin: 'Hora final' },
-    { nombre: 'Nombre', destino: 'Destino final', horaInicio: 'Hora inicio', horaFin: 'Hora final' },
+    {
+      nombre: 'Ruta Centro - Sur',
+      sector: 'Centro',
+      horaInicio: '06:30',
+      horaFin: '08:00',
+      destino: 'Colegio Principal',
+      sectorRuta: 'Centro - Barrio Sur'
+    },
+    {
+      nombre: 'Ruta Norte - Este',
+      sector: 'Norte',
+      horaInicio: '06:45',
+      horaFin: '08:15',
+      destino: 'Colegio Secundario',
+      sectorRuta: 'Norte - Barrio Este'
+    },
   ],
   schools: [
-    { nombre: 'Nombre', direccion: 'Dirección' },
-    { nombre: 'Nombre', direccion: 'Dirección' },
+    {
+      nombre: 'Colegio Técnico Neiva',
+      direccion: 'Calle 50 #20-30',
+      ciudad: 'Neiva',
+      escolaridad: 'Primaria y Bachillerato',
+      telefono: '+57 8 876 5432',
+      correo: 'info@colegiotecnico.edu.co',
+      web: 'www.colegiotecnico.edu.co'
+    },
+    {
+      nombre: 'Instituto Educativo San Jorge',
+      direccion: 'Carrera 5 #10-50',
+      ciudad: 'Neiva',
+      escolaridad: 'Primaria',
+      telefono: '+57 8 877 6543',
+      correo: 'contacto@sanjorge.edu.co',
+      web: 'www.sanjorge.edu.co'
+    },
   ],
   admins: [
-    { nombre: 'Nombre completo', identificacion: 'Identificación', correo: 'Correo electrónico', telefono: 'Teléfono' },
-    { nombre: 'Nombre completo', identificacion: 'Identificación', correo: 'Correo electrónico', telefono: 'Teléfono' },
+    {
+      nombre: 'Carlos Andrés',
+      apellidos: 'Pérez Gómez',
+      correo: 'carlos.perez@admin.com',
+      identificacion: '11111111',
+      telefono: '+57 315 777 8888',
+      fechaNac: '1988-09-12',
+      direccion: 'Calle 20 #10-50'
+    },
+    {
+      nombre: 'Ana María',
+      apellidos: 'Rodríguez Silva',
+      correo: 'ana.rodriguez@admin.com',
+      identificacion: '22222222',
+      telefono: '+57 316 888 9999',
+      fechaNac: '1992-06-25',
+      direccion: 'Calle 25 #15-60'
+    },
   ],
 };
 
@@ -152,6 +332,9 @@ const MOCK_DATA: Record<CardType, any[]> = {
 })
 export class CardList {
   @Input() type: CardType = 'estudiante';
+  @Output() viewItem = new EventEmitter<RecordData>();
+  @Output() editItem = new EventEmitter<RecordData>();
+  @Output() deleteItem = new EventEmitter<RecordData>();
 
   searchText = '';
 
@@ -184,5 +367,17 @@ export class CardList {
       if (half[i + 1]) rows.push([half[i], half[i + 1]]);
     }
     return rows;
+  }
+
+  showDetails(item: RecordData): void {
+    this.viewItem.emit(item);
+  }
+
+  editDetails(item: RecordData): void {
+    this.editItem.emit(item);
+  }
+
+  deleteDetails(item: RecordData): void {
+    this.deleteItem.emit(item);
   }
 }

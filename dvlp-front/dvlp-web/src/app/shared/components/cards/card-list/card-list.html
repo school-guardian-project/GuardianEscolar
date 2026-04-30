@@ -7,11 +7,7 @@
 
   <!-- Buscador -->
   <div class="card-list__search">
-    <input
-      class="card-list__search-input"
-      type="text"
-      placeholder="Buscar..."
-      [(ngModel)]="searchText" />
+    <input class="card-list__search-input" type="text" placeholder="Buscar..." [(ngModel)]="searchText" />
     <span class="card-list__search-icon">
       <mat-icon>search</mat-icon>
     </span>
@@ -19,38 +15,44 @@
 
 
   <!-- Lista de items -->
-<div class="card-list__content">
-  <div class="card-list__items">
-    <div class="card-list__item" *ngFor="let item of items">
-      
-      <!-- Avatar -->
-      <div class="card-list__avatar">
-        <mat-icon>{{ icon }}</mat-icon>
-      </div>
+  <div class="card-list__content">
+    <div class="card-list__items">
+      <div class="card-list__item" *ngFor="let item of items">
 
-      <!-- Info -->
-      <div class="card-list__info">
-        <span class="card-list__name">{{ item[itemFields[0].key] }}</span>
-
-        <ng-container *ngFor="let field of itemFields.slice(1)">
-          <span class="card-list__detail" *ngIf="!field.halfWidth">
-            {{ field.label ? field.label + ': ' : '' }}{{ item[field.key] }}
-          </span>
-        </ng-container>
-
-        <div class="card-list__row" *ngFor="let row of rowFields">
-          <span class="card-list__detail">{{ item[row[0].key] }}</span>
-          <span class="card-list__detail">{{ item[row[1].key] }}</span>
+        <!-- Avatar -->
+        <div class="card-list__avatar">
+          <mat-icon>{{ icon }}</mat-icon>
         </div>
-      </div>
 
-      <!-- Acciones -->
-      <div class="card-list__actions">
-        <button class="card-list__btn"><mat-icon>delete</mat-icon></button>
-        <button class="card-list__btn"><mat-icon>visibility</mat-icon></button>
-        <button class="card-list__btn"><mat-icon>edit</mat-icon></button>
-      </div>
+        <!-- Info -->
+        <div class="card-list__info">
+          <span class="card-list__name">{{ item[itemFields[0].key] }}</span>
 
+          <ng-container *ngFor="let field of itemFields.slice(1)">
+            <span class="card-list__detail" *ngIf="!field.halfWidth">
+              {{ field.label ? field.label + ': ' : '' }}{{ item[field.key] }}
+            </span>
+          </ng-container>
+
+          <div class="card-list__row" *ngFor="let row of rowFields">
+            <span class="card-list__detail">{{ item[row[0].key] }}</span>
+            <span class="card-list__detail">{{ item[row[1].key] }}</span>
+          </div>
+        </div>
+
+        <!-- Acciones -->
+        <div class="card-list__actions">
+          <button class="card-list__btn" (click)="deleteDetails(item)" title="Eliminar">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button class="card-list__btn" (click)="showDetails(item)" title="Ver detalles">
+            <mat-icon>visibility</mat-icon>
+          </button>
+          <button class="card-list__btn" (click)="editDetails(item)" title="Editar">
+            <mat-icon>edit</mat-icon>
+          </button>
+        </div>
+
+      </div>
     </div>
   </div>
-</div>

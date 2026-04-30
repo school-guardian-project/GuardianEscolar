@@ -176,7 +176,7 @@ section {
   border-radius: 15px;
   padding: 15px;
   text-align: center;
-  width: 20%;
+  width: fit-content;
 }
 
 .stat-box h2 {
@@ -247,6 +247,9 @@ section {
   font-size: 1.5rem;
   color: #68768e;
   line-height: 1.4;
+}
+.blue-background {
+  color: #ffffff;
 }
 
 .cards {

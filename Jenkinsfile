@@ -59,10 +59,11 @@ pipeline {
         }
       }
     }
-  }
-}
-post {
-  success {
-    archiveArtifacts artifacts: '**/dist/**', fingerprint: true
+
+    post {
+      success {
+        archiveArtifacts artifacts: '**/dist/**', fingerprint: true
+      }
+    }
   }
 }

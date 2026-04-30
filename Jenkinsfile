@@ -55,7 +55,10 @@ pipeline {
     
     stage('Docker Build Backend') {
       when {
-        branch 'develop'
+        allOf {
+          branch 'develop'
+          expression { env.BUILD_BACK == 'true' }
+        }
       }
       agent any
       steps {

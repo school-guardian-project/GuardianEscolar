@@ -32,6 +32,35 @@ pipeline {
         }
       }
     }
+    stage('Sonar Backend') {
+      when {
+        expression { env.BUILD_BACK == 'true' }
+      }
+      agent {
+        docker { image 'mcr.microsoft.com/dotnet/sdk:8.0' }
+      }
+      environment {
+        SONAR_TOKEN = credentials('sonar-token')
+      }
+      steps {
+        dir('dvlp-back') {
+          sh '''
+            dotnet tool install --global dotnet-sonarscanner
+            export PATH="$PATH:/root/.dotnet/tools"
+    
+            dotnet sonarscanner begin \
+              /k:"guardian-backend" \
+              /d:sonar.host.url=http://host.docker.internal:9000 \
+              /d:sonar.login=$SONAR_TOKEN
+    
+            dotnet build -c Release
+    
+            dotnet sonarscanner end \
+              /d:sonar.login=$SONAR_TOKEN
+          '''
+        }
+      }
+    }
 
     stage('Frontend') {
       when {

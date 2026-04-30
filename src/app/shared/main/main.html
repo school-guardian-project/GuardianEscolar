@@ -1,54 +1,49 @@
 <main>
     <section class="section-start">
         <div class="left">
-            <div class="text">La</div>
-            <div class="text">seguridad</div>
-            <div class="text">escolar</div>
-            <div class="in">en</div>
-            <div class="time">tiempo</div>
-            <div class="really">real</div>
-
-            <div class="paragraph">Monitoreo GPS de rutas, alertas instantáneas y control de asistencia. Tranquilidad
-                para las familias, eficiencia para las escuelas.</div>
-
+            <div class="text">{{ 'hero.line1' | translate }}</div>
+            <div class="text">{{ 'hero.line2' | translate }}</div>
+            <div class="text">{{ 'hero.line3' | translate }}</div>
+            <div class="in">{{ 'hero.line4' | translate }}</div>
+            <div class="time">{{ 'hero.line5' | translate }}</div>
+            <div class="really">{{ 'hero.line6' | translate }}</div>
+            <div class="paragraph">{{ 'hero.paragraph' | translate }}</div>
             <div class="button">
-                <button class="start">Descargar</button>
-                <button class="demo">Ver video</button>
+                <button class="start">{{ 'hero.btn_download' | translate }}</button>
+                <button class="demo">{{ 'hero.btn_video' | translate }}</button>
             </div>
         </div>
 
         <div class="right">
             <div class="card-panel">
-                <div class="floating-badge">+ 12 este mes</div>
+                <div class="floating-badge">{{ 'card_panel.badge' | translate }}</div>
                 <div class="header">
-                    <h3 class="panel">Panel Guardian Escolar</h3>
-                    <span class="badge">● En vivo</span>
+                    <h3 class="panel">{{ 'card_panel.title' | translate }}</h3>
+                   <span class="badge">{{ 'card_panel.live' | translate }}</span>
                 </div>
-
                 <div class="stats">
                     <div class="stat-box">
                         <h2 class="blue">248</h2>
-                        <p>Estudiantes</p>
+                        <p>{{ 'card_panel.students' | translate }}</p>
                     </div>
                     <div class="stat-box">
                         <h2>18</h2>
-                        <p>Rutas</p>
+                        <p>{{ 'card_panel.routes' | translate }}</p>
                     </div>
                     <div class="stat-box">
                         <h2 class="red">3</h2>
-                        <p>Alertas</p>
+                        <p>{{ 'card_panel.alerts' | translate }}</p>
                     </div>
                 </div>
-
                 <div class="alert">
-                    <strong>⚠ Bus fuera de ruta</strong>
+                    <strong>⚠ {{ 'card_panel.alert_msg' | translate }}</strong>
                     <br>
-                    <small class="example">Ruta LOL85 · 6:45 am</small>
+                    <small class="example">{{ 'card_panel.alert_sub' | translate }}</small>
                 </div>
-
                 <div class="success">
-                    <strong>✔ 18 rutas operando</strong> <br>
-                    <small class="example2">Todas en tiempo normal</small>
+                    <strong>✔ {{ 'card_panel.success_msg' | translate }}</strong>
+                    <br>
+                    <small class="example2">{{ 'card_panel.success_sub' | translate }}</small>
                 </div>
             </div>
         </div>
@@ -56,94 +51,41 @@
 
     <section class="functionalities" id="funcionalidades">
         <div>
-            <div class="title-section">FUNCIONALIDADES</div>
-            <div class="title">Todo lo que necesitas para la seguridad escolar</div>
-            <div class="description">Una plataforma completa para administradores, conductores y familias.</div>
+            <div class="title-section">{{ 'features.label' | translate }}</div>
+            <div class="title">{{ 'features.title' | translate }}</div>
+            <div class="description">{{ 'features.description' | translate }}</div>
         </div>
-
         <div class="cards">
-            <div class="card">
-                <mat-icon class="icon-card">satellite_alt</mat-icon>
-                <div class="title-card">GPS en tiempo real</div>
-                <p class="card-description">Ubicación precisa de cada bus en el mapa con actualizaciones cada 10 segundos.</p>
-            </div>
-            <div class="card">
-                <mat-icon class="icon-card">notifications</mat-icon>
-                <div class="title-card">Alertas instantáneas</div>
-                <p class="card-description">Notificaciones push cuando el bus llega, se desvía o hay cualquier incidente.</p>
-            </div>
-            <div class="card">
-                <mat-icon class="icon-card">assignment</mat-icon>
-                <div class="title-card">Control de asistencia</div>
-                <p class="card-description">Registro automático de subida y bajada de cada estudiante al bus.</p>
-            </div>
-            <div class="card">
-                <mat-icon class="icon-card">insert_chart</mat-icon>
-                <div class="title-card">Panel de Administracion</div>
-                <p class="card-description">Dashboard completo con métricas, reportes y gestión de rutas y conductores.
-                </p>
-            </div>
-            <div class="card">
-                <mat-icon class="icon-card">family_restroom</mat-icon>
-                <div class="title-card">App para familias</div>
-                <p class="card-description">Los padres siguen el recorrido del bus y reciben notificaciones en su
-                    celular.</p>
-            </div>
-            <div class="card">
-                <mat-icon class="icon-card">lock</mat-icon>
-                <div class="title-card">Datos seguros</div>
-                <p class="card-description">Cifrado de extremo a extremo y cumplimiento con normativas de protección de
-                    datos.</p>
+            <div class="card" *ngFor="let card of cards">
+                <mat-icon class="icon-card">{{ card.icon }}</mat-icon>
+                <div class="title-card">{{ card.title }}</div>
+                <p class="card-description">{{ card.description }}</p>
             </div>
         </div>
     </section>
 
     <section class="how-it-works" id="como-funciona">
         <div>
-            <div class="title-section">COMO FUNCIONA</div>
-            <div class="title">Simple para todos</div>
+            <div class="title-section">{{ 'how_it_works.label' | translate }}</div>
+            <div class="title">{{ 'how_it_works.title' | translate }}</div>
         </div>
-
         <div class="steps">
-            <div class="step-item">
-                <div class="number">1</div>
+            <div class="step-item" *ngFor="let step of steps; let i = index">
+                <div class="number">{{ i + 1 }}</div>
                 <div class="step">
-                    <div class="title-step">Registro de institución</div>
-                    <p class="description">Crea tu cuenta, agrega tus rutas y conductores en minutos.</p>
-                </div>
-            </div>
-
-            <div class="step-item">
-                <div class="number">2</div>
-                <div class="step">
-                    <div class="title-step">Instálalo en los buses</div>
-                    <p class="description">Texto aquí...</p>
-                </div>
-            </div>
-
-            <div class="step-item">
-                <div class="number">3</div>
-                <div class="step">
-                    <div class="title-step">Invita a las familias</div>
-                    <p class="description">Los padres descargan Guardian Escolar...</p>
-                </div>
-            </div>
-
-            <div class="step-item">
-                <div class="number">4</div>
-                <div class="step">
-                    <div class="title-step">Monitoreo activo</div>
-                    <p class="description">Monitoreo en tiempo real.</p>
+                    <div class="title-step">{{ step.title }}</div>
+                    <p class="description">{{ step.description }}</p>
                 </div>
             </div>
         </div>
     </section>
+
     <section class="question">
-        <div class="title-question">¿Listo para proteger a tus estudiantes?</div>
-        <div class="description">Únete a más de 500 instituciones que ya confían en Guardian Escolar.</div>
+        <div class="title-question">{{ 'cta.title' | translate }}</div>
+        <div class="description">{{ 'cta.description' | translate }}</div>
         <div class="button">
-            <button class="start">Descargar</button>
-            <button class="demo">Hablar con ventas</button>
+            <button class="start">{{ 'cta.btn_download' | translate }}</button>
+            <button class="demo">{{ 'cta.btn_sales' | translate }}</button>
         </div>
     </section>
 </main>

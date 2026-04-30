@@ -1,0 +1,70 @@
+{
+  "navbar": {
+    "features": "Features",
+    "how_it_works": "How it works",
+    "pricing": "Pricing",
+    "contact": "Contact"
+  },
+  "hero": {
+    "line1": "School",
+    "line2": "safety",
+    "line3": "in",
+    "line4": "real",
+    "line5": "time",
+    "line6": "",
+    "paragraph": "GPS route monitoring, instant alerts and attendance control. Peace of mind for families, efficiency for schools.",
+    "btn_download": "Download",
+    "btn_video": "Watch video"
+  },
+  "card_panel": {
+    "badge": "+ 12 this month",
+    "title": "Guardian Escolar Panel",
+    "live": "● Live",
+    "students": "Students",
+    "routes": "Routes",
+    "alerts": "Alerts",
+    "alert_msg": "Bus off route",
+    "alert_sub": "Route LOL85 · 6:45 am",
+    "success_msg": "18 routes operating",
+    "success_sub": "All on normal schedule"
+  },
+  "features": {
+    "label": "FEATURES",
+    "title": "Everything you need for school safety",
+    "description": "A complete platform for administrators, drivers and families.",
+    "cards": [
+      { "icon": "satellite_alt", "title": "Real-time GPS", "description": "Precise location of each bus on the map with updates every 10 seconds." },
+      { "icon": "notifications", "title": "Instant alerts", "description": "Push notifications when the bus arrives, deviates or any incident occurs." },
+      { "icon": "assignment", "title": "Attendance control", "description": "Automatic check-in and check-out record of each student on the bus." },
+      { "icon": "insert_chart", "title": "Admin Dashboard", "description": "Complete dashboard with metrics, reports and route and driver management." },
+      { "icon": "family_restroom", "title": "Family app", "description": "Parents follow the bus route and receive notifications on their phone." },
+      { "icon": "lock", "title": "Secure data", "description": "End-to-end encryption and compliance with data protection regulations." }
+    ]
+  },
+  "how_it_works": {
+    "label": "HOW IT WORKS",
+    "title": "Simple for everyone",
+    "steps": [
+      { "title": "Register your institution", "description": "Create your account, add your routes and drivers in minutes." },
+      { "title": "Install on the buses", "description": "Install the GPS device on each bus in less than 5 minutes." },
+      { "title": "Invite families", "description": "Parents download Guardian Escolar and follow the route in real time." },
+      { "title": "Active monitoring", "description": "Real-time monitoring from the administration panel." }
+    ]
+  },
+  "cta": {
+    "title": "Ready to protect your students?",
+    "description": "Join more than 500 institutions that already trust Guardian Escolar.",
+    "btn_download": "Download",
+    "btn_sales": "Talk to sales"
+  },
+  "footer": {
+    "description": "School monitoring system for safer routes and more peaceful families.",
+    "col_product": "Product",
+    "col_company": "Company",
+    "col_legal": "Legal",
+    "links_product": ["Features", "How it works", "Pricing", "For schools"],
+    "links_company": ["About us", "Blog", "Contact"],
+    "links_legal": ["Privacy", "Terms"],
+    "rights": "© 2026 Guardian Escolar · All rights reserved"
+  }
+}

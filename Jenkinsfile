@@ -33,17 +33,6 @@ pipeline {
       }
     }
 
-    stage('Docker Build Backend') {
-      when {
-        branch 'develop'
-      }
-      steps {
-        dir('dvlp-back') {
-          sh 'docker build -t guardian-backend .'
-        }
-      }
-    }
-
     stage('Frontend') {
       when {
         expression { env.BUILD_FRONT == 'true' }
@@ -55,6 +44,17 @@ pipeline {
         dir('dvlp-front/dvlp-web') {
           sh 'npm ci'
           sh 'npm run build'
+        }
+      }
+    }
+    
+    stage('Docker Build Backend') {
+      when {
+        branch 'develop'
+      }
+      steps {
+        dir('dvlp-back') {
+          sh 'docker build -t guardian-backend .'
         }
       }
     }

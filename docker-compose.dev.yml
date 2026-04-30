@@ -51,17 +51,51 @@ services:
   #     --changeLogFile=/dvlp-back/liquibase/master.xml
   #     update
 
-  # jenkins:
-  #   container_name: jenkins_container
-  #   image: jenkins/jenkins:2.555.1-lts-jdk25
-  #   restart: unless-stopped
-  #   user: root
-  #   ports:
-  #     - 9090:8080
-  #     - 50000:50000
-  #   volumes:
-  #     - jenkins_home:/var/jenkins_home
-  #     - /var/run/docker.sock:/var/run/docker.sock
+  jenkins:
+    container_name: jenkins_container
+    build:
+      context: .
+      dockerfile: Dockerfile.jenkins
+    restart: unless-stopped
+    user: root
+    ports:
+      - 9090:8080
+      - 50000:50000
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - jenkins_net
+  
+  nginx:
+    image: nginx:latest
+    container_name: jenkins-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - jenkins
+    networks:
+      - jenkins_net
+    
+  sonarqube:
+    image: sonarqube:lts
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_data:/opt/sonarqube/logs
+      - sonarqube_extensions:/opt/sonarqube/extensions
+    restart: unless-stopped
 
 volumes:
   jenkins_home:
+  sonarqube_data:
+  sonarqube_logs:
+  sonarqube_extensions:
+
+networks:
+  jenkins_net:

@@ -1,0 +1,70 @@
+{
+  "navbar": {
+    "features": "Funcionalidades",
+    "how_it_works": "Como funciona",
+    "pricing": "Precios",
+    "contact": "Contacto"
+  },
+  "hero": {
+    "line1": "La",
+    "line2": "seguridad",
+    "line3": "escolar",
+    "line4": "en",
+    "line5": "tiempo",
+    "line6": "real",
+    "paragraph": "Monitoreo GPS de rutas, alertas instantáneas y control de asistencia. Tranquilidad para las familias, eficiencia para las escuelas.",
+    "btn_download": "Descargar",
+    "btn_video": "Ver video"
+  },
+  "card_panel": {
+    "badge": "+ 12 este mes",
+    "title": "Panel Guardian Escolar",
+    "live": "● En vivo",
+    "students": "Estudiantes",
+    "routes": "Rutas",
+    "alerts": "Alertas",
+    "alert_msg": "Bus fuera de ruta",
+    "alert_sub": "Ruta LOL85 · 6:45 am",
+    "success_msg": "18 rutas operando",
+    "success_sub": "Todas en tiempo normal"
+  },
+  "features": {
+    "label": "FUNCIONALIDADES",
+    "title": "Todo lo que necesitas para la seguridad escolar",
+    "description": "Una plataforma completa para administradores, conductores y familias.",
+    "cards": [
+      { "icon": "satellite_alt", "title": "GPS en tiempo real", "description": "Ubicación precisa de cada bus en el mapa con actualizaciones cada 10 segundos." },
+      { "icon": "notifications", "title": "Alertas instantáneas", "description": "Notificaciones push cuando el bus llega, se desvía o hay cualquier incidente." },
+      { "icon": "assignment", "title": "Control de asistencia", "description": "Registro automático de subida y bajada de cada estudiante al bus." },
+      { "icon": "insert_chart", "title": "Panel de Administración", "description": "Dashboard completo con métricas, reportes y gestión de rutas y conductores." },
+      { "icon": "family_restroom", "title": "App para familias", "description": "Los padres siguen el recorrido del bus y reciben notificaciones en su celular." },
+      { "icon": "lock", "title": "Datos seguros", "description": "Cifrado de extremo a extremo y cumplimiento con normativas de protección de datos." }
+    ]
+  },
+  "how_it_works": {
+    "label": "COMO FUNCIONA",
+    "title": "Simple para todos",
+    "steps": [
+      { "title": "Registro de institución", "description": "Crea tu cuenta, agrega tus rutas y conductores en minutos." },
+      { "title": "Instálalo en los buses", "description": "Instala el dispositivo GPS en cada bus en menos de 5 minutos." },
+      { "title": "Invita a las familias", "description": "Los padres descargan Guardian Escolar y siguen el recorrido en tiempo real." },
+      { "title": "Monitoreo activo", "description": "Monitoreo en tiempo real desde el panel de administración." }
+    ]
+  },
+  "cta": {
+    "title": "¿Listo para proteger a tus estudiantes?",
+    "description": "Únete a más de 500 instituciones que ya confían en Guardian Escolar.",
+    "btn_download": "Descargar",
+    "btn_sales": "Hablar con ventas"
+  },
+  "footer": {
+    "description": "Sistema de monitoreo escolar para rutas más seguras y familias más tranquilas.",
+    "col_product": "Producto",
+    "col_company": "Empresa",
+    "col_legal": "Legal",
+    "links_product": ["Funcionalidades", "Como funciona", "Precios", "Para escuelas"],
+    "links_company": ["Nosotros", "Blog", "Contacto"],
+    "links_legal": ["Privacidad", "Terminos"],
+    "rights": "© 2026 Guardian Escolar · Todos los derechos reservados"
+  }
+}

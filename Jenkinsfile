@@ -46,6 +46,11 @@ pipeline {
           sh 'npm run build'
         }
       }
+      post {
+        success {
+          archiveArtifacts artifacts: '**/dist/**', fingerprint: true
+        }
+      }
     }
     
     stage('Docker Build Backend') {
@@ -61,9 +66,4 @@ pipeline {
     }
 
   }
-    post {
-      success {
-        archiveArtifacts artifacts: '**/dist/**', fingerprint: true
-      }
-    }
 }

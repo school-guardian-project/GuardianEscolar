@@ -1,35 +1,32 @@
 import { Component } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { NavComponent } from '../../../../../../shared/components/navbar/nav-component/nav-component';
 import { Router } from '@angular/router';
-import { NgIf } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangePassword } from '@shared/components/change/change-password/change-password';
 
 @Component({
   selector: 'app-email',
-  imports: [NavComponent, MatIconModule, MatButtonModule, MatToolbarModule, NgIf, FormsModule],
+  imports: [FormsModule, ReactiveFormsModule, ChangePassword],
   templateUrl: './email.html',
   styleUrl: './email.css',
 })
 export class Email {
-  email: string = '';
-  emailError = '';
-
-  constructor(private router: Router) {}
+  form: FormGroup;
+   
+  constructor(private router: Router, private fb: FormBuilder) {
+    this.form = this.fb.group({
+      email: ['', [Validators.required, Validators.email]]
+    });
+  }
 
   onSubmit() {
-    this.emailError = '';
-
-    if (!this.email) {
-      this.emailError = '*El correo es requerido';
-    } else {
+    if (this.form.valid) {
       this.router.navigate(['/auth/forgot-password/code']);
+    } else {
+      this.form.markAllAsTouched();
     }
   }
 
-  login() {
+  return() {
     this.router.navigate(['/auth/login']);
   }
 }

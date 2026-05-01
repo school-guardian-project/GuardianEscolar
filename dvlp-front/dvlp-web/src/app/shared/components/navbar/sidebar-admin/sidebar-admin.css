@@ -1,7 +1,7 @@
 /* SIDEBAR IZQUIERDO */
 .sidebar {
   width: 200px;
-  background-color: var(--color-navbar); /* 🔥 usa variable */
+  background-color: var(--color-navbar); 
   display: flex;
   flex-direction: column;
   height: 100%;

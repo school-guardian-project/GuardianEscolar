@@ -72,6 +72,7 @@ h4 {
 
 /* TARJETAS */
 .theme-card {
+   position: relative;
   border: 0.5px solid var(--border-color);
   background: var(--card-bg);
   border-radius: 10px;
@@ -87,7 +88,24 @@ h4 {
 
 .theme-card.active {
   border: 2px solid var(--color-navbar);
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.05);
+  transform: scale(1.02);
 }
+
+.active-badge {
+  position: absolute;
+  top: 6px;
+  right: 6px;  
+  left: auto;   
+  background: var(--color-navbar);
+  color: white;
+  font-size: 10px;
+  padding: 1px 6px;
+  border-radius: 8px;
+  font-weight: 500;
+  z-index: 2;
+}
+
 
 /* PREVIEW */
 .theme-preview {
@@ -104,7 +122,7 @@ h4 {
 }
 
 .theme-preview-dark {
-  background: #1e293b; /* se mantiene fijo  */
+  background: #1e293b; 
   border: 0.5px solid #334155;
 }
 
@@ -148,16 +166,50 @@ h4 {
   align-items: center;
   justify-content: flex-start;
   flex-direction: row;
-  gap: 8px;
+  gap: 95px;
   width: 100%;
-  margin-top: 8px;
+  margin-top: 9px;
   cursor: pointer;
 }
 
-.radio-wrapper {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
+.radio-wrapper input {
+  opacity: 0;
+  position: absolute;
+  pointer-events: none;
+}
+
+.custom-radio {
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--border-color);
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+/* bolita interna */
+.custom-radio::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  
+  background: var(--color-navbar);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 0.2s ease;
+}
+
+/* CUANDO ESTÁ SELECCIONADO */
+.radio-wrapper input:checked + .custom-radio {
+  border-color: var(--color-navbar);
+}
+
+.radio-wrapper input:checked + .custom-radio::after {
+  transform: translate(-50%, -50%) scale(1);
 }
 
 /* BOTONES */

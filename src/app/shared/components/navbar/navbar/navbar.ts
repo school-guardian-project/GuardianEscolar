@@ -3,11 +3,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
+import { TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule],
+  imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, TranslateModule, CommonModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })

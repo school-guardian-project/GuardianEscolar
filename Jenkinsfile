@@ -81,6 +81,30 @@ pipeline {
         }
       }
     }
+    stage('Sonar Frontend') {
+      when {
+        expression { env.BUILD_FRONT == 'true' }
+      }
+      agent {
+        docker { image 'node:20' }
+      }
+      environment {
+        SONAR_TOKEN = credentials('sonar-token')
+      }
+      steps {
+        dir('dvlp-front/dvlp-web') {
+          sh '''
+            npm install -g sonar-scanner
+    
+            sonar-scanner \
+              -Dsonar.projectKey=guardian-frontend \
+              -Dsonar.sources=. \
+              -Dsonar.host.url=http://host.docker.internal:9000 \
+              -Dsonar.login=$SONAR_TOKEN
+          '''
+        }
+      }
+    }
     
     stage('Docker Build Backend') {
       when {

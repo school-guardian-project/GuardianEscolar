@@ -40,12 +40,16 @@
   --color-navbar: #1A56DB;
 
   --card-bg: #FFFFFF;
+  --card-secondary-bg: #F8FAFC;
+  --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
   --border-color: #E2E8F0;
 
   --text-secondary: #64748B;
   --title-color: #1A2E4A;
-  --hover-color: #1A56DB;
-  --accent-color: #1A56DB;
+
+  --hover-color: #2061ec;
+  --accent-color: #003ab8;
 
   --alert-bg: #FEF2F2;
   --alert-title: #7F1D1D;
@@ -55,6 +59,7 @@
   --modal-bg: #FFFFFF;
   --color-icon: #164bb4;
   --border-icon: #001c41;
+
   --button-cancel: #FFFFFF;
   --button-apply: #1A56DB;
 }
@@ -67,13 +72,16 @@
   --color-navbar: #16A34A;
 
   --card-bg: #FFFFFF;
+  --card-secondary-bg: #F8FAFC;
+  --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
   --border-color: #E2E8F0;
 
   --text-secondary: #64748B;
   --title-color: #1A2E4A;
 
   --hover-color: #16A34A;
-  --accent-color: #16A34A;
+  --accent-color: #107936;
 
   --alert-bg: #FEF2F2;
   --alert-title: #7F1D1D;
@@ -94,10 +102,12 @@
   --bg-color: #0F1115;
   --text-color: #E5E7EB;
 
-  /* navbar*/
   --color-navbar: #0F2E6B;
 
   --card-bg: #161A22;
+  --card-secondary-bg: #1C1F26;
+  --card-shadow: 0 8px 20px rgba(0,0,0,0.4);
+
   --border-color: #252A34;
 
   --text-secondary: #6B7280;
@@ -113,6 +123,7 @@
 
   --modal-title: #FFFFFF;
   --modal-bg: #161A22;
+
   --color-icon: #164bb4;
   --border-icon: #0025cc;
 
@@ -125,16 +136,18 @@
   --bg-color: #0F1115;
   --text-color: #E5E7EB;
 
-  /* navbar*/
   --color-navbar: #0B4A24;
 
   --card-bg: #161A22;
+  --card-secondary-bg: #1C1F26;
+  --card-shadow: 0 8px 20px rgba(0,0,0,0.4);
+
   --border-color: #252A34;
 
   --text-secondary: #6B7280;
   --title-color: #F9FAFB;
 
-  --hover-color: #22C55E;
+  --hover-color: #1eda63;
   --accent-color: #22C55E;
 
   --alert-bg: #161A22;
@@ -143,14 +156,14 @@
   --alert-icon: #F87171;
 
   --modal-bg: #161A22;
+  --modal-title: #FFFFFF;
+
   --color-icon: #128b3b;
   --border-icon: #00a33f;
-  --modal-title: #FFFFFF;
 
   --button-cancel: #FFFFFF;
   --button-apply: #22C55E;
 }
-
 /*  BODY */
 body {
   background-color: var(--bg-color);

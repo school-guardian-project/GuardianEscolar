@@ -5,42 +5,26 @@
                 <img src="assets/logo-blue.svg" alt="Guardian Escolar"> &nbsp;
                 <div class="guardian">Guardian Escolar</div>
             </span>
-    
-            <p class="description">Sistema de monitoreo escolar para rutas más seguras y familias mástranquilas.</p>
+            <p class="description">{{ 'footer.description' | translate }}</p>
         </div>
-    
         <div class="cols">
             <div class="col">
-                <div class="title">Producto</div>
-        
-                <p class="link">Funcionalidades</p>
-                <p class="link">Como funciona</p>
-                <p class="link">Precios</p>
-                <p class="link">Para escuelas</p>
+                <div class="title">{{ 'footer.col_product' | translate }}</div>
+                <p class="link" *ngFor="let link of linksProduct">{{ link }}</p>
             </div>
-            
             <div class="col">
-                <div class="title">Empresa</div>
-        
-                <p class="link">Nosotros</p>
-                <p class="link">Blog</p>
-                <p class="link">Contacto</p>
+                <div class="title">{{ 'footer.col_company' | translate }}</div>
+                <p class="link" *ngFor="let link of linksCompany">{{ link }}</p>
             </div>
-        
             <div class="col">
-                <div class="title">Legal</div>
-        
-                <p class="link">Privacidad</p>
-                <p class="link">Terminos</p>
+                <div class="title">{{ 'footer.col_legal' | translate }}</div>
+                <p class="link" *ngFor="let link of linksLegal">{{ link }}</p>
             </div>
         </div>
     </div>
-
     <div class="line"></div>
-
     <div class="footer-down">
-        <div class="down-left">&copy; 2026 Guardian Escolar · Todos los derechos reservados</div>
-
+        <div class="down-left">{{ 'footer.rights' | translate }}</div>
         <div class="down-right">
             <div class="social">guardianescolar0@gmail.com</div>
             <div class="social">guardian.edu</div>

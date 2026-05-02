@@ -66,6 +66,9 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
       - jenkins_net
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
   
   nginx:
     image: nginx:latest

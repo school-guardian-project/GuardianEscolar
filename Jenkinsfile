@@ -23,7 +23,7 @@ pipeline {
         expression { env.BUILD_BACK == 'true' }
       }
       agent {
-        docker { image 'mcr.microsoft.com/dotnet/sdk:8.0' }
+        docker { image 'mcr.microsoft.com/dotnet/sdk:10.0' }
       }
       steps {
         dir('dvlp-back') {
@@ -37,7 +37,7 @@ pipeline {
         expression { env.BUILD_BACK == 'true' }
       }
       agent {
-        docker { image 'mcr.microsoft.com/dotnet/sdk:8.0' }
+        docker { image 'mcr.microsoft.com/dotnet/sdk:10.0' }
       }
       environment {
         SONAR_TOKEN = credentials('sonar-token')

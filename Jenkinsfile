@@ -32,6 +32,22 @@ pipeline {
         }
       }
     }
+    stage ('Build Backend') {
+      when {
+        expression { env.BUILD_BACK == "true" }
+      }
+      steps {
+        dir('dvlp-back') {
+          sh '''
+            docker run --rm \
+              -v $(pwd):/app \
+              -w /app \
+              mcr.microsoft.com/dotnet/sdk:10.0 \
+              bash -c "dotnet restore && dotnet build -c Release"
+          '''
+        }
+      }
+    }
     stage('Sonar Backend') {
       when {
         expression { env.BUILD_BACK == 'true' }
@@ -81,6 +97,27 @@ pipeline {
         }
       }
     }
+    stage('Build Frontend') {
+      when {
+        expression { env.BUILD_FRONT == "true" }
+      }
+      steps {
+        dir('dvlp-front/dvlp-web') {
+          sh '''
+            docker run --rm \
+              -v $(pwd):/app \
+              -w /app \
+              node:20 \
+              bash -c "npm ci && npm run build"
+          '''
+        }
+      }
+      post {
+        success {
+          archiveArtifacts artifacts: '**/dist/**', fingerprint: true
+        }
+      }
+    }
     stage('Sonar Frontend') {
       when {
         expression { env.BUILD_FRONT == 'true' }
@@ -120,6 +157,18 @@ pipeline {
         }
       }
     }
-
+    stage('Docker Build Frontend') {
+      when {
+        allOf {
+          branch 'develop'
+          expression { env.BUILD_FRONT == "true" }
+        }
+      }
+      steps {
+        dir('dvlp-front/dvlp-web') {
+          sh 'docker build -t guardian-frontend:latest .'
+        }
+      }
+    }
   }
 }

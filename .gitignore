@@ -1,7 +1,13 @@
 .env
-
 .vs/
+obj/
+bin/
 
-./dvlp-back/src/backend/.vs/*
-./dvlp-back/src/backend/bin/*
-./dvlp-back/src/backend/obj/*
+# Backend
+dvlp-back/src/backend/.vs/
+dvlp-back/src/backend/bin/
+dvlp-back/src/backend/obj/
+
+# Mobile app
+dvlp-front/dvlp-movil/app-movil/bin/
+dvlp-front/dvlp-movil/app-movil/obj/

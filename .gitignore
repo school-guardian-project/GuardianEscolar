@@ -10,4 +10,8 @@ dvlp-back/src/backend/obj/
 
 # Mobile app
 dvlp-front/dvlp-movil/app-movil/bin/
+<<<<<<< HEAD
 dvlp-front/dvlp-movil/app-movil/obj/
+=======
+dvlp-front/dvlp-movil/app-movil/obj/
+>>>>>>> style/contact

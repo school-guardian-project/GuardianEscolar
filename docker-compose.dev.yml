@@ -1,7 +1,9 @@
 services:
   backend:
     container_name: backend-container-dev
-    image: mcr.microsoft.com/dotnet/sdk:10.0
+    build:
+      context: ./dvlp-back/src/backend
+      dockerfile: dev.Dockerfile
     working_dir: /app
     ports:
       - "8080:8080"
@@ -22,7 +24,7 @@ services:
       context: ./dvlp-front/dvlp-web/
       dockerfile: dev.Dockerfile
     ports:
-      - "4201:4200"
+      - "4200:4200"
     environment:
       - NODE_ENV=development
     volumes:

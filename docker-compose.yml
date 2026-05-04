@@ -7,20 +7,23 @@ services:
 
   backend:
     build:
-      context: .dvlp-back/src/backend
-      dockerfile: dev.Dockerfile
+      context: ./dvlp-back/src/backend
+      dockerfile: Dockerfile
+    container_name: guardian-backend
+    networks:
+      - guardian-net
 
-  frtonend:
+  frontend:
     build:
-      context: .dvlp-front/dvlp-web
-      dockerfile: dev.Dockerfile
+      context: ./dvlp-front/dvlp-web
+      dockerfile: Dockerfile
     container_name: guardian-frontend
-    ports: 
+    ports:
       - "3000:80"
     depends_on:
       - backend
     networks:
       - guardian-net
 
-networks: 
+networks:
   guardian-net:

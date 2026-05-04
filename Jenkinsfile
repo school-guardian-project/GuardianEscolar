@@ -150,7 +150,7 @@ pipeline {
 
   post {
     always {
-      node {
+      node('any') {
         cleanWs()
       }
     }

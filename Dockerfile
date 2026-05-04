@@ -6,12 +6,12 @@ COPY package*.json ./
 RUN npm ci
 
 COPY . .
-RUN npx ng build --configuration production --no-server
+RUN npx ng build --configuration spa --output-mode=static
 
 FROM nginx:alpine AS final
 
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-COPY --from=build /app/dist/dvlp-web/browser /usr/share/nginx/html
+COPY --from=build /app/dist/school-guardian/browser /usr/share/nginx/html
 
 EXPOSE 80
 

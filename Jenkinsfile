@@ -26,7 +26,10 @@ pipeline {
         expression { env.BUILD_BACK == 'true' }
       }
       agent {
-        docker { image 'mcr.microsoft.com/dotnet/sdk:10.0' }
+        docker { 
+          image 'mcr.microsoft.com/dotnet/sdk:10.0'
+          args '--network sonar-net'
+        }
       }
       steps {
         dir('dvlp-back/src/backend') {
@@ -40,7 +43,10 @@ pipeline {
         expression { env.BUILD_BACK == 'true' }
       }
       agent {
-        docker { image 'mcr.microsoft.com/dotnet/sdk:10.0' }
+        docker { 
+          image 'mcr.microsoft.com/dotnet/sdk:10.0'
+          args '--network sonar-net'
+        }
       }
       environment {
         SONAR_TOKEN = credentials('sonar-token')
@@ -53,7 +59,7 @@ pipeline {
 
             dotnet sonarscanner begin \\
               /k:"guardian-backend" \\
-              /d:sonar.host.url=http://host.docker.internal:9000 \\
+              /d:sonar.host.url=http://sonarqube:9000 \\
               /d:sonar.login=$SONAR_TOKEN
 
             dotnet build -c Release
@@ -89,7 +95,10 @@ pipeline {
         expression { env.BUILD_FRONT == 'true' }
       }
       agent {
-        docker { image 'node:20' }
+        docker { 
+          image 'node:20' 
+          args '--network sonar-net'
+        }
       }
       environment {
         SONAR_TOKEN = credentials('sonar-token')
@@ -102,7 +111,7 @@ pipeline {
             sonar-scanner \\
               -Dsonar.projectKey=guardian-frontend \\
               -Dsonar.sources=src \\
-              -Dsonar.host.url=http://host.docker.internal:9000 \\
+              -Dsonar.host.url=http://sonarqube:9000 \\
               -Dsonar.login=$SONAR_TOKEN
           '''
         }
@@ -141,7 +150,9 @@ pipeline {
 
   post {
     always {
-      cleanWs()
+      node {
+        cleanWs()
+      }
     }
   }
 }

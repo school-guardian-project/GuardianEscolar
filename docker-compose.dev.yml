@@ -84,6 +84,7 @@ services:
       - jenkins
     networks:
       - jenkins_net
+      - sonar-net
     
   sonarqube:
     image: sonarqube:lts
@@ -95,6 +96,8 @@ services:
       - sonarqube_data:/opt/sonarqube/logs
       - sonarqube_extensions:/opt/sonarqube/extensions
     restart: unless-stopped
+    networks:
+      - sonar-net
 
 volumes:
   jenkins_home:
@@ -104,3 +107,4 @@ volumes:
 
 networks:
   jenkins_net:
+  sonar-net:

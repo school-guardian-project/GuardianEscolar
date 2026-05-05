@@ -14,10 +14,10 @@ input {
 .pin-inputs {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    gap: 15px;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 10px;
+    margin-bottom: 40px;
 }
 
 .pin-input {

@@ -27,9 +27,6 @@ services:
       - "4200:4200"
     environment:
       - NODE_ENV=development
-    volumes:
-      - ./dvlp-front/dvlp-web:/app
-      - /app/node_modules
   
   # liquibase:
   #   image: liquibase/liquibase:5.0.1

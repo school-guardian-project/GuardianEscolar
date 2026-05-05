@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChangePassword } from '@shared/components/change/change-password/change-password';
 import {
@@ -9,6 +9,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { passwordMatch } from '@shared/validator/password-match.validator';
+import { MatDialog } from '@angular/material/dialog';
+import { Confirmations } from '@shared/components/modal/confirmations/confirmations';
 
 @Component({
   selector: 'app-reset',
@@ -18,6 +20,7 @@ import { passwordMatch } from '@shared/validator/password-match.validator';
 })
 export class Reset {
   form: FormGroup;
+  readonly dialog = inject(MatDialog);
 
   constructor(
     private router: Router,
@@ -57,10 +60,28 @@ export class Reset {
 
   onSubmit() {
     if (this.form.valid) {
-      this.router.navigate(['/admin/informacion']);
+      this.openDialog();
     } else {
       this.form.markAllAsTouched();
     }
+  }
+
+  openDialog() {
+    const dialogRef = this.dialog.open(Confirmations, {
+      data: {
+        titleDialog: 'Contraseña restablecida',
+        descriptionDialog: 'Su contraseña ha sido restablecida correctamente.',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result === 'accept') {
+        this.accept();
+      }
+    });
+  }
+  accept() {
+    this.router.navigate(['/auth/login']);
   }
 
   return() {

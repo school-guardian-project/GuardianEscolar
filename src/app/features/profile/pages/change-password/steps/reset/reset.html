@@ -7,17 +7,27 @@
   <form action="" [formGroup]="form">
     <label for="email">Nueva contraseña</label>
     <input type="password" id="password" formControlName="password">
+
+    <div class="error-container">
+      @if (f['password'].value) {
+        @if (f['password'].hasError('required')) {
+          <small class="error">La contraseña es obligatoria</small>
+        }
+        <!-- Validaciones individuales usando Regex directo en el template o métodos -->
+        @if (!f['password'].value.match('(?=.*[A-Z])')) {
+          <small class="error">Falta una mayúscula</small>
+        }
+        @if (!f['password'].value.match('(?=.*[0-9])')) {
+          <small class="error">Falta un número</small>
+        }
+        @if (f['password'].value.length < 8) {
+          <small class="error">Mínimo 8 caracteres</small>
+        }
+      }
+    </div>
     
     <label for="email">Confirmar contraseña</label>
     <input type="password" id="password" formControlName="confirmPassword">
-
-    @if (form.errors && form.errors['passwordNoMatch']) {
-      <small class="error">*Las contraseñas no son iguales.</small>
-    }
-
-    @if (form.errors?.['required']) {
-      <small class="error">*Estos pasos son obligatorios.</small>
-    }
   </form>
 
 </app-change-password>

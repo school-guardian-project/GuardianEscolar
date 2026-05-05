@@ -1,39 +1,45 @@
 input {
-    padding: 10px;
-    border-radius: 5px;
-    border: #68768e 2px solid;
-    transition: border 0.2s ease;
+  padding: 10px;
+  border-radius: 5px;
+  border: #68768e 2px solid;
+  transition: border 0.2s ease;
 }
 
 input:focus {
-    border: #366fea 2px solid;
-    outline: none;
+  border: #366fea 2px solid;
+  outline: none;
 }
 
 input.ng-invalid.ng-touched {
-    border: 2px red solid;
+  border: 2px red solid;
 }
 
 label {
-    margin-bottom: 7px;
-    font-size: 1rem;
+  margin-bottom: 7px;
+  font-size: 1rem;
 }
 
 #password {
-    margin-bottom: 30px;
+  margin-bottom: 30px;
 }
 
 p {
-    color: #68768e;
-    margin-bottom: 50px;
+  color: #68768e;
+  margin-bottom: 50px;
 }
 form {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .error {
-    color: red;
-    margin-top: -20px;
-    margin-bottom: 10px;
+  color: red;
+  margin-top: -20px;
+  margin-bottom: 10px;
+}
+
+.error-container {
+  gap: 5px;
+  display: flex;
+  flex-direction: column;
 }

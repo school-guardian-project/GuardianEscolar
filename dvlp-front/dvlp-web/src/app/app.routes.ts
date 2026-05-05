@@ -51,28 +51,13 @@ export const routes: Routes = [
   /* INFORMATION */
   { path: 'admin/informacion', component: InformationAdmin },
 
-  { path: 'admin',
-    children: [
-      { path: 'change-email', component: ChangeEmail, children: changeEmailRoutes }
-    ]
-  },
+  /* PROFILE CHANGES */
+  { path: 'admin/change-email', component: ChangeEmail, children: changeEmailRoutes },
+  { path: 'admin/change-password', component: ChangePassword, children: changePasswordRoutes },
+  { path: 'admin/change-contact', component: ChangeContact, children: changeContactRoutes },
   /* SUPERADMIN */
   { path: 'superadmin/admins', component: Admins },
   { path: 'superadmin/schools', component: Schools },
-
-  {
-    path: 'admin',
-    children: [
-      { path: 'change-password', component: ChangePassword, children: changePasswordRoutes }
-    ]
-  },
-
-  {
-    path: 'admin',
-    children: [
-      { path: 'change-contact', component: ChangeContact, children: changeContactRoutes }
-    ]
-  },
 
   { path: 'contact', component: Contact},
 

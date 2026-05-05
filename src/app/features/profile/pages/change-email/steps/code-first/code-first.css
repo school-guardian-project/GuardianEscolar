@@ -8,7 +8,7 @@
 }
 
 .login-description {
-  background-color: #D4EAFF;
+  background-color: #d4eaff;
   color: #366fea;
   padding: 15px;
   display: flex;
@@ -22,14 +22,13 @@
 }
 
 .pin-input {
-  width: 50px;
-  height: 60px;
-  border-radius: 11px;
+  width: 40px;
+  height: 50px;
+  border-radius: 5px;
   border: 1px solid #366fea;
   text-align: center;
   font-size: 1.5rem;
-  background-color: #D4EAFF;
-  text-transform: uppercase;
+  background-color: #d4eaff;
 }
 
 .pin-input:focus {

@@ -46,6 +46,10 @@ export class Reset {
     return this.form.controls;
   }
 
+  // Toma el valor del campo de la contraseña. Y devuelve true o false 
+  // para validar se es igual o no. Para validar los requisitos que debe tener la contraseña.
+  // Crea una expresion regular con el texto que se le pase
+  // (regex) y devuelve true o false.
   checkRule(regex: string): boolean {
     const value = this.form.get('password')?.value || '';
     return new RegExp(regex).test(value);

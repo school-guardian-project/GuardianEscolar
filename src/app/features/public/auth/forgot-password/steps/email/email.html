@@ -1,3 +1,4 @@
+
 <app-change-password iconHead="mail" [title]="'forgot_password.title' | translate"
   [sessionDescription]="'forgot_password.session_description' | translate"
   [titleStep]="'forgot_password.title_step' | translate"
@@ -16,9 +17,12 @@
 
     @if (form.get('email')?.touched && form.get('email')?.errors?.['required']) {
     <small class="error">{{ 'login.right.email.errors.required' | translate }}</small>
-    }
+
+
 
     <p>{{ 'forgot_password.hint' | translate }}</p>
   </form>
 
+
 </app-change-password>
+

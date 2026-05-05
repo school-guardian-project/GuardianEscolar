@@ -4,6 +4,7 @@
     <h3 class="lang-title"> {{ 'language.title' | translate }} </h3>
     <p class="lang-sub"> {{ 'language.subtitle' | translate }} </p>
 
+
     <div class="lang-grid">
       <div class="lang-card"
            *ngFor="let lang of language"
@@ -29,6 +30,7 @@
     <div class="lang-btns">
       <button class="btn-cancel" (click)="closeModal()"> {{ 'language.buttons.cancel' | translate }} </button>
       <button class="btn-confirm" (click)="confirm()"> {{ 'language.buttons.confirm' | translate }} </button>
+
     </div>
 
   </div>

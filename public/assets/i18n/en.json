@@ -33,6 +33,7 @@
     "title": "Everything you need for school safety",
     "description": "A complete platform for administrators, drivers and families.",
     "cards": [
+
       {
         "icon": "satellite_alt",
         "title": "Real-time GPS",
@@ -62,13 +63,22 @@
         "icon": "lock",
         "title": "Secure data",
         "description": "End-to-end encryption and compliance with data protection regulations."
-      }
+      },
+
+      { "icon": "satellite_alt", "title": "Real-time GPS", "description": "Precise location of each bus on the map with updates every 10 seconds." },
+      { "icon": "notifications", "title": "Instant alerts", "description": "Push notifications when the bus arrives, deviates or any incident occurs." },
+      { "icon": "assignment", "title": "Attendance control", "description": "Automatic check-in and check-out record of each student on the bus." },
+      { "icon": "insert_chart", "title": "Admin Dashboard", "description": "Complete dashboard with metrics, reports and route and driver management." },
+      { "icon": "family_restroom", "title": "Family app", "description": "Parents follow the bus route and receive notifications on their phone." },
+      { "icon": "lock", "title": "Secure data", "description": "End-to-end encryption and compliance with data protection regulations." }
+
     ]
   },
   "how_it_works": {
     "label": "HOW IT WORKS",
     "title": "Simple for everyone",
     "steps": [
+
       {
         "title": "Register your institution",
         "description": "Create your account, add your routes and drivers in minutes."
@@ -84,8 +94,13 @@
       {
         "title": "Active monitoring",
         "description": "Real-time monitoring from the administration panel."
-      }
-    ]
+      },
+
+      { "title": "Register your institution", "description": "Create your account, add your routes and drivers in minutes." },
+      { "title": "Install on the buses", "description": "Install the GPS device on each bus in less than 5 minutes." },
+      { "title": "Invite families", "description": "Parents download Guardian Escolar and follow the route in real time." },
+      { "title": "Active monitoring", "description": "Real-time monitoring from the administration panel." }
+ ]
   },
   "cta": {
     "title": "Ready to protect your students?",
@@ -98,6 +113,7 @@
     "col_product": "Product",
     "col_company": "Company",
     "col_legal": "Legal",
+
     "links_product": [
       "Features",
       "How it works",
@@ -735,6 +751,12 @@
         "pattern": "*Must contain uppercase, lowercase, numbers and special characters (. - _ @ *)",
         "no_match": "*Passwords do not match"
       }
-    }
+    },
+
+    "links_product": ["Features", "How it works", "Pricing", "For schools"],
+    "links_company": ["About us", "Blog", "Contact"],
+    "links_legal": ["Privacy", "Terms"],
+    "rights": "© 2026 Guardian Escolar · All rights reserved"
+
   }
 }

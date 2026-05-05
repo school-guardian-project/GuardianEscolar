@@ -1,7 +1,7 @@
 {
   "navbar": {
     "features": "Funcionalidades",
-    "how_it_works": "Cómo funciona",
+    "how_it_works": "Como funciona",
     "pricing": "Precios",
     "contact": "Contacto"
   },
@@ -23,8 +23,10 @@
     "students": "Estudiantes",
     "routes": "Rutas",
     "alerts": "Alertas",
-    "alert_msg": "Autobús fuera de ruta",
-    "alert_sub": "Ruta LOL85 · 6:45 a. m.",
+
+    "alert_msg": "Bus fuera de ruta",
+    "alert_sub": "Ruta LOL85 · 6:45 am",
+
     "success_msg": "18 rutas operando",
     "success_sub": "Todas en tiempo normal"
   },
@@ -33,6 +35,7 @@
     "title": "Todo lo que necesitas para la seguridad escolar",
     "description": "Una plataforma completa para administradores, conductores y familias.",
     "cards": [
+
       {
         "icon": "satellite_alt",
         "title": "GPS en tiempo real",
@@ -65,6 +68,7 @@
       }
     ]
   },
+
   "how_it_works": {
     "label": "CÓMO FUNCIONA",
     "title": "Simple para todos",
@@ -84,9 +88,17 @@
       {
         "title": "Monitoreo activo",
         "description": "Monitoreo en tiempo real desde el panel de administración."
-      }
+      },
+
+      { "icon": "satellite_alt", "title": "GPS en tiempo real", "description": "Ubicación precisa de cada bus en el mapa con actualizaciones cada 10 segundos." },
+      { "icon": "notifications", "title": "Alertas instantáneas", "description": "Notificaciones push cuando el bus llega, se desvía o hay cualquier incidente." },
+      { "icon": "assignment", "title": "Control de asistencia", "description": "Registro automático de subida y bajada de cada estudiante al bus." },
+      { "icon": "insert_chart", "title": "Panel de Administración", "description": "Dashboard completo con métricas, reportes y gestión de rutas y conductores." },
+      { "icon": "family_restroom", "title": "App para familias", "description": "Los padres siguen el recorrido del bus y reciben notificaciones en su celular." },
+      { "icon": "lock", "title": "Datos seguros", "description": "Cifrado de extremo a extremo y cumplimiento con normativas de protección de datos." }
     ]
   },
+
   "cta": {
     "title": "¿Listo para proteger a tus estudiantes?",
     "description": "Únete a más de 500 instituciones que ya confían en Guardian Escolar.",
@@ -98,6 +110,7 @@
     "col_product": "Producto",
     "col_company": "Empresa",
     "col_legal": "Legal",
+
     "links_product": [
       "Funcionalidades",
       "Cómo funciona",
@@ -735,6 +748,12 @@
         "pattern": "*Debe tener mayúsculas, minúsculas, números y caracteres especiales (. - _ @ *)",
         "no_match": "*Las contraseñas no son iguales"
       }
-    }
+    },
+
+    "links_product": ["Funcionalidades", "Como funciona", "Precios", "Para escuelas"],
+    "links_company": ["Nosotros", "Blog", "Contacto"],
+    "links_legal": ["Privacidad", "Terminos"],
+    "rights": "© 2026 Guardian Escolar · Todos los derechos reservados"
+
   }
 }

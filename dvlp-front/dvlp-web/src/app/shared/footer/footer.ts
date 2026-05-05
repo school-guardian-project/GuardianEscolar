@@ -18,6 +18,7 @@ export class Footer {
   linksLegal: string[] = [];
 
   ngOnInit() {
+
     this.loadTranslations();
     this.translate.onLangChange.subscribe(() => {
       this.loadTranslations();
@@ -34,5 +35,6 @@ export class Footer {
     this.translate.get('footer.links_legal').subscribe((d: any) => {
       this.linksLegal = Array.isArray(d) ? d : [];
     });
+
   }
 }

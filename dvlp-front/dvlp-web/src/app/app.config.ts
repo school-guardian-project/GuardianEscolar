@@ -4,9 +4,9 @@ import { routes } from './app.routes';
 
 import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-
 import { importProvidersFrom } from '@angular/core';
 import { provideTranslateService, TranslateModule } from '@ngx-translate/core';
+
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
 
 export const appConfig: ApplicationConfig = {
@@ -16,11 +16,13 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withFetch()),
     provideClientHydration(withEventReplay()),
 
+
     provideTranslateService({
       loader: provideTranslateHttpLoader({
         prefix: '/assets/i18n/',
         suffix: '.json',
       }),
     }),
+
   ],
 };

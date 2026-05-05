@@ -17,6 +17,7 @@ export class Main {
   steps: any[] = [];
 
   ngOnInit() {
+
     this.loadTranslations();
     this.translate.onLangChange.subscribe(() => {
       this.loadTranslations();
@@ -29,6 +30,7 @@ export class Main {
     });
     this.translate.get('how_it_works.steps').subscribe((data: any) => {
       this.steps = Array.isArray(data) ? data : [];
+
     });
   }
 }

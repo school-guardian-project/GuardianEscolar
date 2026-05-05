@@ -101,7 +101,7 @@
                   <mat-icon>phone</mat-icon> 
                   {{ 'admin_profile.labels.phone' | translate }}
                 </p>
-                <button class="edit-btn">
+                <button class="edit-btn" (click)="changeContact()">
                   <mat-icon>edit</mat-icon>
                 </button>
               </div>
@@ -144,7 +144,7 @@
                   <mat-icon>lock</mat-icon> 
                   {{ 'admin_profile.labels.password' | translate }}
                 </p>
-                <button class="edit-btn">
+                <button class="edit-btn" (click)="changePassword()">
                   <mat-icon>edit</mat-icon>
                 </button>
               </div>
@@ -163,4 +163,14 @@
 <!-- MODALES -->
 <app-themes *ngIf="changeTheme" (close)="changeTheme = false"></app-themes>
 
+<<<<<<< HEAD
 <app-language *ngIf="changeLanguage" (close)="changeLanguage = false"></app-language>
+=======
+<app-language *ngIf="changeLanguage"
+            (close)="changeLanguage = false">
+
+</app-language>
+
+
+
+>>>>>>> develop

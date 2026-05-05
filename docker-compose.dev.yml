@@ -1,7 +1,9 @@
 services:
   backend:
     container_name: backend-container-dev
-    image: mcr.microsoft.com/dotnet/sdk:10.0
+    build:
+      context: ./dvlp-back/src/backend
+      dockerfile: dev.Dockerfile
     working_dir: /app
     ports:
       - "8080:8080"
@@ -22,12 +24,9 @@ services:
       context: ./dvlp-front/dvlp-web/
       dockerfile: dev.Dockerfile
     ports:
-      - "4201:4200"
+      - "4200:4200"
     environment:
       - NODE_ENV=development
-    volumes:
-      - ./dvlp-front/dvlp-web:/app
-      - /app/node_modules
   
   # liquibase:
   #   image: liquibase/liquibase:5.0.1
@@ -51,17 +50,59 @@ services:
   #     --changeLogFile=/dvlp-back/liquibase/master.xml
   #     update
 
-  # jenkins:
-  #   container_name: jenkins_container
-  #   image: jenkins/jenkins:2.555.1-lts-jdk25
-  #   restart: unless-stopped
-  #   user: root
-  #   ports:
-  #     - 9090:8080
-  #     - 50000:50000
-  #   volumes:
-  #     - jenkins_home:/var/jenkins_home
-  #     - /var/run/docker.sock:/var/run/docker.sock
+  jenkins:
+    container_name: jenkins_container
+    build:
+      context: .
+      dockerfile: Dockerfile.jenkins
+    restart: unless-stopped
+    user: root
+    ports:
+      - 9090:8080
+      - 50000:50000
+    volumes:
+      - jenkins_home:/var/jenkins_home
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - jenkins_net
+      - sonar-net
+    dns:
+      - 8.8.8.8
+      - 8.8.4.4
+  
+  nginx:
+    image: nginx:latest
+    container_name: jenkins-nginx
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - jenkins
+    networks:
+      - jenkins_net
+      - sonar-net
+    
+  sonarqube:
+    image: sonarqube:lts
+    container_name: sonarqube
+    ports:
+      - "9000:9000"
+    volumes:
+      - sonarqube_data:/opt/sonarqube/data
+      - sonarqube_data:/opt/sonarqube/logs
+      - sonarqube_extensions:/opt/sonarqube/extensions
+    restart: unless-stopped
+    networks:
+      - sonar-net
 
 volumes:
   jenkins_home:
+  sonarqube_data:
+  sonarqube_logs:
+  sonarqube_extensions:
+
+networks:
+  jenkins_net:
+  sonar-net:

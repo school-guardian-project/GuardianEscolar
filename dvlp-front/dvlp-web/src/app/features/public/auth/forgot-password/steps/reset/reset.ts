@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { ChangeInformation } from "@shared/components/change/change-information/change-information";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { passwordMatch } from '@shared/validator/password-match.validator';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reset',
-  imports: [ChangeInformation, FormsModule, ReactiveFormsModule],
+  imports: [ChangeInformation, FormsModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './reset.html',
   styleUrl: './reset.css',
 })
@@ -15,12 +16,18 @@ export class Reset {
 
   constructor(private router: Router, private fb: FormBuilder) {
     this.form = this.fb.group({
-      password: ['', [Validators.required, Validators.minLength(8)]],
-      confirmPassword: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(16), Validators.pattern('^[a-zA-Z0-9]$/g')]]
+      password: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.pattern('^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[.\\-_@*]).+$')
+      ]],
+      confirmPassword: ['', [
+        Validators.required,
+        Validators.minLength(8),
+        Validators.maxLength(16)
+      ]]
     }, {
-      validators: [
-        passwordMatch('password', 'confirmPassword')
-      ]
+      validators: [passwordMatch('password', 'confirmPassword')]
     });
   }
 

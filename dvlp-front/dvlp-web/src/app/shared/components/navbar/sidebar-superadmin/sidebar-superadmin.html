@@ -1,20 +1,20 @@
 <div class="sidebar">
   
   <div class="admin-section">
-    <h3>Administrar</h3>
+    <h3>{{ 'sidebarSuperadmin.title' | translate }}</h3>
 
     <a routerLink="/superadmin/admins" class="menu-item" routerLinkActive="active">
-      <mat-icon>group</mat-icon> Administradores
+      <mat-icon>group</mat-icon> {{ 'sidebarSuperadmin.admins' | translate }}
     </a>
 
     <a routerLink="/superadmin/schools" class="menu-item" routerLinkActive="active">
-      <mat-icon>school</mat-icon> Escuelas
+      <mat-icon>school</mat-icon> {{ 'sidebarSuperadmin.schools' | translate }}
     </a>
   </div>
 
   <div class="bottom-section">
     <a routerLink="/admin/informacion" class="menu-item" routerLinkActive="active">
-      <mat-icon>account_circle</mat-icon> Perfil
+      <mat-icon>account_circle</mat-icon> {{ 'sidebarSuperadmin.profile' | translate }}
     </a>
   </div>
 

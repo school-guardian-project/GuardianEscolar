@@ -3,34 +3,64 @@
 
     <div *ngIf="!enviado">
       <div class="modal__header">
-        <h2 class="modal__title">¿Tienes algún inconveniente?</h2>
-        <p class="modal__subtitle">Comunícanoslo</p>
+        <h2 class="modal__title">
+          {{ 'comments_modal.title' | translate }}
+        </h2>
+        <p class="modal__subtitle">
+          {{ 'comments_modal.subtitle' | translate }}
+        </p>
       </div>
+
       <div class="modal__body">
-        <label class="modal__label">Coméntanos tu problema</label>
-        <textarea class="modal__textarea" placeholder="Insertar texto" [(ngModel)]="comentario" rows="5"></textarea>
+        <label class="modal__label">
+          {{ 'comments_modal.label' | translate }}
+        </label>
+
+        <textarea 
+          class="modal__textarea" 
+          [placeholder]="'comments_modal.placeholder' | translate"
+          [(ngModel)]="comentario" 
+          rows="5">
+        </textarea>
       </div>
-      <!-- Mensaje de error  -->
+
+      <!-- ERROR -->
       <div *ngIf="mostrandoError" class="error-message">
         <mat-icon>error_outline</mat-icon>
-        Por favor escribe tu inconveniente antes de enviar
+        {{ 'comments_modal.error' | translate }}
       </div>
+
       <div class="modal__footer">
-        <button class="modal__btn modal__btn--cancel" (click)="cerrar()">Cancelar</button>
-        <button class="modal__btn modal__btn--submit" type="button" (click)="enviar()">Enviar</button>
+        <button class="modal__btn modal__btn--cancel" (click)="cerrar()">
+          {{ 'comments_modal.buttons.cancel' | translate }}
+        </button>
+
+        <button class="modal__btn modal__btn--submit" type="button" (click)="enviar()">
+          {{ 'comments_modal.buttons.submit' | translate }}
+        </button>
       </div>
     </div>
 
+    <!-- SUCCESS -->
     <div *ngIf="enviado" class="modal-overlay">
       <div class="modal">
-      <div class="modal__header">
-        <h2 class="modal__title">¡Mensaje enviado!</h2>
-        <p class="modal__subtitle">Gracias por comentarnos tu inconveniente. Haremos lo posible por solucionarlo cuanto
-          antes</p>
-      </div>
 
-      <div class="modal__footer modal__footer--center">
-        <button class="modal__btn modal__btn--submit" type="button" (click)="cerrar()">Salir</button>
+        <div class="modal__header">
+          <h2 class="modal__title">
+            {{ 'comments_modal.success.title' | translate }}
+          </h2>
+
+          <p class="modal__subtitle">
+            {{ 'comments_modal.success.description' | translate }}
+          </p>
+        </div>
+
+        <div class="modal__footer modal__footer--center">
+          <button class="modal__btn modal__btn--submit" type="button" (click)="cerrar()">
+            {{ 'comments_modal.buttons.exit' | translate }}
+          </button>
+        </div>
+
       </div>
     </div>
 

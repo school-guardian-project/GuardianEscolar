@@ -1,8 +1,8 @@
 <div class="lang-backdrop" (click)="closeModal()">
   <div class="lang-modal" (click)="$event.stopPropagation()">
 
-    <h3 class="lang-title">Seleccionar idioma</h3>
-    <p class="lang-sub">Por favor, elija su idioma preferido para continuar</p>
+    <h3 class="lang-title"> {{ 'language.title' | translate }} </h3>
+    <p class="lang-sub"> {{ 'language.subtitle' | translate }} </p>
 
     <div class="lang-grid">
       <div class="lang-card"
@@ -27,8 +27,8 @@
     </div>
 
     <div class="lang-btns">
-      <button class="btn-cancel" (click)="closeModal()">Cancelar</button>
-      <button class="btn-confirm" (click)="confirm()">Confirmar</button>
+      <button class="btn-cancel" (click)="closeModal()"> {{ 'language.buttons.cancel' | translate }} </button>
+      <button class="btn-confirm" (click)="confirm()"> {{ 'language.buttons.confirm' | translate }} </button>
     </div>
 
   </div>

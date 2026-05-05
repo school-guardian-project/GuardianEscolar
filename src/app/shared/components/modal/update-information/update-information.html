@@ -1,39 +1,47 @@
-<!-- Formulario principal -->
 <div class="modal-overlay" (click)="cerrar()">
   <div class="modal" (click)="$event.stopPropagation()">
 
-    <!-- Header -->
     <div class="modal_header">
-      <h2 class="modal__title">Actualizar información de la Escuela</h2>
+      <h2 class="modal__title">
+        {{ 'update_school.title' | translate }}
+      </h2>
     </div>
 
-    <!-- Formulario -->
     <div class="modal_form">
 
       <!-- Nombre -->
       <div>
-        <label class="modal_form-label">Nombre completo</label>
+        <label class="modal_form-label">
+          {{ 'update_school.fields.name' | translate }}
+        </label>
         <input type="text" class="modal_form-input"
-          placeholder="Ingrese el nombre de la escuela"
+          [placeholder]="'update_school.fields.name_placeholder' | translate"
           [(ngModel)]="nombreEscuela">
       </div>
 
       <!-- Ciudad + Dirección -->
       <div class="modal_form-row">
         <div>
-          <label class="modal_form-label">Ciudad</label>
+          <label class="modal_form-label">
+            {{ 'update_school.fields.city' | translate }}
+          </label>
           <select [(ngModel)]="ciudad">
-            <option value="">Seleccione una ciudad</option>
+            <option value="">
+              {{ 'update_school.fields.city_placeholder' | translate }}
+            </option>
             <option>Neiva</option>
             <option>Bogotá</option>
             <option>Medellín</option>
             <option>Cali</option>
           </select>
         </div>
+
         <div>
-          <label class="modal_form-label">Dirección</label>
+          <label class="modal_form-label">
+            {{ 'update_school.fields.address' | translate }}
+          </label>
           <input type="text" class="modal_form-input"
-            placeholder="Ingrese la dirección"
+            [placeholder]="'update_school.fields.address_placeholder' | translate"
             [(ngModel)]="direccion">
         </div>
       </div>
@@ -41,49 +49,62 @@
       <!-- Teléfono + Logo -->
       <div class="modal_form-row">
         <div>
-          <label class="modal_form-label">Teléfono</label>
+          <label class="modal_form-label">
+            {{ 'update_school.fields.phone' | translate }}
+          </label>
           <input type="text" class="modal_form-input"
-            placeholder="Ingrese el teléfono"
+            [placeholder]="'update_school.fields.phone_placeholder' | translate"
             [(ngModel)]="telefono">
         </div>
+
         <div class="modal_form-upload">
-          <label class="modal_form-label">Logo</label>
+          <label class="modal_form-label">
+            {{ 'update_school.fields.logo' | translate }}
+          </label>
+
           <img src="assets/images/escuela.png" alt="Logo" class="modal_form-logo">
-          <label for="logo" class="modal_form-upload-label">Subir nuevo logo
-              <input type="file" id="logo" class="modal_form-upload-input">
+
+          <label for="logo" class="modal_form-upload-label">
+            {{ 'update_school.fields.upload' | translate }}
+            <input type="file" id="logo" class="modal_form-upload-input">
           </label>
         </div>
       </div>
 
       <!-- Correo -->
       <div>
-        <label class="modal_form-label">Correo electrónico</label>
+        <label class="modal_form-label">
+          {{ 'update_school.fields.email' | translate }}
+        </label>
         <input type="email" class="modal_form-input"
-          placeholder="Ingrese el correo"
+          [placeholder]="'update_school.fields.email_placeholder' | translate"
           [(ngModel)]="email">
       </div>
 
       <!-- Web -->
       <div>
-        <label class="modal_form-label">Página Web</label>
+        <label class="modal_form-label">
+          {{ 'update_school.fields.web' | translate }}
+        </label>
         <input type="text" class="modal_form-input"
-          placeholder="Ingrese la página web"
+          [placeholder]="'update_school.fields.web_placeholder' | translate"
           [(ngModel)]="website">
       </div>
 
       <!-- Error -->
       <div *ngIf="mostrandoError" class="error-message">
         <mat-icon>error_outline</mat-icon>
-        Por favor completa al menos un campo antes de actualizar
+        {{ 'update_school.error' | translate }}
       </div>
 
       <!-- Footer -->
       <div class="modal_footer">
         <button class="modal_btn modal_btn--submit" type="button" (click)="cerrar()">
-          Cancelar
+          {{ 'update_school.buttons.cancel' | translate }}
         </button>
+
         <button class="modal_btn modal_btn--cancel" type="button" (click)="actualizar()">
-          Actualizar
+          {{ 'update_school.buttons.update' | translate }}
         </button>
       </div>
 
@@ -91,15 +112,23 @@
   </div>
 </div>
 
-<!-- Modal de confirmación -->
+<!-- SUCCESS -->
 <div *ngIf="enviado" class="modal-overlay">
   <div class="modal modal--small">
     <div class="modal_header">
-      <h2 class="modal__title">¡Información actualizada!</h2>
-      <p class="modal__subtitle">Los cambios han sido guardados correctamente</p>
+      <h2 class="modal__title">
+        {{ 'update_school.success.title' | translate }}
+      </h2>
+
+      <p class="modal__subtitle">
+        {{ 'update_school.success.description' | translate }}
+      </p>
     </div>
+
     <div class="modal_footer modal__footer--center">
-      <button class="modal_btn modal_btn--cancel" type="button" (click)="cerrar()">Salir</button>
+      <button class="modal_btn modal_btn--cancel" type="button" (click)="cerrar()">
+        {{ 'update_school.buttons.exit' | translate }}
+      </button>
     </div>
   </div>
 </div>

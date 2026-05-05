@@ -1,20 +1,44 @@
-<app-change-information iconHead="lock" title="Crea una contraseña segura"
-  sessionDescription="Ten en cuenta las recomendaciones de seguridad."
-  titleStep="Nueva Contraseña" loginDescription="Elige una contraseña que no hayas usado antes"
-  buttonText="Guardar nueva contraseña" returnStep="Volver" (return)="return()" [showProgress]="true" [currentStep]="3" stepText="3 de 3" (submit)="onSubmit()">
-  
-  <form action="" [formGroup]="form">
-    <label for="email">Nueva contraseña</label>
-    <input type="password" id="password" formControlName="password">
-    
-    <label for="email">Confirmar contraseña</label>
-    <input type="password" id="password" formControlName="confirmPassword">
+<app-change-information
+  iconHead="lock"
+  [title]="'forgot_password.reset.title' | translate"
+  [sessionDescription]="'forgot_password.reset.session_description' | translate"
+  [titleStep]="'forgot_password.reset.title_step' | translate"
+  [loginDescription]="'forgot_password.reset.login_description' | translate"
+  [buttonText]="'forgot_password.reset.button' | translate"
+  [returnStep]="'forgot_password.reset.return' | translate"
+  [showProgress]="true"
+  [currentStep]="3"
+  [stepText]="'forgot_password.reset.step_text' | translate"
+  (return)="return()"
+  (submit)="onSubmit()">
 
-    @if (form.errors && form.errors['passwordNoMatch']) {
-      <small class="error">Las contraseñas no son iguales</small>
+  <form action="" [formGroup]="form">
+
+    <!-- Nueva contraseña -->
+    <label for="password">{{ 'forgot_password.reset.fields.password' | translate }}</label>
+    <input type="password" id="password" formControlName="password">
+
+    @if (form.get('password')?.touched && form.get('password')?.errors?.['required']) {
+      <small class="error">{{ 'forgot_password.reset.errors.required' | translate }}</small>
+    }
+    @if (form.get('password')?.touched && form.get('password')?.errors?.['minlength']) {
+      <small class="error">{{ 'forgot_password.reset.errors.minlength' | translate }}</small>
+    }
+    @if (form.get('password')?.touched && form.get('password')?.errors?.['pattern']) {
+      <small class="error">{{ 'forgot_password.reset.errors.pattern' | translate }}</small>
     }
 
-    @if (form.errors?.['pasword'] && form.errors?.['']) {}
+    <!-- Confirmar contraseña -->
+    <label for="confirmPassword">{{ 'forgot_password.reset.fields.confirm_password' | translate }}</label>
+    <input type="password" id="confirmPassword" formControlName="confirmPassword">
+
+    @if (form.get('confirmPassword')?.touched && form.get('confirmPassword')?.errors?.['required']) {
+      <small class="error">{{ 'forgot_password.reset.errors.required' | translate }}</small>
+    }
+    @if (form.errors?.['passwordNoMatch'] && form.get('confirmPassword')?.touched) {
+      <small class="error">{{ 'forgot_password.reset.errors.no_match' | translate }}</small>
+    }
+
   </form>
-  
+
 </app-change-information>

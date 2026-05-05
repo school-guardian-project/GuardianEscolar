@@ -1,24 +1,24 @@
 <div class="card-list">
   <!-- Título + total -->
   <div class="card-list__header">
-    <h2 class="card-list__title">{{ title }}</h2>
-    <span class="card-list__total">{{ items.length }}</span>
+    <h2 class="card-list__title">{{ titleKey | translate }}</h2>
+    <span class="card-list__total">{{ filteredItems.length }}</span>
   </div>
 
   <!-- Buscador -->
   <div class="card-list__search">
-    <input class="card-list__search-input" type="text" placeholder="Buscar..." [(ngModel)]="searchText" />
+    <input class="card-list__search-input" type="text" [placeholder]="'search.search' | translate"
+      [(ngModel)]="searchText" />
+
     <span class="card-list__search-icon">
       <mat-icon>search</mat-icon>
     </span>
   </div>
 
-
   <!-- Lista de items -->
   <div class="card-list__content">
     <div class="card-list__items">
-      <div class="card-list__item" *ngFor="let item of items">
-
+      <div class="card-list__item" *ngFor="let item of filteredItems">
         <!-- Avatar -->
         <div class="card-list__avatar">
           <mat-icon>{{ icon }}</mat-icon>
@@ -30,7 +30,7 @@
 
           <ng-container *ngFor="let field of itemFields.slice(1)">
             <span class="card-list__detail" *ngIf="!field.halfWidth">
-              {{ field.label ? field.label + ': ' : '' }}{{ item[field.key] }}
+              {{ field.label ? (field.labelKey | translate) + ': ' : '' }}{{ item[field.key] }}
             </span>
           </ng-container>
 
@@ -52,7 +52,7 @@
             <mat-icon>edit</mat-icon>
           </button>
         </div>
-
       </div>
     </div>
   </div>
+</div>

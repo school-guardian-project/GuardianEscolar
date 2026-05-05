@@ -36,7 +36,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
 })
 export class Estudiantes {
 
-  // ── Ver detalles ────────────────────────────────────────────────────────
+  // ── Ver detalles 
   showModal = false;
   studentSelected: RecordData = {};
 

@@ -9,41 +9,36 @@
     <div class="spacer"></div>
   </div>
 
-  <!-- CONTENIDO PRINCIPAL -->
   <div class="main-container">
 
-    <!-- SIDEBAR -->
     <app-sidebar-admin></app-sidebar-admin>
 
-    <!-- CONTENIDO -->
     <div class="information-container">
       <div class="card">
 
         <!-- HEADER -->
         <div class="card-header">
-          <h3 class="subtitle">Información del Administrador</h3>
+          <h3 class="subtitle">
+            {{ 'admin_profile.title' | translate }}
+          </h3>
 
           <div class="header-actions">
-            <!-- Idioma -->
             <div class="icon-action" (click)="changeLanguage = true" title="language">
               <mat-icon>translate</mat-icon>
             </div>
 
-            <!-- Tema -->
             <div class="icon-action" (click)="changeTheme = true" title="Theme">
               <mat-icon>palette</mat-icon>
             </div>
           </div>
         </div>
 
-        <!-- CONTENIDO -->
         <div class="content">
 
           <!-- PERFIL -->
           <div class="profile-container">
             <div class="avatar-wrapper">
 
-              <!-- Imagen o icono -->
               <ng-container *ngIf="imageUrl; else defaultAvatar">
                 <img [src]="imageUrl" class="avatar-img" />
               </ng-container>
@@ -52,12 +47,10 @@
                 <mat-icon class="photo-icon">account_circle</mat-icon>
               </ng-template>
 
-              <!-- Botón editar -->
               <button class="avatar-edit-btn" (click)="fileInput.click()" type="button">
                 <mat-icon>photo_camera</mat-icon>
               </button>
 
-              <!-- Input oculto -->
               <input type="file"
                      #fileInput
                      hidden
@@ -65,12 +58,18 @@
                      (change)="onFileSelected($event)">
             </div>
 
-            <p class="user-name">Nombre del Administrador</p>
-            <span class="user-role-badge">Administrador</span>
+            <p class="user-name">
+              {{ 'admin_profile.user.name' | translate }}
+            </p>
+
+            <span class="user-role-badge">
+              {{ 'admin_profile.user.role' | translate }}
+            </span>
 
             <div class="user-meta">
               <p class="user-meta-item">
-                <mat-icon>badge</mat-icon> C.C 123456789
+                <mat-icon>badge</mat-icon> 
+                {{ 'admin_profile.labels.id' | translate }} 123456789
               </p>
               <p class="user-meta-item">
                 <mat-icon>cake</mat-icon> 1985-10-01
@@ -78,17 +77,16 @@
             </div>
           </div>
 
-          <!-- DIVISOR -->
           <div class="divider-vertical"></div>
 
-          <!-- INFORMACIÓN -->
+          <!-- INFO -->
           <div class="section-info">
 
-            <!-- Correo -->
             <div class="info-item">
               <div class="info-item-header">
                 <p class="info-label">
-                  <mat-icon>email</mat-icon> Correo electrónico
+                  <mat-icon>email</mat-icon> 
+                  {{ 'admin_profile.labels.email' | translate }}
                 </p>
                 <button class="edit-btn" (click)="changeEmail()">
                   <mat-icon>edit</mat-icon>
@@ -97,11 +95,11 @@
               <p class="info-value">admin@example.com</p>
             </div>
 
-            <!-- Teléfono -->
             <div class="info-item">
               <div class="info-item-header">
                 <p class="info-label">
-                  <mat-icon>phone</mat-icon> Teléfono
+                  <mat-icon>phone</mat-icon> 
+                  {{ 'admin_profile.labels.phone' | translate }}
                 </p>
                 <button class="edit-btn">
                   <mat-icon>edit</mat-icon>
@@ -110,41 +108,41 @@
               <p class="info-value">+57 300 123 4567</p>
             </div>
 
-            <!-- Dirección -->
             <div class="info-item">
               <div class="info-item-header">
                 <p class="info-label">
-                  <mat-icon>home</mat-icon> Dirección
+                  <mat-icon>home</mat-icon> 
+                  {{ 'admin_profile.labels.address' | translate }}
                 </p>
               </div>
               <p class="info-value">Calle 123, Ciudad</p>
             </div>
 
-            <!-- Ciudad -->
             <div class="info-item">
               <div class="info-item-header">
                 <p class="info-label">
-                  <mat-icon>location_city</mat-icon> Ciudad
+                  <mat-icon>location_city</mat-icon> 
+                  {{ 'admin_profile.labels.city' | translate }}
                 </p>
               </div>
               <p class="info-value">Neiva</p>
             </div>
 
-            <!-- Escuela -->
             <div class="info-item">
               <div class="info-item-header">
                 <p class="info-label">
-                  <mat-icon>school</mat-icon> Escuela
+                  <mat-icon>school</mat-icon> 
+                  {{ 'admin_profile.labels.school' | translate }}
                 </p>
               </div>
               <p class="info-value">Nombre de la Escuela</p>
             </div>
 
-            <!-- Contraseña -->
             <div class="info-item">
               <div class="info-item-header">
                 <p class="info-label">
-                  <mat-icon>lock</mat-icon> Contraseña
+                  <mat-icon>lock</mat-icon> 
+                  {{ 'admin_profile.labels.password' | translate }}
                 </p>
                 <button class="edit-btn">
                   <mat-icon>edit</mat-icon>
@@ -162,15 +160,7 @@
   </div>
 </div>
 
-<!-- MODAL TEMA -->
-<app-themes *ngIf="changeTheme"
-            (close)="changeTheme = false">
-</app-themes>
+<!-- MODALES -->
+<app-themes *ngIf="changeTheme" (close)="changeTheme = false"></app-themes>
 
-<app-language *ngIf="changeLanguage"
-            (close)="changeLanguage = false">
-
-</app-language>
-
-
-
+<app-language *ngIf="changeLanguage" (close)="changeLanguage = false"></app-language>

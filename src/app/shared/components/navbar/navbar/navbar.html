@@ -5,8 +5,8 @@
         </button>
         <div class="spaces" (click)="sidenav.close()" (click)="scrollToSection('funcionalidades')">{{ 'navbar.features' | translate }}</div>
         <div class="spaces" (click)="sidenav.close()" (click)="scrollToSection('como-funciona')">{{ 'navbar.how_it_works' | translate }}</div>
-        <div class="spaces" (click)="sidenav.close()">{{ 'navbar.pricing' | translate }}</div>
-        <div class="spaces" (click)="sidenav.close()">{{ 'navbar.contact' | translate }}</div>
+        <!-- <div class="spaces" (click)="sidenav.close()">{{ 'navbar.pricing' | translate }}</div> -->
+        <div class="spaces" (click)="sidenav.close()" (click)="contact()">{{ 'navbar.contact' | translate }}</div>
     </mat-sidenav>
 
     <mat-sidenav-content>
@@ -16,24 +16,10 @@
                 <div class="title space">Guardian Escolar</div>
             </div>
             <div class="navbar-center">
-<<<<<<< HEAD
                 <div class="spaces" (click)="scrollToSection('funcionalidades')">{{ 'navbar.features' | translate }}</div>
                 <div class="spaces" (click)="scrollToSection('como-funciona')">{{ 'navbar.how_it_works' | translate }}</div>
-                <div class="spaces">{{ 'navbar.pricing' | translate }}</div>
-                <div class="spaces">{{ 'navbar.contact' | translate }}</div>
-=======
-                <div class="spaces" (click)="scrollToSection('funcionalidades')">Funcionalidades</div>
-            
-                <div class="spaces" (click)="scrollToSection('como-funciona')">Como funciona</div>
-                
-                <!-- <div class="spaces">Precios</div> -->
-            
-<<<<<<< HEAD
-                <div class="spaces">Contacto</div>
->>>>>>> 4a5bd8c74b41b7a9dbf5be0ee47675ff79df88df
-=======
-                <div class="spaces" (click)="contact()">Contacto</div>
->>>>>>> style/contact
+                <!-- <div class="spaces">{{ 'navbar.pricing' | translate }}</div> -->
+                <div class="spaces" (click)="contact()">{{ 'navbar.contact' | translate }}</div>
             </div>
             <div class="navbar-end">
                 <button mat-icon-button>

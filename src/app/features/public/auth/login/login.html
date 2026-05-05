@@ -1,56 +1,70 @@
 <div class="layout">
-    <app-nav-component></app-nav-component>
+  <app-nav-component></app-nav-component>
 
-    <main>
-        <div class="container-session">
-            <div class="sesion-left">
-                <mat-icon class="shield">shield</mat-icon>
+  <main>
+    <div class="container-session">
+      <div class="sesion-left">
+        <mat-icon class="shield">shield</mat-icon>
 
-                <h1 class="panel-sesion">Bienvenido de nuevo</h1>
+        <h1 class="panel-sesion">Bienvenido de nuevo</h1>
 
-                <p class="session-description">Accede al sistema completo de monitoreo de rutas escolares.</p>
+        <p class="session-description">
+          Accede al sistema completo de monitoreo de rutas escolares.
+        </p>
 
-                <div class="GPS"><mat-icon class="icon">satellite_alt</mat-icon> GPS en tiempo real</div>
-                <div class="alerts"><mat-icon class="icon">notifications</mat-icon> Alertas instantáneas</div>
-                <div class="report"><mat-icon class="icon">insert_chart</mat-icon> Reportes y métricas</div>
-
-                <div class="edu">guardian.edu · Soporte 24/7</div>
-            </div>
-
-            <div class="sesion-right">
-                <form [formGroup]="form" (ngSubmit)="login()">
-                    <h2>Iniciar sesión</h2>
-                    <div class="login-description">Ingresa tus credenciales para acceder al panel</div>
-
-                    <label for="email">Correo electrónico</label>
-                    <input type="email" id="email" placeholder="tu-usuario@email.com" formControlName="email">
-                    @if (form.get('email')?.errors?.['email']) {
-                        <small class="error1">*Debe ser un correo valido.</small>
-                    }
-
-                    @if (form.get('email')?.touched && form.get('email')?.errors?.['required']) {
-                        <small class="error">*El correo es requerido.</small>
-                    }
-
-                    <label for="password">Contraseña</label>
-                    <input type="password" id="password" formControlName="password">
-
-                    <div class="olvid">
-                        @if (form.get('password')?.touched && form.get('password')?.errors?.['required']) {
-                            <small class="error">*La contraseña es requerida</small>
-                        }
-                        <div class="password" (click)="forgot()">¿Olvidaste tu contraseña?</div>
-                    </div>
-
-                    <div class="btn">
-                        <button type="submit">Iniciar sesión</button>
-                    </div>
-                </form>
-
-                <div class="line"></div>
-
-                <div class="condition">Al ingresar aceptas nuestros <span class="terms term"> Términos de uso </span> y <span class="terms politic"> Política de privacidad</span></div>
-            </div>
+        <div class="GPS"><mat-icon class="icon">satellite_alt</mat-icon> GPS en tiempo real</div>
+        <div class="alerts">
+          <mat-icon class="icon">notifications</mat-icon> Alertas instantáneas
         </div>
-    </main>
+        <div class="report"><mat-icon class="icon">insert_chart</mat-icon> Reportes y métricas</div>
+
+        <div class="edu">guardian.edu · Soporte 24/7</div>
+      </div>
+
+      <div class="sesion-right">
+        <form [formGroup]="form" (ngSubmit)="login()">
+          <h2>Iniciar sesión</h2>
+          <div class="login-description">Ingresa tus credenciales para acceder al panel</div>
+
+          <label for="email">Correo electrónico</label>
+          <input
+            type="email"
+            id="email"
+            placeholder="tu-usuario@email.com"
+            formControlName="email"
+          />
+          @if (form.get('email')?.touched) {
+            @if (form.get('email')?.errors?.['required']) {
+              <small class="error">*El correo es requerido.</small>
+            } @else if (
+              form.get('email')?.errors?.['pattern'] || form.get('email')?.errors?.['email']
+            ) {
+              <small class="error">*Formato inválido (ejemplo@dominio.com).</small>
+            }
+          }
+
+          <label for="password">Contraseña</label>
+          <input type="password" id="password" formControlName="password" />
+
+          <div class="olvid">
+            @if (form.get('password')?.touched && form.get('password')?.errors?.['required']) {
+              <small class="error">*La contraseña es requerida</small>
+            }
+            <div class="password" (click)="forgot()">¿Olvidaste tu contraseña?</div>
+          </div>
+
+          <div class="btn">
+            <button type="submit">Iniciar sesión</button>
+          </div>
+        </form>
+
+        <div class="line"></div>
+
+        <div class="condition">
+          Al ingresar aceptas nuestros <span class="terms term"> Términos de uso </span> y
+          <span class="terms politic"> Política de privacidad</span>
+        </div>
+      </div>
+    </div>
+  </main>
 </div>

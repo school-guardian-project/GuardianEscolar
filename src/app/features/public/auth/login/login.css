@@ -29,14 +29,15 @@ main {
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
 }
 
-.error1 {
-    color: red;
-    margin-bottom: 20px;
-    margin-top: -30px;
-}
-
+.error1,
 .error {
     color: red;
+}
+
+.error1 {
+    position: absolute;
+    bottom: -18px;
+    left: 0;
 }
 
 .sesion-left {
@@ -53,6 +54,7 @@ main {
     border-bottom-right-radius: 9px;
     border-top-right-radius: 9px;
     justify-content: center;
+    height: 100%;
 }
 
 form {
@@ -137,17 +139,20 @@ input {
     transition: border 0.2s ease;
 }
 
-input[type = "email"] {
+.input-email {
     margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }
 
 input:focus {
-    border: #366fea 2px solid;
+    border: #366fea 1px solid;
     outline: none;
 }
 
 input.ng-invalid.ng-touched {
-    border: 2px red solid;
+    border: 1px red solid;
 }
 
 label {
@@ -193,7 +198,7 @@ button {
     width: 100%;
     border: 10px;
     background-color: #eaeaea;
-    margin-bottom: 20px;
+    margin-top: auto;
 }
 
 .terms {
@@ -203,9 +208,8 @@ button {
 
 .condition {
     font-size: 0.8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
+    margin-top: auto;
 }
 
 .term {
@@ -215,4 +219,20 @@ button {
 
 .politic {
     margin-left: 2px;
+}
+
+@media screen and (max-width: 1000px) {
+    .sesion-left {
+        display: none;
+        width: 0;
+    }
+
+    .sesion-right {
+        border-radius: 9px;
+        width: 100%;
+    }
+
+    .container-session {
+        width: 50%;
+    }
 }

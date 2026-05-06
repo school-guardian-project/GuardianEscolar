@@ -30,4 +30,14 @@ form {
 
 .error {
     color: red;
+    position: absolute;
+    bottom: -18px;
+    left: 0;
+}
+
+.input-email {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }

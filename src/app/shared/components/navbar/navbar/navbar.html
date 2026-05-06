@@ -3,10 +3,19 @@
         <button mat-icon-button>
             <mat-icon class="person" (click)="login()">person</mat-icon>
         </button>
+
+        <div class="spaces" (click)="sidenav.close()" (click)="scrollToSection('funcionalidades')">{{ 'navbar.features' | translate }}</div>
+        <div class="spaces" (click)="sidenav.close()" (click)="scrollToSection('como-funciona')">{{ 'navbar.how_it_works' | translate }}</div>
+        <div class="spaces" (click)="sidenav.close()">{{ 'navbar.pricing' | translate }}</div>
+        <div class="spaces" (click)="sidenav.close()">{{ 'navbar.contact' | translate }}</div>
+                
+        <!-- <div class="spaces" (click)="sidenav.close()">Precios</div> -->
+
         <div class="spaces" (click)="sidenav.close()" (click)="scrollToSection('funcionalidades')">{{ 'navbar.features' | translate }}</div>
         <div class="spaces" (click)="sidenav.close()" (click)="scrollToSection('como-funciona')">{{ 'navbar.how_it_works' | translate }}</div>
         <!-- <div class="spaces" (click)="sidenav.close()">{{ 'navbar.pricing' | translate }}</div> -->
         <div class="spaces" (click)="sidenav.close()" (click)="contact()">{{ 'navbar.contact' | translate }}</div>
+
     </mat-sidenav>
 
     <mat-sidenav-content>
@@ -16,10 +25,6 @@
                 <div class="title space">Guardian Escolar</div>
             </div>
             <div class="navbar-center">
-                <div class="spaces" (click)="scrollToSection('funcionalidades')">{{ 'navbar.features' | translate }}</div>
-                <div class="spaces" (click)="scrollToSection('como-funciona')">{{ 'navbar.how_it_works' | translate }}</div>
-                <!-- <div class="spaces">{{ 'navbar.pricing' | translate }}</div> -->
-                <div class="spaces" (click)="contact()">{{ 'navbar.contact' | translate }}</div>
             </div>
             <div class="navbar-end">
                 <button mat-icon-button>

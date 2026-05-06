@@ -18,8 +18,23 @@ export class Footer {
   linksLegal: string[] = [];
 
   ngOnInit() {
-    this.translate.get('footer.links_product').subscribe((d: string[]) => this.linksProduct = d);
-    this.translate.get('footer.links_company').subscribe((d: string[]) => this.linksCompany = d);
-    this.translate.get('footer.links_legal').subscribe((d: string[]) => this.linksLegal = d);
+
+    this.loadTranslations();
+    this.translate.onLangChange.subscribe(() => {
+      this.loadTranslations();
+    });
+  }
+
+  loadTranslations() {
+    this.translate.get('footer.links_product').subscribe((d: any) => {
+      this.linksProduct = Array.isArray(d) ? d : [];
+    });
+    this.translate.get('footer.links_company').subscribe((d: any) => {
+      this.linksCompany = Array.isArray(d) ? d : [];
+    });
+    this.translate.get('footer.links_legal').subscribe((d: any) => {
+      this.linksLegal = Array.isArray(d) ? d : [];
+    });
+
   }
 }

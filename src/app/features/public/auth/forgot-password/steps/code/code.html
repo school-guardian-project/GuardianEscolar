@@ -1,18 +1,33 @@
-<app-change-password iconHead="lock" title="Verifica tu correo"
-  sessionDescription="Enviamos un código de 6 dígitos a tu correo." titleStep="Código de verificación"
-  loginDescription="" buttonText="Validar" returnStep="Volver" (return)="return()" [showProgress]="true"
-  [currentStep]="2" stepText="2 de 3" (submit)="onSubmit()">
-  
+<app-change-password
+  iconHead="lock"
+  [title]="'forgot_password.code.title' | translate"
+  [sessionDescription]="'forgot_password.code.session_description' | translate"
+  [titleStep]="'forgot_password.code.title_step' | translate"
+  loginDescription=""
+  [buttonText]="'forgot_password.code.button' | translate"
+  [returnStep]="'forgot_password.code.return' | translate"
+  [showProgress]="true"
+  [currentStep]="2"
+  [stepText]="'forgot_password.code.step_text' | translate"
+  (return)="return()"
+  (submit)="onSubmit()">
+
   <div class="login-description">
-    <span>Código enviado a <b> tu@correo.com</b>. Válido por 10 minutos.</span>
+    <span>{{ 'forgot_password.code.sent_to' | translate }} <b>tu@correo.com</b>. {{ 'forgot_password.code.valid' | translate }}</span>
   </div>
+
   <form action="" [formGroup]="form">
     <div class="pin-inputs">
-      <input class="pin-input" *ngFor="let ctrl of pinControls.controls; let i = index" [formControl]="ctrl"
-        maxlength="1" (input)="onInput($event, i)">
+      <input
+        class="pin-input"
+        *ngFor="let ctrl of pinControls.controls; let i = index"
+        [formControl]="ctrl"
+        maxlength="1"
+        (input)="onInput($event, i)">
     </div>
     @if (form.invalid && form.touched) {
-    <small class="error">*Ingresa los 6 digitos del codigo</small>
+      <small class="error">{{ 'forgot_password.code.error' | translate }}</small>
     }
   </form>
+
 </app-change-password>

@@ -1,9 +1,10 @@
 <div class="modal-overlay" (click)="close()">
   <div class="modal modal--small" (click)="$event.stopPropagation()">
-    
+
     <div class="modal_header">
-      <h2 class="modal__title">{{ config.title }}</h2>
-      <p class="modal__subtitle">{{ config.text }}</p>
+
+      <h2 class="modal__title">{{ titleKey | translate }}</h2>
+      <p class="modal__subtitle">{{ textKey | translate }}</p>
     </div>
 
     <div class="modal_form-upload">
@@ -14,20 +15,12 @@
     </div>
 
     <div class="modal_footer modal__footer--center">
-      <button
-        class="modal_btn modal_btn--submit"
-        type="button"
-        (click)="close()"
-      >
-        Cancelar
+      <button class="modal_btn modal_btn--submit" type="button" (click)="close()">
+        {{ 'common.cancel' | translate }}
       </button>
 
-      <button
-        class="modal_btn modal_btn--cancel"
-        type="button"
-        (click)="confirmDelete()"
-      >
-        Eliminar
+      <button class="modal_btn modal_btn--cancel" type="button" (click)="confirmDelete()">
+        {{ 'common.delete' | translate }}
       </button>
     </div>
 

@@ -50,7 +50,7 @@
                 {{ 'login.right.email.errors.required' | translate }}
               </small>
             }
-            @if (form.get('email')?.touched && form.get('email')?.errors?.['email']) {
+            @if (form.get('email')?.touched && form.get('email')?.errors?.['pattern']) {
               <small class="error">
                 {{ 'login.right.email.errors.invalid' | translate }}
               </small>
@@ -78,7 +78,7 @@
 
           <!-- Botón -->
           <div class="btn">
-            <button type="submit" [disabled]="form.invalid">
+            <button type="submit">
               {{ 'login.right.button' | translate }}
             </button>
           </div>

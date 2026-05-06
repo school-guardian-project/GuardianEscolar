@@ -16,7 +16,7 @@
       <input type="email" id="email" formControlName="email">
 
       <!-- Email inválido -->
-      <small class="error" *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['email']">
+      <small class="error" *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['pattern']">
         {{ 'login.right.email.errors.invalid' | translate }}
       </small>
 

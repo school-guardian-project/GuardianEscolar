@@ -1,32 +1,32 @@
 <div class="sidebar">
   <div class="admin-section">
-    <h3>Usuarios</h3>
+    <h3>{{ 'navbar-admin.title-users' | translate }}</h3>
     <a routerLink="/admin/usuarios" class="menu-item" routerLinkActive="active">
-      <mat-icon>person</mat-icon> Estudiante
+      <mat-icon>person</mat-icon> {{ 'navbar-admin.students' | translate }}
     </a>
     <a routerLink="/admin/padres" class="menu-item" routerLinkActive="active">
-      <mat-icon>escalator_warning</mat-icon> Acudiente
+      <mat-icon>escalator_warning</mat-icon> {{ 'navbar-admin.guardian' | translate }}
     </a>
     <a routerLink="/admin/conductores" class="menu-item" routerLinkActive="active">
-      <mat-icon>engineering</mat-icon> Conductor
+      <mat-icon>engineering</mat-icon> {{ 'navbar-admin.drivers' | translate }}
     </a>
     <a routerLink="/admin/familias" class="menu-item" routerLinkActive="active">
-      <mat-icon>family_restroom</mat-icon> Familia
+      <mat-icon>family_restroom</mat-icon> {{ 'navbar-admin.Family' | translate }}
     </a>
   </div>
   <div class="sidebar-divider"></div>
   <div class="admin-section">
-    <h3>Transporte</h3>
+    <h3>{{ 'navbar-admin.title-routes' | translate }}</h3>
     <a routerLink="/admin/buses" class="menu-item" routerLinkActive="active">
-      <mat-icon>directions_bus</mat-icon> Buses
+      <mat-icon>directions_bus</mat-icon> {{ 'navbar-admin.bus' | translate }}
     </a>
 
     <a routerLink="/admin/rutas" class="menu-item" routerLinkActive="active">
-      <mat-icon>route</mat-icon> Rutas
+      <mat-icon>route</mat-icon> {{ 'navbar-admin.route' | translate }}
     </a>
 
     <a routerLink="/admin/paradas" class="menu-item" routerLinkActive="active">
-      <mat-icon>location_on</mat-icon> Paradas
+      <mat-icon>location_on</mat-icon> {{ 'navbar-admin.bus-stops' | translate }}
     </a>
 
 
@@ -34,7 +34,7 @@
 
   <div class="bottom-section">
     <a routerLink="/admin/informacion" class="menu-item" routerLinkActive="active">
-      <mat-icon>account_circle</mat-icon> Perfil
+      <mat-icon>account_circle</mat-icon> {{ 'navbar-admin.title-profile' | translate }}
     </a>
   </div>
 

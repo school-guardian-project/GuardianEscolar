@@ -1,9 +1,17 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+<<<<<<< HEAD
+import { TranslateModule } from '@ngx-translate/core';
+@Component({
+  selector: 'app-themes',
+  standalone: true,
+  imports: [CommonModule, TranslateModule],
+=======
 @Component({
   selector: 'app-themes',
   standalone: true,
   imports: [CommonModule],
+>>>>>>> develop
   templateUrl: './themes.html',
   styleUrl: './themes.css',
 })

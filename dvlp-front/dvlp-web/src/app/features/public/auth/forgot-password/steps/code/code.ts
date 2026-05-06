@@ -1,17 +1,19 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { FormBuilder, FormGroup, FormsModule, NgForm, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChangePassword } from "@shared/components/change/change-password/change-password";
 import { NgFor } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-code',
-  imports: [FormsModule, ChangePassword, ReactiveFormsModule, NgFor],
+  imports: [FormsModule, ChangePassword, ReactiveFormsModule, NgFor, TranslateModule],
   templateUrl: './code.html',
   styleUrl: './code.css',
 })
 export class Code {
-  form: FormGroup
+  form: FormGroup;
+
   constructor(private router: Router, private fb: FormBuilder) {
     this.form = this.fb.group({
       pin: this.fb.array(
@@ -22,7 +24,7 @@ export class Code {
           ])
         )
       )
-    })
+    });
   }
 
   get pinControls() {
@@ -31,11 +33,8 @@ export class Code {
 
   onInput(event: any, index: number) {
     const value = event.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
-
     const control = this.pinControls.at(index);
     control.setValue(value, { emitEvent: false });
-
-    // mover al siguiente input
     if (value && index < 5) {
       const inputs = document.querySelectorAll('input');
       (inputs[index + 1] as HTMLElement)?.focus();
@@ -43,11 +42,9 @@ export class Code {
   }
 
   onSubmit() {
-    const pin = this.pinControls.value.join('');
     if (this.form.valid) {
       this.router.navigate(['/auth/forgot-password/reset']);
-    }
-    else {
+    } else {
       this.form.markAllAsTouched();
     }
   }

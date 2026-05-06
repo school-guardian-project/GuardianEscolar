@@ -41,6 +41,9 @@
 
   --card-bg: #FFFFFF;
   --card-secondary-bg: #F8FAFC;
+
+  --card-color-input: #858e9b;
+
   --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
 
   --border-color: #E2E8F0;
@@ -73,6 +76,10 @@
 
   --card-bg: #FFFFFF;
   --card-secondary-bg: #F8FAFC;
+
+  --card-color-input: #858e9b;
+
+
   --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
 
   --border-color: #E2E8F0;
@@ -106,6 +113,8 @@
 
   --card-bg: #161A22;
   --card-secondary-bg: #1C1F26;
+  --card-color-input: #bcbcbcd3;
+
   --card-shadow: 0 8px 20px rgba(0,0,0,0.4);
 
   --border-color: #252A34;
@@ -140,6 +149,9 @@
 
   --card-bg: #161A22;
   --card-secondary-bg: #1C1F26;
+  --card-color-input: #bcbcbcd3;
+
+
   --card-shadow: 0 8px 20px rgba(0,0,0,0.4);
 
   --border-color: #252A34;

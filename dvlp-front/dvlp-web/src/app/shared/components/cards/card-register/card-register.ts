@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 export type RegisterType =
   | 'estudiante'
@@ -14,31 +15,36 @@ export type RegisterType =
   | 'schools';
 
 export interface Field {
-  label: string;
   name: string;
   type: 'text' | 'date' | 'select' | 'tel' | 'email' | 'file';
-  acceppt?: 'image/*';
   placeholder?: string;
   options?: string[];
   halfWidth?: boolean;
-  hasButton?: boolean;
 }
 
 const FIELDS: Record<RegisterType, Field[]> = {
-
   estudiante: [
-    { label: 'Nombres',              name: 'nombres',        type: 'text' },
-    { label: 'Apellidos',            name: 'apellidos',      type: 'text' },
-    { label: 'Tipo Identificación',  name: 'tipoId',         type: 'select', options: ['CC', 'TI', 'CE', 'Pasaporte', 'Registro Civil'] },
-    { label: 'Identificación',       name: 'identificacion', type: 'text' },
-    { label: 'Fecha nacimiento',     name: 'fechaNac',       type: 'date' },
-    { label: 'Curso',                name: 'curso',          type: 'select', options: ['1°', '2°', '3°', '4°', '5°', '6°', '7°', '8°', '9°', '10°', '11°'], halfWidth: true },
-    { label: 'Teléfono',             name: 'telefono',       type: 'tel',    halfWidth: true },
-    { label: 'Dirección residencia', name: 'direccion',      type: 'text' },
-    { label: 'Correo electrónico',   name: 'correo',         type: 'email' },
+    { name: 'nombres', type: 'text' },
+    { name: 'apellidos', type: 'text' },
+    { name: 'tipoId', type: 'select', options: ['CC', 'TI', 'CE'] },
+    { name: 'identificacion', type: 'text' },
+    { name: 'fechaNac', type: 'date' },
+    { name: 'curso', type: 'select', options: ['1°', '2°', '3°', '4°', '5°', '6°', '7°', '8°', '9°', '10°', '11°'], halfWidth: true },
+    { name: 'telefono', type: 'tel', halfWidth: true },
+    { name: 'direccion', type: 'text' },
+    { name: 'correo', type: 'email' },
   ],
-
   acudiente: [
+<<<<<<< HEAD
+    { name: 'nombres', type: 'text' },
+    { name: 'apellidos', type: 'text' },
+    { name: 'correo', type: 'email' },
+    { name: 'tipoId', type: 'select', options: ['CC','CE'] },
+    { name: 'identificacion', type: 'text' },
+    { name: 'fechaNac', type: 'date' },
+    { name: 'telefono', type: 'tel' },
+    { name: 'direccion', type: 'text' },
+=======
     { label: 'Nombres',               name: 'nombres',         type: 'text' },
     { label: 'Apellidos',            name: 'apellidos',      type: 'text' },
     { label: 'Correo electrónico',   name: 'correo',         type: 'email' },
@@ -47,111 +53,105 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { label: 'Fecha nacimiento',     name: 'fechaNac',       type: 'date' },
     { label: 'Teléfono',             name: 'telefono',       type: 'tel' },
     { label: 'Dirección residencia', name: 'direccion',      type: 'text' },
+>>>>>>> develop
   ],
 
   conductor: [
-    { label: 'Nombres',              name: 'nombres',        type: 'text' },
-    { label: 'Apellidos',            name: 'apellidos',      type: 'text' },
-    { label: 'Tipo Identificación',  name: 'tipoId',         type: 'select', options: ['CC', 'CE', 'Pasaporte'] },
-    { label: 'Identificación',       name: 'identificacion', type: 'text' },
-    { label: 'Fecha nacimiento',     name: 'fechaNac',       type: 'date' },
-    { label: 'Vencimiento licencia', name: 'vencLicencia',   type: 'date',   halfWidth: true },
-    { label: 'Licencia conducción',  name: 'licencia',       type: 'text',   halfWidth: true, hasButton: true },
-    { label: 'Dirección residencia', name: 'direccion',      type: 'text' },
-    { label: 'Correo electrónico',   name: 'correo',         type: 'email' },
+    { name: 'nombres', type: 'text' },
+    { name: 'apellidos', type: 'text' },
+    { name: 'tipoId', type: 'select', options: ['CC','CE'] },
+    { name: 'identificacion', type: 'text' },
+    { name: 'fechaNac', type: 'date' },
+    { name: 'vencLicencia', type: 'date', halfWidth: true },
+    { name: 'licencia', type: 'text', halfWidth: true },
+    { name: 'direccion', type: 'text' },
+    { name: 'correo', type: 'email' },
   ],
 
   familia: [
-    { label: 'Nombre',               name: 'nombre',         type: 'text' },
-    { label: 'Acudiente',            name: 'acudiente',      type: 'select', options: [], hasButton: true },
-    { label: 'Estudiante',           name: 'estudiante',     type: 'select', options: [], hasButton: true },
-    { label: 'Observaciones',        name: 'observaciones',  type: 'text' },
+    { name: 'nombre', type: 'text' },
+    { name: 'acudiente', type: 'select', options: [] },
+    { name: 'estudiante', type: 'select', options: [] },
+    { name: 'observaciones', type: 'text' },
   ],
 
   bus: [
-    { label: 'Matrícula del bus',    name: 'matricula',      type: 'text' },
-    { label: 'Conductor',            name: 'conductor',      type: 'select', options: [] },
-    { label: 'Modelo',               name: 'modelo',         type: 'text' },
-    { label: 'Marca',                name: 'marca',          type: 'text' },
-    { label: 'Capacidad máxima',     name: 'capacidad',      type: 'text' },
-    { label: 'Vigencia SOAT',        name: 'soat',           type: 'date',   halfWidth: true, hasButton: true },
-    { label: 'Estado del GPS',       name: 'gps',            type: 'select', options: ['Activo', 'Inactivo', 'En revisión'], halfWidth: true },
+    { name: 'matricula', type: 'text' },
+    { name: 'conductor', type: 'select', options: [] },
+    { name: 'modelo', type: 'text' },
+    { name: 'marca', type: 'text' },
+    { name: 'capacidad', type: 'text' },
+    { name: 'soat', type: 'date', halfWidth: true },
+    { name: 'gps', type: 'select', options: ['Activo','Inactivo'], halfWidth: true },
   ],
 
   parada: [
-    { label: 'Nombre',               name: 'nombre',         type: 'text' },
-    { label: 'Ciudad',               name: 'ciudad',         type: 'select', options: [] },
-    { label: 'Dirección',            name: 'direccion',      type: 'text' },
-    { label: 'Latitud',              name: 'latitud',        type: 'text' },
-    { label: 'Longitud',             name: 'longitud',       type: 'text' },
+    { name: 'nombre', type: 'text' },
+    { name: 'ciudad', type: 'select', options: [] },
+    { name: 'direccion', type: 'text' },
+    { name: 'latitud', type: 'text' },
+    { name: 'longitud', type: 'text' },
   ],
 
   ruta: [
-    { label: 'Nombre',                    name: 'nombre',     type: 'text' },
-    { label: 'Sector o barrio',           name: 'sector',     type: 'text' },
-    { label: 'Hora de inicio de la ruta', name: 'horaInicio', type: 'text', placeholder: 'HH:MM' },
-    { label: 'Hora finalización de ruta', name: 'horaFin',    type: 'text', placeholder: 'HH:MM' },
-    { label: 'Lugar destino',             name: 'destino',    type: 'text' },
-    { label: 'Sector',                    name: 'sectorRuta', type: 'select', options: [] },
+    { name: 'nombre', type: 'text' },
+    { name: 'sector', type: 'text' },
+    { name: 'horaInicio', type: 'text' },
+    { name: 'horaFin', type: 'text' },
+    { name: 'destino', type: 'text' },
+    { name: 'sectorRuta', type: 'select', options: [] },
   ],
+
   admins: [
-    { label: 'Nombre',               name: 'nombre',         type: 'text' },
-    { label: 'Apellidos',            name: 'apellidos',      type: 'text' },
-    { label: 'Correo electrónico',   name: 'correo',         type: 'email' },
-    { label: 'Identificación',       name: 'identificacion', type: 'text' },
-    { label: 'Fecha nacimiento',     name: 'fechaNac',       type: 'date' },
-    { label: 'Teléfono',             name: 'telefono',       type: 'tel' },
-    { label: 'Dirección residencia', name: 'direccion',      type: 'text' },
+    { name: 'nombre', type: 'text' },
+    { name: 'apellidos', type: 'text' },
+    { name: 'correo', type: 'email' },
+    { name: 'identificacion', type: 'text' },
+    { name: 'fechaNac', type: 'date' },
+    { name: 'telefono', type: 'tel' },
+    { name: 'direccion', type: 'text' },
   ],
+
   schools: [
-    { label: 'Nombre',               name: 'nombre',         type: 'text' },
-    { label: 'Logo',                 name: 'Logo',           type: 'file', acceppt: 'image/*'},
-    { label: 'Ciudad',               name: 'ciudad',         type: 'select', halfWidth: true, options: ['Neiva', 'Medellín', 'Bogotá', 'Cali'] },
-    { label: 'Dirección',            name: 'direccion',      type: 'text', halfWidth: true },
-    { label: 'Telefono',             name: 'telefono',       type: 'tel', halfWidth: true },
-    { label: 'Escolaridad',          name: 'escolaridad',    type: 'select', halfWidth: true, options: ['Primaria', 'Bachillerato', 'Primaria y Bachillerato'] },
-    { label: 'Correo Electronico',   name: 'correo',         type: 'text'},
-    { label: 'Pagina web',           name: 'web',            type: 'text' },
-    
+    { name: 'nombre', type: 'text' },
+    { name: 'logo', type: 'file' },
+    { name: 'ciudad', type: 'select', options: ['Bogotá'] },
+    { name: 'direccion', type: 'text' },
+    { name: 'telefono', type: 'tel' },
+    { name: 'escolaridad', type: 'select', options: ['Primaria'] },
+    { name: 'correo', type: 'email' },
+    { name: 'web', type: 'text' },
   ],
-
 };
 
-const TITLES: Record<RegisterType, string> = {
-  estudiante: 'Registrar estudiante',
-  acudiente:  'Registrar acudientes',
-  conductor:  'Registrar conductores',
-  familia:    'Registrar familias',
-  bus:        'Registrar buses',
-  parada:     'Registrar paradas',
-  ruta:       'Registrar ruta',
-  admins:     'Registrar administradores',
-  schools:    'Registrar escuelas',
-};
 
 @Component({
   selector: 'app-card-register',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, TranslateModule],
   templateUrl: './card-register.html',
   styleUrl: './card-register.css',
 })
 export class CardRegister implements OnInit {
   @Input() type: RegisterType = 'estudiante';
 
-  formData: Record<string, string> = {};
-  groupedFields: Array<Field | [Field, Field]> = []; //  ya no es getter
+  formData: Record<string, any> = {};
+  groupedFields: any[] = [];
 
-  get title(): string {
-    return TITLES[this.type];
+  get titleKey(): string {
+    return `register.${this.type}.title`;
+  }
+
+  getLabelKey(name: string): string {
+    return `register.${this.type}.fields.${name}`;
   }
 
   ngOnInit(): void {
-    this.groupedFields = this.buildGroupedFields(); //  se calcula solo una vez
+    this.groupedFields = this.buildGroupedFields();
   }
 
-  private buildGroupedFields(): Array<Field | [Field, Field]> {
-    const result: Array<Field | [Field, Field]> = [];
+  private buildGroupedFields() {
+    const result: any[] = [];
     const list = FIELDS[this.type];
     let i = 0;
     while (i < list.length) {
@@ -166,11 +166,12 @@ export class CardRegister implements OnInit {
     return result;
   }
 
-  isArray(val: Field | [Field, Field]): val is [Field, Field] {
+  isArray(val: any): boolean {
     return Array.isArray(val);
   }
 
   onSubmit(): void {
-    console.log(`[${this.type}] Datos:`, this.formData);
+    console.log('Datos del formulario:', this.formData);
+    // Aquí iría el servicio de registro
   }
 }

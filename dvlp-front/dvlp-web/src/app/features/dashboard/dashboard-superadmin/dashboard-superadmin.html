@@ -10,40 +10,40 @@
         <div class="main">
             <div class="main-content">
                 <ng-container *ngIf="!isChildRouteActive()">
-                <h1 class="welcome">Bienvenido</h1>
-                <p class="welcome-role">Panel de administración · Guardian Escolar</p>
+                <h1 class="welcome">{{ 'superadmin_dashboard.welcome' | translate }}</h1>
+                <p class="welcome-role">{{ 'superadmin_dashboard.role' | translate }}</p>
 
                 <div class="metrics">
                     <div class="metric-card">
-                        <p class="metric-label">ADMINISTRADORES</p>
+                        <p class="metric-label">{{ 'superadmin_dashboard.metrics.admins' | translate }}</p>
                         <p class="metric-value">248</p>
-                        <p class="metric-sub">+12 este mes</p>
+                        <p class="metric-sub">{{ 'superadmin_dashboard.metrics.month' | translate }}</p>
                     </div>
                     <div class="metric-card">
-                        <p class="metric-label">COLEGIOS REGISTRADOS</p>
+                        <p class="metric-label">{{ 'superadmin_dashboard.metrics.schools' | translate }}</p>
                         <p class="metric-value">18</p>
-                        <p class="metric-sub">Todas operando</p>
+                        <p class="metric-sub">{{ 'superadmin_dashboard.metrics.active' | translate }}</p>
                     </div>
                     <div class="metric-card">
-                        <p class="metric-label">COMENTARIOS HOY</p>
+                        <p class="metric-label">{{ 'superadmin_dashboard.metrics.comments' | translate }}</p>
                         <p class="metric-value danger">3</p>
-                        <p class="metric-sub danger">Requieren atención</p>
+                        <p class="metric-sub danger">{{ 'superadmin_dashboard.metrics.attention' | translate }}</p>
                     </div>
                 </div>
 
                 <div class="alerts-section">
                     <div class="alerts-container">
-                        <h2>Últimas alertas</h2>
+                        <h2>{{ 'superadmin_dashboard.alerts.title' | translate }}</h2>
 
                         <div class="alert-card">
                             <div class="alert-icon">
                                 <mat-icon>person</mat-icon>
                             </div>
                             <div class="alert-content">
-                                <div class="alert-title">Bus fuera de ruta</div>
+                                <div class="alert-title">{{ 'superadmin_dashboard.alerts.out_route' | translate }}</div>
                                 <div class="alert-time">6:45 am</div>
                                 <div class="alert-info">
-                                    Conductor Jose Suarez · Ruta LOL85 · PP8 52F
+                                    {{ 'superadmin_dashboard.alerts.driver' | translate }} Jose Suarez · {{ 'superadmin_dashboard.alerts.route' | translate }} LOL85 · PP8 52F
                                 </div>
                             </div>
                             <button mat-icon-button>
@@ -56,10 +56,10 @@
                                 <mat-icon>person</mat-icon>
                             </div>
                             <div class="alert-content">
-                                <div class="alert-title">Frenó brusco</div>
+                                <div class="alert-title">{{ 'superadmin_dashboard.alerts.sudden_stop' | translate }}</div>
                                 <div class="alert-time">6:45 am</div>
                                 <div class="alert-info">
-                                    Conductor Juan Ramirez · Ruta AB123 · 111ZZZ
+                                    {{ 'superadmin_dashboard.alerts.driver' | translate }} Juan Ramirez · {{ 'superadmin_dashboard.alerts.route' | translate }} AB123 · 111ZZZ
                                 </div>
                             </div>
                             <button mat-icon-button>

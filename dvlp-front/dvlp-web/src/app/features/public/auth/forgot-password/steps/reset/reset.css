@@ -33,10 +33,54 @@ form {
 }
 
 .error {
-  color: red;
-  margin-top: -20px;
-  margin-bottom: 10px;
+    color: red;
+    margin-top: -20px;
+    margin-bottom: 10px;
 }
+
+
+
+
+label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.95rem;
+}
+
+input {
+  width: 100%;
+  padding: 10px 14px;           
+  border: 1.5px solid #e2e8f0;
+  border-radius: 8px;           
+  font-size: 0.98rem;          
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  height: 37px;                 
+}
+
+input:focus {
+  outline: none;
+  border-color: #366fea;
+  box-shadow: 0 0 0 3px rgba(54, 111, 234, 0.12);
+}
+
+/* Mensaje de error */
+small.error {
+  display: block;
+  color: #ef4444;
+  font-size: 0.83rem;
+  margin: 4px 4px 14px 4px;
+  font-weight: 500;
+}
+
+/* Input con error */
+input.ng-invalid.ng-touched {
+  border-color: #ef4444;
+  background-color: #fffafafa;
+}
+
 
 .error-container {
   gap: 5px;

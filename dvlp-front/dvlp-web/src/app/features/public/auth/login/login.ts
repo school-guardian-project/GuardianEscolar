@@ -4,12 +4,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [NavComponent, MatIconModule, MatButtonModule, MatToolbarModule, FormsModule, ReactiveFormsModule],
+  imports: [NavComponent, MatIconModule, MatButtonModule, MatToolbarModule, FormsModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

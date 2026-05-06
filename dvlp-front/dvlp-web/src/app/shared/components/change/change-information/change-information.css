@@ -112,6 +112,7 @@ button {
     font-size: 1rem;
     border: none;
     cursor: pointer;
+    margin-top: 20px;
     margin-bottom: 25px;
     background-color: #366fea;
 }
@@ -151,3 +152,4 @@ button {
     margin-bottom: 10px;
     gap: 10px;
 }
+

@@ -1,18 +1,33 @@
-<app-change-information iconHead="lock" title="Último paso"
-  sessionDescription="Ingresa el código que enviamos a tu nuevo correo." titleStep="Código de verificación"
-  loginDescription="" buttonText="Verificar" returnStep="Volver" (return)="return()" [showProgress]="true"
-  [currentStep]="4" (submit)="onSubmit()" stepText="4 de 4">
+<app-change-information
+  iconHead="lock"
+  title="Último paso"
+  sessionDescription="Ingresa el código que enviamos a tu nuevo correo."
+  titleStep="Código de verificación"
+  loginDescription=""
+  buttonText="Verificar"
+  returnStep="Volver"
+  (return)="return()"
+  [showProgress]="true"
+  [currentStep]="4"
+  (submit)="onSubmit()"
+  stepText="4 de 4"
+>
   <div class="login-description">
     <span>Código enviado a <b> tu@correo.com</b>. Válido por 10 minutos.</span>
   </div>
 
   <form action="" [formGroup]="form">
     <div class="pin-inputs">
-      <input class="pin-input" *ngFor="let ctrl of pinControls.controls; let i = index" [formControl]="ctrl" maxlength="1" (input)="onInput($event, i)">
+      <input
+        class="pin-input"
+        *ngFor="let ctrl of pinControls.controls; let i = index"
+        [formControl]="ctrl"
+        maxlength="1"
+        (input)="onInput($event, i)"
+      />
     </div>
     @if (form.invalid && form.touched) {
-    <small class="error">*Ingresa los 6 digitos del codigo</small>
+      <small class="error">*Ingresa los 6 digitos del codigo</small>
     }
   </form>
-
 </app-change-information>

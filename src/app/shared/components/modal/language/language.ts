@@ -1,11 +1,14 @@
 import { Component, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { TranslateService } from '@ngx-translate/core'; // ← agregar
+import { TranslateModule } from '@ngx-translate/core';
+
 
 @Component({
   selector: 'app-language',
   standalone: true,
-  imports: [CommonModule],
+
+  imports: [CommonModule,   TranslateModule], 
   templateUrl: './language.html',
   styleUrls: ['./language.css'],
 })

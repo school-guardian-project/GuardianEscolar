@@ -27,13 +27,10 @@
               }
             ],
             "styles": ["src/material-theme.scss", "src/styles.css"],
-            "server": "src/main.server.ts",
-            "outputMode": "server",
+            
+            "outputMode": "static",
             "security": {
               "allowedHosts": []
-            },
-            "ssr": {
-              "entry": "src/server.ts"
             }
           },
           "configurations": {
@@ -50,7 +47,11 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "server": "src/main.server.ts",
+              "ssr": {
+                "entry": "src/server.ts"
+              }
             },
             "development": {
               "optimization": false,
@@ -62,9 +63,12 @@
                   "with": "src/environments/environment.development.ts"
                 }
               ]
+            },
+            "spa": {
+              "outputMode": "static"
             }
           },
-          "defaultConfiguration": "production"
+          "defaultConfiguration": "spa"
         },
         "serve": {
           "builder": "@angular/build:dev-server",

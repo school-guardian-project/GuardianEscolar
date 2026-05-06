@@ -8,7 +8,6 @@
   <!-- NAVBAR -->
   <app-navbar-dashboard></app-navbar-dashboard>
 
-
   <div class="content-wrapper">
     <!-- SIDEBAR IZQUIERDO -->
     <app-sidebar-admin></app-sidebar-admin>
@@ -17,64 +16,104 @@
     <div class="main">
       <div class="main-content">
         <ng-container *ngIf="!isChildRouteActive()">
-          <h1 class="welcome">Bienvenido</h1>
-          <p class="welcome-role">Panel de administración · Guardian Escolar</p>
+
+          <h1 class="welcome">
+            {{ 'dashboard.welcome' | translate }}
+          </h1>
+
+          <p class="welcome-role">
+            {{ 'dashboard.role' | translate }}
+          </p>
 
           <div class="metrics">
             <div class="metric-card">
-              <p class="metric-label">ESTUDIANTES</p>
+              <p class="metric-label">
+                {{ 'dashboard.metrics.students' | translate }}
+              </p>
               <p class="metric-value">248</p>
-              <p class="metric-sub">+12 este mes</p>
+              <p class="metric-sub">
+                {{ 'dashboard.metrics.month' | translate }}
+              </p>
             </div>
+
             <div class="metric-card">
-              <p class="metric-label">RUTAS ACTIVAS</p>
+              <p class="metric-label">
+                {{ 'dashboard.metrics.routes' | translate }}
+              </p>
               <p class="metric-value">18</p>
-              <p class="metric-sub">Todas operando</p>
+              <p class="metric-sub">
+                {{ 'dashboard.metrics.operating' | translate }}
+              </p>
             </div>
+
             <div class="metric-card">
-              <p class="metric-label">ALERTAS HOY</p>
+              <p class="metric-label">
+                {{ 'dashboard.metrics.alerts' | translate }}
+              </p>
               <p class="metric-value danger">3</p>
-              <p class="metric-sub danger">Requieren atención</p>
+              <p class="metric-sub danger">
+                {{ 'dashboard.metrics.attention' | translate }}
+              </p>
             </div>
           </div>
 
           <div class="alerts-section">
             <div class="alerts-container">
-              <h2>Últimas alertas</h2>
+              <h2>
+                {{ 'dashboard.alerts.title' | translate }}
+              </h2>
 
+              <!-- ALERTA 1 -->
               <div class="alert-card">
                 <div class="alert-icon">
                   <mat-icon>warning</mat-icon>
                 </div>
+
                 <div class="alert-content">
-                  <div class="alert-title">Bus fuera de ruta</div>
+                  <div class="alert-title">
+                    {{ 'dashboard.alerts.out_of_route' | translate }}
+                  </div>
+
                   <div class="alert-time">6:45 am</div>
+
                   <div class="alert-info">
-                    Conductor Jose Suarez · Ruta LOL85 · PP8 52F
+                    {{ 'dashboard.alerts.driver' | translate }} Jose Suarez · 
+                    {{ 'dashboard.alerts.route' | translate }} LOL85 · PP8 52F
                   </div>
                 </div>
+
                 <button mat-icon-button>
                   <mat-icon>bookmark_border</mat-icon>
                 </button>
               </div>
 
+              <!-- ALERTA 2 -->
               <div class="alert-card warning">
                 <div class="alert-icon">
                   <mat-icon>bus_alert</mat-icon>
                 </div>
+
                 <div class="alert-content">
-                  <div class="alert-title">Frenó brusco</div>
+                  <div class="alert-title">
+                    {{ 'dashboard.alerts.sudden_brake' | translate }}
+                  </div>
+
                   <div class="alert-time">6:45 am</div>
+
                   <div class="alert-info">
-                    Conductor Juan Ramirez · Ruta AB123 · 111ZZZ
+                    {{ 'dashboard.alerts.driver' | translate }} Juan Ramirez · 
+                    {{ 'dashboard.alerts.route' | translate }} AB123 · 111ZZZ
                   </div>
                 </div>
+
                 <button mat-icon-button>
                   <mat-icon>bookmark_border</mat-icon>
                 </button>
               </div>
+
             </div>
           </div>
+
         </ng-container>
 
         <router-outlet></router-outlet>
@@ -86,6 +125,7 @@
       <div class="icon-circle" (click)="showComments = true">
         <mat-icon>chat</mat-icon>
       </div>
+
       <div class="icon-circle" (click)="showDetails(schoolExample)">
         <mat-icon>info</mat-icon>
       </div>
@@ -96,6 +136,3 @@
     </div>
   </div>
 </div>
-
-<!-- 
- -->

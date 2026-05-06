@@ -1,22 +1,24 @@
-import { Component, computed, HostListener, ViewChild} from '@angular/core';
+import { Component, computed, HostListener, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import {MatSidenav, MatSidenavModule} from '@angular/material/sidenav';
-import { TranslateModule } from '@ngx-translate/core';
+import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, TranslateModule, CommonModule],
+  imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, 
+    // TranslateModule,
+     CommonModule],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
 
 export class Navbar {
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
@@ -45,4 +47,17 @@ export class Navbar {
   contact() {
     this.router.navigate(['contact']);
   }
+
+  // private translate = inject(TranslateService);
+  // cards: any[] = [];
+  // steps: any[] = [];
+
+  // ngOnInit() {
+  //   this.translate.get('features.cards').subscribe((data: any[]) => {
+  //     this.cards = data;
+  //   });
+  //   this.translate.get('how_it_works.steps').subscribe((data: any[]) => {
+  //     this.steps = data;
+  //   });
+  // }
 }

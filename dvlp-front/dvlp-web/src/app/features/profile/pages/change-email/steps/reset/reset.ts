@@ -20,7 +20,7 @@ export class Reset {
 
   onSubmit() {
     if (this.form.valid) {
-      this.router.navigate(['/admin/change-email/second-first']);
+      this.router.navigate(['/admin/change-email/code-second']);
     } else {
       this.form.markAllAsTouched();
     }

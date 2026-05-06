@@ -1,56 +1,97 @@
 <div class="layout">
-    <app-nav-component></app-nav-component>
+  <app-nav-component></app-nav-component>
 
-    <main>
-        <div class="container-session">
-            <div class="sesion-left">
-                <mat-icon class="shield">shield</mat-icon>
+  <main>
+    <div class="container-session">
+      <div class="sesion-left">
+        <mat-icon class="shield">shield</mat-icon>
+        <h1 class="panel-sesion">{{ 'login.left.title' | translate }}</h1>
+        <p class="session-description">
+          {{ 'login.left.description' | translate }}
+        </p>
 
-                <h1 class="panel-sesion">Bienvenido de nuevo</h1>
-
-                <p class="session-description">Accede al sistema completo de monitoreo de rutas escolares.</p>
-
-                <div class="GPS"><mat-icon class="icon">satellite_alt</mat-icon> GPS en tiempo real</div>
-                <div class="alerts"><mat-icon class="icon">notifications</mat-icon> Alertas instantáneas</div>
-                <div class="report"><mat-icon class="icon">insert_chart</mat-icon> Reportes y métricas</div>
-
-                <div class="edu">guardian.edu · Soporte 24/7</div>
-            </div>
-
-            <div class="sesion-right">
-                <form [formGroup]="form" (ngSubmit)="login()">
-                    <h2>Iniciar sesión</h2>
-                    <div class="login-description">Ingresa tus credenciales para acceder al panel</div>
-
-                    <label for="email">Correo electrónico</label>
-                    <input type="email" id="email" placeholder="tu-usuario@email.com" formControlName="email">
-                    @if (form.get('email')?.errors?.['email']) {
-                        <small class="error1">*Debe ser un correo valido.</small>
-                    }
-
-                    @if (form.get('email')?.touched && form.get('email')?.errors?.['required']) {
-                        <small class="error">*El correo es requerido.</small>
-                    }
-
-                    <label for="password">Contraseña</label>
-                    <input type="password" id="password" formControlName="password">
-
-                    <div class="olvid">
-                        @if (form.get('password')?.touched && form.get('password')?.errors?.['required']) {
-                            <small class="error">*La contraseña es requerida</small>
-                        }
-                        <div class="password" (click)="forgot()">¿Olvidaste tu contraseña?</div>
-                    </div>
-
-                    <div class="btn">
-                        <button type="submit">Iniciar sesión</button>
-                    </div>
-                </form>
-
-                <div class="line"></div>
-
-                <div class="condition">Al ingresar aceptas nuestros <span class="terms term"> Términos de uso </span> y <span class="terms politic"> Política de privacidad</span></div>
-            </div>
+        <div class="GPS">
+          <mat-icon class="icon">satellite_alt</mat-icon>
+          {{ 'login.left.gps' | translate }}
         </div>
-    </main>
+        <div class="alerts">
+          <mat-icon class="icon">notifications</mat-icon>
+          {{ 'login.left.alerts' | translate }}
+        </div>
+        <div class="report">
+          <mat-icon class="icon">insert_chart</mat-icon>
+          {{ 'login.left.reports' | translate }}
+        </div>
+
+        <div class="edu">
+          {{ 'login.left.footer' | translate }}
+        </div>
+      </div>
+
+      <!-- Lado derecho - Formulario -->
+      <div class="sesion-right">
+        <form [formGroup]="form" (ngSubmit)="login()">
+          <h2>{{ 'login.right.title' | translate }}</h2>
+          <div class="login-description">
+            {{ 'login.right.description' | translate }}
+          </div>
+
+          <!-- Email -->
+          <label for="email">{{ 'login.right.email.label' | translate }}</label>
+          <input
+            type="email"
+            id="email"
+            [placeholder]="'login.right.email.placeholder' | translate"
+            formControlName="email">
+
+          @if (form.get('email')?.touched && form.get('email')?.errors?.['required']) {
+            <small class="error">
+              {{ 'login.right.email.errors.required' | translate }}
+            </small>
+          }
+          @if (form.get('email')?.touched && form.get('email')?.errors?.['email']) {
+            <small class="error">
+              {{ 'login.right.email.errors.invalid' | translate }}
+            </small>
+          }
+
+          <!-- Password -->
+          <label for="password">{{ 'login.right.password.label' | translate }}</label>
+          <input
+            type="password"
+            id="password"
+            [placeholder]="'login.right.password.placeholder' | translate"
+            formControlName="password">
+
+          <div class="olvid">
+            @if (form.get('password')?.touched && form.get('password')?.errors?.['required']) {
+              <small class="error">
+                {{ 'login.right.password.errors.required' | translate }}
+              </small>
+            }
+            <div class="password" (click)="forgot()">
+              {{ 'login.right.forgot' | translate }}
+            </div>
+          </div>
+
+          <!-- Botón -->
+          <div class="btn">
+            <button type="submit" [disabled]="form.invalid">
+              {{ 'login.right.button' | translate }}
+            </button>
+          </div>
+        </form>
+
+        <div class="line"></div>
+
+        <!-- Términos y condiciones -->
+        <div class="condition">
+          {{ 'login.right.terms' | translate }}
+          <span class="terms term">{{ 'login.right.terms_link' | translate }}</span>
+          {{ 'login.right.and' | translate }}
+          <span class="terms politic">{{ 'login.right.privacy_link' | translate }}</span>
+        </div>
+      </div>
+    </div>
+  </main>
 </div>

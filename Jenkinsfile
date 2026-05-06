@@ -1,5 +1,5 @@
 pipeline {
-  agent none
+  agent any
 
   stages {
 
@@ -28,7 +28,7 @@ pipeline {
       agent {
         docker { 
           image 'mcr.microsoft.com/dotnet/sdk:10.0'
-          args '--network sonar-net'
+          args '--network school-guardian-project_sonar-net'
         }
       }
       steps {
@@ -45,7 +45,7 @@ pipeline {
       agent {
         docker { 
           image 'mcr.microsoft.com/dotnet/sdk:10.0'
-          args '--network sonar-net'
+          args '--network school-guardian-project_sonar-net'
         }
       }
       environment {
@@ -97,7 +97,7 @@ pipeline {
       agent {
         docker { 
           image 'node:20' 
-          args '--network sonar-net'
+          args '--network school-guardian-project_sonar-net'
         }
       }
       environment {
@@ -150,9 +150,7 @@ pipeline {
 
   post {
     always {
-      node {
-        cleanWs()
-      }
+      cleanWs()
     }
   }
 }

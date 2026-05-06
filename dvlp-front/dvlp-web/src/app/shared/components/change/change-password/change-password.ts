@@ -1,10 +1,11 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIcon } from "@angular/material/icon";
 import { NavComponent } from "@shared/components/navbar/nav-component/nav-component";
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-change-password',
-  imports: [MatIcon, NavComponent],
+  imports: [MatIcon, NavComponent, ReactiveFormsModule],
   templateUrl: './change-password.html',
   styleUrl: './change-password.css',
 })

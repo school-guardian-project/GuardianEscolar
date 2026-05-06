@@ -5,6 +5,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { SidebarAdmin } from '@shared/components/navbar/sidebar-admin/sidebar-admin';
 import { Themes } from '@shared/components/modal/themes/themes';
 import { Language } from '@shared/components/modal/language/language'
+import { TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 
@@ -18,6 +19,7 @@ import { NgIf } from '@angular/common';
     SidebarAdmin,
     Themes,
     Language,
+    TranslateModule,
     NgIf
   ],
   templateUrl: './information-admin.html',
@@ -52,5 +54,13 @@ export class InformationAdmin {
 
   changeEmail() {
     this.router.navigate(['admin/change-email/email']);
+  }
+
+  changePassword() {
+    this.router.navigate(['admin/change-password/email']);
+  }
+
+  changeContact() {
+    this.router.navigate(['admin/change-contact/telephone']);
   }
 }

@@ -13,17 +13,20 @@
   (submit)="onSubmit()"
 >
   <form action="" [formGroup]="form">
-    <label for="email">Correo electrónico</label>
-    <input type="email" id="email" formControlName="email" />
-    <!-- Muestra mensaje si el usuario entro y salio del campo -->
-    <!-- y si el formato de email es invalido -->
-    @if (form.get('email')?.touched) {
-      @if (form.get('email')?.errors?.['required']) {
-        <small class="error">*El correo es requerido.</small>
-      } @else if (form.get('email')?.errors?.['pattern'] || form.get('email')?.errors?.['email']) {
-        <small class="error">*Formato inválido (ejemplo@dominio.com).</small>
+    <div class="input-email">
+      <label for="email">Correo electrónico</label>
+      <input type="email" id="email" formControlName="email">
+      <!-- Muestra mensaje si el usuario entro y salio del campo -->
+      <!-- y si el formato de email es invalido -->
+      @if (form.get('email')?.touched && form.get('email')?.errors?.['email']) {
+      <small class="error">*Debe ser un email valido</small>
       }
-    }
-    <p>Recibirás un código de 6 dígitos</p>
+      <!-- Muestrra el mensaje si el usuarios toco el campo -->
+      <!-- y si lo dejo vacio -->
+      @if (form.get('email')?.touched && form.get('email')?.errors?.['required']) {
+      <small class="error">*El email es requerido</small>
+      }
+      <p>Recibirás un código de 6 dígitos</p>
+    </div>
   </form>
 </app-change-password>

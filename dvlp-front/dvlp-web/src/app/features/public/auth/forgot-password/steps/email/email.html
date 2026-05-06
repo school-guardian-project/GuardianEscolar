@@ -1,39 +1,32 @@
-<app-change-password
-  iconHead="mail"
-  [title]="'forgot_password.title' | translate"
+<app-change-password iconHead="mail" [title]="'forgot_password.title' | translate"
   [sessionDescription]="'forgot_password.session_description' | translate"
   [titleStep]="'forgot_password.title_step' | translate"
   [loginDescription]="'forgot_password.login_description' | translate"
-  [buttonText]="'forgot_password.button' | translate"
-  [returnStep]="'forgot_password.return' | translate"
-  [showProgress]="true"
-  [currentStep]="1"
-  [stepText]="'forgot_password.step_text' | translate"
-  (return)="return()"
-  (submit)="onSubmit()"
->
+  [buttonText]="'forgot_password.button' | translate" [returnStep]="'forgot_password.return' | translate"
+  [showProgress]="true" [currentStep]="1" [stepText]="'forgot_password.step_text' | translate" (return)="return()"
+  (submit)="onSubmit()">
 
   <form [formGroup]="form">
 
-    <label for="email">
-      {{ 'login.right.email.label' | translate }}
-    </label>
+    <div class="input-email">
+      <label for="email">
+        {{ 'login.right.email.label' | translate }}
+      </label>
 
-    <input type="email" id="email" formControlName="email">
+      <input type="email" id="email" formControlName="email">
 
-    <!-- Email inválido -->
-    <small class="error"
-      *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['email']">
-      {{ 'login.right.email.errors.invalid' | translate }}
-    </small>
+      <!-- Email inválido -->
+      <small class="error" *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['email']">
+        {{ 'login.right.email.errors.invalid' | translate }}
+      </small>
 
-    <!-- Email requerido -->
-    <small class="error"
-      *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['required']">
-      {{ 'login.right.email.errors.required' | translate }}
-    </small>
+      <!-- Email requerido -->
+      <small class="error" *ngIf="form.get('email')?.touched && form.get('email')?.errors?.['required']">
+        {{ 'login.right.email.errors.required' | translate }}
+      </small>
 
-    <p>{{ 'forgot_password.hint' | translate }}</p>
+      <p>{{ 'forgot_password.hint' | translate }}</p>
+    </div>
 
   </form>
 

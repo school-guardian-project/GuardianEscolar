@@ -31,3 +31,10 @@ form {
 .error {
     color: red;
 }
+
+.input-email {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}

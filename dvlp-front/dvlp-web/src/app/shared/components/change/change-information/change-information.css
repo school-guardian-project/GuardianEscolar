@@ -43,6 +43,7 @@ main {
     background-color: white;
     border-bottom-right-radius: 9px;
     border-top-right-radius: 9px;
+    height: 100%;
 }
 
 .sesion-left,
@@ -127,6 +128,7 @@ button {
     color: #366fea;
     text-align: center;
     cursor: pointer;
+    margin-top: auto;
 }
 
 .color {
@@ -153,3 +155,18 @@ button {
     gap: 10px;
 }
 
+@media screen and (max-width: 1000px) {
+    .sesion-left {
+        display: none;
+        width: 0;
+    }
+
+    .sesion-right {
+        border-radius: 9px;
+        width: 100%;
+    }
+
+    .container-session {
+        width: 50%;
+    }
+}

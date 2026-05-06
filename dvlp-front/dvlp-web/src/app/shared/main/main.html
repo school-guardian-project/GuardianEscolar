@@ -19,7 +19,7 @@
                 <div class="floating-badge">{{ 'card_panel.badge' | translate }}</div>
                 <div class="header">
                     <h3 class="panel">{{ 'card_panel.title' | translate }}</h3>
-                   <span class="badge">{{ 'card_panel.live' | translate }}</span>
+                    <span class="badge">{{ 'card_panel.live' | translate }}</span>
                 </div>
                 <div class="stats">
                     <div class="stat-box">
@@ -70,7 +70,7 @@
             <div class="title">{{ 'how_it_works.title' | translate }}</div>
         </div>
         <div class="steps">
-            <div class="step-item" *ngFor="let step of steps; let i = index">
+            <div class="step-item" *ngFor="let step of steps | slice:0:4; let i = index">
                 <div class="number">{{ i + 1 }}</div>
                 <div class="step">
                     <div class="title-step">{{ step.title }}</div>

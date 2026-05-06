@@ -43,6 +43,7 @@ main {
     background-color: white;
     border-bottom-right-radius: 9px;
     border-top-right-radius: 9px;
+    height: 100%;
 }
 
 .sesion-left,
@@ -126,6 +127,7 @@ button {
     color: #366fea;
     text-align: center;
     cursor: pointer;
+    margin-top: auto;
 }
 
 .color {

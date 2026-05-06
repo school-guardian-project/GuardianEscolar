@@ -8,7 +8,7 @@
 }
 
 .login-description {
-  background-color: #D4EAFF;
+  background-color: #d4eaff;
   color: #366fea;
   padding: 15px;
   display: flex;
@@ -22,26 +22,27 @@
 }
 
 .pin-input {
-  width: 50px;
-  height: 60px;
+  width: 40px;
+  height: 50px;
   border-radius: 11px;
   border: 1px solid #366fea;
   text-align: center;
   font-size: 1.5rem;
-  background-color: #D4EAFF;
+  background-color: #d4eaff;
   text-transform: uppercase;
 }
 
 .pin-input:focus {
   outline: none;
-  border: 2px solid #366fea;
+  border: 1px solid #366fea;
 }
 
 .error {
   color: red;
   text-align: center;
-  margin-bottom: 40px;
-  margin-top: -50px;
+  position: absolute;
+  bottom: -18px;
+  left: 0;
 }
 
 input {
@@ -49,11 +50,18 @@ input {
 }
 
 input.ng-invalid.ng-touched {
-  border: 2px red solid;
+  border: 1px red solid;
 }
 
 form {
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+
+.input-pin {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }

@@ -40,8 +40,9 @@
 .error {
   color: red;
   text-align: center;
-  margin-bottom: 40px;
-  margin-top: -50px;
+  position: absolute;
+  bottom: -18px;
+  left: 0;
 }
 
 input {
@@ -56,4 +57,11 @@ form {
   display: flex;
   flex-direction: column;
   width: 100%;
+}
+
+.input-pin {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }

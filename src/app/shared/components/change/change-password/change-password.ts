@@ -2,10 +2,11 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIcon } from "@angular/material/icon";
 import { NavComponent } from "@shared/components/navbar/nav-component/nav-component";
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { TranslateModule } from '@ngx-translate/core';
 @Component({
   selector: 'app-change-password',
-  imports: [MatIcon, NavComponent, ReactiveFormsModule],
+  standalone: true, 
+  imports: [MatIcon, NavComponent, ReactiveFormsModule, TranslateModule],
   templateUrl: './change-password.html',
   styleUrl: './change-password.css',
 })

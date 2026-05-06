@@ -88,14 +88,7 @@
       {
         "title": "Monitoreo activo",
         "description": "Monitoreo en tiempo real desde el panel de administración."
-      },
-
-      { "icon": "satellite_alt", "title": "GPS en tiempo real", "description": "Ubicación precisa de cada bus en el mapa con actualizaciones cada 10 segundos." },
-      { "icon": "notifications", "title": "Alertas instantáneas", "description": "Notificaciones push cuando el bus llega, se desvía o hay cualquier incidente." },
-      { "icon": "assignment", "title": "Control de asistencia", "description": "Registro automático de subida y bajada de cada estudiante al bus." },
-      { "icon": "insert_chart", "title": "Panel de Administración", "description": "Dashboard completo con métricas, reportes y gestión de rutas y conductores." },
-      { "icon": "family_restroom", "title": "App para familias", "description": "Los padres siguen el recorrido del bus y reciben notificaciones en su celular." },
-      { "icon": "lock", "title": "Datos seguros", "description": "Cifrado de extremo a extremo y cumplimiento con normativas de protección de datos." }
+      }
     ]
   },
 
@@ -150,6 +143,7 @@
       },
       "password": {
         "label": "Contraseña",
+        "placeholder": "Ingresa tu contraseña",
         "errors": {
           "required": "*La contraseña es requerida"
         }
@@ -158,9 +152,22 @@
       "button": "Iniciar sesión",
       "terms": "Al ingresar aceptas nuestros",
       "terms_link": "Términos de uso",
+      "and": "y",
       "privacy_link": "Política de privacidad"
+    },
+
+  "change_password": {
+    "rules_title": "La contraseña debe contener:",
+    "rules": {
+      "min_length": "Mínimo 8 dígitos",
+      "alphanumeric": "Números y letras",
+      "case": "Combinación de minúsculas y mayúsculas",
+      "special": "Caracteres especiales (. - _ @ *)"
     }
+}
   },
+
+  
   "dashboard": {
     "welcome": "Bienvenido",
     "role": "Panel de administración · Guardian Escolar",
@@ -712,8 +719,9 @@
 
   "forgot_password": {
     "title": "Recupera tu acceso",
-    "session_description": "Te enviaremos un código...",
+    "session_description": "Le enviaremos un código de verificación a su correo electrónico registrado.",
     "title_step": "Restablecer contraseña",
+    "login_description": "Ingresa el correo con el que te registraste",
     "button": "Enviar código",
     "return": "Volver al inicio de sesión",
     "step_text": "1 de 3",

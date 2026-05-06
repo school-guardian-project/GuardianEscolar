@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ChangePassword } from '@shared/components/change/change-password/change-password';
+import { ChangeInformation } from '@shared/components/change/change-information/change-information'; // ✅ IMPORT CORRECTO
 import {
   FormBuilder,
   FormGroup,
@@ -15,8 +15,9 @@ import { Confirmations } from '@shared/components/modal/confirmations/confirmati
 
 @Component({
   selector: 'app-reset',
+  standalone: true, // ⚠️ IMPORTANTE
   imports: [
-    ChangePassword,
+    ChangeInformation, // ✅ ESTE ES EL FIX REAL
     FormsModule,
     ReactiveFormsModule,
     TranslateModule

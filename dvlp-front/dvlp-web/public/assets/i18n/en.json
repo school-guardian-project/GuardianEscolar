@@ -94,19 +94,16 @@
       {
         "title": "Active monitoring",
         "description": "Real-time monitoring from the administration panel."
-      },
+      }
 
-      { "title": "Register your institution", "description": "Create your account, add your routes and drivers in minutes." },
-      { "title": "Install on the buses", "description": "Install the GPS device on each bus in less than 5 minutes." },
-      { "title": "Invite families", "description": "Parents download Guardian Escolar and follow the route in real time." },
-      { "title": "Active monitoring", "description": "Real-time monitoring from the administration panel." }
+  
  ]
   },
   "cta": {
     "title": "Ready to protect your students?",
     "description": "Join more than 500 institutions that already trust Guardian Escolar.",
     "btn_download": "Download",
-    "btn_sales": "Talk to sales"
+    "btn_sales": "Contact us"
   },
   "footer": {
     "description": "School monitoring system for safer routes and more peaceful families.",
@@ -140,6 +137,7 @@
       "reports": "Reports and metrics",
       "footer": "guardian.edu · 24/7 Support"
     },
+
     "right": {
       "title": "Sign in",
       "description": "Enter your credentials to access the dashboard",
@@ -153,6 +151,7 @@
       },
       "password": {
         "label": "Password",
+        "placeholder": "Enter your password",
         "errors": {
           "required": "*Password is required"
         }
@@ -163,7 +162,17 @@
       "and": "and",
       "terms_link": "Terms of use",
       "privacy_link": "Privacy policy"
+    },
+
+    "change_password": {
+    "rules_title": "The password must contain:",
+    "rules": {
+      "min_length": "Minimum 8 characters",
+      "alphanumeric": "Numbers and letters",
+      "case": "Combination of lowercase and uppercase",
+      "special": "Special characters (. - _ @ *)"
     }
+  }
   },
   "dashboard": {
     "welcome": "Welcome",

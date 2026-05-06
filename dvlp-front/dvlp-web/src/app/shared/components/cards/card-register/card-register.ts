@@ -35,7 +35,6 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { name: 'correo', type: 'email' },
   ],
   acudiente: [
-<<<<<<< HEAD
     { name: 'nombres', type: 'text' },
     { name: 'apellidos', type: 'text' },
     { name: 'correo', type: 'email' },
@@ -44,16 +43,7 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { name: 'fechaNac', type: 'date' },
     { name: 'telefono', type: 'tel' },
     { name: 'direccion', type: 'text' },
-=======
-    { label: 'Nombres',               name: 'nombres',         type: 'text' },
-    { label: 'Apellidos',            name: 'apellidos',      type: 'text' },
-    { label: 'Correo electrónico',   name: 'correo',         type: 'email' },
-    { label: 'Tipo Identificación',  name: 'tipoId',         type: 'select', options: ['CC', 'CE', 'Pasaporte'] },
-    { label: 'Identificación',       name: 'identificacion', type: 'text' },
-    { label: 'Fecha nacimiento',     name: 'fechaNac',       type: 'date' },
-    { label: 'Teléfono',             name: 'telefono',       type: 'tel' },
-    { label: 'Dirección residencia', name: 'direccion',      type: 'text' },
->>>>>>> develop
+
   ],
 
   conductor: [

@@ -216,3 +216,19 @@ button {
 .politic {
     margin-left: 2px;
 }
+
+@media screen and (max-width: 1000px) {
+    .sesion-left {
+        display: none;
+        width: 0;
+    }
+
+    .sesion-right {
+        border-radius: 9px;
+        width: 100%;
+    }
+
+    .container-session {
+        width: 50%;
+    }
+}

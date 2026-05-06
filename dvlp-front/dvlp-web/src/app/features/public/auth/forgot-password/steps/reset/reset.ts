@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ChangeInformation } from "@shared/components/change/change-information/change-information";
+import { ChangePassword } from "@shared/components/change/change-password/change-password";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { passwordMatch } from '@shared/validator/password-match.validator';
 
 @Component({
   selector: 'app-reset',
-  imports: [ChangeInformation, FormsModule, ReactiveFormsModule],
+  imports: [ChangePassword, FormsModule, ReactiveFormsModule],
   templateUrl: './reset.html',
   styleUrl: './reset.css',
 })

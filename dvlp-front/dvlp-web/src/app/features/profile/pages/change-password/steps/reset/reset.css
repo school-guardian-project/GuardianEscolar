@@ -19,10 +19,6 @@ label {
     font-size: 1rem;
 }
 
-#password {
-    margin-bottom: 30px;
-}
-
 p {
     color: #68768e;
     margin-bottom: 50px;
@@ -31,17 +27,45 @@ form {
     display: flex;
     flex-direction: column;
 }
-
-.error {
-    color: red;
-    position: absolute;
-    bottom: -18px;
-    left: 0;
+.password {
+  margin-top: -25px;
+  display: flex;
+  flex-direction: column;
 }
 
-.input-email {
-    margin-bottom: 30px;
-    display: flex;
-    flex-direction: column;
-    position: relative;
+.container-errors {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  height: 55px;
+  gap: 2px;
+}
+
+.error {
+  color: red;
+  position: static;
+  left: 0;
+  top: 0;
+}
+
+/* ------------------------- */
+.input-confirm-password,
+.input-password {
+  display: flex;
+  flex-direction: column;
+}
+
+.error1 {
+  color: red;
+  position: static;
+  left: 0;
+  bottom: 0;
+}
+
+.container-errors-confirm {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  height: 35px;
+  gap: 2px;
 }

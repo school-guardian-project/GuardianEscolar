@@ -22,6 +22,7 @@ label {
 p {
     color: #68768e;
     margin-bottom: 50px;
+    margin-top: 18px;
 }
 form {
     display: flex;
@@ -29,11 +30,16 @@ form {
 }
 
 .error {
+    position: absolute;
+    top: 68px; 
+    left: 0;
     color: red;
+    font-size: 0.75rem;
+    line-height: 1;
+    z-index: 10;
 }
 
 .input-email {
-    margin-bottom: 30px;
     display: flex;
     flex-direction: column;
     position: relative;

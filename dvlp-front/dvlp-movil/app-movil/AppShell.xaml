@@ -6,9 +6,10 @@
     xmlns:local="clr-namespace:app_movil"
     Title="app_movil">
 
+
     <ShellContent
-        Title="Home"
-        ContentTemplate="{DataTemplate local:MainPage}"
-        Route="MainPage" />
+        Title="Bienvenido"
+        ContentTemplate="{DataTemplate pages:welcomer}"
+        Route="welcomer" />
 
 </Shell>

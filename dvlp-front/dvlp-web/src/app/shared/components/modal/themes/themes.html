@@ -46,6 +46,7 @@
           <div class="active-badge"
             *ngIf="currentTheme === 'light-theme-green'">{{ 'theme.select' | translate }}</div>
 
+
           <div class="theme-preview theme-preview-light">
             <div class="theme-sidebar" style="background: #16A34A;"></div>
             <div class="theme-content">
@@ -83,6 +84,7 @@
           <div class="active-badge"
             *ngIf="currentTheme === 'dark-theme-blue'">{{ 'theme.select' | translate }}</div>
 
+
           <div class="theme-preview theme-preview-dark">
             <div class="theme-sidebar" style="background: #3B82F6;"></div>
             <div class="theme-content">
@@ -93,7 +95,9 @@
           </div>
 
           <div class="theme-option">
+
             <span class="theme-name">{{ 'theme.blue' | translate }}</span>
+
             <span class="radio-wrapper">
               <input type="radio" name="theme"
                 [checked]="currentTheme === 'dark-theme-blue'"
@@ -110,8 +114,8 @@
           (click)="setTheme('dark-theme-green')">
 
           <div class="active-badge"
-            *ngIf="currentTheme === 'dark-theme-green'">{{ 'theme.select' | translate }}</div>
 
+            *ngIf="currentTheme === 'dark-theme-green'">{{ 'theme.select' | translate }}</div>
           <div class="theme-preview theme-preview-dark">
             <div class="theme-sidebar" style="background: #22C55E;"></div>
             <div class="theme-content">

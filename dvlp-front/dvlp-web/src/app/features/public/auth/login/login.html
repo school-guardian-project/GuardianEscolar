@@ -36,26 +36,24 @@
             {{ 'login.right.description' | translate }}
           </div>
 
-          <div class="input-email">
-            <!-- Email -->
-            <label for="email">{{ 'login.right.email.label' | translate }}</label>
-            <input
-              type="email"
-              id="email"
-              [placeholder]="'login.right.email.placeholder' | translate"
-              formControlName="email">
-  
-            @if (form.get('email')?.touched && form.get('email')?.errors?.['required']) {
-              <small class="error">
-                {{ 'login.right.email.errors.required' | translate }}
-              </small>
-            }
-            @if (form.get('email')?.touched && form.get('email')?.errors?.['pattern']) {
-              <small class="error">
-                {{ 'login.right.email.errors.invalid' | translate }}
-              </small>
-            }
-          </div>
+          <!-- Email -->
+          <label for="email">{{ 'login.right.email.label' | translate }}</label>
+          <input
+            type="email"
+            id="email"
+            [placeholder]="'login.right.email.placeholder' | translate"
+            formControlName="email">
+
+          @if (form.get('email')?.touched && form.get('email')?.errors?.['required']) {
+            <small class="error">
+              {{ 'login.right.email.errors.required' | translate }}
+            </small>
+          }
+          @if (form.get('email')?.touched && form.get('email')?.errors?.['email']) {
+            <small class="error">
+              {{ 'login.right.email.errors.invalid' | translate }}
+            </small>
+          }
 
           <!-- Password -->
           <label for="password">{{ 'login.right.password.label' | translate }}</label>

@@ -15,7 +15,7 @@ import { Confirmations } from '@shared/components/modal/confirmations/confirmati
 
 @Component({
   selector: 'app-reset',
-  standalone: true, // ⚠️ IMPORTANTE
+  standalone: true,
   imports: [
     ChangePassword, 
     FormsModule,

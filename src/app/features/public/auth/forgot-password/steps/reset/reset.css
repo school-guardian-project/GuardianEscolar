@@ -1,26 +1,22 @@
 input {
   padding: 10px;
   border-radius: 5px;
-  border: #68768e 2px solid;
+  border: #68768e 1px solid;
   transition: border 0.2s ease;
 }
 
 input:focus {
-  border: #366fea 2px solid;
+  border: #366fea 1px solid;
   outline: none;
 }
 
 input.ng-invalid.ng-touched {
-  border: 2px red solid;
+  border: 1px red solid;
 }
 
 label {
   margin-bottom: 7px;
   font-size: 1rem;
-}
-
-#password {
-  margin-bottom: 30px;
 }
 
 p {
@@ -32,58 +28,45 @@ form {
   flex-direction: column;
 }
 
-.error {
-    color: red;
-    margin-top: -20px;
-    margin-bottom: 10px;
-}
-
-
-
-
-label {
-  display: block;
-  margin-bottom: 6px;
-  font-weight: 500;
-  color: #374151;
-  font-size: 0.95rem;
-}
-
-input {
-  width: 100%;
-  padding: 10px 14px;           
-  border: 1.5px solid #e2e8f0;
-  border-radius: 8px;           
-  font-size: 0.98rem;          
-  transition: all 0.2s ease;
-  box-sizing: border-box;
-  height: 37px;                 
-}
-
-input:focus {
-  outline: none;
-  border-color: #366fea;
-  box-shadow: 0 0 0 3px rgba(54, 111, 234, 0.12);
-}
-
-/* Mensaje de error */
-small.error {
-  display: block;
-  color: #ef4444;
-  font-size: 0.83rem;
-  margin: 4px 4px 14px 4px;
-  font-weight: 500;
-}
-
-/* Input con error */
-input.ng-invalid.ng-touched {
-  border-color: #ef4444;
-  background-color: #fffafafa;
-}
-
-
-.error-container {
-  gap: 5px;
+.password {
+  margin-top: -25px;
   display: flex;
   flex-direction: column;
+}
+
+.container-errors {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  height: 55px;
+  gap: 2px;
+}
+
+.error {
+  color: red;
+  position: static;
+  left: 0;
+  top: 0;
+}
+
+/* ------------------------- */
+.input-confirm-password,
+.input-password {
+  display: flex;
+  flex-direction: column;
+}
+
+.error1 {
+  color: red;
+  position: static;
+  left: 0;
+  bottom: 0;
+}
+
+.container-errors-confirm {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px;
+  height: 35px;
+  gap: 2px;
 }

@@ -1,5 +1,5 @@
 input.ng-invalid.ng-touched {
-    border: 2px red solid;
+    border: 1px red solid;
 }
 
 input {
@@ -8,6 +8,9 @@ input {
 
 .error {
     color: red;
+    position: absolute;
+    bottom: -18px;
+    left: 0;
     text-align: center;
 }
 
@@ -17,7 +20,6 @@ input {
     gap: 15px;
     flex-direction: row;
     align-items: center;
-    margin-bottom: 40px;
 }
 
 .pin-input {
@@ -32,7 +34,7 @@ input {
 
 .pin-input:focus {
     outline: none;
-    border: 2px solid #366fea;
+    border: 1px solid #366fea;
 }
 
 .login-description {
@@ -51,4 +53,18 @@ input {
 
 .reenviar {
     color: #366fea;
+}
+
+.input-pin {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 40px;
+    width: 100%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
 }

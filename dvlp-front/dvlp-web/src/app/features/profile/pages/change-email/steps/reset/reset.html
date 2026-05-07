@@ -18,7 +18,7 @@
       <input type="email" id="email" formControlName="email" />
       <!-- Muestra mensaje si el usuario entro y salio del campo -->
       <!-- y si el formato de email es invalido -->
-      @if (form.get('email')?.touched && form.get('email')?.errors?.['email']) {
+      @if (form.get('email')?.touched && form.get('email')?.errors?.['pattern']) {
         <small class="error">*Debe ser un email valido</small>
       }
       <!-- Muestrra el mensaje si el usuarios toco el campo -->

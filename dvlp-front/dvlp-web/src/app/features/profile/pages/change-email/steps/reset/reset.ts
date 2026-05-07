@@ -13,8 +13,10 @@ export class Reset {
   form: FormGroup;
 
   constructor(private router: Router, private fb: FormBuilder) {
+    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.email]]
+      email: ['', [Validators.required, Validators.pattern(emailPattern)]]
     });
   }
 

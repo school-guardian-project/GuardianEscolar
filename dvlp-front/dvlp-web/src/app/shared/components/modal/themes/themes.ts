@@ -5,7 +5,6 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'app-themes',
   standalone: true,
   imports: [CommonModule, TranslateModule],
-
   templateUrl: './themes.html',
   styleUrl: './themes.css',
 })

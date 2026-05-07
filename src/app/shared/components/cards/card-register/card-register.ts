@@ -43,7 +43,6 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { name: 'fechaNac', type: 'date' },
     { name: 'telefono', type: 'tel' },
     { name: 'direccion', type: 'text' },
-
   ],
 
   conductor: [

@@ -5,7 +5,7 @@
     <div class="container-session">
       <div class="sesion-left">
         <mat-icon class="shield">shield</mat-icon>
-        <h1 class="panel-sesion">{{ 'login.left.title' | translate }}</h1>
+         <h1 class="panel-sesion">{{ 'login.left.title' | translate }}</h1>
         <p class="session-description">
           {{ 'login.left.description' | translate }}
         </p>
@@ -65,7 +65,7 @@
 
           <div class="olvid">
             @if (form.get('password')?.touched && form.get('password')?.errors?.['required']) {
-              <small class="error">
+              <small class="error1">
                 {{ 'login.right.password.errors.required' | translate }}
               </small>
             }
@@ -76,7 +76,7 @@
 
           <!-- Botón -->
           <div class="btn">
-            <button type="submit" [disabled]="form.invalid">
+            <button type="submit">
               {{ 'login.right.button' | translate }}
             </button>
           </div>

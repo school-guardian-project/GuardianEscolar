@@ -1,17 +1,17 @@
 input {
     padding: 10px;
     border-radius: 5px;
-    border: #68768e 2px solid;
+    border: #68768e 1px solid;
     transition: border 0.2s ease;
 }
 
 input:focus {
-    border: #366fea 2px solid;
+    border: #366fea 1px solid;
     outline: none;
 }
 
 input.ng-invalid.ng-touched {
-    border: 2px red solid;
+    border: 1px red solid;
 }
 
 label {
@@ -22,6 +22,7 @@ label {
 p {
     color: #68768e;
     margin-bottom: 50px;
+    margin-top: 18px;
 }
 form {
     display: flex;
@@ -29,5 +30,17 @@ form {
 }
 
 .error {
+    position: absolute;
+    top: 68px; 
+    left: 0;
     color: red;
+    font-size: 0.75rem;
+    line-height: 1;
+    z-index: 10;
+}
+
+.input-telephone {
+    display: flex;
+    flex-direction: column;
+    position: relative;
 }

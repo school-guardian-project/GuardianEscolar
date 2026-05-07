@@ -1,25 +1,32 @@
 input.ng-invalid.ng-touched {
-  border: 2px red solid;
+  border: 1px red solid;
 }
 
 input {
   transition: border 0.2s ease;
 }
 
+.input-pin {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
 .error {
   color: red;
   text-align: center;
-  margin-bottom: 40px;
-  margin-top: -50px;
+  position: absolute;
+  bottom: -18px;
+  left: 0;
 }
 
 .pin-inputs {
   display: flex;
   justify-content: center;
-  gap: 15px;
+  gap: 20px;
   flex-direction: row;
   align-items: center;
-  margin-bottom: 50px;
 }
 
 .pin-input {
@@ -34,7 +41,7 @@ input {
 
 .pin-input:focus {
   outline: none;
-  border: 2px solid #366fea;
+  border: 1px solid #366fea;
 }
 
 .login-description {

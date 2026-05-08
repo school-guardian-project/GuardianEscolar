@@ -9,16 +9,19 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-navbar',
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule, MatSidenavModule, 
-    // TranslateModule, TranslateService,git
-     CommonModule],
+  imports: [
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatSidenavModule,
+    TranslateModule,
+    CommonModule,
+  ],
   templateUrl: './navbar.html',
   styleUrl: './navbar.css',
 })
-
 export class Navbar {
-
-  constructor(private router: Router) { }
+  constructor(private router: Router) {}
 
   @ViewChild('sidenav') sidenav!: MatSidenav;
 
@@ -41,7 +44,7 @@ export class Navbar {
   }
 
   login() {
-    this.router.navigate(['/auth/login'])
+    this.router.navigate(['/auth/login']);
   }
 
   contact() {

@@ -5,10 +5,11 @@ import { passwordMatch } from '@shared/validator/password-match.validator';
 import { ChangePassword } from '@shared/components/change/change-password/change-password';
 import { MatDialog } from '@angular/material/dialog';
 import { Confirmations } from '@shared/components/modal/confirmations/confirmations';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-reset',
-  imports: [ReactiveFormsModule, ChangePassword],
+  imports: [ReactiveFormsModule, ChangePassword, TranslateModule],
   templateUrl: './reset.html',
   styleUrl: './reset.css',
 })

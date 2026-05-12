@@ -11,13 +11,13 @@
         http://www.liquibase.org/xml/ns/secure
         http://www.liquibase.org/xml/ns/secure/liquibase-secure-latest.xsd">
 
-    <changeSet id="001-insert-user-admin" author="user_juan">
+    <changeSet id="001-insert-user-student" author="Juan Chala">
 
-        <insert tableName="role">
-            <column name="id" valueNumeric="1"/>
-            <column name="name" value="admin"/>
-            <column name="description" value="Este rol tendra acceso a todas las funciones administrativas para la gestion de usuarios, rutas, buses, paradas, y mas."/>
-            <column name="permissions" value="Crear, leer, actualizar y eliminar"/>
+        <insert tableName="Role" schemaName="app">
+            <column name="id" valueNumeric="2"/>
+            <column name="name" value="student"/>
+            <column name="description" value="Este rol tendra acceso al escaneo del codigo qr para reportar el estado de el mismo."/>
+            <column name="permissions" value="Leer y actualizar"/>
         </insert>
 
     </changeSet>

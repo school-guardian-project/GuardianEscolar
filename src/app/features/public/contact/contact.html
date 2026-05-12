@@ -3,25 +3,24 @@
 <main>
      <section class="section-first">
         <div class="section-left">
-            <div class="support"><span class="object"></span>Soporte disponible ahora</div>
-            <div class="section-title">Estamos aquí para <span class="color">ayudarte</span></div>
+            <div class="support"><span class="object"></span>{{ 'contact.support' | translate }}</div>
+            <div class="section-title">{{ 'contact.title' | translate }} <span class="color">{{ 'contact.title_color' | translate }}</span></div>
 
-            <div class="paragraph">¿Tienes preguntas sobre el sistema, necesitas un video explicativo o quieres integrar
-                Guardian Escolar a tu institución? Escríbenos.</div>
+            <div class="paragraph">{{ 'contact.paragraph' | translate }}</div>
             <div class="container-social">
                 <div class="social-card">
-                    <div class="icon-social">📘</div>
+                    <div class="icon-social"><i class="ph-fill ph-facebook-logo"></i></div>
                     <div class="description-social">
-                        <div class="title-social">Facebook</div>
-                        <div class="link-social">@GuardianEscolar</div>
+                        <div class="title-social">{{ 'contact.social.facebook' | translate }}</div>
+                        <div class="link-social">{{ 'contact.social.facebook_handle' | translate }}</div>
                     </div>
                 </div>
 
                 <div class="social-card">
-                    <div class="icon-social">📷</div>
+                    <div class="icon-social"><i class="ph-fill ph-instagram-logo"></i></div>
                     <div class="description-social">
-                        <div class="title-social">Instagram</div>
-                        <div class="link-social">@GuardianEscolar</div>
+                        <div class="title-social">{{ 'contact.social.instagram' | translate }}</div>
+                        <div class="link-social">{{ 'contact.social.instagram_handle' | translate }}</div>
                     </div>
                 </div>
             </div>
@@ -30,52 +29,44 @@
         <div class="section-right">
             <div class="contact container">
                 <div class="contact-card">
-                    <div class="icon-contact"><mat-icon>contact_phone</mat-icon></div>
+                    <div class="icon-contact"><i class="ph-fill ph-megaphone"></i></div>
                     <div class="description-contact">
-                        <div class="title-important">Informacion de contacto</div>
-                        <div class="description-text">Multiples canales disponibles.</div>
+                        <div class="title-important">{{ 'contact.info_title' | translate }}</div>
+                        <div class="description-text">{{ 'contact.info_subtitle' | translate }}</div>
                     </div>
                 </div>
                 <div class="contact-card">
                     <div class="icon-contact"><mat-icon>email</mat-icon></div>
                     <div class="description-contact">
-                        <div class="title-contact-card">CORREO</div>
-                        <div class="main-title">guardianescolar0@gmail.com</div>
-                        <div class="description-text">Respuesta en menos de 2 horas</div>
+                        <div class="title-contact-card">{{ 'contact.email.title' | translate }}</div>
+                        <div class="main-title">{{ 'contact.email.value' | translate }}</div>
+                        <div class="description-text">{{ 'contact.email.subtitle' | translate }}</div>
                     </div>
-                    <button class="contact-button"><mat-icon>mail</mat-icon></button>
+                    <button class="contact-button" aria-label="{{ 'contact.email.button' | translate }}"><mat-icon>mail</mat-icon></button>
                 </div>
                 <hr>
                 <div class="contact-card">
                     <div class="icon-contact"><mat-icon>phone</mat-icon></div>
                     <div class="description-contact">
-                        <div class="title-contact-card">TELÉFONO</div>
-                        <div class="main-title">+57 314 430 82 74</div>
-                        <div class="description-text">Lunes a viernes · 7am – 6pm</div>
+                        <div class="title-contact-card">{{ 'contact.phone.title' | translate }}</div>
+                        <div class="main-title">{{ 'contact.phone.value' | translate }}</div>
+                        <div class="description-text">{{ 'contact.phone.subtitle' | translate }}</div>
                     </div>
-                    <button class="contact-button"><mat-icon>phone</mat-icon></button>
+                    <button class="contact-button" aria-label="{{ 'contact.phone.button' | translate }}"><mat-icon>phone</mat-icon></button>
                 </div>
                 <hr>
                 <div class="contact-card">
-                    <div class="icon-contact"><mat-icon>message</mat-icon></div>
+                    <div class="icon-contact"><i class="ph-fill ph-whatsapp-logo"></i></div>
                     <div class="description-contact">
-                        <div class="title-contact-card">WHATSAPP</div>
-                        <div class="main-title">+57 314 430 82 74</div>
-                        <div class="description-text">Disponible 24/7 para urgencias</div>
+                        <div class="title-contact-card">{{ 'contact.whatsapp.title' | translate }}</div>
+                        <div class="main-title">{{ 'contact.whatsapp.value' | translate }}</div>
+                        <div class="description-text">{{ 'contact.whatsapp.subtitle' | translate }}</div>
                     </div>
-                    <button class="contact-button">Contactar</button>
+                    <button class="contact-button" aria-label="{{ 'contact.whatsapp.button' | translate }}"><i class="ph-fill ph-whatsapp-logo"></i></button>
                 </div>
-                <!-- <div class="contact-card">
-                    <div class="icon-contact"></div>
-                    <div class="description-contact">
-                        <div class="title-contact-card"></div>
-                        <div class="main-title"></div>
-                        <div class="description-text"></div>
-                    </div>
-                </div> -->
-
             </div>
         </div>
     </section>
+
 </main>
 <app-footer></app-footer>

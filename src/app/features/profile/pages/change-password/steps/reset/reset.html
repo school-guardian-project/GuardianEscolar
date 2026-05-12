@@ -1,21 +1,20 @@
 <app-change-password
   iconHead="lock"
-  title="Crea una contraseña segura"
-  sessionDescription="Ten en cuenta las recomendaciones de seguridad."
-  titleStep="Nueva Contraseña"
-  loginDescription="Elige una contraseña que no hayas usado antes"
-  buttonText="Guardar nueva contraseña"
-  returnStep="Volver"
+  [title]="'change_password.reset.title' | translate"
+  [sessionDescription]="'change_password.reset.sessionDescription' | translate"
+  [titleStep]="'change_password.reset.titleStep' | translate"
+  [loginDescription]="'change_password.reset.loginDescription' | translate"
+  [buttonText]="'change_password.reset.buttonText' | translate"
+  [returnStep]="'change_password.reset.returnStep' | translate"
   (return)="return()"
   [showProgress]="true"
   [currentStep]="3"
-  stepText="3 de 3"
+  [stepText]="'change_password.reset.stepText' | translate"
   (submit)="onSubmit()"
 >
   <form action="" [formGroup]="form">
-    <!-- Este conenido se debe cambiar -->
+    <!-- Este contenido se debe cambiar -->
     <div class="input-password">
-      <!-- Nueva contraseña -->
       <div class="password">
         <label for="password">{{ 'forgot_password.reset.fields.password' | translate }}</label>
         <input type="password" id="password" formControlName="password" />
@@ -37,10 +36,7 @@
     </div>
 
     <div class="input-confirm-password">
-      <!-- Confirmar contraseña -->
-      <label for="confirmPassword">{{
-        'forgot_password.reset.fields.confirm_password' | translate
-      }}</label>
+      <label for="confirmPassword">{{ 'forgot_password.reset.fields.confirm_password' | translate }}</label>
       <input type="password" id="confirmPassword" formControlName="confirmPassword" />
 
       <div class="container-errors-confirm">

@@ -63,15 +63,7 @@
         "icon": "lock",
         "title": "Secure data",
         "description": "End-to-end encryption and compliance with data protection regulations."
-      },
-
-      { "icon": "satellite_alt", "title": "Real-time GPS", "description": "Precise location of each bus on the map with updates every 10 seconds." },
-      { "icon": "notifications", "title": "Instant alerts", "description": "Push notifications when the bus arrives, deviates or any incident occurs." },
-      { "icon": "assignment", "title": "Attendance control", "description": "Automatic check-in and check-out record of each student on the bus." },
-      { "icon": "insert_chart", "title": "Admin Dashboard", "description": "Complete dashboard with metrics, reports and route and driver management." },
-      { "icon": "family_restroom", "title": "Family app", "description": "Parents follow the bus route and receive notifications on their phone." },
-      { "icon": "lock", "title": "Secure data", "description": "End-to-end encryption and compliance with data protection regulations." }
-
+      }
     ]
   },
   "how_it_works": {
@@ -104,6 +96,38 @@
     "description": "Join more than 500 institutions that already trust Guardian Escolar.",
     "btn_download": "Download",
     "btn_contact": "Contact us"
+  },
+  "contact": {
+    "support": "Support available now",
+    "title": "We're here to",
+    "title_color": "help you",
+    "paragraph": "Do you have questions about the system, need an explanatory video, or want to integrate Guardian Escolar into your institution? Write to us.",
+    "social": {
+      "facebook": "Facebook",
+      "facebook_handle": "@GuardianEscolar",
+      "instagram": "Instagram",
+      "instagram_handle": "@GuardianEscolar"
+    },
+    "info_title": "Contact information",
+    "info_subtitle": "Multiple channels available.",
+    "email": {
+      "title": "EMAIL",
+      "value": "guardianescolar0@gmail.com",
+      "subtitle": "Response within 2 hours",
+      "button": "Send email"
+    },
+    "phone": {
+      "title": "PHONE",
+      "value": "+57 314 430 82 74",
+      "subtitle": "Monday to Friday · 7am – 6pm",
+      "button": "Call"
+    },
+    "whatsapp": {
+      "title": "WHATSAPP",
+      "value": "+57 314 430 82 74",
+      "subtitle": "Available 24/7 for emergencies",
+      "button": "Open WhatsApp"
+    }
   },
   "footer": {
     "description": "School monitoring system for safer routes and more peaceful families.",
@@ -162,17 +186,142 @@
       "and": "and",
       "terms_link": "Terms of use",
       "privacy_link": "Privacy policy"
+    }
+  },
+  "change_contact": {
+    "telephone": {
+      "title": "Change phone",
+      "sessionDescription": "For security, verify your contact number.",
+      "titleStep": "Step 1",
+      "buttonText": "Send code",
+      "returnStep": "Back",
+      "stepText": "1 of 4",
+      "label": "Phone",
+      "error_pattern": "*Must be a valid phone number.",
+      "error_required": "*Phone is required.",
+      "help_text": "Enter your number to receive a verification code."
     },
-
-    "change_password": {
+    "code_first": {
+      "title": "Verify code",
+      "sessionDescription": "Enter the code sent to your phone.",
+      "titleStep": "Step 2",
+      "buttonText": "Verify",
+      "returnStep": "Back",
+      "stepText": "2 of 4",
+      "description": "Check your message and enter the 6-digit code.",
+      "pin_error": "*The entered code is invalid."
+    },
+    "reset": {
+      "title": "Update phone",
+      "sessionDescription": "Enter your new number to replace the previous one.",
+      "titleStep": "Step 3",
+      "buttonText": "Continue",
+      "returnStep": "Back",
+      "stepText": "3 of 4",
+      "label": "New phone",
+      "error_pattern": "*Must be a valid phone number.",
+      "error_required": "*Phone is required.",
+      "help_text": "Type the new contact number."
+    },
+    "code_second": {
+      "title": "Confirm code",
+      "sessionDescription": "Enter the code sent to the new number.",
+      "titleStep": "Step 4",
+      "buttonText": "Confirm",
+      "returnStep": "Back",
+      "stepText": "4 of 4",
+      "description": "Enter the code to complete the phone change.",
+      "pin_error": "*The entered code is invalid."
+    }
+  },
+  "change_email": {
+    "email": {
+      "title": "Change email",
+      "sessionDescription": "Enter the email you want to update.",
+      "titleStep": "Step 1",
+      "loginDescription": "You must provide a valid email.",
+      "buttonText": "Send code",
+      "returnStep": "Back",
+      "stepText": "1 of 4",
+      "email_label": "Email",
+      "error_pattern": "*Must be a valid email.",
+      "error_required": "*Email is required.",
+      "help_text": "You will receive a verification code at this email."
+    },
+    "code_first": {
+      "title": "Verify code",
+      "sessionDescription": "Enter the code sent to your current email.",
+      "titleStep": "Step 2",
+      "buttonText": "Verify",
+      "returnStep": "Back",
+      "stepText": "2 of 4",
+      "description": "Check your inbox and type the 6-digit code.",
+      "pin_error": "*The entered code is invalid."
+    },
+    "code_second": {
+      "title": "Confirm code",
+      "sessionDescription": "Enter the code sent to your new email.",
+      "titleStep": "Step 4",
+      "buttonText": "Confirm",
+      "returnStep": "Back",
+      "stepText": "4 of 4",
+      "description": "Enter the final code to update your email.",
+      "pin_error": "*The entered code is invalid."
+    },
+    "reset": {
+      "title": "Almost done",
+      "sessionDescription": "Enter your new email address.",
+      "titleStep": "New email",
+      "loginDescription": "You must enter your new email",
+      "buttonText": "Send code",
+      "returnStep": "Back",
+      "stepText": "3 of 4",
+      "email_label": "Email",
+      "error_pattern": "*Must be a valid email.",
+      "error_required": "*Email is required",
+      "help_text": "You will receive a 6-digit code"
+    }
+  },
+  "change_password": {
     "rules_title": "The password must contain:",
     "rules": {
       "min_length": "Minimum 8 characters",
       "alphanumeric": "Numbers and letters",
       "case": "Combination of lowercase and uppercase",
       "special": "Special characters (. - _ @ *)"
+    },
+    "email": {
+      "title": "Change password",
+      "sessionDescription": "Enter your email to receive a recovery code.",
+      "titleStep": "Step 1",
+      "loginDescription": "You must provide your registered email.",
+      "buttonText": "Send code",
+      "returnStep": "Back",
+      "stepText": "1 of 3",
+      "email_label": "Email",
+      "error_pattern": "*Must be a valid email.",
+      "error_required": "*Email is required.",
+      "help_text": "You will receive a code to reset your password."
+    },
+    "code": {
+      "title": "Verify code",
+      "sessionDescription": "Enter the code sent to your email.",
+      "titleStep": "Step 2",
+      "buttonText": "Verify",
+      "returnStep": "Back",
+      "stepText": "2 of 3",
+      "description": "Check your inbox and enter the 6-digit code.",
+      "pin_error": "*The entered code is invalid."
+    },
+    "reset": {
+      "title": "Reset password",
+      "sessionDescription": "Create a new secure password.",
+      "titleStep": "Step 3",
+      "loginDescription": "Your password must meet the minimum requirements.",
+      "buttonText": "Save password",
+      "returnStep": "Back",
+      "stepText": "3 of 3"
     }
-  }
   },
   "dashboard": {
     "welcome": "Welcome",

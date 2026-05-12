@@ -1,32 +1,28 @@
 <app-change-information
   iconHead="phone"
-  title="Cambia tu teléfono"
-  sessionDescription="Ingresa tu número de teléfono actual para verificar tu identidad."
-  titleStep="Teléfono actual"
+  [title]="'change_contact.telephone.title' | translate"
+  [sessionDescription]="'change_contact.telephone.sessionDescription' | translate"
+  [titleStep]="'change_contact.telephone.titleStep' | translate"
   loginDescription=""
-  buttonText="Verificar"
-  returnStep="Volver al panel de información"
+  [buttonText]="'change_contact.telephone.buttonText' | translate"
+  [returnStep]="'change_contact.telephone.returnStep' | translate"
   (return)="return()"
   [showProgress]="true"
   [currentStep]="1"
-  stepText="1 de 4"
+  [stepText]="'change_contact.telephone.stepText' | translate"
   (submit)="onSubmit()"
 >
   <form action="" [formGroup]="form">
     <div class="input-telephone">
-      <label for="email">Telefono</label>
+      <label for="email">{{ 'change_contact.telephone.label' | translate }}</label>
       <input type="tel" id="telephone" formControlName="telephone" />
-      <!-- Muestra mensaje si el usuario entro y salio del campo -->
-      <!-- y si el formato de email es invalido -->
       @if (form.get('telephone')?.touched && form.get('telephone')?.errors?.['pattern']) {
-        <small class="error">*Debe ser un telefono valido</small>
+        <small class="error">{{ 'change_contact.telephone.error_pattern' | translate }}</small>
       }
-      <!-- Muestrra el mensaje si el usuarios toco el campo -->
-      <!-- y si lo dejo vacio -->
       @if (form.get('telephone')?.touched && form.get('telephone')?.errors?.['required']) {
-        <small class="error">*El telefono es requerido</small>
+        <small class="error">{{ 'change_contact.telephone.error_required' | translate }}</small>
       }
-      <p>Recibirás un código de 6 dígitos</p>
+      <p>{{ 'change_contact.telephone.help_text' | translate }}</p>
     </div>
   </form>
 </app-change-information>

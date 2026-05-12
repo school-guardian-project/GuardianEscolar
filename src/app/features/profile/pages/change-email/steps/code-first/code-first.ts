@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule, FormArray } from '@angular/forms';
 import { ChangeInformation } from "../../../../../../shared/components/change/change-information/change-information";
 import { CommonModule } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-code-first',
-  imports: [ChangeInformation, ReactiveFormsModule, CommonModule],
+  imports: [ChangeInformation, ReactiveFormsModule, CommonModule, TranslateModule],
   templateUrl: './code-first.html',
   styleUrl: './code-first.css',
 })

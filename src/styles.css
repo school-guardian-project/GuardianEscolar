@@ -1,3 +1,14 @@
+@import "@phosphor-icons/web/regular";
+@import "@phosphor-icons/web/fill";
+@import "@phosphor-icons/web/bold";
+@import "@phosphor-icons/web/light";
+@import "@phosphor-icons/web/thin";
+@import "@phosphor-icons/web/duotone";
+
+  
+.ph-fill, .ph , .ph-bold, .ph-light, .ph-thin, .ph-duotone {
+  font-size: 1.5rem;
+}
 /*  RESET  */
 * {
   margin: 0;

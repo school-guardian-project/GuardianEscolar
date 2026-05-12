@@ -1,0 +1,912 @@
+{
+  "navbar": {
+    "features": "Fonctionnalités",
+    "how_it_works": "Comment ça marche",
+    "pricing": "Tarifs",
+    "contact": "Contact"
+  },
+  "hero": {
+    "line1": "La",
+    "line2": "sécurité",
+    "line3": "scolaire",
+    "line4": "en",
+    "line5": "temps",
+    "line6": "réel",
+    "paragraph": "Suivi GPS des trajets, alertes instantanées et contrôle de présence. Tranquillité pour les familles, efficacité pour les écoles.",
+    "btn_download": "Télécharger",
+    "btn_video": "Voir la vidéo"
+  },
+  "card_panel": {
+    "badge": "+ 12 ce mois-ci",
+    "title": "Panneau Guardian Escolar",
+    "live": "● En direct",
+    "students": "Étudiants",
+    "routes": "Itinéraires",
+    "alerts": "Alertes",
+    "alert_msg": "Bus hors route",
+    "alert_sub": "Itinéraire LOL85 · 6:45 am",
+    "success_msg": "18 itinéraires en activité",
+    "success_sub": "Tous dans le timing normal"
+  },
+  "features": {
+    "label": "FONCTIONNALITÉS",
+    "title": "Tout ce dont vous avez besoin pour la sécurité scolaire",
+    "description": "Une plateforme complète pour les administrateurs, conducteurs et familles.",
+    "cards": [
+      {
+        "icon": "satellite_alt",
+        "title": "GPS en temps réel",
+        "description": "Localisation précise de chaque bus sur la carte avec mises à jour toutes les 10 secondes."
+      },
+      {
+        "icon": "notifications",
+        "title": "Alertes instantanées",
+        "description": "Notifications push lorsque le bus arrive, dévie ou qu'un incident se produit."
+      },
+      {
+        "icon": "assignment",
+        "title": "Contrôle de présence",
+        "description": "Enregistrement automatique de la montée et de la descente de chaque élève dans le bus."
+      },
+      {
+        "icon": "insert_chart",
+        "title": "Tableau de bord admin",
+        "description": "Tableau de bord complet avec métriques, rapports et gestion des itinéraires et des conducteurs."
+      },
+      {
+        "icon": "family_restroom",
+        "title": "Application pour les familles",
+        "description": "Les parents suivent le trajet du bus et reçoivent des notifications sur leur téléphone."
+      },
+      {
+        "icon": "lock",
+        "title": "Données sécurisées",
+        "description": "Chiffrement de bout en bout et respect des réglementations sur la protection des données."
+      }
+    ]
+  },
+  "how_it_works": {
+    "label": "COMMENT ÇA MARCHE",
+    "title": "Simple pour tous",
+    "steps": [
+      {
+        "title": "Enregistrement de l'institution",
+        "description": "Créez votre compte, ajoutez vos itinéraires et conducteurs en quelques minutes."
+      },
+      {
+        "title": "Installez-le dans les bus",
+        "description": "Installez l'appareil GPS dans chaque bus en moins de 5 minutes."
+      },
+      {
+        "title": "Invitez les familles",
+        "description": "Les parents téléchargent Guardian Escolar et suivent le trajet en temps réel."
+      },
+      {
+        "title": "Surveillance active",
+        "description": "Surveillance en temps réel depuis le panneau d'administration."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Prêt à protéger vos élèves ?",
+    "description": "Rejoignez plus de 500 établissements qui font déjà confiance à Guardian Escolar.",
+    "btn_download": "Télécharger",
+    "btn_contact": "Contactez-nous"
+  },
+  "contact": {
+    "support": "Assistance disponible maintenant",
+    "title": "Nous sommes là pour",
+    "title_color": "vous aider",
+    "paragraph": "Avez-vous des questions sur le système, besoin d'une vidéo explicative ou souhaitez intégrer Guardian Escolar à votre établissement ? Écrivez-nous.",
+    "social": {
+      "facebook": "Facebook",
+      "facebook_handle": "@GuardianEscolar",
+      "instagram": "Instagram",
+      "instagram_handle": "@GuardianEscolar"
+    },
+    "info_title": "Informations de contact",
+    "info_subtitle": "Plusieurs canaux disponibles.",
+    "email": {
+      "title": "EMAIL",
+      "value": "guardianescolar0@gmail.com",
+      "subtitle": "Réponse en moins de 2 heures",
+      "button": "Envoyer un email"
+    },
+    "phone": {
+      "title": "TÉLÉPHONE",
+      "value": "+57 314 430 82 74",
+      "subtitle": "Du lundi au vendredi · 7h – 18h",
+      "button": "Appeler"
+    },
+    "whatsapp": {
+      "title": "WHATSAPP",
+      "value": "+57 314 430 82 74",
+      "subtitle": "Disponible 24h/24 et 7j/7 pour les urgences",
+      "button": "Ouvrir WhatsApp"
+    }
+  },
+  "footer": {
+    "description": "Système de surveillance scolaire pour des trajets plus sûrs et des familles plus sereines.",
+    "col_product": "Produit",
+    "col_company": "Entreprise",
+    "col_legal": "Légal",
+    "links_product": [
+      "Fonctionnalités",
+      "Comment ça marche",
+      "Tarifs",
+      "Pour les écoles"
+    ],
+    "links_company": [
+      "À propos",
+      "Blog",
+      "Contact"
+    ],
+    "links_legal": [
+      "Confidentialité",
+      "Conditions"
+    ],
+    "rights": "© 2026 Guardian Escolar · Tous droits réservés"
+  },
+  "login": {
+    "left": {
+      "title": "Bienvenue à nouveau",
+      "description": "Accédez au système complet de surveillance des itinéraires scolaires.",
+      "gps": "GPS en temps réel",
+      "alerts": "Alertes instantanées",
+      "reports": "Rapports et métriques",
+      "footer": "guardian.edu · Support 24/7"
+    },
+    "right": {
+      "title": "Se connecter",
+      "description": "Entrez vos identifiants pour accéder au tableau de bord",
+      "email": {
+        "label": "Email",
+        "placeholder": "votre-email@email.com",
+        "errors": {
+          "invalid": "*Doit être un email valide.",
+          "required": "*L'email est requis."
+        }
+      },
+      "password": {
+        "label": "Mot de passe",
+        "placeholder": "Entrez votre mot de passe",
+        "errors": {
+          "required": "*Le mot de passe est requis"
+        }
+      },
+      "forgot": "Mot de passe oublié ?",
+      "button": "Se connecter",
+      "terms": "En vous connectant, vous acceptez nos",
+      "terms_link": "Conditions d'utilisation",
+      "and": "et",
+      "privacy_link": "Politique de confidentialité"
+    }
+  },
+  "change_contact": {
+    "telephone": {
+      "title": "Changer de téléphone",
+      "sessionDescription": "Pour des raisons de sécurité, vérifiez votre numéro de contact.",
+      "titleStep": "Étape 1",
+      "buttonText": "Envoyer le code",
+      "returnStep": "Retour",
+      "stepText": "1 sur 4",
+      "label": "Téléphone",
+      "error_pattern": "*Doit être un numéro valide.",
+      "error_required": "*Le téléphone est requis.",
+      "help_text": "Saisissez votre numéro pour recevoir un code de vérification."
+    },
+    "code_first": {
+      "title": "Vérifier le code",
+      "sessionDescription": "Entrez le code envoyé à votre téléphone.",
+      "titleStep": "Étape 2",
+      "buttonText": "Vérifier",
+      "returnStep": "Retour",
+      "stepText": "2 sur 4",
+      "description": "Vérifiez votre message et saisissez le code à 6 chiffres.",
+      "pin_error": "*Le code saisi n'est pas valide."
+    },
+    "reset": {
+      "title": "Mettre à jour le téléphone",
+      "sessionDescription": "Entrez votre nouveau numéro pour remplacer l'ancien.",
+      "titleStep": "Étape 3",
+      "buttonText": "Continuer",
+      "returnStep": "Retour",
+      "stepText": "3 sur 4",
+      "label": "Nouveau téléphone",
+      "error_pattern": "*Doit être un numéro valide.",
+      "error_required": "*Le téléphone est requis.",
+      "help_text": "Tapez le nouveau numéro de contact."
+    },
+    "code_second": {
+      "title": "Confirmer le code",
+      "sessionDescription": "Entrez le code envoyé au nouveau numéro.",
+      "titleStep": "Étape 4",
+      "buttonText": "Confirmer",
+      "returnStep": "Retour",
+      "stepText": "4 sur 4",
+      "description": "Saisissez le code pour finaliser le changement de téléphone.",
+      "pin_error": "*Le code saisi n'est pas valide."
+    }
+  },
+  "change_email": {
+    "email": {
+      "title": "Changer d'email",
+      "sessionDescription": "Entrez l'email que vous souhaitez mettre à jour.",
+      "titleStep": "Étape 1",
+      "loginDescription": "Vous devez fournir un email valide.",
+      "buttonText": "Envoyer le code",
+      "returnStep": "Retour",
+      "stepText": "1 sur 4",
+      "email_label": "Email",
+      "error_pattern": "*Doit être un email valide.",
+      "error_required": "*L'email est requis.",
+      "help_text": "Vous recevrez un code de vérification sur cet email."
+    },
+    "code_first": {
+      "title": "Vérifier le code",
+      "sessionDescription": "Entrez le code envoyé à votre email actuel.",
+      "titleStep": "Étape 2",
+      "buttonText": "Vérifier",
+      "returnStep": "Retour",
+      "stepText": "2 sur 4",
+      "description": "Consultez votre boîte de réception et saisissez le code à 6 chiffres.",
+      "pin_error": "*Le code saisi n'est pas valide."
+    },
+    "code_second": {
+      "title": "Confirmer le code",
+      "sessionDescription": "Entrez le code envoyé à votre nouvel email.",
+      "titleStep": "Étape 4",
+      "buttonText": "Confirmer",
+      "returnStep": "Retour",
+      "stepText": "4 sur 4",
+      "description": "Entrez le code final pour mettre à jour votre email.",
+      "pin_error": "*Le code saisi n'est pas valide."
+    },
+    "reset": {
+      "title": "Presque terminé",
+      "sessionDescription": "Entrez votre nouvel email.",
+      "titleStep": "Nouvel email",
+      "loginDescription": "Vous devez saisir votre nouvel email",
+      "buttonText": "Envoyer le code",
+      "returnStep": "Retour",
+      "stepText": "3 sur 4",
+      "email_label": "Email",
+      "error_pattern": "*Doit être un email valide.",
+      "error_required": "*L'email est requis",
+      "help_text": "Vous recevrez un code à 6 chiffres"
+    }
+  },
+  "change_password": {
+    "rules_title": "Le mot de passe doit contenir :",
+    "rules": {
+      "min_length": "Minimum 8 caractères",
+      "alphanumeric": "Chiffres et lettres",
+      "case": "Combinaison de minuscules et de majuscules",
+      "special": "Caractères spéciaux (. - _ @ *)"
+    },
+    "email": {
+      "title": "Changer le mot de passe",
+      "sessionDescription": "Entrez votre email pour recevoir un code de récupération.",
+      "titleStep": "Étape 1",
+      "loginDescription": "Vous devez fournir votre email enregistré.",
+      "buttonText": "Envoyer le code",
+      "returnStep": "Retour",
+      "stepText": "1 sur 3",
+      "email_label": "Email",
+      "error_pattern": "*Doit être un email valide.",
+      "error_required": "*L'email est requis.",
+      "help_text": "Vous recevrez un code pour réinitialiser votre mot de passe."
+    },
+    "code": {
+      "title": "Vérifier le code",
+      "sessionDescription": "Entrez le code envoyé à votre email.",
+      "titleStep": "Étape 2",
+      "buttonText": "Vérifier",
+      "returnStep": "Retour",
+      "stepText": "2 sur 3",
+      "description": "Consultez votre boîte de réception et saisissez le code à 6 chiffres.",
+      "pin_error": "*Le code saisi n'est pas valide."
+    },
+    "reset": {
+      "title": "Réinitialiser le mot de passe",
+      "sessionDescription": "Créez un nouveau mot de passe sécurisé.",
+      "titleStep": "Étape 3",
+      "loginDescription": "Votre mot de passe doit respecter les exigences minimales.",
+      "buttonText": "Enregistrer le mot de passe",
+      "returnStep": "Retour",
+      "stepText": "3 sur 3"
+    }
+  },
+  "dashboard": {
+    "welcome": "Bienvenue",
+    "role": "Tableau de bord admin · Guardian Escolar",
+    "metrics": {
+      "students": "ÉTUDIANTS",
+      "routes": "ITINÉRAIRES ACTIFS",
+      "alerts": "ALERTES AUJOURD'HUI",
+      "month": "+12 ce mois-ci",
+      "operating": "Tous en activité",
+      "attention": "Nécessitent une attention"
+    },
+    "alerts": {
+      "title": "Dernières alertes",
+      "out_of_route": "Bus hors route",
+      "sudden_brake": "Freinage brusque",
+      "driver": "Conducteur",
+      "route": "Itinéraire"
+    }
+  },
+  "superadmin_dashboard": {
+    "welcome": "Bienvenue",
+    "role": "Panneau d'administration · Guardian Escolar",
+    "metrics": {
+      "admins": "ADMINISTRATEURS",
+      "schools": "ÉCOLES ENREGISTRÉES",
+      "comments": "COMMENTAIRES AUJOURD'HUI",
+      "month": "+12 ce mois-ci",
+      "active": "Tous en activité",
+      "attention": "Nécessitent une attention"
+    },
+    "alerts": {
+      "title": "Dernières alertes",
+      "out_route": "Bus hors route",
+      "sudden_stop": "Arrêt brusque",
+      "driver": "Conducteur",
+      "route": "Itinéraire"
+    }
+  },
+  "sidebar": {
+    "admin": "Gérer",
+    "users": "Utilisateurs",
+    "buses": "Bus",
+    "profile": "Profil"
+  },
+  "sidebarSuperadmin": {
+    "title": "Gérer",
+    "schools": "Écoles",
+    "admins": "Administrateurs",
+    "profile": "Profil"
+  },
+  "navbar-admin": {
+    "title-users": "Utilisateurs",
+    "students": "Étudiants",
+    "guardian": "Tuteurs",
+    "drivers": "Conducteurs",
+    "Family": "Famille",
+    "title-routes": "Transport",
+    "bus": "Bus",
+    "route": "Itinéraires",
+    "bus-stops": "Arrêts",
+    "title-profile": "Profil"
+  },
+  "comments_modal": {
+    "title": "Avez-vous un problème ?",
+    "subtitle": "Faites-le nous savoir",
+    "label": "Dites-nous votre problème",
+    "placeholder": "Entrez le texte",
+    "error": "Veuillez décrire votre problème avant d'envoyer",
+    "buttons": {
+      "cancel": "Annuler",
+      "submit": "Envoyer",
+      "exit": "Fermer"
+    },
+    "success": {
+      "title": "Message envoyé !",
+      "description": "Merci de nous avoir signalé votre problème. Nous ferons de notre mieux pour le résoudre au plus vite"
+    }
+  },
+  "update_school": {
+    "title": "Mettre à jour les informations de l'école",
+    "fields": {
+      "name": "Nom complet",
+      "name_placeholder": "Entrez le nom de l'école",
+      "city": "Ville",
+      "city_placeholder": "Sélectionnez une ville",
+      "address": "Adresse",
+      "address_placeholder": "Entrez l'adresse",
+      "phone": "Téléphone",
+      "phone_placeholder": "Entrez le téléphone",
+      "logo": "Logo",
+      "upload": "Télécharger un nouveau logo",
+      "email": "Email",
+      "email_placeholder": "Entrez l'email",
+      "web": "Site web",
+      "web_placeholder": "Entrez le site web"
+    },
+    "error": "Veuillez compléter au moins un champ avant de mettre à jour",
+    "buttons": {
+      "cancel": "Annuler",
+      "update": "Mettre à jour",
+      "exit": "Fermer"
+    },
+    "success": {
+      "title": "Informations mises à jour !",
+      "description": "Les changements ont été enregistrés avec succès"
+    }
+  },
+  "theme": {
+    "title": "Changer le thème",
+    "subtitle": "Sélectionner la couleur du panneau",
+    "light": "Clair",
+    "dark": "Sombre",
+    "select": "actif",
+    "blue": "Bleu",
+    "green": "Vert",
+    "buttons": {
+      "cancel": "Annuler",
+      "apply": "Appliquer"
+    }
+  },
+  "language": {
+    "title": "Sélectionner la langue",
+    "subtitle": "Veuillez choisir votre langue préférée pour continuer",
+    "buttons": {
+      "cancel": "Annuler",
+      "confirm": "Confirmer"
+    }
+  },
+  "delete_record": {
+    "estudiante": {
+      "title": "Supprimer l'étudiant",
+      "text": "Voulez-vous supprimer cet étudiant ? Cette action est irréversible."
+    },
+    "acudiente": {
+      "title": "Supprimer le tuteur",
+      "text": "Voulez-vous supprimer ce tuteur ? Cette action est irréversible."
+    },
+    "conductor": {
+      "title": "Supprimer le conducteur",
+      "text": "Voulez-vous supprimer ce conducteur ? Cette action est irréversible."
+    },
+    "familia": {
+      "title": "Supprimer la famille",
+      "text": "Voulez-vous supprimer cette famille ? Cette action est irréversible."
+    },
+    "bus": {
+      "title": "Supprimer le bus",
+      "text": "Voulez-vous supprimer ce bus ? Cette action est irréversible."
+    },
+    "parada": {
+      "title": "Supprimer l'arrêt",
+      "text": "Voulez-vous supprimer cet arrêt ? Cette action est irréversible."
+    },
+    "ruta": {
+      "title": "Supprimer l'itinéraire",
+      "text": "Voulez-vous supprimer cet itinéraire ? Cette action est irréversible."
+    },
+    "admins": {
+      "title": "Supprimer l'administrateur",
+      "text": "Voulez-vous supprimer cet administrateur ? Cette action est irréversible."
+    },
+    "schools": {
+      "title": "Supprimer l'école",
+      "text": "Voulez-vous supprimer cette école ? Cette action est irréversible."
+    }
+  },
+  "common": {
+    "cancel": "Annuler",
+    "delete": "Supprimer",
+    "save": "Enregistrer",
+    "confirm": "Confirmer",
+    "close": "Fermer"
+  },
+  "record_information": {
+    "estudiante": {
+      "title": "Informations de l'étudiant",
+      "fields": {
+        "nombres": "Prénoms",
+        "apellidos": "Noms de famille",
+        "tipoId": "Type d'identité",
+        "identificacion": "Numéro d'identité",
+        "fechaNac": "Date de naissance",
+        "curso": "Classe",
+        "telefono": "Téléphone",
+        "direccion": "Adresse",
+        "correo": "Email"
+      }
+    },
+    "acudiente": {
+      "title": "Informations du tuteur",
+      "fields": {
+        "nombre": "Nom",
+        "apellidos": "Noms de famille",
+        "correo": "Email",
+        "tipoId": "Type d'identité",
+        "identificacion": "Numéro d'identité",
+        "fechaNac": "Date de naissance",
+        "telefono": "Téléphone",
+        "direccion": "Adresse"
+      }
+    },
+    "conductor": {
+      "title": "Informations du conducteur",
+      "fields": {
+        "nombres": "Prénoms",
+        "apellidos": "Noms de famille",
+        "tipoId": "Type d'identité",
+        "identificacion": "Numéro d'identité",
+        "fechaNac": "Date de naissance",
+        "vencLicencia": "Expiration du permis",
+        "licencia": "Permis de conduire",
+        "direccion": "Adresse",
+        "correo": "Email"
+      }
+    },
+    "familia": {
+      "title": "Informations de la famille",
+      "fields": {
+        "nombre": "Nom",
+        "acudiente": "Tuteur",
+        "estudiante": "Étudiant",
+        "observaciones": "Observations"
+      }
+    },
+    "bus": {
+      "title": "Informations du bus",
+      "fields": {
+        "matricula": "Plaque d'immatriculation",
+        "conductor": "Conducteur",
+        "modelo": "Modèle",
+        "marca": "Marque",
+        "capacidad": "Capacité maximale",
+        "gps": "État du GPS",
+        "soat": "Validité SOAT"
+      }
+    },
+    "parada": {
+      "title": "Informations de l'arrêt",
+      "fields": {
+        "nombre": "Nom",
+        "ciudad": "Ville",
+        "direccion": "Adresse",
+        "latitud": "Latitude",
+        "longitud": "Longitude"
+      }
+    },
+    "ruta": {
+      "title": "Informations de l'itinéraire",
+      "fields": {
+        "nombre": "Nom",
+        "sector": "Secteur ou quartier",
+        "horaInicio": "Heure de début",
+        "horaFin": "Heure de fin",
+        "destino": "Destination",
+        "sectorRuta": "Secteur"
+      }
+    },
+    "admins": {
+      "title": "Informations de l'administrateur",
+      "fields": {
+        "nombre": "Nom",
+        "apellidos": "Noms de famille",
+        "correo": "Email",
+        "identificacion": "Numéro d'identité",
+        "telefono": "Téléphone",
+        "fechaNac": "Date de naissance",
+        "direccion": "Adresse"
+      }
+    },
+    "schools": {
+      "title": "Informations de l'école",
+      "fields": {
+        "nombre": "Nom",
+        "ciudad": "Ville",
+        "escolaridad": "Niveau scolaire",
+        "direccion": "Adresse",
+        "telefono": "Téléphone",
+        "correo": "Email",
+        "web": "Site Web"
+      }
+    }
+  },
+  "update_record": {
+    "estudiante": {
+      "title": "Mettre à jour l'étudiant",
+      "fields": {
+        "nombres": "Prénoms",
+        "apellidos": "Noms de famille",
+        "tipoId": "Type d'identité",
+        "identificacion": "Numéro d'identité",
+        "fechaNac": "Date de naissance",
+        "curso": "Classe",
+        "telefono": "Téléphone",
+        "direccion": "Adresse de résidence",
+        "correo": "Email"
+      }
+    },
+    "acudiente": {
+      "title": "Mettre à jour le tuteur",
+      "fields": {
+        "nombre": "Nom",
+        "apellidos": "Noms de famille",
+        "correo": "Email",
+        "tipoId": "Type d'identité",
+        "identificacion": "Numéro d'identité",
+        "fechaNac": "Date de naissance",
+        "telefono": "Téléphone",
+        "direccion": "Adresse de résidence"
+      }
+    },
+    "conductor": {
+      "title": "Mettre à jour le conducteur",
+      "fields": {
+        "nombres": "Prénoms",
+        "apellidos": "Noms de famille",
+        "tipoId": "Type d'identité",
+        "identificacion": "Numéro d'identité",
+        "fechaNac": "Date de naissance",
+        "vencLicencia": "Expiration du permis",
+        "licencia": "Permis de conduire",
+        "direccion": "Adresse de résidence",
+        "correo": "Email"
+      }
+    },
+    "familia": {
+      "title": "Mettre à jour la famille",
+      "fields": {
+        "nombre": "Nom",
+        "acudiente": "Tuteur",
+        "estudiante": "Étudiant",
+        "observaciones": "Observations"
+      }
+    },
+    "bus": {
+      "title": "Mettre à jour le bus",
+      "fields": {
+        "matricula": "Plaque d'immatriculation du bus",
+        "conductor": "Conducteur",
+        "modelo": "Modèle",
+        "marca": "Marque",
+        "capacidad": "Capacité maximale",
+        "soat": "Validité SOAT",
+        "gps": "État du GPS"
+      }
+    },
+    "parada": {
+      "title": "Mettre à jour l'arrêt",
+      "fields": {
+        "nombre": "Nom",
+        "ciudad": "Ville",
+        "direccion": "Adresse",
+        "latitud": "Latitude",
+        "longitud": "Longitude"
+      }
+    },
+    "ruta": {
+      "title": "Mettre à jour l'itinéraire",
+      "fields": {
+        "nombre": "Nom",
+        "sector": "Secteur ou quartier",
+        "horaInicio": "Heure de début de l'itinéraire",
+        "horaFin": "Heure de fin de l'itinéraire",
+        "destino": "Destination",
+        "sectorRuta": "Secteur"
+      }
+    },
+    "admins": {
+      "title": "Mettre à jour l'administrateur",
+      "fields": {
+        "nombre": "Nom",
+        "apellidos": "Noms de famille",
+        "correo": "Email",
+        "identificacion": "Numéro d'identité",
+        "fechaNac": "Date de naissance",
+        "telefono": "Téléphone",
+        "direccion": "Adresse de résidence"
+      }
+    },
+    "schools": {
+      "title": "Mettre à jour l'école",
+      "fields": {
+        "nombre": "Nom",
+        "ciudad": "Ville",
+        "direccion": "Adresse",
+        "telefono": "Téléphone",
+        "escolaridad": "Niveau scolaire",
+        "correo": "Email",
+        "web": "Site Web"
+      }
+    },
+    "buttons": {
+      "save": "Enregistrer les modifications",
+      "select": "Sélectionner…"
+    }
+  },
+  "register": {
+    "select": "Sélectionner…",
+    "button": "Enregistrer",
+    "estudiante": {
+      "title": "Enregistrer l'étudiant",
+      "fields": {
+        "nombres": "Prénoms",
+        "apellidos": "Noms de famille",
+        "tipoId": "Type d'identité",
+        "identificacion": "Numéro d'identité",
+        "fechaNac": "Date de naissance",
+        "curso": "Classe",
+        "telefono": "Téléphone",
+        "direccion": "Adresse",
+        "correo": "Email"
+      }
+    },
+    "acudiente": {
+      "title": "Enregistrer le tuteur",
+      "fields": {
+        "nombres": "Prénoms",
+        "apellidos": "Noms de famille",
+        "correo": "Email",
+        "tipoId": "Type d'identité",
+        "identificacion": "Numéro d'identité",
+        "fechaNac": "Date de naissance",
+        "telefono": "Téléphone",
+        "direccion": "Adresse"
+      }
+    },
+    "conductor": {
+      "title": "Enregistrer le conducteur",
+      "fields": {
+        "nombres": "Prénoms",
+        "apellidos": "Noms de famille",
+        "tipoId": "Type d'identité",
+        "identificacion": "Numéro d'identité",
+        "fechaNac": "Date de naissance",
+        "vencLicencia": "Expiration du permis",
+        "licencia": "Numéro de permis",
+        "direccion": "Adresse",
+        "correo": "Email"
+      }
+    },
+    "familia": {
+      "title": "Enregistrer la famille",
+      "fields": {
+        "nombre": "Nom de la famille",
+        "acudiente": "Tuteur",
+        "estudiante": "Étudiant",
+        "observaciones": "Observations"
+      }
+    },
+    "bus": {
+      "title": "Enregistrer le bus",
+      "fields": {
+        "matricula": "Plaque d'immatriculation",
+        "conductor": "Conducteur",
+        "modelo": "Modèle",
+        "marca": "Marque",
+        "capacidad": "Capacité",
+        "soat": "Validité SOAT",
+        "gps": "État du GPS"
+      }
+    },
+    "parada": {
+      "title": "Enregistrer l'arrêt",
+      "fields": {
+        "nombre": "Nom de l'arrêt",
+        "ciudad": "Ville",
+        "direccion": "Adresse",
+        "latitud": "Latitude",
+        "longitud": "Longitude"
+      }
+    },
+    "ruta": {
+      "title": "Enregistrer l'itinéraire",
+      "fields": {
+        "nombre": "Nom de l'itinéraire",
+        "sector": "Secteur / Quartier",
+        "horaInicio": "Heure de début",
+        "horaFin": "Heure de fin",
+        "destino": "Destination",
+        "sectorRuta": "Secteur"
+      }
+    },
+    "admins": {
+      "title": "Enregistrer l'administrateur",
+      "fields": {
+        "nombre": "Nom",
+        "apellidos": "Noms de famille",
+        "correo": "Email",
+        "identificacion": "Numéro d'identité",
+        "fechaNac": "Date de naissance",
+        "telefono": "Téléphone",
+        "direccion": "Adresse"
+      }
+    },
+    "schools": {
+      "title": "Enregistrer l'école",
+      "fields": {
+        "nombre": "Nom de l'école",
+        "logo": "Logo",
+        "ciudad": "Ville",
+        "direccion": "Adresse",
+        "telefono": "Téléphone",
+        "escolaridad": "Niveau d'éducation",
+        "correo": "Email",
+        "web": "Site Web"
+      }
+    }
+  },
+  "search": {
+    "search": "Rechercher..."
+  },
+  "card_list": {
+    "estudiante": "Étudiants enregistrés",
+    "acudiente": "Tuteurs enregistrés",
+    "conductor": "Conducteurs enregistrés",
+    "familia": "Familles enregistrées",
+    "bus": "Bus enregistrés",
+    "parada": "Arrêts enregistrés",
+    "ruta": "Itinéraires enregistrés",
+    "admins": "Administrateurs enregistrés",
+    "schools": "Écoles enregistrées",
+    "labels": {
+      "licencia_vigente": "Permis valide",
+      "placa": "Plaque d'immatriculation",
+      "nombre_conductor": "Nom du conducteur",
+      "acudiente": "Tuteur",
+      "direccion": "Adresse",
+      "destino_final": "Destination finale",
+      "hora_inicio": "Heure de début",
+      "hora_final": "Heure de fin",
+      "correo_electronico": "Email"
+    }
+  },
+  "admin_profile": {
+    "title": "Informations de l'administrateur",
+    "user": {
+      "name": "Nom de l'administrateur",
+      "role": "Administrateur"
+    },
+    "labels": {
+      "email": "Email",
+      "phone": "Téléphone",
+      "address": "Adresse",
+      "city": "Ville",
+      "school": "École",
+      "password": "Mot de passe",
+      "id": "ID"
+    }
+  },
+  "forgot_password": {
+    "title": "Récupérez votre accès",
+    "session_description": "Nous vous enverrons un code de vérification à votre email enregistré.",
+    "title_step": "Réinitialiser le mot de passe",
+    "login_description": "Entrez l'email avec lequel vous vous êtes inscrit",
+    "button": "Envoyer le code",
+    "return": "Retour à la connexion",
+    "step_text": "1 sur 3",
+    "hint": "Vous recevrez un code à 6 chiffres",
+    "code": {
+      "title": "Vérifiez votre email",
+      "session_description": "Nous avons envoyé un code à 6 chiffres à votre email.",
+      "title_step": "Code de vérification",
+      "button": "Valider",
+      "return": "Retour",
+      "step_text": "2 sur 3",
+      "sent_to": "Code envoyé à",
+      "valid": "Valide pendant 10 minutes.",
+      "error": "*Entrez les 6 chiffres du code"
+    },
+    "reset": {
+      "title": "Créez un mot de passe sécurisé",
+      "session_description": "Tenez compte des recommandations de sécurité.",
+      "title_step": "Nouveau mot de passe",
+      "login_description": "Choisissez un mot de passe que vous n'avez pas encore utilisé",
+      "button": "Enregistrer le nouveau mot de passe",
+      "return": "Retour",
+      "step_text": "3 sur 3",
+      "fields": {
+        "password": "Nouveau mot de passe",
+        "confirm_password": "Confirmer le mot de passe"
+      },
+      "errors": {
+        "required": "*Ce champ est requis",
+        "minlength": "*Minimum 8 caractères",
+        "pattern": "*Doit contenir des majuscules, minuscules, chiffres et caractères spéciaux (. - _ @ *)",
+        "no_match": "*Les mots de passe ne correspondent pas"
+      }
+    },
+    "links_product": ["Fonctionnalités", "Comment ça marche", "Tarifs", "Pour les écoles"],
+    "links_company": ["À propos", "Blog", "Contact"],
+    "links_legal": ["Confidentialité", "Conditions"],
+    "rights": "© 2026 Guardian Escolar · Tous droits réservés"
+  }
+}

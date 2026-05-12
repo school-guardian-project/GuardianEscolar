@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChangePassword } from '../../../../../../shared/components/change/change-password/change-password';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-email',
-  imports: [ReactiveFormsModule, ChangePassword],
+  imports: [ReactiveFormsModule, ChangePassword, TranslateModule],
   templateUrl: './email.html',
   styleUrl: './email.css',
 })

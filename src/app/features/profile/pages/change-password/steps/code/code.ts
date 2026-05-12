@@ -3,10 +3,11 @@ import { Router } from '@angular/router';
 import { ChangePassword } from '../../../../../../shared/components/change/change-password/change-password';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgFor } from '@angular/common';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-code',
-  imports: [ChangePassword, ReactiveFormsModule, NgFor],
+  imports: [ChangePassword, ReactiveFormsModule, NgFor, TranslateModule],
   templateUrl: './code.html',
   styleUrl: './code.css',
 })

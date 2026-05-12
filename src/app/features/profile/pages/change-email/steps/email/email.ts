@@ -2,10 +2,11 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChangeInformation } from "../../../../../../shared/components/change/change-information/change-information";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-email',
-  imports: [ChangeInformation, ReactiveFormsModule],
+  imports: [ChangeInformation, ReactiveFormsModule, TranslateModule],
   templateUrl: './email.html',
   styleUrl: './email.css',
 })

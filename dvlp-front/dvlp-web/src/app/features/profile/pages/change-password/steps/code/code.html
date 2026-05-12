@@ -1,19 +1,19 @@
 <app-change-password
   iconHead="lock"
-  title="Verifica tu correo"
-  sessionDescription="Enviamos un código de 6 dígitos a tu correo."
-  titleStep="Código de verificación"
+  [title]="'change_password.code.title' | translate"
+  [sessionDescription]="'change_password.code.sessionDescription' | translate"
+  [titleStep]="'change_password.code.titleStep' | translate"
   loginDescription=""
-  buttonText="Validar"
-  returnStep="Volver"
+  [buttonText]="'change_password.code.buttonText' | translate"
+  [returnStep]="'change_password.code.returnStep' | translate"
   (return)="return()"
   [showProgress]="true"
   [currentStep]="2"
-  stepText="2 de 3"
+  [stepText]="'change_password.code.stepText' | translate"
   (submit)="onSubmit()"
 >
   <div class="login-description">
-    <span>Código enviado a <b> tu@correo.com</b>. Válido por 10 minutos.</span>
+    <span>{{ 'change_password.code.description' | translate }}</span>
   </div>
   <form action="" [formGroup]="form">
     <div class="input-pin">
@@ -27,7 +27,7 @@
         />
       </div>
       @if (form.invalid && form.touched) {
-        <small class="error">*Ingresa los 6 digitos del codigo</small>
+        <small class="error">{{ 'change_password.code.pin_error' | translate }}</small>
       }
     </div>
   </form>

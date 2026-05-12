@@ -1,19 +1,19 @@
 <app-change-information
   iconHead="lock"
-  title="Último paso"
-  sessionDescription="Ingresa el código que enviamos a tu nuevo correo."
-  titleStep="Código de verificación"
+  [title]="'change_email.code_second.title' | translate"
+  [sessionDescription]="'change_email.code_second.sessionDescription' | translate"
+  [titleStep]="'change_email.code_second.titleStep' | translate"
   loginDescription=""
-  buttonText="Verificar"
-  returnStep="Volver"
+  [buttonText]="'change_email.code_second.buttonText' | translate"
+  [returnStep]="'change_email.code_second.returnStep' | translate"
   (return)="return()"
   [showProgress]="true"
   [currentStep]="4"
   (submit)="onSubmit()"
-  stepText="4 de 4"
+  [stepText]="'change_email.code_second.stepText' | translate"
 >
   <div class="login-description">
-    <span>Código enviado a <b> tu@correo.com</b>. Válido por 10 minutos.</span>
+    <span>{{ 'change_email.code_second.description' | translate }}</span>
   </div>
 
   <form action="" [formGroup]="form">
@@ -28,7 +28,7 @@
         />
       </div>
       @if (form.invalid && form.touched) {
-        <small class="error">*Ingresa los 6 digitos del codigo</small>
+        <small class="error">{{ 'change_email.code_second.pin_error' | translate }}</small>
       }
     </div>
   </form>

@@ -98,6 +98,38 @@
     "btn_download": "Descargar",
     "btn_contact": "Contactanos"
   },
+  "contact": {
+    "support": "Soporte disponible ahora",
+    "title": "Estamos aquí para",
+    "title_color": "ayudarte",
+    "paragraph": "¿Tienes preguntas sobre el sistema, necesitas un video explicativo o quieres integrar Guardian Escolar a tu institución? Escríbenos.",
+    "social": {
+      "facebook": "Facebook",
+      "facebook_handle": "@GuardianEscolar",
+      "instagram": "Instagram",
+      "instagram_handle": "@GuardianEscolar"
+    },
+    "info_title": "Información de contacto",
+    "info_subtitle": "Múltiples canales disponibles.",
+    "email": {
+      "title": "CORREO",
+      "value": "guardianescolar0@gmail.com",
+      "subtitle": "Respuesta en menos de 2 horas",
+      "button": "Enviar correo"
+    },
+    "phone": {
+      "title": "TELÉFONO",
+      "value": "+57 314 430 82 74",
+      "subtitle": "Lunes a viernes · 7am – 6pm",
+      "button": "Llamar"
+    },
+    "whatsapp": {
+      "title": "WHATSAPP",
+      "value": "+57 314 430 82 74",
+      "subtitle": "Disponible 24/7 para urgencias",
+      "button": "Abrir WhatsApp"
+    }
+  },
   "footer": {
     "description": "Sistema de monitoreo escolar para rutas más seguras y familias más tranquilas.",
     "col_product": "Producto",
@@ -154,8 +186,102 @@
       "terms_link": "Términos de uso",
       "and": "y",
       "privacy_link": "Política de privacidad"
+    }
+  },
+  "change_contact": {
+    "telephone": {
+      "title": "Cambiar teléfono",
+      "sessionDescription": "Por seguridad, verifica tu número de contacto.",
+      "titleStep": "Paso 1",
+      "buttonText": "Enviar código",
+      "returnStep": "Volver",
+      "stepText": "1 de 4",
+      "label": "Teléfono",
+      "error_pattern": "*Debe ser un número válido.",
+      "error_required": "*El teléfono es requerido.",
+      "help_text": "Ingresa tu número para recibir un código de verificación."
     },
-
+    "code_first": {
+      "title": "Verificar código",
+      "sessionDescription": "Ingresa el código enviado a tu teléfono.",
+      "titleStep": "Paso 2",
+      "buttonText": "Verificar",
+      "returnStep": "Volver",
+      "stepText": "2 de 4",
+      "description": "Revisa tu mensaje y escribe el código de 6 dígitos.",
+      "pin_error": "*El código ingresado no es válido."
+    },
+    "reset": {
+      "title": "Actualizar teléfono",
+      "sessionDescription": "Introduce tu nuevo número para reemplazar el anterior.",
+      "titleStep": "Paso 3",
+      "buttonText": "Continuar",
+      "returnStep": "Volver",
+      "stepText": "3 de 4",
+      "label": "Nuevo teléfono",
+      "error_pattern": "*Debe ser un número válido.",
+      "error_required": "*El teléfono es requerido.",
+      "help_text": "Escribe el nuevo número de contacto."
+    },
+    "code_second": {
+      "title": "Confirmar código",
+      "sessionDescription": "Ingresa el código enviado al nuevo número.",
+      "titleStep": "Paso 4",
+      "buttonText": "Confirmar",
+      "returnStep": "Volver",
+      "stepText": "4 de 4",
+      "description": "Introduce el código para finalizar el cambio de teléfono.",
+      "pin_error": "*El código ingresado no es válido."
+    }
+  },
+  "change_email": {
+    "email": {
+      "title": "Cambiar correo electrónico",
+      "sessionDescription": "Ingresa el correo que deseas actualizar.",
+      "titleStep": "Paso 1",
+      "loginDescription": "Debes proporcionar un correo válido.",
+      "buttonText": "Enviar código",
+      "returnStep": "Volver",
+      "stepText": "1 de 4",
+      "email_label": "Correo electrónico",
+      "error_pattern": "*Debe ser un correo válido.",
+      "error_required": "*El correo es requerido.",
+      "help_text": "Recibirás un código de verificación en este correo."
+    },
+    "code_first": {
+      "title": "Verificar código",
+      "sessionDescription": "Ingresa el código enviado al correo actual.",
+      "titleStep": "Paso 2",
+      "buttonText": "Verificar",
+      "returnStep": "Volver",
+      "stepText": "2 de 4",
+      "description": "Revisa tu bandeja de entrada y escribe el código de 6 dígitos.",
+      "pin_error": "*El código ingresado no es válido."
+    },
+    "code_second": {
+      "title": "Confirmar código",
+      "sessionDescription": "Ingresa el código enviado al nuevo correo.",
+      "titleStep": "Paso 4",
+      "buttonText": "Confirmar",
+      "returnStep": "Volver",
+      "stepText": "4 de 4",
+      "description": "Introduce el código final para actualizar tu correo.",
+      "pin_error": "*El código ingresado no es válido."
+    },
+    "reset": {
+      "title": "Casi terminamos",
+      "sessionDescription": "Ingresa tu nuevo correo electrónico.",
+      "titleStep": "Nuevo correo",
+      "loginDescription": "Debes ingresar tu nuevo correo",
+      "buttonText": "Enviar código",
+      "returnStep": "Volver",
+      "stepText": "3 de 4",
+      "email_label": "Correo electrónico",
+      "error_pattern": "*Debe ser un correo válido.",
+      "error_required": "*El correo es requerido",
+      "help_text": "Recibirás un código de 6 dígitos"
+    }
+  },
   "change_password": {
     "rules_title": "La contraseña debe contener:",
     "rules": {
@@ -163,11 +289,41 @@
       "alphanumeric": "Números y letras",
       "case": "Combinación de minúsculas y mayúsculas",
       "special": "Caracteres especiales (. - _ @ *)"
+    },
+    "email": {
+      "title": "Cambiar contraseña",
+      "sessionDescription": "Ingresa tu correo para recibir un código de recuperación.",
+      "titleStep": "Paso 1",
+      "loginDescription": "Debes proporcionar tu correo registrado.",
+      "buttonText": "Enviar código",
+      "returnStep": "Volver",
+      "stepText": "1 de 3",
+      "email_label": "Correo electrónico",
+      "error_pattern": "*Debe ser un correo válido.",
+      "error_required": "*El correo es requerido.",
+      "help_text": "Recibirás un código para restablecer tu contraseña."
+    },
+    "code": {
+      "title": "Verificar código",
+      "sessionDescription": "Ingresa el código enviado a tu correo.",
+      "titleStep": "Paso 2",
+      "buttonText": "Verificar",
+      "returnStep": "Volver",
+      "stepText": "2 de 3",
+      "description": "Revisa tu bandeja de entrada y escribe el código de 6 dígitos.",
+      "pin_error": "*El código ingresado no es válido."
+    },
+    "reset": {
+      "title": "Restablecer contraseña",
+      "sessionDescription": "Crea una nueva contraseña segura.",
+      "titleStep": "Paso 3",
+      "loginDescription": "Tu contraseña debe cumplir con los requisitos mínimos.",
+      "buttonText": "Guardar contraseña",
+      "returnStep": "Volver",
+      "stepText": "3 de 3"
     }
-}
   },
 
-  
   "dashboard": {
     "welcome": "Bienvenido",
     "role": "Panel de administración · Guardian Escolar",

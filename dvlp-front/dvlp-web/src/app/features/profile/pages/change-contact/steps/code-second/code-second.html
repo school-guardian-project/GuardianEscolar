@@ -1,19 +1,19 @@
 <app-change-information
   iconHead="lock"
-  title="Último paso"
-  sessionDescription="Ingresa el código que enviamos a tu nuevo teléfono."
-  titleStep="Código de verificación"
+  [title]="'change_contact.code_second.title' | translate"
+  [sessionDescription]="'change_contact.code_second.sessionDescription' | translate"
+  [titleStep]="'change_contact.code_second.titleStep' | translate"
   loginDescription=""
-  buttonText="Verificar"
-  returnStep="Volver"
+  [buttonText]="'change_contact.code_second.buttonText' | translate"
+  [returnStep]="'change_contact.code_second.returnStep' | translate"
   (return)="return()"
   [showProgress]="true"
   [currentStep]="4"
-  stepText="4 de 4"
+  [stepText]="'change_contact.code_second.stepText' | translate"
   (submit)="onSubmit()"
 >
   <div class="login-description">
-    <span>Código enviado a tu <b> telefono 314******</b>. Válido por 10 minutos.</span>
+    <span>{{ 'change_contact.code_second.description' | translate }}</span>
   </div>
 
   <form action="" [formGroup]="form">
@@ -28,7 +28,7 @@
         />
       </div>
       @if (form.invalid && form.touched) {
-        <small class="error">*Ingresa los 6 digitos del codigo</small>
+        <small class="error">{{ 'change_contact.code_second.pin_error' | translate }}</small>
       }
     </div>
   </form>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell
+    x:Class="app_movil.AppShell"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:auth="clr-namespace:app_movil.Pages.Auth"
+    Title="app_movil"
+    Shell.NavBarIsVisible="False">
+
+    <ShellContent
+        Title="Welcome"
+        ContentTemplate="{DataTemplate auth:Welcome}"
+        Route="Welcome" />
+
+    <ShellContent
+        Title="FotgotPassword"
+        ContentTemplate="{DataTemplate auth:ForgotPassword}"
+        Route="ForgotPassword"/>
+
+</Shell>

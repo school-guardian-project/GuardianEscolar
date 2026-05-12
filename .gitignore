@@ -3,6 +3,8 @@
 obj/
 bin/
 
+./dvlp-back/.env
+
 # Backend
 dvlp-back/src/backend/.vs/
 dvlp-back/src/backend/bin/

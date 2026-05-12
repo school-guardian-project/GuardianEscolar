@@ -1,32 +1,28 @@
 <app-change-information
   iconHead="mail"
-  title="Casi terminamos"
-  sessionDescription="Ingresa tu nuevo correo electrónico."
-  titleStep="Nuevo correo"
-  loginDescription="Debes ingresar tu nuevo correo"
-  buttonText="Enviar código"
-  returnStep="Volver"
+  [title]="'change_email.reset.title' | translate"
+  [sessionDescription]="'change_email.reset.sessionDescription' | translate"
+  [titleStep]="'change_email.reset.titleStep' | translate"
+  [loginDescription]="'change_email.reset.loginDescription' | translate"
+  [buttonText]="'change_email.reset.buttonText' | translate"
+  [returnStep]="'change_email.reset.returnStep' | translate"
   (return)="return()"
   [showProgress]="true"
   [currentStep]="3"
   (submit)="onSubmit()"
-  stepText="3 de 4"
+  [stepText]="'change_email.reset.stepText' | translate"
 >
   <form action="" [formGroup]="form">
     <div class="input-email">
-      <label for="email">Correo electrónico</label>
+      <label for="email">{{ 'change_email.reset.email_label' | translate }}</label>
       <input type="email" id="email" formControlName="email" />
-      <!-- Muestra mensaje si el usuario entro y salio del campo -->
-      <!-- y si el formato de email es invalido -->
       @if (form.get('email')?.touched && form.get('email')?.errors?.['pattern']) {
-        <small class="error">*Debe ser un email valido</small>
+        <small class="error">{{ 'change_email.reset.error_pattern' | translate }}</small>
       }
-      <!-- Muestrra el mensaje si el usuarios toco el campo -->
-      <!-- y si lo dejo vacio -->
       @if (form.get('email')?.touched && form.get('email')?.errors?.['required']) {
-        <small class="error">*El email es requerido</small>
+        <small class="error">{{ 'change_email.reset.error_required' | translate }}</small>
       }
-      <p>Recibirás un código de 6 dígitos</p>
+      <p>{{ 'change_email.reset.help_text' | translate }}</p>
     </div>
   </form>
 </app-change-information>

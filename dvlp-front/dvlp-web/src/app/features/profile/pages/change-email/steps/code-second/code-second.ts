@@ -5,10 +5,11 @@ import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } 
 import { NgFor } from '@angular/common';
 import { Confirmations } from "../../../../../../shared/components/modal/confirmations/confirmations";
 import { MatDialog } from '@angular/material/dialog';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-code-second',
-  imports: [ChangeInformation, FormsModule, ReactiveFormsModule, NgFor],
+  imports: [ChangeInformation, FormsModule, ReactiveFormsModule, NgFor, TranslateModule],
   templateUrl: './code-second.html',
   styleUrl: './code-second.css',
 })

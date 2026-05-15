@@ -3,9 +3,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
-import { Input } from '@angular/core';
-import { Location } from '@angular/common';
-
 
 @Component({
   selector: 'app-navbar-manage',
@@ -16,11 +13,9 @@ import { Location } from '@angular/common';
 })
 export class NavbarManage {
 
-  @Input() backRoute: string = '';
-
-  constructor(private router: Router, private location: Location) { }
+  constructor(private router: Router) {}
 
   goBack() {
-    this.location.back();
+    this.router.navigate(['/dashboard-admin']);
   }
 }

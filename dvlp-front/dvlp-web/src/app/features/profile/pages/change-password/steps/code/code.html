@@ -1,33 +1,22 @@
-<app-change-password
-  iconHead="lock"
-  [title]="'change_password.code.title' | translate"
+<app-change-password iconHead="lock" [title]="'change_password.code.title' | translate"
   [sessionDescription]="'change_password.code.sessionDescription' | translate"
   [titleStep]="'change_password.code.titleStep' | translate"
-  loginDescription=""
   [buttonText]="'change_password.code.buttonText' | translate"
-  [returnStep]="'change_password.code.returnStep' | translate"
-  (return)="return()"
-  [showProgress]="true"
-  [currentStep]="2"
-  [stepText]="'change_password.code.stepText' | translate"
-  (submit)="onSubmit()"
->
+  [returnStep]="'change_password.code.returnStep' | translate" (return)="return()" [showProgress]="true"
+  [currentStep]="2" [stepText]="'change_password.code.stepText' | translate" (submit)="onSubmit()">
+  <!-- [min_length]="'change_password.rules.min_length' | translate" -->
+
   <div class="login-description">
     <span>{{ 'change_password.code.description' | translate }}</span>
   </div>
   <form action="" [formGroup]="form">
     <div class="input-pin">
       <div class="pin-inputs">
-        <input
-          class="pin-input"
-          *ngFor="let ctrl of pinControls.controls; let i = index"
-          [formControl]="ctrl"
-          maxlength="1"
-          (input)="onInput($event, i)"
-        />
+        <input class="pin-input" *ngFor="let ctrl of pinControls.controls; let i = index" [formControl]="ctrl"
+          maxlength="1" (input)="onInput($event, i)" />
       </div>
       @if (form.invalid && form.touched) {
-        <small class="error">{{ 'change_password.code.pin_error' | translate }}</small>
+      <small class="error">{{ 'change_password.code.pin_error' | translate }}</small>
       }
     </div>
   </form>

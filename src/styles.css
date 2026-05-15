@@ -194,27 +194,28 @@ body {
   color: var(--text-color);
   font-family: "Segoe UI", Arial, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
-}/* LIGHT YELLOW */
+}
+/* LIGHT YELLOW - DARKER & MORE PROFESSIONAL */
 .light-theme-yellow {
-  --bg-color: #FFFDF5;
+  --bg-color: #FAF8F1;
   --text-color: #1F2937;
 
-  --color-navbar: #F4B400;
+  --color-navbar: #D4A017;
 
   --card-bg: #FFFFFF;
-  --card-secondary-bg: #FFFBEA;
+  --card-secondary-bg: #F8F3E6;
 
-  --card-color-input: #7C8593;
+  --card-color-input: #737B88;
 
   --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
 
-  --border-color: #FDE68A;
+  --border-color: #E7D7A5;
 
   --text-secondary: #6B7280;
-  --title-color: #5C4400;
+  --title-color: #4B3A12;
 
-  --hover-color: #FACC15;
-  --accent-color: #EAB308;
+  --hover-color: #B7791F;
+  --accent-color: #A16207;
 
   --alert-bg: #FEF2F2;
   --alert-title: #7F1D1D;
@@ -223,13 +224,13 @@ body {
 
   --modal-bg: #FFFFFF;
 
-  --color-icon: #EAB308;
-  --border-icon: #B45309;
+  --color-icon: #B7791F;
+  --border-icon: #8B5E00;
 
   --button-cancel: #FFFFFF;
-  --button-apply: #F4B400;
+  --button-apply: #D4A017;
 
-  --sidebar-item: #C58A00;
+  --sidebar-item: #A16207;
 }
 
 /* DARK YELLOW */

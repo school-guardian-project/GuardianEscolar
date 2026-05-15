@@ -8,7 +8,7 @@ public partial class Welcome : ContentPage
     }
     private async void OnForgotPasswordTapped(object? sender, TappedEventArgs e)
     {
-        await Shell.Current.GoToAsync("//ForgotPassword");
+        await Navigation.PushAsync(new ForgotPassword());
     }
 
 

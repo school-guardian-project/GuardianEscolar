@@ -5,10 +5,12 @@
     x:Class="app_movil.Pages.Auth.Welcome"
     BackgroundColor="{StaticResource Background}">
 
+
     <ScrollView>
         <VerticalStackLayout
-            Padding="30"
+            Padding="50"
             Spacing="15"
+            Margin="0,0,0,90"
             VerticalOptions="Center">
 
             <!-- Icono -->
@@ -36,17 +38,17 @@
 
             <!-- Label Correo -->
             <Label
-                Text="Correo"
+                Text="Correo electrónico"
                 FontSize="13"
                 TextColor="{StaticResource TextSecondary}"
-                Margin="5,0,0,0"/>
+                Margin="0,0,0,-10"/>
 
-            <!-- Entry Correo -->
+            <!-- Entry Correo --> 
             <Border
                 BackgroundColor="{StaticResource CardSecondaryBackground}"
-                StrokeShape="RoundRectangle 12"
+                StrokeShape="RoundRectangle 10"
                 Stroke="{StaticResource BorderColor}"
-                Padding="15,0">
+                Padding="30,0">
                 <Entry
                     Placeholder="ejemplo@gmail.com"
                     Keyboard="Email"
@@ -61,7 +63,7 @@
                 Text="Contraseña"
                 FontSize="13"
                 TextColor="{StaticResource TextSecondary}"
-                Margin="5,0,0,0"/>
+                Margin="0,0,0,-10"/>
 
             <!-- Entry Contraseña -->
             <Border

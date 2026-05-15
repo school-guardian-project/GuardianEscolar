@@ -1,5 +1,4 @@
-﻿using app_movil.Pages.Auth;
-namespace app_movil;
+﻿namespace app_movil;
 
 public partial class App : Application
 {
@@ -7,6 +6,6 @@ public partial class App : Application
     {
         InitializeComponent();
         UserAppTheme = AppTheme.Light;
-        MainPage = new AppShell();
+        MainPage = new NavigationPage(new Pages.Auth.Welcome());
     }
 }

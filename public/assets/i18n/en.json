@@ -438,6 +438,8 @@
     "select": "active",
     "blue": "Blue",
     "green": "Green",
+    "yellow": "Yellow",
+    "red": "Red",
     "buttons": {
       "cancel": "Cancel",
       "apply": "Apply"

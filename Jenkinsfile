@@ -152,5 +152,16 @@ pipeline {
     always {
       cleanWs()
     }
+
+    success {
+      mail to: 'guardianescolar0@gmail.com',
+        subject: 'Pipeline EXITOSO',
+        body: 'La compilación y pruebas finalizaron correctamente.'
+    }
+    failure {
+      mail to: 'guardianescolar0@gmail.com',
+      subject: 'Pipeline FALLÓ',
+      body: 'La compilación o pruebas presentaron errores.'
+    }
   }
 }

@@ -3,13 +3,6 @@
 obj/
 bin/
 
-<<<<<<< HEAD
-# Backend
-dvlp-back/src/backend/.vs/
-dvlp-back/src/backend/bin/
-dvlp-back/src/backend/obj/
-
-=======
 ./dvlp-back/.env
 
 # Backend
@@ -18,7 +11,6 @@ dvlp-back/src/backend/bin/
 dvlp-back/liquibase/liquibase.properties
 dvlp-back/src/backend/obj/
 
->>>>>>> feature/liquibase
 # Mobile app
 dvlp-front/dvlp-movil/app-movil/bin/
 dvlp-front/dvlp-movil/app-movil/obj/

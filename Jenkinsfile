@@ -155,13 +155,23 @@ pipeline {
 
     success {
       mail to: 'guardianescolar0@gmail.com',
-        subject: 'Pipeline EXITOSO',
-        body: 'La compilación y pruebas finalizaron correctamente.'
+      subject: 'Pipeline EXITOSO',
+      body: 'La compilación y pruebas finalizaron correctamente.'
+
+      discordSend description: "¡Build exitosa!",
+                    result: 'SUCCESS',
+                    title: 'Hecho',
+                    webhookURL: 'https://discord.com/api/webhooks/1505227295101681674/MkgVrZZs_nS7GSmv4zIX2b6kpTFAWQ865NTgClQ5QdgrwBquk2I2oPAtzxLsCWiw23gU'
     }
     failure {
       mail to: 'guardianescolar0@gmail.com',
       subject: 'Pipeline FALLÓ',
       body: 'La compilación o pruebas presentaron errores.'
+
+      discordSend description: "¡Build fallida!",
+                    result: 'FAILURE',
+                    title: 'Fallo',
+                    webhookURL: 'https://discord.com/api/webhooks/1505227295101681674/MkgVrZZs_nS7GSmv4zIX2b6kpTFAWQ865NTgClQ5QdgrwBquk2I2oPAtzxLsCWiw23gU'
     }
   }
 }

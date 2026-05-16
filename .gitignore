@@ -10,6 +10,7 @@ dvlp-back/src/backend/.vs/
 dvlp-back/src/backend/bin/
 dvlp-back/liquibase/liquibase.properties
 dvlp-back/src/backend/obj/
+dvlp-back/src/backend/obj/Debug
 
 # Mobile app
 dvlp-front/dvlp-movil/app-movil/bin/

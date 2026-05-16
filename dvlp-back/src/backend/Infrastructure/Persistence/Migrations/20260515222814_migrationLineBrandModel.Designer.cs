@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using backend.Infrastructure.Persistence.Context;
@@ -11,9 +12,11 @@ using backend.Infrastructure.Persistence.Context;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260515222814_migrationLineBrandModel")]
+    partial class migrationLineBrandModel
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -23,7 +26,7 @@ namespace backend.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("backend.Model.Entities.Academic.Course", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Academic.Course", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -50,7 +53,7 @@ namespace backend.Migrations
                     b.ToTable("Course", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Academic.CourseGroup", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Academic.CourseGroup", b =>
                 {
                     b.Property<int>("profileId")
                         .HasColumnType("integer");
@@ -65,7 +68,7 @@ namespace backend.Migrations
                     b.ToTable("CourseGroup", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Academic.SchoolCampuse", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Academic.SchoolCampuse", b =>
                 {
                     b.Property<int>("campuseId")
                         .ValueGeneratedOnAdd()
@@ -96,7 +99,7 @@ namespace backend.Migrations
                     b.ToTable("SchoolCampuse", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Alerts.Alert", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Alerts.Alert", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -122,7 +125,7 @@ namespace backend.Migrations
                     b.ToTable("Alert", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Alerts.AlertType", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Alerts.AlertType", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -146,7 +149,7 @@ namespace backend.Migrations
                     b.ToTable("AlertType", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Alerts.SavedAlert", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Alerts.SavedAlert", b =>
                 {
                     b.Property<int>("profileId")
                         .HasColumnType("integer");
@@ -161,7 +164,7 @@ namespace backend.Migrations
                     b.ToTable("SavedAlert", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Exceptions.DriverLicense", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Exceptions.DriverLicense", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -190,7 +193,7 @@ namespace backend.Migrations
                     b.ToTable("DriverLicense", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Exceptions.ExceptionalDriverUsage", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Exceptions.ExceptionalDriverUsage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -229,7 +232,7 @@ namespace backend.Migrations
                     b.ToTable("ExceptionalDriverUsage", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Exceptions.ExceptionalRouteUsage", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Exceptions.ExceptionalRouteUsage", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -260,7 +263,7 @@ namespace backend.Migrations
                     b.ToTable("ExceptionalRouteUsage", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Family.Family", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Family.Family", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -281,7 +284,7 @@ namespace backend.Migrations
                     b.ToTable("Family", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Family.FamilyMember", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Family.FamilyMember", b =>
                 {
                     b.Property<int>("FamilyId")
                         .HasColumnType("integer");
@@ -296,7 +299,7 @@ namespace backend.Migrations
                     b.ToTable("FamilyMember", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.School.City", b =>
+            modelBuilder.Entity("backend.Domain.Entities.School.City", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -317,7 +320,7 @@ namespace backend.Migrations
                     b.ToTable("City", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.School.SchoolEntity", b =>
+            modelBuilder.Entity("backend.Domain.Entities.School.SchoolEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -366,7 +369,7 @@ namespace backend.Migrations
                     b.ToTable("School", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Security.Action", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Security.Action", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -389,7 +392,7 @@ namespace backend.Migrations
                     b.ToTable("Action", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Security.Module", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Security.Module", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -412,7 +415,7 @@ namespace backend.Migrations
                     b.ToTable("Module", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Security.Role", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Security.Role", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -440,7 +443,7 @@ namespace backend.Migrations
                     b.ToTable("Role", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Security.RoleModule", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Security.RoleModule", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -463,7 +466,7 @@ namespace backend.Migrations
                     b.ToTable("RoleModule", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Security.View", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Security.View", b =>
                 {
                     b.Property<int>("id")
                         .ValueGeneratedOnAdd()
@@ -486,7 +489,7 @@ namespace backend.Migrations
                     b.ToTable("View", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Security.ViewAction", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Security.ViewAction", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -509,7 +512,7 @@ namespace backend.Migrations
                     b.ToTable("ViewAction", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Security.ViewModule", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Security.ViewModule", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -532,7 +535,7 @@ namespace backend.Migrations
                     b.ToTable("ViewModule", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Transport.Boarding", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Transport.Boarding", b =>
                 {
                     b.Property<int>("profileId")
                         .HasColumnType("integer");
@@ -558,7 +561,24 @@ namespace backend.Migrations
                     b.ToTable("Boarding", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Transport.Bus", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Transport.Brand", b =>
+                {
+                    b.Property<int>("brandId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("brandId"));
+
+                    b.Property<string>("name")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.HasKey("brandId");
+
+                    b.ToTable("Brand", "app");
+                });
+
+            modelBuilder.Entity("backend.Domain.Entities.Transport.Bus", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -566,22 +586,14 @@ namespace backend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("brand")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<int>("capacity")
-                        .HasColumnType("integer");
-
                     b.Property<int>("driverId")
                         .HasColumnType("integer");
 
                     b.Property<bool>("gpsStatus")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("model")
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                    b.Property<int>("lineModelId")
+                        .HasColumnType("integer");
 
                     b.Property<int>("schoolId")
                         .HasColumnType("integer");
@@ -593,12 +605,83 @@ namespace backend.Migrations
 
                     b.HasIndex("driverId");
 
+                    b.HasIndex("lineModelId");
+
                     b.HasIndex("schoolId");
 
                     b.ToTable("Bus", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Transport.RouteBusAssignments", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Transport.Line", b =>
+                {
+                    b.Property<int>("lineId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("lineId"));
+
+                    b.Property<int>("brandId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("name")
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.HasKey("lineId");
+
+                    b.HasIndex("brandId");
+
+                    b.ToTable("Line", "app");
+                });
+
+            modelBuilder.Entity("backend.Domain.Entities.Transport.LineModel", b =>
+                {
+                    b.Property<int>("lineModelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("lineModelId"));
+
+                    b.Property<int>("capacity")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("lineId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("modelId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("plate")
+                        .IsRequired()
+                        .HasMaxLength(255)
+                        .HasColumnType("character varying(255)");
+
+                    b.HasKey("lineModelId");
+
+                    b.HasIndex("lineId");
+
+                    b.HasIndex("modelId");
+
+                    b.ToTable("LineModel", "app");
+                });
+
+            modelBuilder.Entity("backend.Domain.Entities.Transport.Model", b =>
+                {
+                    b.Property<int>("modelId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("modelId"));
+
+                    b.Property<int>("year")
+                        .HasColumnType("integer");
+
+                    b.HasKey("modelId");
+
+                    b.ToTable("Model", "app");
+                });
+
+            modelBuilder.Entity("backend.Domain.Entities.Transport.RouteBusAssignments", b =>
                 {
                     b.Property<int>("busId")
                         .HasColumnType("integer");
@@ -613,7 +696,7 @@ namespace backend.Migrations
                     b.ToTable("RouteBusAssignments", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Transport.RouteEntity", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Transport.RouteEntity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -645,7 +728,7 @@ namespace backend.Migrations
                     b.ToTable("Route", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Transport.RouteStop", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Transport.RouteStop", b =>
                 {
                     b.Property<int>("routeId")
                         .HasColumnType("integer");
@@ -660,7 +743,7 @@ namespace backend.Migrations
                     b.ToTable("RouteStop", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Transport.RouteStudentAssignments", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Transport.RouteStudentAssignments", b =>
                 {
                     b.Property<int>("profileId")
                         .HasColumnType("integer");
@@ -675,7 +758,7 @@ namespace backend.Migrations
                     b.ToTable("RouteStudentAssignments", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Transport.Stop", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Transport.Stop", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -711,7 +794,7 @@ namespace backend.Migrations
                     b.ToTable("Stop", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Users.Person", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Users.Person", b =>
                 {
                     b.Property<int>("personId")
                         .ValueGeneratedOnAdd()
@@ -751,7 +834,7 @@ namespace backend.Migrations
                     b.ToTable("Person", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Users.Profile", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Users.Profile", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -773,7 +856,7 @@ namespace backend.Migrations
                     b.ToTable("Profile", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Users.ProfileRole", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Users.ProfileRole", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -796,13 +879,13 @@ namespace backend.Migrations
                     b.ToTable("ProfileRole", "app");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Academic.Course", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Academic.Course", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Academic.SchoolCampuse", null)
+                    b.HasOne("backend.Domain.Entities.Academic.SchoolCampuse", null)
                         .WithMany("courses")
                         .HasForeignKey("SchoolCampusecampuseId");
 
-                    b.HasOne("backend.Model.Entities.Academic.SchoolCampuse", "campuse")
+                    b.HasOne("backend.Domain.Entities.Academic.SchoolCampuse", "campuse")
                         .WithMany()
                         .HasForeignKey("campuseId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -811,15 +894,15 @@ namespace backend.Migrations
                     b.Navigation("campuse");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Academic.CourseGroup", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Academic.CourseGroup", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Academic.Course", "course")
+                    b.HasOne("backend.Domain.Entities.Academic.Course", "course")
                         .WithMany("courses")
                         .HasForeignKey("courseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Model.Entities.Users.Profile", "profile")
+                    b.HasOne("backend.Domain.Entities.Users.Profile", "profile")
                         .WithMany("courseGroups")
                         .HasForeignKey("profileId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -830,13 +913,13 @@ namespace backend.Migrations
                     b.Navigation("profile");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Academic.SchoolCampuse", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Academic.SchoolCampuse", b =>
                 {
-                    b.HasOne("backend.Model.Entities.School.SchoolEntity", null)
+                    b.HasOne("backend.Domain.Entities.School.SchoolEntity", null)
                         .WithMany("schoolCampuses")
                         .HasForeignKey("SchoolEntityId");
 
-                    b.HasOne("backend.Model.Entities.School.SchoolEntity", "school")
+                    b.HasOne("backend.Domain.Entities.School.SchoolEntity", "school")
                         .WithMany()
                         .HasForeignKey("schoolId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -845,15 +928,15 @@ namespace backend.Migrations
                     b.Navigation("school");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Alerts.Alert", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Alerts.Alert", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Alerts.AlertType", "alertType")
+                    b.HasOne("backend.Domain.Entities.Alerts.AlertType", "alertType")
                         .WithMany("alerts")
                         .HasForeignKey("alertTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Model.Entities.Transport.Bus", "bus")
+                    b.HasOne("backend.Domain.Entities.Transport.Bus", "bus")
                         .WithMany("alerts")
                         .HasForeignKey("busId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -864,15 +947,15 @@ namespace backend.Migrations
                     b.Navigation("bus");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Alerts.SavedAlert", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Alerts.SavedAlert", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Alerts.Alert", "alerts")
+                    b.HasOne("backend.Domain.Entities.Alerts.Alert", "alerts")
                         .WithMany("savedAlerts")
                         .HasForeignKey("alertId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Model.Entities.Users.Profile", "profile")
+                    b.HasOne("backend.Domain.Entities.Users.Profile", "profile")
                         .WithMany("savedAlerts")
                         .HasForeignKey("profileId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -883,9 +966,9 @@ namespace backend.Migrations
                     b.Navigation("profile");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Exceptions.DriverLicense", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Exceptions.DriverLicense", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Users.Profile", "profile")
+                    b.HasOne("backend.Domain.Entities.Users.Profile", "profile")
                         .WithMany("driverLicenses")
                         .HasForeignKey("profileId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -894,19 +977,19 @@ namespace backend.Migrations
                     b.Navigation("profile");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Exceptions.ExceptionalDriverUsage", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Exceptions.ExceptionalDriverUsage", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Users.Profile", null)
+                    b.HasOne("backend.Domain.Entities.Users.Profile", null)
                         .WithMany("exceptions")
                         .HasForeignKey("ProfileId");
 
-                    b.HasOne("backend.Model.Entities.Transport.Bus", "bus")
+                    b.HasOne("backend.Domain.Entities.Transport.Bus", "bus")
                         .WithMany("exceptionalDriverUsages")
                         .HasForeignKey("busId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Model.Entities.Users.Profile", "profile")
+                    b.HasOne("backend.Domain.Entities.Users.Profile", "profile")
                         .WithMany()
                         .HasForeignKey("profileId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -917,15 +1000,15 @@ namespace backend.Migrations
                     b.Navigation("profile");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Exceptions.ExceptionalRouteUsage", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Exceptions.ExceptionalRouteUsage", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Users.Profile", "profile")
+                    b.HasOne("backend.Domain.Entities.Users.Profile", "profile")
                         .WithMany("exceptionalRouteUsages")
                         .HasForeignKey("profileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Model.Entities.Transport.RouteEntity", "route")
+                    b.HasOne("backend.Domain.Entities.Transport.RouteEntity", "route")
                         .WithMany("exceptionalRouteUsages")
                         .HasForeignKey("routeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -936,15 +1019,15 @@ namespace backend.Migrations
                     b.Navigation("route");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Family.FamilyMember", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Family.FamilyMember", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Family.Family", "Family")
+                    b.HasOne("backend.Domain.Entities.Family.Family", "Family")
                         .WithMany("members")
                         .HasForeignKey("FamilyId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Model.Entities.Users.Profile", "Profile")
+                    b.HasOne("backend.Domain.Entities.Users.Profile", "Profile")
                         .WithMany("members")
                         .HasForeignKey("ProfileId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -955,9 +1038,9 @@ namespace backend.Migrations
                     b.Navigation("Profile");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.School.SchoolEntity", b =>
+            modelBuilder.Entity("backend.Domain.Entities.School.SchoolEntity", b =>
                 {
-                    b.HasOne("backend.Model.Entities.School.City", "city")
+                    b.HasOne("backend.Domain.Entities.School.City", "city")
                         .WithMany("schools")
                         .HasForeignKey("cityId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -966,15 +1049,15 @@ namespace backend.Migrations
                     b.Navigation("city");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Security.RoleModule", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Security.RoleModule", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Security.Module", "Module")
+                    b.HasOne("backend.Domain.Entities.Security.Module", "Module")
                         .WithMany("roleModules")
                         .HasForeignKey("moduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Model.Entities.Security.Role", "Role")
+                    b.HasOne("backend.Domain.Entities.Security.Role", "Role")
                         .WithMany("roleModules")
                         .HasForeignKey("roleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -985,15 +1068,15 @@ namespace backend.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Security.ViewAction", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Security.ViewAction", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Security.Action", "action")
+                    b.HasOne("backend.Domain.Entities.Security.Action", "action")
                         .WithMany("viewActions")
                         .HasForeignKey("actionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Model.Entities.Security.View", "view")
+                    b.HasOne("backend.Domain.Entities.Security.View", "view")
                         .WithMany("viewActions")
                         .HasForeignKey("viewId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1004,15 +1087,15 @@ namespace backend.Migrations
                     b.Navigation("view");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Security.ViewModule", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Security.ViewModule", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Security.Module", "Module")
+                    b.HasOne("backend.Domain.Entities.Security.Module", "Module")
                         .WithMany("viewModules")
                         .HasForeignKey("ModuleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Model.Entities.Security.View", "View")
+                    b.HasOne("backend.Domain.Entities.Security.View", "View")
                         .WithMany("viewModules")
                         .HasForeignKey("ViewId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1023,21 +1106,21 @@ namespace backend.Migrations
                     b.Navigation("View");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Transport.Boarding", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Transport.Boarding", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Transport.Bus", "bus")
+                    b.HasOne("backend.Domain.Entities.Transport.Bus", "bus")
                         .WithMany("boardings")
                         .HasForeignKey("busId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Model.Entities.Users.Profile", "profile")
+                    b.HasOne("backend.Domain.Entities.Users.Profile", "profile")
                         .WithMany("boardings")
                         .HasForeignKey("profileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Model.Entities.Transport.Stop", "stop")
+                    b.HasOne("backend.Domain.Entities.Transport.Stop", "stop")
                         .WithMany("boardings")
                         .HasForeignKey("stopId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1050,15 +1133,21 @@ namespace backend.Migrations
                     b.Navigation("stop");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Transport.Bus", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Transport.Bus", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Users.Profile", "driver")
+                    b.HasOne("backend.Domain.Entities.Users.Profile", "driver")
                         .WithMany("driver")
                         .HasForeignKey("driverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Model.Entities.School.SchoolEntity", "school")
+                    b.HasOne("backend.Domain.Entities.Transport.LineModel", "lineModel")
+                        .WithMany("bus")
+                        .HasForeignKey("lineModelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.Domain.Entities.School.SchoolEntity", "school")
                         .WithMany("buses")
                         .HasForeignKey("schoolId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1066,18 +1155,50 @@ namespace backend.Migrations
 
                     b.Navigation("driver");
 
+                    b.Navigation("lineModel");
+
                     b.Navigation("school");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Transport.RouteBusAssignments", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Transport.Line", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Transport.Bus", "bus")
+                    b.HasOne("backend.Domain.Entities.Transport.Brand", "brand")
+                        .WithMany("line")
+                        .HasForeignKey("brandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("brand");
+                });
+
+            modelBuilder.Entity("backend.Domain.Entities.Transport.LineModel", b =>
+                {
+                    b.HasOne("backend.Domain.Entities.Transport.Line", "line")
+                        .WithMany("lineModel")
+                        .HasForeignKey("lineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.Domain.Entities.Transport.Model", "model")
+                        .WithMany("lineModel")
+                        .HasForeignKey("modelId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("line");
+
+                    b.Navigation("model");
+                });
+
+            modelBuilder.Entity("backend.Domain.Entities.Transport.RouteBusAssignments", b =>
+                {
+                    b.HasOne("backend.Domain.Entities.Transport.Bus", "bus")
                         .WithMany("busAssignments")
                         .HasForeignKey("busId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Model.Entities.Transport.RouteEntity", "route")
+                    b.HasOne("backend.Domain.Entities.Transport.RouteEntity", "route")
                         .WithMany("busAssignments")
                         .HasForeignKey("routeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1088,9 +1209,9 @@ namespace backend.Migrations
                     b.Navigation("route");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Transport.RouteEntity", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Transport.RouteEntity", b =>
                 {
-                    b.HasOne("backend.Model.Entities.School.SchoolEntity", "school")
+                    b.HasOne("backend.Domain.Entities.School.SchoolEntity", "school")
                         .WithMany("routes")
                         .HasForeignKey("schoolId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1099,15 +1220,15 @@ namespace backend.Migrations
                     b.Navigation("school");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Transport.RouteStop", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Transport.RouteStop", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Transport.RouteEntity", "route")
+                    b.HasOne("backend.Domain.Entities.Transport.RouteEntity", "route")
                         .WithMany("routeStops")
                         .HasForeignKey("routeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Model.Entities.Transport.Stop", "stop")
+                    b.HasOne("backend.Domain.Entities.Transport.Stop", "stop")
                         .WithMany("routeStops")
                         .HasForeignKey("stopId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1118,15 +1239,15 @@ namespace backend.Migrations
                     b.Navigation("stop");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Transport.RouteStudentAssignments", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Transport.RouteStudentAssignments", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Users.Profile", "profile")
+                    b.HasOne("backend.Domain.Entities.Users.Profile", "profile")
                         .WithMany("studentAssignments")
                         .HasForeignKey("profileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Model.Entities.Transport.RouteEntity", "route")
+                    b.HasOne("backend.Domain.Entities.Transport.RouteEntity", "route")
                         .WithMany("studentAssignments")
                         .HasForeignKey("routeId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1137,15 +1258,15 @@ namespace backend.Migrations
                     b.Navigation("route");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Transport.Stop", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Transport.Stop", b =>
                 {
-                    b.HasOne("backend.Model.Entities.School.City", "city")
+                    b.HasOne("backend.Domain.Entities.School.City", "city")
                         .WithMany("stops")
                         .HasForeignKey("cityId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Model.Entities.School.SchoolEntity", "school")
+                    b.HasOne("backend.Domain.Entities.School.SchoolEntity", "school")
                         .WithMany("stops")
                         .HasForeignKey("schoolId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1156,9 +1277,9 @@ namespace backend.Migrations
                     b.Navigation("school");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Users.Profile", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Users.Profile", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Users.Person", "person")
+                    b.HasOne("backend.Domain.Entities.Users.Person", "person")
                         .WithMany("profiles")
                         .HasForeignKey("personId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1167,15 +1288,15 @@ namespace backend.Migrations
                     b.Navigation("person");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Users.ProfileRole", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Users.ProfileRole", b =>
                 {
-                    b.HasOne("backend.Model.Entities.Users.Profile", "profile")
+                    b.HasOne("backend.Domain.Entities.Users.Profile", "profile")
                         .WithMany("profileRoles")
                         .HasForeignKey("profileId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Model.Entities.Security.Role", "role")
+                    b.HasOne("backend.Domain.Entities.Security.Role", "role")
                         .WithMany("profileRoles")
                         .HasForeignKey("roleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -1186,39 +1307,39 @@ namespace backend.Migrations
                     b.Navigation("role");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Academic.Course", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Academic.Course", b =>
                 {
                     b.Navigation("courses");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Academic.SchoolCampuse", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Academic.SchoolCampuse", b =>
                 {
                     b.Navigation("courses");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Alerts.Alert", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Alerts.Alert", b =>
                 {
                     b.Navigation("savedAlerts");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Alerts.AlertType", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Alerts.AlertType", b =>
                 {
                     b.Navigation("alerts");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Family.Family", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Family.Family", b =>
                 {
                     b.Navigation("members");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.School.City", b =>
+            modelBuilder.Entity("backend.Domain.Entities.School.City", b =>
                 {
                     b.Navigation("schools");
 
                     b.Navigation("stops");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.School.SchoolEntity", b =>
+            modelBuilder.Entity("backend.Domain.Entities.School.SchoolEntity", b =>
                 {
                     b.Navigation("buses");
 
@@ -1229,33 +1350,38 @@ namespace backend.Migrations
                     b.Navigation("stops");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Security.Action", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Security.Action", b =>
                 {
                     b.Navigation("viewActions");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Security.Module", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Security.Module", b =>
                 {
                     b.Navigation("roleModules");
 
                     b.Navigation("viewModules");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Security.Role", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Security.Role", b =>
                 {
                     b.Navigation("profileRoles");
 
                     b.Navigation("roleModules");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Security.View", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Security.View", b =>
                 {
                     b.Navigation("viewActions");
 
                     b.Navigation("viewModules");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Transport.Bus", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Transport.Brand", b =>
+                {
+                    b.Navigation("line");
+                });
+
+            modelBuilder.Entity("backend.Domain.Entities.Transport.Bus", b =>
                 {
                     b.Navigation("alerts");
 
@@ -1266,7 +1392,22 @@ namespace backend.Migrations
                     b.Navigation("exceptionalDriverUsages");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Transport.RouteEntity", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Transport.Line", b =>
+                {
+                    b.Navigation("lineModel");
+                });
+
+            modelBuilder.Entity("backend.Domain.Entities.Transport.LineModel", b =>
+                {
+                    b.Navigation("bus");
+                });
+
+            modelBuilder.Entity("backend.Domain.Entities.Transport.Model", b =>
+                {
+                    b.Navigation("lineModel");
+                });
+
+            modelBuilder.Entity("backend.Domain.Entities.Transport.RouteEntity", b =>
                 {
                     b.Navigation("busAssignments");
 
@@ -1277,19 +1418,19 @@ namespace backend.Migrations
                     b.Navigation("studentAssignments");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Transport.Stop", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Transport.Stop", b =>
                 {
                     b.Navigation("boardings");
 
                     b.Navigation("routeStops");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Users.Person", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Users.Person", b =>
                 {
                     b.Navigation("profiles");
                 });
 
-            modelBuilder.Entity("backend.Model.Entities.Users.Profile", b =>
+            modelBuilder.Entity("backend.Domain.Entities.Users.Profile", b =>
                 {
                     b.Navigation("boardings");
 

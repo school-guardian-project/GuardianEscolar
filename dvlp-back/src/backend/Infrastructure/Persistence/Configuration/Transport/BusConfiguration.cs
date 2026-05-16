@@ -10,9 +10,7 @@ namespace backend.Infrastructure.Persistence.Configuration.Transport
         public void Configure(EntityTypeBuilder<Bus> builder)
         {
             builder.HasKey(b => b.Id);
-            builder.Property(b => b.brand).HasMaxLength(100);
-            builder.Property(b => b.model).HasMaxLength(100);
-            builder.Property(b => b.capacity).IsRequired();
+            builder.HasOne(b => b.lineModel).WithMany(lm => lm.bus).HasForeignKey(b => b.lineModelId);
             builder.HasOne(b => b.school).WithMany(s => s.buses).HasForeignKey(b => b.schoolId);
             builder.HasOne(b => b.driver).WithMany(p => p.driver).HasForeignKey(b => b.driverId);
         }

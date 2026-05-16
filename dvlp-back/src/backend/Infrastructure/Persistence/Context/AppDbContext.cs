@@ -56,6 +56,10 @@ namespace backend.Infrastructure.Persistence.Context
         public DbSet<View> View => Set<View>();
         public DbSet<ViewModule> ViewModule => Set<ViewModule>();
         public DbSet<RoleModule> RoleModule => Set<RoleModule>();
+        public DbSet<Line> Line => Set<Line>();
+        public DbSet<Model> Model => Set<Model>();
+        public DbSet<LineModel> LineModel => Set<LineModel>();
+        public DbSet<Brand> Brand => Set<Brand>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -92,6 +96,10 @@ namespace backend.Infrastructure.Persistence.Context
             modelBuilder.Entity<View>().ToTable("View", schema: "app");
             modelBuilder.Entity<ViewModule>().ToTable("ViewModule", schema: "app");
             modelBuilder.Entity<RoleModule>().ToTable("RoleModule", schema: "app");
+            modelBuilder.Entity<Line>().ToTable("Line", schema: "app");
+            modelBuilder.Entity<Model>().ToTable("Model", schema: "app");
+            modelBuilder.Entity<LineModel>().ToTable("LineModel", schema: "app");
+            modelBuilder.Entity<Brand>().ToTable("Brand", schema: "app");
 
             modelBuilder.ApplyConfiguration(new PersonConfiguration());
             modelBuilder.ApplyConfiguration(new ProfileConfiguration());
@@ -122,6 +130,10 @@ namespace backend.Infrastructure.Persistence.Context
             modelBuilder.ApplyConfiguration(new ViewConfiguration());
             modelBuilder.ApplyConfiguration(new ViewModuleConfiguration());
             modelBuilder.ApplyConfiguration(new RoleModuleConfiguration());
+            modelBuilder.ApplyConfiguration(new LineConfiguration());
+            modelBuilder.ApplyConfiguration(new ModelConfiguration());
+            modelBuilder.ApplyConfiguration(new LineModelConfiguration());
+            modelBuilder.ApplyConfiguration(new BrandConfiguration());
         }
 
         protected AppDbContext()

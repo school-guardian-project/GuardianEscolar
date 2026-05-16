@@ -10,22 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Infrastructure\IRepositories\**" />
-    <Compile Remove="Infrastructure\Persistence\**" />
-    <Compile Remove="Migrations\**" />
-    <Content Remove="Infrastructure\IRepositories\**" />
-    <Content Remove="Infrastructure\Persistence\**" />
-    <Content Remove="Migrations\**" />
-    <EmbeddedResource Remove="Infrastructure\IRepositories\**" />
-    <EmbeddedResource Remove="Infrastructure\Persistence\**" />
-    <EmbeddedResource Remove="Migrations\**" />
-    <None Remove="Infrastructure\IRepositories\**" />
-    <None Remove="Infrastructure\Persistence\**" />
-    <None Remove="Migrations\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
+    <!-- <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" /> -->
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.5">
       <PrivateAssets>all</PrivateAssets>
@@ -33,6 +18,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.23.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
   </ItemGroup>
 
   <ItemGroup>

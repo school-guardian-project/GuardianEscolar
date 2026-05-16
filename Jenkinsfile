@@ -1,6 +1,10 @@
 pipeline {
   agent any
 
+  environment {
+    FAILED_STAGE = ''
+  }
+
   stages {
 
     stage('Detect Changes') {
@@ -32,6 +36,9 @@ pipeline {
         }
       }
       steps {
+        script {
+          env.FAILED_STAGE = 'Backend'
+        }
         dir('dvlp-back/src/backend') {
           sh 'dotnet restore'
           sh 'dotnet build -c Release'
@@ -52,6 +59,9 @@ pipeline {
         SONAR_TOKEN = credentials('sonar-token')
       }
       steps {
+        script {
+          env.FAILED_STAGE = 'Sonar Backend'
+        }
         dir('dvlp-back/src/backend') {
           sh '''
             dotnet tool install --global dotnet-sonarscanner
@@ -79,6 +89,9 @@ pipeline {
         docker { image 'node:20' }
       }
       steps {
+        script {
+          env.FAILED_STAGE = 'Frontend'
+        }
         dir('dvlp-front/dvlp-web') {
           sh 'npm ci'
           sh 'npm run build'
@@ -104,6 +117,9 @@ pipeline {
         SONAR_TOKEN = credentials('sonar-token')
       }
       steps {
+        script {
+          env.FAILED_STAGE = 'Sonar Frontend'
+        }
         dir('dvlp-front/dvlp-web') {
           sh '''
             npm install -g sonar-scanner
@@ -127,6 +143,9 @@ pipeline {
       }
       agent any
       steps {
+        script {
+          env.FAILED_STAGE = 'Build Backend'
+        }
         dir('dvlp-back/src/backend') {
           sh "docker build -f Dockerfile -t guardian-backend:${BUILD_NUMBER} -t guardian-backend:latest ."
         }
@@ -141,6 +160,9 @@ pipeline {
       }
       agent any
       steps {
+        script {
+          env.FAILED_STAGE = 'Build Frontend'
+        }
         dir('dvlp-front/dvlp-web') {
           sh "docker build -f Dockerfile -t guardian-frontend:${BUILD_NUMBER} -t guardian-frontend:latest ."
         }
@@ -149,14 +171,10 @@ pipeline {
   }
 
   post {
-    always {
-      cleanWs()
-    }
-
     success {
       mail to: 'guardianescolar0@gmail.com',
-      subject: 'Pipeline EXITOSO',
-      body: 'La compilación y pruebas finalizaron correctamente.'
+      subject: "SUCCESS: ${env.JOB_NAME}",
+      body: "Pipeline exitoso"
 
       discordSend description: "¡Build exitosa!",
                     result: 'SUCCESS',
@@ -165,13 +183,27 @@ pipeline {
     }
     failure {
       mail to: 'guardianescolar0@gmail.com',
-      subject: 'Pipeline FALLÓ',
-      body: 'La compilación o pruebas presentaron errores.'
+      subject: "FAILED: ${env.JOB_NAME}",
+      body: """
+            Falló en stage: ${env.FAILED_STAGE}
 
-      discordSend description: "¡Build fallida!",
+            Build:
+            ${env.BUILD_URL}
+      """
+
+      discordSend description: """
+                    ❌ Falló en: ${env.FAILED_STAGE}
+
+                    Build:
+                    ${env.BUILD_URL}
+                  """,
                     result: 'FAILURE',
                     title: 'Fallo',
                     webhookURL: 'https://discord.com/api/webhooks/1505227295101681674/MkgVrZZs_nS7GSmv4zIX2b6kpTFAWQ865NTgClQ5QdgrwBquk2I2oPAtzxLsCWiw23gU'
+    }
+
+    always {
+      cleanWs()
     }
   }
 }

@@ -1,6 +1,6 @@
 services:
   backend:
-    container_name: backend-container-dev
+    container_name: backend-container-dev-i
     build:
       context: ./dvlp-back/src/backend
       dockerfile: dev.Dockerfile

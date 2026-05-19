@@ -2,15 +2,17 @@
 <ContentPage
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:services="clr-namespace:app_movil.Services"
     x:Class="app_movil.Pages.Auth.Welcome"
-    BackgroundColor="{StaticResource Background}">
+    BackgroundColor="{StaticResource Background}"
+    NavigationPage.HasNavigationBar="False">
 
 
     <ScrollView>
         <VerticalStackLayout
             Padding="50"
             Spacing="15"
-            Margin="0,0,0,90"
+            Margin="0,0,0,100"
             VerticalOptions="Center">
 
             <!-- Icono -->
@@ -18,81 +20,91 @@
                 Text="🛡️"
                 FontSize="70"
                 HorizontalOptions="Center"/>
-
-            <!-- Título app -->
+             
+            <!-- Título app 
             <Label
                 Text="Guardian Escolar"
-                FontSize="22"
+                FontSize="28"
                 FontAttributes="Bold"
                 HorizontalOptions="Center"
-                TextColor="{StaticResource TitleColor}"/>
+                TextColor="{StaticResource TitleColor}"
+                Margin="0,10,0,40"/>
+                -->
 
-            <!-- Bienvenido -->
+            <!-- Iniciar Sesión -->
             <Label
-                Text="Bienvenido"
+                Text="{services:Translation Key=Login}"
                 FontSize="26"
                 FontAttributes="Bold"
                 HorizontalOptions="Center"
                 TextColor="{StaticResource TitleColor}"
-                Margin="0,20,0,0"/>
+                Margin="0,50,0,10"/>
 
             <!-- Label Correo -->
             <Label
-                Text="Correo electrónico"
+                Text="{services:Translation Key=Email}"
                 FontSize="13"
                 TextColor="{StaticResource TextSecondary}"
-                Margin="0,0,0,-10"/>
+                Margin="-20,0,0,-10"/>
 
-            <!-- Entry Correo --> 
+            <!-- Entry Correo -->
             <Border
                 BackgroundColor="{StaticResource CardSecondaryBackground}"
                 StrokeShape="RoundRectangle 10"
                 Stroke="{StaticResource BorderColor}"
-                Padding="30,0">
-                <Entry
-                    Placeholder="ejemplo@gmail.com"
-                    Keyboard="Email"
-                    BackgroundColor="Transparent"
-                    PlaceholderColor="{StaticResource InputPlaceholder}"
-                    TextColor="{StaticResource TextPrimary}"
-                    HeightRequest="50"/>
+                Padding="10,0"
+                WidthRequest="330"
+                HorizontalOptions="Center">
+
+            <Entry
+                Placeholder="ejemplo@gmail.com"
+                Keyboard="Email"
+                BackgroundColor="Transparent"
+                PlaceholderColor="{StaticResource InputPlaceholder}"
+                TextColor="{StaticResource TextPrimary}" /> 
+
             </Border>
 
             <!-- Label Contraseña -->
             <Label
-                Text="Contraseña"
+                Text="{services:Translation Key=Password}"
                 FontSize="13"
                 TextColor="{StaticResource TextSecondary}"
-                Margin="0,0,0,-10"/>
+                Margin="-20,0,0,-10"/>
 
             <!-- Entry Contraseña -->
             <Border
                 BackgroundColor="{StaticResource CardSecondaryBackground}"
-                StrokeShape="RoundRectangle 12"
+                StrokeShape="RoundRectangle 10"
                 Stroke="{StaticResource BorderColor}"
-                Padding="15,0">
+                Padding="10,0"
+                WidthRequest="330"
+                HorizontalOptions="Center">
+
                 <Entry
                     Placeholder="••••••••"
                     IsPassword="True"
                     BackgroundColor="Transparent"
                     PlaceholderColor="{StaticResource InputPlaceholder}"
                     TextColor="{StaticResource TextPrimary}"
-                    HeightRequest="50"/>
+                    HeightRequest="10"
+                    />
+                
             </Border>
 
             <!-- Olvidó contraseña -->
             <Label
-                Text="¿Has olvidado la contraseña?"
+                Text="{services:Translation Key=ForgotPassword}"
                 FontSize="13"
                 TextColor="{StaticResource Primary}"
-                Margin="5,0,0,0">
+                Margin="-20,-5,0,0">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Tapped="OnForgotPasswordTapped"/>
                 </Label.GestureRecognizers>
             </Label>
             <!-- Botón -->
             <Button
-                Text="Iniciar sesión"
+                Text="{services:Translation Key=Enter}"
                 BackgroundColor="{StaticResource ButtonPrimary}"
                 TextColor="{StaticResource White}"
                 CornerRadius="25"

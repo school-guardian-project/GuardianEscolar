@@ -65,6 +65,16 @@
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
 
+
+	<!---
+	<ItemGroup>
+	  <EmbeddedResource Remove="Resources\Strings\AppStrings.en.resx" />
+	  <EmbeddedResource Remove="Resources\Strings\AppStrings.es.resx" />
+	  <EmbeddedResource Remove="Resources\Strings\AppStrings.fr.resx" />
+	  <EmbeddedResource Remove="Resources\Strings\AppStrings.pt.resx" />
+	</ItemGroup>
+	-->
+	
 	<ItemGroup>
 		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
@@ -72,8 +82,12 @@
 		<PackageReference Include="UraniumUI.Material" Version="2.15.0" />
 	</ItemGroup>
 
+	
 	<ItemGroup>
 	  <MauiXaml Update="Pages\Auth\ForgotPassword.xaml">
+	    <Generator>MSBuild:Compile</Generator>
+	  </MauiXaml>
+	  <MauiXaml Update="Pages\Auth\VerifyCode.xaml">
 	    <Generator>MSBuild:Compile</Generator>
 	  </MauiXaml>
 	  <MauiXaml Update="Pages\Welcome.xaml">
@@ -83,11 +97,11 @@
 
 	<ItemGroup>
 	  <Folder Include="Models\" />
-	  <Folder Include="Services\" />
 	  <Folder Include="ViewModels\" />
 	  <Folder Include="Pages\Home\" />
 	  <Folder Include="Pages\Config\" />
 	  <Folder Include="Pages\Perfil\" />
 	</ItemGroup>
 
+	
 </Project>

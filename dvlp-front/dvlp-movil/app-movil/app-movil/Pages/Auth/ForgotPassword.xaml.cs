@@ -11,4 +11,9 @@ public partial class ForgotPassword : ContentPage
     {
         await Navigation.PopAsync();
     }
+
+    private async void OnSendCodeClicked(object? sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new VerifyCode());
+    }
 }

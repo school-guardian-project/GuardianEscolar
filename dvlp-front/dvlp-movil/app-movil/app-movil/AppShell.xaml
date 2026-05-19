@@ -17,4 +17,8 @@
         ContentTemplate="{DataTemplate auth:ForgotPassword}"
         Route="ForgotPassword"/>
 
+    <ShellContent
+        Title="VerifyCode"
+        ContentTemplate="{DataTemplate auth:VerifyCode}"
+        Route="VerifyCode"/>
 </Shell>

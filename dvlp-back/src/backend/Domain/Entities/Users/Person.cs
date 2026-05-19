@@ -11,9 +11,7 @@ namespace backend.Domain.Entities.Users
 
         public string? lastName { get; set; }
 
-        public string? identificationType { get; set; }
-
-        public string? identificationNumber { get; set; }
+        public int identificationId { get; set; }
 
         public string? email { get; set; }
 
@@ -22,5 +20,7 @@ namespace backend.Domain.Entities.Users
         public string? residenceAddress { get; set; }
 
         public ICollection<Profile> profiles { get; set; } = new List<Profile>();
+    
+        public IdentificationType IdentificationType { get; set; } = null!;
     }
 }

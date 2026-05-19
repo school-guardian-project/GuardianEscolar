@@ -60,6 +60,7 @@ namespace backend.Infrastructure.Persistence.Context
         public DbSet<Model> Model => Set<Model>();
         public DbSet<LineModel> LineModel => Set<LineModel>();
         public DbSet<Brand> Brand => Set<Brand>();
+        public DbSet<IdentificationType> IdentificationType => Set<IdentificationType>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -100,6 +101,7 @@ namespace backend.Infrastructure.Persistence.Context
             modelBuilder.Entity<Model>().ToTable("Model", schema: "app");
             modelBuilder.Entity<LineModel>().ToTable("LineModel", schema: "app");
             modelBuilder.Entity<Brand>().ToTable("Brand", schema: "app");
+            modelBuilder.Entity<IdentificationType>().ToTable("IdentificationType", schema: "app");
 
             modelBuilder.ApplyConfiguration(new PersonConfiguration());
             modelBuilder.ApplyConfiguration(new ProfileConfiguration());
@@ -134,6 +136,7 @@ namespace backend.Infrastructure.Persistence.Context
             modelBuilder.ApplyConfiguration(new ModelConfiguration());
             modelBuilder.ApplyConfiguration(new LineModelConfiguration());
             modelBuilder.ApplyConfiguration(new BrandConfiguration());
+            modelBuilder.ApplyConfiguration(new IdentificationTypeConfiguration());
         }
 
         protected AppDbContext()

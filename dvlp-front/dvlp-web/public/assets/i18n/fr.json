@@ -432,6 +432,8 @@
     "select": "actif",
     "blue": "Bleu",
     "green": "Vert",
+    "yellow": "Jaune",
+    "red": "Rouge",
     "buttons": {
       "cancel": "Annuler",
       "apply": "Appliquer"

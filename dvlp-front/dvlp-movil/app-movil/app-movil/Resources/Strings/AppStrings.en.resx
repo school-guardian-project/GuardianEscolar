@@ -157,4 +157,7 @@
     <value>Re-send code(20)
 </value>
   </data>
+  <data name="VerifyCode" xml:space="preserve">
+    <value>Verify code</value>
+  </data>
 </root>

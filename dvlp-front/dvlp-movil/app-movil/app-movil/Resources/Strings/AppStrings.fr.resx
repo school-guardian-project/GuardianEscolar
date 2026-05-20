@@ -156,4 +156,7 @@
   <data name="TransferCode" xml:space="preserve">
     <value>Renvoyer le code(20)</value>
   </data>
+  <data name="VerifyCode" xml:space="preserve">
+    <value>Code de vérification</value>
+  </data>
 </root>

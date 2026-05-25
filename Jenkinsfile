@@ -3,9 +3,52 @@ pipeline {
 
   environment {
     FAILED_STAGE = ''
+    DISCORD_WEBHOOK = credeantials('discor-webhook')
   }
 
   stages {
+
+    stage('Git Metadata') {
+      steps {
+        script {
+
+          env.GIT_AUTHOR = sh(
+            script: "git log -1 --pretty=%an",
+            returnStdout: true
+          ).trim()
+
+          env.GIT_EMAIL = sh(
+            script: "git log -1 --pretty=%ae",
+            returnStdout: true
+          ).trim()
+
+          env.GIT_MESSAGE = sh(
+            script: "git log -1 --pretty=%s",
+            returnStdout: true
+          ).trim()
+
+          env.GIT_HASH = sh(
+            script: "git rev-parse --short HEAD",
+            returnStdout: true
+          ).trim()
+
+          env.GIT_BRANCH_NAME = sh(
+            script: "git rev-parse --abbrev-ref HEAD",
+            returnStdout: true
+          ).trim()
+
+          env.GIT_DATE = sh(
+            script: "git log -1 --date=format:'%Y-%m-%d %H:%M:%S' --pretty=%cd",
+            returnStdout: true
+          ).trim()
+
+          env.GIT_FILES = sh(
+            script: "git diff-tree --no-commit-id --name-only -r HEAD",
+            returnStdout: true
+          ).trim()
+        }
+      }
+    }
 
     stage('Detect Changes') {
       agent any
@@ -174,32 +217,122 @@ pipeline {
     success {
       mail to: 'guardianescolar0@gmail.com',
       subject: "SUCCESS: ${env.JOB_NAME}",
-      body: "Pipeline exitoso"
-
-      discordSend description: "¡Build exitosa!",
-                    result: 'SUCCESS',
-                    title: 'Hecho',
-                    webhookURL: 'https://discord.com/api/webhooks/1505227295101681674/MkgVrZZs_nS7GSmv4zIX2b6kpTFAWQ865NTgClQ5QdgrwBquk2I2oPAtzxLsCWiw23gU'
-    }
-    failure {
-      mail to: 'guardianescolar0@gmail.com',
-      subject: "FAILED: ${env.JOB_NAME}",
       body: """
-            Falló en stage: ${env.FAILED_STAGE}
+          📌 Proyecto:
+          ${env.JOB_NAME}
 
-            Build:
-            ${env.BUILD_URL}
+          🌿 Rama:
+          ${env.GIT_BRANCH}
+
+          👤 Autor:
+          ${env.GIT_AUTHOR}
+
+          📝 Commit:
+          ${env.GIT_COMMIT_MSG}
+
+          🕒 Fecha:
+          ${new Date().format("yyyy-MM-dd HH:mm:ss")}
+
+          📂 Archivos afectados:
+          > ${env.GIT_CHANGED_FILES}
+
+          🔢 Build:
+          #${env.BUILD_NUMBER}
+
+          🔗 Jenkins:
+          ${env.BUILD_URL}
       """
 
-      discordSend description: """
-                    ❌ Falló en: ${env.FAILED_STAGE}
+      discordSend(
+        title: "✅ Build Exitosa",
+        description: """
+          📦 **Proyecto:** ${env.JOB_NAME}
 
-                    Build:
-                    ${env.BUILD_URL}
-                  """,
-                    result: 'FAILURE',
-                    title: 'Fallo',
-                    webhookURL: 'https://discord.com/api/webhooks/1505227295101681674/MkgVrZZs_nS7GSmv4zIX2b6kpTFAWQ865NTgClQ5QdgrwBquk2I2oPAtzxLsCWiw23gU'
+          🌿 **Rama:** ${env.GIT_BRANCH_NAME}
+
+          🔖 **Commit:** `${env.GIT_HASH}`
+
+          👤 **Autor:** ${env.GIT_AUTHOR}
+
+          🕒 **Fecha:** ${env.GIT_DATE}
+
+          💬 **Mensaje del commit:**
+          ${env.GIT_MESSAGE}
+
+          📂 **Archivos modificados:**
+          ```text
+          > ${env.GIT_FILES}
+
+          ⏱️ Duración: ${currentBuild.durationString}
+
+          🔗 Build:
+          ${env.BUILD_URL}
+        """,
+          result: 'SUCCESS',
+          webhookURL: env.DISCORD_WEBHOOK
+      )
+    }
+    
+    failure {
+      mail to: 'guardianescolar0@gmail.com',
+      subject: "FAILED: ${env.JOB_NAME} #${env.BUILD_NUMBER}",
+      body: """
+            📌 Proyecto:
+            ${env.JOB_NAME}
+
+            🌿 Rama:
+            ${env.GIT_BRANCH}
+
+            👤 Autor:
+            ${env.GIT_AUTHOR}
+
+            📝 Commit:
+            ${env.GIT_COMMIT_MSG}
+
+            🕒 Fecha:
+            ${new Date().format("yyyy-MM-dd HH:mm:ss")}
+
+            ❌ Stage fallido:
+            ${env.FAILED_STAGE}
+
+            📂 Archivos afectados:
+            ${env.GIT_CHANGED_FILES}
+
+            🔢 Build:
+            #${env.BUILD_NUMBER}
+      """
+
+      discordSend(
+        title: "❌ Build Fallida",
+        description: """
+        🚨 Stage fallido: ${env.FAILED_STAGE}
+
+        📦 Proyecto: ${env.JOB_NAME}
+
+        🌿 Rama: ${env.GIT_BRANCH_NAME}
+
+        🔖 Commit: ${env.GIT_HASH}
+
+        👤 Autor: ${env.GIT_AUTHOR}
+
+        🕒 Fecha: ${env.GIT_DATE}
+
+        💬 Mensaje del commit:
+        ${env.GIT_MESSAGE}
+
+        📂 Archivos modificados:
+
+        > ${env.GIT_FILES}
+
+        ⏱️ Duración: ${currentBuild.durationString}
+
+        🔗 Build:
+        ${env.BUILD_URL}
+        """,
+        result: 'FAILURE',
+        title: 'Fallo',
+        webhookURL: env.DISCORD_WEBHOOK
+      )
     }
 
     always {

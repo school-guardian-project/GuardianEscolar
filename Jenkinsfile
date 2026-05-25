@@ -330,7 +330,6 @@ pipeline {
         ${env.BUILD_URL}
         """,
         result: 'FAILURE',
-        title: 'Fallo',
         webhookURL: env.DISCORD_WEBHOOK
       )
     }

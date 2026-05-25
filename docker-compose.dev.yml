@@ -1,10 +1,9 @@
 services:
   backend:
-    container_name: backend-container-dev-i
+    container_name: backend-container-dev
     build:
       context: ./dvlp-back/src/backend
       dockerfile: dev.Dockerfile
-    working_dir: /app
     ports:
       - "8080:8080"
     environment:

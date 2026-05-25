@@ -3,7 +3,7 @@ pipeline {
 
   environment {
     FAILED_STAGE = ''
-    DISCORD_WEBHOOK = credentials('discor-webhook')
+    DISCORD_WEBHOOK = credentials('discord-webhook')
   }
 
   stages {

@@ -17,12 +17,7 @@ pipeline {
             returnStdout: true
           ).trim()
 
-          env.GIT_EMAIL = sh(
-            script: "git log -1 --pretty=%ae",
-            returnStdout: true
-          ).trim()
-
-          env.GIT_MESSAGE = sh(
+          env.GIT_COMMIT_MSG = sh(
             script: "git log -1 --pretty=%s",
             returnStdout: true
           ).trim()
@@ -37,8 +32,18 @@ pipeline {
             returnStdout: true
           ).trim()
 
+          env.GIT_EMAIL = sh(
+            script: "git log -1 --pretty=%ae",
+            returnStdout: true
+          ).trim()
+
           env.GIT_DATE = sh(
             script: "git log -1 --date=format:'%Y-%m-%d %H:%M:%S' --pretty=%cd",
+            returnStdout: true
+          ).trim()
+
+          env.GIT_MESSAGE = sh(
+            script: "git log -1 --pretty=%s",
             returnStdout: true
           ).trim()
 
@@ -46,6 +51,16 @@ pipeline {
             script: "git diff-tree --no-commit-id --name-only -r HEAD",
             returnStdout: true
           ).trim()
+
+          env.GIT_CHANGED_FILES = sh(
+            script: "git diff-tree --no-commit-id --name-only -r HEAD",
+            returnStdout: true
+          ).trim()
+
+          env.GIT_FILES = env.GIT_CHANGED_FILES
+            .split("\\n")
+            .collect { "• ${it}" }
+            .join("\\n")
         }
       }
     }
@@ -260,7 +275,6 @@ pipeline {
           ${env.GIT_MESSAGE}
 
           📂 **Archivos modificados:**
-          ```text
           > ${env.GIT_FILES}
 
           ⏱️ Duración: ${currentBuild.durationString}

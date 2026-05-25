@@ -64,7 +64,7 @@ pipeline {
         }
         dir('dvlp-back/src/backend') {
           sh '''
-            dotnet tool install --global dotnet-sonarscanner
+            dotnet tool install --global dotnet-sonarscanner --version 6.0.1
             export PATH="$PATH:/root/.dotnet/tools"
 
             dotnet sonarscanner begin \\
@@ -122,7 +122,7 @@ pipeline {
         }
         dir('dvlp-front/dvlp-web') {
           sh '''
-            npm install -g sonar-scanner
+            npm install -g sonar-scanner@5.0.1
     
             sonar-scanner \\
               -Dsonar.projectKey=guardian-frontend \\

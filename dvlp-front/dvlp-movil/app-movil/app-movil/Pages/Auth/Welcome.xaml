@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:services="clr-namespace:app_movil.Services"
     x:Class="app_movil.Pages.Auth.Welcome"
+    xmlns:components="clr-namespace:app_movil.Components"
     BackgroundColor="{StaticResource Background}"
     NavigationPage.HasNavigationBar="False">
 
@@ -40,57 +41,17 @@
                 TextColor="{StaticResource TitleColor}"
                 Margin="0,50,0,10"/>
 
-            <!-- Label Correo -->
-            <Label
-                Text="{services:Translation Key=Email}"
-                FontSize="13"
-                TextColor="{StaticResource TextSecondary}"
-                Margin="-20,0,0,-10"/>
-
-            <!-- Entry Correo -->
-            <Border
-                BackgroundColor="{StaticResource CardSecondaryBackground}"
-                StrokeShape="RoundRectangle 10"
-                Stroke="{StaticResource BorderColor}"
-                Padding="10,0"
-                WidthRequest="330"
-                HorizontalOptions="Center">
-
-            <Entry
+            <components:InputField
+                LabelText="{services:Translation Key=Email}"
                 Placeholder="ejemplo@gmail.com"
                 Keyboard="Email"
-                BackgroundColor="Transparent"
-                PlaceholderColor="{StaticResource InputPlaceholder}"
-                TextColor="{StaticResource TextPrimary}" /> 
+                Text="{Binding Email}"/>
 
-            </Border>
-
-            <!-- Label Contraseña -->
-            <Label
-                Text="{services:Translation Key=Password}"
-                FontSize="13"
-                TextColor="{StaticResource TextSecondary}"
-                Margin="-20,0,0,-10"/>
-
-            <!-- Entry Contraseña -->
-            <Border
-                BackgroundColor="{StaticResource CardSecondaryBackground}"
-                StrokeShape="RoundRectangle 10"
-                Stroke="{StaticResource BorderColor}"
-                Padding="10,0"
-                WidthRequest="330"
-                HorizontalOptions="Center">
-
-                <Entry
-                    Placeholder="••••••••"
-                    IsPassword="True"
-                    BackgroundColor="Transparent"
-                    PlaceholderColor="{StaticResource InputPlaceholder}"
-                    TextColor="{StaticResource TextPrimary}"
-                    HeightRequest="10"
-                    />
-                
-            </Border>
+            <components:InputField
+                LabelText="{services:Translation Key=Password}"
+                Placeholder="••••••••"
+                IsPassword="True"
+                Text="{Binding Password}"/>
 
             <!-- Olvidó contraseña -->
             <Label
@@ -103,14 +64,8 @@
                 </Label.GestureRecognizers>
             </Label>
             <!-- Botón -->
-            <Button
+            <components:PrimaryButton
                 Text="{services:Translation Key=Enter}"
-                BackgroundColor="{StaticResource ButtonPrimary}"
-                TextColor="{StaticResource White}"
-                CornerRadius="25"
-                HeightRequest="55"
-                FontAttributes="Bold"
-                FontSize="16"
                 Margin="0,20,0,0"/>
 
         </VerticalStackLayout>

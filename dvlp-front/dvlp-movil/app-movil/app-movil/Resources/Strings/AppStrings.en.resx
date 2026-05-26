@@ -160,4 +160,16 @@
   <data name="VerifyCode" xml:space="preserve">
     <value>Verify code</value>
   </data>
+  <data name="NewPasswordDescription" xml:space="preserve">
+    <value>Enter the new password.</value>
+  </data>
+  <data name="NewPasswordTitle" xml:space="preserve">
+    <value>New Password</value>
+  </data>
+  <data name="ConfirmPasswordTitle" xml:space="preserve">
+    <value>Confirm Password</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
 </root>

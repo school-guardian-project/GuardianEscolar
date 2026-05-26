@@ -159,4 +159,16 @@
   <data name="VerifyCode" xml:space="preserve">
     <value>Código de verificação</value>
   </data>
+  <data name="NewPasswordDescription" xml:space="preserve">
+    <value>Introduza a nova senha.</value>
+  </data>
+  <data name="NewPasswordTitle" xml:space="preserve">
+    <value>Nova Senha</value>
+  </data>
+  <data name="ConfirmPasswordTitle" xml:space="preserve">
+    <value>Confirme a sua senha</value>
+  </data>
+  <data name="Restore" xml:space="preserve">
+    <value>restaurar</value>
+  </data>
 </root>

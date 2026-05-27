@@ -1,4 +1,5 @@
-﻿using backend.Application.DTOs.Auth;
+﻿using backend.Application.DTOs;
+using backend.Application.DTOs.Auth;
 using backend.Application.Interfaces.Common;
 using backend.Application.Interfaces.Common.Exceptions;
 using backend.Infrastructure.Persistence.Context;
@@ -21,56 +22,42 @@ namespace backend.Infrastructure.Auth
             _jwtService = jwtService;
         }
 
-        public async Task<LoginResponseDto> LoginAsync(LoginResponseDto request)
+        public async Task<LoginResponseDto> LoginAsync(LoginRequestDto request)
         {
             var person = await _context.Person
-                .Include(x => x.Profile)
-                .Include(x => x.ProfileRole)
-                    .ThenInclude(x => x.Role)
-                .FirstOrDefaultAsyn(x => x.Email == request.Email);
+                .Include(x => x.profiles)
+                    .ThenInclude(x => x.profileRoles)
+                    .ThenInclude(x => x.role)
+                .FirstOrDefaultAsync(x => x.email == request.Email);
         
             if (person is null)
             {
                 throw new UnauthorizedException("Credenciales Invalidas");
             }
 
-            if (!person.Active)
+            var profile = person.profiles.FirstOrDefault();
+            if (profile is null)
             {
-                throw new UnauthorizedException("Usuario Inactivo");
-            }
-
-            var passwordCorrect = _passwordService.Verify(person.Profile.Password, request.Password);
-
-            if (!passwordCorrect)
-            {
-                person.Profile.IntentosFallidos++;
-
-                if (person.Profile.IntentosFallidos >= 5)
-                {
-                    person.Profile.Bloqueado = DateTime.UtcNow.AddMinutes(15);
-
-                    person.Profile.IntentosFallidos = 0;
-                }
-
-                await _context.SaveChangesAsync();
-
                 throw new UnauthorizedException("Credenciales Invalidas");
             }
 
-            person.Profile.IntentosFallidos = 0;
+            var passwordCorrect = _passwordService.Verify(profile.password, request.Password);
 
-            var roles = person.ProfileRole.Select(x => x.Role.Name).ToList();
+            if (!passwordCorrect)
+            {
+                throw new UnauthorizedException("Credenciales Invalidas");
+            }
+
+            var roles = person.profiles.SelectMany(p => p.profileRoles).Select(pr => pr.role.name).ToList();
 
             var token = _jwtService.GenerateToken(person, roles);
-
-            await _context.SaveChangesAsync();
 
             return new LoginResponseDto
             {
                 AccessToken = token,
                 Expiration = DateTime.UtcNow.AddMinutes(15),
-                Name = person.Name,
-                Email = person.Email,
+                Name = person.name,
+                Email = person.email,
                 Roles = roles
             };
         }

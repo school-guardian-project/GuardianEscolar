@@ -87,7 +87,7 @@ Table Boarding {
   busId int
   stopId int
   dateTime timestamp
-  action boolean
+  boardingTypeId int
 }
 
 
@@ -184,6 +184,11 @@ Table RouteBusAssignments {
   busId int
   routeId int
   primary key(busId, routeId)
+}
+
+Table BoardingType {
+  boardingId int [primary key]
+  name varhcar(20)
 }
 
 Table SchoolCampuse {
@@ -314,3 +319,5 @@ Ref brand_line: Brand.brandId < Line.brandId
 ref bus_model: LineModel.lineModelid < Bus.lineModelId
 ref lineModel_line: Line.lineId < LineModel.lineId
 ref lineModel_line: Model.modelId < LineModel.modelId
+
+Ref boarding_type: Boarding.boardingTypeId > BoardingType.boardingId

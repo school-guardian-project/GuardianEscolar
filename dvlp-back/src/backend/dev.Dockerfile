@@ -1,16 +1,17 @@
-# Etapa 1: build
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
-WORKDIR /src
+FROM mcr.microsoft.com/dotnet/sdk:10.0
 
-# Copiar csproj primero (cache de dependencias)
+WORKDIR /app
+
+# Copiar proyecto y restaurar dependencias
 COPY *.csproj ./
 RUN dotnet restore
 
-# Copiar todo y compilar
-COPY . ./
+# Copiar el resto del código
+COPY . .
 
-
-# Puerto interno del contenedor
 EXPOSE 8080
 
-CMD ["dotnet", "watch", "run"]
+ENV ASPNETCORE_URLS=http://+:8080
+ENV ASPNETCORE_ENVIRONMENT=Development
+
+CMD ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:8080", "--no-launch-profile"]

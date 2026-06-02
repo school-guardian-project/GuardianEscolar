@@ -1,6 +1,6 @@
 services:
   backend:
-    container_name: backend-container-dev-i
+    container_name: backend-container-dev
     build:
       context: ./dvlp-back/src/backend
       dockerfile: dev.Dockerfile
@@ -9,7 +9,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - AllowedOrigins=http://localhost:4200
-    command: dotnet watch run
     dns:
       - 8.8.8.8
       - 1.1.1.1

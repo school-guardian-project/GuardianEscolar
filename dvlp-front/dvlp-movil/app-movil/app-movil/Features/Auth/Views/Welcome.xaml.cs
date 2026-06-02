@@ -1,4 +1,4 @@
-namespace app_movil.Pages.Auth;
+namespace app_movil.Features.Auth.Views;
 
 public partial class Welcome : ContentPage
 {

@@ -6,6 +6,10 @@ public partial class App : Application
     {
         InitializeComponent();
         UserAppTheme = AppTheme.Light;
-        MainPage = new NavigationPage(new Pages.Auth.Welcome());
+    }
+
+    protected override Window CreateWindow(IActivationState activationState)
+    {
+        return new Window(new AppShell());
     }
 }

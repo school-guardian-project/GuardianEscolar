@@ -1,6 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { ChangePassword } from '@shared/components/change/change-password/change-password';
+import { ChangePassword } from  '@shared/components/change/change-password/change-password';
 import {
   FormBuilder,
   FormGroup,

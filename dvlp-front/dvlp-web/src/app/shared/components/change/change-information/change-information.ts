@@ -5,6 +5,7 @@ import { FormGroup, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-change-information',
+  standalone: true,
   imports: [MatIcon, NavComponent, ReactiveFormsModule],
   templateUrl: './change-information.html',
   styleUrl: './change-information.css',

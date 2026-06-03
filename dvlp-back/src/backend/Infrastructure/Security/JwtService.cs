@@ -1,5 +1,5 @@
 ﻿using backend.Application.Interfaces.Common;
-using backend.Domain.Entities.Users;
+using backend.Modules.UserManagement.Domain.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;

@@ -1,4 +1,4 @@
-﻿namespace backend.Application.Interfaces.Common
+﻿namespace backend.Modules.Security.Domain.Interfaces
 {
     public interface IPasswordService
     {

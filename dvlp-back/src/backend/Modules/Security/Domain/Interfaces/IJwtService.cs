@@ -1,6 +1,6 @@
 ﻿using backend.Modules.UserManagement.Domain.Entities;
 
-namespace backend.Application.Interfaces.Common
+namespace backend.Modules.Security.Domain.Interfaces
 {
     public interface IJwtService
     {

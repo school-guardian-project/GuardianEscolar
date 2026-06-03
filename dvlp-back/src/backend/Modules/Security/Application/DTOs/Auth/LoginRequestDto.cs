@@ -1,4 +1,4 @@
-﻿namespace backend.Application.DTOs
+﻿namespace backend.Modules.Security.Application.DTOs.Auth
 {
     public class LoginRequestDto
     {

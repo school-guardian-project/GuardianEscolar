@@ -1,7 +1,6 @@
-﻿using backend.Application.DTOs;
-using backend.Application.DTOs.Auth;
+﻿using backend.Modules.Security.Application.DTOs.Auth;
 
-namespace backend.Application.Interfaces.Common
+namespace backend.Modules.Security.Domain.Interfaces
 {
     public interface IAuthService
     {

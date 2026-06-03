@@ -8,7 +8,7 @@ namespace backend.Modules.Security.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<View> builder)
         {
-            builder.HasKey(v => v.id);
+            builder.HasKey(v => v.viewId);
             builder.Property(v => v.name).HasMaxLength(255);
             builder.Property(v => v.description).HasMaxLength(1000);
         }

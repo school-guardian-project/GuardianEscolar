@@ -7,7 +7,7 @@ namespace backend.Modules.BoardingManagement.Domain.Entities
 {
     public class Boarding
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Uuid7 boardingId { get; set; } = Uuid7.NewUuid7();
 
         public Uuid7 profileId { get; set; }
 

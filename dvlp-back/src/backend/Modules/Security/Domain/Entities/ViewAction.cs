@@ -4,7 +4,7 @@ namespace backend.Modules.Security.Domain.Entities
 {
     public class ViewAction
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Uuid7 viewActionId { get; set; } = Uuid7.NewUuid7();
 
         public Uuid7 viewId { get; set; }
 

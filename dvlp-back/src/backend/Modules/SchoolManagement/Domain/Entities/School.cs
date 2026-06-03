@@ -7,7 +7,7 @@ namespace backend.Modules.SchoolManagement.Domain.Entities
 {
     public class SchoolEntity
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Uuid7 schoolEntityId { get; set; } = Uuid7.NewUuid7();
 
         public Uuid7 cityId { get; set; }
 

@@ -1,3 +1,4 @@
+using Medo;
 using Microsoft.EntityFrameworkCore;
 using RouteEntity = backend.Modules.RouteManagement.Domain.Entities.RouteEntity;
 using ActionEntity = backend.Modules.Security.Domain.Entities.Action;
@@ -9,7 +10,7 @@ using backend.Modules.FleetManagement.Domain.Entities;
 using backend.Modules.RouteManagement.Domain.Entities;
 using backend.Modules.BoardingManagement.Domain.Entities;
 using backend.Modules.AlertManagement.Domain.Entities;
-using backend.Modules.UserManagement.Infrastructure.Persistence.Configurations;
+using backend.Modules.UserManagement.Infrastructure.Configurations;
 using backend.Modules.Security.Infrastructure.Configurations;
 using backend.Modules.SchoolManagement.Infrastructure.Configurations;
 using backend.Modules.RouteManagement.Infrastructure.Configurations;
@@ -55,10 +56,15 @@ namespace backend.Infrastructure.Persistence.Context
         public DbSet<ViewModule> ViewModule => Set<ViewModule>();
         public DbSet<RoleModule> RoleModule => Set<RoleModule>();
         public DbSet<Line> Line => Set<Line>();
-        public DbSet<Model> Model => Set<Model>();
+        public new DbSet<Model> Model => Set<Model>();
         public DbSet<LineModel> LineModel => Set<LineModel>();
         public DbSet<Brand> Brand => Set<Brand>();
         public DbSet<IdentificationType> IdentificationType => Set<IdentificationType>();
+
+        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
+        {
+            configurationBuilder.Properties<Uuid7>().HaveConversion<Uuid7ToGuidConverter>();
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

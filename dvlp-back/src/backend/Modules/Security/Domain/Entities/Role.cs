@@ -4,7 +4,7 @@ namespace backend.Modules.Security.Domain.Entities
 {
     public class Role
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Uuid7 roleId { get; set; } = Uuid7.NewUuid7();
 
         public string name { get; set; }
 

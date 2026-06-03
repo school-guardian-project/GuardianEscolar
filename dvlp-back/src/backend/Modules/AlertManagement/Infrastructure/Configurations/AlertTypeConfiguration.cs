@@ -8,7 +8,7 @@ namespace backend.Modules.AlertManagement.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<AlertType> builder)
         {
-            builder.HasKey(at => at.Id);
+            builder.HasKey(at => at.alertTypeId);
             builder.Property(at => at.name).HasMaxLength(255);
             builder.Property(at => at.description).HasMaxLength(500);
             builder.Property(at => at.urgencyLevel);

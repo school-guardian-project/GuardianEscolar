@@ -2,7 +2,7 @@ using backend.Modules.UserManagement.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace backend.Modules.UserManagement.Infrastructure.Persistence.Configurations
+namespace backend.Modules.UserManagement.Infrastructure.Configurations
 {
     public class IdentificationTypeConfiguration : IEntityTypeConfiguration<IdentificationType>
     {

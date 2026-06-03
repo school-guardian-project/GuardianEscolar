@@ -8,7 +8,7 @@ namespace backend.Modules.FleetManagement.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Line> builder)
         {
-            builder.HasKey(l => new { l.lineId });
+            builder.HasKey(l => l.lineId);
             builder.Property(l => l.name).HasMaxLength(255);
             builder.HasOne(l => l.brand).WithMany(b => b.line).HasForeignKey(l => l.brandId);
         }

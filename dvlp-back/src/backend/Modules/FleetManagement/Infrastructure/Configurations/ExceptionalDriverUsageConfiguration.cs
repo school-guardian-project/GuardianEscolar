@@ -8,12 +8,12 @@ namespace backend.Modules.FleetManagement.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<ExceptionalDriverUsage> builder)
         {
-            builder.HasKey(edu => edu.Id);
+            builder.HasKey(edu => edu.exceptionalDriverUsageId);
             builder.Property(edu => edu.startDateTime).IsRequired();
             builder.Property(edu => edu.endDateTime).IsRequired();
             builder.Property(edu => edu.reason).HasMaxLength(500);
             builder.HasOne(edu => edu.bus).WithMany(b => b.exceptionalDriverUsages).HasForeignKey(edu => edu.busId);
-            builder.HasOne(edu => edu.profile).WithMany().HasForeignKey(edu => edu.profileId);
+            builder.HasOne(edu => edu.profile).WithMany(p => p.exceptions).HasForeignKey(edu => edu.profileId);
         }
     }
 }

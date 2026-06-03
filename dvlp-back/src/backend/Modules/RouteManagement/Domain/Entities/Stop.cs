@@ -6,7 +6,7 @@ namespace backend.Modules.RouteManagement.Domain.Entities
 {
     public class Stop
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Uuid7 stopId { get; set; } = Uuid7.NewUuid7();
 
         public Uuid7 cityId { get; set; }
 

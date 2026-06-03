@@ -5,7 +5,7 @@ namespace backend.Modules.SchoolManagement.Domain.Entities
 {
     public class CourseGroup
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Uuid7 courseGroupId { get; set; } = Uuid7.NewUuid7();
 
         public Uuid7 profileId { get; set; }
 

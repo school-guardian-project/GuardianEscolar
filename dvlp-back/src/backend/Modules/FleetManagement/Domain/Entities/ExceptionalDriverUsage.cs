@@ -5,7 +5,7 @@ namespace backend.Modules.FleetManagement.Domain.Entities
 {
     public class ExceptionalDriverUsage
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Uuid7 exceptionalDriverUsageId { get; set; } = Uuid7.NewUuid7();
 
         public Uuid7 busId { get; set; }
 

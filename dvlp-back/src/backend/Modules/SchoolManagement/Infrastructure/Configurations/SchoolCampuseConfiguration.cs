@@ -8,7 +8,7 @@ namespace backend.Modules.SchoolManagement.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<SchoolCampuse> builder)
         {
-            builder.HasKey(sc => sc.campuseId);
+            builder.HasKey(sc => sc.schoolCampuseId);
             builder.Property(sc => sc.name).HasMaxLength(255);
             builder.Property(sc => sc.address).HasMaxLength(500);
             builder.HasOne(sc => sc.school).WithMany().HasForeignKey(sc => sc.schoolId);

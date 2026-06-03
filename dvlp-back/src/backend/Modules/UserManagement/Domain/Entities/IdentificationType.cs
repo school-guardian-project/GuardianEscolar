@@ -4,7 +4,7 @@ namespace backend.Modules.UserManagement.Domain.Entities
 {
     public class IdentificationType
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Uuid7 identificationId { get; set; } = Uuid7.NewUuid7();
 
         public String name { get; set; }
 

@@ -1,4 +1,4 @@
-﻿using backend.Application.Interfaces.Common.Exceptions;
+﻿using backend.Shared.Exceptions;
 using backend.Shared.Responses;
 using Microsoft.EntityFrameworkCore;
 using System.Net;

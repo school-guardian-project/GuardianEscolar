@@ -1,7 +1,7 @@
-﻿using backend.Application.Interfaces.Common;
+﻿using backend.Modules.Security.Domain.Interfaces;
 using Microsoft.AspNetCore.Identity;
 
-namespace backend.Infrastructure.Security
+namespace backend.Modules.Security.Application.Services
 {
     public class PasswordService : IPasswordService
     {

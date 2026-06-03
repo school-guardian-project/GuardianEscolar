@@ -1,4 +1,4 @@
-﻿namespace backend.Application.DTOs.Auth
+﻿namespace backend.Modules.Security.Application.DTOs.Auth
 {
     public class LoginResponseDto
     {

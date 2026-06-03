@@ -1,11 +1,10 @@
-﻿using backend.Application.DTOs;
-using backend.Application.DTOs.Auth;
-using backend.Application.Interfaces.Common;
-using backend.Application.Interfaces.Common.Exceptions;
+﻿using backend.Application.Interfaces.Common.Exceptions;
 using backend.Infrastructure.Persistence.Context;
+using backend.Modules.Security.Application.DTOs.Auth;
+using backend.Modules.Security.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace backend.Infrastructure.Auth
+namespace backend.Modules.Security.Application.Services
 {
     public class AuthService : IAuthService
     {

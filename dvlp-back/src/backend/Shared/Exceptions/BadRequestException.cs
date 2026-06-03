@@ -1,4 +1,4 @@
-﻿namespace backend.Application.Interfaces.Common.Exceptions
+﻿namespace backend.Shared.Exceptions
 {
     public class BadRequestException : Exception
     {

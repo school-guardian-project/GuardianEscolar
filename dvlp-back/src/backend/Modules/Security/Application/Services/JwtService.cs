@@ -1,11 +1,11 @@
-﻿using backend.Application.Interfaces.Common;
+﻿using backend.Modules.Security.Domain.Interfaces;
 using backend.Modules.UserManagement.Domain.Entities;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
-namespace backend.Infrastructure.Security
+namespace backend.Modules.Security.Application.Services
 {
     public class JwtService : IJwtService
     {

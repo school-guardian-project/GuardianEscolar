@@ -1,12 +1,14 @@
-using System.ComponentModel.DataAnnotations.Schema;
+using Medo;
 
 namespace backend.Modules.RouteManagement.Domain.Entities
 {
     public class RouteStop
     {
-        public int routeId { get; set; }
+        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
 
-        public int stopId { get; set; }
+        public Uuid7 routeId { get; set; }
+
+        public Uuid7 stopId { get; set; }
 
         public RouteEntity route { get; set; }
 

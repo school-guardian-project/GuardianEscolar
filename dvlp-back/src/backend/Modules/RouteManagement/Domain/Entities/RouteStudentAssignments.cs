@@ -1,12 +1,15 @@
 using backend.Modules.Security.Domain.Entities;
+using Medo;
 
 namespace backend.Modules.RouteManagement.Domain.Entities
 {
     public class RouteStudentAssignments
     {
-        public int profileId { get; set; }
+        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
 
-        public int routeId { get; set; }
+        public Uuid7 profileId { get; set; }
+
+        public Uuid7 routeId { get; set; }
 
         public Profile profile { get; set; }
 

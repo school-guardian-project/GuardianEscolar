@@ -1,10 +1,10 @@
-using System.ComponentModel.DataAnnotations.Schema;
+using Medo;
 
 namespace backend.Modules.FleetManagement.Domain.Entities
 {
     public class Model
     {
-        public int modelId { get; set; }
+        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
 
         public int year { get; set; }
 

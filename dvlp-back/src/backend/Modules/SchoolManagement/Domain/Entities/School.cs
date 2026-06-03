@@ -1,14 +1,15 @@
 using backend.Modules.FleetManagement.Domain.Entities;
 using backend.Modules.RouteManagement.Domain.Entities;
+using Medo;
 using RouteEntity = backend.Modules.RouteManagement.Domain.Entities.RouteEntity;
 
 namespace backend.Modules.SchoolManagement.Domain.Entities
 {
     public class SchoolEntity
     {
-        public int Id { get; set; }
+        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
 
-        public int cityId { get; set; }
+        public Uuid7 cityId { get; set; }
 
         public byte[]? logo { get; set; }
 

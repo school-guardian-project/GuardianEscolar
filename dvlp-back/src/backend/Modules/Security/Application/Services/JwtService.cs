@@ -20,7 +20,7 @@ namespace backend.Modules.Security.Application.Services
         {
             var claims = new List<Claim>
             {
-                new(JwtRegisteredClaimNames.Sub, person.personId.ToString()),
+                new(JwtRegisteredClaimNames.Sub, person.Id.ToString()),
                 new(JwtRegisteredClaimNames.Email, person.email),
                 new(ClaimTypes.Name, person.name)
             };

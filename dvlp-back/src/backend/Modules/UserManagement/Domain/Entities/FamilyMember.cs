@@ -1,13 +1,15 @@
 ﻿using backend.Modules.Security.Domain.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
+using Medo;
 
 namespace backend.Modules.UserManagement.Domain.Entities
 {
     public class FamilyMember
     {
-        public int FamilyId { get; set; }
+        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
 
-        public int ProfileId { get; set; }
+        public Uuid7 FamilyId { get; set; }
+
+        public Uuid7 ProfileId { get; set; }
 
         public Family Family { get; set; }
 

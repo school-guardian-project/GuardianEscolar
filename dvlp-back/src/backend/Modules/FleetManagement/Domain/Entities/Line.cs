@@ -1,14 +1,14 @@
-using System.ComponentModel.DataAnnotations.Schema;
+using Medo;
 
 namespace backend.Modules.FleetManagement.Domain.Entities
 {
     public class Line
     {
-        public int lineId { get; set; }
+        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
 
         public string? name { get; set; }
 
-        public int brandId { get; set; }
+        public Uuid7 brandId { get; set; }
 
         public Brand brand { get; set; }
         

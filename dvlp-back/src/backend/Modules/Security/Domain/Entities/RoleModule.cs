@@ -1,15 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Medo;
 
 namespace backend.Modules.Security.Domain.Entities
 {
     public class RoleModule
     {
-        public int Id { get; set; }
+        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
 
-        public int roleId { get; set; }
+        public Uuid7 roleId { get; set; }
 
-        public int moduleId { get; set; }
+        public Uuid7 moduleId { get; set; }
 
         public Module Module { get; set; }
 

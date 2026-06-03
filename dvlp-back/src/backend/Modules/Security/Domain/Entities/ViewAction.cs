@@ -1,12 +1,14 @@
-﻿namespace backend.Modules.Security.Domain.Entities
+﻿using Medo;
+
+namespace backend.Modules.Security.Domain.Entities
 {
     public class ViewAction
     {
-        public int Id { get; set; }
+        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
 
-        public int viewId { get; set; }
+        public Uuid7 viewId { get; set; }
 
-        public int actionId { get; set; }
+        public Uuid7 actionId { get; set; }
 
         public View view { get; set; }
 

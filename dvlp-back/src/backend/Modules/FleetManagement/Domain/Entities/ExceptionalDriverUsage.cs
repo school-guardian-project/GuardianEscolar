@@ -1,16 +1,15 @@
 ﻿using backend.Modules.Security.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Medo;
 
 namespace backend.Modules.FleetManagement.Domain.Entities
 {
     public class ExceptionalDriverUsage
     {
-        public int Id { get; set; }
+        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
 
-        public int busId { get; set; }
+        public Uuid7 busId { get; set; }
 
-        public int profileId { get; set; }
+        public Uuid7 profileId { get; set; }
 
         public DateTime startDateTime { get; set; }
 

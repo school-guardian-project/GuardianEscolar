@@ -1,26 +1,25 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-using backend.Modules.Security.Domain.Entities;
-using backend.Modules.SchoolManagement.Domain.Entities;
-using backend.Modules.RouteManagement.Domain.Entities;
-using backend.Modules.BoardingManagement.Domain.Entities;
 using backend.Modules.AlertManagement.Domain.Entities;
+using backend.Modules.BoardingManagement.Domain.Entities;
+using backend.Modules.RouteManagement.Domain.Entities;
+using backend.Modules.SchoolManagement.Domain.Entities;
+using backend.Modules.Security.Domain.Entities;
+using Medo;
 
 namespace backend.Modules.FleetManagement.Domain.Entities
 {
     public class Bus
     {
-        public int Id { get; set; }
+        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
 
-        public int driverId { get; set; }
+        public Uuid7 driverId { get; set; }
 
-        public int schoolId { get; set; }
+        public Uuid7 schoolId { get; set; }
 
         public byte[]? soatValidity { get; set; }
 
         public bool gpsStatus { get; set; }
 
-        public int lineModelId { get; set; }
+        public Uuid7 lineModelId { get; set; }
 
         public SchoolEntity school { get; set; }
 

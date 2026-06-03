@@ -1,11 +1,10 @@
-using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+using Medo;
 
 namespace backend.Modules.UserManagement.Domain.Entities
 {
     public class IdentificationType
     {
-        public int identificationId { get; set; }
+        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
 
         public String name { get; set; }
 

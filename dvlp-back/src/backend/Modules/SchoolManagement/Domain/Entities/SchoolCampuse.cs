@@ -1,10 +1,12 @@
+using Medo;
+
 namespace backend.Modules.SchoolManagement.Domain.Entities
 {
     public class SchoolCampuse
     {
-        public int campuseId { get; set; }
+        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
 
-        public int schoolId { get; set; }
+        public Uuid7 schoolId { get; set; }
 
         public string? name { get; set; }
 

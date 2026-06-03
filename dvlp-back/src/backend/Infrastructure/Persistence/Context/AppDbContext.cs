@@ -1,4 +1,3 @@
-using Medo;
 using Microsoft.EntityFrameworkCore;
 using RouteEntity = backend.Modules.RouteManagement.Domain.Entities.RouteEntity;
 using ActionEntity = backend.Modules.Security.Domain.Entities.Action;
@@ -60,11 +59,6 @@ namespace backend.Infrastructure.Persistence.Context
         public DbSet<LineModel> LineModel => Set<LineModel>();
         public DbSet<Brand> Brand => Set<Brand>();
         public DbSet<IdentificationType> IdentificationType => Set<IdentificationType>();
-
-        protected override void ConfigureConventions(ModelConfigurationBuilder configurationBuilder)
-        {
-            configurationBuilder.Properties<Uuid7>().HaveConversion<Uuid7ToGuidConverter>();
-        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

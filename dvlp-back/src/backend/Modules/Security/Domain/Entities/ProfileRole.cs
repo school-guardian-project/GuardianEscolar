@@ -1,14 +1,12 @@
-﻿using Medo;
-
-namespace backend.Modules.Security.Domain.Entities
+﻿namespace backend.Modules.Security.Domain.Entities
 {
     public class ProfileRole
     {
-        public Uuid7 profileRoleId { get; set; } = Uuid7.NewUuid7();
+        public Guid profileRoleId { get; set; } = Guid.NewGuid();
 
-        public Uuid7 roleId { get; set; }
+        public Guid roleId { get; set; }
 
-        public Uuid7 profileId { get; set; }
+        public Guid profileId { get; set; }
 
         // Se identifica la relacion con que entidad
         public Profile profile { get; set; }

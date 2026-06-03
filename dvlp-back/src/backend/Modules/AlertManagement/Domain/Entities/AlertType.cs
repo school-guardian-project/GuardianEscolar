@@ -1,10 +1,8 @@
-﻿using Medo;
-
-namespace backend.Modules.AlertManagement.Domain.Entities
+﻿namespace backend.Modules.AlertManagement.Domain.Entities
 {
     public class AlertType
     {
-        public Uuid7 alertTypeId { get; set; } = Uuid7.NewUuid7();
+        public Guid alertTypeId { get; set; } = Guid.NewGuid();
 
         public string? name { get; set; }
 

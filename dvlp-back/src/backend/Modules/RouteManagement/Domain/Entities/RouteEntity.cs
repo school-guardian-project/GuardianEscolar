@@ -1,13 +1,12 @@
 using backend.Modules.SchoolManagement.Domain.Entities;
-using Medo;
 
 namespace backend.Modules.RouteManagement.Domain.Entities
 {
     public class RouteEntity
     {
-        public Uuid7 routeEntityId { get; set; } = Uuid7.NewUuid7();
+        public Guid routeEntityId { get; set; } = Guid.NewGuid();
 
-        public Uuid7 schoolId { get; set; }
+        public Guid schoolId { get; set; }
 
         public string? Name { get; set; }
 

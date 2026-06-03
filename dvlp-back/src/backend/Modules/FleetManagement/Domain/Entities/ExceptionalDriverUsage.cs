@@ -1,15 +1,14 @@
 ﻿using backend.Modules.Security.Domain.Entities;
-using Medo;
 
 namespace backend.Modules.FleetManagement.Domain.Entities
 {
     public class ExceptionalDriverUsage
     {
-        public Uuid7 exceptionalDriverUsageId { get; set; } = Uuid7.NewUuid7();
+        public Guid exceptionalDriverUsageId { get; set; } = Guid.NewGuid();
 
-        public Uuid7 busId { get; set; }
+        public Guid busId { get; set; }
 
-        public Uuid7 profileId { get; set; }
+        public Guid profileId { get; set; }
 
         public DateTime startDateTime { get; set; }
 

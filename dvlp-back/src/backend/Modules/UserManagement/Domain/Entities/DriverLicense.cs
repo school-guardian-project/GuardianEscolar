@@ -1,13 +1,12 @@
 ﻿using backend.Modules.Security.Domain.Entities;
-using Medo;
 
 namespace backend.Modules.UserManagement.Domain.Entities
 {
     public class DriverLicense
     {
-        public Uuid7 driverLicenseId { get; set; } = Uuid7.NewUuid7();
+        public Guid driverLicenseId { get; set; } = Guid.NewGuid();
 
-        public Uuid7 profileId { get; set; }
+        public Guid profileId { get; set; }
 
         public string? licenseNumber { get; set; }
 

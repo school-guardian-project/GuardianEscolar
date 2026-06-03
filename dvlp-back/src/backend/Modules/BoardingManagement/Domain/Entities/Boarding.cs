@@ -1,19 +1,18 @@
 ﻿using backend.Modules.FleetManagement.Domain.Entities;
 using backend.Modules.RouteManagement.Domain.Entities;
 using backend.Modules.Security.Domain.Entities;
-using Medo;
 
 namespace backend.Modules.BoardingManagement.Domain.Entities
 {
     public class Boarding
     {
-        public Uuid7 boardingId { get; set; } = Uuid7.NewUuid7();
+        public Guid boardingId { get; set; } = Guid.NewGuid();
 
-        public Uuid7 profileId { get; set; }
+        public Guid profileId { get; set; }
 
-        public Uuid7 busId { get; set; }
+        public Guid busId { get; set; }
 
-        public Uuid7 stopId { get; set; }
+        public Guid stopId { get; set; }
 
         public DateTime dateTime { get; set; }
 

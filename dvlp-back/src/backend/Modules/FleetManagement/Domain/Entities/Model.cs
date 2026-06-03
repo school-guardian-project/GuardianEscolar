@@ -1,10 +1,8 @@
-using Medo;
-
 namespace backend.Modules.FleetManagement.Domain.Entities
 {
     public class Model
     {
-        public Uuid7 modelId { get; set; } = Uuid7.NewUuid7();
+        public Guid modelId { get; set; } = Guid.NewGuid();
 
         public int year { get; set; }
 

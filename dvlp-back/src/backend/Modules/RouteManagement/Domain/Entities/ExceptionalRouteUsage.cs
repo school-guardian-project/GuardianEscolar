@@ -1,15 +1,14 @@
 using backend.Modules.Security.Domain.Entities;
-using Medo;
 
 namespace backend.Modules.RouteManagement.Domain.Entities
 {
     public class ExceptionalRouteUsage
     {
-        public Uuid7 exceptionalRouteUsageId { get; set; } = Uuid7.NewUuid7();
+        public Guid exceptionalRouteUsageId { get; set; } = Guid.NewGuid();
 
-        public Uuid7 profileId { get; set; }
+        public Guid profileId { get; set; }
 
-        public Uuid7 routeId { get; set; }
+        public Guid routeId { get; set; }
 
         public DateTime dateTime { get; set; }
 

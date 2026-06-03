@@ -1,14 +1,12 @@
-﻿using Medo;
-
-namespace backend.Modules.Security.Domain.Entities
+﻿namespace backend.Modules.Security.Domain.Entities
 {
     public class ViewModule
     {
-        public Uuid7 viewModuleId { get; set; } = Uuid7.NewUuid7();
+        public Guid viewModuleId { get; set; } = Guid.NewGuid();
 
-        public Uuid7 viewId { get; set; }
+        public Guid viewId { get; set; }
 
-        public Uuid7 moduleId { get; set; }
+        public Guid moduleId { get; set; }
 
         public Module module { get; set; }
 

@@ -4,15 +4,14 @@ using backend.Modules.FleetManagement.Domain.Entities;
 using backend.Modules.RouteManagement.Domain.Entities;
 using backend.Modules.SchoolManagement.Domain.Entities;
 using backend.Modules.UserManagement.Domain.Entities;
-using Medo;
 
 namespace backend.Modules.Security.Domain.Entities
 {
     public class Profile
     {
-        public Uuid7 profileId { get; set; } = Uuid7.NewUuid7();
+        public Guid profileId { get; set; } = Guid.NewGuid();
 
-        public Uuid7 personId { get; set; }
+        public Guid personId { get; set; }
 
         public Person person { get; set; } = null!;
 

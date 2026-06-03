@@ -1,14 +1,12 @@
-using Medo;
-
 namespace backend.Modules.FleetManagement.Domain.Entities
 {
     public class Line
     {
-        public Uuid7 lineId { get; set; } = Uuid7.NewUuid7();
+        public Guid lineId { get; set; } = Guid.NewGuid();
 
         public string? name { get; set; }
 
-        public Uuid7 brandId { get; set; }
+        public Guid brandId { get; set; }
 
         public Brand brand { get; set; }
         

@@ -122,7 +122,7 @@ pipeline {
         }
         dir('dvlp-back/src/backend') {
           sh '''
-            dotnet tool install --global dotnet-sonarscanner --version 6.0.1
+            dotnet tool install --global dotnet-sonarscanner --version 6.0.0
             export PATH="$PATH:/root/.dotnet/tools"
 
             dotnet sonarscanner begin \\

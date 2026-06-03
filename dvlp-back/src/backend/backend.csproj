@@ -24,6 +24,38 @@
 
   <ItemGroup>
     <Folder Include="Application\Services\" />
+    <Folder Include="Modules\AlertManagement\Api\" />
+    <Folder Include="Modules\AlertManagement\Application\DTOs\" />
+    <Folder Include="Modules\AlertManagement\Application\Services\" />
+    <Folder Include="Modules\AlertManagement\Infrastructure\Repositories\" />
+    <Folder Include="Modules\BoardingManagement\Api\" />
+    <Folder Include="Modules\BoardingManagement\Application\DTOs\" />
+    <Folder Include="Modules\BoardingManagement\Application\Services\" />
+    <Folder Include="Modules\BoardingManagement\Infrastructure\Repositories\" />
+    <Folder Include="Modules\FleetManagement\Api\" />
+    <Folder Include="Modules\FleetManagement\Application\DTOs\" />
+    <Folder Include="Modules\FleetManagement\Application\Services\" />
+    <Folder Include="Modules\FleetManagement\Domain\Interfaces\" />
+    <Folder Include="Modules\FleetManagement\Infrastructure\Repositories\" />
+    <Folder Include="Modules\RouteManagement\Application\DTOs\" />
+    <Folder Include="Modules\RouteManagement\Application\Services\" />
+    <Folder Include="Modules\RouteManagement\Api\" />
+    <Folder Include="Modules\RouteManagement\Infrastructure\Repositories\" />
+    <Folder Include="Modules\SchoolManagement\Api\" />
+    <Folder Include="Modules\SchoolManagement\Application\DTOs\" />
+    <Folder Include="Modules\SchoolManagement\Application\Services\" />
+    <Folder Include="Modules\SchoolManagement\Domain\Interfaces\" />
+    <Folder Include="Modules\SchoolManagement\Infrastructure\Repositories\" />
+    <Folder Include="Modules\Security\Application\DTOs\" />
+    <Folder Include="Modules\Security\Application\Services\" />
+    <Folder Include="Modules\Security\Domain\Interfaces\" />
+    <Folder Include="Modules\Security\Infrastructure\Repositories\" />
+    <Folder Include="Modules\Security\Api\" />
+    <Folder Include="Modules\UserManagement\Application\DTOs\" />
+    <Folder Include="Modules\UserManagement\Application\Services\" />
+    <Folder Include="Modules\UserManagement\Domain\Interfaces\" />
+    <Folder Include="Modules\UserManagement\Api\" />
+    <Folder Include="Modules\UserManagement\Infrastructure\Persistence\Repoitory\" />
   </ItemGroup>
 
 </Project>

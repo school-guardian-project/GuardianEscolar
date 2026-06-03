@@ -12,8 +12,8 @@ using backend.Infrastructure.Persistence.Context;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260603205559_MigrationsUuidEntities")]
-    partial class MigrationsUuidEntities
+    [Migration("20260603221528_Guid")]
+    partial class Guid
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,6 +29,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.AlertManagement.Domain.Entities.Alert", b =>
                 {
                     b.Property<Guid>("alertId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("alertTypeId")
@@ -52,6 +53,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.AlertManagement.Domain.Entities.AlertType", b =>
                 {
                     b.Property<Guid>("alertTypeId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("description")
@@ -120,6 +122,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.Brand", b =>
                 {
                     b.Property<Guid>("brandId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("name")
@@ -134,6 +137,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.Bus", b =>
                 {
                     b.Property<Guid>("busId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("driverId")
@@ -165,6 +169,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.ExceptionalDriverUsage", b =>
                 {
                     b.Property<Guid>("exceptionalDriverUsageId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("busId")
@@ -196,6 +201,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.Line", b =>
                 {
                     b.Property<Guid>("lineId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("brandId")
@@ -215,6 +221,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.LineModel", b =>
                 {
                     b.Property<Guid>("lineModelId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<int>("capacity")
@@ -243,6 +250,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.Model", b =>
                 {
                     b.Property<Guid>("modelId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<int>("year")
@@ -256,6 +264,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.RouteManagement.Domain.Entities.ExceptionalRouteUsage", b =>
                 {
                     b.Property<Guid>("exceptionalRouteUsageId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("dateTime")
@@ -302,6 +311,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.RouteManagement.Domain.Entities.RouteEntity", b =>
                 {
                     b.Property<Guid>("routeEntityId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<TimeSpan>("EndTime")
@@ -367,6 +377,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.RouteManagement.Domain.Entities.Stop", b =>
                 {
                     b.Property<Guid>("stopId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("address")
@@ -400,6 +411,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.SchoolManagement.Domain.Entities.City", b =>
                 {
                     b.Property<Guid>("cityId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("country")
@@ -418,6 +430,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.SchoolManagement.Domain.Entities.Course", b =>
                 {
                     b.Property<Guid>("courseId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("campuseId")
@@ -460,6 +473,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.SchoolManagement.Domain.Entities.SchoolCampuse", b =>
                 {
                     b.Property<Guid>("schoolCampuseId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("address")
@@ -488,6 +502,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.SchoolManagement.Domain.Entities.SchoolEntity", b =>
                 {
                     b.Property<Guid>("schoolEntityId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("address")
@@ -504,6 +519,7 @@ namespace backend.Migrations
                         .HasColumnType("character varying(255)");
 
                     b.Property<byte[]>("logo")
+                        .IsRequired()
                         .HasColumnType("bytea");
 
                     b.Property<string>("name")
@@ -534,6 +550,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.Action", b =>
                 {
                     b.Property<Guid>("actionId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("description")
@@ -554,6 +571,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.Module", b =>
                 {
                     b.Property<Guid>("moduleId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("description")
@@ -574,6 +592,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.Profile", b =>
                 {
                     b.Property<Guid>("profileId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("password")
@@ -593,6 +612,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.ProfileRole", b =>
                 {
                     b.Property<Guid>("profileRoleId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("profileId")
@@ -613,6 +633,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.Role", b =>
                 {
                     b.Property<Guid>("roleId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("description")
@@ -638,6 +659,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.RoleModule", b =>
                 {
                     b.Property<Guid>("roleModuleId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("moduleId")
@@ -658,6 +680,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.View", b =>
                 {
                     b.Property<Guid>("viewId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("description")
@@ -678,6 +701,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.ViewAction", b =>
                 {
                     b.Property<Guid>("viewActionId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("actionId")
@@ -698,6 +722,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.ViewModule", b =>
                 {
                     b.Property<Guid>("viewModuleId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("moduleId")
@@ -718,6 +743,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.DriverLicense", b =>
                 {
                     b.Property<Guid>("driverLicenseId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<byte[]>("drivingLicense")
@@ -744,6 +770,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.Family", b =>
                 {
                     b.Property<Guid>("familyId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("name")
@@ -762,6 +789,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.FamilyMember", b =>
                 {
                     b.Property<Guid>("familyMemberId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("familyId")
@@ -782,6 +810,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.IdentificationType", b =>
                 {
                     b.Property<Guid>("identificationId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("name")
@@ -797,6 +826,7 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.Person", b =>
                 {
                     b.Property<Guid>("personId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
                     b.Property<string>("email")

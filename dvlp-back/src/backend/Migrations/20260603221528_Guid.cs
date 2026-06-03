@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class MigrationsUuidEntities : Migration
+    public partial class Guid : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -181,7 +181,7 @@ namespace backend.Migrations
                 {
                     schoolEntityId = table.Column<Guid>(type: "uuid", nullable: false),
                     cityId = table.Column<Guid>(type: "uuid", nullable: false),
-                    logo = table.Column<byte[]>(type: "bytea", nullable: true),
+                    logo = table.Column<byte[]>(type: "bytea", nullable: false),
                     name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     address = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
                     phone = table.Column<int>(type: "integer", nullable: false),

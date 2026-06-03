@@ -16,7 +16,7 @@ var allowedOrigins = builder.Configuration.GetValue<string>("AllowedOrigins")!.S
 
 // Database
 builder.Services.AddDbContext<AppDbContext>(options => 
-    options.UseNpgsql("name=Conection"));
+    options.UseNpgsql("name=DefaultConnection"));
 
 // Cors
 builder.Services.AddCors(options =>

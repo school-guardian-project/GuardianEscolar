@@ -1,0 +1,15 @@
+﻿namespace backend.Modules.SchoolManagement.Domain.Entities
+{
+    public class Course
+    {
+        public int Id { get; set; }
+
+        public string? name { get; set; }
+
+        public int campuseId { get; set; }
+
+        public SchoolCampuse? campuse { get; set; }
+
+        public ICollection<CourseGroup> courses { get; set; } = new List<CourseGroup>();
+    }
+}

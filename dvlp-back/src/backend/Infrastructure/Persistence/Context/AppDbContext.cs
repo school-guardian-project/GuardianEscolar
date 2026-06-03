@@ -1,23 +1,21 @@
-using backend.Domain.Entities.Academic;
-using backend.Domain.Entities.Alerts;
-using backend.Domain.Entities.Exceptions;
-using backend.Domain.Entities.Family;
-using backend.Domain.Entities.School;
-using backend.Domain.Entities.Security;
-using backend.Domain.Entities.Transport;
-using backend.Domain.Entities.Users;
-using backend.Infrastructure.Persistence.Configuration.Academic;
-using backend.Infrastructure.Persistence.Configuration.Alerts;
-using backend.Infrastructure.Persistence.Configuration.Exceptions;
-using backend.Infrastructure.Persistence.Configuration.Family;
-using backend.Infrastructure.Persistence.Configuration.School;
-using backend.Infrastructure.Persistence.Configuration.Security;
-using backend.Infrastructure.Persistence.Configuration.Transport;
-using backend.Infrastructure.Persistence.Configuration.Users;
 using Microsoft.EntityFrameworkCore;
-using RouteEntity = backend.Domain.Entities.Transport.RouteEntity;
-using ActionEntity = backend.Domain.Entities.Security.Action;
-using FamilyEntity = backend.Domain.Entities.Family.Family;
+using RouteEntity = backend.Modules.RouteManagement.Domain.Entities.RouteEntity;
+using ActionEntity = backend.Modules.Security.Domain.Entities.Action;
+using FamilyEntity = backend.Modules.UserManagement.Domain.Entities.Family;
+using backend.Modules.Security.Domain.Entities;
+using backend.Modules.UserManagement.Domain.Entities;
+using backend.Modules.SchoolManagement.Domain.Entities;
+using backend.Modules.FleetManagement.Domain.Entities;
+using backend.Modules.RouteManagement.Domain.Entities;
+using backend.Modules.BoardingManagement.Domain.Entities;
+using backend.Modules.AlertManagement.Domain.Entities;
+using backend.Modules.UserManagement.Infrastructure.Persistence.Configurations;
+using backend.Modules.Security.Infrastructure.Configurations;
+using backend.Modules.SchoolManagement.Infrastructure.Configurations;
+using backend.Modules.RouteManagement.Infrastructure.Configurations;
+using backend.Modules.FleetManagement.Infrastructure.Configurations;
+using backend.Modules.AlertManagement.Infrastructure.Configurations;
+using backend.Modules.BoardingManagement.Infrastructure.Configurations;
 
 namespace backend.Infrastructure.Persistence.Context
 {

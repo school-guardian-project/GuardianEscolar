@@ -1,4 +1,4 @@
-﻿using backend.Domain.Entities.Users;
+﻿using backend.Modules.UserManagement.Domain.Entities;
 
 namespace backend.Application.Interfaces.Common
 {

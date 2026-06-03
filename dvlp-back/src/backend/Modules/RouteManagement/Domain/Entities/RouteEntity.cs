@@ -5,7 +5,7 @@ namespace backend.Modules.RouteManagement.Domain.Entities
 {
     public class RouteEntity
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Uuid7 routeEntityId { get; set; } = Uuid7.NewUuid7();
 
         public Uuid7 schoolId { get; set; }
 

@@ -8,7 +8,7 @@ namespace backend.Modules.RouteManagement.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<ExceptionalRouteUsage> builder)
         {
-            builder.HasKey(eru => eru.Id);
+            builder.HasKey(eru => eru.exceptionalRouteUsageId);
             builder.Property(eru => eru.dateTime).IsRequired();
             builder.Property(eru => eru.reason).HasMaxLength(500);
             builder.HasOne(eru => eru.route).WithMany(r => r.exceptionalRouteUsages).HasForeignKey(eru => eru.routeId);

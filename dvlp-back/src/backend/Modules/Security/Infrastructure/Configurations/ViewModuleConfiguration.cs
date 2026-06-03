@@ -8,9 +8,9 @@ namespace backend.Modules.Security.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<ViewModule> builder)
         {
-            builder.HasKey(vm => vm.Id);
-            builder.HasOne(vm => vm.View).WithMany(v => v.viewModules).HasForeignKey(vm => vm.ViewId);
-            builder.HasOne(vm => vm.Module).WithMany(m => m.viewModules).HasForeignKey(vm => vm.ModuleId);
+            builder.HasKey(vm => vm.viewModuleId);
+            builder.HasOne(vm => vm.view).WithMany(v => v.viewModules).HasForeignKey(vm => vm.viewId);
+            builder.HasOne(vm => vm.module).WithMany(m => m.viewModules).HasForeignKey(vm => vm.moduleId);
         }
     }
 }

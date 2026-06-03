@@ -4,7 +4,7 @@ namespace backend.Modules.FleetManagement.Domain.Entities
 {
     public class Line
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Uuid7 lineId { get; set; } = Uuid7.NewUuid7();
 
         public string? name { get; set; }
 

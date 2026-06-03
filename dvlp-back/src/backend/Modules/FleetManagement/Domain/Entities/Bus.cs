@@ -9,7 +9,7 @@ namespace backend.Modules.FleetManagement.Domain.Entities
 {
     public class Bus
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Uuid7 busId { get; set; } = Uuid7.NewUuid7();
 
         public Uuid7 driverId { get; set; }
 

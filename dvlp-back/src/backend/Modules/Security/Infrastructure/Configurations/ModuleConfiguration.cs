@@ -8,7 +8,7 @@ namespace backend.Modules.Security.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Module> builder)
         {
-            builder.HasKey(m => m.id);
+            builder.HasKey(m => m.moduleId);
             builder.Property(m => m.name).HasMaxLength(255);
             builder.Property(m => m.description).HasMaxLength(1000);
         }

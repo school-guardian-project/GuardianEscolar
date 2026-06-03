@@ -9,7 +9,7 @@ namespace backend.Modules.RouteManagement.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<RouteEntity> builder)
         {
-            builder.HasKey(r => r.Id);
+            builder.HasKey(r => r.routeEntityId);
             builder.Property(r => r.Name).HasMaxLength(255);
             builder.Property(r => r.TargetSector).HasMaxLength(255);
             builder.Property(r => r.StartTime).IsRequired();

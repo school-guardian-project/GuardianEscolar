@@ -8,7 +8,7 @@ namespace backend.Modules.FleetManagement.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Bus> builder)
         {
-            builder.HasKey(b => b.Id);
+            builder.HasKey(b => b.busId);
             builder.HasOne(b => b.lineModel).WithMany(lm => lm.bus).HasForeignKey(b => b.lineModelId);
             builder.HasOne(b => b.school).WithMany(s => s.buses).HasForeignKey(b => b.schoolId);
             builder.HasOne(b => b.driver).WithMany(p => p.driver).HasForeignKey(b => b.driverId);

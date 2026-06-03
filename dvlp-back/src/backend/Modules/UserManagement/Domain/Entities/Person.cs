@@ -5,7 +5,7 @@ namespace backend.Modules.UserManagement.Domain.Entities
 {
     public class Person
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Uuid7 personId { get; set; } = Uuid7.NewUuid7();
 
         public string? name { get; set; }
 

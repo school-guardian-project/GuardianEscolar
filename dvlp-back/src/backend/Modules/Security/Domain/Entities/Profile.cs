@@ -10,7 +10,7 @@ namespace backend.Modules.Security.Domain.Entities
 {
     public class Profile
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Uuid7 profileId { get; set; } = Uuid7.NewUuid7();
 
         public Uuid7 personId { get; set; }
 

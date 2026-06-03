@@ -5,7 +5,7 @@ namespace backend.Modules.UserManagement.Domain.Entities
 {
     public class DriverLicense
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Uuid7 driverLicenseId { get; set; } = Uuid7.NewUuid7();
 
         public Uuid7 profileId { get; set; }
 

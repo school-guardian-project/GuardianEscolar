@@ -8,7 +8,7 @@ namespace backend.Modules.RouteManagement.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Stop> builder)
         {
-            builder.HasKey(s => s.Id);
+            builder.HasKey(s => s.stopId);
             builder.Property(s => s.address).HasMaxLength(500).IsRequired();
             builder.Property(s => s.longitude).HasPrecision(18, 10);
             builder.Property(s => s.latitude).HasPrecision(18, 10);

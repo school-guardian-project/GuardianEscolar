@@ -1,4 +1,4 @@
-﻿using backend.Application.Interfaces.Common.Exceptions;
+﻿using backend.Shared.Exceptions;
 using backend.Infrastructure.Persistence.Context;
 using backend.Modules.Security.Application.DTOs.Auth;
 using backend.Modules.Security.Domain.Interfaces;

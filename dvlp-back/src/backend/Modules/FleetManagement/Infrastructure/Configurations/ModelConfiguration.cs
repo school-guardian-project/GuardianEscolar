@@ -8,7 +8,7 @@ namespace backend.Modules.FleetManagement.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Model> builder)
         {
-            builder.HasKey(m => new { m.modelId });
+            builder.HasKey(m => m.modelId);
         }
     }
 }

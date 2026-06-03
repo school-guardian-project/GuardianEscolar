@@ -5,7 +5,7 @@ namespace backend.Modules.AlertManagement.Domain.Entities
 {
     public class Alert
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Uuid7 alertId { get; set; } = Uuid7.NewUuid7();
 
         public Uuid7 alertTypeId { get; set; }
 

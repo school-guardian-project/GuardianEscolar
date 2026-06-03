@@ -1,13 +1,12 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class MigrationsUuidEntities : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,14 +19,13 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    actionId = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Action", x => x.id);
+                    table.PrimaryKey("PK_Action", x => x.actionId);
                 });
 
             migrationBuilder.CreateTable(
@@ -35,15 +33,27 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    alertTypeId = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
                     description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     urgencyLevel = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AlertType", x => x.Id);
+                    table.PrimaryKey("PK_AlertType", x => x.alertTypeId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Brand",
+                schema: "app",
+                columns: table => new
+                {
+                    brandId = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Brand", x => x.brandId);
                 });
 
             migrationBuilder.CreateTable(
@@ -51,14 +61,13 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    cityId = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
                     country = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_City", x => x.Id);
+                    table.PrimaryKey("PK_City", x => x.cityId);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,14 +75,39 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    familyId = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
                     observations = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Family", x => x.Id);
+                    table.PrimaryKey("PK_Family", x => x.familyId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "IdentificationType",
+                schema: "app",
+                columns: table => new
+                {
+                    identificationId = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IdentificationType", x => x.identificationId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Model",
+                schema: "app",
+                columns: table => new
+                {
+                    modelId = table.Column<Guid>(type: "uuid", nullable: false),
+                    year = table.Column<int>(type: "integer", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Model", x => x.modelId);
                 });
 
             migrationBuilder.CreateTable(
@@ -81,34 +115,13 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    moduleId = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Module", x => x.id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Person",
-                schema: "app",
-                columns: table => new
-                {
-                    personId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    lastName = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    identificationType = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    identificationNumber = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    phone = table.Column<int>(type: "integer", nullable: true),
-                    residenceAddress = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Person", x => x.personId);
+                    table.PrimaryKey("PK_Module", x => x.moduleId);
                 });
 
             migrationBuilder.CreateTable(
@@ -116,15 +129,14 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    roleId = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
                     permissions = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Role", x => x.id);
+                    table.PrimaryKey("PK_Role", x => x.roleId);
                 });
 
             migrationBuilder.CreateTable(
@@ -132,14 +144,34 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    viewId = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_View", x => x.id);
+                    table.PrimaryKey("PK_View", x => x.viewId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Line",
+                schema: "app",
+                columns: table => new
+                {
+                    lineId = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    brandId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Line", x => x.lineId);
+                    table.ForeignKey(
+                        name: "FK_Line_Brand_brandId",
+                        column: x => x.brandId,
+                        principalSchema: "app",
+                        principalTable: "Brand",
+                        principalColumn: "brandId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -147,9 +179,8 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    cityId = table.Column<int>(type: "integer", nullable: false),
+                    schoolEntityId = table.Column<Guid>(type: "uuid", nullable: false),
+                    cityId = table.Column<Guid>(type: "uuid", nullable: false),
                     logo = table.Column<byte[]>(type: "bytea", nullable: true),
                     name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
                     address = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
@@ -160,13 +191,236 @@ namespace backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_School", x => x.Id);
+                    table.PrimaryKey("PK_School", x => x.schoolEntityId);
                     table.ForeignKey(
                         name: "FK_School_City_cityId",
                         column: x => x.cityId,
                         principalSchema: "app",
                         principalTable: "City",
-                        principalColumn: "Id",
+                        principalColumn: "cityId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Person",
+                schema: "app",
+                columns: table => new
+                {
+                    personId = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    lastName = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    identificationId = table.Column<Guid>(type: "uuid", nullable: false),
+                    email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    phone = table.Column<int>(type: "integer", nullable: true),
+                    residenceAddress = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Person", x => x.personId);
+                    table.ForeignKey(
+                        name: "FK_Person_IdentificationType_identificationId",
+                        column: x => x.identificationId,
+                        principalSchema: "app",
+                        principalTable: "IdentificationType",
+                        principalColumn: "identificationId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RoleModule",
+                schema: "app",
+                columns: table => new
+                {
+                    roleModuleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    roleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    moduleId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RoleModule", x => x.roleModuleId);
+                    table.ForeignKey(
+                        name: "FK_RoleModule_Module_moduleId",
+                        column: x => x.moduleId,
+                        principalSchema: "app",
+                        principalTable: "Module",
+                        principalColumn: "moduleId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RoleModule_Role_roleId",
+                        column: x => x.roleId,
+                        principalSchema: "app",
+                        principalTable: "Role",
+                        principalColumn: "roleId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ViewAction",
+                schema: "app",
+                columns: table => new
+                {
+                    viewActionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    viewId = table.Column<Guid>(type: "uuid", nullable: false),
+                    actionId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ViewAction", x => x.viewActionId);
+                    table.ForeignKey(
+                        name: "FK_ViewAction_Action_actionId",
+                        column: x => x.actionId,
+                        principalSchema: "app",
+                        principalTable: "Action",
+                        principalColumn: "actionId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ViewAction_View_viewId",
+                        column: x => x.viewId,
+                        principalSchema: "app",
+                        principalTable: "View",
+                        principalColumn: "viewId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ViewModule",
+                schema: "app",
+                columns: table => new
+                {
+                    viewModuleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    viewId = table.Column<Guid>(type: "uuid", nullable: false),
+                    moduleId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ViewModule", x => x.viewModuleId);
+                    table.ForeignKey(
+                        name: "FK_ViewModule_Module_moduleId",
+                        column: x => x.moduleId,
+                        principalSchema: "app",
+                        principalTable: "Module",
+                        principalColumn: "moduleId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ViewModule_View_viewId",
+                        column: x => x.viewId,
+                        principalSchema: "app",
+                        principalTable: "View",
+                        principalColumn: "viewId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "LineModel",
+                schema: "app",
+                columns: table => new
+                {
+                    lineModelId = table.Column<Guid>(type: "uuid", nullable: false),
+                    lineId = table.Column<Guid>(type: "uuid", nullable: false),
+                    modelId = table.Column<Guid>(type: "uuid", nullable: false),
+                    capacity = table.Column<int>(type: "integer", nullable: false),
+                    plate = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_LineModel", x => x.lineModelId);
+                    table.ForeignKey(
+                        name: "FK_LineModel_Line_lineId",
+                        column: x => x.lineId,
+                        principalSchema: "app",
+                        principalTable: "Line",
+                        principalColumn: "lineId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_LineModel_Model_modelId",
+                        column: x => x.modelId,
+                        principalSchema: "app",
+                        principalTable: "Model",
+                        principalColumn: "modelId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Route",
+                schema: "app",
+                columns: table => new
+                {
+                    routeEntityId = table.Column<Guid>(type: "uuid", nullable: false),
+                    schoolId = table.Column<Guid>(type: "uuid", nullable: false),
+                    Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    TargetSector = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    StartTime = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    EndTime = table.Column<TimeSpan>(type: "interval", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Route", x => x.routeEntityId);
+                    table.ForeignKey(
+                        name: "FK_Route_School_schoolId",
+                        column: x => x.schoolId,
+                        principalSchema: "app",
+                        principalTable: "School",
+                        principalColumn: "schoolEntityId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "SchoolCampuse",
+                schema: "app",
+                columns: table => new
+                {
+                    schoolCampuseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    schoolId = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    address = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
+                    schoolEntityId = table.Column<Guid>(type: "uuid", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_SchoolCampuse", x => x.schoolCampuseId);
+                    table.ForeignKey(
+                        name: "FK_SchoolCampuse_School_schoolEntityId",
+                        column: x => x.schoolEntityId,
+                        principalSchema: "app",
+                        principalTable: "School",
+                        principalColumn: "schoolEntityId");
+                    table.ForeignKey(
+                        name: "FK_SchoolCampuse_School_schoolId",
+                        column: x => x.schoolId,
+                        principalSchema: "app",
+                        principalTable: "School",
+                        principalColumn: "schoolEntityId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Stop",
+                schema: "app",
+                columns: table => new
+                {
+                    stopId = table.Column<Guid>(type: "uuid", nullable: false),
+                    cityId = table.Column<Guid>(type: "uuid", nullable: false),
+                    schoolId = table.Column<Guid>(type: "uuid", nullable: false),
+                    address = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    longitude = table.Column<decimal>(type: "numeric(18,10)", precision: 18, scale: 10, nullable: false),
+                    latitude = table.Column<decimal>(type: "numeric(18,10)", precision: 18, scale: 10, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Stop", x => x.stopId);
+                    table.ForeignKey(
+                        name: "FK_Stop_City_cityId",
+                        column: x => x.cityId,
+                        principalSchema: "app",
+                        principalTable: "City",
+                        principalColumn: "cityId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Stop_School_schoolId",
+                        column: x => x.schoolId,
+                        principalSchema: "app",
+                        principalTable: "School",
+                        principalColumn: "schoolEntityId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -175,14 +429,13 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    personId = table.Column<int>(type: "integer", nullable: false),
+                    profileId = table.Column<Guid>(type: "uuid", nullable: false),
+                    personId = table.Column<Guid>(type: "uuid", nullable: false),
                     password = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Profile", x => x.Id);
+                    table.PrimaryKey("PK_Profile", x => x.profileId);
                     table.ForeignKey(
                         name: "FK_Profile_Person_personId",
                         column: x => x.personId,
@@ -193,378 +446,31 @@ namespace backend.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "RoleModule",
-                schema: "app",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    roleId = table.Column<int>(type: "integer", nullable: false),
-                    moduleId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RoleModule", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_RoleModule_Module_moduleId",
-                        column: x => x.moduleId,
-                        principalSchema: "app",
-                        principalTable: "Module",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RoleModule_Role_roleId",
-                        column: x => x.roleId,
-                        principalSchema: "app",
-                        principalTable: "Role",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ViewAction",
-                schema: "app",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    viewId = table.Column<int>(type: "integer", nullable: false),
-                    actionId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ViewAction", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ViewAction_Action_actionId",
-                        column: x => x.actionId,
-                        principalSchema: "app",
-                        principalTable: "Action",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ViewAction_View_viewId",
-                        column: x => x.viewId,
-                        principalSchema: "app",
-                        principalTable: "View",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ViewModule",
-                schema: "app",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    ViewId = table.Column<int>(type: "integer", nullable: false),
-                    ModuleId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ViewModule", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ViewModule_Module_ModuleId",
-                        column: x => x.ModuleId,
-                        principalSchema: "app",
-                        principalTable: "Module",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ViewModule_View_ViewId",
-                        column: x => x.ViewId,
-                        principalSchema: "app",
-                        principalTable: "View",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Route",
-                schema: "app",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    schoolId = table.Column<int>(type: "integer", nullable: false),
-                    Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    TargetSector = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    StartTime = table.Column<TimeSpan>(type: "interval", nullable: false),
-                    EndTime = table.Column<TimeSpan>(type: "interval", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Route", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Route_School_schoolId",
-                        column: x => x.schoolId,
-                        principalSchema: "app",
-                        principalTable: "School",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SchoolCampuse",
-                schema: "app",
-                columns: table => new
-                {
-                    campuseId = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    schoolId = table.Column<int>(type: "integer", nullable: false),
-                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    address = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    SchoolEntityId = table.Column<int>(type: "integer", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SchoolCampuse", x => x.campuseId);
-                    table.ForeignKey(
-                        name: "FK_SchoolCampuse_School_SchoolEntityId",
-                        column: x => x.SchoolEntityId,
-                        principalSchema: "app",
-                        principalTable: "School",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_SchoolCampuse_School_schoolId",
-                        column: x => x.schoolId,
-                        principalSchema: "app",
-                        principalTable: "School",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Stop",
-                schema: "app",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    cityId = table.Column<int>(type: "integer", nullable: false),
-                    schoolId = table.Column<int>(type: "integer", nullable: false),
-                    address = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    longitude = table.Column<decimal>(type: "numeric(18,10)", precision: 18, scale: 10, nullable: false),
-                    latitude = table.Column<decimal>(type: "numeric(18,10)", precision: 18, scale: 10, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Stop", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Stop_City_cityId",
-                        column: x => x.cityId,
-                        principalSchema: "app",
-                        principalTable: "City",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Stop_School_schoolId",
-                        column: x => x.schoolId,
-                        principalSchema: "app",
-                        principalTable: "School",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Bus",
-                schema: "app",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    driverId = table.Column<int>(type: "integer", nullable: false),
-                    schoolId = table.Column<int>(type: "integer", nullable: false),
-                    brand = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    model = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    capacity = table.Column<int>(type: "integer", nullable: false),
-                    soatValidity = table.Column<byte[]>(type: "bytea", nullable: true),
-                    gpsStatus = table.Column<bool>(type: "boolean", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Bus", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Bus_Profile_driverId",
-                        column: x => x.driverId,
-                        principalSchema: "app",
-                        principalTable: "Profile",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Bus_School_schoolId",
-                        column: x => x.schoolId,
-                        principalSchema: "app",
-                        principalTable: "School",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "DriverLicense",
-                schema: "app",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    profileId = table.Column<int>(type: "integer", nullable: false),
-                    licenseNumber = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    drivingLicense = table.Column<byte[]>(type: "bytea", nullable: false),
-                    licenseExpirationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DriverLicense", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_DriverLicense_Profile_profileId",
-                        column: x => x.profileId,
-                        principalSchema: "app",
-                        principalTable: "Profile",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "FamilyMember",
-                schema: "app",
-                columns: table => new
-                {
-                    FamilyId = table.Column<int>(type: "integer", nullable: false),
-                    ProfileId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_FamilyMember", x => new { x.FamilyId, x.ProfileId });
-                    table.ForeignKey(
-                        name: "FK_FamilyMember_Family_FamilyId",
-                        column: x => x.FamilyId,
-                        principalSchema: "app",
-                        principalTable: "Family",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_FamilyMember_Profile_ProfileId",
-                        column: x => x.ProfileId,
-                        principalSchema: "app",
-                        principalTable: "Profile",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ProfileRole",
-                schema: "app",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    roleId = table.Column<int>(type: "integer", nullable: false),
-                    profileId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ProfileRole", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ProfileRole_Profile_profileId",
-                        column: x => x.profileId,
-                        principalSchema: "app",
-                        principalTable: "Profile",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ProfileRole_Role_roleId",
-                        column: x => x.roleId,
-                        principalSchema: "app",
-                        principalTable: "Role",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "ExceptionalRouteUsage",
-                schema: "app",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    profileId = table.Column<int>(type: "integer", nullable: false),
-                    routeId = table.Column<int>(type: "integer", nullable: false),
-                    dateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    reason = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ExceptionalRouteUsage", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_ExceptionalRouteUsage_Profile_profileId",
-                        column: x => x.profileId,
-                        principalSchema: "app",
-                        principalTable: "Profile",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ExceptionalRouteUsage_Route_routeId",
-                        column: x => x.routeId,
-                        principalSchema: "app",
-                        principalTable: "Route",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "RouteStudentAssignments",
-                schema: "app",
-                columns: table => new
-                {
-                    profileId = table.Column<int>(type: "integer", nullable: false),
-                    routeId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_RouteStudentAssignments", x => new { x.profileId, x.routeId });
-                    table.ForeignKey(
-                        name: "FK_RouteStudentAssignments_Profile_profileId",
-                        column: x => x.profileId,
-                        principalSchema: "app",
-                        principalTable: "Profile",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_RouteStudentAssignments_Route_routeId",
-                        column: x => x.routeId,
-                        principalSchema: "app",
-                        principalTable: "Route",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Course",
                 schema: "app",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    courseId = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    campuseId = table.Column<int>(type: "integer", nullable: false),
-                    SchoolCampusecampuseId = table.Column<int>(type: "integer", nullable: true)
+                    campuseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    schoolCampuseId = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Course", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Course_SchoolCampuse_SchoolCampusecampuseId",
-                        column: x => x.SchoolCampusecampuseId,
-                        principalSchema: "app",
-                        principalTable: "SchoolCampuse",
-                        principalColumn: "campuseId");
+                    table.PrimaryKey("PK_Course", x => x.courseId);
                     table.ForeignKey(
                         name: "FK_Course_SchoolCampuse_campuseId",
                         column: x => x.campuseId,
                         principalSchema: "app",
                         principalTable: "SchoolCampuse",
-                        principalColumn: "campuseId",
+                        principalColumn: "schoolCampuseId",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Course_SchoolCampuse_schoolCampuseId",
+                        column: x => x.schoolCampuseId,
+                        principalSchema: "app",
+                        principalTable: "SchoolCampuse",
+                        principalColumn: "schoolCampuseId");
                 });
 
             migrationBuilder.CreateTable(
@@ -572,8 +478,9 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    routeId = table.Column<int>(type: "integer", nullable: false),
-                    stopId = table.Column<int>(type: "integer", nullable: false)
+                    routeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    stopId = table.Column<Guid>(type: "uuid", nullable: false),
+                    routeStopId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -583,14 +490,217 @@ namespace backend.Migrations
                         column: x => x.routeId,
                         principalSchema: "app",
                         principalTable: "Route",
-                        principalColumn: "Id",
+                        principalColumn: "routeEntityId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RouteStop_Stop_stopId",
                         column: x => x.stopId,
                         principalSchema: "app",
                         principalTable: "Stop",
-                        principalColumn: "Id",
+                        principalColumn: "stopId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Bus",
+                schema: "app",
+                columns: table => new
+                {
+                    busId = table.Column<Guid>(type: "uuid", nullable: false),
+                    driverId = table.Column<Guid>(type: "uuid", nullable: false),
+                    schoolId = table.Column<Guid>(type: "uuid", nullable: false),
+                    soatValidity = table.Column<byte[]>(type: "bytea", nullable: true),
+                    gpsStatus = table.Column<bool>(type: "boolean", nullable: false),
+                    lineModelId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Bus", x => x.busId);
+                    table.ForeignKey(
+                        name: "FK_Bus_LineModel_lineModelId",
+                        column: x => x.lineModelId,
+                        principalSchema: "app",
+                        principalTable: "LineModel",
+                        principalColumn: "lineModelId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bus_Profile_driverId",
+                        column: x => x.driverId,
+                        principalSchema: "app",
+                        principalTable: "Profile",
+                        principalColumn: "profileId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Bus_School_schoolId",
+                        column: x => x.schoolId,
+                        principalSchema: "app",
+                        principalTable: "School",
+                        principalColumn: "schoolEntityId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "DriverLicense",
+                schema: "app",
+                columns: table => new
+                {
+                    driverLicenseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    profileId = table.Column<Guid>(type: "uuid", nullable: false),
+                    licenseNumber = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    drivingLicense = table.Column<byte[]>(type: "bytea", nullable: false),
+                    licenseExpirationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DriverLicense", x => x.driverLicenseId);
+                    table.ForeignKey(
+                        name: "FK_DriverLicense_Profile_profileId",
+                        column: x => x.profileId,
+                        principalSchema: "app",
+                        principalTable: "Profile",
+                        principalColumn: "profileId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ExceptionalRouteUsage",
+                schema: "app",
+                columns: table => new
+                {
+                    exceptionalRouteUsageId = table.Column<Guid>(type: "uuid", nullable: false),
+                    profileId = table.Column<Guid>(type: "uuid", nullable: false),
+                    routeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    dateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    reason = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ExceptionalRouteUsage", x => x.exceptionalRouteUsageId);
+                    table.ForeignKey(
+                        name: "FK_ExceptionalRouteUsage_Profile_profileId",
+                        column: x => x.profileId,
+                        principalSchema: "app",
+                        principalTable: "Profile",
+                        principalColumn: "profileId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ExceptionalRouteUsage_Route_routeId",
+                        column: x => x.routeId,
+                        principalSchema: "app",
+                        principalTable: "Route",
+                        principalColumn: "routeEntityId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "FamilyMember",
+                schema: "app",
+                columns: table => new
+                {
+                    familyMemberId = table.Column<Guid>(type: "uuid", nullable: false),
+                    familyId = table.Column<Guid>(type: "uuid", nullable: false),
+                    profileId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_FamilyMember", x => x.familyMemberId);
+                    table.ForeignKey(
+                        name: "FK_FamilyMember_Family_familyId",
+                        column: x => x.familyId,
+                        principalSchema: "app",
+                        principalTable: "Family",
+                        principalColumn: "familyId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_FamilyMember_Profile_profileId",
+                        column: x => x.profileId,
+                        principalSchema: "app",
+                        principalTable: "Profile",
+                        principalColumn: "profileId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProfileRole",
+                schema: "app",
+                columns: table => new
+                {
+                    profileRoleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    roleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    profileId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProfileRole", x => x.profileRoleId);
+                    table.ForeignKey(
+                        name: "FK_ProfileRole_Profile_profileId",
+                        column: x => x.profileId,
+                        principalSchema: "app",
+                        principalTable: "Profile",
+                        principalColumn: "profileId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProfileRole_Role_roleId",
+                        column: x => x.roleId,
+                        principalSchema: "app",
+                        principalTable: "Role",
+                        principalColumn: "roleId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RouteStudentAssignments",
+                schema: "app",
+                columns: table => new
+                {
+                    profileId = table.Column<Guid>(type: "uuid", nullable: false),
+                    routeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    routeStudentAssignmentsId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RouteStudentAssignments", x => new { x.profileId, x.routeId });
+                    table.ForeignKey(
+                        name: "FK_RouteStudentAssignments_Profile_profileId",
+                        column: x => x.profileId,
+                        principalSchema: "app",
+                        principalTable: "Profile",
+                        principalColumn: "profileId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_RouteStudentAssignments_Route_routeId",
+                        column: x => x.routeId,
+                        principalSchema: "app",
+                        principalTable: "Route",
+                        principalColumn: "routeEntityId",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "CourseGroup",
+                schema: "app",
+                columns: table => new
+                {
+                    profileId = table.Column<Guid>(type: "uuid", nullable: false),
+                    courseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    courseGroupId = table.Column<Guid>(type: "uuid", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_CourseGroup", x => new { x.profileId, x.courseId });
+                    table.ForeignKey(
+                        name: "FK_CourseGroup_Course_courseId",
+                        column: x => x.courseId,
+                        principalSchema: "app",
+                        principalTable: "Course",
+                        principalColumn: "courseId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CourseGroup_Profile_profileId",
+                        column: x => x.profileId,
+                        principalSchema: "app",
+                        principalTable: "Profile",
+                        principalColumn: "profileId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -599,28 +709,27 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    alertTypeId = table.Column<int>(type: "integer", nullable: false),
-                    busId = table.Column<int>(type: "integer", nullable: false),
+                    alertId = table.Column<Guid>(type: "uuid", nullable: false),
+                    alertTypeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    busId = table.Column<Guid>(type: "uuid", nullable: false),
                     dateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Alert", x => x.Id);
+                    table.PrimaryKey("PK_Alert", x => x.alertId);
                     table.ForeignKey(
                         name: "FK_Alert_AlertType_alertTypeId",
                         column: x => x.alertTypeId,
                         principalSchema: "app",
                         principalTable: "AlertType",
-                        principalColumn: "Id",
+                        principalColumn: "alertTypeId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Alert_Bus_busId",
                         column: x => x.busId,
                         principalSchema: "app",
                         principalTable: "Bus",
-                        principalColumn: "Id",
+                        principalColumn: "busId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -629,10 +738,11 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    profileId = table.Column<int>(type: "integer", nullable: false),
-                    busId = table.Column<int>(type: "integer", nullable: false),
-                    stopId = table.Column<int>(type: "integer", nullable: false),
+                    profileId = table.Column<Guid>(type: "uuid", nullable: false),
+                    busId = table.Column<Guid>(type: "uuid", nullable: false),
+                    stopId = table.Column<Guid>(type: "uuid", nullable: false),
                     dateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    boardingId = table.Column<Guid>(type: "uuid", nullable: false),
                     action = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
@@ -643,21 +753,21 @@ namespace backend.Migrations
                         column: x => x.busId,
                         principalSchema: "app",
                         principalTable: "Bus",
-                        principalColumn: "Id",
+                        principalColumn: "busId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Boarding_Profile_profileId",
                         column: x => x.profileId,
                         principalSchema: "app",
                         principalTable: "Profile",
-                        principalColumn: "Id",
+                        principalColumn: "profileId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Boarding_Stop_stopId",
                         column: x => x.stopId,
                         principalSchema: "app",
                         principalTable: "Stop",
-                        principalColumn: "Id",
+                        principalColumn: "stopId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -666,37 +776,29 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    busId = table.Column<int>(type: "integer", nullable: false),
-                    profileId = table.Column<int>(type: "integer", nullable: false),
+                    exceptionalDriverUsageId = table.Column<Guid>(type: "uuid", nullable: false),
+                    busId = table.Column<Guid>(type: "uuid", nullable: false),
+                    profileId = table.Column<Guid>(type: "uuid", nullable: false),
                     startDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     endDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    reason = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    ProfileId = table.Column<int>(type: "integer", nullable: true)
+                    reason = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExceptionalDriverUsage", x => x.Id);
+                    table.PrimaryKey("PK_ExceptionalDriverUsage", x => x.exceptionalDriverUsageId);
                     table.ForeignKey(
                         name: "FK_ExceptionalDriverUsage_Bus_busId",
                         column: x => x.busId,
                         principalSchema: "app",
                         principalTable: "Bus",
-                        principalColumn: "Id",
+                        principalColumn: "busId",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ExceptionalDriverUsage_Profile_ProfileId",
-                        column: x => x.ProfileId,
-                        principalSchema: "app",
-                        principalTable: "Profile",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ExceptionalDriverUsage_Profile_profileId",
                         column: x => x.profileId,
                         principalSchema: "app",
                         principalTable: "Profile",
-                        principalColumn: "Id",
+                        principalColumn: "profileId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -705,8 +807,9 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    busId = table.Column<int>(type: "integer", nullable: false),
-                    routeId = table.Column<int>(type: "integer", nullable: false)
+                    busId = table.Column<Guid>(type: "uuid", nullable: false),
+                    routeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    routeBusAssignmentsId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -716,41 +819,14 @@ namespace backend.Migrations
                         column: x => x.busId,
                         principalSchema: "app",
                         principalTable: "Bus",
-                        principalColumn: "Id",
+                        principalColumn: "busId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RouteBusAssignments_Route_routeId",
                         column: x => x.routeId,
                         principalSchema: "app",
                         principalTable: "Route",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "CourseGroup",
-                schema: "app",
-                columns: table => new
-                {
-                    profileId = table.Column<int>(type: "integer", nullable: false),
-                    courseId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_CourseGroup", x => new { x.profileId, x.courseId });
-                    table.ForeignKey(
-                        name: "FK_CourseGroup_Course_courseId",
-                        column: x => x.courseId,
-                        principalSchema: "app",
-                        principalTable: "Course",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_CourseGroup_Profile_profileId",
-                        column: x => x.profileId,
-                        principalSchema: "app",
-                        principalTable: "Profile",
-                        principalColumn: "Id",
+                        principalColumn: "routeEntityId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -759,8 +835,9 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    profileId = table.Column<int>(type: "integer", nullable: false),
-                    alertId = table.Column<int>(type: "integer", nullable: false)
+                    profileId = table.Column<Guid>(type: "uuid", nullable: false),
+                    alertId = table.Column<Guid>(type: "uuid", nullable: false),
+                    savedAlertId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -770,14 +847,14 @@ namespace backend.Migrations
                         column: x => x.alertId,
                         principalSchema: "app",
                         principalTable: "Alert",
-                        principalColumn: "Id",
+                        principalColumn: "alertId",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SavedAlert_Profile_profileId",
                         column: x => x.profileId,
                         principalSchema: "app",
                         principalTable: "Profile",
-                        principalColumn: "Id",
+                        principalColumn: "profileId",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -812,6 +889,12 @@ namespace backend.Migrations
                 column: "driverId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Bus_lineModelId",
+                schema: "app",
+                table: "Bus",
+                column: "lineModelId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Bus_schoolId",
                 schema: "app",
                 table: "Bus",
@@ -824,10 +907,10 @@ namespace backend.Migrations
                 column: "campuseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Course_SchoolCampusecampuseId",
+                name: "IX_Course_schoolCampuseId",
                 schema: "app",
                 table: "Course",
-                column: "SchoolCampusecampuseId");
+                column: "schoolCampuseId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseGroup_courseId",
@@ -854,12 +937,6 @@ namespace backend.Migrations
                 column: "profileId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ExceptionalDriverUsage_ProfileId",
-                schema: "app",
-                table: "ExceptionalDriverUsage",
-                column: "ProfileId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_ExceptionalRouteUsage_profileId",
                 schema: "app",
                 table: "ExceptionalRouteUsage",
@@ -872,10 +949,41 @@ namespace backend.Migrations
                 column: "routeId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_FamilyMember_ProfileId",
+                name: "IX_FamilyMember_familyId",
                 schema: "app",
                 table: "FamilyMember",
-                column: "ProfileId");
+                column: "familyId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_FamilyMember_profileId",
+                schema: "app",
+                table: "FamilyMember",
+                column: "profileId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Line_brandId",
+                schema: "app",
+                table: "Line",
+                column: "brandId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LineModel_lineId",
+                schema: "app",
+                table: "LineModel",
+                column: "lineId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_LineModel_modelId",
+                schema: "app",
+                table: "LineModel",
+                column: "modelId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Person_identificationId",
+                schema: "app",
+                table: "Person",
+                column: "identificationId",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Profile_personId",
@@ -944,10 +1052,10 @@ namespace backend.Migrations
                 column: "cityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SchoolCampuse_SchoolEntityId",
+                name: "IX_SchoolCampuse_schoolEntityId",
                 schema: "app",
                 table: "SchoolCampuse",
-                column: "SchoolEntityId");
+                column: "schoolEntityId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SchoolCampuse_schoolId",
@@ -980,16 +1088,16 @@ namespace backend.Migrations
                 column: "viewId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ViewModule_ModuleId",
+                name: "IX_ViewModule_moduleId",
                 schema: "app",
                 table: "ViewModule",
-                column: "ModuleId");
+                column: "moduleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ViewModule_ViewId",
+                name: "IX_ViewModule_viewId",
                 schema: "app",
                 table: "ViewModule",
-                column: "ViewId");
+                column: "viewId");
         }
 
         /// <inheritdoc />
@@ -1100,6 +1208,10 @@ namespace backend.Migrations
                 schema: "app");
 
             migrationBuilder.DropTable(
+                name: "LineModel",
+                schema: "app");
+
+            migrationBuilder.DropTable(
                 name: "Profile",
                 schema: "app");
 
@@ -1108,11 +1220,27 @@ namespace backend.Migrations
                 schema: "app");
 
             migrationBuilder.DropTable(
+                name: "Line",
+                schema: "app");
+
+            migrationBuilder.DropTable(
+                name: "Model",
+                schema: "app");
+
+            migrationBuilder.DropTable(
                 name: "Person",
                 schema: "app");
 
             migrationBuilder.DropTable(
                 name: "City",
+                schema: "app");
+
+            migrationBuilder.DropTable(
+                name: "Brand",
+                schema: "app");
+
+            migrationBuilder.DropTable(
+                name: "IdentificationType",
                 schema: "app");
         }
     }

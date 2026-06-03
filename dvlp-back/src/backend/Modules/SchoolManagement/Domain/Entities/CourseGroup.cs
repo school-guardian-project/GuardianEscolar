@@ -1,15 +1,14 @@
 ﻿using backend.Modules.Security.Domain.Entities;
-using Medo;
 
 namespace backend.Modules.SchoolManagement.Domain.Entities
 {
     public class CourseGroup
     {
-        public Uuid7 courseGroupId { get; set; } = Uuid7.NewUuid7();
+        public Guid courseGroupId { get; set; } = Guid.NewGuid();
 
-        public Uuid7 profileId { get; set; }
+        public Guid profileId { get; set; }
 
-        public Uuid7 courseId { get; set; }
+        public Guid courseId { get; set; }
 
         public Course course { get; set; }
 

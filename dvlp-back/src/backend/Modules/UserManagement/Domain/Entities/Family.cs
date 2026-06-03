@@ -1,10 +1,8 @@
-﻿using Medo;
-
-namespace backend.Modules.UserManagement.Domain.Entities
+﻿namespace backend.Modules.UserManagement.Domain.Entities
 {
     public class Family
     {
-        public Uuid7 familyId { get; set; } = Uuid7.NewUuid7();
+        public Guid familyId { get; set; } = Guid.NewGuid();
 
         public string? name { get; set; }
 

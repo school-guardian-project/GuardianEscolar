@@ -1,15 +1,14 @@
 using backend.Modules.FleetManagement.Domain.Entities;
-using Medo;
 
 namespace backend.Modules.RouteManagement.Domain.Entities
 {
     public class RouteBusAssignments
     {
-        public Uuid7 routeBusAssignmentsId { get; set; } = Uuid7.NewUuid7();
+        public Guid routeBusAssignmentsId { get; set; } = Guid.NewGuid();
 
-        public Uuid7 busId { get; set; }
+        public Guid busId { get; set; }
 
-        public Uuid7 routeId { get; set; }
+        public Guid routeId { get; set; }
 
         public Bus bus { get; set; }
 

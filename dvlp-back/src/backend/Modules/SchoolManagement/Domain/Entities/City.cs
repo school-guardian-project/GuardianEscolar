@@ -1,11 +1,10 @@
 using backend.Modules.RouteManagement.Domain.Entities;
-using Medo;
 
 namespace backend.Modules.SchoolManagement.Domain.Entities
 {
     public class City
     {
-        public Uuid7 cityId { get; set; } = Uuid7.NewUuid7();
+        public Guid cityId { get; set; } = Guid.NewGuid();
 
         public string? name { get; set; }
 

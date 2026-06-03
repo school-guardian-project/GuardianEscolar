@@ -1,10 +1,8 @@
-﻿using Medo;
-
-namespace backend.Modules.Security.Domain.Entities
+﻿namespace backend.Modules.Security.Domain.Entities
 {
     public class Module
     {
-        public Uuid7 moduleId { get; set; } = Uuid7.NewUuid7();
+        public Guid moduleId { get; set; } = Guid.NewGuid();
 
         public string name { get; set; }
 

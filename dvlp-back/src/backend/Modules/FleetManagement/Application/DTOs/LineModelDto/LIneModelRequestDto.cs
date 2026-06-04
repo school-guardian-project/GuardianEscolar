@@ -1,0 +1,12 @@
+namespace backend.Modules.FleetManagement.Application.DTOs.LineModelDto;
+
+public class LIneModelRequestDto
+{
+    public Guid lineId { get; set; }
+
+    public Guid modelId { get; set; }
+
+    public int capacity { get; set; }
+
+    public string plate { get; set; }
+}

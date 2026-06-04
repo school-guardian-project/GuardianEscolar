@@ -8,13 +8,13 @@ namespace backend.Modules.RouteManagement.Domain.Entities
 
         public Guid schoolId { get; set; }
 
-        public string? Name { get; set; }
+        public string name { get; set; }
 
-        public string? TargetSector { get; set; }
+        public string targetSector { get; set; }
 
-        public TimeSpan StartTime { get; set; }
+        public TimeSpan startTime { get; set; }
 
-        public TimeSpan EndTime { get; set; }
+        public TimeSpan endTime { get; set; }
 
         public SchoolEntity school { get; set; }
 

@@ -1,0 +1,8 @@
+namespace backend.Modules.RouteManagement.Application.DTOs.RouteStudentAssignmentsDto;
+
+public class RouteStudentAssignmentsRequestDto
+{
+    public Guid profileId { get; set; }
+    
+    public Guid routeId { get; set; }
+}

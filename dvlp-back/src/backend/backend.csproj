@@ -41,16 +41,14 @@
     <Folder Include="Modules\RouteManagement\Api\" />
     <Folder Include="Modules\RouteManagement\Infrastructure\Repositories\" />
     <Folder Include="Modules\SchoolManagement\Api\" />
-    <Folder Include="Modules\SchoolManagement\Application\DTOs\" />
     <Folder Include="Modules\SchoolManagement\Application\Services\" />
     <Folder Include="Modules\SchoolManagement\Domain\Interfaces\" />
     <Folder Include="Modules\SchoolManagement\Infrastructure\Repositories\" />
-    <Folder Include="Modules\Security\Application\DTOs\" />
+    <Folder Include="Modules\Security\Application\DTOs\Request\" />
     <Folder Include="Modules\Security\Application\Services\" />
     <Folder Include="Modules\Security\Domain\Interfaces\" />
     <Folder Include="Modules\Security\Infrastructure\Repositories\" />
     <Folder Include="Modules\Security\Api\" />
-    <Folder Include="Modules\UserManagement\Application\DTOs\" />
     <Folder Include="Modules\UserManagement\Application\Services\" />
     <Folder Include="Modules\UserManagement\Domain\Interfaces\" />
     <Folder Include="Modules\UserManagement\Api\" />

@@ -1,11 +1,10 @@
 ﻿using backend.Modules.Security.Domain.Entities;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.FleetManagement.Domain.Entities
 {
-    public class ExceptionalDriverUsage
+    public class ExceptionalDriverUsage : BaseEntity
     {
-        public Guid exceptionalDriverUsageId { get; set; } = Guid.NewGuid();
-
         public Guid busId { get; set; }
 
         public Guid profileId { get; set; }

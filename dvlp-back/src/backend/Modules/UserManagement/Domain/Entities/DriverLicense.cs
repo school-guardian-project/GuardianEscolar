@@ -1,11 +1,10 @@
 ﻿using backend.Modules.Security.Domain.Entities;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.UserManagement.Domain.Entities
 {
-    public class DriverLicense
+    public class DriverLicense : BaseEntity
     {
-        public Guid driverLicenseId { get; set; } = Guid.NewGuid();
-
         public Guid profileId { get; set; }
 
         public string? licenseNumber { get; set; }

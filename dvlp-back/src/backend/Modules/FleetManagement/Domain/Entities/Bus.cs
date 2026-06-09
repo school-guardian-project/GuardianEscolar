@@ -3,13 +3,12 @@ using backend.Modules.BoardingManagement.Domain.Entities;
 using backend.Modules.RouteManagement.Domain.Entities;
 using backend.Modules.SchoolManagement.Domain.Entities;
 using backend.Modules.Security.Domain.Entities;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.FleetManagement.Domain.Entities
 {
-    public class Bus
+    public class Bus : BaseEntity
     {
-        public Guid busId { get; set; } = Guid.NewGuid();
-
         public Guid driverId { get; set; }
 
         public Guid schoolId { get; set; }

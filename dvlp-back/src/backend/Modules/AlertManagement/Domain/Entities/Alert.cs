@@ -1,11 +1,10 @@
 ﻿using backend.Modules.FleetManagement.Domain.Entities;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.AlertManagement.Domain.Entities
 {
-    public class Alert
+    public class Alert : BaseEntity
     {
-        public Guid alertId { get; set; } = Guid.NewGuid();
-
         public Guid alertTypeId { get; set; }
 
         public Guid busId { get; set; }

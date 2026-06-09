@@ -8,8 +8,7 @@ namespace backend.Modules.UserManagement.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<IdentificationType> builder)
         {
-            builder.HasKey(i => i.identificationId);
-            builder.Property(i => i.name).HasMaxLength(100);
+            builder.Property(i => i.name).HasMaxLength(30);
         }
     }
 }

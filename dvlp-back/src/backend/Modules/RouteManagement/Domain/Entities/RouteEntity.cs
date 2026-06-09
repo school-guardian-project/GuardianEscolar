@@ -1,11 +1,10 @@
 using backend.Modules.SchoolManagement.Domain.Entities;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.RouteManagement.Domain.Entities
 {
-    public class RouteEntity
+    public class RouteEntity : BaseEntity
     {
-        public Guid routeEntityId { get; set; } = Guid.NewGuid();
-
         public Guid schoolId { get; set; }
 
         public string name { get; set; }

@@ -1,9 +1,9 @@
+using backend.Shared.Abstracts;
+
 namespace backend.Modules.SchoolManagement.Domain.Entities
 {
-    public class SchoolCampuse
+    public class SchoolCampuse : BaseEntity
     {
-        public Guid schoolCampuseId { get; set; } = Guid.NewGuid();
-
         public Guid schoolId { get; set; }
 
         public string? name { get; set; }

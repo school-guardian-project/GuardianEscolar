@@ -8,8 +8,7 @@ namespace backend.Modules.UserManagement.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<DriverLicense> builder)
         {
-            builder.HasKey(dl => dl.driverLicenseId);
-            builder.Property(dl => dl.licenseNumber).HasMaxLength(255);
+            builder.Property(dl => dl.licenseNumber).HasMaxLength(20);
             builder.Property(dl => dl.licenseExpirationDate).IsRequired();
             builder.HasOne(dl => dl.profile).WithMany(p => p.driverLicenses).HasForeignKey(dl => dl.profileId);
         }

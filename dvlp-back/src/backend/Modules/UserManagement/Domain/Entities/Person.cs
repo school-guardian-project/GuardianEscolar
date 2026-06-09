@@ -1,11 +1,10 @@
 ﻿using backend.Modules.Security.Domain.Entities;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.UserManagement.Domain.Entities
 {
-    public class Person
+    public class Person : BaseEntity
     {
-        public Guid personId { get; set; } = Guid.NewGuid();
-
         public string? name { get; set; }
 
         public string? lastName { get; set; }

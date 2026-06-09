@@ -8,10 +8,9 @@ namespace backend.Modules.Security.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Role> builder)
         {
-            builder.HasKey(r => r.roleId);
-            builder.Property(r => r.name).HasMaxLength(255);
-            builder.Property(r => r.description).HasMaxLength(500);
-            builder.Property(r => r.permissions).HasMaxLength(2000);
+            builder.Property(r => r.name).HasMaxLength(20);
+            builder.Property(r => r.description).HasMaxLength(100);
+            builder.Property(r => r.permissions).HasMaxLength(40);
         }
     }
 }

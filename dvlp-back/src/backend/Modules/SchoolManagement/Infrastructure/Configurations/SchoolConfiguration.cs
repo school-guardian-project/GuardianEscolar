@@ -8,12 +8,11 @@ namespace backend.Modules.SchoolManagement.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<SchoolEntity> builder)
         {
-            builder.HasKey(s => s.schoolEntityId);
-            builder.Property(s => s.name).HasMaxLength(255);
-            builder.Property(s => s.address).HasMaxLength(500);
-            builder.Property(s => s.email).HasMaxLength(255);
-            builder.Property(s => s.website).HasMaxLength(255);
-            builder.Property(s => s.theme).HasMaxLength(100);
+            builder.Property(s => s.name).HasMaxLength(30);
+            builder.Property(s => s.address).HasMaxLength(30);
+            builder.Property(s => s.email).HasMaxLength(50);
+            builder.Property(s => s.website).HasMaxLength(100);
+            builder.Property(s => s.theme).HasMaxLength(20);
             builder.HasOne(s => s.city).WithMany(c => c.schools).HasForeignKey(s => s.cityId);
         }
     }

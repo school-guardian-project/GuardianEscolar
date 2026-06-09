@@ -1,13 +1,12 @@
 ﻿using backend.Modules.FleetManagement.Domain.Entities;
 using backend.Modules.RouteManagement.Domain.Entities;
 using backend.Modules.Security.Domain.Entities;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.BoardingManagement.Domain.Entities
 {
-    public class Boarding
+    public class Boarding : BaseEntity
     {
-        public Guid boardingId { get; set; } = Guid.NewGuid();
-
         public Guid profileId { get; set; }
 
         public Guid busId { get; set; }

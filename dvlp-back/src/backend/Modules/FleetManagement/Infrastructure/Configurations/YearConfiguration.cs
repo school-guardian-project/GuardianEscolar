@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace backend.Modules.FleetManagement.Infrastructure.Configurations
 {
-    public class ModelConfiguration : IEntityTypeConfiguration<Model>
+    public class YearConfiguration : IEntityTypeConfiguration<Year>
     {
-        public void Configure(EntityTypeBuilder<Model> builder)
+        public void Configure(EntityTypeBuilder<Year> builder)
         {
-            builder.HasKey(m => m.modelId);
+            builder.Property(m => m.year);
         }
     }
 }

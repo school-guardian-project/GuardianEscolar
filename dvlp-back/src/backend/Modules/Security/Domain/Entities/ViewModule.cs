@@ -1,9 +1,9 @@
-﻿namespace backend.Modules.Security.Domain.Entities
-{
-    public class ViewModule
-    {
-        public Guid viewModuleId { get; set; } = Guid.NewGuid();
+﻿using backend.Shared.Abstracts;
 
+namespace backend.Modules.Security.Domain.Entities
+{
+    public class ViewModule : BaseEntity
+    {
         public Guid viewId { get; set; }
 
         public Guid moduleId { get; set; }

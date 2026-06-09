@@ -1,9 +1,9 @@
+using backend.Shared.Abstracts;
+
 namespace backend.Modules.RouteManagement.Domain.Entities
 {
-    public class RouteStop
+    public class RouteStop : BaseEntity
     {
-        public Guid routeStopId { get; set; } = Guid.NewGuid();
-
         public Guid routeId { get; set; }
 
         public Guid stopId { get; set; }

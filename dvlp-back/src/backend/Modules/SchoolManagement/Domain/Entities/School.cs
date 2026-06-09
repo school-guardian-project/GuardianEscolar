@@ -1,13 +1,12 @@
 using backend.Modules.FleetManagement.Domain.Entities;
 using backend.Modules.RouteManagement.Domain.Entities;
+using backend.Shared.Abstracts;
 using RouteEntity = backend.Modules.RouteManagement.Domain.Entities.RouteEntity;
 
 namespace backend.Modules.SchoolManagement.Domain.Entities
 {
-    public class SchoolEntity
+    public class SchoolEntity : BaseEntity
     {
-        public Guid schoolEntityId { get; set; } = Guid.NewGuid();
-
         public Guid cityId { get; set; }
 
         public byte[] logo { get; set; }

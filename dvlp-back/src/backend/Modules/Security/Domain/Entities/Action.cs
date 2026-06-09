@@ -1,9 +1,9 @@
-﻿namespace backend.Modules.Security.Domain.Entities
-{
-    public class Action
-    {
-        public Guid actionId { get; set; } = Guid.NewGuid();
+﻿using backend.Shared.Abstracts;
 
+namespace backend.Modules.Security.Domain.Entities
+{
+    public class Action : BaseEntity
+    {
         public string name { get; set; }
 
         public string description { get; set; }

@@ -1,11 +1,10 @@
 using backend.Modules.FleetManagement.Domain.Entities;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.RouteManagement.Domain.Entities
 {
-    public class RouteBusAssignments
+    public class RouteBusAssignments : BaseEntity
     {
-        public Guid routeBusAssignmentsId { get; set; } = Guid.NewGuid();
-
         public Guid busId { get; set; }
 
         public Guid routeId { get; set; }

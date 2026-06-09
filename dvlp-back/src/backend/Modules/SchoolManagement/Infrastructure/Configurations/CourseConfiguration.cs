@@ -8,9 +8,8 @@ namespace backend.Modules.SchoolManagement.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Course> builder)
         {
-            builder.HasKey(c => c.courseId);
-            builder.Property(c => c.name).HasMaxLength(255);
-            builder.HasOne(c => c.campuse).WithMany().HasForeignKey("campuseId");
+            builder.Property(c => c.name).HasMaxLength(50);
+            builder.HasOne(c => c.campuse).WithMany().HasForeignKey(c => c.campuseId);
         }
     }
 }

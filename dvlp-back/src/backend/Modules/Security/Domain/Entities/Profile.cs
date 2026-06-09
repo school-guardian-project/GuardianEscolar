@@ -4,13 +4,12 @@ using backend.Modules.FleetManagement.Domain.Entities;
 using backend.Modules.RouteManagement.Domain.Entities;
 using backend.Modules.SchoolManagement.Domain.Entities;
 using backend.Modules.UserManagement.Domain.Entities;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.Security.Domain.Entities
 {
-    public class Profile
+    public class Profile : BaseEntity
     {
-        public Guid profileId { get; set; } = Guid.NewGuid();
-
         public Guid personId { get; set; }
 
         public Person person { get; set; } = null!;

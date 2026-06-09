@@ -1,9 +1,9 @@
-﻿namespace backend.Modules.AlertManagement.Domain.Entities
-{
-    public class AlertType
-    {
-        public Guid alertTypeId { get; set; } = Guid.NewGuid();
+﻿using backend.Shared.Abstracts;
 
+namespace backend.Modules.AlertManagement.Domain.Entities
+{
+    public class AlertType : BaseEntity
+    {
         public string? name { get; set; }
 
         public string? description { get; set; }

@@ -12,8 +12,8 @@ using backend.Infrastructure.Persistence.Context;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260609234354_AddStatusColumn")]
-    partial class AddStatusColumn
+    [Migration("20260609235243_AddLengthStatus")]
+    partial class AddLengthStatus
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -43,7 +43,8 @@ namespace backend.Migrations
 
                     b.Property<string>("status")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.HasKey("id");
 
@@ -70,7 +71,8 @@ namespace backend.Migrations
 
                     b.Property<string>("status")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<int?>("urgencyLevel")
                         .HasColumnType("integer");
@@ -94,7 +96,8 @@ namespace backend.Migrations
 
                     b.Property<string>("status")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.HasKey("id");
 

@@ -9,7 +9,7 @@ namespace backend.Shared.Infrastructure.Configuration
         public virtual void Configure(EntityTypeBuilder<TEntity> builder)
         {
             builder.HasKey(be => new { be.id});
-            builder.Property(be => be.status).IsRequired();
+            builder.Property(be => be.status).HasMaxLength(20).IsRequired();
         }
     }
 }

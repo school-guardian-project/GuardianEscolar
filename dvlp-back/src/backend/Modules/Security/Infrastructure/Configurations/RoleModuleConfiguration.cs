@@ -8,7 +8,6 @@ namespace backend.Modules.Security.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<RoleModule> builder)
         {
-            builder.HasKey(rm => rm.roleModuleId);
             builder.HasOne(rm => rm.role).WithMany(r => r.roleModules).HasForeignKey(rm => rm.roleId);
             builder.HasOne(rm => rm.module).WithMany(m => m.roleModules).HasForeignKey(rm => rm.moduleId);
         }

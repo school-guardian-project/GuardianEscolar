@@ -16,6 +16,7 @@ using backend.Modules.RouteManagement.Infrastructure.Configurations;
 using backend.Modules.FleetManagement.Infrastructure.Configurations;
 using backend.Modules.AlertManagement.Infrastructure.Configurations;
 using backend.Modules.BoardingManagement.Infrastructure.Configurations;
+using backend.Shared.Infrastructure.Configuration;
 
 namespace backend.Infrastructure.Persistence.Context
 {
@@ -55,7 +56,7 @@ namespace backend.Infrastructure.Persistence.Context
         public DbSet<ViewModule> ViewModule => Set<ViewModule>();
         public DbSet<RoleModule> RoleModule => Set<RoleModule>();
         public DbSet<Line> Line => Set<Line>();
-        public new DbSet<Model> Model => Set<Model>();
+        public new DbSet<Year> Model => Set<Year>();
         public DbSet<LineModel> LineModel => Set<LineModel>();
         public DbSet<Brand> Brand => Set<Brand>();
         public DbSet<IdentificationType> IdentificationType => Set<IdentificationType>();
@@ -96,7 +97,7 @@ namespace backend.Infrastructure.Persistence.Context
             modelBuilder.Entity<ViewModule>().ToTable("ViewModule", schema: "app");
             modelBuilder.Entity<RoleModule>().ToTable("RoleModule", schema: "app");
             modelBuilder.Entity<Line>().ToTable("Line", schema: "app");
-            modelBuilder.Entity<Model>().ToTable("Model", schema: "app");
+            modelBuilder.Entity<Year>().ToTable("Model", schema: "app");
             modelBuilder.Entity<LineModel>().ToTable("LineModel", schema: "app");
             modelBuilder.Entity<Brand>().ToTable("Brand", schema: "app");
             modelBuilder.Entity<IdentificationType>().ToTable("IdentificationType", schema: "app");
@@ -131,10 +132,11 @@ namespace backend.Infrastructure.Persistence.Context
             modelBuilder.ApplyConfiguration(new ViewModuleConfiguration());
             modelBuilder.ApplyConfiguration(new RoleModuleConfiguration());
             modelBuilder.ApplyConfiguration(new LineConfiguration());
-            modelBuilder.ApplyConfiguration(new ModelConfiguration());
+            modelBuilder.ApplyConfiguration(new YearConfiguration());
             modelBuilder.ApplyConfiguration(new LineModelConfiguration());
             modelBuilder.ApplyConfiguration(new BrandConfiguration());
             modelBuilder.ApplyConfiguration(new IdentificationTypeConfiguration());
+            modelBuilder.ApplyConfiguration(new BaseEntityConfiguration());
         }
 
         protected AppDbContext()

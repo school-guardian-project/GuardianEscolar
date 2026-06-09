@@ -1,9 +1,9 @@
-﻿namespace backend.Modules.Security.Domain.Entities
-{
-    public class ProfileRole
-    {
-        public Guid profileRoleId { get; set; } = Guid.NewGuid();
+﻿using backend.Shared.Abstracts;
 
+namespace backend.Modules.Security.Domain.Entities
+{
+    public class ProfileRole : BaseEntity
+    {
         public Guid roleId { get; set; }
 
         public Guid profileId { get; set; }

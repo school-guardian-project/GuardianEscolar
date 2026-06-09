@@ -1,11 +1,10 @@
 using backend.Modules.Security.Domain.Entities;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.RouteManagement.Domain.Entities
 {
-    public class ExceptionalRouteUsage
+    public class ExceptionalRouteUsage : BaseEntity
     {
-        public Guid exceptionalRouteUsageId { get; set; } = Guid.NewGuid();
-
         public Guid profileId { get; set; }
 
         public Guid routeId { get; set; }

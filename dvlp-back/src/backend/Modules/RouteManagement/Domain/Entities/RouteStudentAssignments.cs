@@ -1,11 +1,10 @@
 using backend.Modules.Security.Domain.Entities;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.RouteManagement.Domain.Entities
 {
-    public class RouteStudentAssignments
+    public class RouteStudentAssignments : BaseEntity
     {
-        public Guid routeStudentAssignmentsId { get; set; } = Guid.NewGuid();
-
         public Guid profileId { get; set; }
 
         public Guid routeId { get; set; }

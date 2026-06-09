@@ -8,7 +8,6 @@ namespace backend.Modules.AlertManagement.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Alert> builder)
         {
-            builder.HasKey(a => a.alertId);
             builder.Property(a => a.dateTime).IsRequired();
             builder.HasOne(a => a.alertType).WithMany(at => at.alerts).HasForeignKey(a => a.alertTypeId);
             builder.HasOne(a => a.bus).WithMany(b => b.alerts).HasForeignKey(a => a.busId);

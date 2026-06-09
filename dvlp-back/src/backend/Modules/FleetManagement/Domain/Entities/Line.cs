@@ -1,9 +1,9 @@
+using backend.Shared.Abstracts;
+
 namespace backend.Modules.FleetManagement.Domain.Entities
 {
-    public class Line
+    public class Line : BaseEntity
     {
-        public Guid lineId { get; set; } = Guid.NewGuid();
-
         public string? name { get; set; }
 
         public Guid brandId { get; set; }

@@ -1,12 +1,11 @@
 using backend.Modules.BoardingManagement.Domain.Entities;
 using backend.Modules.SchoolManagement.Domain.Entities;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.RouteManagement.Domain.Entities
 {
-    public class Stop
+    public class Stop : BaseEntity
     {
-        public Guid stopId { get; set; } = Guid.NewGuid();
-
         public Guid cityId { get; set; }
 
         public Guid schoolId { get; set; }

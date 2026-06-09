@@ -8,7 +8,6 @@ namespace backend.Modules.RouteManagement.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<RouteStop> builder)
         {
-            builder.HasKey(rs => new { rs.routeId, rs.stopId });
             builder.HasOne(rs => rs.route).WithMany(r => r.routeStops).HasForeignKey(rs => rs.routeId);
             builder.HasOne(rs => rs.stop).WithMany(r => r.routeStops).HasForeignKey(rs => rs.stopId);
         }

@@ -1,9 +1,9 @@
+using backend.Shared.Abstracts;
+
 namespace backend.Modules.FleetManagement.Domain.Entities
 {
-    public class LineModel
+    public class LineModel : BaseEntity
     {
-        public Guid lineModelId { get; set; } = Guid.NewGuid();
-
         public Guid lineId { get; set; }
 
         public Guid modelId { get; set; }
@@ -14,7 +14,7 @@ namespace backend.Modules.FleetManagement.Domain.Entities
 
         public Line line { get; set; }
 
-        public Model model { get; set; }
+        public Year Year { get; set; }
 
         public ICollection<Bus> bus { get; set; } = new List<Bus>();
     }

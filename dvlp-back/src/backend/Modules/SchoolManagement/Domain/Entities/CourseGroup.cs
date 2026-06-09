@@ -1,11 +1,10 @@
 ﻿using backend.Modules.Security.Domain.Entities;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.SchoolManagement.Domain.Entities
 {
-    public class CourseGroup
+    public class CourseGroup : BaseEntity
     {
-        public Guid courseGroupId { get; set; } = Guid.NewGuid();
-
         public Guid profileId { get; set; }
 
         public Guid courseId { get; set; }

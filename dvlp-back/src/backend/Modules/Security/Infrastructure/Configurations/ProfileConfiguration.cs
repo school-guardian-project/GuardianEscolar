@@ -8,8 +8,7 @@ namespace backend.Modules.Security.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<Profile> builder)
         {
-            builder.HasKey(p => p.profileId);
-            builder.Property(p => p.password).HasMaxLength(255);
+            builder.Property(p => p.password).HasMaxLength(100);
             // Esta es una relacion de uno a muchos, donde una persona tiene muchos perfiles.
             // Un perfil tiene una persona y una persona tiene muchos perfiles e indica la llave foranea FK
             builder.HasOne(p => p.person).WithMany(pe => pe.profiles).HasForeignKey(p => p.personId);

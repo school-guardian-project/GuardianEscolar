@@ -8,9 +8,8 @@ namespace backend.Modules.UserManagement.Infrastructure.Configurations
     {
         public void Configure(EntityTypeBuilder<FamilyEntity> builder)
         {
-            builder.HasKey(f => f.familyId);
-            builder.Property(f => f.name).HasMaxLength(255);
-            builder.Property(f => f.observations).HasMaxLength(1000);
+            builder.Property(f => f.name).HasMaxLength(50);
+            builder.Property(f => f.observations).HasMaxLength(100);
         }
     }
 }

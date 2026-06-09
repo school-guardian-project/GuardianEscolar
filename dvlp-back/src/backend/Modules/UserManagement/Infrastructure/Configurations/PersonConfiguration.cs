@@ -1,12 +1,13 @@
 ﻿using backend.Modules.UserManagement.Domain.Entities;
+using backend.Shared.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace backend.Modules.UserManagement.Infrastructure.Configurations
 {
-    public class PersonConfiguration : IEntityTypeConfiguration<Person>
+    public class PersonConfiguration : BaseEntityConfiguration<Person>
     {
-        public void Configure(EntityTypeBuilder<Person> builder)
+        public override void Configure(EntityTypeBuilder<Person> builder)
         {
             builder.Property(pe => pe.name).HasMaxLength(50);
             builder.Property(pe => pe.lastName).HasMaxLength(50);

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class Guid : Migration
+    public partial class AbstractClass : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -15,17 +15,37 @@ namespace backend.Migrations
                 name: "app");
 
             migrationBuilder.CreateTable(
+                name: "BaseEntity",
+                schema: "app",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    status = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_BaseEntity", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Action",
                 schema: "app",
                 columns: table => new
                 {
-                    actionId = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Action", x => x.actionId);
+                    table.PrimaryKey("PK_Action", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Action_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -33,14 +53,21 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    alertTypeId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
                     description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     urgencyLevel = table.Column<int>(type: "integer", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_AlertType", x => x.alertTypeId);
+                    table.PrimaryKey("PK_AlertType", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_AlertType_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -48,12 +75,19 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    brandId = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Brand", x => x.brandId);
+                    table.PrimaryKey("PK_Brand", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Brand_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -61,13 +95,20 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    cityId = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    country = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: true),
+                    country = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_City", x => x.cityId);
+                    table.PrimaryKey("PK_City", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_City_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,13 +116,20 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    familyId = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    observations = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: true)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    observations = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Family", x => x.familyId);
+                    table.PrimaryKey("PK_Family", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Family_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -89,12 +137,19 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    identificationId = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_IdentificationType", x => x.identificationId);
+                    table.PrimaryKey("PK_IdentificationType", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_IdentificationType_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -102,12 +157,19 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    modelId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     year = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Model", x => x.modelId);
+                    table.PrimaryKey("PK_Model", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Model_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -115,13 +177,20 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    moduleId = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Module", x => x.moduleId);
+                    table.PrimaryKey("PK_Module", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Module_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -129,14 +198,21 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    roleId = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    permissions = table.Column<string>(type: "character varying(2000)", maxLength: 2000, nullable: false)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
+                    description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    permissions = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Role", x => x.roleId);
+                    table.PrimaryKey("PK_Role", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Role_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -144,13 +220,20 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    viewId = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    description = table.Column<string>(type: "character varying(1000)", maxLength: 1000, nullable: false)
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    description = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_View", x => x.viewId);
+                    table.PrimaryKey("PK_View", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_View_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -158,19 +241,26 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    lineId = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: true),
                     brandId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Line", x => x.lineId);
+                    table.PrimaryKey("PK_Line", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Line_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Line_Brand_brandId",
                         column: x => x.brandId,
                         principalSchema: "app",
                         principalTable: "Brand",
-                        principalColumn: "brandId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -179,25 +269,32 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    schoolEntityId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     cityId = table.Column<Guid>(type: "uuid", nullable: false),
                     logo = table.Column<byte[]>(type: "bytea", nullable: false),
-                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    address = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
+                    name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    address = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
                     phone = table.Column<int>(type: "integer", nullable: false),
-                    email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    website = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    theme = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false)
+                    email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
+                    website = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
+                    theme = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_School", x => x.schoolEntityId);
+                    table.PrimaryKey("PK_School", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_School_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_School_City_cityId",
                         column: x => x.cityId,
                         principalSchema: "app",
                         principalTable: "City",
-                        principalColumn: "cityId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -206,23 +303,30 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    personId = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    lastName = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
+                    lastName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     identificationId = table.Column<Guid>(type: "uuid", nullable: false),
-                    email = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    email = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     phone = table.Column<int>(type: "integer", nullable: true),
-                    residenceAddress = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true)
+                    residenceAddress = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Person", x => x.personId);
+                    table.PrimaryKey("PK_Person", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Person_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Person_IdentificationType_identificationId",
                         column: x => x.identificationId,
                         principalSchema: "app",
                         principalTable: "IdentificationType",
-                        principalColumn: "identificationId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -231,26 +335,33 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    roleModuleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     roleId = table.Column<Guid>(type: "uuid", nullable: false),
                     moduleId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RoleModule", x => x.roleModuleId);
+                    table.PrimaryKey("PK_RoleModule", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_RoleModule_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RoleModule_Module_moduleId",
                         column: x => x.moduleId,
                         principalSchema: "app",
                         principalTable: "Module",
-                        principalColumn: "moduleId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RoleModule_Role_roleId",
                         column: x => x.roleId,
                         principalSchema: "app",
                         principalTable: "Role",
-                        principalColumn: "roleId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -259,26 +370,33 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    viewActionId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     viewId = table.Column<Guid>(type: "uuid", nullable: false),
                     actionId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ViewAction", x => x.viewActionId);
+                    table.PrimaryKey("PK_ViewAction", x => x.id);
                     table.ForeignKey(
                         name: "FK_ViewAction_Action_actionId",
                         column: x => x.actionId,
                         principalSchema: "app",
                         principalTable: "Action",
-                        principalColumn: "actionId",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ViewAction_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ViewAction_View_viewId",
                         column: x => x.viewId,
                         principalSchema: "app",
                         principalTable: "View",
-                        principalColumn: "viewId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -287,26 +405,33 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    viewModuleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     viewId = table.Column<Guid>(type: "uuid", nullable: false),
                     moduleId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ViewModule", x => x.viewModuleId);
+                    table.PrimaryKey("PK_ViewModule", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_ViewModule_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ViewModule_Module_moduleId",
                         column: x => x.moduleId,
                         principalSchema: "app",
                         principalTable: "Module",
-                        principalColumn: "moduleId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ViewModule_View_viewId",
                         column: x => x.viewId,
                         principalSchema: "app",
                         principalTable: "View",
-                        principalColumn: "viewId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -315,28 +440,35 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    lineModelId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     lineId = table.Column<Guid>(type: "uuid", nullable: false),
                     modelId = table.Column<Guid>(type: "uuid", nullable: false),
                     capacity = table.Column<int>(type: "integer", nullable: false),
-                    plate = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false)
+                    plate = table.Column<string>(type: "character varying(15)", maxLength: 15, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_LineModel", x => x.lineModelId);
+                    table.PrimaryKey("PK_LineModel", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_LineModel_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_LineModel_Line_lineId",
                         column: x => x.lineId,
                         principalSchema: "app",
                         principalTable: "Line",
-                        principalColumn: "lineId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_LineModel_Model_modelId",
                         column: x => x.modelId,
                         principalSchema: "app",
                         principalTable: "Model",
-                        principalColumn: "modelId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -345,22 +477,29 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    routeEntityId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     schoolId = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    TargetSector = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
-                    StartTime = table.Column<TimeSpan>(type: "interval", nullable: false),
-                    EndTime = table.Column<TimeSpan>(type: "interval", nullable: false)
+                    name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    targetSector = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    startTime = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    endTime = table.Column<TimeSpan>(type: "interval", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Route", x => x.routeEntityId);
+                    table.PrimaryKey("PK_Route", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Route_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Route_School_schoolId",
                         column: x => x.schoolId,
                         principalSchema: "app",
                         principalTable: "School",
-                        principalColumn: "schoolEntityId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -369,27 +508,34 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    schoolCampuseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     schoolId = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
                     address = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
-                    schoolEntityId = table.Column<Guid>(type: "uuid", nullable: true)
+                    SchoolEntityid = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SchoolCampuse", x => x.schoolCampuseId);
+                    table.PrimaryKey("PK_SchoolCampuse", x => x.id);
                     table.ForeignKey(
-                        name: "FK_SchoolCampuse_School_schoolEntityId",
-                        column: x => x.schoolEntityId,
+                        name: "FK_SchoolCampuse_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SchoolCampuse_School_SchoolEntityid",
+                        column: x => x.SchoolEntityid,
                         principalSchema: "app",
                         principalTable: "School",
-                        principalColumn: "schoolEntityId");
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_SchoolCampuse_School_schoolId",
                         column: x => x.schoolId,
                         principalSchema: "app",
                         principalTable: "School",
-                        principalColumn: "schoolEntityId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -398,29 +544,36 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    stopId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     cityId = table.Column<Guid>(type: "uuid", nullable: false),
                     schoolId = table.Column<Guid>(type: "uuid", nullable: false),
-                    address = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    longitude = table.Column<decimal>(type: "numeric(18,10)", precision: 18, scale: 10, nullable: false),
-                    latitude = table.Column<decimal>(type: "numeric(18,10)", precision: 18, scale: 10, nullable: false)
+                    address = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    longitude = table.Column<decimal>(type: "numeric(12,2)", precision: 12, scale: 2, nullable: false),
+                    latitude = table.Column<decimal>(type: "numeric(12,2)", precision: 12, scale: 2, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Stop", x => x.stopId);
+                    table.PrimaryKey("PK_Stop", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Stop_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Stop_City_cityId",
                         column: x => x.cityId,
                         principalSchema: "app",
                         principalTable: "City",
-                        principalColumn: "cityId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Stop_School_schoolId",
                         column: x => x.schoolId,
                         principalSchema: "app",
                         principalTable: "School",
-                        principalColumn: "schoolEntityId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -429,19 +582,26 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    profileId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     personId = table.Column<Guid>(type: "uuid", nullable: false),
-                    password = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true)
+                    password = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Profile", x => x.profileId);
+                    table.PrimaryKey("PK_Profile", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Profile_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Profile_Person_personId",
                         column: x => x.personId,
                         principalSchema: "app",
                         principalTable: "Person",
-                        principalColumn: "personId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -450,27 +610,34 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    courseId = table.Column<Guid>(type: "uuid", nullable: false),
-                    name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     campuseId = table.Column<Guid>(type: "uuid", nullable: false),
-                    schoolCampuseId = table.Column<Guid>(type: "uuid", nullable: true)
+                    SchoolCampuseid = table.Column<Guid>(type: "uuid", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Course", x => x.courseId);
+                    table.PrimaryKey("PK_Course", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Course_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Course_SchoolCampuse_SchoolCampuseid",
+                        column: x => x.SchoolCampuseid,
+                        principalSchema: "app",
+                        principalTable: "SchoolCampuse",
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "FK_Course_SchoolCampuse_campuseId",
                         column: x => x.campuseId,
                         principalSchema: "app",
                         principalTable: "SchoolCampuse",
-                        principalColumn: "schoolCampuseId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Course_SchoolCampuse_schoolCampuseId",
-                        column: x => x.schoolCampuseId,
-                        principalSchema: "app",
-                        principalTable: "SchoolCampuse",
-                        principalColumn: "schoolCampuseId");
                 });
 
             migrationBuilder.CreateTable(
@@ -478,26 +645,33 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     routeId = table.Column<Guid>(type: "uuid", nullable: false),
-                    stopId = table.Column<Guid>(type: "uuid", nullable: false),
-                    routeStopId = table.Column<Guid>(type: "uuid", nullable: false)
+                    stopId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RouteStop", x => new { x.routeId, x.stopId });
+                    table.PrimaryKey("PK_RouteStop", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_RouteStop_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RouteStop_Route_routeId",
                         column: x => x.routeId,
                         principalSchema: "app",
                         principalTable: "Route",
-                        principalColumn: "routeEntityId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RouteStop_Stop_stopId",
                         column: x => x.stopId,
                         principalSchema: "app",
                         principalTable: "Stop",
-                        principalColumn: "stopId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -506,7 +680,7 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    busId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     driverId = table.Column<Guid>(type: "uuid", nullable: false),
                     schoolId = table.Column<Guid>(type: "uuid", nullable: false),
                     soatValidity = table.Column<byte[]>(type: "bytea", nullable: true),
@@ -515,27 +689,34 @@ namespace backend.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Bus", x => x.busId);
+                    table.PrimaryKey("PK_Bus", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Bus_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Bus_LineModel_lineModelId",
                         column: x => x.lineModelId,
                         principalSchema: "app",
                         principalTable: "LineModel",
-                        principalColumn: "lineModelId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Bus_Profile_driverId",
                         column: x => x.driverId,
                         principalSchema: "app",
                         principalTable: "Profile",
-                        principalColumn: "profileId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Bus_School_schoolId",
                         column: x => x.schoolId,
                         principalSchema: "app",
                         principalTable: "School",
-                        principalColumn: "schoolEntityId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -544,21 +725,28 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    driverLicenseId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     profileId = table.Column<Guid>(type: "uuid", nullable: false),
-                    licenseNumber = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
+                    licenseNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: true),
                     drivingLicense = table.Column<byte[]>(type: "bytea", nullable: false),
                     licenseExpirationDate = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_DriverLicense", x => x.driverLicenseId);
+                    table.PrimaryKey("PK_DriverLicense", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_DriverLicense_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_DriverLicense_Profile_profileId",
                         column: x => x.profileId,
                         principalSchema: "app",
                         principalTable: "Profile",
-                        principalColumn: "profileId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -567,28 +755,35 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    exceptionalRouteUsageId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     profileId = table.Column<Guid>(type: "uuid", nullable: false),
                     routeId = table.Column<Guid>(type: "uuid", nullable: false),
                     dateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    reason = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false)
+                    reason = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExceptionalRouteUsage", x => x.exceptionalRouteUsageId);
+                    table.PrimaryKey("PK_ExceptionalRouteUsage", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_ExceptionalRouteUsage_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ExceptionalRouteUsage_Profile_profileId",
                         column: x => x.profileId,
                         principalSchema: "app",
                         principalTable: "Profile",
-                        principalColumn: "profileId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ExceptionalRouteUsage_Route_routeId",
                         column: x => x.routeId,
                         principalSchema: "app",
                         principalTable: "Route",
-                        principalColumn: "routeEntityId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -597,26 +792,33 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    familyMemberId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     familyId = table.Column<Guid>(type: "uuid", nullable: false),
                     profileId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_FamilyMember", x => x.familyMemberId);
+                    table.PrimaryKey("PK_FamilyMember", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_FamilyMember_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_FamilyMember_Family_familyId",
                         column: x => x.familyId,
                         principalSchema: "app",
                         principalTable: "Family",
-                        principalColumn: "familyId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_FamilyMember_Profile_profileId",
                         column: x => x.profileId,
                         principalSchema: "app",
                         principalTable: "Profile",
-                        principalColumn: "profileId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -625,26 +827,33 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    profileRoleId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     roleId = table.Column<Guid>(type: "uuid", nullable: false),
                     profileId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProfileRole", x => x.profileRoleId);
+                    table.PrimaryKey("PK_ProfileRole", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_ProfileRole_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProfileRole_Profile_profileId",
                         column: x => x.profileId,
                         principalSchema: "app",
                         principalTable: "Profile",
-                        principalColumn: "profileId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ProfileRole_Role_roleId",
                         column: x => x.roleId,
                         principalSchema: "app",
                         principalTable: "Role",
-                        principalColumn: "roleId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -653,26 +862,33 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     profileId = table.Column<Guid>(type: "uuid", nullable: false),
-                    routeId = table.Column<Guid>(type: "uuid", nullable: false),
-                    routeStudentAssignmentsId = table.Column<Guid>(type: "uuid", nullable: false)
+                    routeId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RouteStudentAssignments", x => new { x.profileId, x.routeId });
+                    table.PrimaryKey("PK_RouteStudentAssignments", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_RouteStudentAssignments_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RouteStudentAssignments_Profile_profileId",
                         column: x => x.profileId,
                         principalSchema: "app",
                         principalTable: "Profile",
-                        principalColumn: "profileId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RouteStudentAssignments_Route_routeId",
                         column: x => x.routeId,
                         principalSchema: "app",
                         principalTable: "Route",
-                        principalColumn: "routeEntityId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -681,26 +897,33 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     profileId = table.Column<Guid>(type: "uuid", nullable: false),
-                    courseId = table.Column<Guid>(type: "uuid", nullable: false),
-                    courseGroupId = table.Column<Guid>(type: "uuid", nullable: false)
+                    courseId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_CourseGroup", x => new { x.profileId, x.courseId });
+                    table.PrimaryKey("PK_CourseGroup", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_CourseGroup_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CourseGroup_Course_courseId",
                         column: x => x.courseId,
                         principalSchema: "app",
                         principalTable: "Course",
-                        principalColumn: "courseId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_CourseGroup_Profile_profileId",
                         column: x => x.profileId,
                         principalSchema: "app",
                         principalTable: "Profile",
-                        principalColumn: "profileId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -709,27 +932,34 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    alertId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     alertTypeId = table.Column<Guid>(type: "uuid", nullable: false),
                     busId = table.Column<Guid>(type: "uuid", nullable: false),
                     dateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Alert", x => x.alertId);
+                    table.PrimaryKey("PK_Alert", x => x.id);
                     table.ForeignKey(
                         name: "FK_Alert_AlertType_alertTypeId",
                         column: x => x.alertTypeId,
                         principalSchema: "app",
                         principalTable: "AlertType",
-                        principalColumn: "alertTypeId",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Alert_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Alert_Bus_busId",
                         column: x => x.busId,
                         principalSchema: "app",
                         principalTable: "Bus",
-                        principalColumn: "busId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -738,36 +968,43 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     profileId = table.Column<Guid>(type: "uuid", nullable: false),
                     busId = table.Column<Guid>(type: "uuid", nullable: false),
                     stopId = table.Column<Guid>(type: "uuid", nullable: false),
-                    dateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    boardingId = table.Column<Guid>(type: "uuid", nullable: false),
+                    dateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
                     action = table.Column<bool>(type: "boolean", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Boarding", x => new { x.profileId, x.busId, x.stopId, x.dateTime });
+                    table.PrimaryKey("PK_Boarding", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Boarding_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Boarding_Bus_busId",
                         column: x => x.busId,
                         principalSchema: "app",
                         principalTable: "Bus",
-                        principalColumn: "busId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Boarding_Profile_profileId",
                         column: x => x.profileId,
                         principalSchema: "app",
                         principalTable: "Profile",
-                        principalColumn: "profileId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Boarding_Stop_stopId",
                         column: x => x.stopId,
                         principalSchema: "app",
                         principalTable: "Stop",
-                        principalColumn: "stopId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -776,29 +1013,36 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
-                    exceptionalDriverUsageId = table.Column<Guid>(type: "uuid", nullable: false),
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     busId = table.Column<Guid>(type: "uuid", nullable: false),
                     profileId = table.Column<Guid>(type: "uuid", nullable: false),
                     startDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     endDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    reason = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false)
+                    reason = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ExceptionalDriverUsage", x => x.exceptionalDriverUsageId);
+                    table.PrimaryKey("PK_ExceptionalDriverUsage", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_ExceptionalDriverUsage_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ExceptionalDriverUsage_Bus_busId",
                         column: x => x.busId,
                         principalSchema: "app",
                         principalTable: "Bus",
-                        principalColumn: "busId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_ExceptionalDriverUsage_Profile_profileId",
                         column: x => x.profileId,
                         principalSchema: "app",
                         principalTable: "Profile",
-                        principalColumn: "profileId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -807,26 +1051,33 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     busId = table.Column<Guid>(type: "uuid", nullable: false),
-                    routeId = table.Column<Guid>(type: "uuid", nullable: false),
-                    routeBusAssignmentsId = table.Column<Guid>(type: "uuid", nullable: false)
+                    routeId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_RouteBusAssignments", x => new { x.busId, x.routeId });
+                    table.PrimaryKey("PK_RouteBusAssignments", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_RouteBusAssignments_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RouteBusAssignments_Bus_busId",
                         column: x => x.busId,
                         principalSchema: "app",
                         principalTable: "Bus",
-                        principalColumn: "busId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_RouteBusAssignments_Route_routeId",
                         column: x => x.routeId,
                         principalSchema: "app",
                         principalTable: "Route",
-                        principalColumn: "routeEntityId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -835,26 +1086,33 @@ namespace backend.Migrations
                 schema: "app",
                 columns: table => new
                 {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
                     profileId = table.Column<Guid>(type: "uuid", nullable: false),
-                    alertId = table.Column<Guid>(type: "uuid", nullable: false),
-                    savedAlertId = table.Column<Guid>(type: "uuid", nullable: false)
+                    alertId = table.Column<Guid>(type: "uuid", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_SavedAlert", x => new { x.profileId, x.alertId });
+                    table.PrimaryKey("PK_SavedAlert", x => x.id);
                     table.ForeignKey(
                         name: "FK_SavedAlert_Alert_alertId",
                         column: x => x.alertId,
                         principalSchema: "app",
                         principalTable: "Alert",
-                        principalColumn: "alertId",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_SavedAlert_BaseEntity_id",
+                        column: x => x.id,
+                        principalSchema: "app",
+                        principalTable: "BaseEntity",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_SavedAlert_Profile_profileId",
                         column: x => x.profileId,
                         principalSchema: "app",
                         principalTable: "Profile",
-                        principalColumn: "profileId",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
@@ -875,6 +1133,12 @@ namespace backend.Migrations
                 schema: "app",
                 table: "Boarding",
                 column: "busId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Boarding_profileId",
+                schema: "app",
+                table: "Boarding",
+                column: "profileId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Boarding_stopId",
@@ -907,16 +1171,22 @@ namespace backend.Migrations
                 column: "campuseId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Course_schoolCampuseId",
+                name: "IX_Course_SchoolCampuseid",
                 schema: "app",
                 table: "Course",
-                column: "schoolCampuseId");
+                column: "SchoolCampuseid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_CourseGroup_courseId",
                 schema: "app",
                 table: "CourseGroup",
                 column: "courseId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CourseGroup_profileId",
+                schema: "app",
+                table: "CourseGroup",
+                column: "profileId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_DriverLicense_profileId",
@@ -1022,9 +1292,21 @@ namespace backend.Migrations
                 column: "schoolId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_RouteBusAssignments_busId",
+                schema: "app",
+                table: "RouteBusAssignments",
+                column: "busId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_RouteBusAssignments_routeId",
                 schema: "app",
                 table: "RouteBusAssignments",
+                column: "routeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RouteStop_routeId",
+                schema: "app",
+                table: "RouteStop",
                 column: "routeId");
 
             migrationBuilder.CreateIndex(
@@ -1032,6 +1314,12 @@ namespace backend.Migrations
                 schema: "app",
                 table: "RouteStop",
                 column: "stopId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RouteStudentAssignments_profileId",
+                schema: "app",
+                table: "RouteStudentAssignments",
+                column: "profileId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_RouteStudentAssignments_routeId",
@@ -1046,16 +1334,22 @@ namespace backend.Migrations
                 column: "alertId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_SavedAlert_profileId",
+                schema: "app",
+                table: "SavedAlert",
+                column: "profileId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_School_cityId",
                 schema: "app",
                 table: "School",
                 column: "cityId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_SchoolCampuse_schoolEntityId",
+                name: "IX_SchoolCampuse_SchoolEntityid",
                 schema: "app",
                 table: "SchoolCampuse",
-                column: "schoolEntityId");
+                column: "SchoolEntityid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_SchoolCampuse_schoolId",
@@ -1241,6 +1535,10 @@ namespace backend.Migrations
 
             migrationBuilder.DropTable(
                 name: "IdentificationType",
+                schema: "app");
+
+            migrationBuilder.DropTable(
+                name: "BaseEntity",
                 schema: "app");
         }
     }

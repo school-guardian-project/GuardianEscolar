@@ -1,12 +1,13 @@
 using backend.Modules.SchoolManagement.Domain.Entities;
+using backend.Shared.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace backend.Modules.SchoolManagement.Infrastructure.Configurations
 {
-    public class SchoolCampuseConfiguration : IEntityTypeConfiguration<SchoolCampuse>
+    public class SchoolCampuseConfiguration : BaseEntityConfiguration<SchoolCampuse>
     {
-        public void Configure(EntityTypeBuilder<SchoolCampuse> builder)
+        public override void Configure(EntityTypeBuilder<SchoolCampuse> builder)
         {
             builder.Property(sc => sc.name).HasMaxLength(255);
             builder.Property(sc => sc.address).HasMaxLength(500);

@@ -1,12 +1,13 @@
 using backend.Modules.UserManagement.Domain.Entities;
+using backend.Shared.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace backend.Modules.UserManagement.Infrastructure.Configurations
 {
-    public class DriverLicenseConfiguration : IEntityTypeConfiguration<DriverLicense>
+    public class DriverLicenseConfiguration : BaseEntityConfiguration<DriverLicense>
     {
-        public void Configure(EntityTypeBuilder<DriverLicense> builder)
+        public override void Configure(EntityTypeBuilder<DriverLicense> builder)
         {
             builder.Property(dl => dl.licenseNumber).HasMaxLength(20);
             builder.Property(dl => dl.licenseExpirationDate).IsRequired();

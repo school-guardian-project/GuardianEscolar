@@ -12,8 +12,8 @@ using backend.Infrastructure.Persistence.Context;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260603221528_Guid")]
-    partial class Guid
+    [Migration("20260609224036_AbstractClass")]
+    partial class AbstractClass
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -26,11 +26,26 @@ namespace backend.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("backend.Modules.AlertManagement.Domain.Entities.Alert", b =>
+            modelBuilder.Entity("backend.Shared.Abstracts.BaseEntity", b =>
                 {
-                    b.Property<Guid>("alertId")
+                    b.Property<Guid>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
+
+                    b.Property<string>("status")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("id");
+
+                    b.ToTable("BaseEntity", "app");
+
+                    b.UseTptMappingStrategy();
+                });
+
+            modelBuilder.Entity("backend.Modules.AlertManagement.Domain.Entities.Alert", b =>
+                {
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<Guid>("alertTypeId")
                         .HasColumnType("uuid");
@@ -41,8 +56,6 @@ namespace backend.Migrations
                     b.Property<DateTime>("dateTime")
                         .HasColumnType("timestamp with time zone");
 
-                    b.HasKey("alertId");
-
                     b.HasIndex("alertTypeId");
 
                     b.HasIndex("busId");
@@ -52,9 +65,7 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.AlertManagement.Domain.Entities.AlertType", b =>
                 {
-                    b.Property<Guid>("alertTypeId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<string>("description")
                         .HasMaxLength(500)
@@ -67,52 +78,50 @@ namespace backend.Migrations
                     b.Property<int?>("urgencyLevel")
                         .HasColumnType("integer");
 
-                    b.HasKey("alertTypeId");
-
                     b.ToTable("AlertType", "app");
                 });
 
             modelBuilder.Entity("backend.Modules.AlertManagement.Domain.Entities.SavedAlert", b =>
                 {
-                    b.Property<Guid>("profileId")
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<Guid>("alertId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("savedAlertId")
+                    b.Property<Guid>("profileId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("profileId", "alertId");
-
                     b.HasIndex("alertId");
+
+                    b.HasIndex("profileId");
 
                     b.ToTable("SavedAlert", "app");
                 });
 
             modelBuilder.Entity("backend.Modules.BoardingManagement.Domain.Entities.Boarding", b =>
                 {
-                    b.Property<Guid>("profileId")
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
+
+                    b.Property<bool>("action")
+                        .HasColumnType("boolean");
 
                     b.Property<Guid>("busId")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTime>("dateTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
+
+                    b.Property<Guid>("profileId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("stopId")
                         .HasColumnType("uuid");
 
-                    b.Property<DateTime>("dateTime")
-                        .HasColumnType("timestamp with time zone");
-
-                    b.Property<bool>("action")
-                        .HasColumnType("boolean");
-
-                    b.Property<Guid>("boardingId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("profileId", "busId", "stopId", "dateTime");
-
                     b.HasIndex("busId");
+
+                    b.HasIndex("profileId");
 
                     b.HasIndex("stopId");
 
@@ -121,24 +130,18 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.Brand", b =>
                 {
-                    b.Property<Guid>("brandId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<string>("name")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.HasKey("brandId");
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.ToTable("Brand", "app");
                 });
 
             modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.Bus", b =>
                 {
-                    b.Property<Guid>("busId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<Guid>("driverId")
                         .HasColumnType("uuid");
@@ -155,8 +158,6 @@ namespace backend.Migrations
                     b.Property<byte[]>("soatValidity")
                         .HasColumnType("bytea");
 
-                    b.HasKey("busId");
-
                     b.HasIndex("driverId");
 
                     b.HasIndex("lineModelId");
@@ -168,9 +169,7 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.ExceptionalDriverUsage", b =>
                 {
-                    b.Property<Guid>("exceptionalDriverUsageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<Guid>("busId")
                         .HasColumnType("uuid");
@@ -183,13 +182,11 @@ namespace backend.Migrations
 
                     b.Property<string>("reason")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.Property<DateTime>("startDateTime")
                         .HasColumnType("timestamp with time zone");
-
-                    b.HasKey("exceptionalDriverUsageId");
 
                     b.HasIndex("busId");
 
@@ -200,18 +197,14 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.Line", b =>
                 {
-                    b.Property<Guid>("lineId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<Guid>("brandId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("name")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.HasKey("lineId");
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.HasIndex("brandId");
 
@@ -220,9 +213,7 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.LineModel", b =>
                 {
-                    b.Property<Guid>("lineModelId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<int>("capacity")
                         .HasColumnType("integer");
@@ -235,10 +226,8 @@ namespace backend.Migrations
 
                     b.Property<string>("plate")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.HasKey("lineModelId");
+                        .HasMaxLength(15)
+                        .HasColumnType("character varying(15)");
 
                     b.HasIndex("lineId");
 
@@ -247,25 +236,19 @@ namespace backend.Migrations
                     b.ToTable("LineModel", "app");
                 });
 
-            modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.Model", b =>
+            modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.Year", b =>
                 {
-                    b.Property<Guid>("modelId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<int>("year")
                         .HasColumnType("integer");
-
-                    b.HasKey("modelId");
 
                     b.ToTable("Model", "app");
                 });
 
             modelBuilder.Entity("backend.Modules.RouteManagement.Domain.Entities.ExceptionalRouteUsage", b =>
                 {
-                    b.Property<Guid>("exceptionalRouteUsageId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<DateTime>("dateTime")
                         .HasColumnType("timestamp with time zone");
@@ -275,13 +258,11 @@ namespace backend.Migrations
 
                     b.Property<string>("reason")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
 
                     b.Property<Guid>("routeId")
                         .HasColumnType("uuid");
-
-                    b.HasKey("exceptionalRouteUsageId");
 
                     b.HasIndex("profileId");
 
@@ -292,16 +273,15 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.RouteManagement.Domain.Entities.RouteBusAssignments", b =>
                 {
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
+
                     b.Property<Guid>("busId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("routeId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("routeBusAssignmentsId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("busId", "routeId");
+                    b.HasIndex("busId");
 
                     b.HasIndex("routeId");
 
@@ -310,28 +290,26 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.RouteManagement.Domain.Entities.RouteEntity", b =>
                 {
-                    b.Property<Guid>("routeEntityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
-                    b.Property<TimeSpan>("EndTime")
+                    b.Property<TimeSpan>("endTime")
                         .HasColumnType("interval");
 
-                    b.Property<string>("Name")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.Property<TimeSpan>("StartTime")
-                        .HasColumnType("interval");
-
-                    b.Property<string>("TargetSector")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.Property<Guid>("schoolId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("routeEntityId");
+                    b.Property<TimeSpan>("startTime")
+                        .HasColumnType("interval");
+
+                    b.Property<string>("targetSector")
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.HasIndex("schoolId");
 
@@ -340,16 +318,15 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.RouteManagement.Domain.Entities.RouteStop", b =>
                 {
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
+
                     b.Property<Guid>("routeId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("stopId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("routeStopId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("routeId", "stopId");
+                    b.HasIndex("routeId");
 
                     b.HasIndex("stopId");
 
@@ -358,16 +335,15 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.RouteManagement.Domain.Entities.RouteStudentAssignments", b =>
                 {
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
+
                     b.Property<Guid>("profileId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("routeId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("routeStudentAssignmentsId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("profileId", "routeId");
+                    b.HasIndex("profileId");
 
                     b.HasIndex("routeId");
 
@@ -376,30 +352,26 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.RouteManagement.Domain.Entities.Stop", b =>
                 {
-                    b.Property<Guid>("stopId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<string>("address")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.Property<Guid>("cityId")
                         .HasColumnType("uuid");
 
                     b.Property<decimal>("latitude")
-                        .HasPrecision(18, 10)
-                        .HasColumnType("numeric(18,10)");
+                        .HasPrecision(12, 2)
+                        .HasColumnType("numeric(12,2)");
 
                     b.Property<decimal>("longitude")
-                        .HasPrecision(18, 10)
-                        .HasColumnType("numeric(18,10)");
+                        .HasPrecision(12, 2)
+                        .HasColumnType("numeric(12,2)");
 
                     b.Property<Guid>("schoolId")
                         .HasColumnType("uuid");
-
-                    b.HasKey("stopId");
 
                     b.HasIndex("cityId");
 
@@ -410,70 +382,62 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.SchoolManagement.Domain.Entities.City", b =>
                 {
-                    b.Property<Guid>("cityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<string>("country")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.Property<string>("name")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.HasKey("cityId");
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
 
                     b.ToTable("City", "app");
                 });
 
             modelBuilder.Entity("backend.Modules.SchoolManagement.Domain.Entities.Course", b =>
                 {
-                    b.Property<Guid>("courseId")
-                        .ValueGeneratedOnAdd()
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
+
+                    b.Property<Guid?>("SchoolCampuseid")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("campuseId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("name")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
-                    b.Property<Guid?>("schoolCampuseId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("courseId");
+                    b.HasIndex("SchoolCampuseid");
 
                     b.HasIndex("campuseId");
-
-                    b.HasIndex("schoolCampuseId");
 
                     b.ToTable("Course", "app");
                 });
 
             modelBuilder.Entity("backend.Modules.SchoolManagement.Domain.Entities.CourseGroup", b =>
                 {
-                    b.Property<Guid>("profileId")
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<Guid>("courseId")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("courseGroupId")
+                    b.Property<Guid>("profileId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("profileId", "courseId");
-
                     b.HasIndex("courseId");
+
+                    b.HasIndex("profileId");
 
                     b.ToTable("CourseGroup", "app");
                 });
 
             modelBuilder.Entity("backend.Modules.SchoolManagement.Domain.Entities.SchoolCampuse", b =>
                 {
-                    b.Property<Guid>("schoolCampuseId")
-                        .ValueGeneratedOnAdd()
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
+
+                    b.Property<Guid?>("SchoolEntityid")
                         .HasColumnType("uuid");
 
                     b.Property<string>("address")
@@ -484,15 +448,10 @@ namespace backend.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("character varying(255)");
 
-                    b.Property<Guid?>("schoolEntityId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("schoolId")
                         .HasColumnType("uuid");
 
-                    b.HasKey("schoolCampuseId");
-
-                    b.HasIndex("schoolEntityId");
+                    b.HasIndex("SchoolEntityid");
 
                     b.HasIndex("schoolId");
 
@@ -501,22 +460,20 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.SchoolManagement.Domain.Entities.SchoolEntity", b =>
                 {
-                    b.Property<Guid>("schoolEntityId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<string>("address")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.Property<Guid>("cityId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("email")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<byte[]>("logo")
                         .IsRequired()
@@ -524,23 +481,21 @@ namespace backend.Migrations
 
                     b.Property<string>("name")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.Property<int>("phone")
                         .HasColumnType("integer");
 
                     b.Property<string>("theme")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("website")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.HasKey("schoolEntityId");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.HasIndex("cityId");
 
@@ -549,60 +504,48 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.Action", b =>
                 {
-                    b.Property<Guid>("actionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<string>("description")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("name")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.HasKey("actionId");
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.ToTable("Action", "app");
                 });
 
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.Module", b =>
                 {
-                    b.Property<Guid>("moduleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<string>("description")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("name")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.HasKey("moduleId");
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.ToTable("Module", "app");
                 });
 
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.Profile", b =>
                 {
-                    b.Property<Guid>("profileId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<string>("password")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<Guid>("personId")
                         .HasColumnType("uuid");
-
-                    b.HasKey("profileId");
 
                     b.HasIndex("personId");
 
@@ -611,17 +554,13 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.ProfileRole", b =>
                 {
-                    b.Property<Guid>("profileRoleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<Guid>("profileId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("roleId")
                         .HasColumnType("uuid");
-
-                    b.HasKey("profileRoleId");
 
                     b.HasIndex("profileId");
 
@@ -632,43 +571,35 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.Role", b =>
                 {
-                    b.Property<Guid>("roleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<string>("description")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("character varying(500)");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("name")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<string>("permissions")
                         .IsRequired()
-                        .HasMaxLength(2000)
-                        .HasColumnType("character varying(2000)");
-
-                    b.HasKey("roleId");
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)");
 
                     b.ToTable("Role", "app");
                 });
 
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.RoleModule", b =>
                 {
-                    b.Property<Guid>("roleModuleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<Guid>("moduleId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("roleId")
                         .HasColumnType("uuid");
-
-                    b.HasKey("roleModuleId");
 
                     b.HasIndex("moduleId");
 
@@ -679,38 +610,30 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.View", b =>
                 {
-                    b.Property<Guid>("viewId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<string>("description")
                         .IsRequired()
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.Property<string>("name")
                         .IsRequired()
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.HasKey("viewId");
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.ToTable("View", "app");
                 });
 
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.ViewAction", b =>
                 {
-                    b.Property<Guid>("viewActionId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<Guid>("actionId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("viewId")
                         .HasColumnType("uuid");
-
-                    b.HasKey("viewActionId");
 
                     b.HasIndex("actionId");
 
@@ -721,17 +644,13 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.ViewModule", b =>
                 {
-                    b.Property<Guid>("viewModuleId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<Guid>("moduleId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("viewId")
                         .HasColumnType("uuid");
-
-                    b.HasKey("viewModuleId");
 
                     b.HasIndex("moduleId");
 
@@ -742,9 +661,7 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.DriverLicense", b =>
                 {
-                    b.Property<Guid>("driverLicenseId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<byte[]>("drivingLicense")
                         .IsRequired()
@@ -754,13 +671,11 @@ namespace backend.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("licenseNumber")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)");
 
                     b.Property<Guid>("profileId")
                         .HasColumnType("uuid");
-
-                    b.HasKey("driverLicenseId");
 
                     b.HasIndex("profileId");
 
@@ -769,36 +684,28 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.Family", b =>
                 {
-                    b.Property<Guid>("familyId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<string>("name")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("observations")
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
-
-                    b.HasKey("familyId");
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
 
                     b.ToTable("Family", "app");
                 });
 
             modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.FamilyMember", b =>
                 {
-                    b.Property<Guid>("familyMemberId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<Guid>("familyId")
                         .HasColumnType("uuid");
 
                     b.Property<Guid>("profileId")
                         .HasColumnType("uuid");
-
-                    b.HasKey("familyMemberId");
 
                     b.HasIndex("familyId");
 
@@ -809,49 +716,41 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.IdentificationType", b =>
                 {
-                    b.Property<Guid>("identificationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<string>("name")
                         .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.HasKey("identificationId");
+                        .HasMaxLength(30)
+                        .HasColumnType("character varying(30)");
 
                     b.ToTable("IdentificationType", "app");
                 });
 
             modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.Person", b =>
                 {
-                    b.Property<Guid>("personId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uuid");
+                    b.HasBaseType("backend.Shared.Abstracts.BaseEntity");
 
                     b.Property<string>("email")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<Guid>("identificationId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("lastName")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<string>("name")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<int?>("phone")
                         .HasColumnType("integer");
 
                     b.Property<string>("residenceAddress")
-                        .HasMaxLength(255)
-                        .HasColumnType("character varying(255)");
-
-                    b.HasKey("personId");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.HasIndex("identificationId")
                         .IsUnique();
@@ -873,9 +772,24 @@ namespace backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.AlertManagement.Domain.Entities.Alert", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("alertType");
 
                     b.Navigation("bus");
+                });
+
+            modelBuilder.Entity("backend.Modules.AlertManagement.Domain.Entities.AlertType", b =>
+                {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.AlertManagement.Domain.Entities.AlertType", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("backend.Modules.AlertManagement.Domain.Entities.SavedAlert", b =>
@@ -883,6 +797,12 @@ namespace backend.Migrations
                     b.HasOne("backend.Modules.AlertManagement.Domain.Entities.Alert", "alerts")
                         .WithMany("savedAlerts")
                         .HasForeignKey("alertId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.AlertManagement.Domain.Entities.SavedAlert", "id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -905,6 +825,12 @@ namespace backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.BoardingManagement.Domain.Entities.Boarding", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Modules.Security.Domain.Entities.Profile", "profile")
                         .WithMany("boardings")
                         .HasForeignKey("profileId")
@@ -924,11 +850,26 @@ namespace backend.Migrations
                     b.Navigation("stop");
                 });
 
+            modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.Brand", b =>
+                {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.FleetManagement.Domain.Entities.Brand", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.Bus", b =>
                 {
                     b.HasOne("backend.Modules.Security.Domain.Entities.Profile", "driver")
                         .WithMany("driver")
                         .HasForeignKey("driverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.FleetManagement.Domain.Entities.Bus", "id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -959,6 +900,12 @@ namespace backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.FleetManagement.Domain.Entities.ExceptionalDriverUsage", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Modules.Security.Domain.Entities.Profile", "profile")
                         .WithMany("exceptions")
                         .HasForeignKey("profileId")
@@ -978,30 +925,57 @@ namespace backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.FleetManagement.Domain.Entities.Line", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("brand");
                 });
 
             modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.LineModel", b =>
                 {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.FleetManagement.Domain.Entities.LineModel", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Modules.FleetManagement.Domain.Entities.Line", "line")
                         .WithMany("lineModel")
                         .HasForeignKey("lineId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Modules.FleetManagement.Domain.Entities.Model", "model")
+                    b.HasOne("backend.Modules.FleetManagement.Domain.Entities.Year", "Year")
                         .WithMany("lineModel")
                         .HasForeignKey("modelId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("line");
+                    b.Navigation("Year");
 
-                    b.Navigation("model");
+                    b.Navigation("line");
+                });
+
+            modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.Year", b =>
+                {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.FleetManagement.Domain.Entities.Year", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("backend.Modules.RouteManagement.Domain.Entities.ExceptionalRouteUsage", b =>
                 {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.RouteManagement.Domain.Entities.ExceptionalRouteUsage", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Modules.Security.Domain.Entities.Profile", "profile")
                         .WithMany("exceptionalRouteUsages")
                         .HasForeignKey("profileId")
@@ -1027,6 +1001,12 @@ namespace backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.RouteManagement.Domain.Entities.RouteBusAssignments", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Modules.RouteManagement.Domain.Entities.RouteEntity", "route")
                         .WithMany("busAssignments")
                         .HasForeignKey("routeId")
@@ -1040,6 +1020,12 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.RouteManagement.Domain.Entities.RouteEntity", b =>
                 {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.RouteManagement.Domain.Entities.RouteEntity", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Modules.SchoolManagement.Domain.Entities.SchoolEntity", "school")
                         .WithMany("routes")
                         .HasForeignKey("schoolId")
@@ -1051,6 +1037,12 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.RouteManagement.Domain.Entities.RouteStop", b =>
                 {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.RouteManagement.Domain.Entities.RouteStop", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Modules.RouteManagement.Domain.Entities.RouteEntity", "route")
                         .WithMany("routeStops")
                         .HasForeignKey("routeId")
@@ -1070,6 +1062,12 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.RouteManagement.Domain.Entities.RouteStudentAssignments", b =>
                 {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.RouteManagement.Domain.Entities.RouteStudentAssignments", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Modules.Security.Domain.Entities.Profile", "profile")
                         .WithMany("studentAssignments")
                         .HasForeignKey("profileId")
@@ -1095,6 +1093,12 @@ namespace backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.RouteManagement.Domain.Entities.Stop", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Modules.SchoolManagement.Domain.Entities.SchoolEntity", "school")
                         .WithMany("stops")
                         .HasForeignKey("schoolId")
@@ -1106,17 +1110,32 @@ namespace backend.Migrations
                     b.Navigation("school");
                 });
 
+            modelBuilder.Entity("backend.Modules.SchoolManagement.Domain.Entities.City", b =>
+                {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.SchoolManagement.Domain.Entities.City", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("backend.Modules.SchoolManagement.Domain.Entities.Course", b =>
                 {
+                    b.HasOne("backend.Modules.SchoolManagement.Domain.Entities.SchoolCampuse", null)
+                        .WithMany("courses")
+                        .HasForeignKey("SchoolCampuseid");
+
                     b.HasOne("backend.Modules.SchoolManagement.Domain.Entities.SchoolCampuse", "campuse")
                         .WithMany()
                         .HasForeignKey("campuseId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("backend.Modules.SchoolManagement.Domain.Entities.SchoolCampuse", null)
-                        .WithMany("courses")
-                        .HasForeignKey("schoolCampuseId");
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.SchoolManagement.Domain.Entities.Course", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("campuse");
                 });
@@ -1126,6 +1145,12 @@ namespace backend.Migrations
                     b.HasOne("backend.Modules.SchoolManagement.Domain.Entities.Course", "course")
                         .WithMany("courses")
                         .HasForeignKey("courseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.SchoolManagement.Domain.Entities.CourseGroup", "id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1144,7 +1169,13 @@ namespace backend.Migrations
                 {
                     b.HasOne("backend.Modules.SchoolManagement.Domain.Entities.SchoolEntity", null)
                         .WithMany("schoolCampuses")
-                        .HasForeignKey("schoolEntityId");
+                        .HasForeignKey("SchoolEntityid");
+
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.SchoolManagement.Domain.Entities.SchoolCampuse", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("backend.Modules.SchoolManagement.Domain.Entities.SchoolEntity", "school")
                         .WithMany()
@@ -1163,11 +1194,41 @@ namespace backend.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.SchoolManagement.Domain.Entities.SchoolEntity", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("city");
+                });
+
+            modelBuilder.Entity("backend.Modules.Security.Domain.Entities.Action", b =>
+                {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.Security.Domain.Entities.Action", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("backend.Modules.Security.Domain.Entities.Module", b =>
+                {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.Security.Domain.Entities.Module", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.Profile", b =>
                 {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.Security.Domain.Entities.Profile", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Modules.UserManagement.Domain.Entities.Person", "person")
                         .WithMany("profiles")
                         .HasForeignKey("personId")
@@ -1179,6 +1240,12 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.ProfileRole", b =>
                 {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.Security.Domain.Entities.ProfileRole", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Modules.Security.Domain.Entities.Profile", "profile")
                         .WithMany("profileRoles")
                         .HasForeignKey("profileId")
@@ -1196,8 +1263,23 @@ namespace backend.Migrations
                     b.Navigation("role");
                 });
 
+            modelBuilder.Entity("backend.Modules.Security.Domain.Entities.Role", b =>
+                {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.Security.Domain.Entities.Role", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.RoleModule", b =>
                 {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.Security.Domain.Entities.RoleModule", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Modules.Security.Domain.Entities.Module", "module")
                         .WithMany("roleModules")
                         .HasForeignKey("moduleId")
@@ -1215,11 +1297,26 @@ namespace backend.Migrations
                     b.Navigation("role");
                 });
 
+            modelBuilder.Entity("backend.Modules.Security.Domain.Entities.View", b =>
+                {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.Security.Domain.Entities.View", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.ViewAction", b =>
                 {
                     b.HasOne("backend.Modules.Security.Domain.Entities.Action", "action")
                         .WithMany("viewActions")
                         .HasForeignKey("actionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.Security.Domain.Entities.ViewAction", "id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1236,6 +1333,12 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.Security.Domain.Entities.ViewModule", b =>
                 {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.Security.Domain.Entities.ViewModule", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Modules.Security.Domain.Entities.Module", "module")
                         .WithMany("viewModules")
                         .HasForeignKey("moduleId")
@@ -1255,6 +1358,12 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.DriverLicense", b =>
                 {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.UserManagement.Domain.Entities.DriverLicense", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Modules.Security.Domain.Entities.Profile", "profile")
                         .WithMany("driverLicenses")
                         .HasForeignKey("profileId")
@@ -1264,11 +1373,26 @@ namespace backend.Migrations
                     b.Navigation("profile");
                 });
 
+            modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.Family", b =>
+                {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.UserManagement.Domain.Entities.Family", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.FamilyMember", b =>
                 {
                     b.HasOne("backend.Modules.UserManagement.Domain.Entities.Family", "family")
                         .WithMany("members")
                         .HasForeignKey("familyId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.UserManagement.Domain.Entities.FamilyMember", "id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1283,8 +1407,23 @@ namespace backend.Migrations
                     b.Navigation("profile");
                 });
 
+            modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.IdentificationType", b =>
+                {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.UserManagement.Domain.Entities.IdentificationType", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.Person", b =>
                 {
+                    b.HasOne("backend.Shared.Abstracts.BaseEntity", null)
+                        .WithOne()
+                        .HasForeignKey("backend.Modules.UserManagement.Domain.Entities.Person", "id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("backend.Modules.UserManagement.Domain.Entities.IdentificationType", "IdentificationType")
                         .WithOne("person")
                         .HasForeignKey("backend.Modules.UserManagement.Domain.Entities.Person", "identificationId")
@@ -1330,7 +1469,7 @@ namespace backend.Migrations
                     b.Navigation("bus");
                 });
 
-            modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.Model", b =>
+            modelBuilder.Entity("backend.Modules.FleetManagement.Domain.Entities.Year", b =>
                 {
                     b.Navigation("lineModel");
                 });

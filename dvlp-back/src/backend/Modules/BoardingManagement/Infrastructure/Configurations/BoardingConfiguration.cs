@@ -1,12 +1,13 @@
 using backend.Modules.BoardingManagement.Domain.Entities;
+using backend.Shared.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace backend.Modules.BoardingManagement.Infrastructure.Configurations
 {
-    public class BoardingConfiguration : IEntityTypeConfiguration<Boarding>
+    public class BoardingConfiguration : BaseEntityConfiguration<Boarding>
     {
-        public void Configure(EntityTypeBuilder<Boarding> builder)
+        public override void Configure(EntityTypeBuilder<Boarding> builder)
         {
             builder.Property(b => b.profileId).IsRequired();
             builder.Property(b => b.stopId).IsRequired();

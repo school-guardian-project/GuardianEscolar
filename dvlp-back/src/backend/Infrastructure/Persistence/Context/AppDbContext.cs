@@ -136,7 +136,6 @@ namespace backend.Infrastructure.Persistence.Context
             modelBuilder.ApplyConfiguration(new LineModelConfiguration());
             modelBuilder.ApplyConfiguration(new BrandConfiguration());
             modelBuilder.ApplyConfiguration(new IdentificationTypeConfiguration());
-            modelBuilder.ApplyConfiguration(new BaseEntityConfiguration());
         }
 
         protected AppDbContext()

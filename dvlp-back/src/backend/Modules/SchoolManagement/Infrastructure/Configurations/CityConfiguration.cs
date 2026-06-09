@@ -1,12 +1,13 @@
 using backend.Modules.SchoolManagement.Domain.Entities;
+using backend.Shared.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace backend.Modules.SchoolManagement.Infrastructure.Configurations
 {
-    public class CityConfiguration : IEntityTypeConfiguration<City>
+    public class CityConfiguration : BaseEntityConfiguration<City>
     {
-        public void Configure(EntityTypeBuilder<City> builder)
+        public override void Configure(EntityTypeBuilder<City> builder)
         {
             builder.Property(c => c.name).HasMaxLength(40);
             builder.Property(c => c.country).HasMaxLength(30);

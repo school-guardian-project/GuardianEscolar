@@ -1,12 +1,13 @@
 using backend.Modules.Security.Domain.Entities;
+using backend.Shared.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace backend.Modules.Security.Infrastructure.Configurations
 {
-    public class ProfileConfiguration : IEntityTypeConfiguration<Profile>
+    public class ProfileConfiguration : BaseEntityConfiguration<Profile>
     {
-        public void Configure(EntityTypeBuilder<Profile> builder)
+        public override void Configure(EntityTypeBuilder<Profile> builder)
         {
             builder.Property(p => p.password).HasMaxLength(100);
             // Esta es una relacion de uno a muchos, donde una persona tiene muchos perfiles.

@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class AddStatusColumn : Migration
+    public partial class AddLengthStatus : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -38,7 +38,7 @@ namespace backend.Migrations
                     name = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: true),
                     description = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: true),
                     urgencyLevel = table.Column<int>(type: "integer", nullable: true),
-                    status = table.Column<string>(type: "text", nullable: false)
+                    status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -743,7 +743,7 @@ namespace backend.Migrations
                     alertTypeId = table.Column<Guid>(type: "uuid", nullable: false),
                     busId = table.Column<Guid>(type: "uuid", nullable: false),
                     dateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    status = table.Column<string>(type: "text", nullable: false)
+                    status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -872,7 +872,7 @@ namespace backend.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     profileId = table.Column<Guid>(type: "uuid", nullable: false),
                     alertId = table.Column<Guid>(type: "uuid", nullable: false),
-                    status = table.Column<string>(type: "text", nullable: false)
+                    status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {

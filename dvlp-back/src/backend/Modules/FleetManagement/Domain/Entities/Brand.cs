@@ -1,11 +1,9 @@
-using Medo;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.FleetManagement.Domain.Entities
 {
-    public class Brand
+    public class Brand : BaseEntity
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
-
         public string? name { get; set; }
 
         public ICollection<Line> line { get; set; } = new List<Line>();

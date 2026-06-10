@@ -1,19 +1,19 @@
 using backend.Modules.RouteManagement.Domain.Entities;
+using backend.Shared.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 
 namespace backend.Modules.RouteManagement.Infrastructure.Configurations
 {
-    public class RouteConfiguration : IEntityTypeConfiguration<RouteEntity>
+    public class RouteConfiguration : BaseEntityConfiguration<RouteEntity>
     {
-        public void Configure(EntityTypeBuilder<RouteEntity> builder)
+        public override void Configure(EntityTypeBuilder<RouteEntity> builder)
         {
-            builder.HasKey(r => r.Id);
-            builder.Property(r => r.Name).HasMaxLength(255);
-            builder.Property(r => r.TargetSector).HasMaxLength(255);
-            builder.Property(r => r.StartTime).IsRequired();
-            builder.Property(r => r.EndTime).IsRequired();
+            builder.Property(r => r.name).HasMaxLength(30);
+            builder.Property(r => r.targetSector).HasMaxLength(30);
+            builder.Property(r => r.startTime).IsRequired();
+            builder.Property(r => r.endTime).IsRequired();
             builder.HasOne(r => r.school).WithMany(s => s.routes).HasForeignKey(r => r.schoolId);
         }
     }

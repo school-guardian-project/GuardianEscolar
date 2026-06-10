@@ -1,17 +1,15 @@
-﻿using Medo;
+﻿using backend.Shared.Abstracts;
 
 namespace backend.Modules.Security.Domain.Entities
 {
-    public class RoleModule
+    public class RoleModule : BaseEntity
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Guid roleId { get; set; }
 
-        public Uuid7 roleId { get; set; }
+        public Guid moduleId { get; set; }
 
-        public Uuid7 moduleId { get; set; }
+        public Module module { get; set; }
 
-        public Module Module { get; set; }
-
-        public Role Role { get; set; }
+        public Role role { get; set; }
     }
 }

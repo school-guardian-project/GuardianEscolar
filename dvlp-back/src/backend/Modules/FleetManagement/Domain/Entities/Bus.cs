@@ -3,23 +3,21 @@ using backend.Modules.BoardingManagement.Domain.Entities;
 using backend.Modules.RouteManagement.Domain.Entities;
 using backend.Modules.SchoolManagement.Domain.Entities;
 using backend.Modules.Security.Domain.Entities;
-using Medo;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.FleetManagement.Domain.Entities
 {
-    public class Bus
+    public class Bus : BaseEntity
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Guid driverId { get; set; }
 
-        public Uuid7 driverId { get; set; }
-
-        public Uuid7 schoolId { get; set; }
+        public Guid schoolId { get; set; }
 
         public byte[]? soatValidity { get; set; }
 
         public bool gpsStatus { get; set; }
 
-        public Uuid7 lineModelId { get; set; }
+        public Guid lineModelId { get; set; }
 
         public SchoolEntity school { get; set; }
 

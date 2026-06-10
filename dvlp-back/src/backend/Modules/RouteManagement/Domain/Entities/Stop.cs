@@ -1,16 +1,14 @@
 using backend.Modules.BoardingManagement.Domain.Entities;
 using backend.Modules.SchoolManagement.Domain.Entities;
-using Medo;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.RouteManagement.Domain.Entities
 {
-    public class Stop
+    public class Stop : BaseEntity
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Guid cityId { get; set; }
 
-        public Uuid7 cityId { get; set; }
-
-        public Uuid7 schoolId { get; set; }
+        public Guid schoolId { get; set; }
 
         public string address { get; set; }
 

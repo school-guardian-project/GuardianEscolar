@@ -1,16 +1,16 @@
+using backend.Shared.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using ActionEntity = backend.Modules.Security.Domain.Entities.Action;
 
 namespace backend.Modules.Security.Infrastructure.Configurations
 {
-    public class ActionConfiguration : IEntityTypeConfiguration<ActionEntity>
+    public class ActionConfiguration : BaseEntityConfiguration<ActionEntity>
     {
-        public void Configure(EntityTypeBuilder<ActionEntity> builder)
+        public override void Configure(EntityTypeBuilder<ActionEntity> builder)
         {
-            builder.HasKey(a => a.id);
-            builder.Property(a => a.name).HasMaxLength(255);
-            builder.Property(a => a.description).HasMaxLength(500);
+            builder.Property(a => a.name).HasMaxLength(30);
+            builder.Property(a => a.description).HasMaxLength(100);
         }
     }
 }

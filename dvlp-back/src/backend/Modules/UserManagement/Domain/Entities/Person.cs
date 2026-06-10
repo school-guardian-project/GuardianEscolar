@@ -1,17 +1,15 @@
 ﻿using backend.Modules.Security.Domain.Entities;
-using Medo;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.UserManagement.Domain.Entities
 {
-    public class Person
+    public class Person : BaseEntity
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
-
         public string? name { get; set; }
 
         public string? lastName { get; set; }
 
-        public Uuid7 identificationId { get; set; }
+        public Guid identificationId { get; set; }
 
         public string? email { get; set; }
 

@@ -1,15 +1,13 @@
 ﻿using backend.Modules.FleetManagement.Domain.Entities;
-using Medo;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.AlertManagement.Domain.Entities
 {
-    public class Alert
+    public class Alert : BaseEntity
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Guid alertTypeId { get; set; }
 
-        public Uuid7 alertTypeId { get; set; }
-
-        public Uuid7 busId { get; set; }
+        public Guid busId { get; set; }
 
         public DateTime dateTime { get; set; }
 

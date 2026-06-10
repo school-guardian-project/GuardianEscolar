@@ -1,12 +1,10 @@
-using Medo;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.UserManagement.Domain.Entities
 {
-    public class IdentificationType
+    public class IdentificationType : BaseEntity
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
-
-        public String name { get; set; }
+        public string name { get; set; }
 
         public Person person { get; set; }
     }

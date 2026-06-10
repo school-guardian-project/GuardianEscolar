@@ -1,12 +1,10 @@
-using Medo;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.SchoolManagement.Domain.Entities
 {
-    public class SchoolCampuse
+    public class SchoolCampuse : BaseEntity
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
-
-        public Uuid7 schoolId { get; set; }
+        public Guid schoolId { get; set; }
 
         public string? name { get; set; }
 

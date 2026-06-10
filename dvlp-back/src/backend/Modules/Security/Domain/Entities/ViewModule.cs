@@ -1,17 +1,15 @@
-﻿using Medo;
+﻿using backend.Shared.Abstracts;
 
 namespace backend.Modules.Security.Domain.Entities
 {
-    public class ViewModule
+    public class ViewModule : BaseEntity
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Guid viewId { get; set; }
 
-        public Uuid7 ViewId { get; set; }
+        public Guid moduleId { get; set; }
 
-        public Uuid7 ModuleId { get; set; }
+        public Module module { get; set; }
 
-        public Module Module { get; set; }
-
-        public View View { get; set; }
+        public View view { get; set; }
     }
 }

@@ -1,13 +1,11 @@
 ﻿using backend.Modules.Security.Domain.Entities;
-using Medo;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.UserManagement.Domain.Entities
 {
-    public class DriverLicense
+    public class DriverLicense : BaseEntity
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
-
-        public Uuid7 profileId { get; set; }
+        public Guid profileId { get; set; }
 
         public string? licenseNumber { get; set; }
 

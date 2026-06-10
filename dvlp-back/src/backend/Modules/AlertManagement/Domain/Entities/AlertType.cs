@@ -1,11 +1,9 @@
-﻿using Medo;
+﻿using backend.Shared.Abstracts;
 
 namespace backend.Modules.AlertManagement.Domain.Entities
 {
-    public class AlertType
+    public class AlertType : BaseEntity
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
-
         public string? name { get; set; }
 
         public string? description { get; set; }

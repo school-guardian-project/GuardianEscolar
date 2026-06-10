@@ -1,21 +1,19 @@
 using backend.Modules.SchoolManagement.Domain.Entities;
-using Medo;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.RouteManagement.Domain.Entities
 {
-    public class RouteEntity
+    public class RouteEntity : BaseEntity
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Guid schoolId { get; set; }
 
-        public Uuid7 schoolId { get; set; }
+        public string name { get; set; }
 
-        public string? Name { get; set; }
+        public string targetSector { get; set; }
 
-        public string? TargetSector { get; set; }
+        public TimeSpan startTime { get; set; }
 
-        public TimeSpan StartTime { get; set; }
-
-        public TimeSpan EndTime { get; set; }
+        public TimeSpan endTime { get; set; }
 
         public SchoolEntity school { get; set; }
 

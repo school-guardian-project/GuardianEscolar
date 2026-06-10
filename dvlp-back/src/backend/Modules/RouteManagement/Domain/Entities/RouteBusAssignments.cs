@@ -1,15 +1,13 @@
 using backend.Modules.FleetManagement.Domain.Entities;
-using Medo;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.RouteManagement.Domain.Entities
 {
-    public class RouteBusAssignments
+    public class RouteBusAssignments : BaseEntity
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Guid busId { get; set; }
 
-        public Uuid7 busId { get; set; }
-
-        public Uuid7 routeId { get; set; }
+        public Guid routeId { get; set; }
 
         public Bus bus { get; set; }
 

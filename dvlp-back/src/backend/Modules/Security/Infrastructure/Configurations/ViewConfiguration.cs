@@ -1,16 +1,16 @@
 using backend.Modules.Security.Domain.Entities;
+using backend.Shared.Infrastructure.Configuration;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace backend.Modules.Security.Infrastructure.Configurations
 {
-    public class ViewConfiguration : IEntityTypeConfiguration<View>
+    public class ViewConfiguration : BaseEntityConfiguration<View>
     {
-        public void Configure(EntityTypeBuilder<View> builder)
+        public override void Configure(EntityTypeBuilder<View> builder)
         {
-            builder.HasKey(v => v.id);
-            builder.Property(v => v.name).HasMaxLength(255);
-            builder.Property(v => v.description).HasMaxLength(1000);
+            builder.Property(v => v.name).HasMaxLength(30);
+            builder.Property(v => v.description).HasMaxLength(100);
         }
     }
 }

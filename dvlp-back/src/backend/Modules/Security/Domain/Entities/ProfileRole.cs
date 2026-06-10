@@ -1,14 +1,12 @@
-﻿using Medo;
+﻿using backend.Shared.Abstracts;
 
 namespace backend.Modules.Security.Domain.Entities
 {
-    public class ProfileRole
+    public class ProfileRole : BaseEntity
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Guid roleId { get; set; }
 
-        public Uuid7 roleId { get; set; }
-
-        public Uuid7 profileId { get; set; }
+        public Guid profileId { get; set; }
 
         // Se identifica la relacion con que entidad
         public Profile profile { get; set; }

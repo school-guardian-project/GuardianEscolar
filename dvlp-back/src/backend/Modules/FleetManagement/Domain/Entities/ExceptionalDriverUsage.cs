@@ -1,15 +1,13 @@
 ﻿using backend.Modules.Security.Domain.Entities;
-using Medo;
+using backend.Shared.Abstracts;
 
 namespace backend.Modules.FleetManagement.Domain.Entities
 {
-    public class ExceptionalDriverUsage
+    public class ExceptionalDriverUsage : BaseEntity
     {
-        public Uuid7 Id { get; set; } = Uuid7.NewUuid7();
+        public Guid busId { get; set; }
 
-        public Uuid7 busId { get; set; }
-
-        public Uuid7 profileId { get; set; }
+        public Guid profileId { get; set; }
 
         public DateTime startDateTime { get; set; }
 

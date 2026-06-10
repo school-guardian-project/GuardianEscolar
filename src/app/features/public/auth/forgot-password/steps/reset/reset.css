@@ -54,6 +54,7 @@ form {
 .input-password {
   display: flex;
   flex-direction: column;
+  color: black;
 }
 
 .error1 {
@@ -69,4 +70,7 @@ form {
   margin-bottom: 10px;
   height: 35px;
   gap: 2px;
+}
+.h2{
+    color: black;
 }

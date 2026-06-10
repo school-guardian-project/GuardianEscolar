@@ -231,7 +231,10 @@
       "returnStep": "Back",
       "stepText": "4 of 4",
       "description": "Enter the code to complete the phone change.",
-      "pin_error": "*The entered code is invalid."
+      "pin_error": "*The entered code is invalid.",
+      "confirmationTitle": "Phone updated",
+      "confirmationDescription": "Your phone number has been updated successfully."
+      
     }
   },
   "change_email": {
@@ -266,7 +269,9 @@
       "returnStep": "Back",
       "stepText": "4 of 4",
       "description": "Enter the final code to update your email.",
-      "pin_error": "*The entered code is invalid."
+      "pin_error": "*The entered code is invalid.",
+      "confirmationTitle": "Email updated",
+      "confirmationDescription": "Your email has been updated successfully."
     },
     "reset": {
       "title": "Almost done",
@@ -320,7 +325,9 @@
       "loginDescription": "Your password must meet the minimum requirements.",
       "buttonText": "Save password",
       "returnStep": "Back",
-      "stepText": "3 of 3"
+      "stepText": "3 of 3",
+      "confirmationTitle": "Password updated",
+      "confirmationDescription": "Your password has been updated successfully."
     }
   },
   "dashboard": {
@@ -496,7 +503,8 @@
     "delete": "Delete",
     "save": "Save",
     "confirm": "Confirm",
-    "close": "Close"
+    "close": "Close",
+    "accept": "Accept"
   },
   "record_information": {
     "estudiante": {

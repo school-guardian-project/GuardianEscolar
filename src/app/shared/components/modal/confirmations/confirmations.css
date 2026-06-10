@@ -8,17 +8,22 @@
 
 .description-dialog {
     margin-bottom: 20px;
-    color: black;
+    color: var(--text-color);
 }
 
 button {
     color: white;
-    background-color: #366fea;
+    background-color: var(--button-apply);
     border-radius: 50px;
     padding: 10px 30px;
     border: none;
     cursor: pointer;
     font-size: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: var(--hover-color);
 }
 
 .btn {
@@ -32,7 +37,7 @@ button {
     width: 205px;
     height: 205px;
     line-height: 205px;
-    color: black;
+    color: var(--text-color);
 }
 
 mat-dialog-content,

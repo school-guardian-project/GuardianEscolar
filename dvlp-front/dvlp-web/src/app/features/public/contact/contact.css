@@ -180,7 +180,11 @@ form {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
   width: 100%;
 }
-
+.link-social{
+  color: darkgrey;
+  font-weight: 600;
+  text-decoration: none;
+}
 .section-contact {
   display: flex;
   justify-content: center;
@@ -265,6 +269,7 @@ hr {
 .main-title {
   font-size: 1rem;
   font-weight: 600;
+  color: black;
 }
 
 .title-contact-card,

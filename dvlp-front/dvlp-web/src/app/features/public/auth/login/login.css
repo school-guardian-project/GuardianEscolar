@@ -123,6 +123,7 @@ h1 {
     font-size: 1.5rem;
     line-height: 1;
     margin-bottom: 10px;
+    color: black;
 }
 
 .login-description {
@@ -158,6 +159,7 @@ input.ng-invalid.ng-touched {
 label {
     margin-bottom: 7px;
     font-size: 1rem;
+    color: black;
 }
 
 .password {
@@ -202,7 +204,7 @@ button {
 }
 
 .terms {
-    color: #366fea;
+    color: black;
     cursor: pointer;
 }
 
@@ -210,15 +212,18 @@ button {
     font-size: 0.8rem;
     text-align: center;
     margin-top: auto;
+    color: black;
 }
 
 .term {
     margin-right: 2px;
     margin-left: 2px;
+    color: #366fea;
 }
 
 .politic {
     margin-left: 2px;
+    color: #366fea;
 }
 
 @media screen and (max-width: 1000px) {

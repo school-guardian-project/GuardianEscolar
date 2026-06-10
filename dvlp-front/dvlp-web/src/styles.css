@@ -39,16 +39,17 @@
   --overlay-bg: rgba(15, 23, 42, 0.65);
   --shadow-modal: 0 25px 50px -12px rgba(15, 23, 42, 0.4);
   --focus-ring: 0 0 0 3px rgba(26, 86, 219, 0.12);
+  --mat-sys-surface: #ffffff;
 }
 
 */
 
-/* LIGHT BLUE */
-.light-theme-blue {
+/* LIGHT BLUE */.light-theme-blue {
   --bg-color: #F0F4F8;
   --text-color: #111827;
 
   --color-navbar: #1A56DB;
+  --navbar-gradient: linear-gradient(135deg, #102d7d, #366fea);
 
   --card-bg: #FFFFFF;
   --card-secondary-bg: #F8FAFC;
@@ -76,6 +77,8 @@
 
   --button-cancel: #FFFFFF;
   --button-apply: #1A56DB;
+
+  --mat-sys-surface: #FFFFFF;
 }
 
 /* LIGHT GREEN */
@@ -84,12 +87,12 @@
   --text-color: #111827;
 
   --color-navbar: #16A34A;
+  --navbar-gradient: linear-gradient(135deg, #0a4d22, #2dbe65);
 
   --card-bg: #FFFFFF;
   --card-secondary-bg: #F8FAFC;
 
   --card-color-input: #858e9b;
-
 
   --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
 
@@ -114,6 +117,8 @@
 
   --button-cancel: #FFFFFF;
   --button-apply: #16A34A;
+
+  --mat-sys-surface: #FFFFFF;
 }
 
 /* DARK BLUE */
@@ -122,6 +127,7 @@
   --text-color: #E5E7EB;
 
   --color-navbar: #0F2E6B;
+  --navbar-gradient: linear-gradient(135deg, #071840, #1a4baa);
 
   --card-bg: #161A22;
   --card-secondary-bg: #1C1F26;
@@ -150,6 +156,8 @@
 
   --button-cancel: #FFFFFF;
   --button-apply: #3B82F6;
+
+  --mat-sys-surface: #161A22;
 }
 
 /* DARK GREEN */
@@ -158,11 +166,11 @@
   --text-color: #E5E7EB;
 
   --color-navbar: #0B4A24;
+  --navbar-gradient: linear-gradient(135deg, #052912, #12853f);
 
   --card-bg: #161A22;
   --card-secondary-bg: #1C1F26;
   --card-color-input: #bcbcbcd3;
-
 
   --card-shadow: 0 8px 20px rgba(0,0,0,0.4);
 
@@ -187,20 +195,25 @@
 
   --button-cancel: #FFFFFF;
   --button-apply: #22C55E;
+
+  --mat-sys-surface: #161A22;
 }
-/*  BODY */
+
+/* BODY */
 body {
   background-color: var(--bg-color);
   color: var(--text-color);
   font-family: "Segoe UI", Arial, sans-serif;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-/* LIGHT YELLOW - DARKER & MORE PROFESSIONAL */
+
+/* LIGHT YELLOW */
 .light-theme-yellow {
   --bg-color: #FAF8F1;
   --text-color: #1F2937;
 
   --color-navbar: #D4A017;
+  --navbar-gradient: linear-gradient(135deg, #7a5800, #f0bc30);
 
   --card-bg: #FFFFFF;
   --card-secondary-bg: #F8F3E6;
@@ -231,6 +244,8 @@ body {
   --button-apply: #D4A017;
 
   --sidebar-item: #A16207;
+
+  --mat-sys-surface: #FFFFFF;
 }
 
 /* DARK YELLOW */
@@ -239,6 +254,7 @@ body {
   --text-color: #E5E7EB;
 
   --color-navbar: #B8860B;
+  --navbar-gradient: linear-gradient(135deg, #5c4000, #d4a020);
 
   --card-bg: #1A1D21;
   --card-secondary-bg: #22262B;
@@ -270,13 +286,17 @@ body {
   --button-apply: #FACC15;
 
   --sidebar-item: #FACC15;
+
+  --mat-sys-surface: #1A1D21;
 }
+
 /* LIGHT RED */
 .light-theme-red {
   --bg-color: #F8F4F4;
   --text-color: #1F2937;
 
   --color-navbar: #B42318;
+  --navbar-gradient: linear-gradient(135deg, #6b0d09, #d94035);
 
   --card-bg: #FFFFFF;
   --card-secondary-bg: #FAFAFA;
@@ -305,6 +325,8 @@ body {
 
   --button-cancel: #FFFFFF;
   --button-apply: #B42318;
+
+  --mat-sys-surface: #FFFFFF;
 }
 
 /* DARK RED */
@@ -313,6 +335,7 @@ body {
   --text-color: #E5E7EB;
 
   --color-navbar: #5B1215;
+  --navbar-gradient: linear-gradient(135deg, #300508, #8c1f24);
 
   --card-bg: #181B20;
   --card-secondary-bg: #20242A;
@@ -342,4 +365,6 @@ body {
 
   --button-cancel: #FFFFFF;
   --button-apply: #DC2626;
+
+  --mat-sys-surface: #181B20;
 }

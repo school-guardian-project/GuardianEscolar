@@ -1,10 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { passwordMatch } from '@shared/validator/password-match.validator';
 import { ChangePassword } from '@shared/components/change/change-password/change-password';
-import { MatDialog } from '@angular/material/dialog';
-import { Confirmations } from '@shared/components/modal/confirmations/confirmations';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
@@ -15,7 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class Reset {
   form: FormGroup;
-  readonly dialog = inject(MatDialog);
+  showConfirmation = false;
 
   constructor(
     private router: Router,
@@ -52,27 +50,14 @@ export class Reset {
 
   onSubmit() {
     if (this.form.valid) {
-      this.openDialog();
+      this.showConfirmation = true;
     } else {
       this.form.markAllAsTouched();
     }
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(Confirmations, {
-      data: {
-        titleDialog: 'Contraseña actualizado',
-        descriptionDialog: 'Su contraseña ha sido actualizada correctamente.',
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'accept') {
-        this.accept();
-      }
-    });
-  }
   accept() {
+    this.showConfirmation = false;
     this.router.navigate(['/admin/informacion']);
   }
 

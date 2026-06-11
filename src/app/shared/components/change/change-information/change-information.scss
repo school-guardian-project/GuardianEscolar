@@ -1,0 +1,26 @@
+@use "../change-style.css" as *;
+
+/* .edu usa variables de contraste */
+.edu {
+  color: var(--light-contrast-color);
+}
+
+.aplycolor {
+  color: var(--dark-contrast-color);
+}
+
+/* .color del step text */
+.color {
+  color: var(--text-secondary);
+  margin-left: 5px;
+}
+
+/* login-description tiene font-size ligeramente mayor */
+.login-description {
+  font-size: 1.1rem;
+}
+
+/* margin-bottom del botón */
+button {
+  margin-bottom: 25px;
+}

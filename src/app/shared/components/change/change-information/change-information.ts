@@ -8,7 +8,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   standalone: true,
   imports: [MatIcon, NavComponent, ReactiveFormsModule],
   templateUrl: './change-information.html',
-  styleUrl: './change-information.css',
+  styleUrl: './change-information.scss',
 })
 export class ChangeInformation {
   @Input() isThemed = true; // ← true por defecto porque esta vista siempre tiene tema

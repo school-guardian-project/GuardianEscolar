@@ -28,7 +28,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
     DeleteRecord,
   ],
   templateUrl: './schools.html',
-  styleUrl: './schools.css',
+  styleUrl: './schools.scss',
 })
 export class Schools {
   showModal = false;

@@ -44,7 +44,7 @@ const MOCK_DATA: Partial<Record<CardType, RecordData[]>> = {
     TranslateModule
   ],
   templateUrl: './dashboard-admin.html',
-  styleUrls: ['./dashboard-admin.css']
+  styleUrls: ['./dashboard-admin.scss']
 })
 export class DashboardAdmin {
   viewItem: RecordData = {};

@@ -9,4 +9,6 @@ public class DriverLicenseResponseDto
     public byte[] drivingLicense { get; set; }
 
     public DateTime licenseExpirationDate { get; set; }
+    
+    public string status { get; set; }
 }

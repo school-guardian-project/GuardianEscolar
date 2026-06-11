@@ -13,4 +13,6 @@ public class PersonResponseDto
     public int? phone { get; set; }
 
     public string? residenceAddress { get; set; }
+    
+    public string status { get; set; }
 }

@@ -11,4 +11,6 @@ public class ExceptionalDriverUsageRequestDto
     public DateTime endDateTime { get; set; }
 
     public string reason { get; set; }
+
+    public string bus { get; set; }
 }

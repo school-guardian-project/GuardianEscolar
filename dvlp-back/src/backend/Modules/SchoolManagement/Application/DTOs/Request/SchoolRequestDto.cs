@@ -17,4 +17,6 @@ public class SchoolRequestDto
     public string website { get; set; }
 
     public string theme { get; set; }
+    
+    public string status { get; set; }
 }

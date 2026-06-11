@@ -29,7 +29,6 @@
   <ItemGroup>
     <Folder Include="Application\Services\" />
     <Folder Include="Modules\AlertManagement\Api\" />
-    <Folder Include="Modules\AlertManagement\Application\Mappers\" />
     <Folder Include="Modules\AlertManagement\Application\Services\" />
     <Folder Include="Modules\AlertManagement\Infrastructure\Repositories\" />
     <Folder Include="Modules\BoardingManagement\Api\" />

@@ -7,4 +7,6 @@ public class SchoolCampuseRequestDto
     public string? name { get; set; }
 
     public string? address { get; set; }
+    
+    public string status { get; set; }
 }

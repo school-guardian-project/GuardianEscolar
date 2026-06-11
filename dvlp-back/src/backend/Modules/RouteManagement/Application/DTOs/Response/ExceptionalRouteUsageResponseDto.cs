@@ -9,4 +9,6 @@ public class ExceptionalRouteUsageResponseDto
     public DateTime dateTime { get; set; }
 
     public string reason { get; set; }
+    
+    public string status { get; set; }
 }

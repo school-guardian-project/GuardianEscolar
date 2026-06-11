@@ -5,4 +5,6 @@ public class RouteBusAssignmentsRequestDto
     public Guid busId { get; set; }
 
     public Guid routeId { get; set; }
+    
+    public string status { get; set; }
 }

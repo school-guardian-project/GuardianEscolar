@@ -23,11 +23,13 @@
       Version="1.23.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="10.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2" />
+    <PackageReference Include="AutoMapper" Version="16.1.1" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Application\Services\" />
     <Folder Include="Modules\AlertManagement\Api\" />
+    <Folder Include="Modules\AlertManagement\Application\Mappers\" />
     <Folder Include="Modules\AlertManagement\Application\Services\" />
     <Folder Include="Modules\AlertManagement\Infrastructure\Repositories\" />
     <Folder Include="Modules\BoardingManagement\Api\" />

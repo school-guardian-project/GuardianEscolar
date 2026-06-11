@@ -18,7 +18,7 @@ import { CommonModule } from '@angular/common';
     CommonModule,
   ],
   templateUrl: './navbar.html',
-  styleUrl: './navbar.css',
+  styleUrl: './navbar.scss',
 })
 export class Navbar {
   constructor(private router: Router) {}

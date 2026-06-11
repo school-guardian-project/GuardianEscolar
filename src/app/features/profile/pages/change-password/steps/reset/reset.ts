@@ -9,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'app-reset',
   imports: [ReactiveFormsModule, ChangePassword, TranslateModule],
   templateUrl: './reset.html',
-  styleUrl: './reset.css',
+  styleUrl: './reset.scss',
 })
 export class Reset {
   form: FormGroup;

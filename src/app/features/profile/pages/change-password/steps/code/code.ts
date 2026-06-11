@@ -9,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'app-code',
   imports: [ChangePassword, ReactiveFormsModule, NgFor, TranslateModule],
   templateUrl: './code.html',
-  styleUrl: './code.css',
+  styleUrl: './code.scss',
 })
 export class Code {
   form: FormGroup

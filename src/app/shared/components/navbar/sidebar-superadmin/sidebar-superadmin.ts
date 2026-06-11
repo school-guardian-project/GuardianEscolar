@@ -8,6 +8,6 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [RouterModule, MatIconModule, TranslateModule],
   templateUrl: './sidebar-superadmin.html',
-  styleUrls: ['./sidebar-superadmin.css']
+  styleUrls: ['./sidebar-superadmin.scss']
 })
 export class SidebarSuperadmin {}

@@ -32,7 +32,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
     DeleteRecord,
   ],
   templateUrl: './estudiantes.html',
-  styleUrl: './estudiantes.css',
+  styleUrl: './estudiantes.scss',
 })
 export class Estudiantes {
 

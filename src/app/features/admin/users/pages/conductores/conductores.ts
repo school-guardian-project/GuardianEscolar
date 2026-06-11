@@ -12,7 +12,6 @@ import { UpdateRecord } from '@shared/components/modal/update-record/update-reco
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
 
 
-
 @Component({
   selector: 'app-conductores',
   imports: [
@@ -29,7 +28,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
     DeleteRecord,
   ],
   templateUrl: './conductores.html',
-  styleUrl: './conductores.css',
+  styleUrl: './conductores.scss',
 })
 export class Conductores {
   showModal = false;

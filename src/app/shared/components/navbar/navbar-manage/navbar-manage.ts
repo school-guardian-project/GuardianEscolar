@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   standalone: true,
   imports: [MatToolbarModule, MatButtonModule, MatIconModule],
   templateUrl: './navbar-manage.html',
-  styleUrl: './navbar-manage.css'
+  styleUrl: './navbar-manage.scss'
 })
 export class NavbarManage {
 

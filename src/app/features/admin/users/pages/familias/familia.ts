@@ -29,7 +29,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
     DeleteRecord,
   ],
   templateUrl: './familia.html',
-  styleUrl: './familia.css',
+  styleUrl: './familia.scss',
 })
 export class Familia {
   showModal = false;

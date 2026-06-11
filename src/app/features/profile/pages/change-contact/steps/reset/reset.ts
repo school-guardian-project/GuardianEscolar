@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'app-reset',
   imports: [ChangeInformation, ReactiveFormsModule, TranslateModule],
   templateUrl: './reset.html',
-  styleUrl: './reset.css',
+  styleUrl: './reset.scss',
 })
 export class Reset {
   form: FormGroup;

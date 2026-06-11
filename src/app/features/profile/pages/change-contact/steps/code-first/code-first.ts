@@ -9,7 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'app-code-first',
   imports: [ChangeInformation, NgFor, ReactiveFormsModule, TranslateModule],
   templateUrl: './code-first.html',
-  styleUrl: './code-first.css',
+  styleUrl: './code-first.scss',
 })
 export class CodeFirst {
   form: FormGroup

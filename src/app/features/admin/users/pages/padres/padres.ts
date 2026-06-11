@@ -28,7 +28,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
     DeleteRecord,
   ],
   templateUrl: './padres.html',
-  styleUrl: './padres.css',
+  styleUrl: './padres.scss',
 })
 export class Padres {
   showModal = false;

@@ -1,0 +1,6 @@
+@use '../navbar-shared' as *;
+
+/* Solo diferencia: superadmin usa font-weight: 500 en h3, admin usaba bold */
+/* Si quieres diferenciarlos, usa clases distintas en el HTML:              */
+/* .admin-section--super h3 { font-weight: 500; }                          */
+/* De lo contrario son idénticos y pueden compartir el mismo archivo.      */

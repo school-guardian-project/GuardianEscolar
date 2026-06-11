@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'app-email',
   imports: [ReactiveFormsModule, ChangePassword, TranslateModule],
   templateUrl: './email.html',
-  styleUrl: './email.css',
+  styleUrl: './email.scss',
 })
 export class Email {
   form: FormGroup;

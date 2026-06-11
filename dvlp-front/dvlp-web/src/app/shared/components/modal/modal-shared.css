@@ -1,0 +1,185 @@
+// =============================================================
+// _modal-shared.scss
+// Estilos compartidos entre los modales de la aplicación.
+// Usar con: @use 'path/to/modal-shared' as *;
+// =============================================================
+
+// --------------- OVERLAY / BACKDROP ---------------
+
+.modal-overlay,
+.lang-backdrop {
+  position: fixed;
+  inset: 0;
+  background: var(--overlay-bg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+// --------------- ANIMACIONES ---------------
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60%  { transform: translateX(-5px); }
+  40%, 80%  { transform: translateX(5px); }
+}
+
+// --------------- MODAL BASE ---------------
+
+// Propiedades comunes a .modal y .lang-modal
+%modal-base {
+  background: var(--modal-bg);
+  border-radius: 16px;
+  padding: 32px 28px 24px;
+  width: 100%;
+  max-width: 420px;
+  animation: slideUp 0.2s ease;
+}
+
+// --------------- HEADER ---------------
+
+.modal__header {
+  text-align: center;
+}
+
+.modal__title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--modal-title);
+}
+
+// --------------- BOTONES — BASE ---------------
+
+%btn-base {
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border: none;
+  transition: all 0.2s ease;
+}
+
+%btn-cancel-base {
+  background: var(--button-cancel);
+  color: var(--text-secondary);
+  border: 0.5px solid var(--border-color);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+%btn-submit-base {
+  background: var(--button-apply);
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 500;
+
+  &:hover {
+    filter: brightness(0.95);
+  }
+}
+
+// --------------- FOOTER ---------------
+
+.modal__footer {
+  display: flex;
+  gap: 10px;
+}
+
+// --------------- SUBTÍTULO ---------------
+
+// Ambos modales (modal.scss y lang-modal.scss) tienen
+// un subtítulo de 0.85rem en --text-secondary / --modal-text
+%modal-sub {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+// --------------- ERROR ---------------
+
+.error-message {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--alert-bg);
+  color: var(--alert-text);
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  animation: shake 0.4s ease;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: var(--alert-icon);
+  }
+}
+
+// --------------- LABEL DE CAMPO ---------------
+
+.modal__label {
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+// --------------- TEXTAREA ---------------
+
+.modal__textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 0.5px solid var(--border-color);
+  border-radius: 10px;
+  font-size: 0.9rem;
+  color: var(--modal-textArea);
+  background: var(--bg-color);
+  outline: none;
+  resize: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  font-family: inherit;
+
+  &:focus {
+    border-color: var(--color-navbar);
+    background: var(--card-bg);
+    box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.12);
+  }
+
+  &::placeholder {
+    color: var(--text-secondary);
+  }
+}
+
+// --------------- DIÁLOGOS DE MATERIAL (confirmation) ---------------
+
+mat-dialog-content,
+mat-dialog-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}

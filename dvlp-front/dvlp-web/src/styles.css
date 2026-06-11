@@ -14,6 +14,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+    scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 /* BODY */
@@ -45,7 +51,8 @@ body {
   --hover-color: #2061ec;
   --hover-card: #93b4f7;
   --accent-color: #003ab8;
-  --contrast-color: #0a1f6b;        /* azul muy oscuro, contrasta sobre cards claras */
+  --light-contrast-color: #e8f0ff;
+  --dark-contrast-color: #0a0f2e;
 
   --alert-bg: #FEF2F2;
   --alert-title: #7F1D1D;
@@ -60,6 +67,9 @@ body {
   --button-apply: #1A56DB;
 
   --mat-sys-surface: #FFFFFF;
+
+  --input-bg: #FFFFFF;
+  --input-border: #CBD5E1;
 }
 
 /* ── LIGHT GREEN ────────────────────────────────────────── */
@@ -84,7 +94,8 @@ body {
   --hover-color: #16A34A;
   --hover-card: #86efac;
   --accent-color: #107936;
-  --contrast-color: #063d18;        /* verde muy oscuro */
+  --light-contrast-color: #e6f9ee;
+  --dark-contrast-color: #071a0e;
 
   --alert-bg: #FEF2F2;
   --alert-title: #7F1D1D;
@@ -99,6 +110,9 @@ body {
   --button-apply: #16A34A;
 
   --mat-sys-surface: #FFFFFF;
+
+  --input-bg: #FFFFFF;
+  --input-border: #CBD5E1;
 }
 
 /* ── LIGHT YELLOW ───────────────────────────────────────── */
@@ -123,7 +137,8 @@ body {
   --hover-color: #B7791F;
   --hover-card: #fde68a;
   --accent-color: #A16207;
-  --contrast-color: #4b2d00;        /* ámbar muy oscuro */
+  --light-contrast-color: #fdf6dc;
+  --dark-contrast-color: #1a1000;
 
   --alert-bg: #FEF2F2;
   --alert-title: #7F1D1D;
@@ -138,6 +153,9 @@ body {
   --button-apply: #D4A017;
 
   --mat-sys-surface: #FFFFFF;
+
+  --input-bg: #FFFFFF;
+  --input-border: #D1C07A;
 }
 
 /* ── LIGHT RED ──────────────────────────────────────────── */
@@ -161,7 +179,8 @@ body {
   --hover-color: #C53030;
   --hover-card: #ec7d7d;
   --accent-color: #991B1B;
-  --contrast-color: #4a0a0a;        /* rojo muy oscuro / casi granate */
+  --light-contrast-color: #fde8e8;
+  --dark-contrast-color: #1a0303;
 
   --alert-bg: #FEF2F2;
   --alert-title: #7F1D1D;
@@ -176,6 +195,9 @@ body {
   --button-apply: #B42318;
 
   --mat-sys-surface: #FFFFFF;
+
+  --input-bg: #FFFFFF;
+  --input-border: #E5C5C5;
 }
 
 /* ── DARK BLUE ──────────────────────────────────────────── */
@@ -199,7 +221,8 @@ body {
   --hover-color: #3B82F6;
   --hover-card: #1d3d6e;
   --accent-color: #3B82F6;
-  --contrast-color: #93c5fd;        /* azul muy claro, contrasta sobre cards oscuras */
+  --light-contrast-color: #dbeafe;
+  --dark-contrast-color: #0a0f1e;
 
   --alert-bg: #161A22;
   --alert-title: #FCA5A5;
@@ -215,6 +238,9 @@ body {
   --button-apply: #3B82F6;
 
   --mat-sys-surface: #161A22;
+
+  --input-bg: #0D1117;
+  --input-border: #252A34;
 }
 
 /* ── DARK GREEN ─────────────────────────────────────────── */
@@ -238,7 +264,8 @@ body {
   --hover-color: #1eda63;
   --hover-card: #14532d;
   --accent-color: #22C55E;
-  --contrast-color: #86efac;        /* verde muy claro */
+  --light-contrast-color: #dcfce7;
+  --dark-contrast-color: #071a0e;
 
   --alert-bg: #161A22;
   --alert-title: #FCA5A5;
@@ -254,6 +281,9 @@ body {
   --button-apply: #22C55E;
 
   --mat-sys-surface: #161A22;
+
+  --input-bg: #0D1117;
+  --input-border: #1a2e1f;
 }
 
 /* ── DARK YELLOW ────────────────────────────────────────── */
@@ -278,7 +308,8 @@ body {
   --hover-color: #FACC15;
   --hover-card: #3d2e00;
   --accent-color: #FDE047;
-  --contrast-color: #fef08a;        /* amarillo muy claro */
+  --light-contrast-color: #fefce8;
+  --dark-contrast-color: #0f0c00;
 
   --alert-bg: #1A1D21;
   --alert-title: #FCA5A5;
@@ -294,6 +325,9 @@ body {
   --button-apply: #FACC15;
 
   --mat-sys-surface: #1A1D21;
+
+  --input-bg: #0D1009;
+  --input-border: #3A320F;
 }
 
 /* ── DARK RED ───────────────────────────────────────────── */
@@ -317,7 +351,8 @@ body {
   --hover-color: #EF4444;
   --hover-card: #3d0a0a;
   --accent-color: #DC2626;
-  --contrast-color: #fca5a5;        /* rojo muy claro */
+  --light-contrast-color: #fee2e2;
+  --dark-contrast-color: #0f0202;
 
   --alert-bg: #181B20;
   --alert-title: #FCA5A5;
@@ -333,4 +368,7 @@ body {
   --button-apply: #DC2626;
 
   --mat-sys-surface: #181B20;
+
+  --input-bg: #0D0F12;
+  --input-border: #2B1F1F;
 }

@@ -17,11 +17,11 @@ input.ng-invalid.ng-touched {
 label {
     margin-bottom: 7px;
     font-size: 1rem;
-    color: black;
+    color: var(--light-contrast-color);
 }
 
 p {
-    color: #68768e;
+    color: var(--light-contrast-color);
     margin-bottom: 50px;
     margin-top: 18px;
 }

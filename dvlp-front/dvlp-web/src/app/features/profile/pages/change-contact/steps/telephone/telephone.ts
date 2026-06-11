@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'app-telephone',
   imports: [ChangeInformation, ReactiveFormsModule, TranslateModule],
   templateUrl: './telephone.html',
-  styleUrl: './telephone.css',
+  styleUrl: './telephone.scss',
 })
 export class Telephone {
   form: FormGroup;

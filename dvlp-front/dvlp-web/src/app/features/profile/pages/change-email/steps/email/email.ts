@@ -8,7 +8,7 @@ import { TranslateModule } from '@ngx-translate/core';
   selector: 'app-email',
   imports: [ChangeInformation, ReactiveFormsModule, TranslateModule],
   templateUrl: './email.html',
-  styleUrl: './email.css',
+  styleUrl: './email.scss',
 })
 export class Email {
   // Represena un grupo de contenido dentro de un formulario, un objeto que representa todo el formulario

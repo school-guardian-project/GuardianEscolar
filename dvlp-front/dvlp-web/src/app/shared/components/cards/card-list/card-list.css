@@ -130,7 +130,7 @@
 }
 
 .card-list__item:hover {
-  background-color: var(--hover-color);
+  background-color: var(--hover-card);
   border-color: var(--accent-color);
 }
 
@@ -203,7 +203,7 @@
 
 .card-list__btn:hover {
   background-color: var(--accent-color);
-  color: var(--title-color);
+  color: white;
 }
 
 .card-list__row {

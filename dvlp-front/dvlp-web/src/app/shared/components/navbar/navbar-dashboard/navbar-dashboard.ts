@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
     MatIconModule,
   ],
   templateUrl: './navbar-dashboard.html',
-  styleUrl: './navbar-dashboard.css',
+  styleUrl: './navbar-dashboard.scss',
 })
 export class NavbarDashboard {
   constructor(private router: Router) {}

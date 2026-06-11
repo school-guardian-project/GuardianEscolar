@@ -13,6 +13,9 @@ import { UpdateRecord } from '@shared/components/modal/update-record/update-reco
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
 
 
+
+
+
 @Component({
   selector: 'app-buses',
   imports: [RouterModule, CommonModule,
@@ -28,7 +31,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
      DeleteRecord,
     ], 
   templateUrl: './buses.html',
-  styleUrl: './buses.css',
+  styleUrl: './buses.scss',
 })
 export class Buses {
   showModal = false;

@@ -13,7 +13,7 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true,
   imports: [MatToolbarModule, MatButtonModule, MatIconModule, CommonModule, RouterModule, TranslateModule],
   templateUrl: './navbar-admin.html',
-  styleUrl: './navbar-admin.css',
+  styleUrl: './navbar-admin.scss',
 })
 export class NavbarAdmin {
   

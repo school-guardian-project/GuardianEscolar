@@ -10,6 +10,6 @@ public class CourseGroupProfile : Profile
     public CourseGroupProfile()
     {
         CreateMap<CourseGroup, CourseGroupResponseDto>();
-        CreateMap<CourseGroupRequestDto, CourseGroup>();
+        CreateMap<CourseGroupRequestDto, CourseGroup>().ForMember(dest => dest.id, opt => opt.Ignore());
     }
 }

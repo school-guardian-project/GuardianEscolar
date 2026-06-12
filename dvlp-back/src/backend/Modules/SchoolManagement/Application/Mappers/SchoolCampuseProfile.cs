@@ -10,6 +10,6 @@ public class SchoolCampuseProfile : Profile
     public SchoolCampuseProfile()
     {
         CreateMap<SchoolCampuse, SchoolCampuseResponseDto>();
-        CreateMap<SchoolCampuseRequestDto, SchoolCampuse>();
+        CreateMap<SchoolCampuseRequestDto, SchoolCampuse>().ForMember(dest => dest.id, opt => opt.Ignore());
     }
 }

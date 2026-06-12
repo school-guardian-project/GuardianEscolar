@@ -10,6 +10,6 @@ public class SchoolProfile : Profile
     public SchoolProfile()
     {
         CreateMap<SchoolEntity, SchoolResponseDto>();
-        CreateMap<SchoolRequestDto, SchoolEntity>();
+        CreateMap<SchoolRequestDto, SchoolEntity>().ForMember(dest => dest.id, opt => opt.Ignore());
     }
 }

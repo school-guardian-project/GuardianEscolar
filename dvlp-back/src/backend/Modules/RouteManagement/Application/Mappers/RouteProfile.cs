@@ -10,6 +10,6 @@ public class RouteProfile : Profile
     public RouteProfile()
     {
         CreateMap<RouteEntity, RouteEntityResponseDto>();
-        CreateMap<RouteEntityRequestDto, RouteEntity>();
+        CreateMap<RouteEntityRequestDto, RouteEntity>().ForMember(dest => dest.id, opt => opt.Ignore());
     }
 }

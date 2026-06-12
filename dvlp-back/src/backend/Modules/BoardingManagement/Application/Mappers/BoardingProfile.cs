@@ -10,6 +10,6 @@ public class BoardingProfile : Profile
     public BoardingProfile()
     {
         CreateMap<Boarding, BoardingResponseDto>();
-        CreateMap<BoardingRequestDto, Boarding>();
+        CreateMap<BoardingRequestDto, Boarding>().ForMember(dest => dest.id, opt => opt.Ignore());
     }
 }

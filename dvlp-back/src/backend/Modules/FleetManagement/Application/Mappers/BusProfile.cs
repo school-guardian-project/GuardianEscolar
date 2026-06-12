@@ -10,6 +10,6 @@ public class BusProfile : Profile
     public BusProfile()
     {
         CreateMap<Bus, BusResponseDto>();
-        CreateMap<BusRequestDto, Bus>();
+        CreateMap<BusRequestDto, Bus>().ForMember(dest => dest.id, opt => opt.Ignore());
     }
 }

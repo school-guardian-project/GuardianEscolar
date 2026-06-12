@@ -10,6 +10,6 @@ public class LineModelProfile : Profile
     public LineModelProfile()
     {
         CreateMap<LineModel, LIneModelResponseDto>();
-        CreateMap<LIneModelRequestDto, LineModel>();
+        CreateMap<LIneModelRequestDto, LineModel>().ForMember(dest => dest.id, opt => opt.Ignore());
     }
 }

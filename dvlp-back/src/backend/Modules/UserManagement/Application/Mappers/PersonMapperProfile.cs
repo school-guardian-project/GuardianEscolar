@@ -10,6 +10,6 @@ public class PersonMapperProfile : Profile
     public PersonMapperProfile()
     {
         CreateMap<Person, PersonResponseDto>();
-        CreateMap<PersonRequestDto, Person>();
+        CreateMap<PersonRequestDto, Person>().ForMember(dest => dest.id, opt => opt.Ignore());
     }
 }

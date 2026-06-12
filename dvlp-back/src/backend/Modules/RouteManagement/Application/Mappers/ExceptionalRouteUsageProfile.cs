@@ -10,6 +10,6 @@ public class ExceptionalRouteUsageProfile : Profile
     public ExceptionalRouteUsageProfile()
     {
         CreateMap<ExceptionalRouteUsage, ExceptionalRouteUsageResponseDto>();
-        CreateMap<ExceptionalRouteUsageRequestDto, ExceptionalRouteUsage>();
+        CreateMap<ExceptionalRouteUsageRequestDto, ExceptionalRouteUsage>().ForMember(dest => dest.id, opt => opt.Ignore());
     }
 }

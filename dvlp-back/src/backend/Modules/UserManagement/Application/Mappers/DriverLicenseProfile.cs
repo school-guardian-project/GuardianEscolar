@@ -10,6 +10,6 @@ public class DriverLicenseProfile : Profile
     public DriverLicenseProfile()
     {
         CreateMap<DriverLicense, DriverLicenseResponseDto>();
-        CreateMap<DriverLicenseRequestDto, DriverLicense>();
+        CreateMap<DriverLicenseRequestDto, DriverLicense>().ForMember(dest => dest.id, opt => opt.Ignore());
     }
 }

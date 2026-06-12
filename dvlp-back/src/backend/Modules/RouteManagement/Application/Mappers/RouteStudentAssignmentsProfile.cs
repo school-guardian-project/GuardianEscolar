@@ -10,6 +10,6 @@ public class RouteStudentAssignmentsProfile : Profile
     public RouteStudentAssignmentsProfile()
     {
         CreateMap<RouteStudentAssignments, RouteStudentAssignmentsResponseDto>();
-        CreateMap<RouteStudentAssignmentsRequestDto, RouteStudentAssignments>();
+        CreateMap<RouteStudentAssignmentsRequestDto, RouteStudentAssignments>().ForMember(dest => dest.id, opt => opt.Ignore());
     }
 }

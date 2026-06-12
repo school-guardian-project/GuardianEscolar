@@ -1,12 +1,18 @@
 namespace backend.Shared.Interfaces;
 
-public interface ICrudService<TResponseDto, TRequestDto, TId>
+public interface ICrudService<TResponseDto, TRequestDto, TGuid>
 {
     List<TResponseDto> FindAll();
 
-    TResponseDto FindById(TId id);
+    TResponseDto FindById(TGuid id);
     
     TResponseDto Save(TRequestDto dto);
+
+    TResponseDto Update(TGuid id, TRequestDto dto);
+
+    TResponseDto UpdatePartial(TGuid id, TRequestDto dto);
     
-    void Delete(TId id);
+    void Delete(TGuid id);
+
+    void DeletePartial(TGuid id, TRequestDto dto);
 }

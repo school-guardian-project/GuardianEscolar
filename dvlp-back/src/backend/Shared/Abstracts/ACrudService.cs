@@ -28,6 +28,10 @@ public abstract class ACrudService<TEntity, TResponseDto, TRequestDto> : ICrudSe
     public TResponseDto FindById(Guid id)
     {
         var entity = _context.Set<TEntity>().Find(id);
+        if (entity is null)
+        {
+            throw new Exception("Not found");
+        }
         return _mapper.Map<TResponseDto>(entity);
     }
 
@@ -79,6 +83,10 @@ public abstract class ACrudService<TEntity, TResponseDto, TRequestDto> : ICrudSe
         {
             _context.Set<TEntity>().Remove(entity);
             _context.SaveChanges();
+        }
+        else
+        {
+            throw new Exception("Not found");
         }
     }
 

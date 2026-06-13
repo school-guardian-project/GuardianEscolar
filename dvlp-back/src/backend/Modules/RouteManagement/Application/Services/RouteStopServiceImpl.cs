@@ -12,4 +12,17 @@ public class RouteStopServiceImpl : ACrudService<RouteStop, RouteStopResponseDto
     public RouteStopServiceImpl(AppDbContext context, IMapper mapper) : base(context, mapper)
     {
     }
+
+    public override RouteStopResponseDto UpdatePartial(Guid id, RouteStopRequestDto dto)
+    {
+        var entity = _context.Set<RouteStop>().Find(id);
+        if (entity is null) throw new Exception("Not found");
+        
+        if (dto.routeId != Guid.Empty && dto.routeId != entity.routeId) entity.routeId = dto.routeId;
+        if (dto.stopId != Guid.Empty && dto.stopId != entity.stopId) entity.stopId = dto.stopId;
+        if (!string.IsNullOrEmpty(dto.status) && dto.status != entity.status) entity.status = dto.status;
+
+        _context.SaveChanges();
+        return _mapper.Map<RouteStopResponseDto>(entity);
+    }
 }

@@ -12,4 +12,17 @@ public class FamilyServiceImpl : ACrudService<Family, FamilyResponseDto, FamilyR
     public FamilyServiceImpl(AppDbContext context, IMapper mapper) : base(context, mapper)
     {
     }
+
+    public override FamilyResponseDto UpdatePartial(Guid id, FamilyRequestDto dto)
+    {
+        var entity = _context.Set<Family>().Find(id);
+        if (entity is null) throw new Exception("Not found");
+        
+        if (!string.IsNullOrEmpty(dto.name) && dto.name != entity.name) entity.name = dto.name;
+        if (!string.IsNullOrEmpty(dto.observations) && dto.observations != entity.observations) entity.observations = dto.observations;
+        if (!string.IsNullOrEmpty(dto.status) && dto.status != entity.status) entity.status = dto.status;
+        
+        _context.SaveChanges();
+        return _mapper.Map<FamilyResponseDto>(entity);
+    }
 }

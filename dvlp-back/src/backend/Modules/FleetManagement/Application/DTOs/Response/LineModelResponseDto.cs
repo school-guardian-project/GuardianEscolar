@@ -1,6 +1,6 @@
 namespace backend.Modules.FleetManagement.Application.DTOs.Response;
 
-public class LIneModelResponseDto
+public class LineModelResponseDto
 {
     public Guid lineId { get; set; }
 

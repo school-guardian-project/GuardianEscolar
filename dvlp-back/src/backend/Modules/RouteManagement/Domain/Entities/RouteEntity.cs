@@ -11,9 +11,9 @@ namespace backend.Modules.RouteManagement.Domain.Entities
 
         public string targetSector { get; set; }
 
-        public TimeSpan startTime { get; set; }
+        public DateTime starDatetTime { get; set; } = DateTime.UtcNow;
 
-        public TimeSpan endTime { get; set; }
+        public DateTime endDateTime { get; set; } = DateTime.UtcNow;
 
         public SchoolEntity school { get; set; }
 

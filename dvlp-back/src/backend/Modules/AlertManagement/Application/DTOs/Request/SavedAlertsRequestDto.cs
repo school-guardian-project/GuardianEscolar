@@ -5,4 +5,6 @@ public class SavedAlertsRequestDto
     public Guid profileId { get; set; }
 
     public Guid alertId { get; set; }
+
+    public string status { get; set; }
 }

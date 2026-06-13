@@ -4,13 +4,13 @@ public class SchoolRequestDto
 {
     public Guid cityId { get; set; }
 
-    public byte[] logo { get; set; }
+    public byte[]? logo { get; set; }
 
     public string name { get; set; }
 
     public string address { get; set; }
 
-    public int phone { get; set; }
+    public int? phone { get; set; }
 
     public string email { get; set; }
 

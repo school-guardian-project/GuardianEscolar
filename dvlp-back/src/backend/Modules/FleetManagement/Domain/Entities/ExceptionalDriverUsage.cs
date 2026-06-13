@@ -9,9 +9,9 @@ namespace backend.Modules.FleetManagement.Domain.Entities
 
         public Guid profileId { get; set; }
 
-        public DateTime startDateTime { get; set; }
+        public DateTime startDateTime { get; set; } = DateTime.UtcNow;
 
-        public DateTime endDateTime { get; set; }
+        public DateTime endDateTime { get; set; } = DateTime.UtcNow;
 
         public string reason { get; set; }
 

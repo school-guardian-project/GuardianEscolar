@@ -1,5 +1,5 @@
 using AutoMapper;
-using backend.Modules.AlertManagement.Application.DTOs.AlertsDto;
+using backend.Modules.AlertManagement.Application.DTOs.Request;
 using backend.Modules.AlertManagement.Application.DTOs.Response;
 using backend.Modules.AlertManagement.Domain.Entities;
 
@@ -10,6 +10,6 @@ public class AlertProfile : Profile
     public AlertProfile()
     {
         CreateMap<Alert, AlertResponseDto>();
-        CreateMap<AlertRequestDto, Alert>();
+        CreateMap<AlertRequestDto, Alert>().ForMember(dest => dest.id, opt => opt.Ignore());
     }   
 }

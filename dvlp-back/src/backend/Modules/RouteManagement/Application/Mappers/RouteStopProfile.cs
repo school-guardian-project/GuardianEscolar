@@ -10,6 +10,6 @@ public class RouteStopProfile : Profile
     public RouteStopProfile()
     {
         CreateMap<RouteStop, RouteStopResponseDto>();
-        CreateMap<RouteStopRequestDto, RouteStop>();
+        CreateMap<RouteStopRequestDto, RouteStop>().ForMember(dest => dest.id, opt => opt.Ignore());
     }
 }

@@ -10,6 +10,6 @@ public class SavedAlertsProfile : Profile
     public SavedAlertsProfile()
     {
         CreateMap<SavedAlert, SavedAlertsResponseDto>();
-        CreateMap<SavedAlertsRequestDto, SavedAlert>();
+        CreateMap<SavedAlertsRequestDto, SavedAlert>().ForMember(dest => dest.id, opt => opt.Ignore());
     }
 }

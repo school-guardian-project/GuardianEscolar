@@ -10,6 +10,6 @@ public class FamilyMemberProfile : Profile
     public FamilyMemberProfile()
     {
         CreateMap<FamilyMember, FamilyMemberResponseDto>();
-        CreateMap<FamilyMemberRequestDto, FamilyMember>();
+        CreateMap<FamilyMemberRequestDto, FamilyMember>().ForMember(dest => dest.id, opt => opt.Ignore());
     }
 }

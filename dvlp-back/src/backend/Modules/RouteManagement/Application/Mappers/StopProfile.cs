@@ -10,6 +10,6 @@ public class StopProfile : Profile
     public StopProfile()
     {
         CreateMap<Stop, StopResponseDto>();
-        CreateMap<StopRequestDto, Stop>();
+        CreateMap<StopRequestDto, Stop>().ForMember(dest => dest.id, opt => opt.Ignore());
     }
 }

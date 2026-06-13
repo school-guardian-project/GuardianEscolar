@@ -10,6 +10,6 @@ public class ExceptionalDriverUsageProfile : Profile
     public ExceptionalDriverUsageProfile()
     {
         CreateMap<ExceptionalDriverUsage, ExceptionalDriverResponseDto>();
-        CreateMap<ExceptionalDriverUsageRequestDto, ExceptionalDriverUsage>();
+        CreateMap<ExceptionalDriverUsageRequestDto, ExceptionalDriverUsage>().ForMember(dest => dest.id, opt => opt.Ignore());
     }
 }

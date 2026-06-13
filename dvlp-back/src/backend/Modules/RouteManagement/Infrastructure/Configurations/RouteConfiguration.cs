@@ -12,8 +12,8 @@ namespace backend.Modules.RouteManagement.Infrastructure.Configurations
         {
             builder.Property(r => r.name).HasMaxLength(30);
             builder.Property(r => r.targetSector).HasMaxLength(30);
-            builder.Property(r => r.startTime).IsRequired();
-            builder.Property(r => r.endTime).IsRequired();
+            builder.Property(r => r.starDatetTime).HasDefaultValueSql("NOW()");
+            builder.Property(r => r.endDateTime).HasDefaultValueSql("NOW()");
             builder.HasOne(r => r.school).WithMany(s => s.routes).HasForeignKey(r => r.schoolId);
         }
     }

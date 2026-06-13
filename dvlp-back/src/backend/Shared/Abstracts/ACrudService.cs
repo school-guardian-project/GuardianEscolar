@@ -8,8 +8,8 @@ public abstract class ACrudService<TEntity, TResponseDto, TRequestDto> : ICrudSe
 {
     // el nombre de las variables con "_", representan que son variables privadas.
     // no afectan el codigo el tener eso, es por uso de c#
-    private readonly AppDbContext _context;
-    private readonly IMapper _mapper;
+    protected readonly AppDbContext _context;
+    protected readonly IMapper _mapper;
 
     // Inyectamos los atributos en el constructor
     public ACrudService(AppDbContext context, IMapper mapper)
@@ -60,7 +60,7 @@ public abstract class ACrudService<TEntity, TResponseDto, TRequestDto> : ICrudSe
         }
     }
 
-    public TResponseDto UpdatePartial(Guid id, TRequestDto dto)
+    public virtual TResponseDto UpdatePartial(Guid id, TRequestDto dto)
     {
         var entity = _context.Set<TEntity>().Find(id);
         if (entity != null)

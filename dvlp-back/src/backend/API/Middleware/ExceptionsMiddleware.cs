@@ -1,6 +1,5 @@
 ﻿using backend.Shared.Exceptions;
 using backend.Shared.Responses;
-using Microsoft.EntityFrameworkCore;
 using System.Net;
 using System.Text.Json;
 
@@ -49,7 +48,7 @@ namespace backend.API.Middleware
             var response = new ApiResponse<object>
             {
                 Success = false,
-                Message = exception.Message
+                Message = exception.InnerException?.Message ?? exception.Message
             };
 
             context.Response.ContentType =

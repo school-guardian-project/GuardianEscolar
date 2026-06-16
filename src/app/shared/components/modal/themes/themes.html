@@ -10,12 +10,10 @@
       <div class="themes-grid">
 
         <!-- Azul claro -->
-        <div class="theme-card"
-          [class.active]="currentTheme === 'light-theme-blue'"
+        <div class="theme-card" [class.active]="currentTheme === 'light-theme-blue'"
           (click)="setTheme('light-theme-blue')">
 
-          <div class="active-badge"
-            *ngIf="currentTheme === 'light-theme-blue'">{{ 'theme.select' | translate }}</div>
+          <div class="active-badge" *ngIf="currentTheme === 'light-theme-blue'">{{ 'theme.select' | translate }}</div>
 
           <div class="theme-preview theme-preview-light">
             <div class="theme-sidebar" style="background: #1A56DB;"></div>
@@ -29,22 +27,18 @@
           <div class="theme-option">
             <span class="theme-name">{{ 'theme.blue' | translate }}</span>
             <span class="radio-wrapper">
-              <input type="radio" name="theme"
-                [checked]="currentTheme === 'light-theme-blue'"
+              <input type="radio" name="theme" [checked]="currentTheme === 'light-theme-blue'"
                 (click)="$event.stopPropagation()" />
               <span class="custom-radio"></span>
             </span>
           </div>
-
         </div>
 
         <!-- Verde claro -->
-        <div class="theme-card"
-          [class.active]="currentTheme === 'light-theme-green'"
+        <div class="theme-card" [class.active]="currentTheme === 'light-theme-green'"
           (click)="setTheme('light-theme-green')">
 
-          <div class="active-badge"
-            *ngIf="currentTheme === 'light-theme-green'">{{ 'theme.select' | translate }}</div>
+          <div class="active-badge" *ngIf="currentTheme === 'light-theme-green'">{{ 'theme.select' | translate }}</div>
 
 
           <div class="theme-preview theme-preview-light">
@@ -59,13 +53,60 @@
           <div class="theme-option">
             <span class="theme-name">{{ 'theme.green' | translate }}</span>
             <span class="radio-wrapper">
-              <input type="radio" name="theme"
-                [checked]="currentTheme === 'light-theme-green'"
+              <input type="radio" name="theme" [checked]="currentTheme === 'light-theme-green'"
                 (click)="$event.stopPropagation()" />
               <span class="custom-radio"></span>
             </span>
           </div>
 
+        </div>
+        <!-- Rojo claro -->
+         <div class="theme-card" [class.active]="currentTheme === 'light-theme-red'"
+          (click)="setTheme('light-theme-red')">
+
+          <div class="active-badge" *ngIf="currentTheme === 'light-theme-red'">{{ 'theme.select' | translate }}</div>
+
+          <div class="theme-preview theme-preview-light">
+            <div class="theme-sidebar" style="background: #B42318;"></div>
+            <div class="theme-content">
+              <div class="theme-line theme-line-light" style="width: 70%;"></div>
+              <div class="theme-line theme-line-light" style="width: 50%;"></div>
+              <div class="theme-line theme-line-light" style="width: 60%;"></div>
+            </div>
+          </div>
+
+          <div class="theme-option">
+            <span class="theme-name">{{ 'theme.red' | translate }}</span>
+            <span class="radio-wrapper">
+              <input type="radio" name="theme" [checked]="currentTheme === 'light-theme-red'"
+                (click)="$event.stopPropagation()" />
+              <span class="custom-radio"></span>
+            </span>
+          </div>
+        </div>
+        <!-- Amarrillo claro -->
+         <div class="theme-card" [class.active]="currentTheme === 'light-theme-yellow'"
+          (click)="setTheme('light-theme-yellow')">
+
+          <div class="active-badge" *ngIf="currentTheme === 'light-theme-yellow'">{{ 'theme.select' | translate }}</div>
+
+          <div class="theme-preview theme-preview-light">
+            <div class="theme-sidebar" style="background: #C58A00;"></div>
+            <div class="theme-content">
+              <div class="theme-line theme-line-light" style="width: 70%;"></div>
+              <div class="theme-line theme-line-light" style="width: 50%;"></div>
+              <div class="theme-line theme-line-light" style="width: 60%;"></div>
+            </div>
+          </div>
+
+          <div class="theme-option">
+            <span class="theme-name">{{ 'theme.yellow' | translate }}</span>
+            <span class="radio-wrapper">
+              <input type="radio" name="theme" [checked]="currentTheme === 'light-theme-yellow'"
+                (click)="$event.stopPropagation()" />
+              <span class="custom-radio"></span>
+            </span>
+          </div>
         </div>
 
       </div>
@@ -77,12 +118,10 @@
       <div class="themes-grid">
 
         <!-- Azul oscuro -->
-        <div class="theme-card"
-          [class.active]="currentTheme === 'dark-theme-blue'"
+        <div class="theme-card" [class.active]="currentTheme === 'dark-theme-blue'"
           (click)="setTheme('dark-theme-blue')">
 
-          <div class="active-badge"
-            *ngIf="currentTheme === 'dark-theme-blue'">{{ 'theme.select' | translate }}</div>
+          <div class="active-badge" *ngIf="currentTheme === 'dark-theme-blue'">{{ 'theme.select' | translate }}</div>
 
 
           <div class="theme-preview theme-preview-dark">
@@ -99,8 +138,7 @@
             <span class="theme-name">{{ 'theme.blue' | translate }}</span>
 
             <span class="radio-wrapper">
-              <input type="radio" name="theme"
-                [checked]="currentTheme === 'dark-theme-blue'"
+              <input type="radio" name="theme" [checked]="currentTheme === 'dark-theme-blue'"
                 (click)="$event.stopPropagation()" />
               <span class="custom-radio"></span>
             </span>
@@ -109,13 +147,10 @@
         </div>
 
         <!-- Verde oscuro -->
-        <div class="theme-card"
-          [class.active]="currentTheme === 'dark-theme-green'"
+        <div class="theme-card" [class.active]="currentTheme === 'dark-theme-green'"
           (click)="setTheme('dark-theme-green')">
 
-          <div class="active-badge"
-
-            *ngIf="currentTheme === 'dark-theme-green'">{{ 'theme.select' | translate }}</div>
+          <div class="active-badge" *ngIf="currentTheme === 'dark-theme-green'">{{ 'theme.select' | translate }}</div>
           <div class="theme-preview theme-preview-dark">
             <div class="theme-sidebar" style="background: #22C55E;"></div>
             <div class="theme-content">
@@ -128,8 +163,55 @@
           <div class="theme-option">
             <span class="theme-name">{{ 'theme.green' | translate }}</span>
             <span class="radio-wrapper">
-              <input type="radio" name="theme"
-                [checked]="currentTheme === 'dark-theme-green'"
+              <input type="radio" name="theme" [checked]="currentTheme === 'dark-theme-green'"
+                (click)="$event.stopPropagation()" />
+              <span class="custom-radio"></span>
+            </span>
+          </div>
+
+        </div>
+        <!-- Rojo oscuro -->
+         <div class="theme-card" [class.active]="currentTheme === 'dark-theme-red'"
+          (click)="setTheme('dark-theme-red')">
+
+          <div class="active-badge" *ngIf="currentTheme === 'dark-theme-red'">{{ 'theme.select' | translate }}</div>
+          <div class="theme-preview theme-preview-dark">
+            <div class="theme-sidebar" style="background: #5B1215;"></div>
+            <div class="theme-content">
+              <div class="theme-line theme-line-dark" style="width: 70%;"></div>
+              <div class="theme-line theme-line-dark" style="width: 50%;"></div>
+              <div class="theme-line theme-line-dark" style="width: 60%;"></div>
+            </div>
+          </div>
+
+          <div class="theme-option">
+            <span class="theme-name">{{ 'theme.red' | translate }}</span>
+            <span class="radio-wrapper">
+              <input type="radio" name="theme" [checked]="currentTheme === 'dark-theme-red'"
+                (click)="$event.stopPropagation()" />
+              <span class="custom-radio"></span>
+            </span>
+          </div>
+
+        </div>
+        <!-- Amarrillo oscuro -->
+         <div class="theme-card" [class.active]="currentTheme === 'dark-theme-yellow'"
+          (click)="setTheme('dark-theme-yellow')">
+
+          <div class="active-badge" *ngIf="currentTheme === 'dark-theme-yellow'">{{ 'theme.select' | translate }}</div>
+          <div class="theme-preview theme-preview-dark">
+            <div class="theme-sidebar" style="background: #6B4F00;"></div>
+            <div class="theme-content">
+              <div class="theme-line theme-line-dark" style="width: 70%;"></div>
+              <div class="theme-line theme-line-dark" style="width: 50%;"></div>
+              <div class="theme-line theme-line-dark" style="width: 60%;"></div>
+            </div>
+          </div>
+
+          <div class="theme-option">
+            <span class="theme-name">{{ 'theme.yellow' | translate }}</span>
+            <span class="radio-wrapper">
+              <input type="radio" name="theme" [checked]="currentTheme === 'dark-theme-yellow'"
                 (click)="$event.stopPropagation()" />
               <span class="custom-radio"></span>
             </span>
@@ -138,11 +220,6 @@
         </div>
 
       </div>
-    </div>
-
-    <div class="btn-themes">
-      <button class="close-btn" (click)="closeModal()"> {{ 'theme.buttons.cancel' | translate }}</button>
-      <button class="apply-btn" (click)="closeModal()"> {{ 'theme.buttons.apply' | translate }}</button>
     </div>
 
   </div>

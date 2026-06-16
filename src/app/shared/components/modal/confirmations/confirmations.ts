@@ -9,10 +9,11 @@ import {
   MatDialogRef,
 } from '@angular/material/dialog';
 import { MatIcon } from "@angular/material/icon";
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-confirmations',
-  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatButtonModule, MatIcon],
+  imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose, MatButtonModule, MatIcon, TranslateModule],
   templateUrl: './confirmations.html',
   styleUrl: './confirmations.css',
   changeDetection: ChangeDetectionStrategy.OnPush,

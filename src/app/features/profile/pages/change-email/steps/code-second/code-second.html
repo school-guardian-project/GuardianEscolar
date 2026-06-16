@@ -1,19 +1,19 @@
 <app-change-information
   iconHead="lock"
-  [title]="'change_email.code_second.title' | translate"
-  [sessionDescription]="'change_email.code_second.sessionDescription' | translate"
-  [titleStep]="'change_email.code_second.titleStep' | translate"
+  [title]="'change_contact.code_second.title' | translate"
+  [sessionDescription]="'change_contact.code_second.sessionDescription' | translate"
+  [titleStep]="'change_contact.code_second.titleStep' | translate"
   loginDescription=""
-  [buttonText]="'change_email.code_second.buttonText' | translate"
-  [returnStep]="'change_email.code_second.returnStep' | translate"
+  [buttonText]="'change_contact.code_second.buttonText' | translate"
+  [returnStep]="'change_contact.code_second.returnStep' | translate"
   (return)="return()"
   [showProgress]="true"
   [currentStep]="4"
+  [stepText]="'change_contact.code_second.stepText' | translate"
   (submit)="onSubmit()"
-  [stepText]="'change_email.code_second.stepText' | translate"
 >
   <div class="login-description">
-    <span>{{ 'change_email.code_second.description' | translate }}</span>
+    <span>{{ 'change_contact.code_second.description' | translate }}</span>
   </div>
 
   <form action="" [formGroup]="form">
@@ -28,8 +28,21 @@
         />
       </div>
       @if (form.invalid && form.touched) {
-        <small class="error">{{ 'change_email.code_second.pin_error' | translate }}</small>
+        <small class="error">{{ 'change_contact.code_second.pin_error' | translate }}</small>
       }
     </div>
   </form>
 </app-change-information>
+
+@if (showConfirmation) {
+  <div class="modal-overlay">
+    <div class="modal-confirmation">
+      <i class="ph-fill ph-check-circle icon"></i>
+      <h2 class="title-dialog">{{ 'change_email.code_second.confirmationTitle' | translate }}</h2>
+      <p class="description-dialog">{{ 'change_email.code_second.confirmationDescription' | translate }}</p>
+      <button (click)="accept()">
+        {{ 'common.accept' | translate }}
+      </button>
+    </div>
+  </div>
+}

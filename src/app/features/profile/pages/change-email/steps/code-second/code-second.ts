@@ -1,21 +1,19 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChangeInformation } from "../../../../../../shared/components/change/change-information/change-information";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgFor } from '@angular/common';
-import { Confirmations } from "../../../../../../shared/components/modal/confirmations/confirmations";
-import { MatDialog } from '@angular/material/dialog';
+import { NgFor, NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-code-second',
-  imports: [ChangeInformation, FormsModule, ReactiveFormsModule, NgFor, TranslateModule],
+  imports: [ChangeInformation, FormsModule, ReactiveFormsModule, NgFor, NgIf, TranslateModule],
   templateUrl: './code-second.html',
   styleUrl: './code-second.css',
 })
 export class CodeSecond {
-  form: FormGroup
-  readonly dialog = inject(MatDialog);
+  form: FormGroup;
+  showConfirmation = false;
 
   constructor(private router: Router, private fb: FormBuilder) {
     this.form = this.fb.group({
@@ -48,37 +46,19 @@ export class CodeSecond {
   }
 
   onSubmit() {
-    const pin = this.pinControls.value.join('');
     if (this.form.valid) {
-      this.openDialog();
-    }
-    else {
+      this.showConfirmation = true;
+    } else {
       this.form.markAllAsTouched();
     }
+  }
+
+  accept() {
+    this.showConfirmation = false;
+    this.router.navigate(['/admin/informacion']);
   }
 
   return() {
     this.router.navigate(['/admin/change-email/reset']);
   }
-
-  // Esto trae el componente sin tener que ponerlo en el html
-  openDialog() {
-    const dialogRef = this.dialog.open(Confirmations, {
-      data: {
-        titleDialog: 'Correo actualizado',
-        descriptionDialog: 'Su correo ha sido actualizado correctamente.'
-      }
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result === 'accept') {
-        this.accept()
-      }
-    })
-  }
-
-  accept() {
-    this.router.navigate(['/admin/informacion']);
-  }
-
 }

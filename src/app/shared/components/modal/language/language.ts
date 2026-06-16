@@ -23,7 +23,7 @@ export class Language {
   language = [
     { code: 'es', name: 'Español',    native: 'Español',    flag: '🇪🇸' },
     { code: 'en', name: 'English',    native: 'Ingles',     flag: '🇺🇸' },
-    { code: 'pt', name: 'português',  native: 'Portugués',  flag: '🇵🇹' },
+    { code: 'pt', name: 'Português',  native: 'Portugués',  flag: '🇵🇹' },
     { code: 'fr', name: 'Français',   native: 'Francés',    flag: '🇫🇷' },
   ];
 

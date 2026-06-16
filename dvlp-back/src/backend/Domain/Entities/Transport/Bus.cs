@@ -15,19 +15,32 @@ namespace backend.Domain.Entities.Transport
 
         public int schoolId { get; set; }
 
+<<<<<<< HEAD
         public string? brand { get; set; }
 
         public string? model { get; set; }
 
         public int capacity { get; set; }
 
+=======
+>>>>>>> develop
         public byte[]? soatValidity { get; set; }
 
         public bool gpsStatus { get; set; }
 
+<<<<<<< HEAD
         public SchoolEntity school { get; set; }
 
         public Profile driver { get; set; }
+=======
+        public int lineModelId { get; set; }
+
+        public SchoolEntity school { get; set; }
+
+        public Profile driver { get; set; }
+
+        public LineModel lineModel { get; set; }
+>>>>>>> develop
         
         public ICollection<Alert> alerts { get; set; } = new List<Alert>();
 

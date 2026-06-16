@@ -2,7 +2,6 @@
   "navbar": {
     "features": "Funcionalidades",
     "how_it_works": "Como funciona",
-    "pricing": "Preços",
     "contact": "Contato"
   },
   "hero": {
@@ -225,7 +224,9 @@
       "returnStep": "Voltar",
       "stepText": "4 de 4",
       "description": "Digite o código para concluir a alteração de telefone.",
-      "pin_error": "*O código inserido não é válido."
+      "pin_error": "*O código inserido não é válido.",
+      "confirmationTitle": "Telefone atualizado",
+      "confirmationDescription": "Seu telefone foi atualizado com sucesso."
     }
   },
   "change_email": {
@@ -260,7 +261,9 @@
       "returnStep": "Voltar",
       "stepText": "4 de 4",
       "description": "Digite o código final para atualizar seu email.",
-      "pin_error": "*O código inserido não é válido."
+      "pin_error": "*O código inserido não é válido.",
+      "confirmationTitle": "Email atualizado",
+      "confirmationDescription": "Seu email foi atualizado com sucesso."
     },
     "reset": {
       "title": "Quase lá",
@@ -314,7 +317,9 @@
       "loginDescription": "Sua senha deve atender aos requisitos mínimos.",
       "buttonText": "Salvar senha",
       "returnStep": "Voltar",
-      "stepText": "3 de 3"
+      "stepText": "3 de 3",
+      "confirmationTitle": "Senha atualizada",
+      "confirmationDescription": "Sua senha foi atualizada com sucesso."
     }
   },
   "dashboard": {
@@ -432,6 +437,8 @@
     "select": "ativo",
     "blue": "Azul",
     "green": "Verde",
+    "yellow": "Amarelo",
+    "red": "Vermelho",
     "buttons": {
       "cancel": "Cancelar",
       "apply": "Aplicar"
@@ -488,7 +495,8 @@
     "delete": "Excluir",
     "save": "Salvar",
     "confirm": "Confirmar",
-    "close": "Fechar"
+    "close": "Fechar",
+    "accept": "Aceitar"
   },
   "record_information": {
     "estudiante": {

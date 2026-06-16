@@ -33,3 +33,16 @@
     </div>
   </form>
 </app-change-information>
+
+@if (showConfirmation) {
+  <div class="modal-overlay">
+    <div class="modal-confirmation">
+      <i class="ph-fill ph-check-circle icon"></i>
+      <h2 class="title-dialog">{{ 'change_contact.code_second.confirmationTitle' | translate }}</h2>
+      <p class="description-dialog">{{ 'change_contact.code_second.confirmationDescription' | translate }}</p>
+      <button (click)="accept()">
+        {{ 'common.accept' | translate }}
+      </button>
+    </div>
+  </div>
+}

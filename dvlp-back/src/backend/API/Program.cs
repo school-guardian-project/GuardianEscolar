@@ -1,7 +1,14 @@
+using backend.API.Middleware;
 using backend.Infrastructure.Persistence.Context;
+using backend.Shared.Infrastructure.InjectionDependency;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+using Microsoft.IdentityModel.Tokens;
+>>>>>>> origin/develop
 using Microsoft.OpenApi.Models;
 >>>>>>> develop
 
@@ -15,6 +22,8 @@ builder.Services.AddOpenApi();
 =======
 >>>>>>> develop
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddApplicationServices();
 
 // Arreglo de strings y origenes permitidos
 var allowedOrigins = builder.Configuration.GetValue<string>("AllowedOrigins")!.Split(",");
@@ -24,7 +33,7 @@ var allowedOrigins = builder.Configuration.GetValue<string>("AllowedOrigins")!.S
 =======
 // Database
 builder.Services.AddDbContext<AppDbContext>(options => 
-    options.UseNpgsql("name=Conection"));
+    options.UseNpgsql("name=DefaultConnection"));
 
 // Cors
 >>>>>>> develop
@@ -40,6 +49,7 @@ builder.Services.AddCors(options =>
 });
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 builder.Services.AddDbContext<AppDbContext>(options => 
     options.UseNpgsql("name=Conection"));
 
@@ -53,8 +63,33 @@ if (app.Environment.IsDevelopment())
 
 =======
 builder.Services.AddEndpointsApiExplorer();
+=======
+// Jwt
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    // Esta parte queda pendiente, se debe cambiar antes de poner en produccion, porque debe requerir  HTTPS
+    // Para pruebas y desarrollo se desactivara la necesidad de HTTPS, pero en produccion se debe activar
+    options.RequireHttpsMetadata = false;
+    options.SaveToken = true;
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidIssuer = builder.Configuration["JwtConfig:Issuer"],
+        ValidAudience = builder.Configuration["JwtConfig:Audience"],
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true
+    };
+});
+builder.Services.AddAuthorization();
+>>>>>>> origin/develop
 
-builder.Services.AddSwaggerGen();
+builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(options =>
 {
@@ -78,9 +113,14 @@ if (app.Environment.IsDevelopment())
             "/swagger/v1/swagger.json",
             "Backend API v1");
 
-        options.RoutePrefix = string.Empty;
+        // options.RoutePrefix = string.Empty;
     });
 }
+
+app.UseMiddleware<ExceptionsMiddleware>();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 // Swagger
 >>>>>>> develop

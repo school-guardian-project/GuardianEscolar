@@ -2,7 +2,6 @@
   "navbar": {
     "features": "Fonctionnalités",
     "how_it_works": "Comment ça marche",
-    "pricing": "Tarifs",
     "contact": "Contact"
   },
   "hero": {
@@ -225,7 +224,9 @@
       "returnStep": "Retour",
       "stepText": "4 sur 4",
       "description": "Saisissez le code pour finaliser le changement de téléphone.",
-      "pin_error": "*Le code saisi n'est pas valide."
+      "pin_error": "*Le code saisi n'est pas valide.",
+      "confirmationTitle": "Téléphone mis à jour",
+      "confirmationDescription": "Votre numéro de téléphone a été mis à jour avec succès."
     }
   },
   "change_email": {
@@ -260,7 +261,9 @@
       "returnStep": "Retour",
       "stepText": "4 sur 4",
       "description": "Entrez le code final pour mettre à jour votre email.",
-      "pin_error": "*Le code saisi n'est pas valide."
+      "pin_error": "*Le code saisi n'est pas valide.",
+      "confirmationTitle": "Email mis à jour",
+      "confirmationDescription": "Votre email a été mis à jour avec succès."
     },
     "reset": {
       "title": "Presque terminé",
@@ -314,7 +317,9 @@
       "loginDescription": "Votre mot de passe doit respecter les exigences minimales.",
       "buttonText": "Enregistrer le mot de passe",
       "returnStep": "Retour",
-      "stepText": "3 sur 3"
+      "stepText": "3 sur 3",
+      "confirmationTitle": "Mot de passe mis à jour",
+      "confirmationDescription": "Votre mot de passe a été mis à jour avec succès."
     }
   },
   "dashboard": {
@@ -432,6 +437,8 @@
     "select": "actif",
     "blue": "Bleu",
     "green": "Vert",
+    "yellow": "Jaune",
+    "red": "Rouge",
     "buttons": {
       "cancel": "Annuler",
       "apply": "Appliquer"
@@ -488,7 +495,8 @@
     "delete": "Supprimer",
     "save": "Enregistrer",
     "confirm": "Confirmer",
-    "close": "Fermer"
+    "close": "Fermer",
+    "accept": "Accepter"
   },
   "record_information": {
     "estudiante": {

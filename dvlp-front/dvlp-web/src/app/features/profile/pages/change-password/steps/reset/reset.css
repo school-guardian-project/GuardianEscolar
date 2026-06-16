@@ -1,71 +1,108 @@
 input {
     padding: 10px;
     border-radius: 5px;
-    border: #68768e 1px solid;
+    border: var(--text-secondary) 1px solid;
     transition: border 0.2s ease;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    width: 100%;
+    box-sizing: border-box;
 }
 
 input:focus {
-    border: #366fea 1px solid;
+    border: var(--accent-color) 1px solid;
     outline: none;
 }
 
 input.ng-invalid.ng-touched {
-    border: 1px red solid;
+    border: 1px solid var(--alert-icon);
 }
 
 label {
     margin-bottom: 7px;
     font-size: 1rem;
+    color: var(--text-color);
 }
 
 p {
-    color: #68768e;
+    color: var(--text-secondary);
     margin-bottom: 50px;
+    margin-top: 18px;
 }
+
 form {
     display: flex;
     flex-direction: column;
 }
-.password {
-  margin-top: -25px;
-  display: flex;
-  flex-direction: column;
-}
-
-.container-errors {
-  display: flex;
-  flex-direction: column;
-  margin-bottom: 10px;
-  height: 55px;
-  gap: 2px;
-}
 
 .error {
-  color: red;
-  position: static;
-  left: 0;
-  top: 0;
+    position: static;
+    margin-top: 5px;
+    color: var(--alert-icon);
+    font-size: 0.75rem;
+    line-height: 1;
+    z-index: 10;
 }
 
-/* ------------------------- */
-.input-confirm-password,
-.input-password {
+.input-email {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+}
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--overlay-bg, rgba(15, 23, 42, 0.65));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-confirmation {
+  background-color: var(--modal-bg);
+  color: var(--text-color);
+  border-radius: 10px;
+  padding: 30px 40px;
+  max-width: 360px;
+  width: 90%;
+  box-shadow: var(--shadow-modal, 0 25px 50px -12px rgba(15, 23, 42, 0.4));
   display: flex;
   flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
-.error1 {
-  color: red;
-  position: static;
-  left: 0;
-  bottom: 0;
+.modal-confirmation .icon {
+  font-size: 4rem;
+  color: var(--button-apply);
+  margin-bottom: 15px;
 }
 
-.container-errors-confirm {
-  display: flex;
-  flex-direction: column;
+.modal-confirmation .title-dialog {
+  font-size: 1.2rem;
+  font-weight: 600;
   margin-bottom: 10px;
-  height: 35px;
-  gap: 2px;
+  color: var(--modal-title, var(--title-color));
+}
+
+.modal-confirmation .description-dialog {
+  margin-bottom: 20px;
+  color: var(--text-secondary);
+}
+
+.modal-confirmation button {
+  color: white;
+  background-color: var(--button-apply);
+  border-radius: 50px;
+  padding: 10px 30px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.modal-confirmation button:hover {
+  background-color: var(--hover-color);
 }

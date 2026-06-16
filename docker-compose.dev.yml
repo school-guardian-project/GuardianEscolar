@@ -4,15 +4,19 @@ services:
     build:
       context: ./dvlp-back/src/backend
       dockerfile: dev.Dockerfile
-    working_dir: /app
+    env_file:
+      - ./dvlp-back/src/backend/.env
     ports:
       - "8080:8080"
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - AllowedOrigins=http://localhost:4200
+<<<<<<< HEAD
     volumes:
       - ./dvlp-back/src/backend:/app
     command: dotnet watch run
+=======
+>>>>>>> origin/develop
     dns:
       - 8.8.8.8
       - 1.1.1.1

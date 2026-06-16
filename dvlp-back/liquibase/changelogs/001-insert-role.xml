@@ -13,11 +13,11 @@
 
     <changeSet id="001-insert-user-admin" author="user_juan">
 
-        <insert tableName="role">
-            <column name="id" valueNumeric="1"/>
+        <insert schemaName="app" tableName="Role">
             <column name="name" value="admin"/>
-            <column name="description" value="Este rol tendra acceso a todas las funciones administrativas para la gestion de usuarios, rutas, buses, paradas, y mas."/>
+            <column name="description" value="Este rol tendra acceso a todas las funciones administrativas."/>
             <column name="permissions" value="Crear, leer, actualizar y eliminar"/>
+            <column name="status" value="nice"/>
         </insert>
 
     </changeSet>

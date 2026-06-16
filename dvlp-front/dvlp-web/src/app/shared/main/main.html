@@ -1,92 +1,92 @@
 <main>
-    <section class="section-start">
-        <div class="left">
-            <div class="text">{{ 'hero.line1' | translate }}</div>
-            <div class="text">{{ 'hero.line2' | translate }}</div>
-            <div class="text">{{ 'hero.line3' | translate }}</div>
-            <div class="in">{{ 'hero.line4' | translate }}</div>
-            <div class="time">{{ 'hero.line5' | translate }}</div>
-            <div class="really">{{ 'hero.line6' | translate }}</div>
-            <div class="paragraph">{{ 'hero.paragraph' | translate }}</div>
-            <div class="button">
-                <button class="start">{{ 'hero.btn_download' | translate }}</button>
-                <button class="demo">{{ 'hero.btn_video' | translate }}</button>
+    <section class="section-start-index">
+        <div class="left-index">
+            <div class="text-index">{{ 'hero.line1' | translate }}</div>
+            <div class="text-index">{{ 'hero.line2' | translate }}</div>
+            <div class="text-index">{{ 'hero.line3' | translate }}</div>
+            <div class="in-index">{{ 'hero.line4' | translate }}</div>
+            <div class="time-index">{{ 'hero.line5' | translate }}</div>
+            <div class="really-index">{{ 'hero.line6' | translate }}</div>
+            <div class="paragraph-index">{{ 'hero.paragraph' | translate }}</div>
+            <div class="button-index">
+                <button class="start-index">{{ 'hero.btn_download' | translate }}</button>
+                <button class="demo-index">{{ 'hero.btn_video' | translate }}</button>
             </div>
         </div>
 
-        <div class="right">
-            <div class="card-panel">
-                <div class="floating-badge">{{ 'card_panel.badge' | translate }}</div>
-                <div class="header">
-                    <h3 class="panel">{{ 'card_panel.title' | translate }}</h3>
-                    <span class="badge">{{ 'card_panel.live' | translate }}</span>
+        <div class="right-index">
+            <div class="card-panel-index">
+                <div class="floating-badge-index">{{ 'card_panel.badge' | translate }}</div>
+                <div class="header-index">
+                    <h3 class="panel-index">{{ 'card_panel.title' | translate }}</h3>
+                    <span class="badge-index">{{ 'card_panel.live' | translate }}</span>
                 </div>
-                <div class="stats">
-                    <div class="stat-box">
-                        <h2 class="blue">248</h2>
+                <div class="stats-index">
+                    <div class="stat-box-index">
+                        <h2 class="blue-index">248</h2>
                         <p>{{ 'card_panel.students' | translate }}</p>
                     </div>
-                    <div class="stat-box">
+                    <div class="stat-box-index">
                         <h2>18</h2>
                         <p>{{ 'card_panel.routes' | translate }}</p>
                     </div>
-                    <div class="stat-box">
-                        <h2 class="red">3</h2>
+                    <div class="stat-box-index">
+                        <h2 class="red-index">3</h2>
                         <p>{{ 'card_panel.alerts' | translate }}</p>
                     </div>
                 </div>
-                <div class="alert">
+                <div class="alert-index">
                     <strong>⚠ {{ 'card_panel.alert_msg' | translate }}</strong>
                     <br>
-                    <small class="example">{{ 'card_panel.alert_sub' | translate }}</small>
+                    <small class="example-index">{{ 'card_panel.alert_sub' | translate }}</small>
                 </div>
-                <div class="success">
+                <div class="success-index">
                     <strong>✔ {{ 'card_panel.success_msg' | translate }}</strong>
                     <br>
-                    <small class="example2">{{ 'card_panel.success_sub' | translate }}</small>
+                    <small class="example2-index">{{ 'card_panel.success_sub' | translate }}</small>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="functionalities" id="funcionalidades">
+    <section class="functionalities-index" id="funcionalidades">
         <div>
-            <div class="title-section">{{ 'features.label' | translate }}</div>
-            <div class="title">{{ 'features.title' | translate }}</div>
-            <div class="description">{{ 'features.description' | translate }}</div>
+            <div class="title-section-index">{{ 'features.label' | translate }}</div>
+            <div class="title-index">{{ 'features.title' | translate }}</div>
+            <div class="description-index">{{ 'features.description' | translate }}</div>
         </div>
-        <div class="cards">
-            <div class="card" *ngFor="let card of cards">
-                <mat-icon class="icon-card">{{ card.icon }}</mat-icon>
-                <div class="title-card">{{ card.title }}</div>
-                <p class="card-description">{{ card.description }}</p>
+        <div class="cards-index">
+            <div class="card-index" *ngFor="let card of cards">
+                <mat-icon class="icon-card-index">{{ card.icon }}</mat-icon>
+                <div class="title-card-index">{{ card.title }}</div>
+                <p class="card-description-index">{{ card.description }}</p>
             </div>
         </div>
     </section>
 
-    <section class="how-it-works" id="como-funciona">
+    <section class="how-it-works-index" id="como-funciona">
         <div>
-            <div class="title-section">{{ 'how_it_works.label' | translate }}</div>
-            <div class="title">{{ 'how_it_works.title' | translate }}</div>
+            <div class="title-section-index">{{ 'how_it_works.label' | translate }}</div>
+            <div class="title-index">{{ 'how_it_works.title' | translate }}</div>
         </div>
-        <div class="steps">
-            <div class="step-item" *ngFor="let step of steps | slice:0:4; let i = index">
-                <div class="number">{{ i + 1 }}</div>
-                <div class="step">
-                    <div class="title-step">{{ step.title }}</div>
-                    <p class="description">{{ step.description }}</p>
+        <div class="steps-index">
+            <div class="step-item-index" *ngFor="let step of steps | slice:0:4; let i = index">
+                <div class="number-index">{{ i + 1 }}</div>
+                <div class="step-index">
+                    <div class="title-step-index">{{ step.title }}</div>
+                    <p class="description-index">{{ step.description }}</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="question">
-        <div class="title-question">{{ 'cta.title' | translate }}</div>
-        <div class="description">{{ 'cta.description' | translate }}</div>
+    <section class="question-index">
+        <div class="title-question-index">{{ 'cta.title' | translate }}</div>
+        <div class="description-index question">{{ 'cta.description' | translate }}</div>
 
-        <div class="button">
-            <button class="start">{{ 'cta.btn_download' | translate }}</button>
-            <button class="demo">{{ 'cta.btn_contact' | translate }}</button>
+        <div class="button-index">
+            <button class="start-index">{{ 'cta.btn_download' | translate }}</button>
+            <button class="demo-index">{{ 'cta.btn_contact' | translate }}</button>
         </div>
     </section>
 </main>

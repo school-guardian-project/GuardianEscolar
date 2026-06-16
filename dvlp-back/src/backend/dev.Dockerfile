@@ -1,23 +1,21 @@
-# Etapa 1: build
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
-WORKDIR /src
+FROM mcr.microsoft.com/dotnet/sdk:10.0
 
-# Copiar csproj primero (cache de dependencias)
+WORKDIR /app
+
+# Copiar proyecto y restaurar dependencias
 COPY *.csproj ./
 RUN dotnet restore
 
-# Copiar todo y compilar
-COPY . ./
-RUN dotnet publish -c Release -o /app/publish
+RUN dotnet tool install --global dotnet-ef
 
-# Etapa 2: runtime (más liviana)
-FROM mcr.microsoft.com/dotnet/aspnet:10.0
-WORKDIR /app
+ENV PATH="${PATH}:/root/.dotnet/tools"
 
-# Copiar build
-COPY --from=build /app/publish .
+# Copiar el resto del código
+COPY . .
 
-# Puerto interno del contenedor
-EXPOSE 80
+EXPOSE 8080
 
-ENTRYPOINT ["dotnet", "backend.dll"]
+ENV ASPNETCORE_URLS=http://+:8080
+ENV ASPNETCORE_ENVIRONMENT=Development
+
+CMD ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:8080", "--no-launch-profile"]

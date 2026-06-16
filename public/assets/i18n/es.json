@@ -23,10 +23,15 @@
     "students": "Estudiantes",
     "routes": "Rutas",
     "alerts": "Alertas",
+<<<<<<< HEAD
 
     "alert_msg": "Bus fuera de ruta",
     "alert_sub": "Ruta LOL85 · 6:45 am",
 
+=======
+    "alert_msg": "Bus fuera de ruta",
+    "alert_sub": "Ruta LOL85 · 6:45 am",
+>>>>>>> develop
     "success_msg": "18 rutas operando",
     "success_sub": "Todas en tiempo normal"
   },
@@ -35,7 +40,10 @@
     "title": "Todo lo que necesitas para la seguridad escolar",
     "description": "Una plataforma completa para administradores, conductores y familias.",
     "cards": [
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
       {
         "icon": "satellite_alt",
         "title": "GPS en tiempo real",
@@ -68,7 +76,10 @@
       }
     ]
   },
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
   "how_it_works": {
     "label": "CÓMO FUNCIONA",
     "title": "Simple para todos",
@@ -91,7 +102,10 @@
       }
     ]
   },
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
   "cta": {
     "title": "¿Listo para proteger a tus estudiantes?",
     "description": "Únete a más de 500 instituciones que ya confían en Guardian Escolar.",
@@ -135,7 +149,10 @@
     "col_product": "Producto",
     "col_company": "Empresa",
     "col_legal": "Legal",
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
     "links_product": [
       "Funcionalidades",
       "Cómo funciona",
@@ -323,7 +340,10 @@
       "stepText": "3 de 3"
     }
   },
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
   "dashboard": {
     "welcome": "Bienvenido",
     "role": "Panel de administración · Guardian Escolar",
@@ -872,7 +892,10 @@
       "id": "C.C"
     }
   },
+<<<<<<< HEAD
 
+=======
+>>>>>>> develop
   "forgot_password": {
     "title": "Recupera tu acceso",
     "session_description": "Le enviaremos un código de verificación a su correo electrónico registrado.",
@@ -882,7 +905,10 @@
     "return": "Volver al inicio de sesión",
     "step_text": "1 de 3",
     "hint": "Recibirás un código de 6 dígitos",
+<<<<<<< HEAD
     
+=======
+>>>>>>> develop
     "code": {
       "title": "Verifica tu correo",
       "session_description": "Enviamos un código de 6 dígitos a tu correo.",
@@ -913,11 +939,30 @@
         "no_match": "*Las contraseñas no son iguales"
       }
     },
+<<<<<<< HEAD
 
     "links_product": ["Funcionalidades", "Como funciona", "Precios", "Para escuelas"],
     "links_company": ["Nosotros", "Blog", "Contacto"],
     "links_legal": ["Privacidad", "Terminos"],
     "rights": "© 2026 Guardian Escolar · Todos los derechos reservados"
 
+=======
+    "links_product": [
+      "Funcionalidades",
+      "Como funciona",
+      "Precios",
+      "Para escuelas"
+    ],
+    "links_company": [
+      "Nosotros",
+      "Blog",
+      "Contacto"
+    ],
+    "links_legal": [
+      "Privacidad",
+      "Terminos"
+    ],
+    "rights": "© 2026 Guardian Escolar · Todos los derechos reservados"
+>>>>>>> develop
   }
 }

@@ -5,7 +5,10 @@
         public AppShell()
         {
             InitializeComponent();
-                Routing.RegisterRoute("ForgotPassword", typeof(Features.Auth.Views.ForgotPassword));
+            // Registrar rutas para navegación mediante Shell
+            Routing.RegisterRoute("ForgotPassword", typeof(Features.Auth.Views.ForgotPassword));
+            Routing.RegisterRoute("VerifyCode", typeof(Features.Auth.Views.VerifyCode));
+            Routing.RegisterRoute("NewPassword", typeof(Features.Auth.Views.NewPassword));
         }
     }
 }

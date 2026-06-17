@@ -1,0 +1,57 @@
+/* ── BASE (siempre claro, hardcoded) ────────────────────── */
+mat-toolbar {
+  width: 100%;
+  padding: 10px;
+  background-color: #ffffff;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.title-guardian {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.7rem;
+  color: #111827;             /* hardcoded */
+}
+
+.shield {
+  color: white;
+  background-color: #1c54dc; /* hardcoded */
+  border-radius: 12px;
+  width: 45px;
+  height: 45px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.7rem;
+}
+
+/* ── CON TEMA (usa variables) ───────────────────────────── */
+mat-toolbar.themed {
+  background-color: var(--card-bg);
+  box-shadow: var(--card-shadow);
+}
+
+mat-toolbar.themed .title-guardian {
+  color: var(--title-color);
+}
+
+mat-toolbar.themed .shield {
+  background-color: var(--color-navbar);
+}
+
+/* ── COMPARTIDO ─────────────────────────────────────────── */
+.content {
+  min-width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spacer {
+  flex: 1;
+}

@@ -30,7 +30,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
     DeleteRecord,
   ],
   templateUrl: './paradas.html',
-  styleUrl: './paradas.css',
+  styleUrl: './paradas.scss',
 })
 export class Paradas {
   showModal = false;

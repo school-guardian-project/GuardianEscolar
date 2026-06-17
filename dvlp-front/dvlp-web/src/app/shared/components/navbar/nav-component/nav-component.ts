@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import {MatIconModule} from '@angular/material/icon';
 import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
@@ -8,10 +8,11 @@ import { Location } from '@angular/common';
   selector: 'app-nav-component',
   imports: [MatToolbarModule, MatButtonModule, MatIconModule],
   templateUrl: './nav-component.html',
-  styleUrl: './nav-component.css',
+  styleUrl: './nav-component.scss',
 })
 export class NavComponent {
   constructor(private location: Location) {}
+  themed = input<boolean>(false); // false = siempre claro
 
   goBack(): void {
     this.location.back();

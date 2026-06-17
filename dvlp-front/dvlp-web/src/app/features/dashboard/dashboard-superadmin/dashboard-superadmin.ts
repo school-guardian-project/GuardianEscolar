@@ -19,7 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
             RouterModule,
             TranslateModule],
   templateUrl: './dashboard-superadmin.html',
-  styleUrl: './dashboard-superadmin.css',
+  styleUrl: './dashboard-superadmin.scss',
 })
 export class DashboardSuperadmin {
   

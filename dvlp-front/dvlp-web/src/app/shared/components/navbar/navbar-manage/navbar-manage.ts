@@ -12,7 +12,7 @@ import { Location } from '@angular/common';
   standalone: true,
   imports: [MatToolbarModule, MatButtonModule, MatIconModule],
   templateUrl: './navbar-manage.html',
-  styleUrl: './navbar-manage.css'
+  styleUrl: './navbar-manage.scss'
 })
 export class NavbarManage {
 

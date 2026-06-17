@@ -8,9 +8,11 @@ import { TranslateModule } from '@ngx-translate/core';
   standalone: true, 
   imports: [MatIcon, NavComponent, ReactiveFormsModule, TranslateModule],
   templateUrl: './change-password.html',
-  styleUrl: './change-password.css',
+  styleUrl: './change-password.scss',
 })
 export class ChangePassword {
+  @Input() isThemed = true; // ← true por defecto porque esta vista siempre tiene tema
+
   @Input() iconHead = '';
   @Input() title = '';
   @Input() sessionDescription = '';

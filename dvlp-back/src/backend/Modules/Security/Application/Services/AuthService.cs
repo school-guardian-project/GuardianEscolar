@@ -1,5 +1,5 @@
-﻿using backend.Shared.Exceptions;
-using backend.Infrastructure.Persistence.Context;
+﻿using backend.Infrastructure.Persistence.Context;
+using backend.Shared.Exceptions;
 using backend.Modules.Security.Application.DTOs.Auth;
 using backend.Modules.Security.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;

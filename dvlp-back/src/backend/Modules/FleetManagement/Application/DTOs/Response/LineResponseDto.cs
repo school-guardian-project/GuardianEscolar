@@ -5,4 +5,6 @@ public class LineResponseDto
     public string? name { get; set; }
 
     public Guid brandId { get; set; }
+
+    public string status { get; set; }
 }

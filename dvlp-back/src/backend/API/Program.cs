@@ -1,15 +1,16 @@
 using backend.API.Middleware;
 using backend.Infrastructure.Persistence.Context;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
+using backend.Shared.Infrastructure.InjectionDependency;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddControllers();
+builder.Services.AddAutoMapper(typeof(Program));
+builder.Services.AddApplicationServices();
 
 // Arreglo de strings y origenes permitidos
 var allowedOrigins = builder.Configuration.GetValue<string>("AllowedOrigins")!.Split(",");
@@ -56,8 +57,6 @@ builder.Services.AddAuthorization();
 
 builder.Services.AddEndpointsApiExplorer();
 
-builder.Services.AddSwaggerGen();
-
 builder.Services.AddSwaggerGen(options =>
 {
     options.SwaggerDoc("v1", new OpenApiInfo
@@ -68,8 +67,8 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
-
 var app = builder.Build();
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -80,7 +79,7 @@ if (app.Environment.IsDevelopment())
             "/swagger/v1/swagger.json",
             "Backend API v1");
 
-        options.RoutePrefix = string.Empty;
+        // options.RoutePrefix = string.Empty;
     });
 }
 
@@ -89,7 +88,6 @@ app.UseMiddleware<ExceptionsMiddleware>();
 app.UseAuthentication();
 app.UseAuthorization();
 
-// Swagger
 app.UseHttpsRedirection();
 
 // Activando Cors en toda la aplicacion

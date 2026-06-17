@@ -1,4 +1,4 @@
-namespace backend.Modules.AlertManagement.Application.DTOs.AlertsDto;
+namespace backend.Modules.AlertManagement.Application.DTOs.Request;
 
 public class AlertRequestDto
 {
@@ -6,5 +6,5 @@ public class AlertRequestDto
 
     public Guid busId { get; set; }
 
-    public DateTime dateTime { get; set; }
+    public string status{ get; set; }
 }

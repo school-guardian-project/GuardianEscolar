@@ -3,8 +3,6 @@
 obj/
 bin/
 
-./dvlp-back/.env
-
 # Backend
 dvlp-back/src/backend/.vs/
 dvlp-back/src/backend/bin/
@@ -15,4 +13,7 @@ dvlp-back/src/backend/obj/Debug
 # Mobile app
 dvlp-front/dvlp-movil/app-movil/bin/
 dvlp-front/dvlp-movil/app-movil/obj/
-dvlp-front/dvlp-movil/app-movil
+dvlp-front/dvlp-movil/app-movil/.vs/
+
+*.user
+*.suo

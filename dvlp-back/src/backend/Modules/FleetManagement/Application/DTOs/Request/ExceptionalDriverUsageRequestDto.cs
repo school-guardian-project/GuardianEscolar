@@ -6,9 +6,7 @@ public class ExceptionalDriverUsageRequestDto
 
     public Guid profileId { get; set; }
 
-    public DateTime startDateTime { get; set; }
-
-    public DateTime endDateTime { get; set; }
-
     public string reason { get; set; }
+    
+    public string status { get; set; }
 }

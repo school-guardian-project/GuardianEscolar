@@ -1,0 +1,69 @@
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="app_movil.Components.Layout.BottomTabBar">
+
+    <Border BackgroundColor="#6B5ED6"
+            StrokeThickness="0"
+            HeightRequest="72">
+
+        <Grid ColumnDefinitions="*,*,*"
+              VerticalOptions="Center">
+
+            <!-- TAB 1: Rutas -->
+            <Border Grid.Column="0"
+                    BackgroundColor="Transparent"
+                    StrokeThickness="0">
+                <VerticalStackLayout HorizontalOptions="Center"
+                                     Spacing="4">
+                    <Image Source="icon_map.png"
+                           WidthRequest="28" HeightRequest="28"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Rutas"
+                           FontSize="10" TextColor="White"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnRutasTapped"/>
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- TAB 2: Ubicación -->
+            <Border Grid.Column="1"
+                    BackgroundColor="Transparent"
+                    StrokeThickness="0">
+                <VerticalStackLayout HorizontalOptions="Center"
+                                     Spacing="4">
+                    <Image Source="icon_location.png"
+                           WidthRequest="28" HeightRequest="28"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Ubicación"
+                           FontSize="10" TextColor="White"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnUbicacionTapped"/>
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- TAB 3: Perfil -->
+            <Border Grid.Column="2"
+                    BackgroundColor="Transparent"
+                    StrokeThickness="0">
+                <VerticalStackLayout HorizontalOptions="Center"
+                                     Spacing="4">
+                    <Image Source="icon_profile.png"
+                           WidthRequest="28" HeightRequest="28"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Perfil"
+                           FontSize="10" TextColor="White"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnPerfilTapped"/>
+                </Border.GestureRecognizers>
+            </Border>
+
+        </Grid>
+    </Border>
+
+</ContentView>

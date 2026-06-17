@@ -13,9 +13,9 @@ namespace backend.Modules.BoardingManagement.Domain.Entities
 
         public Guid stopId { get; set; }
 
-        public DateTime dateTime { get; set; }
+        public DateTime dateTime { get; set; } = DateTime.UtcNow;
 
-        public bool action { get; set; }
+        public bool? action { get; set; }
 
         public required Profile profile { get; set; }
 

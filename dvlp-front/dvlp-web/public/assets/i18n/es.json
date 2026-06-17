@@ -22,8 +22,10 @@
     "students": "Estudiantes",
     "routes": "Rutas",
     "alerts": "Alertas",
+
     "alert_msg": "Bus fuera de ruta",
     "alert_sub": "Ruta LOL85 · 6:45 am",
+
     "success_msg": "18 rutas operando",
     "success_sub": "Todas en tiempo normal"
   },
@@ -884,6 +886,7 @@
     "return": "Volver al inicio de sesión",
     "step_text": "1 de 3",
     "hint": "Recibirás un código de 6 dígitos",
+    
     "code": {
       "title": "Verifica tu correo",
       "session_description": "Enviamos un código de 6 dígitos a tu correo.",
@@ -914,21 +917,11 @@
         "no_match": "*Las contraseñas no son iguales"
       }
     },
-    "links_product": [
-      "Funcionalidades",
-      "Como funciona",
-      "Precios",
-      "Para escuelas"
-    ],
-    "links_company": [
-      "Nosotros",
-      "Blog",
-      "Contacto"
-    ],
-    "links_legal": [
-      "Privacidad",
-      "Terminos"
-    ],
+
+    "links_product": ["Funcionalidades", "Como funciona", "Precios", "Para escuelas"],
+    "links_company": ["Nosotros", "Blog", "Contacto"],
+    "links_legal": ["Privacidad", "Terminos"],
     "rights": "© 2026 Guardian Escolar · Todos los derechos reservados"
+
   }
 }

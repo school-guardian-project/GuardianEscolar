@@ -13,4 +13,6 @@ public class BusResponseDto
     public bool gpsStatus { get; set; }
 
     public Guid lineModelId { get; set; }
+
+    public string status { get; set; }
 }

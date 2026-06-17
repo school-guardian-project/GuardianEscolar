@@ -11,12 +11,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - AllowedOrigins=http://localhost:4200
-<<<<<<< HEAD
-    volumes:
-      - ./dvlp-back/src/backend:/app
-    command: dotnet watch run
-=======
->>>>>>> origin/develop
     dns:
       - 8.8.8.8
       - 1.1.1.1

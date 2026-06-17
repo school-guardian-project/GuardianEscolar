@@ -11,21 +11,15 @@
 
   <ItemGroup>
     <Compile Remove="Infrastructure\IRepositories\**" />
-    <Compile Remove="Infrastructure\Persistence\**" />
-    <Compile Remove="Migrations\**" />
+    <Compile Remove="Infrastructure\IRepositories\**" />
     <Content Remove="Infrastructure\IRepositories\**" />
-    <Content Remove="Infrastructure\Persistence\**" />
-    <Content Remove="Migrations\**" />
     <EmbeddedResource Remove="Infrastructure\IRepositories\**" />
-    <EmbeddedResource Remove="Infrastructure\Persistence\**" />
-    <EmbeddedResource Remove="Migrations\**" />
     <None Remove="Infrastructure\IRepositories\**" />
-    <None Remove="Infrastructure\Persistence\**" />
-    <None Remove="Migrations\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.5" />
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="10.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.5" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="10.0.5">
       <PrivateAssets>all</PrivateAssets>
@@ -45,12 +39,13 @@
     <Folder Include="Modules\BoardingManagement\Infrastructure\Repositories\" />
     <Folder Include="Modules\FleetManagement\Domain\Interfaces\" />
     <Folder Include="Modules\FleetManagement\Infrastructure\Repositories\" />
-    <Folder Include="Modules\RouteManagement\Infrastructure\Repositories\" />
     <Folder Include="Modules\SchoolManagement\Domain\Interfaces\" />
     <Folder Include="Modules\SchoolManagement\Infrastructure\Repositories\" />
     <Folder Include="Modules\Security\Application\DTOs\Request\" />
-    <Folder Include="Modules\Security\Application\Services\" />
-    <Folder Include="Modules\Security\Domain\Interfaces\" />
+    <Folder Include="Modules\RouteManagement\Infrastructure\Repositories\" />
+    <Folder Include="Modules\Security\Infrastructure\Repositories\" />
+    <Folder Include="Modules\Security\Api\" />
+    <Folder Include="Modules\UserManagement\Domain\Interfaces\" />
     <Folder Include="Modules\Security\Infrastructure\Repositories\" />
     <Folder Include="Modules\Security\Api\" />
     <Folder Include="Modules\UserManagement\Domain\Interfaces\" />

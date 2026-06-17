@@ -6,24 +6,13 @@ public partial class VerifyCode : ContentPage
 	{
 		InitializeComponent();
 	}
-    private async void OnSendCodeClicked(object? sender, EventArgs e)
-    {
-        await Navigation.PushAsync(new NewPassword());
-    }
+	private async void OnSendCodeClicked(object? sender, EventArgs e)
+	{
+		// Usar navegación de Shell para evitar NullReference si Navigation es nulo
+		await Shell.Current.GoToAsync(nameof(NewPassword));
+	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

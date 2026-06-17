@@ -1,6 +1,6 @@
 namespace app_movil.Features.Auth.Views;
 
-public partial class ForgotPassword :  ContentPage
+public partial class ForgotPassword : ContentPage
 {
     public ForgotPassword()
     {
@@ -9,11 +9,11 @@ public partial class ForgotPassword :  ContentPage
 
     private async void OnBackTapped(object? sender, TappedEventArgs e)
     {
-        await Navigation.PopAsync();
+        await Shell.Current.GoToAsync("..");
     }
 
     private async void OnSendCodeClicked(object? sender, EventArgs e)
     {
-        await Navigation.PushAsync(new VerifyCode());
+        await Shell.Current.GoToAsync(nameof(VerifyCode));
     }
 }

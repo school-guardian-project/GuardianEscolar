@@ -188,6 +188,17 @@ footer {
 @media screen and (max-width: 480px) {
     footer {
         padding: 40px;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .footer-header {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .col1 {
+        width: 100%;
     }
 
     .cols {
@@ -204,5 +215,17 @@ footer {
     .footer-down {
         flex-direction: column;
         text-align: center;
+        gap: 20px;
+    }
+
+    .down-right {
+        display: flex;
+        flex-direction: column;
+        order: 1;
+        gap: 20px;
+    }
+
+    .down-left {
+        order: 2;
     }
 }

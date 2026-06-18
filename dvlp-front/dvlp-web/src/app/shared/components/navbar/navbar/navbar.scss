@@ -103,7 +103,7 @@ mat-toolbar {
   }
 
   mat-sidenav-container {
-    width: 100vw;
+    width: 100%;
     height: 100vh;
     min-height: 100vh;
     position: fixed;
@@ -111,6 +111,7 @@ mat-toolbar {
     left: 0;
     z-index: 1200;
     background: transparent;
+    overflow-x: hidden;
   }
 
   mat-sidenav {
@@ -134,6 +135,21 @@ mat-toolbar {
 
   mat-sidenav .person {
     margin-bottom: 20px;
+  }
+
+  mat-sidenav-content {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .logo {
+    width: 40px;
+    height: 52px;
+  }
+
+  .title {
+    font-size: 1.3rem;
   }
 
   mat-sidenav-content {

@@ -4,6 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:services="clr-namespace:app_movil.Services"
     x:Class="app_movil.Features.Auth.Views.Welcome"
+    xmlns:inputs="clr-namespace:app_movil.Components.Inputs"
     xmlns:components="clr-namespace:app_movil.Components"
     BackgroundColor="{StaticResource Background}"
     NavigationPage.HasNavigationBar="False">
@@ -41,13 +42,13 @@
                 TextColor="{StaticResource TitleColor}"
                 Margin="0,50,0,10"/>
 
-            <components:InputField
+            <inputs:InputField
                 LabelText="{services:Translation Key=Email}"
                 Placeholder="ejemplo@gmail.com"
                 Keyboard="Email"
                 Text="{Binding Email}"/>
 
-            <components:InputField
+            <inputs:InputField
                 LabelText="{services:Translation Key=Password}"
                 Placeholder="••••••••"
                 IsPassword="True"

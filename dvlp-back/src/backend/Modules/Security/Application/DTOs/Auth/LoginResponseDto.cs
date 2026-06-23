@@ -2,14 +2,14 @@
 {
     public class LoginResponseDto
     {
-        public String AccessToken { get; set; }
+        public string AccessToken { get; set; }
 
         public DateTime Expiration { get; set; }
 
-        public String Name { get; set; }
+        public string Name { get; set; }
 
-        public String Email { get; set; }
+        public string Email { get; set; }
 
-        public List<String> Roles { get; set; } = new();
+        public List<string> Roles { get; set; } = new();
     }
 }

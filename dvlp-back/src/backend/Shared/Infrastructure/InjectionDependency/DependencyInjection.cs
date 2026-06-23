@@ -13,6 +13,8 @@ using backend.Modules.RouteManagement.Application.Services;
 using backend.Modules.SchoolManagement.Application.DTOs.Request;
 using backend.Modules.SchoolManagement.Application.DTOs.Response;
 using backend.Modules.SchoolManagement.Application.Services;
+using backend.Modules.Security.Application.Services;
+using backend.Modules.Security.Domain.Interfaces;
 using backend.Modules.UserManagement.Application.DTOs.Request;
 using backend.Modules.UserManagement.Application.DTOs.Response;
 using backend.Modules.UserManagement.Application.Services;
@@ -45,5 +47,9 @@ public static class DependencyInjection
         services.AddScoped<ICrudService<FamilyMemberResponseDto, FamilyMemberRequestDto, Guid>, FamilyMemberServiceImpl>();
         services.AddScoped<ICrudService<FamilyResponseDto, FamilyRequestDto, Guid>, FamilyServiceImpl>();
         services.AddScoped<ICrudService<PersonResponseDto, PersonRequestDto, Guid>, PersonServiceImpl>();
+
+        services.AddScoped<IAuthService, AuthService>();
+        services.AddScoped<IJwtService, JwtService>();
+        services.AddScoped<IPasswordService, PasswordService>();
     }
 }

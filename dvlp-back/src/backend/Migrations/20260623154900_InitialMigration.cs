@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class AddLengthStatus : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -366,8 +366,8 @@ namespace backend.Migrations
                     schoolId = table.Column<Guid>(type: "uuid", nullable: false),
                     name = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
                     targetSector = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
-                    startTime = table.Column<TimeSpan>(type: "interval", nullable: false),
-                    endTime = table.Column<TimeSpan>(type: "interval", nullable: false),
+                    starDatetTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
+                    endDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
                     status = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
@@ -532,6 +532,9 @@ namespace backend.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     driverId = table.Column<Guid>(type: "uuid", nullable: false),
                     schoolId = table.Column<Guid>(type: "uuid", nullable: false),
+                    brand = table.Column<string>(type: "text", nullable: true),
+                    model = table.Column<string>(type: "text", nullable: true),
+                    capacity = table.Column<int>(type: "integer", nullable: false),
                     soatValidity = table.Column<byte[]>(type: "bytea", nullable: true),
                     gpsStatus = table.Column<bool>(type: "boolean", nullable: false),
                     lineModelId = table.Column<Guid>(type: "uuid", nullable: false),
@@ -742,7 +745,7 @@ namespace backend.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     alertTypeId = table.Column<Guid>(type: "uuid", nullable: false),
                     busId = table.Column<Guid>(type: "uuid", nullable: false),
-                    dateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    dateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
                     status = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
@@ -811,8 +814,8 @@ namespace backend.Migrations
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     busId = table.Column<Guid>(type: "uuid", nullable: false),
                     profileId = table.Column<Guid>(type: "uuid", nullable: false),
-                    startDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    endDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
+                    startDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
+                    endDateTime = table.Column<DateTime>(type: "timestamp with time zone", nullable: false, defaultValueSql: "NOW()"),
                     reason = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     status = table.Column<string>(type: "text", nullable: false)
                 },
@@ -1029,8 +1032,7 @@ namespace backend.Migrations
                 name: "IX_Person_identificationId",
                 schema: "app",
                 table: "Person",
-                column: "identificationId",
-                unique: true);
+                column: "identificationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Profile_personId",

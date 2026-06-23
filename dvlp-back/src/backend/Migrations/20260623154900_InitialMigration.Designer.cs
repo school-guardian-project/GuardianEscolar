@@ -12,8 +12,8 @@ using backend.Infrastructure.Persistence.Context;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260609235243_AddLengthStatus")]
-    partial class AddLengthStatus
+    [Migration("20260623154900_InitialMigration")]
+    partial class InitialMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,7 +39,9 @@ namespace backend.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("dateTime")
-                        .HasColumnType("timestamp with time zone");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("status")
                         .IsRequired()
@@ -171,6 +173,12 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
+                    b.Property<string>("brand")
+                        .HasColumnType("text");
+
+                    b.Property<int>("capacity")
+                        .HasColumnType("integer");
+
                     b.Property<Guid>("driverId")
                         .HasColumnType("uuid");
 
@@ -179,6 +187,9 @@ namespace backend.Migrations
 
                     b.Property<Guid>("lineModelId")
                         .HasColumnType("uuid");
+
+                    b.Property<string>("model")
+                        .HasColumnType("text");
 
                     b.Property<Guid>("schoolId")
                         .HasColumnType("uuid");
@@ -211,7 +222,9 @@ namespace backend.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<DateTime>("endDateTime")
-                        .HasColumnType("timestamp with time zone");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<Guid>("profileId")
                         .HasColumnType("uuid");
@@ -222,7 +235,9 @@ namespace backend.Migrations
                         .HasColumnType("character varying(200)");
 
                     b.Property<DateTime>("startDateTime")
-                        .HasColumnType("timestamp with time zone");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("status")
                         .IsRequired()
@@ -376,8 +391,10 @@ namespace backend.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uuid");
 
-                    b.Property<TimeSpan>("endTime")
-                        .HasColumnType("interval");
+                    b.Property<DateTime>("endDateTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("name")
                         .IsRequired()
@@ -387,8 +404,10 @@ namespace backend.Migrations
                     b.Property<Guid>("schoolId")
                         .HasColumnType("uuid");
 
-                    b.Property<TimeSpan>("startTime")
-                        .HasColumnType("interval");
+                    b.Property<DateTime>("starDatetTime")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("timestamp with time zone")
+                        .HasDefaultValueSql("NOW()");
 
                     b.Property<string>("status")
                         .IsRequired()
@@ -1018,8 +1037,7 @@ namespace backend.Migrations
 
                     b.HasKey("id");
 
-                    b.HasIndex("identificationId")
-                        .IsUnique();
+                    b.HasIndex("identificationId");
 
                     b.ToTable("Person", "app");
                 });
@@ -1451,8 +1469,8 @@ namespace backend.Migrations
             modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.Person", b =>
                 {
                     b.HasOne("backend.Modules.UserManagement.Domain.Entities.IdentificationType", "IdentificationType")
-                        .WithOne("person")
-                        .HasForeignKey("backend.Modules.UserManagement.Domain.Entities.Person", "identificationId")
+                        .WithMany("people")
+                        .HasForeignKey("identificationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1602,8 +1620,7 @@ namespace backend.Migrations
 
             modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.IdentificationType", b =>
                 {
-                    b.Navigation("person")
-                        .IsRequired();
+                    b.Navigation("people");
                 });
 
             modelBuilder.Entity("backend.Modules.UserManagement.Domain.Entities.Person", b =>

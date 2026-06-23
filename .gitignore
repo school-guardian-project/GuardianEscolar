@@ -17,3 +17,5 @@ dvlp-front/dvlp-movil/app-movil/.vs/
 
 *.user
 *.suo
+
+dvlp-back/src/backend/appsettings.Development.json

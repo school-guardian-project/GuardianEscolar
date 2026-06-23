@@ -11,7 +11,7 @@ namespace backend.Modules.UserManagement.Infrastructure.Configurations
         {
             builder.Property(pe => pe.name).HasMaxLength(50);
             builder.Property(pe => pe.lastName).HasMaxLength(50);
-            builder.HasOne(pe => pe.IdentificationType).WithOne(it => it.person).HasForeignKey<Person>(pe => pe.identificationId);
+            builder.HasOne(pe => pe.IdentificationType).WithMany(it => it.people).HasForeignKey(pe => pe.identificationId);
             builder.Property(pe => pe.email).HasMaxLength(50);
             builder.Property(pe => pe.residenceAddress).HasMaxLength(50);
         }

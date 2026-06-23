@@ -13,6 +13,6 @@ public class PersonRequestDto
     public int? phone { get; set; }
 
     public string? residenceAddress { get; set; }
-    
-    public string status { get; set; }
+
+    public string? password { get; set; }
 }

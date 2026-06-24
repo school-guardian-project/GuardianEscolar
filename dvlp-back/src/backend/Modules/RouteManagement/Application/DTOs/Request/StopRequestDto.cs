@@ -11,6 +11,4 @@ public class StopRequestDto
     public decimal? longitude { get; set; }
 
     public decimal? latitude { get; set; }
-
-    public string status { get; set; }
 }

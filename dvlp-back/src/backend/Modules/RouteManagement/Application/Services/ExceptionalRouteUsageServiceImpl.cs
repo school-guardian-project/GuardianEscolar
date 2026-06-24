@@ -20,7 +20,6 @@ public class ExceptionalRouteUsageServiceImpl : ACrudService<ExceptionalRouteUsa
         
         if (dto.profileId != Guid.Empty && dto.profileId != entity.profileId) entity.profileId = dto.profileId;
         if (dto.routeId != Guid.Empty && dto.routeId != entity.routeId) entity.routeId = dto.routeId;
-        if (!string.IsNullOrEmpty(dto.status) && dto.status != entity.status) entity.status = dto.status;
         if (!string.IsNullOrEmpty(dto.reason) && dto.reason != entity.reason) entity.reason = dto.reason;
         
         _context.SaveChanges();

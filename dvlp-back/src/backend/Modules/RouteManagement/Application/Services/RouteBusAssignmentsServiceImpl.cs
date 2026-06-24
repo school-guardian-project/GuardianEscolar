@@ -20,7 +20,6 @@ public class RouteBusAssignmentsServiceImpl : ACrudService<RouteBusAssignments, 
         
         if (dto.busId != Guid.Empty && dto.busId != entity.busId) entity.busId = dto.busId;
         if (dto.routeId != Guid.Empty && dto.routeId != entity.routeId) entity.routeId = dto.routeId;
-        if (!string.IsNullOrEmpty(dto.status) && dto.status != entity.status) entity.status = dto.status;
 
         _context.SaveChanges();
         return _mapper.Map<RouteBusAssignmentsResponseDto>(entity);

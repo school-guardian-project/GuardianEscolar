@@ -7,6 +7,4 @@ public class ExceptionalDriverUsageRequestDto
     public Guid profileId { get; set; }
 
     public string reason { get; set; }
-    
-    public string status { get; set; }
 }

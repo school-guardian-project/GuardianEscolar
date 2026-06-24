@@ -20,7 +20,6 @@ public class CourseServiceImpl : ACrudService<Course, CourseResponseDto, CourseR
         
         if (dto.campuseId != Guid.Empty && dto.campuseId != entity.campuseId) entity.campuseId = dto.campuseId;
         if (!string.IsNullOrEmpty(dto.name) && dto.name != entity.name) entity.name = dto.name;
-        if (!string.IsNullOrEmpty(dto.status) && dto.status != entity.status) entity.status = dto.status;
         
         _context.SaveChanges();
         return _mapper.Map<CourseResponseDto>(entity);

@@ -7,6 +7,4 @@ public class RouteEntityRequestDto
     public string? name { get; set; }
 
     public string? targetSector { get; set; }
-    
-    public string status { get; set; }
 }

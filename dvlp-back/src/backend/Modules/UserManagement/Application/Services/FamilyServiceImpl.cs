@@ -20,7 +20,6 @@ public class FamilyServiceImpl : ACrudService<Family, FamilyResponseDto, FamilyR
         
         if (!string.IsNullOrEmpty(dto.name) && dto.name != entity.name) entity.name = dto.name;
         if (!string.IsNullOrEmpty(dto.observations) && dto.observations != entity.observations) entity.observations = dto.observations;
-        if (!string.IsNullOrEmpty(dto.status) && dto.status != entity.status) entity.status = dto.status;
         
         _context.SaveChanges();
         return _mapper.Map<FamilyResponseDto>(entity);

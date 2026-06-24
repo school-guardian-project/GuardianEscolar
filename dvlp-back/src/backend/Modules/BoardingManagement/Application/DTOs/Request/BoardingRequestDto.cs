@@ -9,6 +9,4 @@ public class BoardingRequestDto
     public Guid stopId { get; set; }
 
     public bool? action { get; set; }
-
-    public string status { get; set; }
 }

@@ -7,6 +7,4 @@ public class ExceptionalRouteUsageRequestDto
     public Guid routeId { get; set; }
 
     public string reason { get; set; }
-    
-    public string status { get; set; }
 }

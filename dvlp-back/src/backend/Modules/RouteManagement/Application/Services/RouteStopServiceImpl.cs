@@ -20,7 +20,6 @@ public class RouteStopServiceImpl : ACrudService<RouteStop, RouteStopResponseDto
         
         if (dto.routeId != Guid.Empty && dto.routeId != entity.routeId) entity.routeId = dto.routeId;
         if (dto.stopId != Guid.Empty && dto.stopId != entity.stopId) entity.stopId = dto.stopId;
-        if (!string.IsNullOrEmpty(dto.status) && dto.status != entity.status) entity.status = dto.status;
 
         _context.SaveChanges();
         return _mapper.Map<RouteStopResponseDto>(entity);

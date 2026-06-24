@@ -15,4 +15,6 @@ public class PersonRequestDto
     public string? residenceAddress { get; set; }
 
     public string? password { get; set; }
+
+    public Guid roleId { get; set; }
 }

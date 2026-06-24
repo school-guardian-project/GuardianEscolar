@@ -8,6 +8,7 @@ namespace backend.Modules.UserManagement.Api.Controller;
 
 [ApiController]
 [Route("api/person")]
+[Tags("person")]
 public class PersonController : ACrudController<PersonResponseDto, PersonRequestDto>
 {
     public PersonController(ICrudService<PersonResponseDto, PersonRequestDto, Guid> service) : base(service)

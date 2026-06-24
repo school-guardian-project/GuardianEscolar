@@ -8,6 +8,7 @@ namespace backend.Modules.FleetManagement.Api.Controller;
 
 [ApiController]
 [Route("api/bus")]
+[Tags("bus")]
 public class BusController : ACrudController<BusResponseDto, BusRequestDto>
 {
     public BusController(ICrudService<BusResponseDto, BusRequestDto, Guid> service) : base(service)

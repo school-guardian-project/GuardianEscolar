@@ -8,6 +8,7 @@ namespace backend.Modules.AlertManagement.Api.Controller;
 
 [ApiController]
 [Route("api/saved-alerts")]
+[Tags("saved-alerts")]
 public class SavedAlertsController :ACrudController<SavedAlertsResponseDto, SavedAlertsRequestDto>
 {
     public SavedAlertsController(ICrudService<SavedAlertsResponseDto, SavedAlertsRequestDto, Guid> service) : base(service)

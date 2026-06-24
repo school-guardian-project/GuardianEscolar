@@ -8,6 +8,7 @@ namespace backend.Modules.UserManagement.Api.Controller;
 
 [ApiController]
 [Route("api/family")]
+[Tags("family")]
 public class FamilyController : ACrudController<FamilyResponseDto, FamilyRequestDto>
 {
     public FamilyController(ICrudService<FamilyResponseDto, FamilyRequestDto, Guid> service) : base(service)

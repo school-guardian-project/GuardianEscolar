@@ -8,6 +8,7 @@ namespace backend.Modules.BoardingManagement.Api.Controller;
 
 [ApiController]
 [Route("api/boarding")]
+[Tags("boarding")]
 public class BoardingController : ACrudController<BoardingResponseDto, BoardingRequestDto>
 {
     public BoardingController(ICrudService<BoardingResponseDto, BoardingRequestDto, Guid> service) : base(service)

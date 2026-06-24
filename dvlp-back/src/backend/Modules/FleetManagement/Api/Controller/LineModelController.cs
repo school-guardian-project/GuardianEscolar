@@ -8,6 +8,7 @@ namespace backend.Modules.FleetManagement.Api.Controller;
 
 [ApiController]
 [Route("api/line-model")]
+[Tags("line-model")]
 public class LineModelController : ACrudController<LineModelResponseDto, LIneModelRequestDto>
 {
     public LineModelController(ICrudService<LineModelResponseDto, LIneModelRequestDto, Guid> service) : base(service)

@@ -8,6 +8,7 @@ namespace backend.Modules.AlertManagement.Api.Controller;
 
 [ApiController]
 [Route("api/alert")]
+[Tags("alert")]
 public class AlertController : ACrudController<AlertResponseDto, AlertRequestDto>
 {
     public AlertController(ICrudService<AlertResponseDto, AlertRequestDto, Guid> service) : base(service)

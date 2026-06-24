@@ -8,6 +8,7 @@ namespace backend.Modules.SchoolManagement.Api.Controller;
 
 [ApiController]
 [Route("api/course")]
+[Tags("course")]
 public class CourseController : ACrudController<CourseResponseDto, CourseRequestDto>
 {
     public CourseController(ICrudService<CourseResponseDto, CourseRequestDto, Guid> service) : base(service)

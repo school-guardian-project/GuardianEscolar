@@ -8,6 +8,7 @@ namespace backend.Modules.FleetManagement.Api.Controller;
 
 [ApiController]
 [Route("api/exceptional-driver-usage")]
+[Tags("exceptional-driver-usage")]
 public class ExceptionalDriverUsageController : ACrudController<ExceptionalDriverResponseDto, ExceptionalDriverUsageRequestDto>
 {
     public ExceptionalDriverUsageController(ICrudService<ExceptionalDriverResponseDto, ExceptionalDriverUsageRequestDto, Guid> service) : base(service)

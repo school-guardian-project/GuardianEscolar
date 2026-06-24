@@ -8,6 +8,7 @@ namespace backend.Modules.RouteManagement.Api.Controller;
 
 [ApiController]
 [Route("api/exceptional-route-usage")]
+[Tags("exceptional-route-usage")]
 public class ExceptionalRouteUsageController : ACrudController<ExceptionalRouteUsageResponseDto, ExceptionalRouteUsageRequestDto>
 {
     public ExceptionalRouteUsageController(ICrudService<ExceptionalRouteUsageResponseDto, ExceptionalRouteUsageRequestDto, Guid> service) : base(service)

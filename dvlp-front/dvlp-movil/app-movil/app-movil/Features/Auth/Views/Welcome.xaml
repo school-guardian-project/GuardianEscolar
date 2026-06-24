@@ -67,7 +67,8 @@
             <!-- Botón -->
             <components:PrimaryButton
                 Text="{services:Translation Key=Enter}"
-                Margin="0,20,0,0"/>
+                Margin="0,20,0,0"
+                Clicked="OnSendCodeClicked"/>
 
         </VerticalStackLayout>
     </ScrollView>

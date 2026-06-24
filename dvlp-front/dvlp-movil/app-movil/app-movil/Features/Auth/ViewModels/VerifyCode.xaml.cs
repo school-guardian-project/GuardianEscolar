@@ -8,9 +8,9 @@ public partial class VerifyCode : ContentPage
 	}
 	private async void OnSendCodeClicked(object? sender, EventArgs e)
 	{
-		// Usar navegación de Shell para evitar NullReference si Navigation es nulo
-		await Shell.Current.GoToAsync(nameof(NewPassword));
-	}
+        // Usar navegación de Shell para evitar NullReference si Navigation es nulo
+        await Shell.Current.GoToAsync(nameof(NewPassword));
+    }
 
 }
 

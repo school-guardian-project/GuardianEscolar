@@ -1,6 +1,7 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="app_movil.Components.Layout.BottomTabBar">
+             x:Class="app_movil.Components.Layout.BottomTabBar"
+             xmlns:services="clr-namespace:app_movil.Services">
 
     <Border BackgroundColor="#6B5ED6"
             StrokeThickness="0"
@@ -15,10 +16,16 @@
                     StrokeThickness="0">
                 <VerticalStackLayout HorizontalOptions="Center"
                                      Spacing="4">
-                    <Image Source="icon_map.png"
-                           WidthRequest="28" HeightRequest="28"
+                    <Label Text="route"
+                           FontFamily="MaterialSymbolsOutlined"
+                           FontSize="28"
+                           TextColor="White"
+                           WidthRequest="28"
+                           HeightRequest="28"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center"
                            HorizontalOptions="Center"/>
-                    <Label Text="Rutas"
+                    <Label Text="{services:Translation Key=Route}"
                            FontSize="10" TextColor="White"
                            HorizontalOptions="Center"/>
                 </VerticalStackLayout>
@@ -27,16 +34,22 @@
                 </Border.GestureRecognizers>
             </Border>
 
-            <!-- TAB 2: Ubicación -->
+            <!-- TAB 2: Ubicacion -->
             <Border Grid.Column="1"
                     BackgroundColor="Transparent"
                     StrokeThickness="0">
                 <VerticalStackLayout HorizontalOptions="Center"
                                      Spacing="4">
-                    <Image Source="icon_location.png"
-                           WidthRequest="28" HeightRequest="28"
+                    <Label Text="location_on"
+                           FontFamily="MaterialSymbolsOutlined"
+                           FontSize="28"
+                           TextColor="White"
+                           WidthRequest="28"
+                           HeightRequest="28"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center"
                            HorizontalOptions="Center"/>
-                    <Label Text="Ubicación"
+                    <Label Text="{services:Translation Key=Location}"
                            FontSize="10" TextColor="White"
                            HorizontalOptions="Center"/>
                 </VerticalStackLayout>
@@ -51,10 +64,16 @@
                     StrokeThickness="0">
                 <VerticalStackLayout HorizontalOptions="Center"
                                      Spacing="4">
-                    <Image Source="icon_profile.png"
-                           WidthRequest="28" HeightRequest="28"
+                    <Label Text="person"
+                           FontFamily="MaterialSymbolsOutlined"
+                           FontSize="28"
+                           TextColor="White"
+                           WidthRequest="28"
+                           HeightRequest="28"
+                           HorizontalTextAlignment="Center"
+                           VerticalTextAlignment="Center"
                            HorizontalOptions="Center"/>
-                    <Label Text="Perfil"
+                    <Label Text="{services:Translation Key=Profile}"
                            FontSize="10" TextColor="White"
                            HorizontalOptions="Center"/>
                 </VerticalStackLayout>

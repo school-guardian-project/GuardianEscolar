@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="app_movil.Components.Inputs.SearchInput"
+              xmlns:services="clr-namespace:app_movil.Services">
+
+        <Border
+        BackgroundColor="{StaticResource CardBackground}"
+        Stroke="{StaticResource BorderColor}"
+        StrokeThickness="1"
+        StrokeShape="RoundRectangle 15">
+
+        <Grid
+            Padding="12,0"
+            ColumnDefinitions="Auto,*"
+            HeightRequest="50">
+
+            <Label
+                Grid.Column="0"
+                WidthRequest="20"
+                HeightRequest="20"
+                Text="search"
+                FontFamily="MaterialSymbolsOutlined"
+                FontSize="20"
+                TextColor="{StaticResource TextSecondary}"
+                HorizontalTextAlignment="Center"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center" />
+
+            <Entry
+                Grid.Column="1"
+                Margin="10,0,0,0"
+                Placeholder="{services:Translation Key=SearchRoute}"
+                PlaceholderColor="{StaticResource InputPlaceholder}"
+                TextColor="{StaticResource TextPrimary}"
+                VerticalOptions="Center" />
+
+        </Grid>
+    </Border>
+</ContentView>

@@ -1,3 +1,4 @@
+using System.Text;
 using backend.API.Middleware;
 using backend.Infrastructure.Persistence.Context;
 using backend.Shared.Infrastructure.InjectionDependency;
@@ -50,7 +51,8 @@ builder.Services.AddAuthentication(options =>
         ValidateIssuer = true,
         ValidateAudience = true,
         ValidateLifetime = true,
-        ValidateIssuerSigningKey = true
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtConfig:Key"]!))
     };
 });
 builder.Services.AddAuthorization();
@@ -85,13 +87,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseMiddleware<ExceptionsMiddleware>();
 
+app.UseCors();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
 app.UseHttpsRedirection();
-
-// Activando Cors en toda la aplicacion
-app.UseCors();
 
 app.MapControllers();
 

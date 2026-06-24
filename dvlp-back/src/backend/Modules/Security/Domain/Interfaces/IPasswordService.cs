@@ -2,8 +2,8 @@
 {
     public interface IPasswordService
     {
-        String Hash(String password);
+        string Hash(string password);
 
-        bool Verify(String hash, String password);
+        bool Verify(string hash, string password);
     }
 }

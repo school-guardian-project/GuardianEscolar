@@ -6,6 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,7 @@ import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } 
 export class Login {
   form: FormGroup;
 
-  constructor(private router: Router, private fb: FormBuilder) {
+  constructor(private router: Router, private fb: FormBuilder, private authService: AuthService) {
     const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
     this.form = this.fb.group({
@@ -27,11 +28,23 @@ export class Login {
   }
 
   login() {
-    if (this.form.valid) {
-      this.router.navigate(['/dashboard-admin'])
-    } else {
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
+      return;
     }
+
+    const { email, password } = this.form.value;
+    this.authService.login(email, password).subscribe({
+      next: (res) => {
+        const roles = res.roles;
+        if (roles.includes('admin')){
+          this.router.navigate(['/dashboard-admin'])
+        } else {
+          this.router.navigate(['/home'])
+        }
+      },
+      error: () => alert('Credencilaes invalidas')
+    })
   }
 
   forgot() {

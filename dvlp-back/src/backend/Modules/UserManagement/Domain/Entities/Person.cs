@@ -9,8 +9,6 @@ namespace backend.Modules.UserManagement.Domain.Entities
 
         public string? lastName { get; set; }
 
-        public string? identificationType { get; set; }
-
         public Guid identificationId { get; set; }
 
         public string? email { get; set; }

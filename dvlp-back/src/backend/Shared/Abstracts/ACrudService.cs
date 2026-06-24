@@ -35,7 +35,7 @@ public abstract class ACrudService<TEntity, TResponseDto, TRequestDto> : ICrudSe
         return _mapper.Map<TResponseDto>(entity);
     }
 
-    public TResponseDto Save(TRequestDto dto)
+    public virtual TResponseDto Save(TRequestDto dto)
     {
         var entity = _mapper.Map<TEntity>(dto);
         entity.status = "active";

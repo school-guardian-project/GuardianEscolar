@@ -20,7 +20,6 @@ public class AlertServiceImpl : ACrudService<Alert, AlertResponseDto, AlertReque
         
         if (dto.alertTypeId != Guid.Empty) entity.alertTypeId = dto.alertTypeId;
         if (dto.busId != Guid.Empty) entity.busId = dto.busId;
-        if (!string.IsNullOrEmpty(dto.status) && dto.status != entity.status) entity.status = dto.status;
         
         _context.SaveChanges();
         return _mapper.Map<AlertResponseDto>(entity);

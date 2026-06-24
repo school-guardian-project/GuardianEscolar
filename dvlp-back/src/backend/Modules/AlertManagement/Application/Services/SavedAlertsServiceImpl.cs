@@ -20,7 +20,6 @@ public class SavedAlertsServiceImpl : ACrudService<SavedAlert, SavedAlertsRespon
         
         if (dto.profileId != Guid.Empty) entity.profileId = dto.profileId;
         if (dto.alertId != Guid.Empty) entity.alertId = dto.alertId;
-        if (!string.IsNullOrEmpty(dto.status) && dto.status != entity.status) entity.status = dto.status;
         
         _context.SaveChanges();
         return _mapper.Map<SavedAlertsResponseDto>(entity);

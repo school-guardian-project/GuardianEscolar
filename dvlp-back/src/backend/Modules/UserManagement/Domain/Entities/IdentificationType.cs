@@ -6,6 +6,6 @@ namespace backend.Modules.UserManagement.Domain.Entities
     {
         public string name { get; set; }
 
-        public Person person { get; set; }
+        public ICollection<Person> people { get; set; } = new List<Person>();
     }
 }

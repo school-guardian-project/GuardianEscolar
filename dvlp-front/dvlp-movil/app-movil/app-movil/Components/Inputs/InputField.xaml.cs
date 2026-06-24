@@ -1,4 +1,4 @@
-namespace app_movil.Components;
+namespace app_movil.Components.Inputs;
 
 public partial class InputField : ContentView
 {

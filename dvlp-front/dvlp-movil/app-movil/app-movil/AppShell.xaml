@@ -4,7 +4,7 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:auth="clr-namespace:app_movil.Features.Auth.Views"
-    Title="app_movil"
+    xmlns:home="clr-namespace:app_movil.Features.Home.Views"
     Shell.NavBarIsVisible="False">
 
     <ShellContent
@@ -13,13 +13,10 @@
         Route="Welcome" />
 
     <ShellContent
-        Title="ForgotPassword"
-        ContentTemplate="{DataTemplate auth:ForgotPassword}"
-        Route="ForgotPassword"/>
-
-    <ShellContent
-        Title="VerifyCode"
-        ContentTemplate="{DataTemplate auth:VerifyCode}"
-        Route="VerifyCode"/>
+        Title="MainPage"
+        ContentTemplate="{DataTemplate home:MainPage}"
+        Route="MainPage" />
 
 </Shell>
+    
+    

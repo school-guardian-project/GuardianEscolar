@@ -171,4 +171,22 @@
   <data name="Restore" xml:space="preserve">
     <value>restaurar</value>
   </data>
+  <data name="FinalDestination" xml:space="preserve">
+    <value>Destino Final</value>
+  </data>
+  <data name="Route" xml:space="preserve">
+    <value>Rota</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Localização</value>
+  </data>
+  <data name="Profile" xml:space="preserve">
+    <value>Perfil</value>
+  </data>
+  <data name="School" xml:space="preserve">
+    <value>Escola</value>
+  </data>
+  <data name="SearchRoute" xml:space="preserve">
+    <value>Rota de pesquisa</value>
+  </data>
 </root>

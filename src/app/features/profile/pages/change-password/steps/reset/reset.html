@@ -34,7 +34,7 @@
         }
       </div>
     </div>
-
+<br><br><br>
     <div class="input-confirm-password">
       <label for="confirmPassword">{{ 'forgot_password.reset.fields.confirm_password' | translate }}</label>
       <input type="password" id="confirmPassword" formControlName="confirmPassword" />
@@ -43,10 +43,10 @@
         @if (
           form.get('confirmPassword')?.touched && form.get('confirmPassword')?.errors?.['required']
         ) {
-          <small class="error1">{{ 'forgot_password.reset.errors.required' | translate }}</small>
+          <small class="error">{{ 'forgot_password.reset.errors.required' | translate }}</small>
         }
         @if (form.errors?.['passwordNoMatch'] && form.get('confirmPassword')?.touched) {
-          <small class="error1">{{ 'forgot_password.reset.errors.no_match' | translate }}</small>
+          <small class="error">{{ 'forgot_password.reset.errors.no_match' | translate }}</small>
         }
       </div>
     </div>

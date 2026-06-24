@@ -1,26 +1,171 @@
 @use "../change-style.css" as *;
 
-/* .edu usa variables de contraste */
-.edu {
-  color: var(--light-contrast-color);
+/* ── SIEMPRE APLICA (estructura/layout) ─────────────────── */
+.layout {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
 }
 
-.aplycolor {
+app-nav-component {
+  flex: 0 0 auto;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.container-session {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 760px;
+  height: 100%;
+  max-height: 500px;
+}
+
+.sesion-left,
+.sesion-right {
+  padding: 36px 40px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sesion-left {
+  width: 40%;
+  justify-content: space-between;
+  border-top-left-radius: 9px;
+  border-bottom-left-radius: 9px;
+}
+
+.sesion-right {
+  width: 60%;
+  justify-content: flex-start;
+  border-bottom-right-radius: 9px;
+  border-top-right-radius: 9px;
+  height: 100%;
+}
+
+.spacer {
+  flex: 1;
+}
+
+h1, h2 {
+  font-size: 1.5rem;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.login-description {
+  margin-bottom: 50px;
+  line-height: 1;
+  font-size: 1rem;
+}
+
+button {
+  border-radius: 50px;
+  padding: 10px 30px;
+  font-size: 1rem;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  transition: background-color 0.2s ease;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.return {
+  text-align: center;
+  cursor: pointer;
+  margin-top: auto;
+  transition: color 0.2s ease;
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column;
+}
+
+.bars {
+  border-radius: 5px;
+  width: 40px;
+  height: 3px;
+}
+
+.progres {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 10px;
+}
+
+.edu {
+  padding: 12px;
+  border-radius: 15px;
+  padding: 20px;
+  line-height: 1.5;
   color: var(--dark-contrast-color);
 }
 
-/* .color del step text */
-.color {
-  color: var(--text-secondary);
-  margin-left: 5px;
+ul {
+  margin-left: 20px;
+  margin-right: 20px;
 }
 
-/* login-description tiene font-size ligeramente mayor */
-.login-description {
-  font-size: 1.1rem;
+input[type="password"] {
+  margin: 30px;
 }
 
-/* margin-bottom del botón */
-button {
+form {
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-sesion {
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.session-description {
+  line-height: 1.5;
   margin-bottom: 25px;
+  font-size: 1rem;
+}
+
+.icon {
+  border-radius: 15px;
+  width: 55px;
+  height: 55px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.1rem;
+  margin-bottom: 20px;
+}
+
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media screen and (max-width: 1000px) {
+  .sesion-left {
+    display: none;
+    width: 0;
+  }
+
+  .sesion-right {
+    border-radius: 9px;
+    width: 100%;
+  }
+
+  .container-session {
+    width: 50%;
+  }
 }

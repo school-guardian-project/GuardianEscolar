@@ -23,7 +23,7 @@ import { Confirmations } from '@shared/components/modal/confirmations/confirmati
     TranslateModule
   ],
   templateUrl: './reset.html',
-  styleUrl: './reset.css',
+  styleUrl: './reset.scss',
 })
 export class Reset {
   form: FormGroup;

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                   http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd">
+
+    <changeSet id="insert_role" author="Juan Chala">
+        <insert schemaName="app" tableName="Role">
+            <column name="name" value="admin"/>
+            <column name="description" value="Administrador del colegio"/>
+            <column name="permissions" value="Insertar, actualizar, eliminar, leer"/>
+            <column name="status" value="active"/>
+        </insert>
+
+        <insert schemaName="app" tableName="Role">
+            <column name="name" value="superAdmin"/>
+            <column name="description" value="Administrador del aplicativo"/>
+            <column name="permissions" value="Crear, actualizar, eliminar, leer"/>
+            <column name="status" value="active"/>
+        </insert>
+
+        <insert schemaName="app" tableName="Role">
+            <column name="name" value="student"/>
+            <column name="description" value="Role que escanea QR"/>
+            <column name="permissions" value="Actualizar, leer"/>
+            <column name="status" value="active"/>
+        </insert>
+
+        <insert schemaName="app" tableName="Role">
+            <column name="name" value="driver"/>
+            <column name="description" value="Conductor de bus"/>
+            <column name="permissions" value="Actualizar, crear, leer"/>
+            <column name="status" value="active"/>
+        </insert>
+
+        <insert schemaName="app" tableName="Role">
+            <column name="name" value="father"/>
+            <column name="description" value="Padre de familia"/>
+            <column name="permissions" value="Actualizar, leer"/>
+            <column name="status" value="active"/>
+        </insert>
+    </changeSet>
+
+</databaseChangeLog>

@@ -15,6 +15,7 @@ dvlp-front/dvlp-movil/app-movil/bin/
 dvlp-front/dvlp-movil/app-movil/obj/
 dvlp-front/dvlp-movil/app-movil/.vs/
 
+*.csproj.user
 *.user
 *.suo
 

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Modules.FleetManagement.Api.Controller;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/line-model")]
 public class LineModelController : ACrudController<LineModelResponseDto, LIneModelRequestDto>
 {
     public LineModelController(ICrudService<LineModelResponseDto, LIneModelRequestDto, Guid> service) : base(service)

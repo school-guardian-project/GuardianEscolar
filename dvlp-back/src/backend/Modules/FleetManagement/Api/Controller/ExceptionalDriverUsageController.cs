@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Modules.FleetManagement.Api.Controller;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/exceptional-driver-usage")]
 public class ExceptionalDriverUsageController : ACrudController<ExceptionalDriverResponseDto, ExceptionalDriverUsageRequestDto>
 {
     public ExceptionalDriverUsageController(ICrudService<ExceptionalDriverResponseDto, ExceptionalDriverUsageRequestDto, Guid> service) : base(service)

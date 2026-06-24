@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Modules.RouteManagement.Api.Controller;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/exceptional-route-usage")]
 public class ExceptionalRouteUsageController : ACrudController<ExceptionalRouteUsageResponseDto, ExceptionalRouteUsageRequestDto>
 {
     public ExceptionalRouteUsageController(ICrudService<ExceptionalRouteUsageResponseDto, ExceptionalRouteUsageRequestDto, Guid> service) : base(service)

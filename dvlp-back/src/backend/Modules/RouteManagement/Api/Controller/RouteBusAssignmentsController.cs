@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Modules.RouteManagement.Api.Controller;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/route-bus-assignments")]
 public class RouteBusAssignmentsController : ACrudController<RouteBusAssignmentsResponseDto, RouteBusAssignmentsRequestDto>
 {
     public RouteBusAssignmentsController(ICrudService<RouteBusAssignmentsResponseDto, RouteBusAssignmentsRequestDto, Guid> service) : base(service)

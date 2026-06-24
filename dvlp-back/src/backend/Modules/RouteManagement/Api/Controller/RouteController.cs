@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Modules.RouteManagement.Api.Controller;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/route")]
 public class RouteController : ACrudController<RouteEntityResponseDto, RouteEntityRequestDto>
 {
     public RouteController(ICrudService<RouteEntityResponseDto, RouteEntityRequestDto, Guid> service) : base(service)

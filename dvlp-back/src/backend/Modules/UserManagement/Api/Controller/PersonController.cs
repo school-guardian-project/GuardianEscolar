@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Modules.UserManagement.Api.Controller;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/person")]
 public class PersonController : ACrudController<PersonResponseDto, PersonRequestDto>
 {
     public PersonController(ICrudService<PersonResponseDto, PersonRequestDto, Guid> service) : base(service)

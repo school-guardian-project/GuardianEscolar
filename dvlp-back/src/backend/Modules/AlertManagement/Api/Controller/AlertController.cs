@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Modules.AlertManagement.Api.Controller;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/alert")]
 public class AlertController : ACrudController<AlertResponseDto, AlertRequestDto>
 {
     public AlertController(ICrudService<AlertResponseDto, AlertRequestDto, Guid> service) : base(service)

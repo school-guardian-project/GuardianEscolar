@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Modules.SchoolManagement.Api.Controller;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/course")]
 public class CourseController : ACrudController<CourseResponseDto, CourseRequestDto>
 {
     public CourseController(ICrudService<CourseResponseDto, CourseRequestDto, Guid> service) : base(service)

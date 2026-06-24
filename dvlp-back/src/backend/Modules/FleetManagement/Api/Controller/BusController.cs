@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Modules.FleetManagement.Api.Controller;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/bus")]
 public class BusController : ACrudController<BusResponseDto, BusRequestDto>
 {
     public BusController(ICrudService<BusResponseDto, BusRequestDto, Guid> service) : base(service)

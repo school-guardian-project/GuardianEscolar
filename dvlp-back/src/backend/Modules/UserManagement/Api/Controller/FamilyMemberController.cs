@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Modules.UserManagement.Api.Controller;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/family-member")]
 public class FamilyMemberController : ACrudController<FamilyMemberResponseDto, FamilyMemberRequestDto>
 {
     public FamilyMemberController(ICrudService<FamilyMemberResponseDto, FamilyMemberRequestDto, Guid> service) : base(service)

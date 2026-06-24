@@ -1,5 +1,6 @@
 using AutoMapper;
 using backend.Infrastructure.Persistence.Context;
+using backend.Modules.Security.Domain.Entities;
 using backend.Modules.Security.Domain.Interfaces;
 using backend.Modules.UserManagement.Application.DTOs.Request;
 using backend.Modules.UserManagement.Application.DTOs.Response;
@@ -21,6 +22,8 @@ public class PersonServiceImpl : ACrudService<Person, PersonResponseDto, PersonR
     {
         var person = _mapper.Map<Person>(dto);
         person.status = "active";
+        _context.Person.Add(person);
+        _context.SaveChanges();
 
         var profile = new Profile
         {
@@ -28,9 +31,16 @@ public class PersonServiceImpl : ACrudService<Person, PersonResponseDto, PersonR
             password = _passwordService.Hash(dto.password),
             status = "active"
         };
-            
-        _context.Person.Add(person);
         _context.Profile.Add(profile);
+        _context.SaveChanges();
+
+        var profileRole = new ProfileRole
+        {
+            profileId = profile.id,
+            roleId = dto.roleId,
+            status = "active"
+        };
+        _context.ProfileRole.Add(profileRole);
         _context.SaveChanges();
 
         return _mapper.Map<PersonResponseDto>(person);

@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Modules.RouteManagement.Api.Controller;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/stop")]
+[Tags("stop")]
 public class StopController : ACrudController<StopResponseDto, StopRequestDto>
 {
     public StopController(ICrudService<StopResponseDto, StopRequestDto, Guid> service) : base(service)

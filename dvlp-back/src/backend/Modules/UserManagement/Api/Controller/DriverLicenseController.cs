@@ -7,7 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Modules.UserManagement.Api.Controller;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api/driver-license")]
+[Tags("driver-license")]
 public class DriverLicenseController : ACrudController<DriverLicenseResponseDto, DriverLicenseRequestDto>
 {
     public DriverLicenseController(ICrudService<DriverLicenseResponseDto, DriverLicenseRequestDto, Guid> service) : base(service)

@@ -7,6 +7,7 @@ namespace backend.Modules.Security.Api.Controllers;
 
 [ApiController]
 [Route("api/")]
+[Tags("auth")]
 public class AuthController : ControllerBase
 {
     private readonly IAuthService _authService;

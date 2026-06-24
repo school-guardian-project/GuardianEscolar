@@ -20,7 +20,6 @@ public class CourseGroupServiceImpl : ACrudService<CourseGroup, CourseGroupRespo
         
         if (dto.profileId != Guid.Empty && dto.profileId != entity.profileId) entity.profileId = dto.profileId;
         if (dto.courseId != Guid.Empty && dto.courseId != entity.courseId) entity.courseId = dto.courseId;
-        if (!string.IsNullOrEmpty(dto.status) && dto.status != entity.status) entity.status = dto.status;
         
         _context.SaveChanges();
         return _mapper.Map<CourseGroupResponseDto>(entity);

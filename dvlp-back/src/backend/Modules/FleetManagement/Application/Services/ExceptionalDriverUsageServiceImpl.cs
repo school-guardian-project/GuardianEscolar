@@ -21,7 +21,6 @@ public class ExceptionalDriverUsageServiceImpl : ACrudService<ExceptionalDriverU
         if (dto.profileId != Guid.Empty && dto.profileId != entity.profileId) entity.profileId = dto.profileId;
         if (dto.busId != Guid.Empty && dto.busId != entity.busId) entity.busId = dto.busId;
         if (!string.IsNullOrEmpty(dto.reason) && dto.reason != entity.reason) entity.reason = dto.reason;
-        if (!string.IsNullOrEmpty(dto.status) && dto.status != entity.status) entity.status = dto.status;
         
         _context.SaveChanges();
         return _mapper.Map<ExceptionalDriverResponseDto>(entity);

@@ -5,6 +5,4 @@ public class FamilyRequestDto
     public string name { get; set; }
 
     public string observations { get; set; }
-    
-    public string status { get; set; }
 }

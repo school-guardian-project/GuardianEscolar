@@ -21,7 +21,6 @@ public class SchoolCampuseServiceImpl : ACrudService<SchoolCampuse, SchoolCampus
         if (dto.schoolId != Guid.Empty && dto.schoolId != entity.schoolId) entity.schoolId = dto.schoolId;
         if (!string.IsNullOrEmpty(dto.name) && dto.name != entity.name) entity.name = dto.name;
         if (!string.IsNullOrEmpty(dto.address) && dto.address != entity.address) entity.address = dto.address;
-        if (!string.IsNullOrEmpty(dto.status) && dto.status != entity.status) entity.status = dto.status;
         
         _context.SaveChanges();
         return _mapper.Map<SchoolCampuseResponseDto>(entity);

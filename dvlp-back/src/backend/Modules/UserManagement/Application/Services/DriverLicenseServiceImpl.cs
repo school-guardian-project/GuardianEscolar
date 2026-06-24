@@ -22,7 +22,6 @@ public class DriverLicenseServiceImpl : ACrudService<DriverLicense, DriverLicens
         if (dto.drivingLicense != null && !dto.drivingLicense.SequenceEqual(entity.drivingLicense)) entity.drivingLicense = dto.drivingLicense;
         if (dto.licenseExpirationDate.HasValue && dto.licenseExpirationDate.Value != entity.licenseExpirationDate) entity.licenseExpirationDate = dto.licenseExpirationDate.Value;
         if (!string.IsNullOrEmpty(dto.licenseNumber) && dto.licenseNumber != entity.licenseNumber) entity.licenseNumber = dto.licenseNumber;
-        if (!string.IsNullOrEmpty(dto.status) && dto.status != entity.status) entity.status = dto.status;
         
         _context.SaveChanges();
         return _mapper.Map<DriverLicenseResponseDto>(entity);

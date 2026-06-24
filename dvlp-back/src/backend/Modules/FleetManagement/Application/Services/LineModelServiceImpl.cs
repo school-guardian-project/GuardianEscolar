@@ -22,7 +22,6 @@ public class LineModelServiceImpl : ACrudService<LineModel, LineModelResponseDto
         if (dto.modelId != Guid.Empty && dto.modelId != entity.modelId) entity.modelId = dto.modelId;
         if (dto.capacity.HasValue && dto.capacity.Value != entity.capacity) entity.capacity = dto.capacity.Value;
         if (!string.IsNullOrEmpty(dto.plate) && dto.plate != entity.plate) entity.plate = dto.plate;
-        if (!string.IsNullOrEmpty(dto.status) && dto.status != entity.status) entity.status = dto.status;
         
         _context.SaveChanges();
         return _mapper.Map<LineModelResponseDto>(entity);

@@ -20,7 +20,6 @@ public class FamilyMemberServiceImpl : ACrudService<FamilyMember, FamilyMemberRe
         
         if (dto.profileId != Guid.Empty && dto.profileId != entity.profileId) entity.profileId = dto.profileId;
         if (dto.familyId != Guid.Empty && dto.familyId != entity.familyId) entity.familyId = dto.familyId;
-        if (!string.IsNullOrEmpty(dto.status) && dto.status != entity.status) entity.status = dto.status;
         
         _context.SaveChanges();
         return _mapper.Map<FamilyMemberResponseDto>(entity);

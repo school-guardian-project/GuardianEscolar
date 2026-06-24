@@ -23,7 +23,6 @@ public class BusServiceImpl : ACrudService<Bus, BusResponseDto, BusRequestDto>
         if (dto.lineModelId != Guid.Empty && dto.lineModelId != entity.lineModelId) entity.lineModelId = dto.lineModelId;
         if (dto.soatValidity != null && !dto.soatValidity.SequenceEqual(entity.soatValidity)) entity.soatValidity = dto.soatValidity;
         if (dto.gpsStatus.HasValue && dto.gpsStatus.Value != entity.gpsStatus) entity.gpsStatus = dto.gpsStatus.Value;
-        if (!string.IsNullOrEmpty(dto.status) && dto.status != entity.status) entity.status = dto.status;
         
         _context.SaveChanges();
         return _mapper.Map<BusResponseDto>(entity);

@@ -22,7 +22,6 @@ public class BoardingServiceImpl : ACrudService<Boarding, BoardingResponseDto, B
         if (dto.busId != Guid.Empty && dto.busId != entity.busId) entity.busId = dto.busId;
         if (dto.stopId != Guid.Empty && dto.stopId != entity.stopId) entity.stopId = dto.stopId;
         if (dto.action.HasValue && dto.action.Value != entity.action) entity.action = dto.action.Value;
-        if (!string.IsNullOrEmpty(dto.status) && dto.status != entity.status) entity.status = dto.status;
         
         _context.SaveChanges();
         return _mapper.Map<BoardingResponseDto>(entity);

@@ -1,6 +1,7 @@
 
 <app-change-password
   iconHead="lock"
+  [isThemed]="false"        
   [title]="'forgot_password.reset.title' | translate"
   [sessionDescription]="'forgot_password.reset.session_description' | translate"
   [titleStep]="'forgot_password.reset.title_step' | translate"
@@ -36,7 +37,7 @@
         }
       </div>
     </div>
-
+<br><br><br>
     <div class="input-confirm-password">
       <!-- Confirmar contraseña -->
       <label for="confirmPassword">{{ 'forgot_password.reset.fields.confirm_password' | translate }}</label>
@@ -44,10 +45,10 @@
   
       <div class="container-errors-confirm">
         @if (form.get('confirmPassword')?.touched && form.get('confirmPassword')?.errors?.['required']) {
-          <small class="error1">{{ 'forgot_password.reset.errors.required' | translate }}</small>
+          <small class="error">{{ 'forgot_password.reset.errors.required' | translate }}</small>
         }
         @if (form.errors?.['passwordNoMatch'] && form.get('confirmPassword')?.touched) {
-          <small class="error1">{{ 'forgot_password.reset.errors.no_match' | translate }}</small>
+          <small class="error">{{ 'forgot_password.reset.errors.no_match' | translate }}</small>
         }
       </div>
     </div>

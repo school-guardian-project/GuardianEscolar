@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Modules.RouteManagement.Api.Controller;
 
 [ApiController]
-[Route("api/exceptional-route-usage")]
-[Tags("exceptional-route-usage")]
+[Route("api/route-bus-assignments")]
+[Tags("route-bus-assignments")]
 public class RouteBusAssignmentsController : ACrudController<RouteBusAssignmentsResponseDto, RouteBusAssignmentsRequestDto>
 {
     public RouteBusAssignmentsController(ICrudService<RouteBusAssignmentsResponseDto, RouteBusAssignmentsRequestDto, Guid> service) : base(service)

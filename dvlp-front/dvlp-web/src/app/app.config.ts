@@ -8,7 +8,7 @@ import { importProvidersFrom } from '@angular/core';
 import { provideTranslateService, TranslateModule } from '@ngx-translate/core';
 
 import { provideTranslateHttpLoader } from '@ngx-translate/http-loader';
-import { authInterceptor } from '@core/services/auth.interceptor';
+import { authInterceptor } from '@core/services/security/auth.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [

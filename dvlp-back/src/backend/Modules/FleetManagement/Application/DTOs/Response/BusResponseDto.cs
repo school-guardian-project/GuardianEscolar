@@ -2,8 +2,6 @@ namespace backend.Modules.FleetManagement.Application.DTOs.Response;
 
 public class BusResponseDto
 {
-    public Guid busId { get; set; } = Guid.NewGuid();
-
     public Guid driverId { get; set; }
 
     public Guid schoolId { get; set; }

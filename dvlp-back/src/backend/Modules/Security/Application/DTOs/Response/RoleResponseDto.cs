@@ -7,4 +7,6 @@ public class RoleResponseDto
     public string description { get; set; }
 
     public string permissions { get; set; }
+
+    public string status { get; set; }
 }

@@ -6,7 +6,7 @@ public class StopRequestDto
 
     public Guid schoolId { get; set; }
 
-    public string? address { get; set; }
+    public string address { get; set; }
 
     public decimal? longitude { get; set; }
 

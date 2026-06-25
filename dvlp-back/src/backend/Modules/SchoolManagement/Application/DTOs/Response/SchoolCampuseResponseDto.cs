@@ -1,12 +1,8 @@
+using backend.Modules.SchoolManagement.Application.DTOs.Request;
+
 namespace backend.Modules.SchoolManagement.Application.DTOs.Response;
 
-public class SchoolCampuseResponseDto
+public class SchoolCampuseResponseDto : SchoolCampuseRequestDto
 {
-    public Guid schoolId { get; set; }
-
-    public string? name { get; set; }
-
-    public string? address { get; set; }
-    
     public string status { get; set; }
 }

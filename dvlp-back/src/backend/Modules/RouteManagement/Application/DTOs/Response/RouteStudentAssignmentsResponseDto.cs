@@ -1,10 +1,8 @@
+using backend.Modules.RouteManagement.Application.DTOs.Request;
+
 namespace backend.Modules.RouteManagement.Application.DTOs.Response;
 
-public class RouteStudentAssignmentsResponseDto
+public class RouteStudentAssignmentsResponseDto : RouteStudentAssignmentsRequestDto
 {
-    public Guid profileId { get; set; }
-    
-    public Guid routeId { get; set; }
-    
     public string status { get; set; }
 }

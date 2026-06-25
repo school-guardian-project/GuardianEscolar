@@ -8,5 +8,5 @@ public class LIneModelRequestDto
 
     public int? capacity { get; set; }
 
-    public string? plate { get; set; }
+    public string plate { get; set; }
 }

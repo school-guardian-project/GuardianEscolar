@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 export abstract class AbstractCrudService<TResponse, TRequest = TResponse> {
     constructor(protected api: ApiService, protected endpoint: string) {}
 
-    getAll(): Observable<TResponse> {
+    getAll(): Observable<TResponse[]> {
         return this.api.getAll<TResponse>(this.endpoint)
     }
 

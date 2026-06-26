@@ -6,7 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
-import { AuthService } from '@core/services/auth.service';
+import { AuthService } from '@core/services/security/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -35,7 +35,7 @@ export class Login {
 
     const { email, password } = this.form.value;
     this.authService.login(email, password).subscribe({
-      next: (res) => {
+      next: (res: any) => {
         const roles = res.roles;
         if (roles.includes('admin')){
           this.router.navigate(['/dashboard-admin'])

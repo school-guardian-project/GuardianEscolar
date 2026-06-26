@@ -1,11 +1,11 @@
 import { ApiService } from "../api.service";
 import { Injectable } from '@angular/core';
-import { PersonRequest, PersonResponse } from "@core/models/user-management/person.model";
 import { AbstractCrudService } from "../abstract-crud.service";
+import { BusRequest, BusResponse } from "@core/models/fleet-management/bus.model";
 
 @Injectable({ providedIn: 'root' })
-export class PersonService extends AbstractCrudService<PersonResponse, PersonRequest> {
+export class BusService extends AbstractCrudService<BusResponse, BusRequest> {
     constructor(api: ApiService) {
-        super(api, 'person');
+        super(api, 'bus');
     }
 }

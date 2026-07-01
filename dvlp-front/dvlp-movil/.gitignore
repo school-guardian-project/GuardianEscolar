@@ -1,6 +1,2 @@
-<<<<<<< HEAD
 /.idea
-app-movil.*
-=======
-/.idea
->>>>>>> origin/develop
+app-movil.csproj.Sdk*

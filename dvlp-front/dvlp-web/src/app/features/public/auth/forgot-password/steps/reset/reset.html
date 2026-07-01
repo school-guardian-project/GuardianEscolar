@@ -1,4 +1,3 @@
-
 <app-change-password
   iconHead="lock"
   [isThemed]="false"        
@@ -24,17 +23,15 @@
        </div>
   
       <div class="container-errors">
-        @if (form.get('password')?.touched) {
-          @if (form.get('password')?.errors?.['required']) {
+          @if (form.get('password')?.touched && form.get('password')?.errors?.['required']) {
             <small class="error">{{ 'forgot_password.reset.errors.required' | translate }}</small>
           }
-          @if (form.get('password')?.errors?.['minlength']) {
+          @if (form.get('password')?.dirty && form.get('password')?.errors?.['minlength']) {
             <small class="error">{{ 'forgot_password.reset.errors.minlength' | translate }}</small>
           }
-          @if (form.get('password')?.errors?.['pattern']) {
+          @if (form.get('password')?.dirty && form.get('password')?.errors?.['pattern']) {
             <small class="error">{{ 'forgot_password.reset.errors.pattern' | translate }}</small>
           }
-        }
       </div>
     </div>
 <br><br><br>
@@ -47,7 +44,7 @@
         @if (form.get('confirmPassword')?.touched && form.get('confirmPassword')?.errors?.['required']) {
           <small class="error">{{ 'forgot_password.reset.errors.required' | translate }}</small>
         }
-        @if (form.errors?.['passwordNoMatch'] && form.get('confirmPassword')?.touched) {
+        @if (form.errors?.['passwordNoMatch'] && form.get('confirmPassword')?.dirty) {
           <small class="error">{{ 'forgot_password.reset.errors.no_match' | translate }}</small>
         }
       </div>
@@ -55,6 +52,4 @@
 
   </form>
 
-
 </app-change-password>
-

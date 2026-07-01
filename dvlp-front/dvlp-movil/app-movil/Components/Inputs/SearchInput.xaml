@@ -17,9 +17,9 @@
 
             <Label
                 Grid.Column="0"
-                WidthRequest="20"
-                HeightRequest="20"
-                Text="search"
+                WidthRequest="21"
+                HeightRequest="25"
+                Text="🔎"
                 FontFamily="MaterialSymbolsOutlined"
                 FontSize="20"
                 TextColor="{StaticResource TextSecondary}"

@@ -14,18 +14,18 @@ public partial class BottomTabBar : ContentView
     // Se ejecuta cuando tocan "Rutas"
     private void OnRutasTapped(object sender, TappedEventArgs e)
     {
-        TabSelected?.Invoke(this, "rutas");
+        TabSelected?.Invoke(this, "routes");
     }
 
     // Se ejecuta cuando tocan "Ubicación"
     private void OnUbicacionTapped(object sender, TappedEventArgs e)
     {
-        TabSelected?.Invoke(this, "ubicacion");
+        TabSelected?.Invoke(this, "location");
     }
 
     // Se ejecuta cuando tocan "Perfil"
     private void OnPerfilTapped(object sender, TappedEventArgs e)
     {
-        TabSelected?.Invoke(this, "perfil");
+        TabSelected?.Invoke(this, "profile");
     }
 }

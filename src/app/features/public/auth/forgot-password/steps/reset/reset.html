@@ -42,10 +42,10 @@
   
       <div class="container-errors-confirm">
         @if (form.get('confirmPassword')?.touched && form.get('confirmPassword')?.errors?.['required']) {
-          <small class="error" id="confirmPasswordError">{{ 'forgot_password.reset.errors.required' | translate }}</small>
+          <small class="error">{{ 'forgot_password.reset.errors.required' | translate }}</small>
         }
         @if (form.errors?.['passwordNoMatch'] && form.get('confirmPassword')?.dirty) {
-          <small class="error" id="confirmPasswordError">{{ 'forgot_password.reset.errors.no_match' | translate }}</small>
+          <small class="error">{{ 'forgot_password.reset.errors.no_match' | translate }}</small>
         }
       </div>
     </div>

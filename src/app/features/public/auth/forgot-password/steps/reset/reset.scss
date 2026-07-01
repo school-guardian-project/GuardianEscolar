@@ -9,7 +9,8 @@
     position: relative;
 }
 
-.container-errors {
+.container-errors,
+.container-errors-confirm {
     position: absolute;
     top: 100%;
     left: 0;
@@ -22,8 +23,4 @@
     font-size: 13px;
     margin-top: 4px;
     // position: absolute;
-}
-
-#confirmPasswordError {
-    position: absolute;
 }

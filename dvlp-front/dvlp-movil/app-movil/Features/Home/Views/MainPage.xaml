@@ -22,14 +22,14 @@
 
             <!-- Barra superior flotante -->
             <Grid
-                Padding="28,44,22,0"
+                Padding="10,15,10,0"
                 ColumnDefinitions="*,Auto"
-                ColumnSpacing="10"
+                ColumnSpacing="5"
                 VerticalOptions="Start">
 
                 <inputs:SearchInput
                     Grid.Column="0"
-                    HeightRequest="50"/>
+                    HeightRequest="40"/>
 
                 <buttons:NotificationButton
                     Grid.Column="1"

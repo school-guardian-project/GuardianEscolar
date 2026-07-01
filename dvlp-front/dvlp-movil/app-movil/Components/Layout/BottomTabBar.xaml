@@ -16,7 +16,7 @@
                     StrokeThickness="0">
                 <VerticalStackLayout HorizontalOptions="Center"
                                      Spacing="4">
-                    <Label Text="route"
+                    <Label Text="🚌"
                            FontFamily="MaterialSymbolsOutlined"
                            FontSize="28"
                            TextColor="White"
@@ -40,7 +40,7 @@
                     StrokeThickness="0">
                 <VerticalStackLayout HorizontalOptions="Center"
                                      Spacing="4">
-                    <Label Text="location_on"
+                    <Label Text="📍"
                            FontFamily="MaterialSymbolsOutlined"
                            FontSize="28"
                            TextColor="White"
@@ -64,7 +64,7 @@
                     StrokeThickness="0">
                 <VerticalStackLayout HorizontalOptions="Center"
                                      Spacing="4">
-                    <Label Text="person"
+                    <Label Text="🧍‍"
                            FontFamily="MaterialSymbolsOutlined"
                            FontSize="28"
                            TextColor="White"

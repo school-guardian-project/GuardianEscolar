@@ -13,12 +13,12 @@
         <Grid>
 
             <Label
-                Text="notifications"
+                Text="🔔"
                 FontFamily="MaterialSymbolsOutlined"
                 FontSize="24"
                 TextColor="{StaticResource TextPrimary}"
-                WidthRequest="24"
-                HeightRequest="24"
+                WidthRequest="34"
+                HeightRequest="34"
                 HorizontalTextAlignment="Center"
                 VerticalTextAlignment="Center"
                 HorizontalOptions="Center"

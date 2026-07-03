@@ -1,59 +1,43 @@
-# Funcionamiento actual del proyecto MAUI
+# Guardian Escolar - Funcionamiento de la app movil MAUI
 
-Este documento resume el estado actual de la aplicacion movil MAUI ubicada en:
+Este documento explica el funcionamiento actual de la aplicacion movil de **Guardian Escolar**, desarrollada con **.NET MAUI**. La idea es que cualquier persona que lo lea pueda entender que hace la app, como esta organizada, que funciones tiene, para que sirve cada parte y cuales son los codigos importantes.
 
-```text
-dvlp-movil/app-movil/app-movil
-```
-
-La aplicacion compila correctamente despues de ajustar las rutas de la solucion y los namespaces de algunos componentes reorganizados.
-
-Validacion realizada:
-
-```powershell
-dotnet build app-movil.slnx
-```
-
-Resultado:
+Ruta del proyecto movil:
 
 ```text
-0 Errores
-64 Advertencias
+dvlp-front/dvlp-movil/app-movil
 ```
 
-Las advertencias actuales no bloquean la compilacion. Estan relacionadas principalmente con nulabilidad y analisis de plataforma.
-
-## 1. Estructura general
-
-La solucion principal esta en:
+Archivo principal del proyecto:
 
 ```text
-dvlp-movil/app-movil.slnx
+dvlp-front/dvlp-movil/app-movil/app-movil.csproj
 ```
 
-Actualmente apunta al proyecto real en:
+## 1. Objetivo de la aplicacion movil
 
-```text
-app-movil/app-movil/app-movil.csproj
-```
+La app movil de Guardian Escolar busca apoyar el seguimiento del transporte escolar desde el celular. Su objetivo principal es permitir que usuarios como acudientes, estudiantes o personal autorizado puedan consultar informacion relacionada con rutas, ubicacion, conductor, vehiculo y estado del recorrido.
 
-Esto es importante porque, despues de la reorganizacion, el archivo `.csproj` quedo un nivel mas adentro. Antes la solucion buscaba:
+En el estado actual, la aplicacion ya cuenta con:
 
-```text
-app-movil/app-movil.csproj
-```
+- Flujo visual de inicio de sesion.
+- Flujo visual para recuperar contrasena.
+- Pantalla principal con mapa.
+- Buscador de ruta.
+- Boton visual de notificaciones.
+- Tarjeta con informacion de una ruta.
+- Barra inferior de navegacion.
+- Pantalla base de perfil.
+- Soporte de traducciones por archivos `.resx`.
+- Componentes reutilizables para botones, entradas, codigo de verificacion, busqueda, tarjeta de ruta y navegacion inferior.
 
-pero esa ruta ya no corresponde a la ubicacion actual.
+Importante: varias funciones ya estan construidas a nivel visual y de navegacion, pero todavia no estan conectadas completamente con el backend ni con datos reales.
 
-## 2. Proyecto MAUI
+## 2. Tecnologia usada
 
-El archivo principal del proyecto es:
+La aplicacion esta hecha con **.NET MAUI**, que permite crear aplicaciones moviles usando C# y XAML.
 
-```text
-app-movil/app-movil/app-movil.csproj
-```
-
-Configuracion actual importante:
+Configuracion principal del archivo `app-movil.csproj`:
 
 ```xml
 <TargetFrameworks>net10.0-android</TargetFrameworks>
@@ -68,46 +52,49 @@ Configuracion actual importante:
 
 Esto significa:
 
-- La app esta configurada actualmente para Android.
-- Usa el modelo `SingleProject` de .NET MAUI.
-- El namespace raiz del proyecto es `app_movil`.
-- La app usa XAML.
-- La generacion de XAML esta activa con `MauiXamlInflator=SourceGen`.
-- La nulabilidad esta activa, por eso aparecen advertencias cuando eventos o parametros no declaran bien si aceptan `null`.
+- Actualmente la app compila para Android.
+- Usa el modelo de proyecto unico de MAUI.
+- El namespace principal es `app_movil`.
+- Las vistas estan construidas con XAML.
+- La nulabilidad esta activada para mejorar la seguridad del codigo.
+- La compilacion de XAML usa `SourceGen`.
 
-## 3. Dependencias instaladas
+## 3. Dependencias principales
 
-El proyecto usa estas dependencias principales:
+El proyecto usa estas librerias:
 
 ```xml
+<PackageReference Include="Mapsui.Maui" Version="5.1.0" />
 <PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
 <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="10.0.0" />
 <PackageReference Include="UraniumUI.Icons.MaterialSymbols" Version="2.15.0" />
 <PackageReference Include="UraniumUI.Material" Version="2.15.0" />
 ```
 
-Funcionamiento:
+Funcion de cada dependencia:
 
-- `Microsoft.Maui.Controls`: base de controles visuales MAUI.
-- `Microsoft.Extensions.Logging.Debug`: logs en modo debug.
-- `UraniumUI.Material`: componentes/estilos Material para MAUI.
-- `UraniumUI.Icons.MaterialSymbols`: iconos Material Symbols.
+- `Microsoft.Maui.Controls`: base de controles visuales de MAUI.
+- `Microsoft.Extensions.Logging.Debug`: permite ver logs durante el desarrollo.
+- `UraniumUI.Material`: aporta estilos y componentes visuales tipo Material.
+- `UraniumUI.Icons.MaterialSymbols`: permite usar iconos Material Symbols.
+- `Mapsui.Maui`: permite mostrar mapas dentro de la aplicacion.
 
 ## 4. Inicio de la aplicacion
 
-El punto de configuracion de MAUI esta en:
+El archivo de arranque es:
 
 ```text
 MauiProgram.cs
 ```
 
-Actualmente registra:
+Alli se configura MAUI, UraniumUI, SkiaSharp y las fuentes:
 
 ```csharp
 builder
     .UseMauiApp<App>()
     .UseUraniumUI()
     .UseUraniumUIMaterial()
+    .UseSkiaSharp()
     .ConfigureFonts(fonts =>
     {
         fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -116,21 +103,16 @@ builder
     });
 ```
 
-Esto hace que:
+Esto permite:
 
-- La clase `App` sea la aplicacion principal.
-- UraniumUI quede habilitado.
-- UraniumUI Material quede habilitado.
-- Se registren las fuentes `OpenSans-Regular.ttf` y `OpenSans-Semibold.ttf`.
-- Se registren los iconos Material Symbols.
+- Cargar la clase principal `App`.
+- Habilitar estilos de UraniumUI.
+- Habilitar controles graficos necesarios para Mapsui mediante SkiaSharp.
+- Registrar las fuentes OpenSans.
+- Registrar iconos Material Symbols.
+- Activar logs de depuracion cuando se compila en modo `DEBUG`.
 
-En modo `DEBUG`, tambien se habilita:
-
-```csharp
-builder.Logging.AddDebug();
-```
-
-## 5. Clase App
+## 5. Clase App y recursos globales
 
 Archivos:
 
@@ -139,14 +121,14 @@ App.xaml
 App.xaml.cs
 ```
 
-`App.xaml` carga los diccionarios globales de recursos:
+`App.xaml` carga los recursos globales:
 
 ```xml
 <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
 <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
 ```
 
-`App.xaml.cs` define el tema claro y crea la ventana principal:
+`App.xaml.cs` fuerza el tema claro y crea la ventana principal:
 
 ```csharp
 UserAppTheme = AppTheme.Light;
@@ -155,11 +137,11 @@ return new Window(new AppShell());
 
 Funcionamiento:
 
-- La app fuerza tema claro.
-- La primera pantalla se administra mediante `AppShell`.
-- Los colores y estilos globales estan disponibles en toda la app.
+- La app inicia con tema claro.
+- La navegacion principal se maneja desde `AppShell`.
+- Los colores, estilos, fuentes y recursos quedan disponibles para todas las pantallas.
 
-## 6. Navegacion con Shell
+## 6. Navegacion con AppShell
 
 Archivos:
 
@@ -168,15 +150,7 @@ AppShell.xaml
 AppShell.xaml.cs
 ```
 
-`AppShell.xaml` define el contenedor principal de navegacion:
-
-```xml
-<Shell
-    x:Class="app_movil.AppShell"
-    Shell.NavBarIsVisible="False">
-```
-
-Actualmente registra visualmente estas rutas:
+`AppShell.xaml` define las pantallas principales visibles para Shell:
 
 ```xml
 <ShellContent
@@ -185,67 +159,75 @@ Actualmente registra visualmente estas rutas:
     Route="Welcome" />
 
 <ShellContent
-    Title="ForgotPassword"
-    ContentTemplate="{DataTemplate auth:ForgotPassword}"
-    Route="ForgotPassword"/>
-
-<ShellContent
-    Title="VerifyCode"
-    ContentTemplate="{DataTemplate auth:VerifyCode}"
-    Route="VerifyCode"/>
+    Title="MainPage"
+    ContentTemplate="{DataTemplate home:MainPage}"
+    Route="MainPage" />
 ```
 
-`AppShell.xaml.cs` registra rutas para navegacion programatica:
+Rutas registradas en `AppShell.xaml.cs`:
 
 ```csharp
-Routing.RegisterRoute("ForgotPassword", typeof(Features.Auth.Views.ForgotPassword));
-Routing.RegisterRoute("VerifyCode", typeof(Features.Auth.Views.VerifyCode));
-Routing.RegisterRoute("NewPassword", typeof(Features.Auth.Views.NewPassword));
+Routing.RegisterRoute(nameof(ForgotPassword), typeof(ForgotPassword));
+Routing.RegisterRoute(nameof(VerifyCode), typeof(VerifyCode));
+Routing.RegisterRoute(nameof(NewPassword), typeof(NewPassword));
+Routing.RegisterRoute(nameof(Profile), typeof(Profile));
 ```
 
-Funcionamiento actual:
+Pantallas dentro de la navegacion:
 
-- La app arranca en el Shell.
-- La primera pantalla visible es `Welcome`.
-- Se puede navegar a `ForgotPassword`.
-- Desde `ForgotPassword` se puede navegar a `VerifyCode`.
-- Desde `VerifyCode` se puede navegar a `NewPassword`.
-- `NewPassword` esta registrada como ruta aunque no aparece como `ShellContent`.
+- `Welcome`: pantalla inicial de inicio de sesion.
+- `MainPage`: pantalla principal con mapa.
+- `ForgotPassword`: pantalla para solicitar recuperacion de contrasena.
+- `VerifyCode`: pantalla para ingresar codigo de verificacion.
+- `NewPassword`: pantalla para crear nueva contrasena.
+- `Profile`: pantalla base de perfil.
 
-## 7. Flujo de autenticacion actual
+## 7. Flujo general de usuario
 
-Las pantallas activas estan en:
+El flujo actual de la app es:
+
+1. El usuario abre la app.
+2. La app carga `AppShell`.
+3. La primera pantalla visible es `Welcome`.
+4. Desde `Welcome`, el usuario puede:
+   - Presionar `Ingresar` para ir a `MainPage`.
+   - Presionar `Olvido la contrasena` para ir a `ForgotPassword`.
+5. Desde `ForgotPassword`, el usuario ingresa su correo y pasa a `VerifyCode`.
+6. Desde `VerifyCode`, el usuario ingresa el codigo y pasa a `NewPassword`.
+7. Desde `NewPassword`, el usuario restaura la contrasena y vuelve visualmente a `Welcome`.
+8. En `MainPage`, el usuario ve el mapa, buscador, boton de notificaciones, informacion de ruta y barra inferior.
+
+Este flujo todavia es principalmente visual. No hay validacion real de credenciales, correo, codigo o contrasena contra el backend.
+
+## 8. Modulo de autenticacion
+
+Ruta:
 
 ```text
-Features/Auth/Views
+Features/Auth
 ```
 
-Pantallas actuales:
+Pantallas:
 
 ```text
-Welcome.xaml
-ForgotPassword.xaml
-VerifyCode.xaml
-NewPassword.xaml
+Features/Auth/Views/Welcome.xaml
+Features/Auth/Views/ForgotPassword.xaml
+Features/Auth/Views/VerifyCode.xaml
+Features/Auth/Views/NewPassword.xaml
 ```
 
-Los archivos `.xaml.cs` fueron movidos fisicamente a:
+Code-behind:
 
 ```text
-Features/Auth/ViewModels
+Features/Auth/ViewModels/Welcome.xaml.cs
+Features/Auth/ViewModels/ForgotPassword.xaml.cs
+Features/Auth/ViewModels/VerifyCode.xaml.cs
+Features/Auth/ViewModels/NewPassword.xaml.cs
 ```
 
-pero siguen funcionando como code-behind porque conservan el namespace de las Views:
+Nota importante: aunque la carpeta se llama `ViewModels`, esos archivos todavia son code-behind, no ViewModels reales. Funcionan porque mantienen el namespace de las vistas y heredan de `ContentPage`.
 
-```csharp
-namespace app_movil.Features.Auth.Views;
-```
-
-Esto permite que MAUI una correctamente cada XAML con su clase parcial.
-
-Importante: aunque la carpeta se llama `ViewModels`, estos archivos todavia no son ViewModels reales. Siguen siendo code-behind porque heredan de `ContentPage` y contienen eventos de UI.
-
-## 8. Pantalla Welcome
+### 8.1. Welcome
 
 Archivos:
 
@@ -254,30 +236,36 @@ Features/Auth/Views/Welcome.xaml
 Features/Auth/ViewModels/Welcome.xaml.cs
 ```
 
-Funcionamiento:
+Funcion:
 
-- Muestra una pantalla de inicio de sesion.
-- Usa traducciones para textos como `Login`, `Email`, `Password` y `ForgotPassword`.
-- Usa `InputField` reutilizable para correo y contrasena.
-- Usa `PrimaryButton` para el boton de ingreso.
-- El enlace "ForgotPassword" navega a la pantalla de recuperacion.
+- Muestra la pantalla de inicio de sesion.
+- Tiene campo de correo.
+- Tiene campo de contrasena.
+- Tiene enlace para recuperar contrasena.
+- Tiene boton para ingresar.
 
-Evento principal:
+Componentes usados:
+
+- `InputField` para correo.
+- `InputField` para contrasena.
+- `PrimaryButton` para ingresar.
+- Traducciones con `{services:Translation ...}`.
+
+Navegacion:
 
 ```csharp
-private async void OnForgotPasswordTapped(object? sender, TappedEventArgs e)
-{
-    await Navigation.PushAsync(new ForgotPassword());
-}
+await Shell.Current.GoToAsync(nameof(ForgotPassword));
+await Shell.Current.GoToAsync("//MainPage");
 ```
 
-Nota:
+Estado actual:
 
-- Esta navegacion usa `Navigation.PushAsync`.
-- El resto del flujo usa mas `Shell.Current.GoToAsync`.
-- Funciona al compilar, pero a futuro conviene unificar la navegacion usando Shell.
+- La pantalla esta construida.
+- El boton `Ingresar` lleva a la pantalla principal.
+- No valida usuario ni contrasena contra backend.
+- No guarda sesion ni token.
 
-## 9. Pantalla ForgotPassword
+### 8.2. ForgotPassword
 
 Archivos:
 
@@ -286,36 +274,26 @@ Features/Auth/Views/ForgotPassword.xaml
 Features/Auth/ViewModels/ForgotPassword.xaml.cs
 ```
 
-Funcionamiento:
+Funcion:
 
-- Muestra formulario para ingresar correo.
-- Usa `Entry` directamente para el correo.
-- Usa `PrimaryButton` para enviar codigo.
-- Usa traducciones: `ResetPassword`, `EnterEmail`, `Email`, `CodeVerif`, `SendCode`.
+- Permite ingresar un correo para recuperar contrasena.
+- Muestra instrucciones al usuario.
+- Tiene boton para enviar codigo.
 
-Evento principal:
-
-```csharp
-private async void OnSendCodeClicked(object? sender, EventArgs e)
-{
-    await Shell.Current.GoToAsync(nameof(VerifyCode));
-}
-```
-
-Tambien existe:
+Navegacion:
 
 ```csharp
-private async void OnBackTapped(object? sender, TappedEventArgs e)
-{
-    await Shell.Current.GoToAsync("..");
-}
+await Shell.Current.GoToAsync(nameof(VerifyCode));
 ```
 
-Nota:
+Estado actual:
 
-- `OnBackTapped` esta preparado, pero en el XAML actual no se ve un control conectado a ese evento.
+- La pantalla esta construida.
+- El boton lleva a la pantalla de verificacion.
+- No envia un correo real.
+- No consume endpoint del backend.
 
-## 10. Pantalla VerifyCode
+### 8.3. VerifyCode
 
 Archivos:
 
@@ -324,23 +302,27 @@ Features/Auth/Views/VerifyCode.xaml
 Features/Auth/ViewModels/VerifyCode.xaml.cs
 ```
 
-Funcionamiento:
+Funcion:
 
-- Muestra instrucciones para ingresar codigo.
-- Usa el componente reutilizable `CodeInput`.
-- Usa `PrimaryButton` para continuar.
-- Usa traducciones: `ResetPassword`, `CodeEmail`, `TransferCode`, `SendCode`.
+- Permite ingresar un codigo de verificacion.
+- Usa el componente `CodeInput`.
+- Tiene texto para reenviar codigo.
+- Tiene boton para continuar.
 
-Evento principal:
+Navegacion:
 
 ```csharp
-private async void OnSendCodeClicked(object? sender, EventArgs e)
-{
-    await Shell.Current.GoToAsync(nameof(NewPassword));
-}
+await Shell.Current.GoToAsync(nameof(NewPassword));
 ```
 
-## 11. Pantalla NewPassword
+Estado actual:
+
+- La pantalla esta construida.
+- El flujo continua hacia nueva contrasena.
+- El codigo no se valida contra backend.
+- El texto de reenviar codigo es visual; no tiene temporizador funcional.
+
+### 8.4. NewPassword
 
 Archivos:
 
@@ -349,29 +331,89 @@ Features/Auth/Views/NewPassword.xaml
 Features/Auth/ViewModels/NewPassword.xaml.cs
 ```
 
-Funcionamiento:
+Funcion:
 
-- Muestra pantalla para crear nueva contrasena.
-- Usa `InputField` para la nueva contrasena.
-- Usa `InputField` para confirmar contrasena.
-- Ambos campos tienen `IsPassword="True"`.
-- Usa `PrimaryButton` para restaurar.
+- Permite ingresar nueva contrasena.
+- Permite confirmar contrasena.
+- Tiene boton para restaurar.
 
-Evento principal:
+Estado actual:
 
-```csharp
-private async void OnSendCodeClicked(object? sender, EventArgs e)
-{
-    await Navigation.PushAsync(new Welcome());
-}
+- La pantalla esta construida.
+- Usa campos de contrasena.
+- No valida que las contrasenas coincidan.
+- No actualiza la contrasena en backend.
+- Actualmente vuelve a `Welcome` usando `Navigation.PushAsync(new Welcome())`; se recomienda unificarlo con Shell.
+
+## 9. Pantalla principal con mapa
+
+Ruta:
+
+```text
+Features/Home/Views/MainPage.xaml
+Features/Home/Views/MainPage.xaml.cs
 ```
 
-Nota:
+Funcion:
 
-- Esta pantalla vuelve a `Welcome` usando `Navigation.PushAsync`.
-- A futuro conviene usar Shell tambien aqui, por ejemplo `Shell.Current.GoToAsync("//Welcome")` si se quiere volver al inicio limpiando el flujo.
+- Muestra un mapa principal.
+- Carga capa de OpenStreetMap.
+- Centra la vista aproximada sobre Colombia.
+- Muestra una barra superior con buscador y notificaciones.
+- Muestra una tarjeta inferior con informacion de ruta.
+- Muestra una barra inferior con tres opciones: rutas, ubicacion y perfil.
 
-## 12. Componentes reutilizables
+Codigo principal del mapa:
+
+```csharp
+var map = new Mapsui.Map();
+map.Widgets.Clear();
+map.Layers.Add(OpenStreetMap.CreateTileLayer());
+RouteMap.Map = map;
+```
+
+Ubicacion inicial:
+
+```csharp
+var (minX, minY) = SphericalMercator.FromLonLat(-81.85, -4.23);
+var (maxX, maxY) = SphericalMercator.FromLonLat(-66.85, 13.51);
+var bbox = new MRect(minX, minY, maxX, maxY);
+map.Navigator.ZoomToBox(bbox);
+```
+
+Estado actual:
+
+- El mapa esta implementado con Mapsui.
+- La capa visual viene de OpenStreetMap.
+- El mapa necesita internet para cargar correctamente los tiles.
+- Todavia no muestra rutas reales, buses reales ni marcadores.
+- Todavia no consume ubicacion GPS del dispositivo.
+- La barra inferior esta en pantalla, pero el evento `TabSelected` no aparece enlazado en el XAML de `MainPage`.
+
+## 10. Perfil
+
+Archivos:
+
+```text
+Features/Profile/Views/Profile.xaml
+Features/Profile/Views/Profile.xaml.cs
+```
+
+Estado actual:
+
+- Existe una pantalla base de perfil.
+- La pantalla muestra un texto de prueba.
+- La ruta `Profile` esta registrada en `AppShell.xaml.cs`.
+- El namespace actual es `app_movil.Features.Home.Views`, aunque el archivo esta dentro de `Features/Profile/Views`.
+
+Recomendacion:
+
+- Ajustar el namespace a `app_movil.Features.Profile.Views`.
+- Agregar la pantalla como `ShellContent` si se quiere navegar con ruta absoluta.
+- Conectar la barra inferior para abrir el perfil.
+- Reemplazar el contenido de prueba por datos reales del usuario.
+
+## 11. Componentes reutilizables
 
 Los componentes estan en:
 
@@ -379,7 +421,7 @@ Los componentes estan en:
 Components
 ```
 
-### PrimaryButton
+### 11.1. PrimaryButton
 
 Archivos:
 
@@ -388,36 +430,44 @@ Components/Buttons/PrimaryButton.xaml
 Components/Buttons/PrimaryButton.xaml.cs
 ```
 
-Namespace:
+Funcion:
 
-```csharp
-app_movil.Components
-```
-
-Funcionamiento:
-
-- Envuelve un `Button` de MAUI.
-- Permite configurar texto con la propiedad `Text`.
+- Boton reutilizable para acciones principales.
+- Permite configurar texto.
 - Permite usar `Command`.
 - Permite usar `CommandParameter`.
 - Expone evento `Clicked`.
 
-Propiedades enlazables:
-
-```csharp
-Text
-Command
-CommandParameter
-```
-
 Se usa en:
 
-- `Welcome.xaml`
-- `ForgotPassword.xaml`
-- `VerifyCode.xaml`
-- `NewPassword.xaml`
+- `Welcome`
+- `ForgotPassword`
+- `VerifyCode`
+- `NewPassword`
 
-### InputField
+### 11.2. NotificationButton
+
+Archivos:
+
+```text
+Components/Buttons/NotificationButton.xaml
+Components/Buttons/NotificationButton.xaml.cs
+```
+
+Funcion:
+
+- Boton visual de notificaciones.
+- Muestra un icono de campana.
+- Muestra un punto rojo como indicador de alerta o notificacion pendiente.
+
+Estado actual:
+
+- Es visual.
+- No tiene evento publico de click.
+- No abre una pantalla de notificaciones.
+- No consume alertas reales.
+
+### 11.3. InputField
 
 Archivos:
 
@@ -426,24 +476,18 @@ Components/Inputs/InputField.xaml
 Components/Inputs/InputField.xaml.cs
 ```
 
-Namespace:
+Funcion:
 
-```csharp
-app_movil.Components.Inputs
-```
+- Campo reutilizable para entrada de texto.
+- Permite label superior.
+- Permite placeholder.
+- Permite enlace bidireccional de texto.
+- Permite definir teclado.
+- Permite marcar campo como contrasena.
 
-Funcionamiento:
+Propiedades principales:
 
-- Componente reutilizable para entrada de texto.
-- Muestra un label superior.
-- Usa un `Entry` dentro de un `Border`.
-- Permite texto bidireccional con `BindingMode.TwoWay`.
-- Permite configurar teclado.
-- Permite configurar si es campo de contrasena.
-
-Propiedades enlazables:
-
-```csharp
+```text
 LabelText
 Placeholder
 Text
@@ -451,12 +495,7 @@ Keyboard
 IsPassword
 ```
 
-Se usa en:
-
-- `Welcome.xaml`
-- `NewPassword.xaml`
-
-### CodeInput
+### 11.4. CodeInput
 
 Archivos:
 
@@ -465,45 +504,42 @@ Components/Inputs/CodeInput.xaml
 Components/Inputs/CodeInput.xaml.cs
 ```
 
-Namespace:
+Funcion:
 
-```csharp
-app_movil.Components.Inputs
-```
+- Componente para ingresar codigo de verificacion.
+- Muestra seis campos.
+- Cada campo acepta un caracter.
+- Usa teclado numerico.
 
-Funcionamiento:
+Estado actual:
 
-- Muestra seis campos `Entry`.
-- Cada campo usa el estilo `CodeEntryStyle`.
-- Cada campo acepta maximo un caracter.
-- El teclado es numerico.
+- Sirve como componente visual.
+- Todavia no expone una propiedad unica con el codigo completo.
+- Todavia no mueve automaticamente el foco entre casillas.
 
-Se usa en:
-
-- `VerifyCode.xaml`
-
-### HeaderBar
+### 11.5. SearchInput
 
 Archivos:
 
 ```text
-Components/Layout/HeaderBar.xaml
-Components/Layout/HeaderBar.xaml.cs
+Components/Inputs/SearchInput.xaml
+Components/Inputs/SearchInput.xaml.cs
 ```
 
-Namespace:
+Funcion:
 
-```csharp
-app_movil.Components
-```
+- Buscador visual para rutas.
+- Muestra icono de busqueda.
+- Usa placeholder traducido con la clave `SearchRoute`.
 
-Funcionamiento:
+Estado actual:
 
-- Componente de encabezado.
-- Compila correctamente.
-- Actualmente no se ve usado en las pantallas de autenticacion revisadas.
+- Es visual.
+- No expone todavia una propiedad `Text`.
+- No filtra rutas.
+- No consulta rutas desde backend.
 
-### BottomTabBar
+### 11.6. BottomTabBar
 
 Archivos:
 
@@ -512,40 +548,36 @@ Components/Layout/BottomTabBar.xaml
 Components/Layout/BottomTabBar.xaml.cs
 ```
 
-Namespace:
+Funcion:
 
-```csharp
-app_movil.Components.Layout
-```
+- Barra inferior de navegacion.
+- Tiene tres opciones:
+  - Rutas.
+  - Ubicacion.
+  - Perfil.
 
-Funcionamiento:
-
-- Componente de barra inferior.
-- Expone evento:
+Evento expuesto:
 
 ```csharp
 public event EventHandler<string> TabSelected;
 ```
 
-- Al tocar una opcion, emite uno de estos valores:
+Valores que emite:
 
 ```text
-rutas
-ubicacion
-perfil
+routes
+location
+profile
 ```
 
-Eventos internos:
+Estado actual:
 
-```csharp
-OnRutasTapped
-OnUbicacionTapped
-OnPerfilTapped
-```
+- El componente existe y emite eventos.
+- En `MainPage.xaml.cs` existe el metodo `OnTabSelected`.
+- En `MainPage.xaml` no se ve enlazado el evento `TabSelected`, por lo que al tocar las opciones puede no ejecutarse la navegacion.
+- Las rutas absolutas `//routes` y `//location` no aparecen registradas actualmente.
 
-Compila correctamente, pero no se ve integrado todavia en el flujo de autenticacion.
-
-### RouteInfoCard
+### 11.7. RouteInfoCard
 
 Archivos:
 
@@ -554,162 +586,34 @@ Components/Cards/RouteInfoCard.xaml
 Components/Cards/RouteInfoCard.xaml.cs
 ```
 
-Namespace:
+Funcion:
 
-```csharp
-app_movil.Components.Cards
-```
+- Muestra informacion resumida de una ruta.
+- Presenta nombre de ruta.
+- Presenta conductor.
+- Presenta placa del vehiculo.
+- Presenta horario.
+- Presenta cantidad de paradas.
+- Presenta destino final.
 
-Funcionamiento:
-
-- Componente visual tipo tarjeta para informacion de ruta.
-- Compila correctamente.
-- Actualmente no se ve usado en las pantallas de autenticacion revisadas.
-
-## 13. Recursos globales
-
-Los recursos estan en:
+Datos actuales de ejemplo:
 
 ```text
-Resources
+Ruta Centro
+Carlos Perez
+ABC-123
+06:00 AM - 07:30 AM
+12 paradas
+Destino final: Escuela
 ```
 
-### Colores
+Estado actual:
 
-Archivo:
+- Es una tarjeta visual.
+- Los datos estan escritos directamente en el XAML.
+- Todavia no recibe datos dinamicos desde backend.
 
-```text
-Resources/Styles/Colors.xaml
-```
-
-Define colores globales como:
-
-```text
-Primary
-PrimaryDark
-PrimaryLight
-Background
-CardBackground
-TextPrimary
-TextSecondary
-TitleColor
-InputPlaceholder
-BorderColor
-ButtonPrimary
-White
-Black
-Gray100...Gray950
-```
-
-Estos colores son usados en XAML con:
-
-```xml
-{StaticResource Background}
-{StaticResource TitleColor}
-{StaticResource TextSecondary}
-```
-
-### Estilos
-
-Archivo:
-
-```text
-Resources/Styles/Styles.xaml
-```
-
-Define estilos globales para controles MAUI:
-
-```text
-ActivityIndicator
-IndicatorView
-Border
-BoxView
-Button
-CheckBox
-DatePicker
-Editor
-Entry
-ImageButton
-Label
-Picker
-ProgressBar
-RadioButton
-RefreshView
-SearchBar
-SearchHandler
-Shadow
-Slider
-SwipeItem
-Switch
-TimePicker
-Page
-Shell
-NavigationPage
-TabbedPage
-```
-
-Tambien define el estilo especial:
-
-```xml
-<Style x:Key="CodeEntryStyle" TargetType="Entry">
-```
-
-Ese estilo se usa en `CodeInput`.
-
-### Fuentes
-
-Archivos:
-
-```text
-Resources/Fonts/OpenSans-Regular.ttf
-Resources/Fonts/OpenSans-Semibold.ttf
-```
-
-Registradas en `MauiProgram.cs` como:
-
-```text
-OpenSansRegular
-OpenSansSemibold
-```
-
-### Icono y splash
-
-Archivos:
-
-```text
-Resources/AppIcon/appicon.svg
-Resources/AppIcon/appiconfg.svg
-Resources/Splash/splash.svg
-```
-
-Registrados en el `.csproj`:
-
-```xml
-<MauiIcon Include="Resources\AppIcon\appicon.svg" ... />
-<MauiSplashScreen Include="Resources\Splash\splash.svg" ... />
-```
-
-### Imagenes
-
-Archivo actual:
-
-```text
-Resources/Images/dotnet_bot.png
-```
-
-Registrado como `MauiImage`.
-
-### Raw assets
-
-Archivo actual:
-
-```text
-Resources/Raw/AboutAssets.txt
-```
-
-Registrado como `MauiAsset`.
-
-## 14. Traducciones e internacionalizacion
+## 12. Internacionalizacion y traducciones
 
 Archivos:
 
@@ -732,27 +636,20 @@ Extension XAML:
 Core/Extensions/TranslationExtension.cs
 ```
 
-Funcionamiento:
-
-- `LocalizationService` usa `ResourceManager`.
-- Busca textos en `app_movil.Resources.Strings.AppStrings`.
-- Si no encuentra una clave, devuelve la clave original.
-- Permite cambiar idioma con:
-
-```csharp
-LocalizationService.SetLanguage("es");
-LocalizationService.SetLanguage("en");
-LocalizationService.SetLanguage("fr");
-LocalizationService.SetLanguage("pt");
-```
-
-Uso desde XAML:
+Uso en XAML:
 
 ```xml
 Text="{services:Translation Key=Login}"
 ```
 
-Claves usadas actualmente:
+Idiomas disponibles:
+
+- Espanol.
+- Ingles.
+- Frances.
+- Portugues.
+
+Claves importantes:
 
 ```text
 Welcome
@@ -773,16 +670,119 @@ NewPasswordDescription
 NewPasswordTitle
 ConfirmPasswordTitle
 Restore
+FinalDestination
+Route
+Location
+Profile
+School
+SearchRoute
 ```
 
-Observacion:
+Observacion importante:
 
-- Las traducciones compilan.
-- Algunos textos en los archivos se ven con caracteres mal codificados al leerlos desde consola, por ejemplo `ContraseÃ±a`. Conviene revisar la codificacion UTF-8 de los `.resx` y XAML para que los acentos se muestren correctamente.
+- Algunos textos aparecen con problemas de codificacion al leerlos desde consola, por ejemplo caracteres como `Ã³` o `Ã±`.
+- Se recomienda guardar XAML y `.resx` en UTF-8 correcto para que los acentos se vean bien en la app y en la documentacion.
 
-## 15. Plataformas
+## 13. Recursos visuales
 
-El proyecto tiene carpetas de plataforma:
+### 13.1. Colores
+
+Archivo:
+
+```text
+Resources/Styles/Colors.xaml
+```
+
+Define colores globales como:
+
+```text
+Primary
+PrimaryDark
+PrimaryLight
+Background
+CardBackground
+CardSecondaryBackground
+TextPrimary
+TextSecondary
+TitleColor
+InputPlaceholder
+BorderColor
+ButtonPrimary
+White
+Black
+Gray100...Gray950
+```
+
+### 13.2. Estilos
+
+Archivo:
+
+```text
+Resources/Styles/Styles.xaml
+```
+
+Define estilos globales para controles MAUI como:
+
+```text
+Button
+Entry
+Label
+Border
+Page
+Shell
+NavigationPage
+TabbedPage
+SearchBar
+Switch
+Slider
+Picker
+DatePicker
+```
+
+Tambien define el estilo:
+
+```xml
+<Style x:Key="CodeEntryStyle" TargetType="Entry">
+```
+
+Ese estilo se usa en el componente `CodeInput`.
+
+### 13.3. Fuentes
+
+Archivos:
+
+```text
+Resources/Fonts/OpenSans-Regular.ttf
+Resources/Fonts/OpenSans-Semibold.ttf
+```
+
+Alias registrados:
+
+```text
+OpenSansRegular
+OpenSansSemibold
+```
+
+### 13.4. Icono y splash
+
+Archivos:
+
+```text
+Resources/AppIcon/appicon.svg
+Resources/AppIcon/appiconfg.svg
+Resources/Splash/splash.svg
+```
+
+Declarados en el `.csproj` como:
+
+```xml
+<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+```
+
+## 14. Plataformas soportadas
+
+El proyecto contiene carpetas para varias plataformas:
 
 ```text
 Platforms/Android
@@ -791,13 +791,11 @@ Platforms/MacCatalyst
 Platforms/Windows
 ```
 
-Pero el `.csproj` actual solo compila para:
+Pero actualmente el `.csproj` solo compila para:
 
 ```text
 net10.0-android
 ```
-
-Por eso la validacion realizada fue para Android.
 
 ### Android
 
@@ -807,257 +805,357 @@ Archivo:
 Platforms/Android/AndroidManifest.xml
 ```
 
-Permisos actuales:
+Permisos:
 
 ```xml
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <uses-permission android:name="android.permission.INTERNET" />
 ```
 
-Esto permite:
+Estos permisos son importantes porque:
 
-- Consultar estado de red.
-- Usar internet.
+- La app necesita saber si hay conexion.
+- El mapa de OpenStreetMap requiere internet para cargar.
+- En el futuro, la app necesitara comunicarse con el backend.
 
-Tambien existen:
+## 15. Estado real de las funciones
 
-```text
-Platforms/Android/MainActivity.cs
-Platforms/Android/MainApplication.cs
-Platforms/Android/Resources/values/colors.xml
-```
+| Funcion | Estado actual | Observacion |
+| --- | --- | --- |
+| Inicio de sesion | Visual y navegable | No valida credenciales reales |
+| Recuperar contrasena | Visual y navegable | No envia correo real |
+| Verificar codigo | Visual y navegable | No valida codigo real |
+| Crear nueva contrasena | Visual | No actualiza backend |
+| Mapa | Implementado visualmente | Usa OpenStreetMap, sin rutas reales |
+| Busqueda de ruta | Visual | No filtra ni consulta datos |
+| Notificaciones | Visual | No abre pantalla ni consulta alertas |
+| Tarjeta de ruta | Visual | Datos estaticos |
+| Barra inferior | Componente creado | Falta enlazar evento en `MainPage.xaml` |
+| Perfil | Pantalla base | Contenido de prueba |
+| Traducciones | Implementadas | Revisar codificacion UTF-8 |
 
-## 16. Estado actual de compilacion
+## 16. Que funciona actualmente
 
-El proyecto MAUI compila con:
+Actualmente la app tiene funcionando:
 
-```powershell
-cd dvlp-movil
-dotnet build app-movil.slnx
-```
+- Estructura base de proyecto MAUI.
+- Inicio desde `App`.
+- Navegacion principal con `AppShell`.
+- Pantalla inicial `Welcome`.
+- Navegacion desde login hacia `MainPage`.
+- Flujo visual de recuperacion de contrasena.
+- Pantalla principal con mapa Mapsui.
+- Capa de mapa OpenStreetMap.
+- Buscador visual de rutas.
+- Boton visual de notificaciones.
+- Tarjeta visual de informacion de ruta.
+- Barra inferior visual.
+- Pantalla base de perfil.
+- Componentes reutilizables.
+- Recursos globales de estilos y colores.
+- Traducciones por `.resx`.
+- Configuracion Android con permiso de internet.
 
-Resultado actual:
+## 17. Pendientes tecnicos
 
-```text
-Build correcto
-0 errores
-64 advertencias
-```
+Estos puntos son importantes para mejorar la app en una version mas completa:
 
-Advertencias principales:
+1. Conectar autenticacion con backend.
+2. Guardar token o sesion del usuario.
+3. Validar campos obligatorios en login y recuperacion.
+4. Validar formato de correo.
+5. Validar que las contrasenas coincidan.
+6. Enviar codigo de recuperacion real.
+7. Validar codigo de recuperacion real.
+8. Conectar mapa con rutas reales.
+9. Mostrar marcadores de buses, paradas o estudiantes.
+10. Consumir ubicacion GPS cuando sea necesario.
+11. Hacer que `RouteInfoCard` reciba datos dinamicos.
+12. Hacer que `SearchInput` filtre o consulte rutas.
+13. Conectar `NotificationButton` con alertas reales.
+14. Enlazar `BottomTabBar.TabSelected` en `MainPage.xaml`.
+15. Registrar correctamente las rutas de ubicacion y perfil.
+16. Corregir namespace de `Profile`.
+17. Convertir code-behind en ViewModels reales si se quiere aplicar MVVM.
+18. Corregir textos con codificacion incorrecta.
+19. Reducir advertencias de nulabilidad.
+20. Agregar pruebas o validaciones manuales documentadas.
 
-- Nulabilidad en eventos como `Clicked` y `TabSelected`.
-- Diferencias de nulabilidad en parametros `sender`.
-- Advertencias CA1416/CA1418 de analisis de plataforma.
-- Nulabilidad en `CreateWindow(IActivationState activationState)`.
+## 18. Riesgos o detalles a revisar
 
-Estas advertencias no rompen la compilacion.
+### Navegacion mezclada
 
-## 17. Cambios realizados para que compile despues de reorganizar
-
-### Ruta del proyecto en la solucion
-
-Se cambio:
-
-```text
-app-movil/app-movil.csproj
-```
-
-por:
-
-```text
-app-movil/app-movil/app-movil.csproj
-```
-
-Archivo modificado:
-
-```text
-dvlp-movil/app-movil.slnx
-```
-
-### Namespace de InputField
-
-Antes:
-
-```csharp
-namespace app_movil.Components;
-```
-
-Ahora:
-
-```csharp
-namespace app_movil.Components.Inputs;
-```
-
-Tambien se actualizo el XAML:
-
-```xml
-x:Class="app_movil.Components.Inputs.InputField"
-```
-
-Archivos:
-
-```text
-Components/Inputs/InputField.xaml
-Components/Inputs/InputField.xaml.cs
-```
-
-### Uso de InputField en pantallas
-
-Antes:
-
-```xml
-<components:InputField />
-```
-
-Ahora:
-
-```xml
-<inputs:InputField />
-```
-
-Pantallas modificadas:
-
-```text
-Features/Auth/Views/Welcome.xaml
-Features/Auth/Views/NewPassword.xaml
-```
-
-### Campos de contrasena
-
-En `NewPassword.xaml` se corrigio:
-
-```xml
-Keyboard="Password"
-```
-
-por:
-
-```xml
-IsPassword="True"
-```
-
-Porque `Password` no es un valor valido para `Keyboard` en MAUI.
-
-## 18. Que funciona hasta ahora
-
-Actualmente funciona:
-
-- La solucion MAUI apunta al proyecto correcto.
-- El proyecto compila.
-- La app arranca desde `App`.
-- La ventana principal carga `AppShell`.
-- `AppShell` controla la navegacion principal.
-- Las rutas de autenticacion estan registradas.
-- La pantalla `Welcome` existe y compila.
-- La pantalla `ForgotPassword` existe y compila.
-- La pantalla `VerifyCode` existe y compila.
-- La pantalla `NewPassword` existe y compila.
-- Los componentes `PrimaryButton`, `InputField` y `CodeInput` compilan.
-- Los recursos globales de colores y estilos cargan desde `App.xaml`.
-- Las fuentes OpenSans estan registradas.
-- UraniumUI esta registrado.
-- Los iconos Material Symbols estan registrados.
-- Los archivos `.resx` de idiomas estan conectados mediante `LocalizationService`.
-- La extension `{services:Translation ...}` funciona en XAML.
-- Android tiene permisos de internet y estado de red.
-
-## 19. Lo que esta pendiente o conviene mejorar
-
-### Reorganizar code-behind y ViewModels
-
-Los archivos en:
-
-```text
-Features/Auth/ViewModels
-```
-
-siguen siendo code-behind de las Views. Funcionan porque mantienen:
+La mayoria del flujo usa:
 
 ```csharp
-namespace app_movil.Features.Auth.Views;
-```
-
-pero arquitectonicamente no son ViewModels reales.
-
-Opciones recomendadas:
-
-- Mover los `.xaml.cs` de regreso a `Features/Auth/Views`.
-- O crear ViewModels reales, por ejemplo `WelcomeViewModel`, `ForgotPasswordViewModel`, etc.
-
-### Unificar navegacion
-
-Actualmente se mezclan:
-
-```csharp
-Navigation.PushAsync(...)
 Shell.Current.GoToAsync(...)
 ```
 
-Recomendacion:
+Pero `NewPassword` usa:
 
-- Usar Shell para todo el flujo.
-- Evitar mezclar navegacion tradicional con Shell.
-
-### Corregir codificacion de textos
-
-Hay textos que aparecen como:
-
-```text
-ContraseÃ±a
-Iniciar sesiÃ³n
-Â¿OlvidÃ³ la contraseÃ±a?
+```csharp
+Navigation.PushAsync(new Welcome());
 ```
 
 Recomendacion:
 
-- Guardar XAML y `.resx` en UTF-8 correcto.
-- Revisar textos visibles con acentos.
-
-### Reducir advertencias de nulabilidad
-
-Ejemplos:
-
 ```csharp
-public event EventHandler Clicked;
-public event EventHandler<string> TabSelected;
+await Shell.Current.GoToAsync("//Welcome");
 ```
 
-Podrian declararse como nullable:
+Asi se mantiene una sola forma de navegar.
 
-```csharp
-public event EventHandler? Clicked;
-public event EventHandler<string>? TabSelected;
-```
+### Barra inferior no conectada
 
-Tambien se pueden ajustar parametros:
-
-```csharp
-private void MainButton_Clicked(object? sender, EventArgs e)
-```
-
-### Revisar plataformas
-
-Aunque hay carpetas para iOS, MacCatalyst y Windows, el proyecto actual solo compila Android:
+`BottomTabBar` emite `TabSelected`, pero en `MainPage.xaml` esta asi:
 
 ```xml
-<TargetFrameworks>net10.0-android</TargetFrameworks>
+<layout:BottomTabBar Grid.Row="2"/>
 ```
 
-Si se desea compilar para Windows/iOS/MacCatalyst, habria que volver a agregar esos frameworks al `.csproj`.
+Para conectar el evento deberia quedar similar a:
 
-## 20. Resumen final
+```xml
+<layout:BottomTabBar Grid.Row="2" TabSelected="OnTabSelected"/>
+```
 
-El proyecto MAUI esta funcionando a nivel de compilacion y estructura base. La parte movil tiene configurado:
+Ademas se deben registrar rutas reales para `routes`, `location` y `profile`, o ajustar los nombres a las rutas existentes.
 
-- Proyecto MAUI Android.
-- Shell como sistema de navegacion.
-- Flujo inicial de autenticacion.
-- Componentes reutilizables.
-- Recursos globales.
-- Traducciones por `.resx`.
-- UraniumUI y Material Symbols.
+### Profile con namespace inconsistente
 
-Lo mas importante ya quedo corregido: la solucion apunta al `.csproj` correcto y los componentes reorganizados tienen namespaces coherentes con su ubicacion.
+El archivo esta en:
 
-El siguiente paso tecnico recomendable es ordenar la arquitectura de `Views`/`ViewModels`, unificar la navegacion con Shell y corregir la codificacion de textos con acentos.
+```text
+Features/Profile/Views/Profile.xaml
+```
+
+Pero usa:
+
+```csharp
+namespace app_movil.Features.Home.Views;
+```
+
+Funciona si todo apunta a ese namespace, pero para orden del proyecto conviene cambiarlo a:
+
+```csharp
+namespace app_movil.Features.Profile.Views;
+```
+
+### Datos estaticos
+
+La tarjeta de ruta muestra datos fijos. Para una version mas completa se recomienda que esos datos vengan de:
+
+- Un ViewModel.
+- Un servicio local.
+- Una API del backend.
+
+## 19. Como ejecutar o validar
+
+Desde la carpeta del proyecto movil:
+
+```powershell
+cd "C:\Users\ROJAS\Desktop\ADSO\Guardian Escolar\dvlp-front\dvlp-movil\app-movil"
+dotnet build app-movil.csproj
+```
+
+Si se usa solucion desde una carpeta superior, verificar primero donde esta el archivo `.slnx` y ejecutar:
+
+```powershell
+dotnet build app-movil.slnx
+```
+
+Validaciones manuales recomendadas:
+
+1. Abrir la app en emulador o dispositivo Android.
+2. Confirmar que inicia en `Welcome`.
+3. Presionar `Ingresar` y verificar que abre `MainPage`.
+4. Verificar que el mapa carga con internet.
+5. Volver al flujo de recuperacion de contrasena.
+6. Probar `ForgotPassword`, `VerifyCode` y `NewPassword`.
+7. Revisar que los textos se vean correctamente.
+8. Revisar que no haya pantallas cortadas en resoluciones pequenas.
+9. Revisar si la barra inferior responde al tocar rutas, ubicacion y perfil.
+10. Validar que los permisos de internet esten activos en Android.
+
+
+
+## 20. Repaso rapido de funcionamiento
+
+Esta seccion resume para que sirve cada parte importante de la app y que codigo se debe reconocer al leer el proyecto.
+
+### 20.1. Archivos principales
+
+| Archivo | Para que sirve |
+| --- | --- |
+| `app-movil.csproj` | Define que el proyecto es MAUI, para que plataforma compila y que dependencias usa. |
+| `MauiProgram.cs` | Configura el arranque de la app, librerias, fuentes, UraniumUI, SkiaSharp y logs. |
+| `App.xaml` | Carga estilos y colores globales. |
+| `App.xaml.cs` | Crea la ventana principal y carga `AppShell`. |
+| `AppShell.xaml` | Define las pantallas principales de navegacion. |
+| `AppShell.xaml.cs` | Registra rutas para navegar entre pantallas. |
+
+### 20.2. Codigo importante de arranque
+
+Este codigo hace que la app inicie usando MAUI y cargue sus herramientas visuales:
+
+```csharp
+builder
+    .UseMauiApp<App>()
+    .UseUraniumUI()
+    .UseUraniumUIMaterial()
+    .UseSkiaSharp()
+    .ConfigureFonts(fonts =>
+    {
+        fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+        fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+        fonts.AddMaterialSymbolsFonts();
+    });
+```
+
+Este codigo crea la ventana principal:
+
+```csharp
+return new Window(new AppShell());
+```
+
+### 20.3. Codigo importante de navegacion
+
+Las pantallas principales se declaran en `AppShell.xaml`:
+
+```xml
+<ShellContent
+    Title="Welcome"
+    ContentTemplate="{DataTemplate auth:Welcome}"
+    Route="Welcome" />
+
+<ShellContent
+    Title="MainPage"
+    ContentTemplate="{DataTemplate home:MainPage}"
+    Route="MainPage" />
+```
+
+Las pantallas secundarias se registran en `AppShell.xaml.cs`:
+
+```csharp
+Routing.RegisterRoute(nameof(ForgotPassword), typeof(ForgotPassword));
+Routing.RegisterRoute(nameof(VerifyCode), typeof(VerifyCode));
+Routing.RegisterRoute(nameof(NewPassword), typeof(NewPassword));
+Routing.RegisterRoute(nameof(Profile), typeof(Profile));
+```
+
+Para navegar se usa:
+
+```csharp
+await Shell.Current.GoToAsync(nameof(ForgotPassword));
+await Shell.Current.GoToAsync("//MainPage");
+```
+
+### 20.4. Codigo importante del mapa
+
+El mapa se carga en `MainPage.xaml.cs` con Mapsui:
+
+```csharp
+var map = new Mapsui.Map();
+map.Widgets.Clear();
+map.Layers.Add(OpenStreetMap.CreateTileLayer());
+RouteMap.Map = map;
+```
+
+La vista se centra aproximadamente sobre Colombia:
+
+```csharp
+var (minX, minY) = SphericalMercator.FromLonLat(-81.85, -4.23);
+var (maxX, maxY) = SphericalMercator.FromLonLat(-66.85, 13.51);
+var bbox = new MRect(minX, minY, maxX, maxY);
+map.Navigator.ZoomToBox(bbox);
+```
+
+Para que el mapa cargue, Android necesita permisos de internet:
+
+```xml
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.INTERNET" />
+```
+
+### 20.5. Codigo importante de traducciones
+
+Los textos se llaman desde XAML usando una clave:
+
+```xml
+Text="{services:Translation Key=Login}"
+```
+
+La clave `Login` se busca en los archivos:
+
+```text
+Resources/Strings/AppStrings.es.resx
+Resources/Strings/AppStrings.en.resx
+Resources/Strings/AppStrings.fr.resx
+Resources/Strings/AppStrings.pt.resx
+```
+
+Esto permite cambiar textos sin modificar cada pantalla manualmente.
+
+### 20.6. Para que sirve cada carpeta
+
+| Carpeta | Para que sirve |
+| --- | --- |
+| `Features/Auth` | Contiene las pantallas de login y recuperacion de contrasena. |
+| `Features/Home` | Contiene la pantalla principal con el mapa. |
+| `Features/Profile` | Contiene la pantalla base del perfil. |
+| `Components/Buttons` | Guarda botones reutilizables como `PrimaryButton` y `NotificationButton`. |
+| `Components/Inputs` | Guarda entradas reutilizables como `InputField`, `CodeInput` y `SearchInput`. |
+| `Components/Layout` | Guarda componentes de estructura como `BottomTabBar`. |
+| `Components/Cards` | Guarda tarjetas visuales como `RouteInfoCard`. |
+| `Core/Services` | Guarda servicios internos como `LocalizationService`. |
+| `Core/Extensions` | Guarda extensiones para usar traducciones en XAML. |
+| `Resources` | Guarda estilos, colores, fuentes, imagenes, iconos, splash y textos. |
+| `Platforms` | Guarda configuraciones propias de Android, iOS, Windows y MacCatalyst. |
+
+### 20.7. Funciones principales de la app
+
+| Funcion | Donde esta | Para que sirve |
+| --- | --- | --- |
+| Inicio de sesion | `Welcome` | Permite entrar visualmente a la app. |
+| Recuperar contrasena | `ForgotPassword` | Permite escribir correo para solicitar codigo. |
+| Verificar codigo | `VerifyCode` | Permite ingresar codigo de recuperacion. |
+| Nueva contrasena | `NewPassword` | Permite escribir y confirmar nueva contrasena. |
+| Mapa | `MainPage` | Muestra una vista geografica con OpenStreetMap. |
+| Buscar ruta | `SearchInput` | Prepara una entrada para buscar rutas. |
+| Notificaciones | `NotificationButton` | Muestra acceso visual a alertas o avisos. |
+| Informacion de ruta | `RouteInfoCard` | Muestra ruta, conductor, placa, horario, paradas y destino. |
+| Navegacion inferior | `BottomTabBar` | Permite cambiar entre rutas, ubicacion y perfil. |
+| Perfil | `Profile` | Pantalla base para informacion del usuario. |
+
+## 21. Checklist de repaso
+
+Para estudiar el proyecto, conviene poder responder:
+
+- Que es `.NET MAUI` y por que se usa en la app movil.
+- Donde se declaran las dependencias del proyecto.
+- Que hace `MauiProgram.cs`.
+- Que hace `AppShell`.
+- Cuales son las pantallas del flujo de autenticacion.
+- Como se navega de `Welcome` a `MainPage`.
+- Como se navega de recuperacion de contrasena a codigo y nueva contrasena.
+- Donde se carga el mapa.
+- Para que sirve `Mapsui.Maui`.
+- Para que sirve `UseSkiaSharp`.
+- Donde estan los permisos de internet de Android.
+- Que componentes son reutilizables.
+- Para que sirve `PrimaryButton`.
+- Para que sirve `InputField`.
+- Para que sirve `CodeInput`.
+- Para que sirve `SearchInput`.
+- Para que sirve `RouteInfoCard`.
+- Para que sirve `BottomTabBar`.
+- Como funcionan las traducciones con `.resx`.
+- Que cosas ya son funcionales y que cosas siguen siendo visuales o pendientes.
+
+## 22. Resumen final
+
+La app movil de Guardian Escolar ya tiene una base funcional importante: estructura MAUI, navegacion con Shell, flujo visual de autenticacion, recuperacion de contrasena, pantalla principal con mapa, componentes reutilizables, estilos globales y traducciones.
+
+Las funciones nuevas mas importantes son la pantalla principal con **Mapsui/OpenStreetMap**, el buscador de rutas, el boton de notificaciones, la tarjeta de informacion de ruta, la barra inferior y la pantalla base de perfil.
+
+El estado actual es bueno como prototipo movil navegable, pero para una version mas completa se recomienda conectar la app con el backend, corregir detalles de navegacion, limpiar namespaces, reemplazar datos estaticos por datos reales y revisar la codificacion de textos.

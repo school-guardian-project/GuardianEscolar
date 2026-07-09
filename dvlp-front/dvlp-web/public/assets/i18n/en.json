@@ -741,7 +741,8 @@
         "curso": "Grade",
         "telefono": "Phone",
         "direccion": "Address",
-        "correo": "Email"
+        "correo": "Email",
+        "contraseña": "Password"
       }
     },
     "acudiente": {
@@ -754,7 +755,8 @@
         "identificacion": "ID Number",
         "fechaNac": "Birth Date",
         "telefono": "Phone",
-        "direccion": "Address"
+        "direccion": "Address",
+        "contraseña": "Password"
       }
     },
     "conductor": {
@@ -768,7 +770,8 @@
         "vencLicencia": "License Expiry",
         "licencia": "License Number",
         "direccion": "Address",
-        "correo": "Email"
+        "correo": "Email",
+        "contraseña": "Password"
       }
     },
     "familia": {
@@ -822,7 +825,8 @@
         "identificacion": "ID Number",
         "fechaNac": "Birth Date",
         "telefono": "Phone",
-        "direccion": "Address"
+        "direccion": "Address",
+        "contraseña": "Password"
       }
     },
     "schools": {

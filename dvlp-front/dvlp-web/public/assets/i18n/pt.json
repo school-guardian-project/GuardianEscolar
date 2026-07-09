@@ -734,7 +734,8 @@
         "curso": "Curso",
         "telefono": "Telefone",
         "direccion": "Endereço",
-        "correo": "E-mail"
+        "correo": "E-mail",
+        "contraseña": "Senha"
       }
     },
     "acudiente": {
@@ -747,7 +748,8 @@
         "identificacion": "Número de identificação",
         "fechaNac": "Data de nascimento",
         "telefono": "Telefone",
-        "direccion": "Endereço"
+        "direccion": "Endereço",
+        "contraseña": "Senha"
       }
     },
     "conductor": {
@@ -761,7 +763,8 @@
         "vencLicencia": "Validade da licença",
         "licencia": "Número da licença",
         "direccion": "Endereço",
-        "correo": "E-mail"
+        "correo": "E-mail",
+        "contraseña": "Senha"
       }
     },
     "familia": {
@@ -815,7 +818,8 @@
         "identificacion": "Identificação",
         "fechaNac": "Data de nascimento",
         "telefono": "Telefone",
-        "direccion": "Endereço"
+        "direccion": "Endereço",
+        "contraseña": "Senha"
       }
     },
     "schools": {

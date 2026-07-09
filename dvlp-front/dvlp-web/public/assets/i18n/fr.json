@@ -734,7 +734,8 @@
         "curso": "Classe",
         "telefono": "Téléphone",
         "direccion": "Adresse",
-        "correo": "Email"
+        "correo": "Email",
+        "contraseña": "Mot de passe"
       }
     },
     "acudiente": {
@@ -747,7 +748,8 @@
         "identificacion": "Numéro d'identité",
         "fechaNac": "Date de naissance",
         "telefono": "Téléphone",
-        "direccion": "Adresse"
+        "direccion": "Adresse",
+        "contraseña": "Mot de passe"
       }
     },
     "conductor": {
@@ -761,7 +763,8 @@
         "vencLicencia": "Expiration du permis",
         "licencia": "Numéro de permis",
         "direccion": "Adresse",
-        "correo": "Email"
+        "correo": "Email",
+        "contraseña": "Mot de passe"
       }
     },
     "familia": {
@@ -815,7 +818,8 @@
         "identificacion": "Numéro d'identité",
         "fechaNac": "Date de naissance",
         "telefono": "Téléphone",
-        "direccion": "Adresse"
+        "direccion": "Adresse",
+        "contraseña": "Mot de passe"
       }
     },
     "schools": {

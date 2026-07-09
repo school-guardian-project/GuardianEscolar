@@ -23,6 +23,9 @@ services:
       dockerfile: dev.Dockerfile
     ports:
       - "4200:4200"
+    volumes:
+      - ./dvlp-front/dvlp-web:/app
+      - /app/node_modules
     environment:
       - NODE_ENV=development
   

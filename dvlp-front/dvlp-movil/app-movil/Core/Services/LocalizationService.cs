@@ -17,6 +17,7 @@ public static class LocalizationService
     // y devuelve la traducción. Si no encuentra nada, devuelve la clave
     public static string Get(string key)
     {
+        key = key.Trim();
         return _resourceManager.GetString(key, CultureInfo.CurrentUICulture) ?? key;
     }
 

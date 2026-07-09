@@ -7,16 +7,18 @@
     xmlns:home="clr-namespace:app_movil.Features.Home.Views"
     Shell.NavBarIsVisible="False">
 
-    <ShellContent
-        Title="Welcome"
-        ContentTemplate="{DataTemplate auth:Welcome}"
-        Route="Welcome" />
+    <FlyoutItem Title="Home" Icon="dotnet_bot.png">
+        <ShellContent
+            Title="Main"
+            ContentTemplate="{DataTemplate home:MainPage}"
+            Route="MainPage" />
+    </FlyoutItem>
 
-    <ShellContent
-        Title="MainPage"
-        ContentTemplate="{DataTemplate home:MainPage}"
-        Route="MainPage" />
+    <FlyoutItem Title="Profile" Icon="dotnet_bot.png">
+        <ShellContent
+            Title="Profile"
+            ContentTemplate="{DataTemplate auth:Welcome}"
+            Route="Welcome" />
+    </FlyoutItem>
 
 </Shell>
-    
-    

@@ -186,7 +186,13 @@
   <data name="School" xml:space="preserve">
     <value>École</value>
   </data>
+  <data name="Stops" xml:space="preserve">
+    <value>Arrêts</value>
+  </data>
   <data name="SearchRoute" xml:space="preserve">
     <value>Recherche d'itinéraire</value>
+  </data>
+  <data name="PersonalData" xml:space="preserve">
+    <value>mes données personnelles</value>
   </data>
 </root>

@@ -24,16 +24,7 @@
                 HorizontalOptions="Center"
                 VerticalOptions="Center" />
 
-            <!-- Indicador rojo -->
-            <Border
-                WidthRequest="10"
-                HeightRequest="10"
-                BackgroundColor="Red"
-                StrokeThickness="0"
-                HorizontalOptions="End"
-                VerticalOptions="Start"
-                Margin="0,8,8,0"
-                StrokeShape="RoundRectangle 50"/>
+            
 
         </Grid>
 

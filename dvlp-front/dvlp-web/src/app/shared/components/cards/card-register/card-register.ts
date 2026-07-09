@@ -33,6 +33,7 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { name: 'telefono', type: 'tel', halfWidth: true },
     { name: 'direccion', type: 'text' },
     { name: 'correo', type: 'email' },
+    { name: 'contraseña', type: 'text' },
   ],
   acudiente: [
     { name: 'nombres', type: 'text' },
@@ -43,6 +44,7 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { name: 'fechaNac', type: 'date' },
     { name: 'telefono', type: 'tel' },
     { name: 'direccion', type: 'text' },
+    { name: 'contraseña', type: 'text' },
   ],
 
   conductor: [
@@ -55,6 +57,7 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { name: 'licencia', type: 'text', halfWidth: true },
     { name: 'direccion', type: 'text' },
     { name: 'correo', type: 'email' },
+    { name: 'contraseña', type: 'text' },
   ],
 
   familia: [
@@ -99,6 +102,7 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { name: 'fechaNac', type: 'date' },
     { name: 'telefono', type: 'tel' },
     { name: 'direccion', type: 'text' },
+    { name: 'contraseña', type: 'text' },
   ],
 
   schools: [

@@ -188,7 +188,13 @@
   <data name="School" xml:space="preserve">
     <value>Escuela</value>
   </data>
+  <data name="Stops" xml:space="preserve">
+    <value>Paradas</value>
+  </data>
   <data name="SearchRoute" xml:space="preserve">
     <value>Buscar Ruta</value>
+  </data>
+  <data name="PersonalData" xml:space="preserve">
+    <value>Mis datos personales</value>
   </data>
 </root>

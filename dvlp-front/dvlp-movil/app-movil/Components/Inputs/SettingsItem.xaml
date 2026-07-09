@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="app_movil.Components.Inputs.SettingsItem"
+             x:Name="this">
+    <VerticalStackLayout>
+
+        <Border
+        BackgroundColor="{StaticResource CardSecondaryBackground}"
+        Stroke="{StaticResource BorderColor}"
+        StrokeShape="RoundRectangle 18"
+        Padding="16,0"
+        HeightRequest="60">
+
+            <Grid ColumnDefinitions="Auto,*,Auto">
+
+                <!-- Icono -->
+                <Image
+                Source="{Binding Icon, Source={x:Reference this}}"
+                WidthRequest="26"
+                HeightRequest="26"
+                VerticalOptions="Center"/>
+
+                <!-- Texto -->
+                <Label
+                Grid.Column="1"
+                Margin="15,0"
+                VerticalOptions="Center"
+                FontSize="17"
+                Text="{Binding Title, Source={x:Reference this}}"
+                TextColor="{StaticResource TextPrimary}"/>
+
+                <!-- Flecha -->
+                <Image
+                Grid.Column="2"
+                Source="->"
+                WidthRequest="18"
+                HeightRequest="18"
+                VerticalOptions="Center"/>
+
+            </Grid>
+
+            <Border.GestureRecognizers>
+                <TapGestureRecognizer
+                Command="{Binding Command, Source={x:Reference this}}"/>
+            </Border.GestureRecognizers>
+
+        </Border>
+    </VerticalStackLayout>
+</ContentView>

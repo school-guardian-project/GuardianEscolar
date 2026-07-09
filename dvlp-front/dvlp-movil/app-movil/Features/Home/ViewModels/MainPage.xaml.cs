@@ -12,21 +12,21 @@ public partial class MainPage : ContentPage
         LoadMap();
     }
 
-private async void OnTabSelected(object sender, string tab)
+    private async void OnTabSelected(object sender, string tab)
     {
-        if( tab == "routes")
-            await Shell.Current.GoToAsync("//routes");
+        if (tab == "routes")
+            await Shell.Current.GoToAsync("//MainPage");
         else if (tab == "location")
-            await Shell.Current.GoToAsync("//location");
-        else if ( tab == "profile")
-            await Shell.Current.GoToAsync("//Profile");
+            await Shell.Current.GoToAsync("//MainPage"); 
+        else if (tab == "profile")
+            await Shell.Current.GoToAsync(nameof(Profile)); 
     }
-private void LoadMap()
-{
+    private void LoadMap()
+    {
         var map = new Mapsui.Map();
 
-            map.Widgets.Clear();
-            map.Layers.Add(OpenStreetMap.CreateTileLayer());
+        map.Widgets.Clear();
+        map.Layers.Add(OpenStreetMap.CreateTileLayer());
 
         RouteMap.Map = map;
 
@@ -37,6 +37,6 @@ private void LoadMap()
         var bbox = new MRect(minX, minY, maxX, maxY);
 
         map.Navigator.ZoomToBox(bbox);
-          
+
     }
 }

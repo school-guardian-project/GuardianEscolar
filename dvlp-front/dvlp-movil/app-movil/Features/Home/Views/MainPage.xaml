@@ -42,7 +42,8 @@
 
         <cards:RouteInfoCard Grid.Row="1"/>
 
-        <layout:BottomTabBar Grid.Row="2"/>
+       <layout:BottomTabBar Grid.Row="2"
+                     TabSelected="OnTabSelected"/> 
 
     </Grid>
 

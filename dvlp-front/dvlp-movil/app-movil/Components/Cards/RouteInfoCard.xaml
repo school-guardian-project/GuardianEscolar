@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:services="clr-namespace:app_movil.Services"
              x:Class="app_movil.Components.Cards.RouteInfoCard">
 
     <Border
@@ -59,7 +60,7 @@
                     <Label
                         FontAttributes="Bold"
                         HorizontalTextAlignment="Center"
-                        Text="Paradas"
+                        Text="{services:Translation Key=Stops}"
                         TextColor="{StaticResource TitleColor}"/>
                     <Label
                         FontSize="12"
@@ -73,12 +74,12 @@
                     <Label
                         FontAttributes="Bold"
                         HorizontalTextAlignment="Center"
-                        Text="Destino final"
+                        Text="{services:Translation Key=FinalDestination}"
                         TextColor="{StaticResource TitleColor}"/>
                     <Label
                         FontSize="12"
                         HorizontalTextAlignment="Center"
-                        Text="Escuela"
+                        Text="{services:Translation Key=School}"
                         TextColor="{StaticResource TextSecondary}"/>
                 </VerticalStackLayout>
 

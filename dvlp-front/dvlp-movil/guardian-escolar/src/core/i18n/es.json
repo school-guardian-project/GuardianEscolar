@@ -1,0 +1,18 @@
+{
+  "login": "Iniciar Sesión",
+  "email": "Correo electrónico",
+  "password": "Contraseña",
+  "forgotPassword": "¿Olvidaste tu contraseña?",
+  "enter": "Ingresar",
+  "sendCode": "Enviar código",
+  "verifyCode": "Verificar código",
+  "newPassword": "Nueva contraseña",
+  "confirmPassword": "Confirmar contraseña",
+  "save": "Guardar",
+  "route": "Rutas",
+  "location": "Ubicación",
+  "profile": "Perfil",
+  "searchRoute": "Buscar ruta",
+  "finalDestination": "Destino final",
+  "school": "Escuela"
+}

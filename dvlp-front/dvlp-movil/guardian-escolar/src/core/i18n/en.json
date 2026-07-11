@@ -1,0 +1,18 @@
+{
+  "login": "Login",
+  "email": "Email",
+  "password": "Password",
+  "forgotPassword": "Forgot your password?",
+  "enter": "Enter",
+  "sendCode": "Send code",
+  "verifyCode": "Verify code",
+  "newPassword": "New password",
+  "confirmPassword": "Confirm password",
+  "save": "Save",
+  "route": "Routes",
+  "location": "Location",
+  "profile": "Profile",
+  "searchRoute": "Search route",
+  "finalDestination": "Final destination",
+  "school": "School"
+}

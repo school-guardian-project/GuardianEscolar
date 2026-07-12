@@ -14,5 +14,9 @@
   "profile": "Profile",
   "searchRoute": "Search route",
   "finalDestination": "Final destination",
-  "school": "School"
+  "school": "School",
+
+  "button": {
+    "enter": "Enter"
+  }
 }

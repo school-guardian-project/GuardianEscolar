@@ -14,5 +14,9 @@
   "profile": "Perfil",
   "searchRoute": "Pesquisar rota",
   "finalDestination": "Destino final",
-  "school": "Escola"
+  "school": "Escola",
+
+  "button": {
+    "enter": "Entrar em"
+  }
 }

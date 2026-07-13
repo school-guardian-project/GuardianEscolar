@@ -1,22 +1,39 @@
 {
-  "login": "Login",
-  "email": "Email",
-  "password": "Password",
-  "forgotPassword": "Forgot your password?",
-  "enter": "Enter",
-  "sendCode": "Send code",
-  "verifyCode": "Verify code",
-  "newPassword": "New password",
-  "confirmPassword": "Confirm password",
-  "save": "Save",
-  "route": "Routes",
-  "location": "Location",
-  "profile": "Profile",
-  "searchRoute": "Search route",
-  "finalDestination": "Final destination",
-  "school": "School",
-
   "button": {
-    "enter": "Enter"
+    "enter": "Login",
+    "sendCode": "Send code",
+    "verifyCode": "Verify code",
+    "restore": "Restore"
+  },
+  "inputs": {
+    "title.email": "Email",
+    "title.password": "Password",
+    "emailPlaceholder": "Enter your email",
+    "passwordPlaceholder": "Enter your password",
+    "verifyCodePlaceholder": "Enter the verification code",
+    "newPasswordPlaceholder": "Enter your new password",
+    "confirmPasswordPlaceholder": "Confirm your new password"
+  },
+  "login": {
+    "title": "Login",
+    "ForgotPassword": "Forgot your password?"
+  },
+  "forgotPassword": {
+    "title": "Reset password",
+    "description": "Enter your email to receive a verification code.",
+    "emailPlaceholder": "Email"
+  },
+
+  "verifyCode": {
+    "title": "Reset password",
+    "description": "Enter the verification code sent to your email.",
+    "transferCode": "Didn't receive the code? Resend"
+  },
+
+  "newPassword": {
+    "title": "Reset password",
+    "description": "Enter your new password.",
+    "newPasswordPlaceholder": "Enter your new password",
+    "confirmPasswordPlaceholder": "Confirm your new password"
   }
 }

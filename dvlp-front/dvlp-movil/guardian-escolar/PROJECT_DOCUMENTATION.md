@@ -4,6 +4,22 @@ Este documento explica la estructura del proyecto y los archivos disponibles en 
 
 > Nota: `App.js` importa pantallas bajo `src/features/auth/views`, `src/features/home/views` y `src/features/profile/views`, pero esos archivos no están presentes en el workspace actual. La documentación describe los archivos disponibles.
 
+## Metodología de arquitectura
+
+La aplicación usa una organización cercana a Feature-Sliced Design (FSD). En este enfoque:
+
+- Cada ``slice`` o característica se coloca en `src/features/`.
+- `src/components/` contiene bloques de interfaz reutilizables.
+- `src/core/` contiene lógica compartida, temas y traducciones.
+
+Aunque no es un FSD completo al 100%, el proyecto sí separa claramente:
+
+- `features/` para funciones específicas,
+- `components/` para UI y elementos visuales,
+- `core/` para configuración global y servicios.
+
+Esta separación facilita mantener el código ordenado y entender qué pertenece a cada parte de la app.
+
 ---
 
 ## 1. Estructura general del proyecto

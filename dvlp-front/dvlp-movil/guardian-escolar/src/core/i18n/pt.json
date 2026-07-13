@@ -1,22 +1,40 @@
 {
-  "login": "Entrar",
-  "email": "E-mail",
-  "password": "Senha",
-  "forgotPassword": "Esqueceu a senha?",
-  "enter": "Entrar",
-  "sendCode": "Enviar código",
-  "verifyCode": "Verificar código",
-  "newPassword": "Nova senha",
-  "confirmPassword": "Confirmar senha",
-  "save": "Salvar",
-  "route": "Rotas",
-  "location": "Localização",
-  "profile": "Perfil",
-  "searchRoute": "Pesquisar rota",
-  "finalDestination": "Destino final",
-  "school": "Escola",
-
   "button": {
-    "enter": "Entrar em"
+    "enter": "Entrar",
+    "sendCode": "Enviar código",
+    "verifyCode": "Verificar código",
+    "restore": "Restaurar"
+  },
+  "inputs": {
+    "title.email": "E-mail",
+    "title.password": "Senha",
+    "emailPlaceholder": "Digite seu e-mail",
+    "passwordPlaceholder": "Digite sua senha",
+    "verifyCodePlaceholder": "Digite o código de verificação",
+    "newPasswordPlaceholder": "Digite sua nova senha",
+    "confirmPasswordPlaceholder": "Confirme sua nova senha"
+  },
+  "login": {
+    "title": "Entrar",
+    "ForgotPassword": "Esqueceu sua senha?"
+  },
+  "forgotPassword": {
+    "title": "Redefinir senha",
+    "description": "Digite seu e-mail para receber um código de verificação.",
+    "emailPlaceholder": "E-mail"
+  },
+
+  "verifyCode": {
+    "title": "Redefinir senha",
+    "description": "Digite o código enviado para seu e-mail.",
+    "transferCode": "Não recebeu o código? Reenviar"
+  },
+
+  "newPassword": {
+    "title": "Redefinir senha",
+    "description": "Digite sua nova senha.",
+    "newPasswordPlaceholder": "Digite sua nova senha",
+    "confirmPasswordPlaceholder": "Confirme sua nova senha"
   }
 }
+

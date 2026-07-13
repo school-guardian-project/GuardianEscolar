@@ -4,6 +4,7 @@ import {
   Text,
   StyleSheet,
 } from "react-native";
+import { styles } from './Login.styles';
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
 
@@ -32,12 +33,12 @@ export default function Login({ navigation }) {
           { color: theme.titleColor },
         ]}
       >
-        {t("login")}
+        {t("login.title")}
       </Text>
 
       {/* Correo */}
       <InputField
-        label={t("email")}
+        label={t("inputs.title.email")}
         placeholder="ejemplo@gmail.com"
         value={email}
         onChangeText={setEmail}
@@ -46,7 +47,7 @@ export default function Login({ navigation }) {
 
       {/* Contraseña */}
       <InputField
-        label={t("password")}
+        label={t("inputs.title.password")}
         placeholder="••••••••"
         value={password}
         onChangeText={setPassword}
@@ -61,7 +62,7 @@ export default function Login({ navigation }) {
         ]}
         onPress={() => navigation.navigate("ForgotPassword")}
       >
-        {t("forgotPassword")}
+        {t("login.ForgotPassword")}
       </Text>
 
       {/* Botón */}
@@ -72,29 +73,3 @@ export default function Login({ navigation }) {
     </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    justifyContent: "center",
-    padding: 25,
-  },
-
-  icon: {
-    fontSize: 70,
-    textAlign: "center",
-    marginBottom: 10,
-  },
-
-  title: {
-    fontSize: 26,
-    fontWeight: "bold",
-    textAlign: "center",
-    marginBottom: 50,
-  },
-
-  forgotPassword: {
-    fontSize: 13,
-    marginBottom: 30,
-  },
-});

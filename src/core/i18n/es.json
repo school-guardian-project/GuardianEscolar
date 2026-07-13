@@ -1,22 +1,44 @@
 {
-  "login": "Iniciar Sesión",
-  "email": "Correo electrónico",
-  "password": "Contraseña",
-  "forgotPassword": "¿Olvidaste tu contraseña?",
-  "enter": "Ingresar",
-  "sendCode": "Enviar código",
-  "verifyCode": "Verificar código",
-  "newPassword": "Nueva contraseña",
-  "confirmPassword": "Confirmar contraseña",
-  "save": "Guardar",
-  "route": "Rutas",
-  "location": "Ubicación",
-  "profile": "Perfil",
-  "searchRoute": "Buscar ruta",
-  "finalDestination": "Destino final",
-  "school": "Escuela",
-
   "button": {
-    "enter": "Ingresar"
+    "enter": "Ingresar",
+    "sendCode": "Enviar código",
+    "verifyCode": "Verificar código",
+    "restore": "Restablecer"
+  },
+  "inputs": {
+    "title.email": "Correo Electrónico",
+    "title.password": "Contraseña",
+    "emailPlaceholder": "Ingresa tu correo electrónico",
+    "passwordPlaceholder": "Ingresa tu contraseña",
+    "verifyCodePlaceholder": "Ingresa el código de verificación",
+    "newPasswordPlaceholder": "Ingresa tu nueva contraseña",
+    "confirmPasswordPlaceholder": "Confirma tu nueva contraseña"
+  },
+
+  "login": {
+    "title": "Iniciar sesión",
+    "ForgotPassword": "¿Olvidaste tu contraseña?"
+  },
+
+  "forgotPassword": {
+    "title": "Restablecer contraseña",
+    "description": "Ingresa tu correo electrónico para recibir un código de verificación.",
+    "emailPlaceholder": "Correo electrónico"
+
+  },
+  
+  "verifyCode": {
+    "title": "Restablecer contraseña",
+    "description": "Ingresa el código enviado a tu correo electrónico.",
+    "transferCode": "¿No recibiste el código? Reenviar"
+  },
+
+  "newPassword": {
+    "title": "Restablecer contraseña",
+    "description": "Ingresa tu nueva contraseña.",
+    "newPasswordPlaceholder": "Ingresa tu nueva contraseña",
+    "confirmPasswordPlaceholder": "Confirma tu nueva contraseña"
   }
 }
+  
+  

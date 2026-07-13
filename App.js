@@ -5,10 +5,10 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text } from 'react-native';
 import { ThemeProvider } from '@core/services/ThemeService';
 
-import Login from '@features/auth/views/Login';
-// import ForgotPassword from '@features/auth/views/ForgotPassword';
-// import VerifyCode from '@features/auth/views/VerifyCode';
-// import NewPassword from '@features/auth/views/NewPassword';
+import Login from '@features/auth/views/Login/Login';
+import ForgotPassword from '@features/auth/views/ForgotPassword/ForgotPassword';
+import VerifyCode from '@features/auth/views/VerifyCode/VerifyCode';
+import NewPassword from '@features/auth/views/NewPassword/NewPassword';
 
 // Pantallas comentadas temporalmente hasta crearlas
 import { View } from 'react-native';
@@ -48,6 +48,9 @@ export default function App() {
           initialRouteName="Login"
           screenOptions={{ headerShown: false }}>
           <Stack.Screen name="Login" component={Login}/>
+          <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
+          <Stack.Screen name="VerifyCode" component={VerifyCode}/>
+          <Stack.Screen name="NewPassword" component={NewPassword}/>
           <Stack.Screen name="HomeTabs" component={HomeTabs}/>
         </Stack.Navigator>
       </NavigationContainer>

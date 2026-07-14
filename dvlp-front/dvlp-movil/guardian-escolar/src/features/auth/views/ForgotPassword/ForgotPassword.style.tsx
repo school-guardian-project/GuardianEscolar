@@ -2,8 +2,8 @@ import { StyleSheet } from "react-native";
 
 export default StyleSheet.create({
   container: {
-    padding: 20,
-    marginTop: 30 ,
+    paddingHorizontal: 20,
+    paddingVertical: 24,
     flexGrow: 1,
   },
 
@@ -18,6 +18,12 @@ export default StyleSheet.create({
     fontSize: 13,
     textAlign: "center",
     marginTop: 10,
+  },
+
+  form: {
+    width: "100%",
+    maxWidth: 440,
+    alignSelf: "center",
   },
 
   backButtonWrap: {
@@ -36,7 +42,12 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     paddingHorizontal: 12,
-    marginBottom: 40,
+    marginBottom: 24,
+  },
+
+  buttonWrap: {
+    marginTop: 16,
+    width: "100%",
   },
 
   info: {

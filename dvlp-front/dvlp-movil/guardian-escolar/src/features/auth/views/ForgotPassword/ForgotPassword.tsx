@@ -33,9 +33,10 @@ export default function ForgotPassword() {
     <ScrollView
       style={{ flex: 1, backgroundColor: theme.bgColor }}
       contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled"
     >
       {/* Botón volver */}
-      <View style={{ marginBottom: 25, marginLeft: -15, marginTop: -10 }}>
+      <View style={styles.backButtonWrap}>
         <BackButton />
       </View>
 
@@ -57,36 +58,40 @@ export default function ForgotPassword() {
         {t("forgotPassword.description")}
       </Text>
 
-      <Text
-        style={[
-          styles.label,
-          { color: theme.titleColor }
-        ]}
-      >
-        {t("inputs.title.email")}
-      </Text>
+      <View style={styles.form}>
+        <Text
+          style={[
+            styles.label,
+            { color: theme.titleColor }
+          ]}
+        >
+          {t("inputs.title.email")}
+        </Text>
 
-      <TextInput
-        value={email}
-        onChangeText={setEmail}
-        placeholder={t("forgotPassword.emailPlaceholder")}
-        placeholderTextColor={theme.cardColorInput}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        style={[
-          styles.input,
-          {
-            backgroundColor: theme.cardSecondaryBg,
-            borderColor: theme.borderColor,
-            color: theme.textColor,
-          },
-        ]}
-      />
+        <TextInput
+          value={email}
+          onChangeText={setEmail}
+          placeholder={t("forgotPassword.emailPlaceholder")}
+          placeholderTextColor={theme.cardColorInput}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          style={[
+            styles.input,
+            {
+              backgroundColor: theme.cardSecondaryBg,
+              borderColor: theme.borderColor,
+              color: theme.textColor,
+            },
+          ]}
+        />
 
-      <PrimaryButton
-        text={t("button.sendCode")}
-        onPress={() => navigation.navigate("VerifyCode")}
-      />
+        <View style={styles.buttonWrap}>
+          <PrimaryButton
+            text={t("button.sendCode")}
+            onPress={() => navigation.navigate("VerifyCode")}
+          />
+        </View>
+      </View>
     </ScrollView>
   );
 }

@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import {
   ScrollView,
+  View,
   Text,
-  StyleSheet,
 } from "react-native";
 import { styles } from './Login.styles';
 import { useTranslation } from "react-i18next";
@@ -22,6 +22,7 @@ export default function Login({ navigation }) {
     <ScrollView
       style={{ backgroundColor: theme.bgColor }}
       contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled"
     >
       {/* Icono */}
       <Text style={styles.icon}>🛡️</Text>
@@ -36,40 +37,44 @@ export default function Login({ navigation }) {
         {t("login.title")}
       </Text>
 
-      {/* Correo */}
-      <InputField
-        label={t("inputs.title.email")}
-        placeholder="ejemplo@gmail.com"
-        value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-      />
+      <View style={styles.form}>
+        {/* Correo */}
+        <InputField
+          label={t("inputs.title.email")}
+          placeholder="ejemplo@gmail.com"
+          value={email}
+          onChangeText={setEmail}
+          keyboardType="email-address"
+        />
 
-      {/* Contraseña */}
-      <InputField
-        label={t("inputs.title.password")}
-        placeholder="••••••••"
-        value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-      />
+        {/* Contraseña */}
+        <InputField
+          label={t("inputs.title.password")}
+          placeholder="••••••••"
+          value={password}
+          onChangeText={setPassword}
+          secureTextEntry
+        />
 
-      {/* Olvidó contraseña */}
-      <Text
-        style={[
-          styles.forgotPassword,
-          { color: theme.navbarColor },
-        ]}
-        onPress={() => navigation.navigate("ForgotPassword")}
-      >
-        {t("login.ForgotPassword")}
-      </Text>
+        {/* Olvidó contraseña */}
+        <Text
+          style={[
+            styles.forgotPassword,
+            { color: theme.navbarColor },
+          ]}
+          onPress={() => navigation.navigate("ForgotPassword")}
+        >
+          {t("login.ForgotPassword")}
+        </Text>
 
-      {/* Botón */}
-      <PrimaryButton
-        text={t("button.enter")}
-        /*onPress={() => navigation.navigate("Home")}*/
-      />
+        {/* Botón */}
+        <View style={styles.buttonWrap}>
+          <PrimaryButton
+            text={t("button.enter")}
+            onPress={() => navigation.navigate("MainPage")}
+          />
+        </View>
+      </View>
     </ScrollView>
   );
 }

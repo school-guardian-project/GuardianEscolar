@@ -2,6 +2,11 @@ import React from "react";
 import { Pressable, Text, StyleSheet } from "react-native";
 import { useTheme } from "@core/services/ThemeService";
 
+//Icons
+import { Ionicons } from '@expo/vector-icons';
+import { MaterialIcons } from '@expo/vector-icons';
+import { FontAwesome } from '@expo/vector-icons';
+
 export default function NotificationButton({ onPress }) {
   const { theme } = useTheme();
 
@@ -22,7 +27,7 @@ export default function NotificationButton({ onPress }) {
           { color: theme.textColor },
         ]}
       >
-        🔔
+        <Ionicons name="notifications" size={24} color="black" />
       </Text>
     </Pressable>
   );

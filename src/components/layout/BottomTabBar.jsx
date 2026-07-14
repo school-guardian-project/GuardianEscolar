@@ -3,6 +3,13 @@ import { View, Pressable, Text, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
 
+// Icons
+import {
+  Ionicons,
+  MaterialIcons,
+  FontAwesome5,
+} from "@expo/vector-icons";
+
 export default function BottomTabBar({
   onRoutePress,
   onLocationPress,
@@ -25,7 +32,7 @@ export default function BottomTabBar({
         style={styles.tab}
         onPress={onRoutePress}
       >
-        <Text style={styles.icon}>🚌</Text>
+        <FontAwesome5 name="bus" size={24} color="#FFFFFF" />
         <Text style={styles.label}>{t("route")}</Text>
       </Pressable>
 
@@ -34,7 +41,7 @@ export default function BottomTabBar({
         style={styles.tab}
         onPress={onLocationPress}
       >
-        <Text style={styles.icon}>📍</Text>
+        <MaterialIcons name="place" size={24} color="#FFFFFF" />
         <Text style={styles.label}>{t("location")}</Text>
       </Pressable>
 
@@ -43,7 +50,7 @@ export default function BottomTabBar({
         style={styles.tab}
         onPress={onProfilePress}
       >
-        <Text style={styles.icon}>🧍</Text>
+        <Ionicons name="person" size={24} color="#FFFFFF" />
         <Text style={styles.label}>{t("profile")}</Text>
       </Pressable>
     </View>
@@ -60,11 +67,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-  },
-
-  icon: {
-    fontSize: 28,
-    color: "#FFFFFF",
   },
 
   label: {

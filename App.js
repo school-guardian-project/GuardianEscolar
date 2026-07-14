@@ -9,7 +9,7 @@ import Login from '@features/auth/views/Login/Login';
 import ForgotPassword from '@features/auth/views/ForgotPassword/ForgotPassword';
 import VerifyCode from '@features/auth/views/VerifyCode/VerifyCode';
 import NewPassword from '@features/auth/views/NewPassword/NewPassword';
-
+import MainPage from "@features/home/views/MainPage/MainPage";
 // Pantallas comentadas temporalmente hasta crearlas
 import { View } from 'react-native';
 
@@ -17,9 +17,11 @@ const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 // Pantallas placeholder temporales
+/*
 function MainPage() {
   return <View style={{ flex: 1 }}/>;
 }
+  */
 
 function Profile() {
   return <View style={{ flex: 1 }}/>;
@@ -51,6 +53,7 @@ export default function App() {
           <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
           <Stack.Screen name="VerifyCode" component={VerifyCode}/>
           <Stack.Screen name="NewPassword" component={NewPassword}/>
+          <Stack.Screen name="MainPage" component={MainPage}/>  
           <Stack.Screen name="HomeTabs" component={HomeTabs}/>
         </Stack.Navigator>
       </NavigationContainer>

@@ -4,7 +4,12 @@ export const styles = StyleSheet.create({
   container: {
     flexGrow: 1,
     justifyContent: 'center',
-    padding: 25,
+    alignItems: 'center',
+    padding: 10,
+  },
+  form: {
+    width: '100%',
+    
   },
   icon: {
     fontSize: 70,
@@ -15,10 +20,15 @@ export const styles = StyleSheet.create({
     fontSize: 26,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 50,
+    marginBottom: 20,
   },
   forgotPassword: {
     fontSize: 13,
-    marginBottom: 30,
+    marginBottom: 10,
+    textAlign: 'left',
+  },
+  buttonWrap: {
+    width: '100%',
+    marginTop: 15,
   },
 });

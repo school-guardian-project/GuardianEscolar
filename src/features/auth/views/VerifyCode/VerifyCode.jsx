@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { ScrollView, View, Text } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 
@@ -17,14 +17,15 @@ export default function VerifyCode() {
     const navigation = useNavigation();
 
     return (
-        <View
+        <ScrollView
             style={[
-                styles.container,
                 { backgroundColor: theme.bgColor },
             ]}
+            contentContainerStyle={styles.container}
+            keyboardShouldPersistTaps="handled"
         >
             {/* Botón volver */}
-            <View style={{ marginBottom: 25, marginLeft: -15, marginTop: -10 }}>
+            <View style={styles.backButtonWrap}>
                 <BackButton />
             </View>
 
@@ -46,21 +47,25 @@ export default function VerifyCode() {
                 {t("verifyCode.description")}
             </Text>
 
-            <CodeInput />
+            <View style={styles.form}>
+              <CodeInput />
 
-            <Text
-                style={[
-                    styles.info,
-                    { color: theme.titleColor },
-                ]}
-            >
-                {t("verifyCode.transferCode")}
-            </Text>
+              <Text
+                  style={[
+                      styles.info,
+                      { color: theme.titleColor },
+                  ]}
+              >
+                  {t("verifyCode.transferCode")}
+              </Text>
 
-            <PrimaryButton
-                text={t("button.verifyCode")}
-                onPress={() => navigation.navigate("NewPassword")}
-            />
-        </View>
+              <View style={styles.buttonWrap}>
+                <PrimaryButton
+                    text={t("button.verifyCode")}
+                    onPress={() => navigation.navigate("NewPassword")}
+                />
+              </View>
+            </View>
+        </ScrollView>
     );
 }

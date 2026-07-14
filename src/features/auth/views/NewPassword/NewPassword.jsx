@@ -26,8 +26,9 @@ export default function NewPassword() {
     <ScrollView
       style={{ flex: 1, backgroundColor: theme.bgColor }}
       contentContainerStyle={styles.container}
+      keyboardShouldPersistTaps="handled"
     >
-      <View style={{ marginBottom: 25, marginLeft: -15, marginTop: -10 }}>
+      <View style={styles.backButtonWrap}>
         <BackButton />
       </View>
 
@@ -49,60 +50,61 @@ export default function NewPassword() {
         {t("newPassword.description")}
       </Text>
 
-      <Text
-        style={[
-          styles.label,
-          { color: theme.titleColor },
-        ]}
-      >
-        {t("newPassword.newPasswordPlaceholder")}
-      </Text>
+      <View style={styles.form}>
+        <Text
+          style={[
+            styles.label,
+            { color: theme.titleColor },
+          ]}
+        >
+          {t("newPassword.newPasswordPlaceholder")}
+        </Text>
 
-      <TextInput
-        value={password}
-        onChangeText={setPassword}
-        
-        placeholderTextColor={theme.cardColorInput}
-        secureTextEntry
-        style={[
-          styles.input,
-          {
-            backgroundColor: theme.cardSecondaryBg,
-            borderColor: theme.borderColor,
-            color: theme.textColor,
-          },
-        ]}
-      />
-
-      <Text
-        style={[
-          styles.label,
-          { color: theme.titleColor },
-        ]}
-      >
-        {t("newPassword.confirmPasswordPlaceholder")}
-      </Text>
-
-      <TextInput
-        value={confirmPassword}
-        onChangeText={setConfirmPassword}
-        placeholderTextColor={theme.cardColorInput}
-        secureTextEntry
-        style={[
-          styles.input,
-          {
-            backgroundColor: theme.cardSecondaryBg,
-            borderColor: theme.borderColor,
-            color: theme.textColor,
-          },
-        ]}
-      />
-
-      <View style={styles.buttonWrap}>
-        <PrimaryButton
-          text={t("button.restore")}
-          onPress={() => navigation.navigate("Login")}
+        <TextInput
+          value={password}
+          onChangeText={setPassword}
+          placeholderTextColor={theme.cardColorInput}
+          secureTextEntry
+          style={[
+            styles.input,
+            {
+              backgroundColor: theme.cardSecondaryBg,
+              borderColor: theme.borderColor,
+              color: theme.textColor,
+            },
+          ]}
         />
+
+        <Text
+          style={[
+            styles.label,
+            { color: theme.titleColor },
+          ]}
+        >
+          {t("newPassword.confirmPasswordPlaceholder")}
+        </Text>
+
+        <TextInput
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          placeholderTextColor={theme.cardColorInput}
+          secureTextEntry
+          style={[
+            styles.input,
+            {
+              backgroundColor: theme.cardSecondaryBg,
+              borderColor: theme.borderColor,
+              color: theme.textColor,
+            },
+          ]}
+        />
+
+        <View style={styles.buttonWrap}>
+          <PrimaryButton
+            text={t("button.restore")}
+            onPress={() => navigation.navigate("Login")}
+          />
+        </View>
       </View>
     </ScrollView>
   );

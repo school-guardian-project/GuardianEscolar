@@ -6,7 +6,6 @@ import { useTheme } from "@core/services/ThemeService";
 export default function RouteInfoCard() {
   const { t } = useTranslation();
   const { theme } = useTheme();
-
   return (
     <View
       style={[
@@ -20,7 +19,7 @@ export default function RouteInfoCard() {
       {/* Encabezado */}
       <View style={styles.header}>
 
-        <View>
+        <View style={styles.headerText}>
           <Text
             style={[
               styles.title,
@@ -40,7 +39,7 @@ export default function RouteInfoCard() {
           </Text>
         </View>
 
-        <View>
+        <View style={styles.headerText}>
           <Text
             style={[
               styles.titleRight,
@@ -120,9 +119,12 @@ export default function RouteInfoCard() {
 
 const styles = StyleSheet.create({
   card: {
+    width: "100%",
+    alignSelf: "center",
     borderWidth: 1,
-    borderTopLeftRadius: 5,
-    borderTopRightRadius: 5,
+    borderTopLeftRadius: 12,
+    borderTopRightRadius: 12,
+    borderRadius: 12,
     padding: 16,
   },
 
@@ -132,24 +134,33 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
 
+  headerText: {
+    flex: 1,
+    minWidth: 0,
+  },
+
   title: {
     fontSize: 16,
     fontWeight: "bold",
+    flexShrink: 1,
   },
 
   subtitle: {
     fontSize: 12,
+    flexShrink: 1,
   },
 
   titleRight: {
     fontSize: 16,
     fontWeight: "bold",
     textAlign: "right",
+    flexShrink: 1,
   },
 
   subtitleRight: {
     fontSize: 12,
     textAlign: "right",
+    flexShrink: 1,
   },
 
   divider: {

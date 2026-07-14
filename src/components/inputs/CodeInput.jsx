@@ -30,11 +30,14 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
     justifyContent: "center",
-    gap: 10,
+    gap: 6,
+    width: "100%",
   },
 
   input: {
-    width: 45,
+    flex: 1,
+    maxWidth: 45,
+    minWidth: 0,
     height: 50,
     borderWidth: 1,
     borderRadius: 10,

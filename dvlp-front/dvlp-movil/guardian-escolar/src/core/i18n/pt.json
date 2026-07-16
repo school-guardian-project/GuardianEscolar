@@ -12,7 +12,8 @@
     "passwordPlaceholder": "Digite sua senha",
     "verifyCodePlaceholder": "Digite o código de verificação",
     "newPasswordPlaceholder": "Digite sua nova senha",
-    "confirmPasswordPlaceholder": "Confirme sua nova senha"
+    "confirmPasswordPlaceholder": "Confirme sua nova senha",
+    "searchRoute": "Encontrar rota"
   },
   "login": {
     "title": "Entrar",
@@ -35,6 +36,18 @@
     "description": "Digite sua nova senha.",
     "newPasswordPlaceholder": "Digite sua nova senha",
     "confirmPasswordPlaceholder": "Confirme sua nova senha"
+  },
+
+  "cards": {
+    "finalDestination": "Destino final",
+    "stops": "Paradas",
+    "school": "Escola"
+  },
+
+  "bottom": {
+    "route": "rota",
+    "location": "localização",
+    "profile": "perfil"
   }
 }
 

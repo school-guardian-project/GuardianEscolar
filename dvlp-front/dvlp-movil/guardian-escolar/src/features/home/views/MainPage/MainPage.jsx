@@ -48,7 +48,11 @@ export default function MainPage() {
 
         <View style={[styles.bottomSection, { marginHorizontal: -horizontalPadding }]}>
           <RouteInfoCard />
-          <BottomTabBar />
+          <BottomTabBar
+            onRoutePress={() => navigation.navigate("MainPage")}
+            onLocationPress={() => navigation.navigate("Location")}
+            onProfilePress={() => navigation.navigate("Profile")}
+          />
         </View>
       </View>
     </View>

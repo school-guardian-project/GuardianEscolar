@@ -10,6 +10,7 @@ import ForgotPassword from '@features/auth/views/ForgotPassword/ForgotPassword';
 import VerifyCode from '@features/auth/views/VerifyCode/VerifyCode';
 import NewPassword from '@features/auth/views/NewPassword/NewPassword';
 import MainPage from "@features/home/views/MainPage/MainPage";
+import Profile from "@features/profile/views/Profile/Profile";
 // Pantallas comentadas temporalmente hasta crearlas
 import { View } from 'react-native';
 
@@ -22,11 +23,12 @@ function MainPage() {
   return <View style={{ flex: 1 }}/>;
 }
   */
-
+/*
 function Profile() {
   return <View style={{ flex: 1 }}/>;
 }
 
+*/
 function HomeTabs() {
   return (
     <Tab.Navigator screenOptions={{ headerShown: false }}>
@@ -54,6 +56,7 @@ export default function App() {
           <Stack.Screen name="VerifyCode" component={VerifyCode}/>
           <Stack.Screen name="NewPassword" component={NewPassword}/>
           <Stack.Screen name="MainPage" component={MainPage}/>  
+          <Stack.Screen name="Profile" component={Profile}/>
           <Stack.Screen name="HomeTabs" component={HomeTabs}/>
         </Stack.Navigator>
       </NavigationContainer>

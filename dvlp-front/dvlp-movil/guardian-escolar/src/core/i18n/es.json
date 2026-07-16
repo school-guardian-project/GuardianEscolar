@@ -12,7 +12,8 @@
     "passwordPlaceholder": "Ingresa tu contraseña",
     "verifyCodePlaceholder": "Ingresa el código de verificación",
     "newPasswordPlaceholder": "Ingresa tu nueva contraseña",
-    "confirmPasswordPlaceholder": "Confirma tu nueva contraseña"
+    "confirmPasswordPlaceholder": "Confirma tu nueva contraseña",
+    "searchRoute": "Buscar ruta"
   },
 
   "login": {
@@ -38,7 +39,21 @@
     "description": "Ingresa tu nueva contraseña.",
     "newPasswordPlaceholder": "Ingresa tu nueva contraseña",
     "confirmPasswordPlaceholder": "Confirma tu nueva contraseña"
+  },
+
+  "cards": {
+    "finalDestination": "Destino final",
+    "stops": "Paradas",
+    "school": "Escuela"
+  },
+
+  "bottom": {
+    "route": "Ruta",
+    "location": "Ubicación",
+    "profile": "Perfil"
   }
+
+
 }
   
   

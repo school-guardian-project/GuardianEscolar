@@ -79,7 +79,7 @@ export default function RouteInfoCard() {
               { color: theme.titleColor },
             ]}
           >
-            {t("stops")}
+            {t("cards.stops")}
           </Text>
 
           <Text
@@ -99,7 +99,7 @@ export default function RouteInfoCard() {
               { color: theme.titleColor },
             ]}
           >
-            {t("finalDestination")}
+            {t("cards.finalDestination")}
           </Text>
 
           <Text
@@ -108,7 +108,7 @@ export default function RouteInfoCard() {
               { color: theme.textSecondary },
             ]}
           >
-            {t("school")}
+            {t("cards.school")}
           </Text>
         </View>
 

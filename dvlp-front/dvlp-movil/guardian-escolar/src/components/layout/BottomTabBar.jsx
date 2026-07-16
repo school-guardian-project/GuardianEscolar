@@ -1,5 +1,6 @@
 import React from "react";
 import { View, Pressable, Text, StyleSheet } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
 
@@ -17,6 +18,7 @@ export default function BottomTabBar({
 }) {
   const { t } = useTranslation();
   const { theme } = useTheme();
+  const navigation = useNavigation();
 
   return (
     <View
@@ -33,7 +35,7 @@ export default function BottomTabBar({
         onPress={onRoutePress}
       >
         <FontAwesome5 name="bus" size={24} color="#FFFFFF" />
-        <Text style={styles.label}>{t("route")}</Text>
+        <Text style={styles.label}>{t("bottom.route")}</Text>
       </Pressable>
 
       {/* Ubicación */}
@@ -42,16 +44,18 @@ export default function BottomTabBar({
         onPress={onLocationPress}
       >
         <MaterialIcons name="place" size={24} color="#FFFFFF" />
-        <Text style={styles.label}>{t("location")}</Text>
+        <Text style={styles.label}>{t("bottom.location")}</Text>
       </Pressable>
 
       {/* Perfil */}
       <Pressable
         style={styles.tab}
-        onPress={onProfilePress}
+       onPress={() => navigation.navigate("Profile")}
       >
         <Ionicons name="person" size={24} color="#FFFFFF" />
-        <Text style={styles.label}>{t("profile")}</Text>
+        <Text style={styles.label}>{t("bottom.profile")}</Text>
+
+        
       </Pressable>
     </View>
   );

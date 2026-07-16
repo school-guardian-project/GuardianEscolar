@@ -24,7 +24,7 @@ export default function SearchInput({ value, onChangeText }) {
       <TextInput
         value={value}
         onChangeText={onChangeText}
-        placeholder={t("searchRoute")}
+        placeholder={t("inputs.searchRoute")}
         placeholderTextColor={theme.cardColorInput}
         style={[styles.input, { color: theme.textColor }]}/>
 

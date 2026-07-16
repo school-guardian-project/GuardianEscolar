@@ -32,7 +32,7 @@ export default function BottomTabBar({
       {/* Rutas */}
       <Pressable
         style={styles.tab}
-        onPress={onRoutePress}
+        onPress={() => navigation.navigate("MainPage")}
       >
         <FontAwesome5 name="bus" size={24} color="#FFFFFF" />
         <Text style={styles.label}>{t("bottom.route")}</Text>
@@ -54,8 +54,6 @@ export default function BottomTabBar({
       >
         <Ionicons name="person" size={24} color="#FFFFFF" />
         <Text style={styles.label}>{t("bottom.profile")}</Text>
-
-        
       </Pressable>
     </View>
   );

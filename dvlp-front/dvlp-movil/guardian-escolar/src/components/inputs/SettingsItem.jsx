@@ -1,5 +1,5 @@
 import React from "react";
-import { Pressable, View, Text, Image, StyleSheet } from "react-native";
+import { Pressable, View, Text, StyleSheet } from "react-native";
 import { useTheme } from "@core/services/ThemeService";
 
 export default function SettingsItem({
@@ -21,10 +21,7 @@ export default function SettingsItem({
       ]}
     >
       {/* Icono */}
-      <Image
-        source={icon}
-        style={styles.icon}
-      />
+      <View style={styles.icon}>{icon}</View>
 
       {/* Texto */}
       <Text
@@ -63,7 +60,8 @@ const styles = StyleSheet.create({
   icon: {
     width: 26,
     height: 26,
-    resizeMode: "contain",
+    alignItems: "center",
+    justifyContent: "center",
   },
 
   title: {

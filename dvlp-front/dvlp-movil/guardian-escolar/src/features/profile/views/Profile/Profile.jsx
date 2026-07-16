@@ -6,8 +6,7 @@ import styles from "./Profile.style";
 export default function Profile() {
     return (
         <View style={styles.container}>
-            <Text>Profile</Text>
-            <Text> Datos </Text>
+            <Text style={styles.text}>Perfil</Text>
         </View>
     )
 }

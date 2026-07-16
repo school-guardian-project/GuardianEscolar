@@ -1,0 +1,59 @@
+{
+  "button": {
+    "enter": "Ingresar",
+    "sendCode": "Enviar código",
+    "verifyCode": "Verificar código",
+    "restore": "Restablecer"
+  },
+  "inputs": {
+    "title.email": "Correo Electrónico",
+    "title.password": "Contraseña",
+    "emailPlaceholder": "Ingresa tu correo electrónico",
+    "passwordPlaceholder": "Ingresa tu contraseña",
+    "verifyCodePlaceholder": "Ingresa el código de verificación",
+    "newPasswordPlaceholder": "Ingresa tu nueva contraseña",
+    "confirmPasswordPlaceholder": "Confirma tu nueva contraseña",
+    "searchRoute": "Buscar ruta"
+  },
+
+  "login": {
+    "title": "Iniciar sesión",
+    "ForgotPassword": "¿Olvidaste tu contraseña?"
+  },
+
+  "forgotPassword": {
+    "title": "Restablecer contraseña",
+    "description": "Ingresa tu correo electrónico para recibir un código de verificación.",
+    "emailPlaceholder": "Correo electrónico"
+
+  },
+  
+  "verifyCode": {
+    "title": "Restablecer contraseña",
+    "description": "Ingresa el código enviado a tu correo electrónico.",
+    "transferCode": "¿No recibiste el código? Reenviar"
+  },
+
+  "newPassword": {
+    "title": "Restablecer contraseña",
+    "description": "Ingresa tu nueva contraseña.",
+    "newPasswordPlaceholder": "Ingresa tu nueva contraseña",
+    "confirmPasswordPlaceholder": "Confirma tu nueva contraseña"
+  },
+
+  "cards": {
+    "finalDestination": "Destino final",
+    "stops": "Paradas",
+    "school": "Escuela"
+  },
+
+  "bottom": {
+    "route": "Ruta",
+    "location": "Ubicación",
+    "profile": "Perfil"
+  }
+
+
+}
+  
+  

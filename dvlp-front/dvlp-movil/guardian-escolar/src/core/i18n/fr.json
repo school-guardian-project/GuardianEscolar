@@ -1,0 +1,53 @@
+{
+  "button": {
+    "enter": "Se connecter",
+    "sendCode": "Envoyer le code",
+    "verifyCode": "Vérifier le code",
+    "restore": "Restaurer"
+  },
+  "inputs": {
+    "title.email": "E-mail",
+    "title.password": "Mot de passe",
+    "emailPlaceholder": "Entrez votre e-mail",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "verifyCodePlaceholder": "Entrez le code de vérification",
+    "newPasswordPlaceholder": "Entrez votre nouveau mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez votre nouveau mot de passe",
+    "searchRoute": "Rechercher une route"
+  },
+  "login": {
+    "title": "Connexion",
+    "ForgotPassword": "Mot de passe oublié ?"
+  },
+  "forgotPassword": {
+    "title": "Réinitialiser le mot de passe",
+    "description": "Entrez votre e-mail pour recevoir un code de vérification.",
+    "emailPlaceholder": "E-mail"
+  },
+
+  
+  "verifyCode": {
+    "title": "Réinitialiser le mot de passe",
+    "description": "Saisissez le code envoyé à votre adresse e-mail.",
+    "transferCode": "Vous n'avez pas reçu le code ? Renvoyer"
+  },
+
+  "newPassword": {
+    "title": "Réinitialiser le mot de passe",
+    "description": "Entrez votre nouveau mot de passe.",
+    "newPasswordPlaceholder": "Entrez votre nouveau mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez votre nouveau mot de passe"
+  },
+
+  "cards": {
+    "finalDestination": "Destination finale",
+    "stops": "Arrêts",
+    "school": "École"
+  },
+
+  "bottom": {
+    "route": "Route",
+    "location": "Emplacement",
+    "profile": "profil"
+  }
+}

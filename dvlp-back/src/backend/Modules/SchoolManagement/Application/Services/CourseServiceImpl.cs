@@ -13,6 +13,13 @@ public class CourseServiceImpl : ACrudService<Course, CourseResponseDto, CourseR
     {
     }
 
+    public override CourseResponseDto Save(CourseRequestDto dto)
+    {
+        var result = base.Save(dto);
+        _context.SaveChanges();
+        return result;
+    }
+
     public override CourseResponseDto UpdatePartial(Guid id, CourseRequestDto dto)
     {
         var entity = _context.Set<Course>().Find(id);

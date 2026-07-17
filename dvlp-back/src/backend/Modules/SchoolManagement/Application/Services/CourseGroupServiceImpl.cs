@@ -24,4 +24,14 @@ public class CourseGroupServiceImpl : ACrudService<CourseGroup, CourseGroupRespo
         _context.SaveChanges();
         return _mapper.Map<CourseGroupResponseDto>(entity);
     }
+
+    public void AssignStudent(Guid profileId, Guid courseId)
+    {
+        _context.CourseGroup.Add(new CourseGroup
+        {
+            profileId = profileId,
+            courseId = courseId,
+            status = "active"
+        });
+    }
 }

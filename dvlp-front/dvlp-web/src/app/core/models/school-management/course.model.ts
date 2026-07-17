@@ -4,5 +4,6 @@ export interface CourseRequest {
 }
 
 export interface CourseResponse extends CourseRequest {
+    id: string
     status: string;
 }

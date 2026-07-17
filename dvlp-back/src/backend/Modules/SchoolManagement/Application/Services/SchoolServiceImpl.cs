@@ -13,6 +13,13 @@ public class SchoolServiceImpl : ACrudService<SchoolEntity, SchoolResponseDto, S
     {
     }
 
+    public override SchoolResponseDto Save(SchoolRequestDto dto)
+    {
+        var result = base.Save(dto);
+        _context.SaveChanges();
+        return result;
+    }
+
     public override SchoolResponseDto UpdatePartial(Guid id, SchoolRequestDto dto)
     {
         var entity = _context.Set<SchoolEntity>().Find(id);

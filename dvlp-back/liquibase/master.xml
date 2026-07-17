@@ -6,4 +6,5 @@
     
     <include file="changelogs/user-management/insert/insert-identification-type.xml"/>
     <include file="changelogs/security/insert/insert-role.xml"/>
+    <include file="changelogs/school-management/insert/insert-city.xml"/>
 </databaseChangeLog>

@@ -11,9 +11,6 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - AllowedOrigins=http://localhost:4200
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
 
   # Contenedor de desarrollo para el frontend
   frontend-web:

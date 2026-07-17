@@ -1,5 +1,5 @@
 // estudiantes.ts — ejemplo de integración con app-update-record
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -13,6 +13,11 @@ import { NavbarAdmin } from '@shared/components/navbar/navbar-admin/navbar-admin
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
+import { StudentService } from '@core/services/user-management/student.service';
+import { StudentRequest, StudentResponse } from '@core/models/user-management/student.model';
+import { ApiService } from '@core/services/api.service';
+import { CourseResponse } from '@core/models/school-management/course.model';
+import { IdentificationTypeResponse } from '@core/models/user-management/identification-type.model';
 
 @Component({
   selector: 'app-estudiantes',
@@ -34,7 +39,96 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
   templateUrl: './estudiantes.html',
   styleUrl: './estudiantes.scss',
 })
-export class Estudiantes {
+export class Estudiantes implements OnInit {
+
+  students: StudentResponse[] = [];
+  identificationTypes: IdentificationTypeResponse[] = [];
+  courses: CourseResponse[] = [];
+
+  constructor(private studentService: StudentService, private api: ApiService) {}
+
+  ngOnInit(): void {
+    this.loadStudents();
+    this.loadIdentificationType();
+    this.loadCourses();
+  }
+
+  private loadIdentificationType(): void {
+    this.api.getAll<IdentificationTypeResponse>('identification-type').subscribe({
+      next: (data: IdentificationTypeResponse[]) => this.identificationTypes = data,
+      error: (error: any) => console.error('Error cargando tipos de identificacion: ', error)
+    });
+  }
+
+  private loadCourses(): void {
+    this.api.getAll<CourseResponse>('course').subscribe({
+      next: (data: CourseResponse[]) => this.courses = data,
+      error: (error: any) => console.error('Error cargando cursos: ', error)
+    });
+  }
+
+  private loadStudents(): void {
+    this.studentService.getAll().subscribe({
+      next: (data: StudentResponse[]) => {
+        this.students = data;
+      },
+      error: (error: any) => {
+        console.error('Error al cargar estudiantes: ', error);
+      }
+    });
+  }
+
+  // -- Registrar nuevo estudiante (COnsumir Web Api)
+  private mapToStudentRequest(data: Record<string, any>): StudentRequest {
+    const idType = this.identificationTypes.find(t => t.name == data['tipoId']);
+    const course = this.courses.find(c => c.name == data['curso'])
+    
+    return {
+      name: data['nombres'],
+      lastName: data['apellidos'],
+      identificationId: idType?.id ?? '',
+      identificationNumber: data['identificacion'],
+      email: data['correo'],
+      phone: data['telefono'],
+      residenceAddress: data['direccion'],
+      password: data['contraseña'],
+      courseName: data['curso']
+    }
+  }
+
+  onRegister(data: Record<string, any>): void {
+    const request = this.mapToStudentRequest(data);
+
+    const idType = this.identificationTypes.find(t => t.name === data['tipoId']);
+    if (!idType) {
+      console.error('Tipo de identificación no válido');
+      return;
+    }
+
+    const course = this.courses.find(c => c.name === data['curso']);
+    if (!course) {
+      console.error('Curso no válido');
+      return;
+    }
+
+    this.studentService.create(request).subscribe({
+      next: (response: StudentResponse) => {
+        console.log('Estudiante creado: ', response);
+        this.loadStudents();
+      },
+      error: (error: any) => {
+        console.error('Error al crear estudiante: ', error);
+      }
+    })
+  }
+
+  // Metodo para las selecciones de los select del formulario de registro
+  get selectOptions(): Record<string, string[]> {
+      return {
+        tipoId: this.identificationTypes.map(t => t.name),
+        curso: this.courses.map(c => c.name)
+      }
+  }
 
   // ── Ver detalles 
   showModal = false;

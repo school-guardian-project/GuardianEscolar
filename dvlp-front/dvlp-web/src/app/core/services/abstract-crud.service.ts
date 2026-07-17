@@ -9,15 +9,15 @@ export abstract class AbstractCrudService<TResponse, TRequest = TResponse> {
     }
 
     getById(id: string): Observable<TResponse> {
-        return this.api.getById<TResponse>('person', id)
+        return this.api.getById<TResponse>(this.endpoint, id)
     }
 
-    create(data: TRequest): Observable<TResponse> {
-        return this.api.create<TResponse, TRequest>('person', data)
+    save(data: TRequest): Observable<TResponse> {
+        return this.api.create<TResponse, TRequest>(this.endpoint, data)
     }
 
     update(id: string, data: TRequest): Observable<TResponse> {
-        return this.api.update<TResponse, TRequest>('person', data, id)
+        return this.api.update<TResponse, TRequest>(this.endpoint, data, id)
     }
 
     updatePartial(id: string, data: Partial<TRequest>): Observable<TResponse> {
@@ -25,10 +25,10 @@ export abstract class AbstractCrudService<TResponse, TRequest = TResponse> {
     }
 
     delete(id: string) {
-        return this.api.delete('person', id)
+        return this.api.delete(this.endpoint, id)
     }
 
     deletePartial(id: string) {
-        return this.api.deletePartial('person', id)
+        return this.api.deletePartial(this.endpoint, id)
     }
 }

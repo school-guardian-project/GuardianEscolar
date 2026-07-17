@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, OnChanges, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -125,8 +125,10 @@ const FIELDS: Record<RegisterType, Field[]> = {
   templateUrl: './card-register.html',
   styleUrl: './card-register.css',
 })
-export class CardRegister implements OnInit {
+export class CardRegister implements OnInit, OnChanges {
   @Input() type: RegisterType = 'estudiante';
+  @Input() selectOptions?: Record<string, string[]>;
+  @Output() submitted = new EventEmitter<Record<string, any>>();
 
   formData: Record<string, any> = {};
   groupedFields: any[] = [];
@@ -141,6 +143,30 @@ export class CardRegister implements OnInit {
 
   ngOnInit(): void {
     this.groupedFields = this.buildGroupedFields();
+
+    if (this.selectOptions) this.overrideSelectOptions();
+  }
+
+  private overrideSelectOptions(): void {
+    // Toma los campos del formulario (ej: tipoId, curso, etc.)
+    const list = FIELDS[this.type];
+
+    for (const field of list) {
+      // Si es un select Y el padre tiene opciones para ese campo...
+      if (field.type === 'select' && this.selectOptions?.[field.name]) {
+        // Reemplaza las opciones
+        field.options = this.selectOptions[field.name];
+      }
+    }
+
+    this.groupedFields = this.buildGroupedFields();
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selectOptions'] && this.selectOptions) {
+      this.overrideSelectOptions();
+      this.groupedFields = this.buildGroupedFields();
+    }
   }
 
   private buildGroupedFields() {
@@ -164,7 +190,7 @@ export class CardRegister implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('Datos del formulario:', this.formData);
+    this.submitted.emit(this.formData);
     // Aquí iría el servicio de registro
   }
 }

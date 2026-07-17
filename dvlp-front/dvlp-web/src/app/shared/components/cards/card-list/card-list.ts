@@ -327,6 +327,7 @@ const MOCK_DATA: Record<CardType, any[]> = {
 })
 export class CardList {
   @Input() type: CardType = 'estudiante';
+  @Input() data?: any[];
 
   @Output() viewItem = new EventEmitter<RecordData>();
   @Output() editItem = new EventEmitter<RecordData>();
@@ -347,7 +348,7 @@ export class CardList {
   }
 
   get items(): any[] {
-    return MOCK_DATA[this.type] || [];
+    return (this.data ?? MOCK_DATA[this.type]) || [];
   }
 
   get filteredItems(): any[] {

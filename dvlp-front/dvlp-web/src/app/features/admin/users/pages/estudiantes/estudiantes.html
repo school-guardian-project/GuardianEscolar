@@ -4,9 +4,10 @@
 <div class="page-wrapper">
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
-    <app-card-register type="estudiante"></app-card-register>
+    <app-card-register type="estudiante" [selectOptions]="selectOptions" (submitted)="onRegister($event)"></app-card-register>
     <app-card-list
       type="estudiante"
+      [data]="students"
       (viewItem)="showDetails($event)"
       (editItem)="showUpdate($event)"
       (deleteItem)="showDelete($event)">

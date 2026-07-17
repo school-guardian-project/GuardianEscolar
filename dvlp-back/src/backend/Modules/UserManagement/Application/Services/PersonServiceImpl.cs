@@ -1,12 +1,10 @@
 using AutoMapper;
 using backend.Infrastructure.Persistence.Context;
-using backend.Modules.Security.Domain.Entities;
 using backend.Modules.Security.Domain.Interfaces;
 using backend.Modules.UserManagement.Application.DTOs.Request;
 using backend.Modules.UserManagement.Application.DTOs.Response;
 using backend.Modules.UserManagement.Domain.Entities;
 using backend.Shared.Abstracts;
-using Profile = backend.Modules.Security.Domain.Entities.Profile;
 
 namespace backend.Modules.UserManagement.Application.Services;
 
@@ -18,34 +16,6 @@ public class PersonServiceImpl : ACrudService<Person, PersonResponseDto, PersonR
         _passwordService = passwordService;
     }
 
-    public override PersonResponseDto Save(PersonRequestDto dto)
-    {
-        var person = _mapper.Map<Person>(dto);
-        person.status = "active";
-        _context.Person.Add(person);
-        _context.SaveChanges();
-
-        var profile = new Profile
-        {
-            personId = person.id,
-            password = _passwordService.Hash(dto.password),
-            status = "active"
-        };
-        _context.Profile.Add(profile);
-        _context.SaveChanges();
-
-        var profileRole = new ProfileRole
-        {
-            profileId = profile.id,
-            roleId = dto.roleId,
-            status = "active"
-        };
-        _context.ProfileRole.Add(profileRole);
-        _context.SaveChanges();
-
-        return _mapper.Map<PersonResponseDto>(person);
-    }
-
     public override PersonResponseDto UpdatePartial(Guid id, PersonRequestDto dto)
     {
         var entity = _context.Set<Person>().Find(id);
@@ -54,11 +24,20 @@ public class PersonServiceImpl : ACrudService<Person, PersonResponseDto, PersonR
         if (dto.identificationId != Guid.Empty && dto.identificationId != entity.identificationId) entity.identificationId = dto.identificationId;
         if (!string.IsNullOrEmpty(dto.name) && dto.name != entity.name) entity.name = dto.name;
         if (!string.IsNullOrEmpty(dto.lastName) && dto.lastName != entity.lastName) entity.lastName = dto.lastName;
+        if (!string.IsNullOrEmpty(dto.identificationNumber) && dto.identificationNumber != entity.identificationNumber) entity.identificationNumber = dto.identificationNumber;
         if (!string.IsNullOrEmpty(dto.email) && dto.email != entity.email) entity.email = dto.email;
         if (!string.IsNullOrEmpty(dto.residenceAddress) && dto.residenceAddress != entity.residenceAddress) entity.residenceAddress = dto.residenceAddress;
         if (dto.phone.HasValue && dto.phone != entity.phone) entity.phone = dto.phone.Value;
         
         _context.SaveChanges();
         return _mapper.Map<PersonResponseDto>(entity);
+    }
+
+    public Person Create(PersonRequestDto dto)
+    {
+        var person = _mapper.Map<Person>(dto);
+        person.status = "active";
+        _context.Person.Add(person);
+        return person;
     }
 }

@@ -48,6 +48,13 @@ public static class DependencyInjection
         services.AddScoped<ICrudService<FamilyResponseDto, FamilyRequestDto, Guid>, FamilyServiceImpl>();
         services.AddScoped<ICrudService<PersonResponseDto, PersonRequestDto, Guid>, PersonServiceImpl>();
 
+        services.AddScoped<StudentService>();
+        services.AddScoped<ProfileService>();
+        services.AddScoped<PersonServiceImpl>();
+        services.AddScoped<IdentificationTypeService>();
+        services.AddScoped<ProfileRoleService>();
+        services.AddScoped<CourseGroupServiceImpl>();
+
         services.AddScoped<IAuthService, AuthService>();
         services.AddScoped<IJwtService, JwtService>();
         services.AddScoped<IPasswordService, PasswordService>();

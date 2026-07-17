@@ -41,7 +41,6 @@
     <Folder Include="Modules\FleetManagement\Infrastructure\Repositories\" />
     <Folder Include="Modules\SchoolManagement\Domain\Interfaces\" />
     <Folder Include="Modules\SchoolManagement\Infrastructure\Repositories\" />
-    <Folder Include="Modules\Security\Application\DTOs\Request\" />
     <Folder Include="Modules\RouteManagement\Infrastructure\Repositories\" />
     <Folder Include="Modules\Security\Infrastructure\Repositories\" />
     <Folder Include="Modules\Security\Api\" />

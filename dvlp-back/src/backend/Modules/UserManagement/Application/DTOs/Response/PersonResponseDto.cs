@@ -5,16 +5,14 @@ public class PersonResponseDto
     public string name { get; set; }
 
     public string lastName { get; set; }
-
-    public Guid identificationId { get; set; }
+    
+    public string identificationNumber { get; set; }
 
     public string email { get; set; }
 
     public int phone { get; set; }
 
     public string residenceAddress { get; set; }
-
-    public Guid roleId { get; set; }
     
     public string status { get; set; }
 }

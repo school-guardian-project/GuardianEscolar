@@ -40,7 +40,7 @@ public abstract class ACrudService<TEntity, TResponseDto, TRequestDto> : ICrudSe
         var entity = _mapper.Map<TEntity>(dto);
         entity.status = "active";
         _context.Set<TEntity>().Add(entity);
-        _context.SaveChanges();
+        // _context.SaveChanges();
         return _mapper.Map<TResponseDto>(entity);
     }
 

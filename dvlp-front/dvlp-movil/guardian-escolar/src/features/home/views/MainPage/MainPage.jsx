@@ -21,10 +21,10 @@ export default function MainPage() {
       <MapView
         style={styles.map}
         initialRegion={{
-          latitude: 4.711,
-          longitude: -74.0721,
-          latitudeDelta: 0.05,
-          longitudeDelta: 0.05,
+            latitude: 2.9273,
+            longitude: -75.2819,
+            latitudeDelta: 0.08,
+            longitudeDelta: 0.08,
         }}
       />
 

@@ -13,7 +13,19 @@
     "verifyCodePlaceholder": "Digite o código de verificação",
     "newPasswordPlaceholder": "Digite sua nova senha",
     "confirmPasswordPlaceholder": "Confirme sua nova senha",
-    "searchRoute": "Encontrar rota"
+    "searchRoute": "Encontrar rota",
+    "data": "Meus dados",
+    "family": "Minha família",
+    "security": "Segurança",
+    "privacity": "Políticas de privacidade",
+    "aboutus": "Sobre nós",
+    "logout": "Sair",
+    "phone": "Telefone",
+    "email": "E-mail",
+    "password": "Senha",
+    "address": "Endereço",
+    "city": "Cidade",
+    "school": "Escola"
   },
   "login": {
     "title": "Entrar",

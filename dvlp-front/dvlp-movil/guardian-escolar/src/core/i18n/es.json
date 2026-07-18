@@ -13,7 +13,19 @@
     "verifyCodePlaceholder": "Ingresa el código de verificación",
     "newPasswordPlaceholder": "Ingresa tu nueva contraseña",
     "confirmPasswordPlaceholder": "Confirma tu nueva contraseña",
-    "searchRoute": "Buscar ruta"
+    "searchRoute": "Buscar ruta",
+    "data": "Mis datos",
+    "family": "Mi familia",
+    "security": "Seguridad",
+    "privacity": "Políticas de privacidad",
+    "aboutus": "Sobre nosotros",
+    "logout": "Cerrar sesión",
+    "phone": "Telefono",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "address": "Dirección",
+    "city": "Ciudad",
+    "school": "Escuela"
   },
 
   "login": {
@@ -39,6 +51,11 @@
     "description": "Ingresa tu nueva contraseña.",
     "newPasswordPlaceholder": "Ingresa tu nueva contraseña",
     "confirmPasswordPlaceholder": "Confirma tu nueva contraseña"
+  },
+
+  "profile": {
+    "title": "Mi perfil",
+    "subtitle": "Gestioná tu cuenta y preferencias"
   },
 
   "cards": {

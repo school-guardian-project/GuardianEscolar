@@ -13,7 +13,19 @@
     "verifyCodePlaceholder": "Entrez le code de vérification",
     "newPasswordPlaceholder": "Entrez votre nouveau mot de passe",
     "confirmPasswordPlaceholder": "Confirmez votre nouveau mot de passe",
-    "searchRoute": "Rechercher une route"
+    "searchRoute": "Rechercher une route",
+    "data": "Mes données",
+    "family": "Ma famille",
+    "security": "Sécurité",
+    "privacity": "Politiques de confidentialité",
+    "aboutus": "À propos de nous",
+    "logout": "Déconnexion",
+    "phone": "Téléphone",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "address": "Adresse",
+    "city": "Ville",
+    "school": "École"
   },
   "login": {
     "title": "Connexion",

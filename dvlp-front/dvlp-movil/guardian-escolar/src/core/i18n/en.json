@@ -13,7 +13,19 @@
     "verifyCodePlaceholder": "Enter the verification code",
     "newPasswordPlaceholder": "Enter your new password",
     "confirmPasswordPlaceholder": "Confirm your new password",
-    "searchRoute": "Search route"
+    "searchRoute": "Search route",
+    "data": "My data",
+    "family": "My family",
+    "security": "Security",
+    "privacity": "Privacy policies",
+    "aboutus": "About us",
+    "logout": "Log out",
+    "phone": "Phone",
+    "email": "Email",
+    "password": "Password",
+    "address": "Address",
+    "city": "City",
+    "school": "School"
   },
   "login": {
     "title": "Login",
@@ -37,6 +49,7 @@
     "newPasswordPlaceholder": "Enter your new password",
     "confirmPasswordPlaceholder": "Confirm your new password"
   },
+
 
   "cards": {
     "finalDestination": "Final destination",

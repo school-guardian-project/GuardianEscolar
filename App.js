@@ -11,7 +11,8 @@ import VerifyCode from '@features/auth/views/VerifyCode/VerifyCode';
 import NewPassword from '@features/auth/views/NewPassword/NewPassword';
 import MainPage from "@features/home/views/MainPage/MainPage";
 import Profile from "@features/profile/views/Profile/Profile";
-// Pantallas comentadas temporalmente hasta crearlas
+import Datas from "@features/profile/views/Datas/Datas";
+import Family from "@features/profile/views/Family/Family";
 import { View } from 'react-native';
 
 const Stack = createStackNavigator();
@@ -57,6 +58,8 @@ export default function App() {
           <Stack.Screen name="NewPassword" component={NewPassword}/>
           <Stack.Screen name="MainPage" component={MainPage}/>  
           <Stack.Screen name="Profile" component={Profile}/>
+          <Stack.Screen name="Datas" component={Datas}/>
+          <Stack.Screen name="Family" component={Family}/>
           <Stack.Screen name="HomeTabs" component={HomeTabs}/>
         </Stack.Navigator>
       </NavigationContainer>

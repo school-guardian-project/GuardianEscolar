@@ -8,7 +8,7 @@ import BottomTabBar from "@components/layout/BottomTabBar";
 import InfoCard from "@components/cards/InfoCard";
 import InfoRow from "@components/cards/InfoRow";
 
-import styles from "./Datas.style";
+import styles from "@core/styles/profileScreen.style";
 
 export default function Datas() {
   const { theme } = useTheme();

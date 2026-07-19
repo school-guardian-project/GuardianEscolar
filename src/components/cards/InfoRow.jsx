@@ -36,7 +36,7 @@ export default function InfoRow({
         {/* Icono izquierda */}
         <Ionicons
           name={icon}
-          size={22}
+          size={30}
           color={theme.iconColor}
         />
 

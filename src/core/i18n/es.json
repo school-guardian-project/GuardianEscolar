@@ -25,7 +25,9 @@
     "password": "Contraseña",
     "address": "Dirección",
     "city": "Ciudad",
-    "school": "Escuela"
+    "school": "Escuela",
+    "name": "Nombre",
+    "rol": "Rol"
   },
 
   "login": {
@@ -56,6 +58,11 @@
   "profile": {
     "title": "Mi perfil",
     "subtitle": "Gestioná tu cuenta y preferencias"
+  },
+
+  "Family": {
+    "holder": "Titular",
+    "members": "Otros miembros"
   },
 
   "cards": {

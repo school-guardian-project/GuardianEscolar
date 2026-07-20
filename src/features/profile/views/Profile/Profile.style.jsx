@@ -33,4 +33,5 @@ export default StyleSheet.create({
   card: {
     marginBottom: 12,
   },
+
 });

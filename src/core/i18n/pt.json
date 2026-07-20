@@ -25,7 +25,9 @@
     "password": "Senha",
     "address": "Endereço",
     "city": "Cidade",
-    "school": "Escola"
+    "school": "Escola",
+    "name": "Nome",
+    "rol": "Rol"
   },
   "login": {
     "title": "Entrar",
@@ -36,30 +38,38 @@
     "description": "Digite seu e-mail para receber um código de verificação.",
     "emailPlaceholder": "E-mail"
   },
-
   "verifyCode": {
     "title": "Redefinir senha",
     "description": "Digite o código enviado para seu e-mail.",
     "transferCode": "Não recebeu o código? Reenviar"
   },
-
   "newPassword": {
     "title": "Redefinir senha",
     "description": "Digite sua nova senha.",
     "newPasswordPlaceholder": "Digite sua nova senha",
     "confirmPasswordPlaceholder": "Confirme sua nova senha"
   },
-
+  "profile": {
+    "title": "Meu perfil",
+    "subtitle": "Gerencie sua conta e preferências"
+  },
+  "Family": {
+    "holder": "Responsável",
+    "members": "Outros membros"
+  },
+  "security": {
+    "notificationsOff": "Ativar notificações",
+    "notificationsOn": "Desativar notificações",
+    "changePassword": "Alterar senha"
+  },
   "cards": {
     "finalDestination": "Destino final",
     "stops": "Paradas",
     "school": "Escola"
   },
-
   "bottom": {
     "route": "rota",
     "location": "localização",
     "profile": "perfil"
   }
 }
-

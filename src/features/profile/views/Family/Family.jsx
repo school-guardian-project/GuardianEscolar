@@ -29,7 +29,7 @@ export default function Family() {
                 contentContainerStyle={styles.content}
                 showsVerticalScrollIndicator={false}
             >
-                <View style={{ alignItems: "flex-start", marginTop: -17}}>
+                <View style={[styles.sectionHeader, styles.sectionHeaderFirst]}>
                     <Text
                         style={[
                             styles.sectionTitle,
@@ -48,7 +48,7 @@ export default function Family() {
                     />
                 </InfoCard>
 
-                <View style={{ alignItems: "flex-start" }}>
+                <View style={styles.sectionHeader}>
                     <Text
                         style={[
                             styles.sectionTitle,

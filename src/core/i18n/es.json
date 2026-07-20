@@ -27,7 +27,8 @@
     "city": "Ciudad",
     "school": "Escuela",
     "name": "Nombre",
-    "rol": "Rol"
+    "rol": "Rol",
+    "notifications": "Notificaciones"
   },
 
   "login": {
@@ -63,6 +64,12 @@
   "Family": {
     "holder": "Titular",
     "members": "Otros miembros"
+  },
+
+  "security":{
+    "notificationsOff": "Activar notificaciones",
+    "notificationsOn": "Desactivar notificaciones",
+    "changePassword" : "Cambiar la contraseña"
   },
 
   "cards": {

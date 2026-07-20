@@ -44,6 +44,7 @@ export default function Profile() {
                     <SettingsItem
                         icon={<MaterialIcons name="security" size={22} color={theme.iconColor} />}
                         title={t("inputs.security")}
+                        onPress={() => navigation.navigate("Security")}
                     />
                 </View>
 
@@ -51,6 +52,7 @@ export default function Profile() {
                     <SettingsItem
                         icon={<Ionicons name="lock-closed" size={22} color={theme.iconColor} />}
                         title={t("inputs.privacity")}
+                        onPress={() => navigation.navigate("PrivacyPolicies")}
                     />
                 </View>
 

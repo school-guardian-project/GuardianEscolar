@@ -25,7 +25,9 @@
     "password": "Password",
     "address": "Address",
     "city": "City",
-    "school": "School"
+    "school": "School",
+    "name": "Name",
+    "rol": "Rol"
   },
   "login": {
     "title": "Login",
@@ -36,13 +38,11 @@
     "description": "Enter your email to receive a verification code.",
     "emailPlaceholder": "Email"
   },
-
   "verifyCode": {
     "title": "Reset password",
     "description": "Enter the verification code sent to your email.",
     "transferCode": "Didn't receive the code? Resend"
   },
-
   "newPassword": {
     "title": "Reset password",
     "description": "Enter your new password.",
@@ -50,13 +50,27 @@
     "confirmPasswordPlaceholder": "Confirm your new password"
   },
 
+  "profile": {
+    "title": "My profile",
+    "subtitle": "Manage your account and preferences"
+  },
+
+  "Family": {
+    "holder": "Holder",
+    "members": "Other members"
+  },
+
+  "security":{
+    "notificationsOff": "Turn on notifications",
+    "notificationsOn": "Turn off notifications",
+    "changePassword" : "Change password"
+  },
 
   "cards": {
     "finalDestination": "Final destination",
     "stops": "Stops",
     "school": "school"
   },
-
   "bottom": {
     "route": "Route",
     "location": "Location",

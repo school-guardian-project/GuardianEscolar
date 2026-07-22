@@ -60,6 +60,7 @@ export default function Profile() {
                     <SettingsItem
                         icon={<Ionicons name="information-circle" size={22} color={theme.iconColor} />}
                         title={t("inputs.aboutus")}
+                        onPress={() => navigation.navigate("AboutUs")}
                     />
                 </View>
 
@@ -67,6 +68,7 @@ export default function Profile() {
                     <SettingsItem
                         icon={<Entypo name="log-out" size={24} color="red" />}
                         title={t("inputs.logout")}
+                        onPress={() => navigation.navigate("Logout")}
                     />
                 </View>
             </ScrollView>

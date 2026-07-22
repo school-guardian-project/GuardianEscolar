@@ -3,7 +3,9 @@
     "enter": "Entrar",
     "sendCode": "Enviar código",
     "verifyCode": "Verificar código",
-    "restore": "Restaurar"
+    "restore": "Restaurar",
+    "suport": "Suporte",
+    "rateUs": "Avalie-nos"
   },
   "inputs": {
     "title.email": "E-mail",
@@ -13,12 +15,12 @@
     "verifyCodePlaceholder": "Digite o código de verificação",
     "newPasswordPlaceholder": "Digite sua nova senha",
     "confirmPasswordPlaceholder": "Confirme sua nova senha",
-    "searchRoute": "Encontrar rota",
-    "data": "Meus dados",
-    "family": "Minha família",
+    "searchRoute": "Pesquisar rota",
+    "data": "Meus Dados",
+    "family": "Minha Família",
     "security": "Segurança",
-    "privacity": "Políticas de privacidade",
-    "aboutus": "Sobre nós",
+    "privacity": "Política de Privacidade",
+    "aboutus": "Sobre Nós",
     "logout": "Sair",
     "phone": "Telefone",
     "email": "E-mail",
@@ -27,41 +29,93 @@
     "city": "Cidade",
     "school": "Escola",
     "name": "Nome",
-    "rol": "Rol"
+    "rol": "Função",
+    "notifications": "Notificações",
+    "titlePermission": "Permissões do Aplicativo",
+    "titleDatas": "Dados Coletados",
+    "titleProtection": "Criptografia e Proteção de Dados",
+    "titleAutentication": "Autenticação Segura",
+    "titleAccess": "Acesso de Acordo com sua Função",
+    "titleRegister": "Registro por Código QR",
+    "titleElimination": "Retenção e Exclusão de Dados",
+    "titleConnection": "Funcionamento Offline",
+    "titleLaws": "Seus Direitos como Usuário",
+    "titleAbout": "Quem Somos?",
+    "titleMission": "Missão",
+    "titleVision": "Visão",
+    "titleTeam": "Nossa Equipe",
+    "titleValues": "Nossos Valores"
   },
+
   "login": {
     "title": "Entrar",
     "ForgotPassword": "Esqueceu sua senha?"
   },
+
   "forgotPassword": {
-    "title": "Redefinir senha",
+    "title": "Redefinir Senha",
     "description": "Digite seu e-mail para receber um código de verificação.",
     "emailPlaceholder": "E-mail"
   },
+
   "verifyCode": {
-    "title": "Redefinir senha",
+    "title": "Redefinir Senha",
     "description": "Digite o código enviado para seu e-mail.",
     "transferCode": "Não recebeu o código? Reenviar"
   },
+
   "newPassword": {
-    "title": "Redefinir senha",
+    "title": "Redefinir Senha",
     "description": "Digite sua nova senha.",
     "newPasswordPlaceholder": "Digite sua nova senha",
     "confirmPasswordPlaceholder": "Confirme sua nova senha"
   },
+
   "profile": {
-    "title": "Meu perfil",
+    "title": "Meu Perfil",
     "subtitle": "Gerencie sua conta e preferências"
   },
+
   "Family": {
     "holder": "Responsável",
-    "members": "Outros membros"
+    "members": "Outros Membros"
   },
+
   "security": {
     "notificationsOff": "Ativar notificações",
     "notificationsOn": "Desativar notificações",
     "changePassword": "Alterar senha"
   },
+
+  "privacy": {
+  "descriPermission": "O Guardião Escolar solicita acesso a determinados recursos do seu dispositivo exclusivamente para fornecer o serviço de monitoramento do transporte escolar. A permissão de localização permite exibir em tempo real a posição do ônibus no mapa interativo e calcular o tempo estimado de chegada. A permissão da câmera é utilizada apenas para o escaneamento de códigos QR que registram a entrada e saída do estudante do veículo. A permissão de notificações é utilizada para informar imediatamente sobre eventos importantes durante o trajeto do aluno. Nenhuma permissão é utilizada para finalidades diferentes das aqui descritas e você pode revogá-las a qualquer momento nas configurações do seu dispositivo.",
+
+  "descripDatas": "De acordo com o princípio da finalidade estabelecido pela Lei Colombiana 1581 de 2012, o Guardião Escolar coleta apenas os dados pessoais estritamente necessários para fornecer o serviço de transporte escolar monitorado. Esses dados incluem informações de identificação do estudante, informações de contato do responsável e dados operacionais do serviço, como localização GPS do ônibus e registros de embarque e desembarque por QR Code.",
+
+  "descriProtection": "Toda a comunicação entre o aplicativo e nossos servidores é protegida por protocolos criptografados HTTPS/TLS, garantindo que as informações de localização, identidade e contato permaneçam protegidas contra acessos não autorizados.",
+
+  "descripAutentication": "O acesso à plataforma é protegido por mecanismos de autenticação segura. As senhas são armazenadas de forma criptografada e nunca em texto simples. Após várias tentativas consecutivas de login incorretas, a conta é temporariamente bloqueada.",
+
+  "descripAccess": "O acesso às informações é definido conforme o perfil de cada usuário. Os responsáveis acessam apenas as informações dos seus filhos, os motoristas visualizam somente suas rotas e os administradores gerenciam usuários e rotas com registro de auditoria.",
+
+  "descripRegister": "Cada embarque e desembarque é registrado por meio de um código QR exclusivo, armazenando data, hora e localização. Após o registro, o responsável recebe uma notificação automática.",
+
+  "descripElimination": "Os dados de localização e histórico das rotas são armazenados por até trinta (30) dias para fins de auditoria e rastreabilidade. Após esse período, são excluídos de forma segura.",
+
+  "descripConnection": "O Guardião Escolar foi desenvolvido para funcionar mesmo em locais com conexão instável. Quando não há sinal, os dados são armazenados localmente e sincronizados automaticamente quando a conexão retorna.",
+
+  "descripLaws": "De acordo com a Constituição da Colômbia e a Lei 1581 de 2012, você tem o direito de acessar, atualizar, corrigir ou solicitar a exclusão de seus dados pessoais, além de conhecer como essas informações são utilizadas."
+},
+
+"aboutus": {
+  "descripAbout": "Somos uma equipe de três estudantes do SENA que desenvolve soluções tecnológicas voltadas para a melhoria de processos reais. Este aplicativo faz parte do nosso projeto de formação, no qual aplicamos os conhecimentos adquiridos em Análise e Desenvolvimento de Software para criar um sistema funcional, seguro e fácil de usar.\n\nNosso trabalho busca fortalecer a gestão do transporte escolar, oferecendo ferramentas que melhoram a comunicação, a organização e a tranquilidade de estudantes, pais e responsáveis.",
+  "descripMission": "Desenvolver um aplicativo confiável para a administração e o acompanhamento das rotas escolares, permitindo monitorar em tempo real o transporte estudantil e melhorar a segurança e a comunicação entre as famílias e as instituições de ensino.",
+  "descripVision": "Ser um projeto tecnológico de referência em soluções para transporte escolar, destacando-se pela inovação, facilidade de uso e compromisso com a segurança, com capacidade de crescer e se adaptar às necessidades futuras.",
+  "descripTeam": "O Guardian Escolar nasceu do trabalho conjunto de Johan Smith Santamaria Fernández, Sharik Dayanna Rojas Ibarra e Juan Pablo Chala Ramírez, alunos do curso Tecnólogo em Análise e Desenvolvimento de Software do SENA, sob a orientação dos instrutores da instituição. Cada integrante contribuiu com sua função na análise, no design, no desenvolvimento e na gestão do banco de dados do projeto.",
+  "descripValues": "Segurança, transparência e compromisso são os princípios que orientam cada decisão por trás do Guardian Escolar. Acreditamos que a tecnologia deve estar a serviço do bem-estar dos estudantes, proporcionando às famílias a tranquilidade de saber que seus filhos estão seguros durante cada trajeto escolar."
+},
+
+
   "cards": {
     "finalDestination": "Destino final",
     "stops": "Paradas",

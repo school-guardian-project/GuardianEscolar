@@ -15,6 +15,8 @@ import Datas from "@features/profile/views/Datas/Datas";
 import Family from "@features/profile/views/Family/Family";
 import Security from "@features/profile/views/Security/Security";
 import PrivacyPolicies from '@features/profile/views/Privacy/PrivacyPolicies';
+import AboutUs from '@features/profile/views/AboutUs/AboutUs'
+import Logout from '@features/profile/views/Logout/Logout';
 import { View } from 'react-native';
 
 const Stack = createStackNavigator();
@@ -64,6 +66,8 @@ export default function App() {
           <Stack.Screen name="Family" component={Family}/>
           <Stack.Screen name="Security" component={Security}/>
           <Stack.Screen name="PrivacyPolicies" component={PrivacyPolicies}/>
+          <Stack.Screen name="AboutUs" component={AboutUs}/>
+          <Stack.Screen name="Logout"  component={Logout}/>
           <Stack.Screen name="HomeTabs" component={HomeTabs}/>
         </Stack.Navigator>
       </NavigationContainer>

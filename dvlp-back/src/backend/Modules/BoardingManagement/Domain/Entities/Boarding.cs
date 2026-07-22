@@ -12,7 +12,7 @@ namespace backend.Modules.BoardingManagement.Domain.Entities
         public Guid busId { get; set; }
 
         public Guid stopId { get; set; }
-
+        
         public DateTime dateTime { get; set; } = DateTime.UtcNow;
 
         public bool? action { get; set; }

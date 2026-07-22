@@ -22,6 +22,7 @@ namespace backend.API.Middleware
             }
             catch (Exception ex)
             {
+                Console.WriteLine(ex.ToString());
                 await HandleException(context, ex);
             }
         }

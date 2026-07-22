@@ -26,9 +26,9 @@
 
         <!-- Info -->
         <div class="card-list__info">
-          <span class="card-list__name">{{ item[itemFields[0].key] }}</span>
+          <span class="card-list__name">{{ item.name }} {{ item.lastName }}</span>
 
-          <ng-container *ngFor="let field of itemFields.slice(1)">
+          <ng-container *ngFor="let field of itemFields">
             <span class="card-list__detail" *ngIf="!field.halfWidth">
               {{ field.label ? (field.labelKey | translate) + ': ' : '' }}{{ item[field.key] }}
             </span>

@@ -1,7 +1,7 @@
 import { ProfileRequest } from "./profile.model";
 
 export interface StudentRequest extends ProfileRequest {
-    courseName: string;
+    courseId: string;
 }
 
 export interface StudentResponse {

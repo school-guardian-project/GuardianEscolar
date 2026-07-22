@@ -36,17 +36,21 @@ public class StudentService : IBusinessApplication<StudentRequestDto, StudentRes
         {
             if (string.IsNullOrEmpty(dto.password))
             {
-                throw new ArgumentNullException(nameof(dto.courseName), "El nombre del curso es requerido");
+                throw new ArgumentNullException(nameof(dto.password), "La contraseña es requerida.");
             }
 
-            var courseId = await _context.Course
-                .AsNoTracking()
-                .Where(c => c.name == dto.courseName)
-                .Select(c => c.id)
-                .FirstOrDefaultAsync();
-            if (courseId == Guid.Empty)
+            if (dto.courseId == Guid.Empty)
             {
-                throw new ArgumentException($"El curso {dto.courseName} no existe", nameof(dto.courseName));
+                throw new ArgumentNullException(nameof(dto.courseId), "El curso es requerido.");
+            }
+
+            bool courseExists = await _context.Course
+                .AsNoTracking()
+                .AnyAsync(c => c.id == dto.courseId);
+
+            if (!courseExists)
+            {
+                throw new ArgumentException("El curso seleccionado no existe.");
             }
 
             var person = _personService.Create(dto);
@@ -56,6 +60,9 @@ public class StudentService : IBusinessApplication<StudentRequestDto, StudentRes
             var role = await _context.Role.AsNoTracking().FirstOrDefaultAsync(r => r.name == "student");
             if (role == null) throw new Exception("Not Found");
             _profileRoleService.Assign(profile.id, role.id);
+            
+            Console.WriteLine($"dto.courseId: {dto.courseId}");
+            // Console.WriteLine($"courseId obtenido de la BD: {courseId}");
 
             _courseGroupService.AssignStudent(profile.id, dto.courseId);
 
@@ -63,7 +70,18 @@ public class StudentService : IBusinessApplication<StudentRequestDto, StudentRes
 
             await transction.CommitAsync();
 
-            return _mapper.Map<StudentResponseDto>(profile);
+			Console.WriteLine("Commit realizado");
+
+            return new StudentResponseDto
+			{
+    			name = person.name,
+    			lastName = person.lastName,
+    			identificationNumber = person.identificationNumber,
+    			phone = person.phone,
+    			courseName = ""
+			};
+
+			Console.WriteLine("Mapper realizado");
         }
         catch
         {

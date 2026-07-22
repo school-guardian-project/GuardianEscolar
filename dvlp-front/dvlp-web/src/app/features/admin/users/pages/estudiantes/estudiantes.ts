@@ -45,6 +45,8 @@ export class Estudiantes implements OnInit {
   identificationTypes: IdentificationTypeResponse[] = [];
   courses: CourseResponse[] = [];
 
+  selectOptions: Record<string, string[]> = { tipoId: [], curso: [] };
+  
   constructor(private studentService: StudentService, private api: ApiService) {}
 
   ngOnInit(): void {
@@ -55,21 +57,35 @@ export class Estudiantes implements OnInit {
 
   private loadIdentificationType(): void {
     this.api.getAll<IdentificationTypeResponse>('identification-type').subscribe({
-      next: (data: IdentificationTypeResponse[]) => this.identificationTypes = data,
+      next: (data: IdentificationTypeResponse[]) => {
+        this.identificationTypes = data, 
+        this.updateSelectOptions();
+      },
       error: (error: any) => console.error('Error cargando tipos de identificacion: ', error)
     });
   }
 
   private loadCourses(): void {
     this.api.getAll<CourseResponse>('course').subscribe({
-      next: (data: CourseResponse[]) => this.courses = data,
+      next: (data: CourseResponse[]) => {
+         this.courses = data,
+         this.updateSelectOptions();
+      },
       error: (error: any) => console.error('Error cargando cursos: ', error)
     });
+  }
+
+  private updateSelectOptions(): void {
+    this.selectOptions = {
+      tipoId: this.identificationTypes.map(t => t.name),
+      curso: this.courses.map(c => c.name)
+    }
   }
 
   private loadStudents(): void {
     this.studentService.getAll().subscribe({
       next: (data: StudentResponse[]) => {
+        console.log(data);
         this.students = data;
       },
       error: (error: any) => {
@@ -92,7 +108,7 @@ export class Estudiantes implements OnInit {
       phone: data['telefono'],
       residenceAddress: data['direccion'],
       password: data['contraseña'],
-      courseName: data['curso']
+      courseId: course?.id ?? '',
     }
   }
 
@@ -120,14 +136,6 @@ export class Estudiantes implements OnInit {
         console.error('Error al crear estudiante: ', error);
       }
     })
-  }
-
-  // Metodo para las selecciones de los select del formulario de registro
-  get selectOptions(): Record<string, string[]> {
-      return {
-        tipoId: this.identificationTypes.map(t => t.name),
-        curso: this.courses.map(c => c.name)
-      }
   }
 
   // ── Ver detalles 

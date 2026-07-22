@@ -45,10 +45,9 @@ const TITLE_KEYS: Record<CardType, string> = {
 // Campos a mostrar (con claves de traducción)
 const ITEM_FIELDS: Record<CardType, ItemField[]> = {
   estudiante: [
-    { key: 'nombre' },
-    { key: 'identificacion' },
-    { key: 'curso', halfWidth: true },
-    { key: 'telefono', halfWidth: true },
+    { key: 'identificationNumber' },
+    { key: 'courseName', halfWidth: true },
+    { key: 'phone', halfWidth: true },
   ],
   acudiente: [
     { key: 'nombre' },

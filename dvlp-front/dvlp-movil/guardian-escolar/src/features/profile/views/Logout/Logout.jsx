@@ -6,6 +6,7 @@ import { useTheme } from "@core/services/ThemeService";
 import { useNavigation } from "@react-navigation/native";
 import BackButton from "@components/buttons/BackButton";
 import PrimaryButton from "@components/buttons/PrimaryButton";
+import BottomTabBar from "@components/layout/BottomTabBar";
 
 import styles from "@core/styles/profileScreen.style";
 
@@ -84,6 +85,7 @@ export default function Logout() {
           
         </View>
       </View>
+      <BottomTabBar />
     </View>
   );
 }

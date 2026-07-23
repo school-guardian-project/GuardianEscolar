@@ -107,4 +107,20 @@ cancelText: {
   fontWeight: "600",
 },
 
+supportLabel: {
+  fontSize: 18,
+  fontWeight: "600",
+  marginBottom: 15,
+},
+
+textArea: {
+  width: "100%",
+  minHeight: 180,
+  borderRadius: 20,
+  padding: 16,
+  fontSize: 16,
+  textAlignVertical: "top",
+  marginBottom: 25,
+},
+
 });

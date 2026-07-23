@@ -6,7 +6,8 @@
     "restore": "Restablecer",
     "suport": "Soporte",
     "rateUs": "Califícanos",
-    "cancel": "Cancelar"
+    "cancel": "Cancelar",
+    "send": "Enviar"
   },
   "inputs": {
     "title.email": "Correo Electrónico",
@@ -112,6 +113,17 @@
   "logout":{
     "title": "Cerrar Sesión",
     "description": "Vas a salir de tu cuenta en este dispositivo. Podrás volver a iniciar sesión cuando quieras."
+  },
+
+  "support": {
+    "title": "Cuéntanos tu inconveniente",
+  "description": "Cuéntanos tu inconveniente",
+  "placeholder": "Escribe aquí tu mensaje..."
+},
+
+  "rateUs":{
+    "title": "Cuéntanos tu opinión",
+    "placeholder": "Escribe aquí tu opinión..."
   },
 
   "cards": {

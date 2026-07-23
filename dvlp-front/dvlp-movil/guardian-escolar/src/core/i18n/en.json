@@ -5,7 +5,8 @@
     "verifyCode": "Verify Code",
     "restore": "Reset",
     "suport": "Support",
-    "rateUs": "Rate Us"
+    "rateUs": "Rate Us",
+    "cancel": "Cancel"
   },
   "inputs": {
     "title.email": "Email",
@@ -46,75 +47,70 @@
     "titleTeam": "Our Team",
     "titleValues": "Our Values"
   },
-
   "login": {
     "title": "Sign In",
     "ForgotPassword": "Forgot your password?"
   },
-
   "forgotPassword": {
     "title": "Reset Password",
     "description": "Enter your email to receive a verification code.",
     "emailPlaceholder": "Email"
   },
-
   "verifyCode": {
     "title": "Reset Password",
     "description": "Enter the verification code sent to your email.",
     "transferCode": "Didn't receive the code? Resend"
   },
-
   "newPassword": {
     "title": "Reset Password",
     "description": "Enter your new password.",
     "newPasswordPlaceholder": "Enter your new password",
     "confirmPasswordPlaceholder": "Confirm your new password"
   },
-
   "profile": {
     "title": "My Profile",
     "subtitle": "Manage your account and preferences"
   },
-
   "Family": {
     "holder": "Guardian",
     "members": "Other Members"
   },
-
   "security": {
     "notificationsOff": "Enable notifications",
     "notificationsOn": "Disable notifications",
     "changePassword": "Change Password"
   },
   "privacy": {
-  "descriPermission": "Guardian Escolar requests access to certain features of your device solely to provide the school transportation monitoring service. Location permission allows the application to display the school bus's real-time position on the interactive map and calculate estimated arrival times. Camera permission is used exclusively to scan QR codes that record the student's boarding and departure from the vehicle. Notification permission is used to immediately inform you about relevant events during your child's trip. No permission is used for purposes other than those described here, and you may revoke them at any time through your device settings, understanding that this may limit some application features.",
-
-  "descripDatas": "In accordance with the purpose limitation principle established by Colombian Law 1581 of 2012, Guardian Escolar collects only the personal data strictly necessary to provide the monitored school transportation service. This includes student identification information (name, assigned route, educational institution), guardian contact information (name, email address, phone number), and operational service data (bus GPS location, boarding and departure records through QR codes). No additional sensitive information is collected, and this data is not shared with third parties unrelated to the school transportation service.",
-
-  "descriProtection": "All communication between the application and our servers is protected using encrypted HTTPS/TLS protocols, ensuring that students' location, identity, and contact information remain secure from end to end. This measure complies with Article 4 of Colombian Law 1581 of 2012, which requires data controllers to implement the necessary technical measures to prevent unauthorized access, alteration, loss, or misuse of personal information.",
-
-  "descripAutentication": "Access to the platform is protected through secure authentication mechanisms. User passwords are stored in encrypted form and are never stored or transmitted as plain text. As an additional security measure against unauthorized access attempts, the system temporarily blocks an account after several consecutive failed login attempts and records this event for monitoring purposes.",
-
-  "descripAccess": "In accordance with the restricted circulation principle established by Colombian Law 1581 of 2012, access to information within Guardian Escolar is segmented according to each user's role. Guardians can only view information related to their own children; drivers can access only the routes assigned to them; and administrators manage routes and users through an audit log that records every action, ensuring traceability and control over information usage.",
-
-  "descripRegister": "Each student boarding and departure event is recorded through a unique QR code, storing the date, time, and exact location. This prevents duplicate, fraudulent, or inconsistent records. Once the event is confirmed, the system immediately notifies the guardian, ensuring transparency and timely information about the student's status during the school trip.",
-
-  "descripElimination": "Location data and route history are retained for a maximum period of thirty (30) days for traceability, auditing, and incident management purposes. After this period, the information is securely deleted. In accordance with the right to erasure established by Colombian Law 1581 of 2012, guardians may request the deletion of their child's personal data at any time unless a legal obligation requires its retention.",
-
-  "descripConnection": "Guardian Escolar is designed to operate reliably even in areas with intermittent network coverage. When the bus device temporarily loses connectivity, location data is securely stored on the device and automatically synchronized with the server once the connection is restored, ensuring that no trip records are lost or modified.",
-
-  "descripLaws": "According to the Colombian Constitution and Law 1581 of 2012 (Personal Data Protection Law), as the data subject—or the student's legal representative—you have the right to know, update, and correct your personal information; request proof of your authorization for data processing; be informed about how your information has been used; file complaints with the Superintendence of Industry and Commerce for violations of the law; revoke your authorization and/or request the deletion of your data when legal principles and rights are not respected; and access your personal information free of charge. To exercise these rights, you may contact the school administrator or our designated support channel."
-},
-
-"aboutus": {
-  "descripAbout": "We are a team of three SENA students developing technological solutions focused on improving real-world processes. This application is part of our educational project, where we apply the knowledge acquired in Software Analysis and Development to create a functional, secure, and user-friendly system.\n\nOur work aims to strengthen school transportation management by providing tools that improve communication, organization, and peace of mind for students, parents, and guardians.",
-  "descripMission": "To develop a reliable application for managing and monitoring school transportation routes, enabling real-time tracking of student transportation while improving safety and communication between families and educational institutions.",
-  "descripVision": "To become a leading technological project in school transportation solutions, recognized for innovation, ease of use, and commitment to safety, with the ability to grow and adapt to future needs.",
-  "descripTeam": "Guardian Escolar was created through the joint effort of Johan Smith Santamaria Fernández, Sharik Dayanna Rojas Ibarra, and Juan Pablo Chala Ramírez, students of the SENA Software Analysis and Development Technology program, under the guidance of SENA instructors. Each team member contributed to the analysis, design, development, and database management of the project.",
-  "descripValues": "Safety, transparency, and commitment are the principles that guide every decision behind Guardian Escolar. We believe technology should serve the well-being of students, giving families the peace of mind of knowing their children are safe during every school trip."
-},
-
-
+    "descriPermission": "Guardian Escolar requests access to certain features of your device solely to provide the school transportation monitoring service. Location permission allows the application to display the school bus's real-time position on the interactive map and calculate estimated arrival times. Camera permission is used exclusively to scan QR codes that record the student's boarding and departure from the vehicle. Notification permission is used to immediately inform you about relevant events during your child's trip. No permission is used for purposes other than those described here, and you may revoke them at any time through your device settings, understanding that this may limit some application features.",
+    "descripDatas": "In accordance with the purpose limitation principle established by Colombian Law 1581 of 2012, Guardian Escolar collects only the personal data strictly necessary to provide the monitored school transportation service. This includes student identification information (name, assigned route, educational institution), guardian contact information (name, email address, phone number), and operational service data (bus GPS location, boarding and departure records through QR codes). No additional sensitive information is collected, and this data is not shared with third parties unrelated to the school transportation service.",
+    "descriProtection": "All communication between the application and our servers is protected using encrypted HTTPS/TLS protocols, ensuring that students' location, identity, and contact information remain secure from end to end. This measure complies with Article 4 of Colombian Law 1581 of 2012, which requires data controllers to implement the necessary technical measures to prevent unauthorized access, alteration, loss, or misuse of personal information.",
+    "descripAutentication": "Access to the platform is protected through secure authentication mechanisms. User passwords are stored in encrypted form and are never stored or transmitted as plain text. As an additional security measure against unauthorized access attempts, the system temporarily blocks an account after several consecutive failed login attempts and records this event for monitoring purposes.",
+    "descripAccess": "In accordance with the restricted circulation principle established by Colombian Law 1581 of 2012, access to information within Guardian Escolar is segmented according to each user's role. Guardians can only view information related to their own children; drivers can access only the routes assigned to them; and administrators manage routes and users through an audit log that records every action, ensuring traceability and control over information usage.",
+    "descripRegister": "Each student boarding and departure event is recorded through a unique QR code, storing the date, time, and exact location. This prevents duplicate, fraudulent, or inconsistent records. Once the event is confirmed, the system immediately notifies the guardian, ensuring transparency and timely information about the student's status during the school trip.",
+    "descripElimination": "Location data and route history are retained for a maximum period of thirty (30) days for traceability, auditing, and incident management purposes. After this period, the information is securely deleted. In accordance with the right to erasure established by Colombian Law 1581 of 2012, guardians may request the deletion of their child's personal data at any time unless a legal obligation requires its retention.",
+    "descripConnection": "Guardian Escolar is designed to operate reliably even in areas with intermittent network coverage. When the bus device temporarily loses connectivity, location data is securely stored on the device and automatically synchronized with the server once the connection is restored, ensuring that no trip records are lost or modified.",
+    "descripLaws": "According to the Colombian Constitution and Law 1581 of 2012 (Personal Data Protection Law), as the data subject—or the student's legal representative—you have the right to know, update, and correct your personal information; request proof of your authorization for data processing; be informed about how your information has been used; file complaints with the Superintendence of Industry and Commerce for violations of the law; revoke your authorization and/or request the deletion of your data when legal principles and rights are not respected; and access your personal information free of charge. To exercise these rights, you may contact the school administrator or our designated support channel."
+  },
+  "aboutus": {
+    "descripAbout": "We are a team of three SENA students developing technological solutions focused on improving real-world processes. This application is part of our educational project, where we apply the knowledge acquired in Software Analysis and Development to create a functional, secure, and user-friendly system.\n\nOur work aims to strengthen school transportation management by providing tools that improve communication, organization, and peace of mind for students, parents, and guardians.",
+    "descripMission": "To develop a reliable application for managing and monitoring school transportation routes, enabling real-time tracking of student transportation while improving safety and communication between families and educational institutions.",
+    "descripVision": "To become a leading technological project in school transportation solutions, recognized for innovation, ease of use, and commitment to safety, with the ability to grow and adapt to future needs.",
+    "descripTeam": "Guardian Escolar was created through the joint effort of Johan Smith Santamaria Fernández, Sharik Dayanna Rojas Ibarra, and Juan Pablo Chala Ramírez, students of the SENA Software Analysis and Development Technology program, under the guidance of SENA instructors. Each team member contributed to the analysis, design, development, and database management of the project.",
+    "descripValues": "Safety, transparency, and commitment are the principles that guide every decision behind Guardian Escolar. We believe technology should serve the well-being of students, giving families the peace of mind of knowing their children are safe during every school trip."
+  },
+  "logout": {
+    "title": "Log Out",
+    "description": "You are about to log out of your account on this device. You can sign in again whenever you want."
+  },
+  "support": {
+    "title": "Tell us about your issue",
+    "description": "Tell us about your issue",
+    "placeholder": "Write your message here..."
+  },
+  "rateUs": {
+    "title": "Tell us what you think",
+    "placeholder": "Write your opinion here..."
+  },
   "cards": {
     "finalDestination": "Final destination",
     "stops": "Stops",

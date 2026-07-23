@@ -5,7 +5,8 @@
     "verifyCode": "Vérifier le code",
     "restore": "Réinitialiser",
     "suport": "Assistance",
-    "rateUs": "Évaluez-nous"
+    "rateUs": "Évaluez-nous",
+    "cancel": "Annuler"
   },
   "inputs": {
     "title.email": "E-mail",
@@ -46,47 +47,39 @@
     "titleTeam": "Notre Équipe",
     "titleValues": "Nos Valeurs"
   },
-
   "login": {
     "title": "Se connecter",
     "ForgotPassword": "Mot de passe oublié ?"
   },
-
   "forgotPassword": {
     "title": "Réinitialiser le mot de passe",
     "description": "Saisissez votre e-mail pour recevoir un code de vérification.",
     "emailPlaceholder": "E-mail"
   },
-
   "verifyCode": {
     "title": "Réinitialiser le mot de passe",
     "description": "Saisissez le code envoyé à votre e-mail.",
     "transferCode": "Vous n'avez pas reçu le code ? Renvoyer"
   },
-
   "newPassword": {
     "title": "Réinitialiser le mot de passe",
     "description": "Saisissez votre nouveau mot de passe.",
     "newPasswordPlaceholder": "Saisissez votre nouveau mot de passe",
     "confirmPasswordPlaceholder": "Confirmez votre nouveau mot de passe"
   },
-
   "profile": {
     "title": "Mon Profil",
     "subtitle": "Gérez votre compte et vos préférences"
   },
-
   "Family": {
     "holder": "Responsable",
     "members": "Autres Membres"
   },
-
   "security": {
     "notificationsOff": "Activer les notifications",
     "notificationsOn": "Désactiver les notifications",
     "changePassword": "Changer le mot de passe"
   },
-
   "privacy": {
     "descriPermission": "Guardian Escolar demande l'accès à certaines fonctionnalités de votre appareil uniquement pour assurer le service de suivi du transport scolaire. L'autorisation de localisation permet d'afficher en temps réel la position du bus sur la carte interactive et de calculer les heures d'arrivée estimées. L'autorisation de la caméra est utilisée exclusivement pour scanner les codes QR enregistrant la montée et la descente de l'élève. Les notifications servent à vous informer immédiatement des événements importants concernant le trajet de votre enfant. Ces autorisations ne sont utilisées à aucune autre fin.",
     "descripDatas": "Conformément au principe de finalité établi par la loi colombienne 1581 de 2012, Guardian Escolar collecte uniquement les données personnelles strictement nécessaires au fonctionnement du service de transport scolaire surveillé. Cela comprend les informations d'identification de l'élève, les coordonnées du responsable légal ainsi que les données opérationnelles telles que la localisation GPS du bus et les enregistrements par code QR.",
@@ -98,15 +91,26 @@
     "descripConnection": "Guardian Escolar fonctionne même dans les zones où la connexion réseau est instable. Les données sont stockées localement puis synchronisées automatiquement dès que la connexion est rétablie.",
     "descripLaws": "Conformément à la Constitution colombienne et à la loi 1581 de 2012 relative à la protection des données personnelles, vous avez le droit d'accéder à vos données, de les mettre à jour, de les corriger, de demander leur suppression et de connaître l'utilisation qui en est faite."
   },
-
   "aboutus": {
-  "descripAbout": "Nous sommes une équipe de trois étudiants du SENA qui développe des solutions technologiques visant à améliorer des processus réels. Cette application fait partie de notre projet de formation, dans lequel nous appliquons les connaissances acquises en Analyse et Développement de Logiciels afin de créer un système fonctionnel, sécurisé et facile à utiliser.\n\nNotre travail vise à renforcer la gestion du transport scolaire en proposant des outils qui améliorent la communication, l'organisation et la tranquillité d'esprit des élèves, des parents et des responsables légaux.",
-  "descripMission": "Développer une application fiable pour la gestion et le suivi des itinéraires scolaires, permettant de surveiller en temps réel le transport des élèves et d'améliorer la sécurité ainsi que la communication entre les familles et les établissements scolaires.",
-  "descripVision": "Devenir un projet technologique de référence dans les solutions de transport scolaire, reconnu pour son innovation, sa simplicité d'utilisation et son engagement envers la sécurité, avec la capacité de grandir et de s'adapter aux besoins futurs.",
-  "descripTeam": "Guardian Escolar est né du travail conjoint de Johan Smith Santamaria Fernández, Sharik Dayanna Rojas Ibarra et Juan Pablo Chala Ramírez, étudiants du programme Technologue en Analyse et Développement de Logiciels du SENA, sous la supervision des instructeurs de l'institution. Chaque membre a contribué à l'analyse, à la conception, au développement et à la gestion de la base de données du projet.",
-  "descripValues": "La sécurité, la transparence et l'engagement sont les principes qui guident chacune des décisions derrière Guardian Escolar. Nous croyons que la technologie doit être au service du bien-être des élèves, en offrant aux familles la tranquillité de savoir que leurs enfants sont en sécurité pendant chaque trajet scolaire."
-},
-
+    "descripAbout": "Nous sommes une équipe de trois étudiants du SENA qui développe des solutions technologiques visant à améliorer des processus réels. Cette application fait partie de notre projet de formation, dans lequel nous appliquons les connaissances acquises en Analyse et Développement de Logiciels afin de créer un système fonctionnel, sécurisé et facile à utiliser.\n\nNotre travail vise à renforcer la gestion du transport scolaire en proposant des outils qui améliorent la communication, l'organisation et la tranquillité d'esprit des élèves, des parents et des responsables légaux.",
+    "descripMission": "Développer une application fiable pour la gestion et le suivi des itinéraires scolaires, permettant de surveiller en temps réel le transport des élèves et d'améliorer la sécurité ainsi que la communication entre les familles et les établissements scolaires.",
+    "descripVision": "Devenir un projet technologique de référence dans les solutions de transport scolaire, reconnu pour son innovation, sa simplicité d'utilisation et son engagement envers la sécurité, avec la capacité de grandir et de s'adapter aux besoins futurs.",
+    "descripTeam": "Guardian Escolar est né du travail conjoint de Johan Smith Santamaria Fernández, Sharik Dayanna Rojas Ibarra et Juan Pablo Chala Ramírez, étudiants du programme Technologue en Analyse et Développement de Logiciels du SENA, sous la supervision des instructeurs de l'institution. Chaque membre a contribué à l'analyse, à la conception, au développement et à la gestion de la base de données du projet.",
+    "descripValues": "La sécurité, la transparence et l'engagement sont les principes qui guident chacune des décisions derrière Guardian Escolar. Nous croyons que la technologie doit être au service du bien-être des élèves, en offrant aux familles la tranquillité de savoir que leurs enfants sont en sécurité pendant chaque trajet scolaire."
+  },
+  "logout": {
+    "title": "Se déconnecter",
+    "description": "Vous allez vous déconnecter de votre compte sur cet appareil. Vous pourrez vous reconnecter à tout moment."
+  },
+  "support": {
+    "title": "Conte-nos o seu problema",
+    "description": "Conte-nos o seu problema",
+    "placeholder": "Escreva sua mensagem aqui..."
+  },
+  "rateUs": {
+    "title": "Conte-nos a sua opinião",
+    "placeholder": "Escreva sua opinião aqui..."
+  },
   "cards": {
     "finalDestination": "Destination finale",
     "stops": "Arrêts",

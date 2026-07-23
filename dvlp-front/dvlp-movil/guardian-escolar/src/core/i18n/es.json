@@ -3,7 +3,11 @@
     "enter": "Ingresar",
     "sendCode": "Enviar código",
     "verifyCode": "Verificar código",
-    "restore": "Restablecer"
+    "restore": "Restablecer",
+    "suport": "Soporte",
+    "rateUs": "Califícanos",
+    "cancel": "Cancelar",
+    "send": "Enviar"
   },
   "inputs": {
     "title.email": "Correo Electrónico",
@@ -13,7 +17,36 @@
     "verifyCodePlaceholder": "Ingresa el código de verificación",
     "newPasswordPlaceholder": "Ingresa tu nueva contraseña",
     "confirmPasswordPlaceholder": "Confirma tu nueva contraseña",
-    "searchRoute": "Buscar ruta"
+    "searchRoute": "Buscar ruta",
+    "data": "Mis datos",
+    "family": "Mi familia",
+    "security": "Seguridad",
+    "privacity": "Políticas de privacidad",
+    "aboutus": "Sobre nosotros",
+    "logout": "Cerrar sesión",
+    "phone": "Telefono",
+    "email": "Correo Electrónico",
+    "password": "Contraseña",
+    "address": "Dirección",
+    "city": "Ciudad",
+    "school": "Escuela",
+    "name": "Nombre",
+    "rol": "Rol",
+    "notifications": "Notificaciones",
+    "titlePermission": "Permisos de la aplicación",
+    "titleDatas": "Datos que recolectamos",
+    "titleProtection": "Cifrado y protección de datos",
+    "titleAutentication": "Autenticación segura",
+    "titleAccess": "Acceso según tu rol",
+    "titleRegister": "Registro por código QR",
+    "titleElimination": "Retención y eliminación de datos",
+    "titleConnection" : "Funcionamiento sin conexión",
+    "titleLaws": "Tus derechos como usuario",
+    "titleAbout": "¿Quiénes somos?",
+    "titleMission": "Misión",
+    "titleVision": "Visión",
+    "titleTeam": "Nuestro equipo",
+    "titleValues": "Nuestros valores"
   },
 
   "login": {
@@ -39,6 +72,58 @@
     "description": "Ingresa tu nueva contraseña.",
     "newPasswordPlaceholder": "Ingresa tu nueva contraseña",
     "confirmPasswordPlaceholder": "Confirma tu nueva contraseña"
+  },
+
+  "profile": {
+    "title": "Mi perfil",
+    "subtitle": "Gestioná tu cuenta y preferencias"
+  },
+
+  "Family": {
+    "holder": "Titular",
+    "members": "Otros miembros"
+  },
+
+  "security":{
+    "notificationsOff": "Activar notificaciones",
+    "notificationsOn": "Desactivar notificaciones",
+    "changePassword" : "Cambiar la contraseña"
+  },
+
+  "privacy" : {
+    "descriPermission":"Guardián Escolar solicita acceso a determinadas funciones de tu dispositivo únicamente para prestar el servicio de monitoreo escolar. El permiso de ubicación permite mostrar en tiempo real la posición del bus en el mapa interactivo y calcular tiempos estimados de llegada. El permiso de cámara se utiliza exclusivamente para el escaneo de códigos QR que registran el ingreso y salida del estudiante del vehículo. El permiso de notificaciones se emplea para informarte de manera inmediata sobre eventos relevantes del trayecto de tu hijo/a. Ningún permiso se utiliza con fines distintos a los aquí descritos, y puedes revocarlos en cualquier momento desde la configuración de tu dispositivo, entendiendo que esto podría limitar algunas funcionalidades de la aplicación.",
+    "descripDatas":"En cumplimiento del principio de finalidad establecido en la Ley 1581 de 2012, Guardián Escolar recolecta únicamente los datos personales estrictamente necesarios para la prestación del servicio de transporte escolar monitoreado. Estos datos incluyen: información de identificación del estudiante (nombre, ruta asignada, institución educativa), datos de contacto del acudiente (nombre, correo electrónico, teléfono), y datos operativos del servicio (ubicación GPS del bus, horarios de ingreso y salida registrados mediante código QR). No se recolectan datos sensibles adicionales, ni se comparte esta información con terceros ajenos a la operación del servicio de transporte escolar.",
+    "descriProtection": "Toda comunicación entre la aplicación y nuestros servidores se realiza mediante protocolos de cifrado (HTTPS/TLS), garantizando que la información de ubicación, identidad y contacto de los estudiantes viaje protegida de extremo a extremo. Esta medida responde a la obligación establecida en el artículo 4 de la Ley 1581 de 2012, que exige a los responsables del tratamiento de datos personales adoptar las medidas técnicas necesarias para otorgar seguridad a los registros, evitando su adulteración, pérdida, consulta, uso o acceso no autorizado.",
+    "descripAutentication": "El acceso a la plataforma está protegido mediante mecanismos de autenticación segura. Las contraseñas de los usuarios se almacenan de forma cifrada y en ningún caso se guardan ni se transmiten como texto plano. Como medida adicional de protección frente a intentos de acceso no autorizado, el sistema bloquea temporalmente una cuenta después de varios intentos fallidos consecutivos de inicio de sesión, notificando este evento para su respectivo seguimiento.",
+    "descripAccess" : "En atención al principio de circulación restringida consagrado en la Ley 1581 de 2012, el acceso a la información dentro de Guardián Escolar está segmentado según el rol de cada usuario. Un acudiente únicamente puede consultar la información y ubicación correspondiente a su hijo/a; un conductor accede exclusivamente a los datos de la ruta que tiene asignada; y un administrador gestiona rutas y usuarios bajo un registro de auditoría que deja constancia de cada acción realizada, garantizando trazabilidad y control sobre el uso de la información.",
+    "descripRegister": "Cada evento de ingreso o salida del estudiante se registra mediante un código QR único, quedando almacenado con fecha, hora y ubicación exacta, lo que permite prevenir registros duplicados, fraudulentos o inconsistentes. Una vez confirmado el evento, el sistema notifica de manera automática e inmediata al acudiente, garantizando transparencia y oportunidad en la información sobre el estado del estudiante durante su trayecto escolar.",
+    "descripElimination": "Los datos de ubicación e historial de recorridos se conservan por un periodo máximo de treinta (30) días, tiempo necesario para efectos de trazabilidad, auditoría y atención de posibles incidentes. Vencido este término, la información es eliminada de forma segura. De conformidad con el derecho de supresión contemplado en la Ley 1581 de 2012, el acudiente puede solicitar en cualquier momento la eliminación de los datos personales de su hijo/a, salvo que exista un deber legal o reglamentario que obligue a conservarlos.",
+    "descripConnection" : "Guardián Escolar está diseñado para operar de forma confiable incluso en zonas con cobertura de red intermitente. Cuando el dispositivo del bus pierde temporalmente la señal, los datos de ubicación se almacenan de forma segura en el dispositivo y se sincronizan automáticamente con el servidor una vez se restablece la conexión, garantizando que ningún registro del trayecto se pierda ni se altere durante este proceso.",
+    "descripLaws": "De acuerdo con la Constitución Política de Colombia y la Ley 1581 de 2012 (Ley de Protección de Datos Personales), como titular de los datos —o como representante legal del estudiante— tienes derecho a: conocer, actualizar y rectificar tu información personal; solicitar prueba de la autorización otorgada para el tratamiento de tus datos; ser informado sobre el uso que se ha dado a tu información; presentar quejas ante la Superintendencia de Industria y Comercio por infracciones a la ley; revocar la autorización y/o solicitar la supresión de tus datos cuando no se respeten los principios, derechos y garantías constitucionales y legales; y acceder de forma gratuita a tus datos personales que hayan sido objeto de tratamiento. Para ejercer cualquiera de estos derechos, puedes contactar al administrador del colegio o a nuestro canal de atención designado."
+  },
+
+  "aboutus": {
+    "descripAbout": "Somos un equipo de tres estudiantes del SENA que desarrolla soluciones tecnológicas enfocadas en mejorar procesos reales. Este aplicativo forma parte de nuestro proyecto formativo, en el cual aplicamos los conocimientos adquiridos en análisis y desarrollo de software para crear un sistema funcional, seguro y fácil de usar.\n\n Nuestro trabajo está orientado a fortalecer la gestión del transporte escolar, aportando herramientas que mejoren la comunicación, la organización y la tranquilidad de estudiantes, padres y acudientes.",
+    "descripMission":"Desarrollar una aplicación confiable para la administración y el seguimiento de rutas escolares, que permita monitorear en tiempo real el transporte estudiantil y mejorar la seguridad y la comunicación entre las familias y las instituciones educativas.",
+    "descripVision": "Ser un proyecto tecnológico de referencia en soluciones de transporte escolar, destacándonos por la innovación, la facilidad de uso y el compromiso con la seguridad, con proyección a crecer y adaptarse a nuevas necesidades en el futuro.",
+    "descripTeam": "Guardián Escolar nace del trabajo conjunto de Johan Smith Santamaria Fernández, Sharik Dayanna Rojas Ibarra y Juan Pablo Chala Ramírez, aprendices del Tecnólogo en Análisis y Desarrollo de Software del SENA, bajo la orientación de los instructores asignados por el SENA. Cada integrante aportó su rol en el análisis, diseño, desarrollo y gestión de la base de datos del proyecto.",
+    "descripValues": "Seguridad, transparencia y compromiso son los principios que guían cada decisión detrás de Guardián Escolar. Creemos que la tecnología debe estar al servicio del bienestar de los estudiantes, brindando a las familias la tranquilidad de saber que sus hijos están seguros durante cada trayecto escolar."
+  },
+
+  "logout":{
+    "title": "Cerrar Sesión",
+    "description": "Vas a salir de tu cuenta en este dispositivo. Podrás volver a iniciar sesión cuando quieras."
+  },
+
+  "support": {
+    "title": "Cuéntanos tu inconveniente",
+  "description": "Cuéntanos tu inconveniente",
+  "placeholder": "Escribe aquí tu mensaje..."
+},
+
+  "rateUs":{
+    "title": "Cuéntanos tu opinión",
+    "placeholder": "Escribe aquí tu opinión..."
   },
 
   "cards": {

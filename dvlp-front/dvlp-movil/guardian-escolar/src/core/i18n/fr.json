@@ -3,48 +3,119 @@
     "enter": "Se connecter",
     "sendCode": "Envoyer le code",
     "verifyCode": "Vérifier le code",
-    "restore": "Restaurer"
+    "restore": "Réinitialiser",
+    "suport": "Assistance",
+    "rateUs": "Évaluez-nous",
+    "cancel": "Annuler"
   },
   "inputs": {
     "title.email": "E-mail",
     "title.password": "Mot de passe",
-    "emailPlaceholder": "Entrez votre e-mail",
-    "passwordPlaceholder": "Entrez votre mot de passe",
-    "verifyCodePlaceholder": "Entrez le code de vérification",
-    "newPasswordPlaceholder": "Entrez votre nouveau mot de passe",
+    "emailPlaceholder": "Saisissez votre e-mail",
+    "passwordPlaceholder": "Saisissez votre mot de passe",
+    "verifyCodePlaceholder": "Saisissez le code de vérification",
+    "newPasswordPlaceholder": "Saisissez votre nouveau mot de passe",
     "confirmPasswordPlaceholder": "Confirmez votre nouveau mot de passe",
-    "searchRoute": "Rechercher une route"
+    "searchRoute": "Rechercher un itinéraire",
+    "data": "Mes Informations",
+    "family": "Ma Famille",
+    "security": "Sécurité",
+    "privacity": "Politique de Confidentialité",
+    "aboutus": "À propos de nous",
+    "logout": "Se déconnecter",
+    "phone": "Téléphone",
+    "email": "E-mail",
+    "password": "Mot de passe",
+    "address": "Adresse",
+    "city": "Ville",
+    "school": "École",
+    "name": "Nom",
+    "rol": "Rôle",
+    "notifications": "Notifications",
+    "titlePermission": "Autorisations de l'Application",
+    "titleDatas": "Données Collectées",
+    "titleProtection": "Chiffrement et Protection des Données",
+    "titleAutentication": "Authentification Sécurisée",
+    "titleAccess": "Accès Selon Votre Rôle",
+    "titleRegister": "Enregistrement par Code QR",
+    "titleElimination": "Conservation et Suppression des Données",
+    "titleConnection": "Fonctionnement Hors Ligne",
+    "titleLaws": "Vos Droits en Tant qu'Utilisateur",
+    "titleAbout": "Qui Sommes-nous ?",
+    "titleMission": "Mission",
+    "titleVision": "Vision",
+    "titleTeam": "Notre Équipe",
+    "titleValues": "Nos Valeurs"
   },
   "login": {
-    "title": "Connexion",
+    "title": "Se connecter",
     "ForgotPassword": "Mot de passe oublié ?"
   },
   "forgotPassword": {
     "title": "Réinitialiser le mot de passe",
-    "description": "Entrez votre e-mail pour recevoir un code de vérification.",
+    "description": "Saisissez votre e-mail pour recevoir un code de vérification.",
     "emailPlaceholder": "E-mail"
   },
-
-  
   "verifyCode": {
     "title": "Réinitialiser le mot de passe",
-    "description": "Saisissez le code envoyé à votre adresse e-mail.",
+    "description": "Saisissez le code envoyé à votre e-mail.",
     "transferCode": "Vous n'avez pas reçu le code ? Renvoyer"
   },
-
   "newPassword": {
     "title": "Réinitialiser le mot de passe",
-    "description": "Entrez votre nouveau mot de passe.",
-    "newPasswordPlaceholder": "Entrez votre nouveau mot de passe",
+    "description": "Saisissez votre nouveau mot de passe.",
+    "newPasswordPlaceholder": "Saisissez votre nouveau mot de passe",
     "confirmPasswordPlaceholder": "Confirmez votre nouveau mot de passe"
   },
-
+  "profile": {
+    "title": "Mon Profil",
+    "subtitle": "Gérez votre compte et vos préférences"
+  },
+  "Family": {
+    "holder": "Responsable",
+    "members": "Autres Membres"
+  },
+  "security": {
+    "notificationsOff": "Activer les notifications",
+    "notificationsOn": "Désactiver les notifications",
+    "changePassword": "Changer le mot de passe"
+  },
+  "privacy": {
+    "descriPermission": "Guardian Escolar demande l'accès à certaines fonctionnalités de votre appareil uniquement pour assurer le service de suivi du transport scolaire. L'autorisation de localisation permet d'afficher en temps réel la position du bus sur la carte interactive et de calculer les heures d'arrivée estimées. L'autorisation de la caméra est utilisée exclusivement pour scanner les codes QR enregistrant la montée et la descente de l'élève. Les notifications servent à vous informer immédiatement des événements importants concernant le trajet de votre enfant. Ces autorisations ne sont utilisées à aucune autre fin.",
+    "descripDatas": "Conformément au principe de finalité établi par la loi colombienne 1581 de 2012, Guardian Escolar collecte uniquement les données personnelles strictement nécessaires au fonctionnement du service de transport scolaire surveillé. Cela comprend les informations d'identification de l'élève, les coordonnées du responsable légal ainsi que les données opérationnelles telles que la localisation GPS du bus et les enregistrements par code QR.",
+    "descriProtection": "Toutes les communications entre l'application et nos serveurs sont protégées par des protocoles chiffrés HTTPS/TLS afin de garantir la confidentialité des données de localisation, d'identité et de contact.",
+    "descripAutentication": "L'accès à la plateforme est protégé par des mécanismes d'authentification sécurisés. Les mots de passe sont stockés sous forme chiffrée et jamais en texte clair. Après plusieurs tentatives de connexion infructueuses, le compte est temporairement verrouillé.",
+    "descripAccess": "L'accès aux informations est limité selon le rôle de chaque utilisateur. Les responsables légaux consultent uniquement les informations concernant leurs enfants, les conducteurs accèdent uniquement à leurs itinéraires et les administrateurs disposent d'un journal d'audit de toutes leurs actions.",
+    "descripRegister": "Chaque montée et descente de l'élève est enregistrée à l'aide d'un code QR unique avec la date, l'heure et la position exacte. Une notification est immédiatement envoyée au responsable légal.",
+    "descripElimination": "Les données de localisation et l'historique des trajets sont conservés pendant une durée maximale de trente (30) jours à des fins d'audit et de traçabilité, puis supprimés de manière sécurisée.",
+    "descripConnection": "Guardian Escolar fonctionne même dans les zones où la connexion réseau est instable. Les données sont stockées localement puis synchronisées automatiquement dès que la connexion est rétablie.",
+    "descripLaws": "Conformément à la Constitution colombienne et à la loi 1581 de 2012 relative à la protection des données personnelles, vous avez le droit d'accéder à vos données, de les mettre à jour, de les corriger, de demander leur suppression et de connaître l'utilisation qui en est faite."
+  },
+  "aboutus": {
+    "descripAbout": "Nous sommes une équipe de trois étudiants du SENA qui développe des solutions technologiques visant à améliorer des processus réels. Cette application fait partie de notre projet de formation, dans lequel nous appliquons les connaissances acquises en Analyse et Développement de Logiciels afin de créer un système fonctionnel, sécurisé et facile à utiliser.\n\nNotre travail vise à renforcer la gestion du transport scolaire en proposant des outils qui améliorent la communication, l'organisation et la tranquillité d'esprit des élèves, des parents et des responsables légaux.",
+    "descripMission": "Développer une application fiable pour la gestion et le suivi des itinéraires scolaires, permettant de surveiller en temps réel le transport des élèves et d'améliorer la sécurité ainsi que la communication entre les familles et les établissements scolaires.",
+    "descripVision": "Devenir un projet technologique de référence dans les solutions de transport scolaire, reconnu pour son innovation, sa simplicité d'utilisation et son engagement envers la sécurité, avec la capacité de grandir et de s'adapter aux besoins futurs.",
+    "descripTeam": "Guardian Escolar est né du travail conjoint de Johan Smith Santamaria Fernández, Sharik Dayanna Rojas Ibarra et Juan Pablo Chala Ramírez, étudiants du programme Technologue en Analyse et Développement de Logiciels du SENA, sous la supervision des instructeurs de l'institution. Chaque membre a contribué à l'analyse, à la conception, au développement et à la gestion de la base de données du projet.",
+    "descripValues": "La sécurité, la transparence et l'engagement sont les principes qui guident chacune des décisions derrière Guardian Escolar. Nous croyons que la technologie doit être au service du bien-être des élèves, en offrant aux familles la tranquillité de savoir que leurs enfants sont en sécurité pendant chaque trajet scolaire."
+  },
+  "logout": {
+    "title": "Se déconnecter",
+    "description": "Vous allez vous déconnecter de votre compte sur cet appareil. Vous pourrez vous reconnecter à tout moment."
+  },
+  "support": {
+    "title": "Conte-nos o seu problema",
+    "description": "Conte-nos o seu problema",
+    "placeholder": "Escreva sua mensagem aqui..."
+  },
+  "rateUs": {
+    "title": "Conte-nos a sua opinião",
+    "placeholder": "Escreva sua opinião aqui..."
+  },
   "cards": {
     "finalDestination": "Destination finale",
     "stops": "Arrêts",
     "school": "École"
   },
-
   "bottom": {
     "route": "Route",
     "location": "Emplacement",

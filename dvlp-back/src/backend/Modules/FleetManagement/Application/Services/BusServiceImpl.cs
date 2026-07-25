@@ -21,7 +21,7 @@ public class BusServiceImpl : ACrudService<Bus, BusResponseDto, BusRequestDto>
         if (dto.driverId != Guid.Empty && dto.driverId != entity.driverId) entity.driverId = dto.driverId;
         if (dto.schoolId != Guid.Empty && dto.schoolId != entity.schoolId) entity.schoolId = dto.schoolId;
         if (dto.lineModelId != Guid.Empty && dto.lineModelId != entity.lineModelId) entity.lineModelId = dto.lineModelId;
-        if (dto.soatValidity != null && !dto.soatValidity.SequenceEqual(entity.soatValidity)) entity.soatValidity = dto.soatValidity;
+        if (dto.soatValidity.HasValue && dto.soatValidity != entity.soatValidity) entity.soatValidity = dto.soatValidity.Value;
         if (dto.gpsStatus.HasValue && dto.gpsStatus.Value != entity.gpsStatus) entity.gpsStatus = dto.gpsStatus.Value;
         
         _context.SaveChanges();

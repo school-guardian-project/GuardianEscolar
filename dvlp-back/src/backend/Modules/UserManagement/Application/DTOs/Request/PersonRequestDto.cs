@@ -13,6 +13,8 @@ public class PersonRequestDto
     public string email { get; set; }
 
     public int? phone { get; set; }
+    
+    public DateOnly? dateBirth { get; set; }
 
     public string residenceAddress { get; set; }
 }

@@ -1,4 +1,5 @@
-﻿using backend.Shared.Exceptions;
+﻿using System.Diagnostics;
+using backend.Shared.Exceptions;
 using backend.Shared.Responses;
 using System.Net;
 using System.Text.Json;
@@ -18,7 +19,9 @@ namespace backend.API.Middleware
         {
             try
             {
+                var sw = Stopwatch.StartNew();
                 await _next(context);
+                Console.WriteLine($"{context.Request.Path} -> {sw.ElapsedMilliseconds} ms");
             }
             catch (Exception ex)
             {

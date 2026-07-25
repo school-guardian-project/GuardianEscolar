@@ -6,7 +6,7 @@ public class BusRequestDto
 
     public Guid schoolId { get; set; }
 
-    public byte[]? soatValidity { get; set; }
+    public DateOnly? soatValidity { get; set; }
 
     public bool? gpsStatus { get; set; }
 

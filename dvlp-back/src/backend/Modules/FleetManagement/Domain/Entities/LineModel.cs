@@ -8,7 +8,7 @@ namespace backend.Modules.FleetManagement.Domain.Entities
 
         public Guid modelId { get; set; }
 
-        public int capacity { get; set; }
+        public byte capacity { get; set; }
 
         public string plate { get; set; }
 

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using backend.Modules.UserManagement.Application.DTOs.Request;
 using backend.Modules.UserManagement.Application.DTOs.Response;
 using backend.Modules.UserManagement.Application.Services;
@@ -27,7 +28,9 @@ public class StudentController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<List<StudentResponseDto>>> FindAll()
     {
+        var sw = Stopwatch.StartNew();
         var result = await _studentService.FindAll();
+        Console.WriteLine($"Controller: {sw.ElapsedMilliseconds} ms");
         return Ok(result);
     }
 }

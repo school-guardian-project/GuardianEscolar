@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices.JavaScript;
 using backend.Modules.AlertManagement.Domain.Entities;
 using backend.Modules.BoardingManagement.Domain.Entities;
 using backend.Modules.RouteManagement.Domain.Entities;
@@ -13,13 +14,7 @@ namespace backend.Modules.FleetManagement.Domain.Entities
 
         public Guid schoolId { get; set; }
 
-        public string? brand { get; set; }
-
-        public string? model { get; set; }
-
-        public int capacity { get; set; }
-
-        public byte[]? soatValidity { get; set; }
+        public DateOnly soatValidity { get; set; }
 
         public bool gpsStatus { get; set; }
 

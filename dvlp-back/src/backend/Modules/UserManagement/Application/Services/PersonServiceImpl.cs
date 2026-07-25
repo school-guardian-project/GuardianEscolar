@@ -28,6 +28,7 @@ public class PersonServiceImpl : ACrudService<Person, PersonResponseDto, PersonR
         if (!string.IsNullOrEmpty(dto.email) && dto.email != entity.email) entity.email = dto.email;
         if (!string.IsNullOrEmpty(dto.residenceAddress) && dto.residenceAddress != entity.residenceAddress) entity.residenceAddress = dto.residenceAddress;
         if (dto.phone.HasValue && dto.phone != entity.phone) entity.phone = dto.phone.Value;
+        if (dto.dateBirth.HasValue && dto.dateBirth != entity.dateBirth) entity.dateBirth = dto.dateBirth.Value;
         
         _context.SaveChanges();
         return _mapper.Map<PersonResponseDto>(entity);

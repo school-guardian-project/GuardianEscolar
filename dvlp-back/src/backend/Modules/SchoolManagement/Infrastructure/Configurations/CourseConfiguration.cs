@@ -9,7 +9,7 @@ namespace backend.Modules.SchoolManagement.Infrastructure.Configurations
     {
         public override void Configure(EntityTypeBuilder<Course> builder)
         {
-            builder.Property(c => c.name).HasMaxLength(50);
+            builder.Property(c => c.name).HasMaxLength(10);
             builder.HasOne(c => c.campuse).WithMany().HasForeignKey(c => c.campuseId);
         }
     }

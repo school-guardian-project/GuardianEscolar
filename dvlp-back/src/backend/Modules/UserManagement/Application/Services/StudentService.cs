@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using AutoMapper;
 using backend.Infrastructure.Persistence.Context;
 using backend.Modules.SchoolManagement.Application.Services;
@@ -92,7 +93,8 @@ public class StudentService : IBusinessApplication<StudentRequestDto, StudentRes
 
     public async Task<List<StudentResponseDto>> FindAll()
     {
-        return await _context.Profile
+        var sw = Stopwatch.StartNew();
+        var result = await _context.Profile
             .AsNoTracking()
             .Where(p => p.status == "active")
             .Where(p => p.profileRoles.Any(r => r.role.name == "student"))
@@ -107,5 +109,9 @@ public class StudentService : IBusinessApplication<StudentRequestDto, StudentRes
                 .Select(c => c.course.name)
                 .FirstOrDefault()
         }).ToListAsync();
+        
+        Console.WriteLine($"Consulta EF: {sw.ElapsedMilliseconds} ms");
+
+        return result;
     }
 }

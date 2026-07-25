@@ -8,7 +8,7 @@ namespace backend.Modules.AlertManagement.Domain.Entities
 
         public string? description { get; set; }
 
-        public int? urgencyLevel { get; set; }
+        public byte? urgencyLevel { get; set; }
 
         public ICollection<Alert> alerts { get; set; } = new List<Alert>();
     }

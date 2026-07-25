@@ -10,8 +10,8 @@ namespace backend.Modules.AlertManagement.Infrastructure.Configurations
         public override void Configure(EntityTypeBuilder<AlertType> builder)
         {
             base.Configure(builder);
-            builder.Property(at => at.name).HasMaxLength(255);
-            builder.Property(at => at.description).HasMaxLength(500);
+            builder.Property(at => at.name).HasMaxLength(30);
+            builder.Property(at => at.description).HasMaxLength(100);
             builder.Property(at => at.urgencyLevel);
         }
     }

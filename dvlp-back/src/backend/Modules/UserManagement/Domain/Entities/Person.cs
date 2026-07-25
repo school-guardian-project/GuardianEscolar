@@ -17,6 +17,8 @@ namespace backend.Modules.UserManagement.Domain.Entities
 
         public int? phone { get; set; }
 
+        public DateOnly dateBirth { get; set; }
+
         public string? residenceAddress { get; set; }
 
         public ICollection<Profile> profiles { get; set; } = new List<Profile>();

@@ -2,12 +2,13 @@ import React from "react";
 import { View } from "react-native";
 import MapView from "react-native-maps";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
-
-import SearchInput from "@components/inputs/SearchInput";
-import NotificationButton from "@components/buttons/NotificationButton";
 import RouteInfoCard from "@components/cards/RouteInfoCard";
 import BottomTabBar from "@components/layout/BottomTabBar";
 import useWindow from "@core/hooks/useWindow";
+import TopBar from "@components/TopBar";
+import { roleConfig } from "@core/config/roles/roleConfig";
+import { useNavigation } from "@react-navigation/native";
+import useSession from "@core/hooks/useSession";
 
 import styles from "./MainPage.style";
 
@@ -15,6 +16,9 @@ export default function MainPage() {
   const { width } = useWindow();
   const insets = useSafeAreaInsets();
   const horizontalPadding = width < 360 ? 12 : 16;
+  const navigation = useNavigation();
+  const { role } = useSession();
+  const config = roleConfig[role];
 
   return (
     <View style={styles.container}>
@@ -39,12 +43,7 @@ export default function MainPage() {
           },
         ]}
       >
-        <View style={styles.topBar}>
-          <View style={styles.searchWrapper}>
-            <SearchInput />
-          </View>
-          <NotificationButton />
-        </View>
+        <TopBar config={config.topBar} />
 
         <View style={[styles.bottomSection, { marginHorizontal: -horizontalPadding }]}>
           <RouteInfoCard />

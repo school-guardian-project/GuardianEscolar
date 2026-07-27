@@ -13,16 +13,7 @@ export default StyleSheet.create({
     ...StyleSheet.absoluteFillObject,
     justifyContent: "space-between",
   },
-  topBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingTop: 12,
-    gap: 8,
-  },
-  searchWrapper: {
-    flex: 1,
-    minWidth: 0,
-  },
+  
   bottomSection: {
     alignSelf: "stretch",
   },

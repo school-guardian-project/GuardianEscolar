@@ -19,7 +19,6 @@ import AboutUs from '@features/profile/views/AboutUs/AboutUs'
 import Logout from '@features/profile/views/Logout/Logout';
 import Support from "@features/profile/views/AboutUs/Support/Support";
 import Rating from "@features/profile/views/AboutUs/Rating/Rating";
-import { View } from 'react-native';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();

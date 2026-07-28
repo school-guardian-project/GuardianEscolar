@@ -21,32 +21,28 @@
       </div>
 
       <div class="container-errors">
-        @if (form.get('password')?.touched) {
-          @if (form.get('password')?.errors?.['required']) {
+          @if (form.get('password')?.touched && form.get('password')?.errors?.['required']) {
             <small class="error">{{ 'forgot_password.reset.errors.required' | translate }}</small>
           }
-          @if (form.get('password')?.errors?.['minlength']) {
+          @if (form.get('password')?.dirty && form.get('password')?.errors?.['minlength']) {
             <small class="error">{{ 'forgot_password.reset.errors.minlength' | translate }}</small>
           }
-          @if (form.get('password')?.errors?.['pattern']) {
+          @if (form.get('password')?.dirty && form.get('password')?.errors?.['pattern']) {
             <small class="error">{{ 'forgot_password.reset.errors.pattern' | translate }}</small>
           }
-        }
       </div>
     </div>
-
+<br><br><br>
     <div class="input-confirm-password">
       <label for="confirmPassword">{{ 'forgot_password.reset.fields.confirm_password' | translate }}</label>
       <input type="password" id="confirmPassword" formControlName="confirmPassword" />
 
       <div class="container-errors-confirm">
-        @if (
-          form.get('confirmPassword')?.touched && form.get('confirmPassword')?.errors?.['required']
-        ) {
-          <small class="error1">{{ 'forgot_password.reset.errors.required' | translate }}</small>
+        @if (form.get('confirmPassword')?.touched && form.get('confirmPassword')?.errors?.['required']) {
+          <small class="error">{{ 'forgot_password.reset.errors.required' | translate }}</small>
         }
-        @if (form.errors?.['passwordNoMatch'] && form.get('confirmPassword')?.touched) {
-          <small class="error1">{{ 'forgot_password.reset.errors.no_match' | translate }}</small>
+        @if (form.errors?.['passwordNoMatch'] && form.get('confirmPassword')?.dirty) {
+          <small class="error">{{ 'forgot_password.reset.errors.no_match' | translate }}</small>
         }
       </div>
     </div>

@@ -27,7 +27,7 @@ main {
   width: 100%;
   max-width: 760px;
   height: 100%;
-  max-height: 500px;
+  max-height: 600px;
   box-shadow: var(--card-shadow);
 }
 
@@ -113,7 +113,7 @@ button {
   font-size: 1rem;
   border: none;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 50px;
   margin-bottom: 20px;
   transition: background-color 0.2s ease;
 }
@@ -177,3 +177,5 @@ button:hover {
     width: 50%;
   }
 }
+
+

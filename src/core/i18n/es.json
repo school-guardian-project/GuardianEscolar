@@ -7,15 +7,19 @@
     "suport": "Soporte",
     "rateUs": "Califícanos",
     "cancel": "Cancelar",
-    "send": "Enviar"
+    "send": "Enviar",
+    "update": "Actualizar"
   },
   "inputs": {
     "title.email": "Correo Electrónico",
+    "title.numero": "Número telefónico",
     "title.password": "Contraseña",
+    "numeroPlaceholder": "Ingresa el nuevo número telefónico",
     "emailPlaceholder": "Ingresa tu correo electrónico",
     "passwordPlaceholder": "Ingresa tu contraseña",
     "verifyCodePlaceholder": "Ingresa el código de verificación",
     "newPasswordPlaceholder": "Ingresa tu nueva contraseña",
+    "confirmPassword": "Nueva contraseña",
     "confirmPasswordPlaceholder": "Confirma tu nueva contraseña",
     "searchRoute": "Buscar ruta",
     "data": "Mis datos",
@@ -62,7 +66,7 @@
   },
   
   "verifyCode": {
-    "title": "Restablecer contraseña",
+    "title": "Código de verificación",
     "description": "Ingresa el código enviado a tu correo electrónico.",
     "transferCode": "¿No recibiste el código? Reenviar"
   },
@@ -71,7 +75,42 @@
     "title": "Restablecer contraseña",
     "description": "Ingresa tu nueva contraseña.",
     "newPasswordPlaceholder": "Ingresa tu nueva contraseña",
+
     "confirmPasswordPlaceholder": "Confirma tu nueva contraseña"
+  },
+
+
+  "account":{
+    "updatePhone":{
+      "title" :"Actualizar número telefónico",
+      "description": "Ingresa su correo electrónico para verificar su identidad"
+    },
+
+    "verifyPhone":{
+      "descriptionVerify": "Hemos enviado un código a su número. Por favor ingréselo."
+    },
+
+    "newPhone":{ 
+      "description": "Ingresa el nuevo número telefónico."
+    },
+
+    "updateEmail":{
+      "title": "Actualizar correo electrónico",
+      "description": "Ingrese su correo para verificar su identidad."
+    }, 
+
+    "verifyEmail" : {
+      "description" : "Hemos enviado un código a su correo.Por favor ingréselo."
+    },
+
+    "newEmail": {
+      "description" : "Ingresa el nuevo correo electrónico."
+    },
+
+    "updatePassword": {
+      "title" : "Actualizar contraseña"
+    }
+    
   },
 
   "profile": {

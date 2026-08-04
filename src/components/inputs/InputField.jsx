@@ -5,8 +5,8 @@ import { useTheme } from "@core/services/ThemeService";
 export default function InputField({
   label,
   placeholder,
-  value,
-  onChangeText,
+  value = "",
+  onChangeText = () => {},
   keyboardType = "default",
   secureTextEntry = false,
 }) {
@@ -49,7 +49,7 @@ export default function InputField({
 
 const styles = StyleSheet.create({
   container: {
-    marginBottom: 12,
+    marginBottom: 10,
   },
 
   label: {

@@ -5,20 +5,55 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text } from 'react-native';
 import { ThemeProvider } from '@core/services/ThemeService';
 
+
+// Iniciar Sesion
 import Login from '@features/auth/views/Login/Login';
-import ForgotPassword from '@features/auth/views/ForgotPassword/ForgotPassword';
-import VerifyCode from '@features/auth/views/VerifyCode/VerifyCode';
-import NewPassword from '@features/auth/views/NewPassword/NewPassword';
+
+//Recuperar contraseña
+import ForgotPassword from '@features/account/views/Password/ForgotPassword/ForgotPassword/ForgotPassword';
+import VerifyCode from '@features/account/views/Password/ForgotPassword/VerifyCode/VerifyCode';
+import NewPassword from '@features/account/views/Password/ForgotPassword/NewPassword/NewPassword';
+
+//Cambiar contraseña 
+import UpdatePassword from '@features/account/views/Password/UpdatePassword/UpdatePassword/UpdatePassword';
+import VerifyCodePassword from "@features/account/views/Password/UpdatePassword/VerifyPassword/VerifyCodePassword";
+import ChangePasswordForm from "@features/account/views/Password/UpdatePassword/ChangePasswordForm/ChangePasswordForm";
+// Pagina principal
 import MainPage from "@features/home/views/MainPage/MainPage";
+
+// Mi perfil
 import Profile from "@features/profile/views/Profile/Profile";
+
+// Mis datos
 import Datas from "@features/profile/views/Datas/Datas";
+
+//Cambiar correo electrónico
+import UpdateEmail from "@features/account/views/Email/UpdateEmail/UpdateEmail";
+import VerifyUpdateEmail from "@features/account/views/Email/VerifyUpdateEmail/VerifyUpdateEmail"
+import NewEmail from "@features/account/views/Email/NewEmail/NewEmail"
+import VerifyNewEmail from "@features/account/views/Email/VerifyNewEmail/VerifyNewEmail"
+
+//Cambiar telefono
+import UpdatePhone from "@features/account/views/Phone/UpdatePhone/UpdatePhone";
+import VerifyUpdatePhone from "@features/account/views/Phone/VerifyUpdatePhone/VerifyUpdatePhone";
+import NewPhone from "@features/account/views/Phone/NewPhone/NewPhone";
+import VerifyNewPhone from "@features/account/views/Phone/VerifyNewPhone/VerifyNewPhone";
+// Mi familia
 import Family from "@features/profile/views/Family/Family";
+
+//Seguridad y Politicas
 import Security from "@features/profile/views/Security/Security";
 import PrivacyPolicies from '@features/profile/views/Privacy/PrivacyPolicies';
+
+//Sobre nosotros
 import AboutUs from '@features/profile/views/AboutUs/AboutUs'
-import Logout from '@features/profile/views/Logout/Logout';
+
+//Calificaciones
 import Support from "@features/profile/views/AboutUs/Support/Support";
 import Rating from "@features/profile/views/AboutUs/Rating/Rating";
+
+//Cerrar sesion
+import Logout from '@features/profile/views/Logout/Logout';
 import { View } from 'react-native';
 
 const Stack = createStackNavigator();
@@ -65,6 +100,17 @@ export default function App() {
           <Stack.Screen name="MainPage" component={MainPage}/>  
           <Stack.Screen name="Profile" component={Profile}/>
           <Stack.Screen name="Datas" component={Datas}/>
+          <Stack.Screen name="UpdateEmail" component={UpdateEmail}/>
+          <Stack.Screen name="VerifyUpdateEmail" component={VerifyUpdateEmail}/>
+          <Stack.Screen name="NewEmail" component={NewEmail}/>
+          <Stack.Screen name="VerifyNewEmail" component={VerifyNewEmail}/>
+          <Stack.Screen name="UpdatePhone" component={UpdatePhone}/>
+          <Stack.Screen name="VerifyUpdatePhone" component={VerifyUpdatePhone}/>
+          <Stack.Screen name="NewPhone" component={NewPhone}/>
+          <Stack.Screen name="VerifyNewPhone" component={VerifyNewPhone}/>
+          <Stack.Screen name="UpdatePassword" component={UpdatePassword}/>
+          <Stack.Screen name="VerifyCodePassword" component={VerifyCodePassword}/>
+          <Stack.Screen name="ChangePasswordForm" component={ChangePasswordForm}/>
           <Stack.Screen name="Family" component={Family}/>
           <Stack.Screen name="Security" component={Security}/>
           <Stack.Screen name="PrivacyPolicies" component={PrivacyPolicies}/>

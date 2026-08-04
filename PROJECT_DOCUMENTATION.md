@@ -176,6 +176,8 @@ También conviene resolver estos puntos detectados en el código actual:
 - `InfoRow` recibe las propiedades `arrow` y `hidden`, pero aún no las representa ni modifica el valor mostrado. Son puntos preparados para completar la interfaz.
 - Los datos de ruta, perfil y familia son valores de ejemplo. No están vinculados a usuario, ubicación ni base de datos.
 
+## Principio DRY (Don't Repeat Yourself)
+
 ## 10. Resumen
 
 Guardian Escolar cuenta ahora con una base de interfaz completa para autenticación, consulta de ruta y gestión de perfil. La arquitectura separa pantallas, componentes compartidos y servicios globales; el tema y las traducciones se aplican de forma transversal. El siguiente paso natural es reemplazar los datos simulados y las acciones de navegación incompletas por flujos conectados a los servicios reales del proyecto.

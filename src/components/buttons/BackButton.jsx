@@ -5,11 +5,19 @@ import { useNavigation } from "@react-navigation/native";
 
 import { useTheme } from "@core/services/ThemeService";
 
-export default function BackButton({ label }) {
+export default function BackButton({
+  label,
+  backTo,
+}) {
   const navigation = useNavigation();
   const { theme } = useTheme();
 
   const handleBack = () => {
+    if (backTo) {
+      navigation.navigate(backTo);
+      return;
+    }
+
     if (navigation.canGoBack()) {
       navigation.goBack();
     } else {

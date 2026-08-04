@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { ScrollView, View, Switch } from "react-native";
 import { useTranslation } from "react-i18next";
-
+import { useNavigation } from "@react-navigation/native";
 import BackButton from "@components/buttons/BackButton";
 import BottomTabBar from "@components/layout/BottomTabBar";
 import InfoCard from "@components/cards/InfoCard";
@@ -13,6 +13,7 @@ import styles from "@core/styles/profileScreen.style";
 export default function Security() {
     const { theme } = useTheme();
     const { t } = useTranslation();
+      const navigation = useNavigation();
     const [enabled, setEnabled] = useState(false);
 
     return (
@@ -56,6 +57,7 @@ export default function Security() {
                         value={t("security.changePassword")}
                         editable
                         last
+                        editOnPress={() => navigation.navigate("UpdatePassword")}
                     />
                 </InfoCard>
 

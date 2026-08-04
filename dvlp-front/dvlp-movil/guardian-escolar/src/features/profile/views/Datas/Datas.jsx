@@ -8,12 +8,14 @@ import BottomTabBar from "@components/layout/BottomTabBar";
 import InfoCard from "@components/cards/InfoCard";
 import InfoRow from "@components/cards/InfoRow";
 
+import { useNavigation } from "@react-navigation/native";
+
 import styles from "@core/styles/profileScreen.style";
 
 export default function Datas() {
   const { theme } = useTheme();
   const { t } = useTranslation();
-
+  const navigation = useNavigation();
   return (
     <View
       style={[
@@ -37,6 +39,7 @@ export default function Datas() {
             title={t("inputs.phone")}
             value="+57 *** *** ****"
             editable
+            editOnPress={() => navigation.navigate("UpdatePhone")}
           />
 
           <InfoRow
@@ -44,6 +47,7 @@ export default function Datas() {
             title={t("inputs.email")}
             value="correoejemplo@gmail.com"
             editable
+            editOnPress={() => navigation.navigate("UpdateEmail")}
           />
 
           <InfoRow

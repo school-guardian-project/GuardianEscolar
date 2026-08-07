@@ -52,6 +52,9 @@ import AboutUs from '@features/profile/views/AboutUs/AboutUs'
 import Support from "@features/profile/views/AboutUs/Support/Support";
 import Rating from "@features/profile/views/AboutUs/Rating/Rating";
 
+
+import Appearance from "@features/profile/views/Appearance/Appearance";
+import Language from "@features/profile/views/language/language";
 //Cerrar sesion
 import Logout from '@features/profile/views/Logout/Logout';
 import { View } from 'react-native';
@@ -118,6 +121,8 @@ export default function App() {
           <Stack.Screen name="Logout"  component={Logout}/>
           <Stack.Screen name="Support" component={Support}/>
           <Stack.Screen name="Rating" component={Rating}/>
+          <Stack.Screen name="Appearance" component={Appearance}/>
+          <Stack.Screen name="Language" component={Language}/>
           <Stack.Screen name="HomeTabs" component={HomeTabs}/>
         </Stack.Navigator>
       </NavigationContainer>

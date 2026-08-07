@@ -6,24 +6,30 @@ import InputField from "@components/inputs/InputField";
 import PrimaryButton from "@components/buttons/PrimaryButton";
 
 export default function PasswordScreen({
-
     title,
     description,
     buttonText,
     nextScreen,
+    onSuccess,
+}) {
 
-}){
+    const navigation = useNavigation();
 
-    const navigation=useNavigation();
+    const handleSubmit = () => {
+        if (onSuccess) {
+            onSuccess(navigation);
+            return;
+        }
 
-    return(
+        navigation.navigate(nextScreen);
+    };
 
+    return (
         <AccountLayout
             backLabel={title}
             title={title}
             description={description}
         >
-
             <InputField
                 label="Nueva contraseña"
                 secureTextEntry
@@ -36,11 +42,8 @@ export default function PasswordScreen({
 
             <PrimaryButton
                 text={buttonText}
-                onPress={()=>navigation.navigate(nextScreen)}
+                onPress={handleSubmit}
             />
-
         </AccountLayout>
-
-    )
-
+    );
 }

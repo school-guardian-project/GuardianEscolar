@@ -1,5 +1,5 @@
 Table Person {
-    id uui [primary key]
+    id uuid [primary key]
     name varchar(50)
     lastName varchar(50)
     identificacionTypeId uuid

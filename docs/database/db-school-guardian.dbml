@@ -1,250 +1,287 @@
 Table Person {
-    personId int [primary key]
-    name varchar(255)
-    lastName varchar(255)
-    identificacionTypeId int
-    identificationNumber varchar(255)
-    email varchar(255)
-    phone varchar(20)
-    residenceAddress varchar(255)
+    id uui [primary key]
+    name varchar(50)
+    lastName varchar(50)
+    identificacionTypeId uuid
+    identificationNumber varchar(50)
+    email varchar(50)
+    phone int
+    residenceAddress varchar(50)
+    dateBirth date
+    status varchar(20)
 }
 
 Table IdentificationType {
-  identificacionTypeId int [primary key]
-  name varchar(255)
+  id uuid [primary key]
+  name varchar(30)
+  status varchar(20)
 }
 
 Table Role {
-    roleId int [primary key]
-    name varchar(255)
-    description varchar(255)
+    id uuid [primary key]
+    name varchar(20)
+    description varchar(100)
+    permissions varchar(40)
+    status varchar(20)
 }
 
 Table Action {
-    actionId int [primary key]
-    name varchar(255)
-    description text
+    id uuid [primary key]
+    name varchar(30)
+    description varchar(100)
+    status varchar(20)
 }
 
 Table View {
-    viewId int [primary key]
-    name varchar(255)
-    description text
+    id uuid [primary key]
+    name varchar(30)
+    description varchar(100)
+    status varchar(20)
 }
 
 Table Module {
-    moduleId int [primary key]
-    name varchar(255)
-    description text
+    id uuid [primary key]
+    name varchar(30)
+    description varchar(100)
+    status varchar(20)
 }
 
 Table RoleModule {
-    roleModuleId int [primary key]
-    roleId int
-    moduleId int
+    id uuid [primary key]
+    roleId uuid
+    moduleId uuid
+    status varchar(20)
 }
 
 Table ViewModule {
-    viewModuleId int [primary key] 
-    viewId int
-    moduleId int
+    id uuid [primary key] 
+    viewId uuid
+    moduleId uuid
+    status varchar(20)
 }
 
 Table ViewAction {
-    viewActionId int [primary key]
-    viewId int
-    actionId int
+    id uuid [primary key]
+    viewId uuid
+    actionId uuid
+    status varchar(20)
 }
 
 // ----------------------------------
 Table Family {
-    familyId int [primary key]
-    name varchar(255)
-    observations TEXT
+    id uuid [primary key]
+    name varchar(50)
+    observations varchar(100)
+    status varchar(20)
 }
 
 Table FamilyMember {
-    familyId int
-    profileId int
-    primary key (familyId, profileId)
+    id uuid [primary key]
+    familyId uuid
+    profileId uuid
+    status varchar(20)
 }
 
 Table School {
-  schoolId int [primary key]
-  cityId int 
-  logo varchar(255)
-  name varchar(255)
-  address varchar(255)
-  phone varchar(20)
-  email varchar(255)
-  website varchar(255)
-  theme varchar(255)
+  id uuid [primary key]
+  cityId uuid
+  logo byte
+  name varchar(30)
+  address varchar(30)
+  phone int
+  email varchar(50)
+  website varchar(100)
+  theme varchar(20)
+  status varchar(20)
 }
 
 Table Boarding {
-  boardinId int [primary key]
-  profileId int
-  busId int
-  stopId int
+  id uuid [primary key]
+  profileId uuid
+  busId uuid
+  stopId uuid
   dateTime timestamp
+  status varchar(20)
   boardingTypeId int
+}
+
+Table BoardingType {
+  id int [primary key]
+  name varhcar(20)
 }
 
 
 Table SavedAlert {
-    profileId int
-    alertId int
-    primary key (profileId, alertId)
+    id uuid [primary key]
+    profileId uuid
+    alertId uuid
+    status varchar(20)
   }
 
 Table AlertType {
-    alertTypeId int [primary key]
-    name varchar(255)
-    description varchar(255)
-    urgencyLevel int
+    id uuid [primary key]
+    name varchar(30)
+    description varchar(100)
+    urgencyLevel byte
+    status varchar(20)
   }
 
 Table Alert {
-    alertId int [primary key]
-    alertTypeId int
-    busId int
-    dateTime datetime 
+    id uuid [primary key]
+    alertTypeId uuid
+    busId uuid
+    dateTime datetime
+    status varchar(20)
   }
 
 
 Table Bus {
-  busId int [primary key]
-  driverId int
-  schoolId int
+  id uuid [primary key]
+  driverId uuid
+  schoolId uuid
   soatValidity date
   gpsStatus boolean
-  lineModelId int
+  lineModelId uuid
+  status varchar(20)
 }
 
 Table Brand {
-  brandId int [primary key]
-  name varchar(255)
+  id uuid [primary key]
+  name varchar(30)
+  status varchar(20)
 }
 
-Table Model {
-  modelId int [primary key]
-  year year
+Table Year {
+  id uuid [primary key]
+  year int
+  status varchar(20)
 }
 Table Line {
-  lineId int [primary key]
-  name varchar(255)
-  brandId int
+  id uuid [primary key]
+  brandId uuid
+  name varchar(30)
+  status varchar(20)
 }
 Table LineModel {
-  lineModelid int [primary key]
-  lineId int
-  modelId int
-  capacity int
-  plate varchar(50)
+  id uuid [primary key]
+  lineId uuid
+  modelId uuid
+  capacity byte
+  plate varchar(15)
+  status varchar(20)
 }
 
 Table Stop {
-  stopId int [primary key]
-  cityId int
-  schoolId int
-  address varchar(255)
-  longitude decimal
-  latitude decimal
+  id uuid [primary key]
+  cityId uuid
+  schoolId uuid
+  address varchar(30)
+  longitude decimal(12, 2)
+  latitude decimal(12, 2)
+  status varchar(20)
 }
 
 Table Route {
-  routeId int [primary key]
-  schoolId int
-  name varchar(255)
-  targetSector varchar(255)
-  startTime time [not null]
-  endTime time [not null]
+  id uuid [primary key]
+  schoolId uuid
+  name varchar(30)
+  targetSector varchar(30)
+  startDateTime datetime
+  endDateTime datetime
+  status varchar(20)
 }
 
 
 Table City {
-  cityId int [primary key]
-  name VARCHAR(255) [not null]
-  country VARCHAR(255) [not null]
+  id uuid [primary key]
+  name varchar(40)
+  country varchar(30)
+  status varchar(20)
 }
 
 Table RouteStudentAssignments {
-  profileId int
-  routeId int
-  primary key(profileId, routeId)
+  id uuid [primary key]
+  profileId uuid
+  routeId uuid
+  status varchar(20)
 }
 
 Table RouteStop {
-  routeId int
-  stopId int
-  primary key (routeId, stopId)
+  id uuid [primary key]
+  routeId uuid
+  stopId uuid
+  status varchar(20)
 }
 
 Table RouteBusAssignments {
-  busId int
-  routeId int
-  primary key(busId, routeId)
-}
-
-Table BoardingType {
-  boardingId int [primary key]
-  name varhcar(20)
+  id uuid [primary key]
+  busId uuid
+  routeId uuid
+  status varchar(20)
 }
 
 Table SchoolCampuse {
-  campusId int [primary key]
-  schoolId int [not null]
-  name varchar(255) [not null]
-  address varchar(255) [not null]
+  id uuid [primary key]
+  schoolId uuid
+  name varchar(30)
+  address varchar(30)
+  status varchar(20)
 }
 
 Table Course {
-  courseId int [primary key]
-  campusId int [not null]
-  name varchar(255) [not null]
+  id uuid [primary key]
+  campusId uuid
+  name varchar(10)
+  status varchar(20)
 }
 
 Table CourseGroup {
-  profileId int
-  courseId int
-  primary key (profileId, courseId)
+  id uuid [primary key]
+  profileId uuid
+  courseId uuid
+  status varchar(20)
 }
 
 Table DriverLicense {
-  licenseId int [primary key]
+  id uuid [primary key]
   profileId int [not null]
   licenseNumber varchar(255)
   drivingLicense varchar(255) [not null]
   licenseExpirationDate date [not null]
+  status varchar(20)
 }
 
-Table ProfileRol {
-  profileId int
-  roleId int
-  primary key (profileId, roleId)
+Table ProfileRole {
+  id uuid [primary key]
+  profileId uuid
+  roleId uuid
+  status varchar(20)
 }
 
 Table Profile {
-    profileId int [primary key]
-    personId int [not null]
-    passwordHash varchar(255)
+    id uuid [primary key]
+    personId uuid
+    passwordHash varchar(100)
+    status varchar(20)
 }
 
 Table ExceptionalDriverUsage {
-  usageId int [primary key]
-  busId int [not null]
-  profileId int [not null]
-  startDateTime datetime [not null]
-  endDateTime datetime [not null]
-  reason varchar(255) [not null]
+  id uuid [primary key]
+  busId uuid
+  profileId uuid
+  dateTime datetime
+  reason varchar(200)
+  status varchar(20)
 }
 
 Table ExceptionalRouteUsage {
-  usageId int [primary key]
-  profileId int [not null]
-  routeId int [not null]
-  dateTime datetime [not null]
-  reason varchar(255)
+  id uuid [primary key]
+  profileId uuid
+  routeId uuid
+  startDateTime datetime
+  endDateTime datetime
+  reason varchar(200)
+  status varchar(20)
 }
 
 
@@ -253,71 +290,70 @@ Table ExceptionalRouteUsage {
 
 // Relationships
 
-Ref person_profile: Profile.personId - Person.personId
-Ref profile_rol: ProfileRol.profileId > Profile.profileId
-Ref profile_rol: ProfileRol.roleId > Role.roleId
+Ref person_profile: Profile.personId - Person.id
+Ref profile_rol: ProfileRole.profileId > Profile.id
+Ref profile_rol: ProfileRole.roleId > Role.id
 
-Ref saved_alert: SavedAlert.profileId > Profile.profileId
-Ref saved_alert: SavedAlert.alertId > Alert.alertId
+Ref saved_alert: SavedAlert.profileId > Profile.id
+Ref saved_alert: SavedAlert.alertId > Alert.id
 
-Ref alert: Alert.alertTypeId > AlertType.alertTypeId
-Ref alert: Alert.busId > Bus.busId
+Ref alert: Alert.alertTypeId > AlertType.id
+Ref alert: Alert.busId > Bus.id
 
-Ref school_campuse: SchoolCampuse.schoolId > School.schoolId
+Ref school_campuse: SchoolCampuse.schoolId > School.id
 
-Ref family_member: FamilyMember.familyId > Family.familyId
-Ref family_member: FamilyMember.profileId > Profile.profileId
+Ref family_member: FamilyMember.familyId > Family.id
+Ref family_member: FamilyMember.profileId > Profile.id
 
-Ref boarding: Boarding.profileId > Profile.profileId
-Ref boarding: Boarding.busId > Bus.busId
-Ref boarding: Boarding.stopId > Stop.stopId
+Ref boarding: Boarding.profileId > Profile.id
+Ref boarding: Boarding.busId > Bus.id
+Ref boarding: Boarding.stopId > Stop.id
 
-Ref cities: Stop.cityId > City.cityId
-Ref cities: School.cityId > City.cityId
+Ref cities: Stop.cityId > City.id
+Ref cities: School.cityId > City.id
 
-Ref route_student_assignments: RouteStudentAssignments.routeId > Route.routeId
-Ref route_student_assignments: RouteStudentAssignments.profileId > Profile.profileId
+Ref route_student_assignments: RouteStudentAssignments.routeId > Route.id
+Ref route_student_assignments: RouteStudentAssignments.profileId > Profile.id
 
-Ref route_stop: RouteStop.routeId > Route.routeId
-Ref route_stop: RouteStop.stopId > Stop.stopId
+Ref route_stop: RouteStop.routeId > Route.id
+Ref route_stop: RouteStop.stopId > Stop.id
 
-Ref route_bus_assignments: RouteBusAssignments.busId > Bus.busId
-Ref route_bus_assignments: RouteBusAssignments.routeId > Route.routeId
+Ref route_bus_assignments: RouteBusAssignments.busId > Bus.id
+Ref route_bus_assignments: RouteBusAssignments.routeId > Route.id
 
-Ref bus: Bus.schoolId > School.schoolId
-Ref bus: Bus.driverId > Profile.profileId
+Ref bus: Bus.schoolId > School.id
+Ref bus: Bus.driverId > Profile.id
 
-Ref stop_school: Stop.schoolId > School.schoolId
+Ref stop_school: Stop.schoolId > School.id
 
-Ref route_school: Route.schoolId > School.schoolId
+Ref route_school: Route.schoolId > School.id
 
-Ref course_group: CourseGroup.profileId > Profile.profileId
-Ref course_group: CourseGroup.courseId > Course.courseId
+Ref course_group: CourseGroup.profileId > Profile.id
+Ref course_group: CourseGroup.courseId > Course.id
 
-Ref driver_license: DriverLicense.profileId - Profile.profileId
+Ref driver_license: DriverLicense.profileId - Profile.id
 
-Ref exception_driver_usage: ExceptionalDriverUsage.busId > Bus.busId
-Ref exception_driver_usage: ExceptionalDriverUsage.profileId > Profile.profileId
+Ref exception_driver_usage: ExceptionalDriverUsage.busId > Bus.id
+Ref exception_driver_usage: ExceptionalDriverUsage.profileId > Profile.id
 
-Ref exceptional_route_usage: ExceptionalRouteUsage.profileId > Profile.profileId
-Ref exceptional_route_usage: ExceptionalRouteUsage.routeId > Route.routeId
+Ref exceptional_route_usage: ExceptionalRouteUsage.profileId > Profile.id
+Ref exceptional_route_usage: ExceptionalRouteUsage.routeId > Route.id
 
 // Modulo de seguridad
-Ref role_module: RoleModule.roleId > Role.roleId
-Ref role_module: RoleModule.moduleId > Module.moduleId
+Ref role_module: RoleModule.roleId > Role.id
+Ref role_module: RoleModule.moduleId > Module.id
 
-Ref view_module: ViewModule.viewId > View.viewId
-Ref view_module: ViewModule.moduleId > Module.moduleId
+Ref view_module: ViewModule.viewId > View.id
+Ref view_module: ViewModule.moduleId > Module.id
 
-Ref view_action: ViewAction.viewId > View.viewId
-Ref view_action: ViewAction.actionId > Action.actionId
+Ref view_action: ViewAction.viewId > View.id
+Ref view_action: ViewAction.actionId > Action.id
 
-Ref n: Course.campusId > SchoolCampuse.campusId
+Ref n: Course.campusId > SchoolCampuse.id
 
-Ref identificacionType_person: Person.identificacionTypeId - IdentificationType.identificacionTypeId
-Ref brand_line: Brand.brandId < Line.brandId
-ref bus_model: LineModel.lineModelid < Bus.lineModelId
-ref lineModel_line: Line.lineId < LineModel.lineId
-ref lineModel_line: Model.modelId < LineModel.modelId
-
-Ref boarding_type: Boarding.boardingTypeId > BoardingType.boardingId
+Ref identificacionType_person: Person.identificacionTypeId > IdentificationType.id
+Ref brand_line: Brand.id < Line.brandId
+ref bus_model: LineModel.id < Bus.lineModelId
+ref lineModel_line: Line.id < LineModel.lineId
+ref lineModel_line: Year.id < LineModel.modelId
+ref: Boarding.boardingTypeId > BoardingType.id

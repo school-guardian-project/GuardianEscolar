@@ -15,12 +15,21 @@ export default function VerifyScreen({
     buttonText,
     resendText,
     nextScreen,
-
-}){
+    onSuccess,
+}) {
 
     const navigation = useNavigation();
 
-    return(
+    const handleSubmit = () => {
+        if (onSuccess) {
+            onSuccess(navigation);
+            return;
+        }
+
+        navigation.navigate(nextScreen);
+    };
+
+    return (
 
         <AccountLayout
             backLabel={title}
@@ -28,11 +37,11 @@ export default function VerifyScreen({
             description={description}
         >
 
-            <CodeInput/>
+            <CodeInput />
 
             <PrimaryButton
                 text={buttonText}
-                onPress={()=>navigation.navigate(nextScreen)}
+                onPress={handleSubmit}
             />
 
             <Pressable style={styles.link}>

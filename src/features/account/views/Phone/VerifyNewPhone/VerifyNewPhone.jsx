@@ -1,6 +1,6 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-
+import { resetToSection } from "@core/navigation/navigationHelper";
 import VerifyScreen from "@components/account/screens/VerifyScreen";
 
 export default function VerifyNewPhone() {
@@ -16,6 +16,9 @@ export default function VerifyNewPhone() {
             buttonText={t("button.verifyCode")}
             resendText={t("verifyCode.transferCode")}
             nextScreen="Profile"
+            onSuccess={(navigation) =>
+                resetToSection(navigation, "Datas")
+            }
         />
 
     );

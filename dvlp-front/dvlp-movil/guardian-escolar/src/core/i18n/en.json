@@ -22,6 +22,8 @@
     "confirmPassword": "New password",
     "confirmPasswordPlaceholder": "Confirm your new password",
     "searchRoute": "Search route",
+    "appearance": "Appearance",
+    "language": "Language",
     "data": "My data",
     "family": "My family",
     "security": "Security",

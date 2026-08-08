@@ -123,4 +123,19 @@ textArea: {
   marginBottom: 25,
 },
 
+radio: {
+    width: 20,
+    height: 20,
+    borderRadius: 10,
+    borderWidth: 2,
+    alignItems: "center",
+    justifyContent: "center",
+},
+
+radioSelected: {
+    width: 10,
+    height: 10,
+    borderRadius: 5,
+},
+
 });

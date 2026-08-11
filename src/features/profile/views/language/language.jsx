@@ -61,31 +61,35 @@ export default function Language() {
             >
 
                 <View>
-
+                    <View style={styles.card}>
                     <SettingsItem
                         title="Español"
                         onPress={() => changeLanguage("es")}
                         rightContent={renderRadio("es")}
                     />
-
+                    </View>
+                    <View style={styles.card}>
                     <SettingsItem
                         title="English"
                         onPress={() => changeLanguage("en")}
                         rightContent={renderRadio("en")}
                     />
+                    </View>
+                    <View style={styles.card}>
 
                     <SettingsItem
                         title="Français"
                         onPress={() => changeLanguage("fr")}
                         rightContent={renderRadio("fr")}
                     />
-
+                    </View>
+                    <View style={styles.card}>
                     <SettingsItem
                         title="Português"
                         onPress={() => changeLanguage("pt")}
                         rightContent={renderRadio("pt")}
                     />
-
+                    </View>
                 </View>
 
             </ScrollView>

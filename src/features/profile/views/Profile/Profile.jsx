@@ -20,7 +20,7 @@ export default function Profile() {
                 showsVerticalScrollIndicator={false}
             >
                 <Text style={[styles.title, { color: theme.titleColor }]}>{t("profile.title")}</Text>
-                <Text style={styles.subtitle}>{t("profile.subtitle")}</Text>
+                <Text style={[styles.subtitle, { color: theme.titleColor }]}>{t("profile.subtitle")}</Text>
 
                 <View style={styles.card}>
                     <SettingsItem

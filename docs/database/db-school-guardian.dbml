@@ -1,70 +1,79 @@
+enum Status {
+  ACTIVE
+  INACTIVE
+}
+
+enum BoardingType {
+  ON_BOARD
+  OFF_BOARD
+}
+
+enum IdentificationType {
+  CC
+  TI
+}
+
 Table Person {
     id uuid [primary key]
     name varchar(50)
     lastName varchar(50)
-    identificacionTypeId uuid
+    identificacionTypeId IdentificationType [not null, default: 'TI']
     identificationNumber varchar(50)
     email varchar(50)
     phone int
     residenceAddress varchar(50)
     dateBirth date
-    status varchar(20)
-}
-
-Table IdentificationType {
-  id uuid [primary key]
-  name varchar(30)
-  status varchar(20)
+    status Status [not null, default: 'ACTIVE']
 }
 
 Table Role {
-    id uuid [primary key]
+    id smallint [primary key]
     name varchar(20)
     description varchar(100)
     permissions varchar(40)
-    status varchar(20)
+    status Status [not null, default: 'ACTIVE']
 }
 
 Table Action {
     id uuid [primary key]
     name varchar(30)
     description varchar(100)
-    status varchar(20)
+    status Status [not null, default: 'ACTIVE']
 }
 
 Table View {
     id uuid [primary key]
     name varchar(30)
     description varchar(100)
-    status varchar(20)
+    status Status [not null, default: 'ACTIVE']
 }
 
 Table Module {
     id uuid [primary key]
     name varchar(30)
     description varchar(100)
-    status varchar(20)
+    status Status [not null, default: 'ACTIVE']
 }
 
 Table RoleModule {
     id uuid [primary key]
-    roleId uuid
+    roleId smallint
     moduleId uuid
-    status varchar(20)
+    status Status [not null, default: 'ACTIVE']
 }
 
 Table ViewModule {
     id uuid [primary key] 
     viewId uuid
     moduleId uuid
-    status varchar(20)
+    status Status [not null, default: 'ACTIVE']
 }
 
 Table ViewAction {
     id uuid [primary key]
     viewId uuid
     actionId uuid
-    status varchar(20)
+    status Status [not null, default: 'ACTIVE']
 }
 
 // ----------------------------------
@@ -72,14 +81,14 @@ Table Family {
     id uuid [primary key]
     name varchar(50)
     observations varchar(100)
-    status varchar(20)
+    status Status [not null, default: 'ACTIVE']
 }
 
 Table FamilyMember {
     id uuid [primary key]
     familyId uuid
     profileId uuid
-    status varchar(20)
+    status Status [not null, default: 'ACTIVE']
 }
 
 Table School {
@@ -92,7 +101,7 @@ Table School {
   email varchar(50)
   website varchar(100)
   theme varchar(20)
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 
 Table Boarding {
@@ -101,13 +110,8 @@ Table Boarding {
   busId uuid
   stopId uuid
   dateTime timestamp
-  status varchar(20)
-  boardingTypeId int
-}
-
-Table BoardingType {
-  id int [primary key]
-  name varhcar(20)
+  status Status [not null, default: 'ACTIVE']
+  boardingTypeId BoardingType [not null, default: "ON_BOARD"]
 }
 
 
@@ -115,23 +119,23 @@ Table SavedAlert {
     id uuid [primary key]
     profileId uuid
     alertId uuid
-    status varchar(20)
+    status Status [not null, default: 'ACTIVE']
   }
 
 Table AlertType {
-    id uuid [primary key]
+    id smallint [primary key]
     name varchar(30)
     description varchar(100)
-    urgencyLevel byte
-    status varchar(20)
+    urgencyLevel smallint
+    status Status [not null, default: 'ACTIVE']
   }
 
 Table Alert {
     id uuid [primary key]
-    alertTypeId uuid
+    alertTypeId smallint
     busId uuid
     dateTime datetime
-    status varchar(20)
+    status Status [not null, default: 'ACTIVE']
   }
 
 
@@ -142,33 +146,33 @@ Table Bus {
   soatValidity date
   gpsStatus boolean
   lineModelId uuid
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 
 Table Brand {
-  id uuid [primary key]
+  id smallint [primary key]
   name varchar(30)
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 
 Table Year {
-  id uuid [primary key]
+  id smallint [primary key]
   year int
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 Table Line {
   id uuid [primary key]
   brandId uuid
   name varchar(30)
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 Table LineModel {
   id uuid [primary key]
   lineId uuid
-  modelId uuid
-  capacity byte
+  modelId smallint
+  capacity smallint
   plate varchar(15)
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 
 Table Stop {
@@ -178,7 +182,7 @@ Table Stop {
   address varchar(30)
   longitude decimal(12, 2)
   latitude decimal(12, 2)
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 
 Table Route {
@@ -188,7 +192,7 @@ Table Route {
   targetSector varchar(30)
   startDateTime datetime
   endDateTime datetime
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 
 
@@ -196,28 +200,28 @@ Table City {
   id uuid [primary key]
   name varchar(40)
   country varchar(30)
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 
 Table RouteStudentAssignments {
   id uuid [primary key]
   profileId uuid
   routeId uuid
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 
 Table RouteStop {
   id uuid [primary key]
   routeId uuid
   stopId uuid
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 
 Table RouteBusAssignments {
   id uuid [primary key]
   busId uuid
   routeId uuid
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 
 Table SchoolCampuse {
@@ -225,44 +229,44 @@ Table SchoolCampuse {
   schoolId uuid
   name varchar(30)
   address varchar(30)
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 
 Table Course {
   id uuid [primary key]
   campusId uuid
   name varchar(10)
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 
 Table CourseGroup {
   id uuid [primary key]
   profileId uuid
   courseId uuid
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 
 Table DriverLicense {
   id uuid [primary key]
   profileId int [not null]
-  licenseNumber varchar(255)
+  licenseNumber smallint
   drivingLicense varchar(255) [not null]
   licenseExpirationDate date [not null]
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 
 Table ProfileRole {
   id uuid [primary key]
   profileId uuid
-  roleId uuid
-  status varchar(20)
+  roleId smallint
+  status Status [not null, default: 'ACTIVE']
 }
 
 Table Profile {
     id uuid [primary key]
     personId uuid
     passwordHash varchar(100)
-    status varchar(20)
+    status Status [not null, default: 'ACTIVE']
 }
 
 Table ExceptionalDriverUsage {
@@ -271,7 +275,7 @@ Table ExceptionalDriverUsage {
   profileId uuid
   dateTime datetime
   reason varchar(200)
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 
 Table ExceptionalRouteUsage {
@@ -281,9 +285,26 @@ Table ExceptionalRouteUsage {
   startDateTime datetime
   endDateTime datetime
   reason varchar(200)
-  status varchar(20)
+  status Status [not null, default: 'ACTIVE']
 }
 
+Table GpsDevice {
+  id uuid [primary key]
+  busId uuid
+  imei varchar(20)
+  status varchar(20)
+  lastConnection datetime
+}
+
+Table GpsLocation {
+  id uuid [primary key]
+  gpsDeviceId uuid
+  latitude decimal(10, 7)
+  longitude decimal(10, 7)
+  speed decimal(8, 2)
+  course decimal(8, 2)
+  dateTime datetime
+}
 
 
 
@@ -350,10 +371,10 @@ Ref view_action: ViewAction.viewId > View.id
 Ref view_action: ViewAction.actionId > Action.id
 
 Ref n: Course.campusId > SchoolCampuse.id
-
-Ref identificacionType_person: Person.identificacionTypeId > IdentificationType.id
 Ref brand_line: Brand.id < Line.brandId
 ref bus_model: LineModel.id < Bus.lineModelId
 ref lineModel_line: Line.id < LineModel.lineId
+Ref gps_device_bus: GpsDevice.busId - Bus.id
+
+Ref gps_location_device: GpsLocation.gpsDeviceId > GpsDevice.id
 ref lineModel_line: Year.id < LineModel.modelId
-ref: Boarding.boardingTypeId > BoardingType.id

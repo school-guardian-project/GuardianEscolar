@@ -250,7 +250,6 @@ Table DriverLicense {
   id uuid [primary key]
   profileId int [not null]
   licenseNumber smallint
-  drivingLicense varchar(255) [not null]
   licenseExpirationDate date [not null]
   status Status [not null, default: 'ACTIVE']
 }

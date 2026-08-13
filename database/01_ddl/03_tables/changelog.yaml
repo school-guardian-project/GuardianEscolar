@@ -1,0 +1,11 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: f37e5649-b48f-4460-b1e0-6dbe4d054ed7
+      author: Juan Chala
+      changes:
+        - sqlFile:
+            path: 001_tables.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true

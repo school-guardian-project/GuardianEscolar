@@ -27,18 +27,39 @@ services:
       - NODE_ENV=development
     volumes:
       - ./dvlp-front/dvlp-web/src:/app/src
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: school-guardian-db-dev
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - school-guardian-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user_juan -d school-guardian"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
   
   liquibase:
-    image: liquibase/liquibase:5.0.1
+    image: liquibase/liquibase:4.29
     container_name: liquibase_container
     volumes:
-      - ./dvlp-back/liquibase:/workspace
+      - ${SCHOOL_GUARDIAN_DB_DIR-./school-guardian-db}:/workspace
       - ./dvlp-back/liquibase/drivers/postgresql-42.7.10.jar:/liquibase/lib/postgresql.jar
     networks:
       - default
+    depends_on:
+      postgres:
+        condition: service_healthy
     command: >
       --defaultsFile=/workspace/liquibase.properties
       --searchPath=/workspace
+      --changeLogFile=changelog/changelog-master.yaml
       update
 
   # jenkins:
@@ -93,6 +114,7 @@ volumes:
   sonarqube_data:
   sonarqube_logs:
   sonarqube_extensions:
+  school-guardian-postgres-data:
 
 networks:
   jenkins_net:

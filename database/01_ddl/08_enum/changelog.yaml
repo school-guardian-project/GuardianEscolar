@@ -1,0 +1,11 @@
+databaseChangeLog:
+
+  - changeSet:
+      id: 0dd4e82b-e2d1-4ebb-83df-3e90490233c0
+      author: Juan Chala
+      changes:
+        - sqlFile:
+            path: 001_enum.sql
+            relativeToChangelogFile: true
+            splitStatements: true
+            stripComments: true

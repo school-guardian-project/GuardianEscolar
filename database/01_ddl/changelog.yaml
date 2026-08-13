@@ -1,0 +1,13 @@
+databaseChangeLog:
+
+  - include:
+      file: 08_enum/changelog.yaml
+      contextFilter: 01_ddl
+      labels: 08_enum
+      relativeToChangeLogFile: true
+      
+  - include:
+      file: 03_tables/changelog.yaml
+      contextFilter: 01_ddl
+      labels: 03_tables
+      relativeToChangeLogFile: true

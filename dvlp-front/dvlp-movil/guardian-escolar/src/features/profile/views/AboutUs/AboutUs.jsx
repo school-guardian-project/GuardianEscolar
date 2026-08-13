@@ -25,7 +25,8 @@ export default function Profile() {
         >
             {/* Encabezado */}
             <View style={styles.header}>
-                <BackButton label={t("inputs.aboutus")} />
+                <BackButton label={t("inputs.aboutus")}
+                backTo="Profile" />
             </View>
 
 

@@ -27,7 +27,7 @@ export default function NotificationButton({ onPress }) {
           { color: theme.textColor },
         ]}
       >
-        <Ionicons name="notifications" size={24} color="black" />
+        <Ionicons name="notifications" size={24} color={theme.iconColor} />
       </Text>
     </Pressable>
   );

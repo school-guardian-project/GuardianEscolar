@@ -245,6 +245,7 @@ const MOCK_DATA: Record<CardType, any[]> = {
   parada: [
     {
       nombre: 'Parada Centro',
+      estudiante: 'Juan Carlos García',
       direccion: 'Carrera 7 #5-40',
       ciudad: 'Neiva',
       latitud: '2.9277',
@@ -252,6 +253,7 @@ const MOCK_DATA: Record<CardType, any[]> = {
     },
     {
       nombre: 'Parada Barrio Sur',
+      estudiante: 'Diego Andres Gutierrez',
       direccion: 'Calle 50 #10-20',
       ciudad: 'Neiva',
       latitud: '2.9200',

@@ -672,6 +672,7 @@
       "title": "Mettre à jour l'arrêt",
       "fields": {
         "nombre": "Nom",
+        "estudiante": "Étudiant",
         "ciudad": "Ville",
         "direccion": "Adresse",
         "latitud": "Latitude",
@@ -787,6 +788,7 @@
       "title": "Enregistrer l'arrêt",
       "fields": {
         "nombre": "Nom de l'arrêt",
+        "estudiante": "Étudiant",
         "ciudad": "Ville",
         "direccion": "Adresse",
         "latitud": "Latitude",

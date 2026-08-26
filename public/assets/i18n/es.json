@@ -566,6 +566,7 @@
       "title": "Información de la Parada",
       "fields": {
         "nombre": "Nombre",
+        "estudiante": "Estudiante",
         "ciudad": "Ciudad",
         "direccion": "Dirección",
         "latitud": "Latitud",
@@ -675,6 +676,7 @@
       "title": "Actualizar Parada",
       "fields": {
         "nombre": "Nombre",
+        "estudiante": "Estudiante",
         "ciudad": "Ciudad",
         "direccion": "Dirección",
         "latitud": "Latitud",

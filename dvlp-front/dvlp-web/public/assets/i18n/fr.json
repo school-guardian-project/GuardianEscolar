@@ -10,10 +10,7 @@
     "line3": "scolaire",
     "line4": "en",
     "line5": "temps",
-    "line6": "réel",
-    "paragraph": "Suivi GPS des trajets, alertes instantanées et contrôle de présence. Tranquillité pour les familles, efficacité pour les écoles.",
-    "btn_download": "Télécharger",
-    "btn_video": "Voir la vidéo"
+    "line6": "réel"
   },
   "card_panel": {
     "badge": "+ 12 ce mois-ci",
@@ -132,17 +129,10 @@
     "links_product": [
       "Fonctionnalités",
       "Comment ça marche",
-      "Tarifs",
-      "Pour les écoles"
-    ],
-    "links_company": [
-      "À propos",
-      "Blog",
       "Contact"
     ],
     "links_legal": [
-      "Confidentialité",
-      "Conditions"
+      "Confidentialité et conditions"
     ],
     "rights": "© 2026 Guardian Escolar · Tous droits réservés"
   },
@@ -912,9 +902,8 @@
         "no_match": "*Les mots de passe ne correspondent pas"
       }
     },
-    "links_product": ["Fonctionnalités", "Comment ça marche", "Tarifs", "Pour les écoles"],
-    "links_company": ["À propos", "Blog", "Contact"],
-    "links_legal": ["Confidentialité", "Conditions"],
+    "links_product": ["Fonctionnalités", "Comment ça marche", "Contact"],
+    "links_legal": ["Confidentialité et conditions"],
     "rights": "© 2026 Guardian Escolar · Tous droits réservés"
   }
 }

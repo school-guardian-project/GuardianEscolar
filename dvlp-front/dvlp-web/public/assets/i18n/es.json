@@ -10,10 +10,7 @@
     "line3": "escolar",
     "line4": "en",
     "line5": "tiempo",
-    "line6": "real",
-    "paragraph": "Monitoreo GPS de rutas, alertas instantáneas y control de asistencia. Tranquilidad para las familias, eficiencia para las escuelas.",
-    "btn_download": "Descargar",
-    "btn_video": "Ver video"
+    "line6": "real"
   },
   "card_panel": {
     "badge": "+ 12 este mes",
@@ -134,17 +131,10 @@
     "links_product": [
       "Funcionalidades",
       "Cómo funciona",
-      "Precios",
-      "Para escuelas"
-    ],
-    "links_company": [
-      "Nosotros",
-      "Blog",
       "Contacto"
     ],
     "links_legal": [
-      "Privacidad",
-      "Términos"
+      "Privacidad y términos"
     ],
     "rights": "© 2026 Guardian Escolar · Todos los derechos reservados"
   },
@@ -918,9 +908,8 @@
       }
     },
 
-    "links_product": ["Funcionalidades", "Como funciona", "Precios", "Para escuelas"],
-    "links_company": ["Nosotros", "Blog", "Contacto"],
-    "links_legal": ["Privacidad", "Terminos"],
+    "links_product": ["Funcionalidades", "Como funciona", "Contacto"],
+    "links_legal": ["Privacidad y términos"],
     "rights": "© 2026 Guardian Escolar · Todos los derechos reservados"
 
   }

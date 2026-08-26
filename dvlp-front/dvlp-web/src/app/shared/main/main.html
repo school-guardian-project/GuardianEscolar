@@ -7,16 +7,13 @@
             <div class="in-index">{{ 'hero.line4' | translate }}</div>
             <div class="time-index">{{ 'hero.line5' | translate }}</div>
             <div class="really-index">{{ 'hero.line6' | translate }}</div>
-            <div class="paragraph-index">{{ 'hero.paragraph' | translate }}</div>
             <div class="button-index">
-                <button class="start-index">{{ 'hero.btn_download' | translate }}</button>
-                <button class="demo-index">{{ 'hero.btn_video' | translate }}</button>
             </div>
         </div>
-
+        <!-- Panel datos-->
         <div class="right-index">
             <div class="card-panel-index">
-                <div class="floating-badge-index">{{ 'card_panel.badge' | translate }}</div>
+                <!-- <div class="floating-badge-index">{{ 'card_panel.badge' | translate }}</div>
                 <div class="header-index">
                     <h3 class="panel-index">{{ 'card_panel.title' | translate }}</h3>
                     <span class="badge-index">{{ 'card_panel.live' | translate }}</span>
@@ -34,8 +31,8 @@
                         <h2 class="red-index">3</h2>
                         <p>{{ 'card_panel.alerts' | translate }}</p>
                     </div>
-                </div>
-                <div class="alert-index">
+                </div> -->
+                <!-- <div class="alert-index">
                     <strong>⚠ {{ 'card_panel.alert_msg' | translate }}</strong>
                     <br>
                     <small class="example-index">{{ 'card_panel.alert_sub' | translate }}</small>
@@ -44,7 +41,7 @@
                     <strong>✔ {{ 'card_panel.success_msg' | translate }}</strong>
                     <br>
                     <small class="example2-index">{{ 'card_panel.success_sub' | translate }}</small>
-                </div>
+                </div> -->
             </div>
         </div>
     </section>
@@ -86,7 +83,7 @@
 
         <div class="button-index">
             <button class="start-index">{{ 'cta.btn_download' | translate }}</button>
-            <button class="demo-index">{{ 'cta.btn_contact' | translate }}</button>
+            <button class="demo-index" routerLink="/contact">{{ 'cta.btn_contact' | translate }}</button>
         </div>
     </section>
 </main>

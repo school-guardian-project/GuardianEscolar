@@ -8,7 +8,7 @@ main {
 
 section {
   width: 100%;
-  padding: 100px;
+  padding: 70px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -18,7 +18,7 @@ section {
   display: flex;
   flex-direction: row;
   background: linear-gradient(135deg, #102d7d, #366fea);
-  min-height: 100vh;
+  min-height: 80vh;
   position: relative;
   overflow: hidden;
 }
@@ -60,12 +60,6 @@ section {
   flex-direction: column;
 }
 
-.paragraph-index {
-  color: white;
-  font-size: 1.5rem;
-  margin-bottom: 7px;
-  line-height: 1.4;
-}
 
 .text-index {
   color: white;
@@ -74,11 +68,7 @@ section {
   font-weight: 800;
 }
 
-.button-index {
-  display: flex;
-  gap: 70px;
-  margin-top: 50px;
-}
+
 
 .start-index,
 .demo-index {
@@ -86,6 +76,7 @@ section {
   border-radius: 60px;
   padding: 10px 30px;
   font-weight: 600;
+  margin: 40px;
   cursor: pointer;
   color: black;
   font-size: 1.8rem;
@@ -121,7 +112,7 @@ section {
 
 .card-panel-index {
   position: relative;
-  background-color: white;
+  background-color: rgb(201, 226, 255);
   padding: 30px;
   border-radius: 20px;
   box-shadow: black 0px 10px 40px rgba(0, 0, 0, 0.3);
@@ -129,113 +120,29 @@ section {
   color: black;
 }
 
-.floating-badge-index {
-  position: absolute;
-  top: -23px;
-  right: -20px;
-  background: #2454DC;
-  color: white;
-  padding: 10px 30px;
-  font-size: 1.1rem;
-  border-radius: 999px;
-  font-weight: bold;
-  border: white 5px solid;
-}
-
-.header-index {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.panel-index {
-  font-size: 1.3rem;
-  background: #F5F5F5;
-}
-
-.badge-index {
-  color: #366fea;
-  padding: 5px;
-  font-size: 18px;
-}
-
-.stats-index {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin: 20px 0;
-  color: black;
-}
-
-.stat-box-index {
-  background: #F5F5F5;
-  border-radius: 15px;
-  padding: 15px;
-  text-align: center;
-  width: fit-content;
-  color: black;
-}
-
-.stat-box-index h2 {
-  margin: 0;
-}
-
-.blue-index {
-  color: #2255D6;
-}
-
-.red-index {
-  color: #c62828;
-}
-
-.alert-index {
-  background: #FDECEA;
-  color: #c62828;
-  padding: 15px;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  font-size: 14px;
-}
-
-.example-index {
-  color: #ee494a;
-}
-
-.success-index {
-  background: #F0F4FD;
-  color: #2454DC;
-  padding: 15px;
-  border-radius: 10px;
-  font-size: 14px;
-}
-
-.example2-index {
-  color: #366fea;
-}
-
 .title-section-index {
   color: #366fea;
   font-size: 1.2rem;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 .title-index {
   color: black;
   font-weight: 800;
-  font-size: 5rem;
-  margin-bottom: 60px;
+  font-size: 3rem;
+  margin-bottom: 40px;
   line-height: 1;
 }
 
 .card-description-index {
   flex: 1;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   line-height: 1.7;
   color: #70747F;
 }
 
 .title-card-index {
-  font-size: 2.3rem;
+  font-size: 2.1rem;
   line-height: 1.4;
   font-weight: 600;
   color:black;
@@ -248,13 +155,14 @@ section {
 
 .description-index {
   margin-bottom: 40px;
-  font-size: 1.5rem;
+  font-size: 1.25rem;
   color: black;
   line-height: 1.4;
 }
 
 .description-index.question {
   color: white;
+  font-size: 1.25rem;
 }
 
 .blue-background-index {
@@ -265,7 +173,7 @@ section {
   width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 30px;
 }
 
 .card-index {
@@ -281,7 +189,7 @@ section {
 }
 
 .card-index:hover {
-  transform: translate(20px, -20px) scale(1.05);
+  transform: scale(1.05);
   box-shadow: black 0px 10px 40px rgba(0, 0, 0, 0.3);
 }
 
@@ -302,6 +210,7 @@ section {
   background-color: #ECF5FC;
   display: flex;
   flex-direction: column;
+  height: 80%;
 }
 
 .steps-index {
@@ -343,7 +252,7 @@ section {
 
 .title-question-index {
   color: white;
-  font-size: 5rem;
+  font-size: 3rem;
   font-weight: 800;
   line-height: 1.3;
   margin-bottom: 40px;

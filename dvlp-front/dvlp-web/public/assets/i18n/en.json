@@ -10,10 +10,7 @@
     "line3": "in",
     "line4": "real",
     "line5": "time",
-    "line6": "",
-    "paragraph": "GPS route monitoring, instant alerts and attendance control. Peace of mind for families, efficiency for schools.",
-    "btn_download": "Download",
-    "btn_video": "Watch video"
+    "line6": ""
   },
   "card_panel": {
     "badge": "+ 12 this month",
@@ -132,17 +129,10 @@
     "links_product": [
       "Features",
       "How it works",
-      "Pricing",
-      "For schools"
-    ],
-    "links_company": [
-      "About us",
-      "Blog",
       "Contact"
     ],
     "links_legal": [
-      "Privacy",
-      "Terms"
+      "Privacy and terms"
     ],
     "rights": "© 2026 Guardian Escolar · All rights reserved"
   },
@@ -915,17 +905,10 @@
     "links_product": [
       "Features",
       "How it works",
-      "Pricing",
-      "For schools"
-    ],
-    "links_company": [
-      "About us",
-      "Blog",
       "Contact"
     ],
     "links_legal": [
-      "Privacy",
-      "Terms"
+      "Privacy and terms"
     ],
     "rights": "© 2026 Guardian Escolar · All rights reserved"
   }

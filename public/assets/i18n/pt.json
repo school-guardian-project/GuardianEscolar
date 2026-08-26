@@ -10,10 +10,7 @@
     "line3": "escolar",
     "line4": "em",
     "line5": "tempo",
-    "line6": "real",
-    "paragraph": "Monitoramento GPS de rotas, alertas instantâneos e controle de presença. Tranquilidade para as famílias, eficiência para as escolas.",
-    "btn_download": "Baixar",
-    "btn_video": "Assistir vídeo"
+    "line6": "real"
   },
   "card_panel": {
     "badge": "+ 12 este mês",
@@ -132,17 +129,10 @@
     "links_product": [
       "Funcionalidades",
       "Como funciona",
-      "Preços",
-      "Para escolas"
-    ],
-    "links_company": [
-      "Sobre nós",
-      "Blog",
       "Contato"
     ],
     "links_legal": [
-      "Privacidade",
-      "Termos"
+      "Privacidade e termos"
     ],
     "rights": "© 2026 Guardian Escolar · Todos os direitos reservados"
   },
@@ -912,9 +902,8 @@
         "no_match": "*As senhas não coincidem"
       }
     },
-    "links_product": ["Funcionalidades", "Como funciona", "Preços", "Para escolas"],
-    "links_company": ["Sobre nós", "Blog", "Contato"],
-    "links_legal": ["Privacidade", "Termos"],
+    "links_product": ["Funcionalidades", "Como funciona", "Contato"],
+    "links_legal": ["Privacidade e termos"],
     "rights": "© 2026 Guardian Escolar · Todos os direitos reservados"
   }
 }

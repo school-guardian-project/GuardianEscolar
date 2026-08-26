@@ -27,4 +27,22 @@ export class Contact implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.langChangeSubscription?.unsubscribe();
   }
+
+  async copyPhone(): Promise<void> {
+    const phone = '+57 314 430 82 74';
+
+    if (navigator.clipboard?.writeText) {
+      await navigator.clipboard.writeText(phone);
+      return;
+    }
+
+    const input = document.createElement('textarea');
+    input.value = phone;
+    input.style.position = 'fixed';
+    input.style.opacity = '0';
+    document.body.appendChild(input);
+    input.select();
+    document.execCommand('copy');
+    input.remove();
+  }
 }

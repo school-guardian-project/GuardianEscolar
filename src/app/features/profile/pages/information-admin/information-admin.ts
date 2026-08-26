@@ -8,6 +8,7 @@ import { Language } from '@shared/components/modal/language/language'
 import { TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
+import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-manage';
 
 @Component({
   selector: 'app-information-admin',
@@ -17,6 +18,7 @@ import { NgIf } from '@angular/common';
     MatButtonModule,
     MatIconModule,
     SidebarAdmin,
+    NavbarManage,
     Themes,
     Language,
     TranslateModule,

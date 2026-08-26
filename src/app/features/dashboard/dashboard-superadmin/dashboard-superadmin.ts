@@ -4,14 +4,14 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { NavbarDashboard } from '@shared/components/navbar/navbar-dashboard/navbar-dashboard';
+import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-manage';
 import { SidebarSuperadmin } from '@shared/components/navbar/sidebar-superadmin/sidebar-superadmin';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-dashboard-superadmin',
   imports: [CommonModule, 
-            NavbarDashboard, 
+            NavbarManage, 
             MatToolbarModule,  
             MatButtonModule, 
             MatIconModule, 

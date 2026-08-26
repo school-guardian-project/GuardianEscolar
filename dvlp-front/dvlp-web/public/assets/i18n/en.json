@@ -32,7 +32,6 @@
     "title": "Everything you need for school safety",
     "description": "A complete platform for administrators, drivers and families.",
     "cards": [
-
       {
         "icon": "satellite_alt",
         "title": "Real-time GPS",
@@ -69,7 +68,6 @@
     "label": "HOW IT WORKS",
     "title": "Simple for everyone",
     "steps": [
-
       {
         "title": "Register your institution",
         "description": "Create your account, add your routes and drivers in minutes."
@@ -86,9 +84,7 @@
         "title": "Active monitoring",
         "description": "Real-time monitoring from the administration panel."
       }
-
-  
- ]
+    ]
   },
   "cta": {
     "title": "Ready to protect your students?",
@@ -133,7 +129,6 @@
     "col_product": "Product",
     "col_company": "Company",
     "col_legal": "Legal",
-
     "links_product": [
       "Features",
       "How it works",
@@ -155,12 +150,8 @@
     "left": {
       "title": "Welcome back",
       "description": "Access the complete school route monitoring system.",
-      "gps": "Real-time GPS",
-      "alerts": "Instant alerts",
-      "reports": "Reports and metrics",
       "footer": "guardian.edu · 24/7 Support"
     },
-
     "right": {
       "title": "Sign in",
       "description": "Enter your credentials to access the dashboard",
@@ -233,7 +224,6 @@
       "pin_error": "*The entered code is invalid.",
       "confirmationTitle": "Phone updated",
       "confirmationDescription": "Your phone number has been updated successfully."
-      
     }
   },
   "change_email": {
@@ -534,21 +524,21 @@
       }
     },
     "conductor": {
-      "title": "Driver Information",
+      "title": "Driver information",
       "fields": {
         "nombres": "Names",
         "apellidos": "Last names",
         "tipoId": "ID Type",
-        "identificacion": "ID Number",
+        "identificacion": "ID number",
         "fechaNac": "Birth Date",
-        "vencLicencia": "License Expiry",
-        "licencia": "Driver License",
+        "vencLicencia": "License expiry",
+        "licencia": "Driver license",
         "direccion": "Address",
         "correo": "Email"
       }
     },
     "familia": {
-      "title": "Family Information",
+      "title": "Family information",
       "fields": {
         "nombre": "Name",
         "acudiente": "Guardian",
@@ -557,7 +547,7 @@
       }
     },
     "bus": {
-      "title": "Bus Information",
+      "title": "Bus information",
       "fields": {
         "matricula": "License Plate",
         "conductor": "Driver",
@@ -572,6 +562,7 @@
       "title": "Stop Information",
       "fields": {
         "nombre": "Name",
+        "estudiante": "Student",
         "ciudad": "City",
         "direccion": "Address",
         "latitud": "Latitude",
@@ -919,11 +910,21 @@
         "no_match": "*Passwords do not match"
       }
     },
-
-    "links_product": ["Features", "How it works", "Pricing", "For schools"],
-    "links_company": ["About us", "Blog", "Contact"],
-    "links_legal": ["Privacy", "Terms"],
+    "links_product": [
+      "Features",
+      "How it works",
+      "Pricing",
+      "For schools"
+    ],
+    "links_company": [
+      "About us",
+      "Blog",
+      "Contact"
+    ],
+    "links_legal": [
+      "Privacy",
+      "Terms"
+    ],
     "rights": "© 2026 Guardian Escolar · All rights reserved"
-
   }
 }

@@ -150,9 +150,6 @@
     "left": {
       "title": "Bem-vindo de volta",
       "description": "Acesse o sistema completo de monitoramento de rotas escolares.",
-      "gps": "GPS em tempo real",
-      "alerts": "Alertas instantâneos",
-      "reports": "Relatórios e métricas",
       "footer": "guardian.edu · Suporte 24/7"
     },
     "right": {
@@ -565,6 +562,7 @@
       "title": "Informações da Parada",
       "fields": {
         "nombre": "Nome",
+        "estudiante": "Estudante",
         "ciudad": "Cidade",
         "direccion": "Endereço",
         "latitud": "Latitude",

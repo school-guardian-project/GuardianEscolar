@@ -150,9 +150,6 @@
     "left": {
       "title": "Bienvenue à nouveau",
       "description": "Accédez au système complet de surveillance des itinéraires scolaires.",
-      "gps": "GPS en temps réel",
-      "alerts": "Alertes instantanées",
-      "reports": "Rapports et métriques",
       "footer": "guardian.edu · Support 24/7"
     },
     "right": {
@@ -565,6 +562,7 @@
       "title": "Informations de l'arrêt",
       "fields": {
         "nombre": "Nom",
+        "estudiante": "Étudiant",
         "ciudad": "Ville",
         "direccion": "Adresse",
         "latitud": "Latitude",

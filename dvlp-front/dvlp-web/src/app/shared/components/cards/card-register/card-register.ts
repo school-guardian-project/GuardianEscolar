@@ -76,6 +76,7 @@ const FIELDS: Record<RegisterType, Field[]> = {
 
   parada: [
     { name: 'nombre', type: 'text' },
+    {name:  'estudiante', type: 'select', options: [] },
     { name: 'ciudad', type: 'select', options: [] },
     { name: 'direccion', type: 'text' },
     { name: 'latitud', type: 'text' },

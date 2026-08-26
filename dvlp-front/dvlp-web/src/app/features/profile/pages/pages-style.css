@@ -100,7 +100,7 @@ form {
 }
 
 .modal-confirmation button {
-  color: white;
+  color: var(--dark-contrast-color);
   background-color: var(--button-apply);
   border-radius: 50px;
   padding: 10px 30px;

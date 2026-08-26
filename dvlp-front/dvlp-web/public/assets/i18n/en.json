@@ -672,6 +672,7 @@
       "title": "Update Stop",
       "fields": {
         "nombre": "Name",
+        "estudiante": "Student",
         "ciudad": "City",
         "direccion": "Address",
         "latitud": "Latitude",
@@ -787,6 +788,7 @@
       "title": "Register Stop",
       "fields": {
         "nombre": "Stop Name",
+        "estudiante": "Student",
         "ciudad": "City",
         "direccion": "Address",
         "latitud": "Latitude",

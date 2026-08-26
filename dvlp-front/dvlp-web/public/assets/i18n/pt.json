@@ -672,6 +672,7 @@
       "title": "Atualizar Parada",
       "fields": {
         "nombre": "Nome",
+        "estudiante": "Estudante",
         "ciudad": "Cidade",
         "direccion": "Endereço",
         "latitud": "Latitude",
@@ -787,6 +788,7 @@
       "title": "Registrar Parada",
       "fields": {
         "nombre": "Nome da Parada",
+        "estudiante": "Estudante",
         "ciudad": "Cidade",
         "direccion": "Endereço",
         "latitud": "Latitude",

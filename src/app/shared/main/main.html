@@ -12,36 +12,154 @@
         </div>
         <!-- Panel datos-->
         <div class="right-index">
-            <div class="card-panel-index">
-                <!-- <div class="floating-badge-index">{{ 'card_panel.badge' | translate }}</div>
-                <div class="header-index">
-                    <h3 class="panel-index">{{ 'card_panel.title' | translate }}</h3>
-                    <span class="badge-index">{{ 'card_panel.live' | translate }}</span>
+            <div class="dashboard-shell">
+                <div class="app-window">
+                    <div class="app-header">
+                        <div class="brand">
+                            <span class="brand-mark"></span>
+                            <span>yelowsoft</span>
+                        </div>
+                        <div class="header-dots">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                        <div class="profile-dot"></div>
+                    </div>
+
+                    <div class="dashboard-panel">
+                        <div class="dashboard-title-row">
+                            <h3>Live Tracking</h3>
+                            <button class="select-button">
+                                <span>All Vehicles</span>
+                                <span class="caret">⌄</span>
+                            </button>
+                            <button class="filter-button">Filters</button>
+                        </div>
+
+                        <div class="stats-row">
+                            <div class="stat-box stat-blue">
+                                <span class="stat-value">32</span>
+                                <span class="stat-label">Total Vehicles</span>
+                                <span class="stat-tag live">Live</span>
+                            </div>
+                            <div class="stat-box stat-green">
+                                <span class="stat-value">28</span>
+                                <span class="stat-label">On Route</span>
+                                <span class="stat-tag">87%</span>
+                            </div>
+                            <div class="stat-box stat-red">
+                                <span class="stat-value">2</span>
+                                <span class="stat-label">Alerts</span>
+                                <span class="stat-tag">Active</span>
+                            </div>
+                            <div class="stat-box stat-gray">
+                                <span class="stat-value">94%</span>
+                                <span class="stat-label">Avg. On-Time</span>
+                                <span class="stat-arrow">↑</span>
+                            </div>
+                        </div>
+
+                        <div class="map-panel">
+                            <div class="map-layers"></div>
+                            <div class="pickup-tag">
+                                <span class="pin pin-green"></span>
+                                <div>
+                                    <strong>Pickup Point</strong>
+                                    <small>Green Street</small>
+                                    <span>07:15 AM</span>
+                                </div>
+                            </div>
+
+                            <div class="school-tag">
+                                <span class="pin pin-blue"></span>
+                                <div>
+                                    <strong>School</strong>
+                                    <small>Springfield School</small>
+                                    <span>07:45 AM</span>
+                                </div>
+                            </div>
+
+                            <div class="bus-card">
+                                <span class="mini-bus">Bus 02</span>
+                                <small>On Route</small>
+                                <strong>45 km/h</strong>
+                            </div>
+
+                            <div class="route-path"></div>
+                            <div class="route-dot route-dot-1"></div>
+                            <div class="route-dot route-dot-2"></div>
+                            <div class="route-dot route-dot-3"></div>
+                        </div>
+
+                        <div class="activity-panel">
+                            <h4>Live Activity</h4>
+                            <div class="activity-row">
+                                <span class="bus-badge">Bus 02</span>
+                                <span>On Route</span>
+                                <span>Green Street</span>
+                                <span>→ Springfield School</span>
+                                <span>07:35 AM</span>
+                                <span>45 km/h</span>
+                            </div>
+                            <div class="activity-row">
+                                <span class="bus-badge">Bus 05</span>
+                                <span>On Route</span>
+                                <span>Maple Avenue</span>
+                                <span>→ Springfield School</span>
+                                <span>07:38 AM</span>
+                                <span>40 km/h</span>
+                            </div>
+                            <div class="activity-row">
+                                <span class="bus-badge">Bus 08</span>
+                                <span>Delayed</span>
+                                <span>Oak Boulevard</span>
+                                <span>→ Springfield School</span>
+                                <span>07:50 AM</span>
+                                <span>25 km/h</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="stats-index">
-                    <div class="stat-box-index">
-                        <h2 class="blue-index">248</h2>
-                        <p>{{ 'card_panel.students' | translate }}</p>
+
+                <div class="phone-preview">
+                    <div class="phone-top-bar"></div>
+                    <div class="phone-card">
+                        <div class="phone-header">
+                            <div class="phone-status"></div>
+                            <div class="phone-signal"></div>
+                            <div class="phone-battery"></div>
+                        </div>
+                        <div class="phone-alert">
+                            <span class="phone-bell"></span>
+                            <div>
+                                <strong>Geofence Alert</strong>
+                                <small>Bus 02 has arrived at Springfield School</small>
+                                <span>07:45 AM</span>
+                            </div>
+                        </div>
+                        <div class="phone-bus-card">
+                            <div class="mini-bus-row">
+                                <span class="mini-bus small">Bus 02</span>
+                                <span class="status-pill">On Route</span>
+                            </div>
+                            <div class="phone-metrics">
+                                <div>
+                                    <label>ETA</label>
+                                    <strong>7:45 AM</strong>
+                                </div>
+                                <div>
+                                    <label>Speed</label>
+                                    <strong>45 km/h</strong>
+                                </div>
+                            </div>
+                            <div class="next-stop">
+                                <span>Next Stop</span>
+                                <strong>Springfield School</strong>
+                            </div>
+                        </div>
                     </div>
-                    <div class="stat-box-index">
-                        <h2>18</h2>
-                        <p>{{ 'card_panel.routes' | translate }}</p>
-                    </div>
-                    <div class="stat-box-index">
-                        <h2 class="red-index">3</h2>
-                        <p>{{ 'card_panel.alerts' | translate }}</p>
-                    </div>
-                </div> -->
-                <!-- <div class="alert-index">
-                    <strong>⚠ {{ 'card_panel.alert_msg' | translate }}</strong>
-                    <br>
-                    <small class="example-index">{{ 'card_panel.alert_sub' | translate }}</small>
                 </div>
-                <div class="success-index">
-                    <strong>✔ {{ 'card_panel.success_msg' | translate }}</strong>
-                    <br>
-                    <small class="example2-index">{{ 'card_panel.success_sub' | translate }}</small>
-                </div> -->
             </div>
         </div>
     </section>

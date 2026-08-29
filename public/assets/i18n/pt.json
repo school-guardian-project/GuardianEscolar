@@ -597,7 +597,7 @@
   },
   "update_record": {
     "estudiante": {
-      "title": "Atualizar Estudante",
+      "title": "Atualizar estudante",
       "fields": {
         "nombres": "Nomes",
         "apellidos": "Sobrenome",
@@ -611,7 +611,7 @@
       }
     },
     "acudiente": {
-      "title": "Atualizar Responsável",
+      "title": "Atualizar responsável",
       "fields": {
         "nombre": "Nome",
         "apellidos": "Sobrenome",
@@ -624,7 +624,7 @@
       }
     },
     "conductor": {
-      "title": "Atualizar Motorista",
+      "title": "Atualizar motorista",
       "fields": {
         "nombres": "Nomes",
         "apellidos": "Sobrenome",
@@ -638,7 +638,7 @@
       }
     },
     "familia": {
-      "title": "Atualizar Família",
+      "title": "Atualizar família",
       "fields": {
         "nombre": "Nome",
         "acudiente": "Responsável",
@@ -647,19 +647,19 @@
       }
     },
     "bus": {
-      "title": "Atualizar Ônibus",
+      "title": "Atualizar ônibus",
       "fields": {
         "matricula": "Matrícula do ônibus",
         "conductor": "Motorista",
         "modelo": "Modelo",
         "marca": "Marca",
-        "capacidad": "Capacidade máxima",
+        "capacidade": "Capacidade máxima",
         "soat": "Validade do SOAT",
         "gps": "Status do GPS"
       }
     },
     "parada": {
-      "title": "Atualizar Parada",
+      "title": "Atualizar parada",
       "fields": {
         "nombre": "Nome",
         "estudiante": "Estudante",
@@ -670,7 +670,7 @@
       }
     },
     "ruta": {
-      "title": "Atualizar Rota",
+      "title": "Atualizar rota",
       "fields": {
         "nombre": "Nome",
         "sector": "Setor ou bairro",
@@ -681,7 +681,7 @@
       }
     },
     "admins": {
-      "title": "Atualizar Administrador",
+      "title": "Atualizar administrador",
       "fields": {
         "nombre": "Nome",
         "apellidos": "Sobrenome",
@@ -693,7 +693,7 @@
       }
     },
     "schools": {
-      "title": "Atualizar Escola",
+      "title": "Atualizar escola",
       "fields": {
         "nombre": "Nome",
         "ciudad": "Cidade",
@@ -713,7 +713,7 @@
     "select": "Selecionar…",
     "button": "Registrar",
     "estudiante": {
-      "title": "Registrar Estudante",
+      "title": "Registrar estudante",
       "fields": {
         "nombres": "Nomes",
         "apellidos": "Sobrenome",
@@ -727,7 +727,7 @@
       }
     },
     "acudiente": {
-      "title": "Registrar Responsável",
+      "title": "Registrar responsável",
       "fields": {
         "nombres": "Nomes",
         "apellidos": "Sobrenome",
@@ -740,7 +740,7 @@
       }
     },
     "conductor": {
-      "title": "Registrar Motorista",
+      "title": "Registrar motorista",
       "fields": {
         "nombres": "Nomes",
         "apellidos": "Sobrenome",
@@ -754,7 +754,7 @@
       }
     },
     "familia": {
-      "title": "Registrar Família",
+      "title": "Registrar família",
       "fields": {
         "nombre": "Nome da família",
         "acudiente": "Responsável",
@@ -763,21 +763,21 @@
       }
     },
     "bus": {
-      "title": "Registrar Ônibus",
+      "title": "Registrar ônibus",
       "fields": {
         "matricula": "Matrícula",
         "conductor": "Motorista",
         "modelo": "Modelo",
         "marca": "Marca",
-        "capacidad": "Capacidade",
+        "capacidade": "Capacidade",
         "soat": "Validade do SOAT",
         "gps": "Status do GPS"
       }
     },
     "parada": {
-      "title": "Registrar Parada",
+      "title": "Registrar parada",
       "fields": {
-        "nombre": "Nome da Parada",
+        "nombre": "Nome da parada",
         "estudiante": "Estudante",
         "ciudad": "Cidade",
         "direccion": "Endereço",
@@ -786,10 +786,10 @@
       }
     },
     "ruta": {
-      "title": "Registrar Rota",
+      "title": "Registrar rota",
       "fields": {
-        "nombre": "Nome da Rota",
-        "sector": "Setor / Bairro",
+        "nombre": "Nome da rota",
+        "sector": "Setor / bairro",
         "horaInicio": "Hora de início",
         "horaFin": "Hora de término",
         "destino": "Destino",
@@ -797,7 +797,7 @@
       }
     },
     "admins": {
-      "title": "Registrar Administrador",
+      "title": "Registrar administrador",
       "fields": {
         "nombre": "Nome",
         "apellidos": "Sobrenome",
@@ -809,7 +809,7 @@
       }
     },
     "schools": {
-      "title": "Registrar Escola",
+      "title": "Registrar escola",
       "fields": {
         "nombre": "Nome da escola",
         "logo": "Logo",

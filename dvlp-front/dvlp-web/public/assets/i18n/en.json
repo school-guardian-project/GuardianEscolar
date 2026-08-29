@@ -597,12 +597,12 @@
   },
   "update_record": {
     "estudiante": {
-      "title": "Update Student",
+      "title": "Update student",
       "fields": {
         "nombres": "Names",
         "apellidos": "Last names",
-        "tipoId": "ID Type",
-        "identificacion": "ID Number",
+        "tipoId": "ID type",
+        "identificacion": "ID number",
         "fechaNac": "Birth date",
         "curso": "Grade",
         "telefono": "Phone",
@@ -611,25 +611,25 @@
       }
     },
     "acudiente": {
-      "title": "Update Guardian",
+      "title": "Update guardian",
       "fields": {
         "nombre": "Name",
         "apellidos": "Last names",
         "correo": "Email",
-        "tipoId": "ID Type",
-        "identificacion": "ID Number",
+        "tipoId": "ID type",
+        "identificacion": "ID number",
         "fechaNac": "Birth date",
         "telefono": "Phone",
         "direccion": "Home address"
       }
     },
     "conductor": {
-      "title": "Update Driver",
+      "title": "Update driver",
       "fields": {
         "nombres": "Names",
         "apellidos": "Last names",
-        "tipoId": "ID Type",
-        "identificacion": "ID Number",
+        "tipoId": "ID type",
+        "identificacion": "ID number",
         "fechaNac": "Birth date",
         "vencLicencia": "License expiry",
         "licencia": "Driver license",
@@ -638,7 +638,7 @@
       }
     },
     "familia": {
-      "title": "Update Family",
+      "title": "Update family",
       "fields": {
         "nombre": "Name",
         "acudiente": "Guardian",
@@ -647,7 +647,7 @@
       }
     },
     "bus": {
-      "title": "Update Bus",
+      "title": "Update bus",
       "fields": {
         "matricula": "License plate",
         "conductor": "Driver",
@@ -659,7 +659,7 @@
       }
     },
     "parada": {
-      "title": "Update Stop",
+      "title": "Update stop",
       "fields": {
         "nombre": "Name",
         "estudiante": "Student",
@@ -670,7 +670,7 @@
       }
     },
     "ruta": {
-      "title": "Update Route",
+      "title": "Update route",
       "fields": {
         "nombre": "Name",
         "sector": "Sector or neighborhood",
@@ -681,19 +681,19 @@
       }
     },
     "admins": {
-      "title": "Update Administrator",
+      "title": "Update administrator",
       "fields": {
         "nombre": "Name",
         "apellidos": "Last names",
         "correo": "Email",
-        "identificacion": "ID Number",
+        "identificacion": "ID number",
         "fechaNac": "Birth date",
         "telefono": "Phone",
         "direccion": "Home address"
       }
     },
     "schools": {
-      "title": "Update School",
+      "title": "Update school",
       "fields": {
         "nombre": "Name",
         "ciudad": "City",
@@ -713,13 +713,13 @@
     "select": "Select…",
     "button": "Register",
     "estudiante": {
-      "title": "Register Student",
+      "title": "Register student",
       "fields": {
         "nombres": "Names",
-        "apellidos": "Last Names",
-        "tipoId": "ID Type",
-        "identificacion": "ID Number",
-        "fechaNac": "Birth Date",
+        "apellidos": "Last names",
+        "tipoId": "ID type",
+        "identificacion": "ID number",
+        "fechaNac": "Birth date",
         "curso": "Grade",
         "telefono": "Phone",
         "direccion": "Address",
@@ -727,57 +727,57 @@
       }
     },
     "acudiente": {
-      "title": "Register Guardian",
+      "title": "Register guardian",
       "fields": {
         "nombres": "Names",
-        "apellidos": "Last Names",
+        "apellidos": "Last names",
         "correo": "Email",
-        "tipoId": "ID Type",
-        "identificacion": "ID Number",
-        "fechaNac": "Birth Date",
+        "tipoId": "ID type",
+        "identificacion": "ID number",
+        "fechaNac": "Birth date",
         "telefono": "Phone",
         "direccion": "Address"
       }
     },
     "conductor": {
-      "title": "Register Driver",
+      "title": "Register driver",
       "fields": {
         "nombres": "Names",
-        "apellidos": "Last Names",
-        "tipoId": "ID Type",
-        "identificacion": "ID Number",
-        "fechaNac": "Birth Date",
-        "vencLicencia": "License Expiry",
-        "licencia": "License Number",
+        "apellidos": "Last names",
+        "tipoId": "ID type",
+        "identificacion": "ID number",
+        "fechaNac": "Birth date",
+        "vencLicencia": "License expiry",
+        "licencia": "License number",
         "direccion": "Address",
         "correo": "Email"
       }
     },
     "familia": {
-      "title": "Register Family",
+      "title": "Register family",
       "fields": {
-        "nombre": "Family Name",
+        "nombre": "Family name",
         "acudiente": "Guardian",
         "estudiante": "Student",
         "observaciones": "Observations"
       }
     },
     "bus": {
-      "title": "Register Bus",
+      "title": "Register bus",
       "fields": {
-        "matricula": "License Plate",
+        "matricula": "License plate",
         "conductor": "Driver",
         "modelo": "Model",
         "marca": "Brand",
         "capacidad": "Capacity",
-        "soat": "SOAT Validity",
-        "gps": "GPS Status"
+        "soat": "SOAT validity",
+        "gps": "GPS status"
       }
     },
     "parada": {
-      "title": "Register Stop",
+      "title": "Register stop",
       "fields": {
-        "nombre": "Stop Name",
+        "nombre": "Stop name",
         "estudiante": "Student",
         "ciudad": "City",
         "direccion": "Address",
@@ -786,37 +786,37 @@
       }
     },
     "ruta": {
-      "title": "Register Route",
+      "title": "Register route",
       "fields": {
-        "nombre": "Route Name",
-        "sector": "Sector / Neighborhood",
-        "horaInicio": "Start Time",
-        "horaFin": "End Time",
+        "nombre": "Route name",
+        "sector": "Sector / neighborhood",
+        "horaInicio": "Start time",
+        "horaFin": "End time",
         "destino": "Destination",
         "sectorRuta": "Sector"
       }
     },
     "admins": {
-      "title": "Register Administrator",
+      "title": "Register administrator",
       "fields": {
         "nombre": "Name",
-        "apellidos": "Last Names",
+        "apellidos": "Last names",
         "correo": "Email",
-        "identificacion": "ID Number",
-        "fechaNac": "Birth Date",
+        "identificacion": "ID number",
+        "fechaNac": "Birth date",
         "telefono": "Phone",
         "direccion": "Address"
       }
     },
     "schools": {
-      "title": "Register School",
+      "title": "Register school",
       "fields": {
-        "nombre": "School Name",
+        "nombre": "School name",
         "logo": "Logo",
         "ciudad": "City",
         "direccion": "Address",
         "telefono": "Phone",
-        "escolaridad": "Education Level",
+        "escolaridad": "Education level",
         "correo": "Email",
         "web": "Website"
       }

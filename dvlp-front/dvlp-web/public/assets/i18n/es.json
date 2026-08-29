@@ -12,20 +12,6 @@
     "line5": "tiempo",
     "line6": "real"
   },
-  "card_panel": {
-    "badge": "+ 12 este mes",
-    "title": "Panel Guardian Escolar",
-    "live": "● En vivo",
-    "students": "Estudiantes",
-    "routes": "Rutas",
-    "alerts": "Alertas",
-
-    "alert_msg": "Bus fuera de ruta",
-    "alert_sub": "Ruta LOL85 · 6:45 am",
-
-    "success_msg": "18 rutas operando",
-    "success_sub": "Todas en tiempo normal"
-  },
   "features": {
     "label": "FUNCIONALIDADES",
     "title": "Todo lo que necesitas para la seguridad escolar",
@@ -601,48 +587,48 @@
   },
   "update_record": {
     "estudiante": {
-      "title": "Actualizar Estudiante",
+      "title": "Actualizar estudiante",
       "fields": {
         "nombres": "Nombres",
         "apellidos": "Apellidos",
-        "tipoId": "Tipo Identificación",
+        "tipoId": "Tipo de identificación",
         "identificacion": "Identificación",
-        "fechaNac": "Fecha nacimiento",
+        "fechaNac": "Fecha de nacimiento",
         "curso": "Curso",
         "telefono": "Teléfono",
-        "direccion": "Dirección residencia",
+        "direccion": "Dirección de residencia",
         "correo": "Correo electrónico"
       }
     },
     "acudiente": {
-      "title": "Actualizar Acudiente",
+      "title": "Actualizar acudiente",
       "fields": {
         "nombre": "Nombre",
         "apellidos": "Apellidos",
         "correo": "Correo electrónico",
-        "tipoId": "Tipo Identificación",
+        "tipoId": "Tipo de identificación",
         "identificacion": "Identificación",
-        "fechaNac": "Fecha nacimiento",
+        "fechaNac": "Fecha de nacimiento",
         "telefono": "Teléfono",
-        "direccion": "Dirección residencia"
+        "direccion": "Dirección de residencia"
       }
     },
     "conductor": {
-      "title": "Actualizar Conductor",
+      "title": "Actualizar conductor",
       "fields": {
         "nombres": "Nombres",
         "apellidos": "Apellidos",
-        "tipoId": "Tipo Identificación",
+        "tipoId": "Tipo de identificación",
         "identificacion": "Identificación",
-        "fechaNac": "Fecha nacimiento",
-        "vencLicencia": "Vencimiento licencia",
-        "licencia": "Licencia conducción",
-        "direccion": "Dirección residencia",
+        "fechaNac": "Fecha de nacimiento",
+        "vencLicencia": "Vencimiento de licencia",
+        "licencia": "Licencia de conducción",
+        "direccion": "Dirección de residencia",
         "correo": "Correo electrónico"
       }
     },
     "familia": {
-      "title": "Actualizar Familia",
+      "title": "Actualizar familia",
       "fields": {
         "nombre": "Nombre",
         "acudiente": "Acudiente",
@@ -651,7 +637,7 @@
       }
     },
     "bus": {
-      "title": "Actualizar Bus",
+      "title": "Actualizar bus",
       "fields": {
         "matricula": "Matrícula del bus",
         "conductor": "Conductor",
@@ -663,7 +649,7 @@
       }
     },
     "parada": {
-      "title": "Actualizar Parada",
+      "title": "Actualizar parada",
       "fields": {
         "nombre": "Nombre",
         "estudiante": "Estudiante",
@@ -674,7 +660,7 @@
       }
     },
     "ruta": {
-      "title": "Actualizar Ruta",
+      "title": "Actualizar ruta",
       "fields": {
         "nombre": "Nombre",
         "sector": "Sector o barrio",
@@ -685,19 +671,19 @@
       }
     },
     "admins": {
-      "title": "Actualizar Administrador",
+      "title": "Actualizar administrador",
       "fields": {
         "nombre": "Nombre",
         "apellidos": "Apellidos",
         "correo": "Correo electrónico",
         "identificacion": "Identificación",
-        "fechaNac": "Fecha nacimiento",
+        "fechaNac": "Fecha de nacimiento",
         "telefono": "Teléfono",
-        "direccion": "Dirección residencia"
+        "direccion": "Dirección de residencia"
       }
     },
     "schools": {
-      "title": "Actualizar Escuela",
+      "title": "Actualizar escuela",
       "fields": {
         "nombre": "Nombre",
         "ciudad": "Ciudad",
@@ -717,57 +703,57 @@
     "select": "Seleccionar…",
     "button": "Registrar",
     "estudiante": {
-      "title": "Registrar Estudiante",
+      "title": "Registrar estudiante",
       "fields": {
         "nombres": "Nombres",
         "apellidos": "Apellidos",
-        "tipoId": "Tipo de Identificación",
-        "identificacion": "Número de Identificación",
-        "fechaNac": "Fecha de Nacimiento",
+        "tipoId": "Tipo de identificación",
+        "identificacion": "Número de identificación",
+        "fechaNac": "Fecha de nacimiento",
         "curso": "Curso",
         "telefono": "Teléfono",
         "direccion": "Dirección",
-        "correo": "Correo Electrónico"
+        "correo": "Correo electrónico"
       }
     },
     "acudiente": {
-      "title": "Registrar Acudiente",
+      "title": "Registrar acudiente",
       "fields": {
         "nombres": "Nombres",
         "apellidos": "Apellidos",
-        "correo": "Correo Electrónico",
-        "tipoId": "Tipo de Identificación",
-        "identificacion": "Número de Identificación",
-        "fechaNac": "Fecha de Nacimiento",
+        "correo": "Correo electrónico",
+        "tipoId": "Tipo de identificación",
+        "identificacion": "Número de identificación",
+        "fechaNac": "Fecha de nacimiento",
         "telefono": "Teléfono",
         "direccion": "Dirección"
       }
     },
     "conductor": {
-      "title": "Registrar Conductor",
+      "title": "Registrar conductor",
       "fields": {
         "nombres": "Nombres",
         "apellidos": "Apellidos",
-        "tipoId": "Tipo de Identificación",
-        "identificacion": "Número de Identificación",
-        "fechaNac": "Fecha de Nacimiento",
-        "vencLicencia": "Vencimiento de Licencia",
-        "licencia": "Número de Licencia",
+        "tipoId": "Tipo de identificación",
+        "identificacion": "Número de identificación",
+        "fechaNac": "Fecha de nacimiento",
+        "vencLicencia": "Vencimiento de licencia",
+        "licencia": "Número de licencia",
         "direccion": "Dirección",
-        "correo": "Correo Electrónico"
+        "correo": "Correo electrónico"
       }
     },
     "familia": {
-      "title": "Registrar Familia",
+      "title": "Registrar familia",
       "fields": {
-        "nombre": "Nombre de Familia",
+        "nombre": "Nombre de la familia",
         "acudiente": "Acudiente",
         "estudiante": "Estudiante",
         "observaciones": "Observaciones"
       }
     },
     "bus": {
-      "title": "Registrar Bus",
+      "title": "Registrar bus",
       "fields": {
         "matricula": "Matrícula",
         "conductor": "Conductor",
@@ -779,9 +765,9 @@
       }
     },
     "parada": {
-      "title": "Registrar Parada",
+      "title": "Registrar parada",
       "fields": {
-        "nombre": "Nombre de la Parada",
+        "nombre": "Nombre de la parada",
         "estudiante": "Estudiante",
         "ciudad": "Ciudad",
         "direccion": "Dirección",
@@ -790,39 +776,39 @@
       }
     },
     "ruta": {
-      "title": "Registrar Ruta",
+      "title": "Registrar ruta",
       "fields": {
-        "nombre": "Nombre de la Ruta",
-        "sector": "Sector / Barrio",
-        "horaInicio": "Hora de Inicio",
-        "horaFin": "Hora de Finalización",
+        "nombre": "Nombre de la ruta",
+        "sector": "Sector / barrio",
+        "horaInicio": "Hora de inicio",
+        "horaFin": "Hora de finalización",
         "destino": "Destino",
         "sectorRuta": "Sector"
       }
     },
     "admins": {
-      "title": "Registrar Administrador",
+      "title": "Registrar administrador",
       "fields": {
         "nombre": "Nombre",
         "apellidos": "Apellidos",
-        "correo": "Correo Electrónico",
+        "correo": "Correo electrónico",
         "identificacion": "Identificación",
-        "fechaNac": "Fecha de Nacimiento",
+        "fechaNac": "Fecha de nacimiento",
         "telefono": "Teléfono",
         "direccion": "Dirección"
       }
     },
     "schools": {
-      "title": "Registrar Escuela",
+      "title": "Registrar escuela",
       "fields": {
-        "nombre": "Nombre de la Escuela",
+        "nombre": "Nombre de la escuela",
         "logo": "Logo",
         "ciudad": "Ciudad",
         "direccion": "Dirección",
         "telefono": "Teléfono",
-        "escolaridad": "Nivel Educativo",
-        "correo": "Correo Electrónico",
-        "web": "Página Web"
+        "escolaridad": "Nivel educativo",
+        "correo": "Correo electrónico",
+        "web": "Página web"
       }
     }
   },

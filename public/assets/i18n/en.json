@@ -499,7 +499,7 @@
     }
   },
   "right_index": {
-    "brand": "yelowsoft",
+    "brand": "Guardian Escolar",
     "dashboardTitle": "Live Tracking",
     "allVehicles": "All Vehicles",
     "filters": "Filters",
@@ -508,7 +508,7 @@
     "onRoute": "On Route",
     "alerts": "Alerts",
     "active": "Active",
-    "avgOnTime": "Avg. On-Time",
+    "students": "Students",
     "pickupPoint": "Pickup Point",
     "greenStreet": "Green Street",
     "school": "School",

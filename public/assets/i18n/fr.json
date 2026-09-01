@@ -499,7 +499,7 @@
     }
   },
   "right_index": {
-    "brand": "yelowsoft",
+    "brand": "Gardien Scolaire",
     "dashboardTitle": "Suivi en direct",
     "allVehicles": "Tous les véhicules",
     "filters": "Filtres",
@@ -508,7 +508,7 @@
     "onRoute": "En route",
     "alerts": "Alertes",
     "active": "Actives",
-    "avgOnTime": "Moy. à l’heure",
+    "students": "Étudiants",
     "pickupPoint": "Point de prise en charge",
     "greenStreet": "Rue Verte",
     "school": "École",

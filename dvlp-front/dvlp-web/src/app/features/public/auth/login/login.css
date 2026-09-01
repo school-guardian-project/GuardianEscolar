@@ -45,7 +45,7 @@ main {
     border-top-left-radius: 9px;
     border-bottom-left-radius: 9px;
     background: linear-gradient(135deg, #102d7d, #366fea);
-    justify-content: space-between;
+    /* justify-content:; */
 }
 
 .sesion-right {
@@ -93,29 +93,12 @@ form {
     font-size: 1rem;
 }
 
-.GPS,
-.alerts,
-.report {
-    padding: 10px;
-    background-color: #346ce4;
-    border-radius: 10px;
-    margin-bottom: 12px;
-    color: white;
-    display: flex;
-    align-items: center;
-    font-size: 0.8rem;
-}
-.icon {
-    margin: 0 10px;
-}
-
-.report {
-    margin-bottom: 30px;
-}
-
 .edu {
     color: white;
     font-size: 0.8rem;
+    justify-content: flex-end;
+    margin-top: auto;
+    margin-bottom: 0;
 }
 
 h2,

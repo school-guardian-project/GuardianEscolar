@@ -499,7 +499,7 @@
     }
   },
   "right_index": {
-    "brand": "yelowsoft",
+    "brand": "Guardião Escolar",
     "dashboardTitle": "Rastreamento ao vivo",
     "allVehicles": "Todos os veículos",
     "filters": "Filtros",
@@ -508,7 +508,7 @@
     "onRoute": "Em rota",
     "alerts": "Alertas",
     "active": "Ativas",
-    "avgOnTime": "Média no horário",
+    "students": "Estudantes",
     "pickupPoint": "Ponto de coleta",
     "greenStreet": "Rua Verde",
     "school": "Escola",

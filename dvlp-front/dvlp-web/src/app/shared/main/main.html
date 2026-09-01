@@ -32,7 +32,6 @@
                             <h3>{{ 'right_index.dashboardTitle' | translate }}</h3>
                             <button class="select-button">
                                 <span>{{ 'right_index.allVehicles' | translate }}</span>
-                                <span class="caret">⌄</span>
                             </button>
                             <button class="filter-button">{{ 'right_index.filters' | translate }}</button>
                         </div>
@@ -54,9 +53,8 @@
                                 <span class="stat-tag">{{ 'right_index.active' | translate }}</span>
                             </div>
                             <div class="stat-box stat-gray">
-                                <span class="stat-value">94%</span>
-                                <span class="stat-label">{{ 'right_index.avgOnTime' | translate }}</span>
-                                <span class="stat-arrow">↑</span>
+                                <span class="stat-value">34</span>
+                                <span class="stat-label">{{ 'right_index.students' | translate }}</span>
                             </div>
                         </div>
 
@@ -123,15 +121,13 @@
                 </div>
 
                 <div class="phone-preview">
-                    <div class="phone-top-bar"></div>
                     <div class="phone-card">
                         <div class="phone-header">
                             <div class="phone-status"></div>
-                            <div class="phone-signal"></div>
                             <div class="phone-battery"></div>
                         </div>
                         <div class="phone-alert">
-                            <span class="phone-bell"></span>
+                            <span><mat-icon class="phone-bell">notifications</mat-icon></span>
                             <div>
                                 <strong>{{ 'right_index.geofenceAlert' | translate }}</strong>
                                 <small>{{ 'right_index.geofenceMessage' | translate }}</small>
@@ -140,7 +136,7 @@
                         </div>
                         <div class="phone-bus-card">
                             <div class="mini-bus-row">
-                                <span class="mini-bus small">{{ 'right_index.bus' | translate }}</span>
+                                <span class="mini-bus small"><mat-icon>bus_alert</mat-icon></span>
                                 <span class="status-pill">{{ 'right_index.onRoute' | translate }}</span>
                             </div>
                             <div class="phone-metrics">

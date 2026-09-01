@@ -12,18 +12,6 @@
     "line5": "temps",
     "line6": "réel"
   },
-  "card_panel": {
-    "badge": "+ 12 ce mois-ci",
-    "title": "Panneau Guardian Escolar",
-    "live": "● En direct",
-    "students": "Étudiants",
-    "routes": "Itinéraires",
-    "alerts": "Alertes",
-    "alert_msg": "Bus hors route",
-    "alert_sub": "Itinéraire LOL85 · 6:45 am",
-    "success_msg": "18 itinéraires en activité",
-    "success_sub": "Tous dans le timing normal"
-  },
   "features": {
     "label": "FONCTIONNALITÉS",
     "title": "Tout ce dont vous avez besoin pour la sécurité scolaire",
@@ -122,9 +110,7 @@
     }
   },
   "footer": {
-    "description": "Système de surveillance scolaire pour des trajets plus sûrs et des familles plus sereines.",
     "col_product": "Produit",
-    "col_company": "Entreprise",
     "col_legal": "Légal",
     "links_product": [
       "Fonctionnalités",
@@ -241,14 +227,6 @@
       "pin_error": "*Le code saisi n'est pas valide."
     },
     "code_second": {
-      "title": "Confirmer le code",
-      "sessionDescription": "Entrez le code envoyé à votre nouvel email.",
-      "titleStep": "Étape 4",
-      "buttonText": "Confirmer",
-      "returnStep": "Retour",
-      "stepText": "4 sur 4",
-      "description": "Entrez le code final pour mettre à jour votre email.",
-      "pin_error": "*Le code saisi n'est pas valide.",
       "confirmationTitle": "Email mis à jour",
       "confirmationDescription": "Votre email a été mis à jour avec succès."
     },
@@ -368,8 +346,7 @@
     "title-routes": "Transport",
     "bus": "Bus",
     "route": "Itinéraires",
-    "bus-stops": "Arrêts",
-    "title-profile": "Profil"
+    "bus-stops": "Arrêts"
   },
   "comments_modal": {
     "title": "Avez-vous un problème ?",
@@ -425,11 +402,7 @@
     "blue": "Bleu",
     "green": "Vert",
     "yellow": "Jaune",
-    "red": "Rouge",
-    "buttons": {
-      "cancel": "Annuler",
-      "apply": "Appliquer"
-    }
+    "red": "Rouge"
   },
   "language": {
     "title": "Sélectionner la langue",
@@ -439,271 +412,13 @@
       "confirm": "Confirmer"
     }
   },
-  "delete_record": {
-    "estudiante": {
-      "title": "Supprimer l'étudiant",
-      "text": "Voulez-vous supprimer cet étudiant ? Cette action est irréversible."
-    },
-    "acudiente": {
-      "title": "Supprimer le tuteur",
-      "text": "Voulez-vous supprimer ce tuteur ? Cette action est irréversible."
-    },
-    "conductor": {
-      "title": "Supprimer le conducteur",
-      "text": "Voulez-vous supprimer ce conducteur ? Cette action est irréversible."
-    },
-    "familia": {
-      "title": "Supprimer la famille",
-      "text": "Voulez-vous supprimer cette famille ? Cette action est irréversible."
-    },
-    "bus": {
-      "title": "Supprimer le bus",
-      "text": "Voulez-vous supprimer ce bus ? Cette action est irréversible."
-    },
-    "parada": {
-      "title": "Supprimer l'arrêt",
-      "text": "Voulez-vous supprimer cet arrêt ? Cette action est irréversible."
-    },
-    "ruta": {
-      "title": "Supprimer l'itinéraire",
-      "text": "Voulez-vous supprimer cet itinéraire ? Cette action est irréversible."
-    },
-    "admins": {
-      "title": "Supprimer l'administrateur",
-      "text": "Voulez-vous supprimer cet administrateur ? Cette action est irréversible."
-    },
-    "schools": {
-      "title": "Supprimer l'école",
-      "text": "Voulez-vous supprimer cette école ? Cette action est irréversible."
-    }
-  },
   "common": {
     "cancel": "Annuler",
     "delete": "Supprimer",
-    "save": "Enregistrer",
-    "confirm": "Confirmer",
     "close": "Fermer",
     "accept": "Accepter"
   },
-  "record_information": {
-    "estudiante": {
-      "title": "Informations de l'étudiant",
-      "fields": {
-        "nombres": "Prénoms",
-        "apellidos": "Noms de famille",
-        "tipoId": "Type d'identité",
-        "identificacion": "Numéro d'identité",
-        "fechaNac": "Date de naissance",
-        "curso": "Classe",
-        "telefono": "Téléphone",
-        "direccion": "Adresse",
-        "correo": "Email"
-      }
-    },
-    "acudiente": {
-      "title": "Informations du tuteur",
-      "fields": {
-        "nombre": "Nom",
-        "apellidos": "Noms de famille",
-        "correo": "Email",
-        "tipoId": "Type d'identité",
-        "identificacion": "Numéro d'identité",
-        "fechaNac": "Date de naissance",
-        "telefono": "Téléphone",
-        "direccion": "Adresse"
-      }
-    },
-    "conductor": {
-      "title": "Informations du conducteur",
-      "fields": {
-        "nombres": "Prénoms",
-        "apellidos": "Noms de famille",
-        "tipoId": "Type d'identité",
-        "identificacion": "Numéro d'identité",
-        "fechaNac": "Date de naissance",
-        "vencLicencia": "Expiration du permis",
-        "licencia": "Permis de conduire",
-        "direccion": "Adresse",
-        "correo": "Email"
-      }
-    },
-    "familia": {
-      "title": "Informations de la famille",
-      "fields": {
-        "nombre": "Nom",
-        "acudiente": "Tuteur",
-        "estudiante": "Étudiant",
-        "observaciones": "Observations"
-      }
-    },
-    "bus": {
-      "title": "Informations du bus",
-      "fields": {
-        "matricula": "Plaque d'immatriculation",
-        "conductor": "Conducteur",
-        "modelo": "Modèle",
-        "marca": "Marque",
-        "capacidad": "Capacité maximale",
-        "gps": "État du GPS",
-        "soat": "Validité SOAT"
-      }
-    },
-    "parada": {
-      "title": "Informations de l'arrêt",
-      "fields": {
-        "nombre": "Nom",
-        "estudiante": "Étudiant",
-        "ciudad": "Ville",
-        "direccion": "Adresse",
-        "latitud": "Latitude",
-        "longitud": "Longitude"
-      }
-    },
-    "ruta": {
-      "title": "Informations de l'itinéraire",
-      "fields": {
-        "nombre": "Nom",
-        "sector": "Secteur ou quartier",
-        "horaInicio": "Heure de début",
-        "horaFin": "Heure de fin",
-        "destino": "Destination",
-        "sectorRuta": "Secteur"
-      }
-    },
-    "admins": {
-      "title": "Informations de l'administrateur",
-      "fields": {
-        "nombre": "Nom",
-        "apellidos": "Noms de famille",
-        "correo": "Email",
-        "identificacion": "Numéro d'identité",
-        "telefono": "Téléphone",
-        "fechaNac": "Date de naissance",
-        "direccion": "Adresse"
-      }
-    },
-    "schools": {
-      "title": "Informations de l'école",
-      "fields": {
-        "nombre": "Nom",
-        "ciudad": "Ville",
-        "escolaridad": "Niveau scolaire",
-        "direccion": "Adresse",
-        "telefono": "Téléphone",
-        "correo": "Email",
-        "web": "Site Web"
-      }
-    }
-  },
   "update_record": {
-    "estudiante": {
-      "title": "Mettre à jour l'étudiant",
-      "fields": {
-        "nombres": "Prénoms",
-        "apellidos": "Noms de famille",
-        "tipoId": "Type d'identité",
-        "identificacion": "Numéro d'identité",
-        "fechaNac": "Date de naissance",
-        "curso": "Classe",
-        "telefono": "Téléphone",
-        "direccion": "Adresse de résidence",
-        "correo": "Email"
-      }
-    },
-    "acudiente": {
-      "title": "Mettre à jour le tuteur",
-      "fields": {
-        "nombre": "Nom",
-        "apellidos": "Noms de famille",
-        "correo": "Email",
-        "tipoId": "Type d'identité",
-        "identificacion": "Numéro d'identité",
-        "fechaNac": "Date de naissance",
-        "telefono": "Téléphone",
-        "direccion": "Adresse de résidence"
-      }
-    },
-    "conductor": {
-      "title": "Mettre à jour le conducteur",
-      "fields": {
-        "nombres": "Prénoms",
-        "apellidos": "Noms de famille",
-        "tipoId": "Type d'identité",
-        "identificacion": "Numéro d'identité",
-        "fechaNac": "Date de naissance",
-        "vencLicencia": "Expiration du permis",
-        "licencia": "Permis de conduire",
-        "direccion": "Adresse de résidence",
-        "correo": "Email"
-      }
-    },
-    "familia": {
-      "title": "Mettre à jour la famille",
-      "fields": {
-        "nombre": "Nom",
-        "acudiente": "Tuteur",
-        "estudiante": "Étudiant",
-        "observaciones": "Observations"
-      }
-    },
-    "bus": {
-      "title": "Mettre à jour le bus",
-      "fields": {
-        "matricula": "Plaque d'immatriculation du bus",
-        "conductor": "Conducteur",
-        "modelo": "Modèle",
-        "marca": "Marque",
-        "capacidad": "Capacité maximale",
-        "soat": "Validité SOAT",
-        "gps": "État du GPS"
-      }
-    },
-    "parada": {
-      "title": "Mettre à jour l'arrêt",
-      "fields": {
-        "nombre": "Nom",
-        "estudiante": "Étudiant",
-        "ciudad": "Ville",
-        "direccion": "Adresse",
-        "latitud": "Latitude",
-        "longitud": "Longitude"
-      }
-    },
-    "ruta": {
-      "title": "Mettre à jour l'itinéraire",
-      "fields": {
-        "nombre": "Nom",
-        "sector": "Secteur ou quartier",
-        "horaInicio": "Heure de début de l'itinéraire",
-        "horaFin": "Heure de fin de l'itinéraire",
-        "destino": "Destination",
-        "sectorRuta": "Secteur"
-      }
-    },
-    "admins": {
-      "title": "Mettre à jour l'administrateur",
-      "fields": {
-        "nombre": "Nom",
-        "apellidos": "Noms de famille",
-        "correo": "Email",
-        "identificacion": "Numéro d'identité",
-        "fechaNac": "Date de naissance",
-        "telefono": "Téléphone",
-        "direccion": "Adresse de résidence"
-      }
-    },
-    "schools": {
-      "title": "Mettre à jour l'école",
-      "fields": {
-        "nombre": "Nom",
-        "ciudad": "Ville",
-        "direccion": "Adresse",
-        "telefono": "Téléphone",
-        "escolaridad": "Niveau scolaire",
-        "correo": "Email",
-        "web": "Site Web"
-      }
-    },
     "buttons": {
       "save": "Enregistrer les modifications",
       "select": "Sélectionner…"
@@ -711,116 +426,7 @@
   },
   "register": {
     "select": "Sélectionner…",
-    "button": "Enregistrer",
-    "estudiante": {
-      "title": "Enregistrer l'étudiant",
-      "fields": {
-        "nombres": "Prénoms",
-        "apellidos": "Noms de famille",
-        "tipoId": "Type d'identité",
-        "identificacion": "Numéro d'identité",
-        "fechaNac": "Date de naissance",
-        "curso": "Classe",
-        "telefono": "Téléphone",
-        "direccion": "Adresse",
-        "correo": "Email"
-      }
-    },
-    "acudiente": {
-      "title": "Enregistrer le tuteur",
-      "fields": {
-        "nombres": "Prénoms",
-        "apellidos": "Noms de famille",
-        "correo": "Email",
-        "tipoId": "Type d'identité",
-        "identificacion": "Numéro d'identité",
-        "fechaNac": "Date de naissance",
-        "telefono": "Téléphone",
-        "direccion": "Adresse"
-      }
-    },
-    "conductor": {
-      "title": "Enregistrer le conducteur",
-      "fields": {
-        "nombres": "Prénoms",
-        "apellidos": "Noms de famille",
-        "tipoId": "Type d'identité",
-        "identificacion": "Numéro d'identité",
-        "fechaNac": "Date de naissance",
-        "vencLicencia": "Expiration du permis",
-        "licencia": "Numéro de permis",
-        "direccion": "Adresse",
-        "correo": "Email"
-      }
-    },
-    "familia": {
-      "title": "Enregistrer la famille",
-      "fields": {
-        "nombre": "Nom de la famille",
-        "acudiente": "Tuteur",
-        "estudiante": "Étudiant",
-        "observaciones": "Observations"
-      }
-    },
-    "bus": {
-      "title": "Enregistrer le bus",
-      "fields": {
-        "matricula": "Plaque d'immatriculation",
-        "conductor": "Conducteur",
-        "modelo": "Modèle",
-        "marca": "Marque",
-        "capacidad": "Capacité",
-        "soat": "Validité SOAT",
-        "gps": "État du GPS"
-      }
-    },
-    "parada": {
-      "title": "Enregistrer l'arrêt",
-      "fields": {
-        "nombre": "Nom de l'arrêt",
-        "estudiante": "Étudiant",
-        "ciudad": "Ville",
-        "direccion": "Adresse",
-        "latitud": "Latitude",
-        "longitud": "Longitude"
-      }
-    },
-    "ruta": {
-      "title": "Enregistrer l'itinéraire",
-      "fields": {
-        "nombre": "Nom de l'itinéraire",
-        "sector": "Secteur / Quartier",
-        "horaInicio": "Heure de début",
-        "horaFin": "Heure de fin",
-        "destino": "Destination",
-        "sectorRuta": "Secteur"
-      }
-    },
-    "admins": {
-      "title": "Enregistrer l'administrateur",
-      "fields": {
-        "nombre": "Nom",
-        "apellidos": "Noms de famille",
-        "correo": "Email",
-        "identificacion": "Numéro d'identité",
-        "fechaNac": "Date de naissance",
-        "telefono": "Téléphone",
-        "direccion": "Adresse"
-      }
-    },
-    "schools": {
-      "title": "Enregistrer l'école",
-      "fields": {
-        "nombre": "Nom de l'école",
-        "logo": "Logo",
-        "ciudad": "Ville",
-        "direccion": "Adresse",
-        "telefono": "Téléphone",
-        "escolaridad": "Niveau d'éducation",
-        "correo": "Email",
-        "web": "Site Web"
-      }
-    }
+    "button": "Enregistrer"
   },
   "search": {
     "search": "Rechercher..."
@@ -872,17 +478,6 @@
     "return": "Retour à la connexion",
     "step_text": "1 sur 3",
     "hint": "Vous recevrez un code à 6 chiffres",
-    "code": {
-      "title": "Vérifiez votre email",
-      "session_description": "Nous avons envoyé un code à 6 chiffres à votre email.",
-      "title_step": "Code de vérification",
-      "button": "Valider",
-      "return": "Retour",
-      "step_text": "2 sur 3",
-      "sent_to": "Code envoyé à",
-      "valid": "Valide pendant 10 minutes.",
-      "error": "*Entrez les 6 chiffres du code"
-    },
     "reset": {
       "title": "Créez un mot de passe sécurisé",
       "session_description": "Tenez compte des recommandations de sécurité.",
@@ -901,9 +496,37 @@
         "pattern": "*Doit contenir des majuscules, minuscules, chiffres et caractères spéciaux (. - _ @ *)",
         "no_match": "*Les mots de passe ne correspondent pas"
       }
-    },
-    "links_product": ["Fonctionnalités", "Comment ça marche", "Contact"],
-    "links_legal": ["Confidentialité et conditions"],
-    "rights": "© 2026 Guardian Escolar · Tous droits réservés"
+    }
+  },
+  "right_index": {
+    "brand": "yelowsoft",
+    "dashboardTitle": "Suivi en direct",
+    "allVehicles": "Tous les véhicules",
+    "filters": "Filtres",
+    "live": "En direct",
+    "totalVehicles": "Véhicules totaux",
+    "onRoute": "En route",
+    "alerts": "Alertes",
+    "active": "Actives",
+    "avgOnTime": "Moy. à l’heure",
+    "pickupPoint": "Point de prise en charge",
+    "greenStreet": "Rue Verte",
+    "school": "École",
+    "springfieldSchool": "École Springfield",
+    "bus": "Bus 02",
+    "bus05": "Bus 05",
+    "bus08": "Bus 08",
+    "liveActivity": "Activité en direct",
+    "delayed": "Retardé",
+    "mapleAvenue": "Avenue Maple",
+    "oakBoulevard": "Boulevard Oak",
+    "geofenceAlert": "Alerte de géofence",
+    "geofenceMessage": "Le Bus 02 est arrivé à l’école Springfield",
+    "eta": "ETA",
+    "etaValue": "7:45 AM",
+    "speedLabel": "Vitesse",
+    "busSpeed": "45 km/h",
+    "nextStop": "Prochaine étape",
+    "nextStopValue": "École Springfield"
   }
 }

@@ -110,9 +110,7 @@
     }
   },
   "footer": {
-    "description": "Sistema de monitoreo escolar para rutas más seguras y familias más tranquilas.",
     "col_product": "Producto",
-    "col_company": "Empresa",
     "col_legal": "Legal",
     "links_product": [
       "Funcionalidades",
@@ -200,11 +198,9 @@
       "stepText": "4 de 4",
       "description": "Introduce el código para finalizar el cambio de teléfono.",
       "pin_error": "*El código ingresado no es válido.",
-      "confirmationTitle":"Teléfono actualizado",
-      "confirmationDescription":"Su teléfono ha sido actualizado correctamente."
+      "confirmationTitle": "Teléfono actualizado",
+      "confirmationDescription": "Su teléfono ha sido actualizado correctamente."
     }
-    
-    
   },
   "change_email": {
     "email": {
@@ -231,16 +227,8 @@
       "pin_error": "*El código ingresado no es válido."
     },
     "code_second": {
-      "title": "Confirmar código",
-      "sessionDescription": "Ingresa el código enviado al nuevo correo.",
-      "titleStep": "Paso 4",
-      "buttonText": "Confirmar",
-      "returnStep": "Volver",
-      "stepText": "4 de 4",
-      "description": "Introduce el código final para actualizar tu correo.",
-      "pin_error": "*El código ingresado no es válido.",
-      "confirmationTitle":"Correo actualizado",
-      "confirmationDescription":"Su correo ha sido actualizado correctamente."
+      "confirmationTitle": "Correo actualizado",
+      "confirmationDescription": "Su correo ha sido actualizado correctamente."
     },
     "reset": {
       "title": "Casi terminamos",
@@ -295,8 +283,8 @@
       "buttonText": "Guardar contraseña",
       "returnStep": "Volver",
       "stepText": "3 de 3",
-      "confirmationTitle":"Contraseña actualizada",
-      "confirmationDescription":"Su contraseña ha sido actualizada correctamente."
+      "confirmationTitle": "Contraseña actualizada",
+      "confirmationDescription": "Su contraseña ha sido actualizada correctamente."
     }
   },
   "dashboard": {
@@ -358,8 +346,7 @@
     "title-routes": "Transporte",
     "bus": "Buses",
     "route": "Rutas",
-    "bus-stops": "Paradas",
-    "title-profile": "Perfil"
+    "bus-stops": "Paradas"
   },
   "comments_modal": {
     "title": "¿Tienes algún inconveniente?",
@@ -415,11 +402,7 @@
     "blue": "Azul",
     "green": "Verde",
     "red": "Rojo",
-    "yellow": "Amarillo",
-    "buttons": {
-      "cancel": "Cancelar",
-      "apply": "Aplicar"
-    }
+    "yellow": "Amarillo"
   },
   "language": {
     "title": "Seleccionar idioma",
@@ -429,271 +412,13 @@
       "confirm": "Confirmar"
     }
   },
-  "delete_record": {
-    "estudiante": {
-      "title": "Eliminar Estudiante",
-      "text": "¿Deseas eliminar este estudiante? Esta acción no se puede deshacer."
-    },
-    "acudiente": {
-      "title": "Eliminar Acudiente",
-      "text": "¿Deseas eliminar este acudiente? Esta acción no se puede deshacer."
-    },
-    "conductor": {
-      "title": "Eliminar Conductor",
-      "text": "¿Deseas eliminar este conductor? Esta acción no se puede deshacer."
-    },
-    "familia": {
-      "title": "Eliminar Familia",
-      "text": "¿Deseas eliminar esta familia? Esta acción no se puede deshacer."
-    },
-    "bus": {
-      "title": "Eliminar Bus",
-      "text": "¿Deseas eliminar este bus? Esta acción no se puede deshacer."
-    },
-    "parada": {
-      "title": "Eliminar Parada",
-      "text": "¿Deseas eliminar esta parada? Esta acción no se puede deshacer."
-    },
-    "ruta": {
-      "title": "Eliminar Ruta",
-      "text": "¿Deseas eliminar esta ruta? Esta acción no se puede deshacer."
-    },
-    "admins": {
-      "title": "Eliminar Administrador",
-      "text": "¿Deseas eliminar este administrador? Esta acción no se puede deshacer."
-    },
-    "schools": {
-      "title": "Eliminar Escuela",
-      "text": "¿Deseas eliminar esta escuela? Esta acción no se puede deshacer."
-    }
-  },
   "common": {
     "cancel": "Cancelar",
     "delete": "Eliminar",
-    "save": "Guardar",
-    "confirm": "Confirmar",
     "close": "Cerrar",
     "accept": "Aceptar"
   },
-  "record_information": {
-    "estudiante": {
-      "title": "Información del Estudiante",
-      "fields": {
-        "nombres": "Nombres",
-        "apellidos": "Apellidos",
-        "tipoId": "Tipo Identificación",
-        "identificacion": "Identificación",
-        "fechaNac": "Fecha Nacimiento",
-        "curso": "Curso",
-        "telefono": "Teléfono",
-        "direccion": "Dirección",
-        "correo": "Correo Electrónico"
-      }
-    },
-    "acudiente": {
-      "title": "Información del Acudiente",
-      "fields": {
-        "nombre": "Nombre",
-        "apellidos": "Apellidos",
-        "correo": "Correo Electrónico",
-        "tipoId": "Tipo Identificación",
-        "identificacion": "Identificación",
-        "fechaNac": "Fecha Nacimiento",
-        "telefono": "Teléfono",
-        "direccion": "Dirección"
-      }
-    },
-    "conductor": {
-      "title": "Información del Conductor",
-      "fields": {
-        "nombres": "Nombres",
-        "apellidos": "Apellidos",
-        "tipoId": "Tipo Identificación",
-        "identificacion": "Identificación",
-        "fechaNac": "Fecha Nacimiento",
-        "vencLicencia": "Vencimiento Licencia",
-        "licencia": "Licencia Conducción",
-        "direccion": "Dirección",
-        "correo": "Correo Electrónico"
-      }
-    },
-    "familia": {
-      "title": "Información de la Familia",
-      "fields": {
-        "nombre": "Nombre",
-        "acudiente": "Acudiente",
-        "estudiante": "Estudiante",
-        "observaciones": "Observaciones"
-      }
-    },
-    "bus": {
-      "title": "Información del Bus",
-      "fields": {
-        "matricula": "Matrícula",
-        "conductor": "Conductor",
-        "modelo": "Modelo",
-        "marca": "Marca",
-        "capacidad": "Capacidad Máxima",
-        "gps": "Estado del GPS",
-        "soat": "Vigencia SOAT"
-      }
-    },
-    "parada": {
-      "title": "Información de la Parada",
-      "fields": {
-        "nombre": "Nombre",
-        "estudiante": "Estudiante",
-        "ciudad": "Ciudad",
-        "direccion": "Dirección",
-        "latitud": "Latitud",
-        "longitud": "Longitud"
-      }
-    },
-    "ruta": {
-      "title": "Información de la Ruta",
-      "fields": {
-        "nombre": "Nombre",
-        "sector": "Sector o Barrio",
-        "horaInicio": "Hora Inicio",
-        "horaFin": "Hora Finalización",
-        "destino": "Lugar Destino",
-        "sectorRuta": "Sector"
-      }
-    },
-    "admins": {
-      "title": "Información del Administrador",
-      "fields": {
-        "nombre": "Nombre",
-        "apellidos": "Apellidos",
-        "correo": "Correo Electrónico",
-        "identificacion": "Identificación",
-        "telefono": "Teléfono",
-        "fechaNac": "Fecha Nacimiento",
-        "direccion": "Dirección"
-      }
-    },
-    "schools": {
-      "title": "Información de la Escuela",
-      "fields": {
-        "nombre": "Nombre",
-        "ciudad": "Ciudad",
-        "escolaridad": "Escolaridad",
-        "direccion": "Dirección",
-        "telefono": "Teléfono",
-        "correo": "Correo Electrónico",
-        "web": "Página Web"
-      }
-    }
-  },
   "update_record": {
-    "estudiante": {
-      "title": "Actualizar estudiante",
-      "fields": {
-        "nombres": "Nombres",
-        "apellidos": "Apellidos",
-        "tipoId": "Tipo de identificación",
-        "identificacion": "Identificación",
-        "fechaNac": "Fecha de nacimiento",
-        "curso": "Curso",
-        "telefono": "Teléfono",
-        "direccion": "Dirección de residencia",
-        "correo": "Correo electrónico"
-      }
-    },
-    "acudiente": {
-      "title": "Actualizar acudiente",
-      "fields": {
-        "nombre": "Nombre",
-        "apellidos": "Apellidos",
-        "correo": "Correo electrónico",
-        "tipoId": "Tipo de identificación",
-        "identificacion": "Identificación",
-        "fechaNac": "Fecha de nacimiento",
-        "telefono": "Teléfono",
-        "direccion": "Dirección de residencia"
-      }
-    },
-    "conductor": {
-      "title": "Actualizar conductor",
-      "fields": {
-        "nombres": "Nombres",
-        "apellidos": "Apellidos",
-        "tipoId": "Tipo de identificación",
-        "identificacion": "Identificación",
-        "fechaNac": "Fecha de nacimiento",
-        "vencLicencia": "Vencimiento de licencia",
-        "licencia": "Licencia de conducción",
-        "direccion": "Dirección de residencia",
-        "correo": "Correo electrónico"
-      }
-    },
-    "familia": {
-      "title": "Actualizar familia",
-      "fields": {
-        "nombre": "Nombre",
-        "acudiente": "Acudiente",
-        "estudiante": "Estudiante",
-        "observaciones": "Observaciones"
-      }
-    },
-    "bus": {
-      "title": "Actualizar bus",
-      "fields": {
-        "matricula": "Matrícula del bus",
-        "conductor": "Conductor",
-        "modelo": "Modelo",
-        "marca": "Marca",
-        "capacidad": "Capacidad máxima",
-        "soat": "Vigencia SOAT",
-        "gps": "Estado del GPS"
-      }
-    },
-    "parada": {
-      "title": "Actualizar parada",
-      "fields": {
-        "nombre": "Nombre",
-        "estudiante": "Estudiante",
-        "ciudad": "Ciudad",
-        "direccion": "Dirección",
-        "latitud": "Latitud",
-        "longitud": "Longitud"
-      }
-    },
-    "ruta": {
-      "title": "Actualizar ruta",
-      "fields": {
-        "nombre": "Nombre",
-        "sector": "Sector o barrio",
-        "horaInicio": "Hora de inicio de la ruta",
-        "horaFin": "Hora finalización de ruta",
-        "destino": "Lugar destino",
-        "sectorRuta": "Sector"
-      }
-    },
-    "admins": {
-      "title": "Actualizar administrador",
-      "fields": {
-        "nombre": "Nombre",
-        "apellidos": "Apellidos",
-        "correo": "Correo electrónico",
-        "identificacion": "Identificación",
-        "fechaNac": "Fecha de nacimiento",
-        "telefono": "Teléfono",
-        "direccion": "Dirección de residencia"
-      }
-    },
-    "schools": {
-      "title": "Actualizar escuela",
-      "fields": {
-        "nombre": "Nombre",
-        "ciudad": "Ciudad",
-        "direccion": "Dirección",
-        "telefono": "Teléfono",
-        "escolaridad": "Escolaridad",
-        "correo": "Correo electrónico",
-        "web": "Página web"
-      }
-    },
     "buttons": {
       "save": "Guardar cambios",
       "select": "Seleccionar…"
@@ -701,116 +426,7 @@
   },
   "register": {
     "select": "Seleccionar…",
-    "button": "Registrar",
-    "estudiante": {
-      "title": "Registrar estudiante",
-      "fields": {
-        "nombres": "Nombres",
-        "apellidos": "Apellidos",
-        "tipoId": "Tipo de identificación",
-        "identificacion": "Número de identificación",
-        "fechaNac": "Fecha de nacimiento",
-        "curso": "Curso",
-        "telefono": "Teléfono",
-        "direccion": "Dirección",
-        "correo": "Correo electrónico"
-      }
-    },
-    "acudiente": {
-      "title": "Registrar acudiente",
-      "fields": {
-        "nombres": "Nombres",
-        "apellidos": "Apellidos",
-        "correo": "Correo electrónico",
-        "tipoId": "Tipo de identificación",
-        "identificacion": "Número de identificación",
-        "fechaNac": "Fecha de nacimiento",
-        "telefono": "Teléfono",
-        "direccion": "Dirección"
-      }
-    },
-    "conductor": {
-      "title": "Registrar conductor",
-      "fields": {
-        "nombres": "Nombres",
-        "apellidos": "Apellidos",
-        "tipoId": "Tipo de identificación",
-        "identificacion": "Número de identificación",
-        "fechaNac": "Fecha de nacimiento",
-        "vencLicencia": "Vencimiento de licencia",
-        "licencia": "Número de licencia",
-        "direccion": "Dirección",
-        "correo": "Correo electrónico"
-      }
-    },
-    "familia": {
-      "title": "Registrar familia",
-      "fields": {
-        "nombre": "Nombre de la familia",
-        "acudiente": "Acudiente",
-        "estudiante": "Estudiante",
-        "observaciones": "Observaciones"
-      }
-    },
-    "bus": {
-      "title": "Registrar bus",
-      "fields": {
-        "matricula": "Matrícula",
-        "conductor": "Conductor",
-        "modelo": "Modelo",
-        "marca": "Marca",
-        "capacidad": "Capacidad",
-        "soat": "Vigencia SOAT",
-        "gps": "Estado GPS"
-      }
-    },
-    "parada": {
-      "title": "Registrar parada",
-      "fields": {
-        "nombre": "Nombre de la parada",
-        "estudiante": "Estudiante",
-        "ciudad": "Ciudad",
-        "direccion": "Dirección",
-        "latitud": "Latitud",
-        "longitud": "Longitud"
-      }
-    },
-    "ruta": {
-      "title": "Registrar ruta",
-      "fields": {
-        "nombre": "Nombre de la ruta",
-        "sector": "Sector / barrio",
-        "horaInicio": "Hora de inicio",
-        "horaFin": "Hora de finalización",
-        "destino": "Destino",
-        "sectorRuta": "Sector"
-      }
-    },
-    "admins": {
-      "title": "Registrar administrador",
-      "fields": {
-        "nombre": "Nombre",
-        "apellidos": "Apellidos",
-        "correo": "Correo electrónico",
-        "identificacion": "Identificación",
-        "fechaNac": "Fecha de nacimiento",
-        "telefono": "Teléfono",
-        "direccion": "Dirección"
-      }
-    },
-    "schools": {
-      "title": "Registrar escuela",
-      "fields": {
-        "nombre": "Nombre de la escuela",
-        "logo": "Logo",
-        "ciudad": "Ciudad",
-        "direccion": "Dirección",
-        "telefono": "Teléfono",
-        "escolaridad": "Nivel educativo",
-        "correo": "Correo electrónico",
-        "web": "Página web"
-      }
-    }
+    "button": "Registrar"
   },
   "search": {
     "search": "Buscar..."
@@ -862,18 +478,6 @@
     "return": "Volver al inicio de sesión",
     "step_text": "1 de 3",
     "hint": "Recibirás un código de 6 dígitos",
-    
-    "code": {
-      "title": "Verifica tu correo",
-      "session_description": "Enviamos un código de 6 dígitos a tu correo.",
-      "title_step": "Código de verificación",
-      "button": "Validar",
-      "return": "Volver",
-      "step_text": "2 de 3",
-      "sent_to": "Código enviado a",
-      "valid": "Válido por 10 minutos.",
-      "error": "*Ingresa los 6 dígitos del código"
-    },
     "reset": {
       "title": "Crea una contraseña segura",
       "session_description": "Ten en cuenta las recomendaciones de seguridad.",
@@ -892,11 +496,37 @@
         "pattern": "*Debe tener mayúsculas, minúsculas, números y caracteres especiales (. - _ @ *)",
         "no_match": "*Las contraseñas no son iguales"
       }
-    },
-
-    "links_product": ["Funcionalidades", "Como funciona", "Contacto"],
-    "links_legal": ["Privacidad y términos"],
-    "rights": "© 2026 Guardian Escolar · Todos los derechos reservados"
-
+    }
+  },
+  "right_index": {
+    "brand": "yelowsoft",
+    "dashboardTitle": "Seguimiento en vivo",
+    "allVehicles": "Todos los vehículos",
+    "filters": "Filtros",
+    "live": "En vivo",
+    "totalVehicles": "Vehículos totales",
+    "onRoute": "En ruta",
+    "alerts": "Alertas",
+    "active": "Activas",
+    "avgOnTime": "Prom. a tiempo",
+    "pickupPoint": "Punto de recogida",
+    "greenStreet": "Calle Verde",
+    "school": "Escuela",
+    "springfieldSchool": "Escuela Springfield",
+    "bus": "Bus 02",
+    "bus05": "Bus 05",
+    "bus08": "Bus 08",
+    "liveActivity": "Actividad en vivo",
+    "delayed": "Retrasado",
+    "mapleAvenue": "Avenida Maple",
+    "oakBoulevard": "Boulevard Oak",
+    "geofenceAlert": "Alerta de geovalla",
+    "geofenceMessage": "Bus 02 ha llegado a la Escuela Springfield",
+    "eta": "ETA",
+    "etaValue": "7:45 AM",
+    "speedLabel": "Velocidad",
+    "busSpeed": "45 km/h",
+    "nextStop": "Pr?xima parada",
+    "nextStopValue": "Escuela Springfield"
   }
 }

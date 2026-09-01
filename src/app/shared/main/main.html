@@ -17,7 +17,7 @@
                     <div class="app-header">
                         <div class="brand">
                             <span class="brand-mark"></span>
-                            <span>yelowsoft</span>
+                            <span>{{ 'right_index.brand' | translate }}</span>
                         </div>
                         <div class="header-dots">
                             <span></span>
@@ -29,33 +29,33 @@
 
                     <div class="dashboard-panel">
                         <div class="dashboard-title-row">
-                            <h3>Live Tracking</h3>
+                            <h3>{{ 'right_index.dashboardTitle' | translate }}</h3>
                             <button class="select-button">
-                                <span>All Vehicles</span>
+                                <span>{{ 'right_index.allVehicles' | translate }}</span>
                                 <span class="caret">⌄</span>
                             </button>
-                            <button class="filter-button">Filters</button>
+                            <button class="filter-button">{{ 'right_index.filters' | translate }}</button>
                         </div>
 
                         <div class="stats-row">
                             <div class="stat-box stat-blue">
                                 <span class="stat-value">32</span>
-                                <span class="stat-label">Total Vehicles</span>
-                                <span class="stat-tag live">Live</span>
+                                <span class="stat-label">{{ 'right_index.totalVehicles' | translate }}</span>
+                                <span class="stat-tag live">{{ 'right_index.live' | translate }}</span>
                             </div>
                             <div class="stat-box stat-green">
                                 <span class="stat-value">28</span>
-                                <span class="stat-label">On Route</span>
+                                <span class="stat-label">{{ 'right_index.onRoute' | translate }}</span>
                                 <span class="stat-tag">87%</span>
                             </div>
                             <div class="stat-box stat-red">
                                 <span class="stat-value">2</span>
-                                <span class="stat-label">Alerts</span>
-                                <span class="stat-tag">Active</span>
+                                <span class="stat-label">{{ 'right_index.alerts' | translate }}</span>
+                                <span class="stat-tag">{{ 'right_index.active' | translate }}</span>
                             </div>
                             <div class="stat-box stat-gray">
                                 <span class="stat-value">94%</span>
-                                <span class="stat-label">Avg. On-Time</span>
+                                <span class="stat-label">{{ 'right_index.avgOnTime' | translate }}</span>
                                 <span class="stat-arrow">↑</span>
                             </div>
                         </div>
@@ -65,8 +65,8 @@
                             <div class="pickup-tag">
                                 <span class="pin pin-green"></span>
                                 <div>
-                                    <strong>Pickup Point</strong>
-                                    <small>Green Street</small>
+                                    <strong>{{ 'right_index.pickupPoint' | translate }}</strong>
+                                    <small>{{ 'right_index.greenStreet' | translate }}</small>
                                     <span>07:15 AM</span>
                                 </div>
                             </div>
@@ -74,16 +74,16 @@
                             <div class="school-tag">
                                 <span class="pin pin-blue"></span>
                                 <div>
-                                    <strong>School</strong>
-                                    <small>Springfield School</small>
+                                    <strong>{{ 'right_index.school' | translate }}</strong>
+                                    <small>{{ 'right_index.springfieldSchool' | translate }}</small>
                                     <span>07:45 AM</span>
                                 </div>
                             </div>
 
                             <div class="bus-card">
-                                <span class="mini-bus">Bus 02</span>
-                                <small>On Route</small>
-                                <strong>45 km/h</strong>
+                                <span class="mini-bus">{{ 'right_index.bus' | translate }}</span>
+                                <small>{{ 'right_index.onRoute' | translate }}</small>
+                                <strong>{{ 'right_index.busSpeed' | translate }}</strong>
                             </div>
 
                             <div class="route-path"></div>
@@ -93,28 +93,28 @@
                         </div>
 
                         <div class="activity-panel">
-                            <h4>Live Activity</h4>
+                            <h4>{{ 'right_index.liveActivity' | translate }}</h4>
                             <div class="activity-row">
-                                <span class="bus-badge">Bus 02</span>
-                                <span>On Route</span>
-                                <span>Green Street</span>
-                                <span>→ Springfield School</span>
+                                <span class="bus-badge">{{ 'right_index.bus' | translate }}</span>
+                                <span>{{ 'right_index.onRoute' | translate }}</span>
+                                <span>{{ 'right_index.greenStreet' | translate }}</span>
+                                <span>→ {{ 'right_index.springfieldSchool' | translate }}</span>
                                 <span>07:35 AM</span>
-                                <span>45 km/h</span>
+                                <span>{{ 'right_index.busSpeed' | translate }}</span>
                             </div>
                             <div class="activity-row">
-                                <span class="bus-badge">Bus 05</span>
-                                <span>On Route</span>
-                                <span>Maple Avenue</span>
-                                <span>→ Springfield School</span>
+                                <span class="bus-badge">{{ 'right_index.bus05' | translate }}</span>
+                                <span>{{ 'right_index.onRoute' | translate }}</span>
+                                <span>{{ 'right_index.mapleAvenue' | translate }}</span>
+                                <span>→ {{ 'right_index.springfieldSchool' | translate }}</span>
                                 <span>07:38 AM</span>
                                 <span>40 km/h</span>
                             </div>
                             <div class="activity-row">
-                                <span class="bus-badge">Bus 08</span>
-                                <span>Delayed</span>
-                                <span>Oak Boulevard</span>
-                                <span>→ Springfield School</span>
+                                <span class="bus-badge">{{ 'right_index.bus08' | translate }}</span>
+                                <span>{{ 'right_index.delayed' | translate }}</span>
+                                <span>{{ 'right_index.oakBoulevard' | translate }}</span>
+                                <span>→ {{ 'right_index.springfieldSchool' | translate }}</span>
                                 <span>07:50 AM</span>
                                 <span>25 km/h</span>
                             </div>
@@ -133,29 +133,29 @@
                         <div class="phone-alert">
                             <span class="phone-bell"></span>
                             <div>
-                                <strong>Geofence Alert</strong>
-                                <small>Bus 02 has arrived at Springfield School</small>
+                                <strong>{{ 'right_index.geofenceAlert' | translate }}</strong>
+                                <small>{{ 'right_index.geofenceMessage' | translate }}</small>
                                 <span>07:45 AM</span>
                             </div>
                         </div>
                         <div class="phone-bus-card">
                             <div class="mini-bus-row">
-                                <span class="mini-bus small">Bus 02</span>
-                                <span class="status-pill">On Route</span>
+                                <span class="mini-bus small">{{ 'right_index.bus' | translate }}</span>
+                                <span class="status-pill">{{ 'right_index.onRoute' | translate }}</span>
                             </div>
                             <div class="phone-metrics">
                                 <div>
-                                    <label>ETA</label>
-                                    <strong>7:45 AM</strong>
+                                    <label>{{ 'right_index.eta' | translate }}</label>
+                                    <strong>{{ 'right_index.etaValue' | translate }}</strong>
                                 </div>
                                 <div>
-                                    <label>Speed</label>
-                                    <strong>45 km/h</strong>
+                                    <label>{{ 'right_index.speedLabel' | translate }}</label>
+                                    <strong>{{ 'right_index.busSpeed' | translate }}</strong>
                                 </div>
                             </div>
                             <div class="next-stop">
-                                <span>Next Stop</span>
-                                <strong>Springfield School</strong>
+                                <span>{{ 'right_index.nextStop' | translate }}</span>
+                                <strong>{{ 'right_index.nextStopValue' | translate }}</strong>
                             </div>
                         </div>
                     </div>

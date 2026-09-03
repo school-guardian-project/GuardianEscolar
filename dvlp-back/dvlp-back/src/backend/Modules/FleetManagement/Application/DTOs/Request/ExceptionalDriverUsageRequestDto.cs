@@ -1,0 +1,10 @@
+namespace backend.Modules.FleetManagement.Application.DTOs.Request;
+
+public class ExceptionalDriverUsageRequestDto
+{
+    public Guid busId { get; set; }
+
+    public Guid profileId { get; set; }
+
+    public string reason { get; set; }
+}

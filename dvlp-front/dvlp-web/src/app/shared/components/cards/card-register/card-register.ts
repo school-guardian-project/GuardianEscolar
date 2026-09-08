@@ -114,6 +114,19 @@ const FIELDS: Record<RegisterType, Field[]> = {
   ],
 };
 
+// TODO: Reemplazar estos datos quemados cuando el formulario se conecte al servicio de familias.
+const FAMILY_FORM_DATA = {
+  nombre: 'Familia García López',
+  acudiente: 'Rosa María González',
+  estudiante: 'Juan Carlos García',
+  observaciones: 'Familia con 2 hijos en el colegio',
+};
+
+const FAMILY_OPTIONS = {
+  acudiente: ['Rosa María González', 'Pedro José López'],
+  estudiante: ['Juan Carlos García', 'María Elena Ruiz'],
+};
+
 
 @Component({
   selector: 'app-card-register',
@@ -127,6 +140,8 @@ export class CardRegister implements OnInit {
 
   formData: Record<string, any> = {};
   groupedFields: any[] = [];
+  selectedStudents: string[] = [];
+  selectedStudent = '';
 
   get titleKey(): string {
     return `register.${this.type}.title`;
@@ -138,6 +153,42 @@ export class CardRegister implements OnInit {
 
   ngOnInit(): void {
     this.groupedFields = this.buildGroupedFields();
+
+    if (this.type === 'familia') {
+      this.formData = { ...FAMILY_FORM_DATA };
+      this.selectedStudents = [FAMILY_FORM_DATA.estudiante];
+      this.formData['estudiante'] = [...this.selectedStudents];
+      FIELDS.familia[1].options = FAMILY_OPTIONS.acudiente;
+      FIELDS.familia[2].options = FAMILY_OPTIONS.estudiante;
+    }
+  }
+
+  isFamilyStudentField(fieldName: string): boolean {
+    return this.type === 'familia' && fieldName === 'estudiante';
+  }
+
+  onSelectChange(fieldName: string, value: string): void {
+    if (this.isFamilyStudentField(fieldName)) {
+      this.selectedStudent = value;
+      this.onStudentSelected();
+      return;
+    }
+
+    this.formData[fieldName] = value;
+  }
+
+  onStudentSelected(): void {
+    if (this.selectedStudent && !this.selectedStudents.includes(this.selectedStudent)) {
+      this.selectedStudents = [...this.selectedStudents, this.selectedStudent];
+      this.formData['estudiante'] = [...this.selectedStudents];
+    }
+
+    this.selectedStudent = '';
+  }
+
+  removeStudent(student: string): void {
+    this.selectedStudents = this.selectedStudents.filter((selected) => selected !== student);
+    this.formData['estudiante'] = [...this.selectedStudents];
   }
 
   private buildGroupedFields() {

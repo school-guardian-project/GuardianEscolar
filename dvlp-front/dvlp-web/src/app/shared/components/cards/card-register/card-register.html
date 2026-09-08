@@ -12,14 +12,21 @@
             <label class="card-register__label">
               {{ getLabelKey(field.name) | translate }}
             </label>
-            <div class="card-register__input-wrap">
+            <div class="card-register__input-wrap" [class.card-register__input-wrap--multiple]="isFamilyStudentField(field.name)">
               <select *ngIf="field.type === 'select'" 
                       class="card-register__input" 
-                      [(ngModel)]="formData[field.name]"
-                      [name]="field.name">
+                      [ngModel]="isFamilyStudentField(field.name) ? selectedStudent : formData[field.name]"
+                      [name]="field.name"
+                      (ngModelChange)="onSelectChange(field.name, $event)">
                 <option value="" disabled>{{ 'register.select' | translate }}</option>
                 <option *ngFor="let opt of field.options" [value]="opt">{{ opt }}</option>
               </select>
+              <div *ngIf="isFamilyStudentField(field.name)" class="card-register__selected-items">
+                <span *ngFor="let student of selectedStudents" class="card-register__selected-item">
+                  {{ student }}
+                  <button type="button" class="card-register__remove-btn" (click)="removeStudent(student)" [attr.aria-label]="'Remove ' + student">x</button>
+                </span>
+              </div>
               <input *ngIf="field.type !== 'select'" 
                      class="card-register__input" 
                      [type]="field.type"
@@ -35,14 +42,21 @@
         <label class="card-register__label">
           {{ getLabelKey(group.name) | translate }}
         </label>
-        <div class="card-register__input-wrap">
+        <div class="card-register__input-wrap" [class.card-register__input-wrap--multiple]="isFamilyStudentField(group.name)">
           <select *ngIf="group.type === 'select'" 
                   class="card-register__input" 
-                  [(ngModel)]="formData[group.name]"
-                  [name]="group.name">
+              [ngModel]="isFamilyStudentField(group.name) ? selectedStudent : formData[group.name]"
+                  [name]="group.name"
+              (ngModelChange)="onSelectChange(group.name, $event)">
             <option value="" disabled>{{ 'register.select' | translate }}</option>
             <option *ngFor="let opt of group.options" [value]="opt">{{ opt }}</option>
           </select>
+          <div *ngIf="isFamilyStudentField(group.name)" class="card-register__selected-items">
+            <span *ngFor="let student of selectedStudents" class="card-register__selected-item">
+              {{ student }}
+              <button type="button" class="card-register__remove-btn" (click)="removeStudent(student)" [attr.aria-label]="'Remove ' + student">x</button>
+            </span>
+          </div>
           <input *ngIf="group.type !== 'select'" 
                  class="card-register__input" 
                  [type]="group.type"

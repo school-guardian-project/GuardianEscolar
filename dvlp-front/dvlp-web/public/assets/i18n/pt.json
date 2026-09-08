@@ -418,7 +418,263 @@
     "close": "Fechar",
     "accept": "Aceitar"
   },
+  "record_information": {
+    "estudiante": {
+      "title": "Informações do estudante",
+      "fields": {
+        "nombres": "Nomes",
+        "apellidos": "Sobrenomes",
+        "tipoId": "Tipo de documento",
+        "identificacion": "Identificação",
+        "fechaNac": "Data de nascimento",
+        "curso": "Curso",
+        "telefono": "Telefone",
+        "direccion": "Endereço",
+        "correo": "E-mail"
+      }
+    },
+    "acudiente": {
+      "title": "Informações do responsável",
+      "fields": {
+        "nombre": "Nome",
+        "apellidos": "Sobrenomes",
+        "correo": "E-mail",
+        "tipoId": "Tipo de documento",
+        "identificacion": "Identificação",
+        "fechaNac": "Data de nascimento",
+        "telefono": "Telefone",
+        "direccion": "Endereço"
+      }
+    },
+    "conductor": {
+      "title": "Informações do motorista",
+      "fields": {
+        "nombres": "Nomes",
+        "apellidos": "Sobrenomes",
+        "tipoId": "Tipo de documento",
+        "identificacion": "Identificação",
+        "fechaNac": "Data de nascimento",
+        "vencLicencia": "Validade da carteira",
+        "licencia": "Carteira",
+        "direccion": "Endereço",
+        "correo": "E-mail"
+      }
+    },
+    "familia": {
+      "title": "Informações da família",
+      "fields": {
+        "nombre": "Nome",
+        "acudiente": "Responsável",
+        "estudiante": "Estudante",
+        "observaciones": "Observações"
+      }
+    },
+    "bus": {
+      "title": "Informações do ônibus",
+      "fields": {
+        "matricula": "Placa",
+        "conductor": "Motorista",
+        "modelo": "Modelo",
+        "marca": "Marca",
+        "capacidad": "Capacidade",
+        "gps": "GPS",
+        "soat": "SOAT"
+      }
+    },
+    "parada": {
+      "title": "Informações da parada",
+      "fields": {
+        "nombre": "Nome",
+        "estudiante": "Estudante",
+        "ciudad": "Cidade",
+        "direccion": "Endereço",
+        "latitud": "Latitude",
+        "longitud": "Longitude"
+      }
+    },
+    "ruta": {
+      "title": "Informações da rota",
+      "fields": {
+        "nombre": "Nome",
+        "sector": "Setor",
+        "horaInicio": "Hora de início",
+        "horaFin": "Hora final",
+        "destino": "Destino",
+        "sectorRuta": "Setor da rota"
+      }
+    },
+    "admins": {
+      "title": "Informações do administrador",
+      "fields": {
+        "nombre": "Nome",
+        "apellidos": "Sobrenomes",
+        "correo": "E-mail",
+        "identificacion": "Identificação",
+        "fechaNac": "Data de nascimento",
+        "telefono": "Telefone",
+        "direccion": "Endereço"
+      }
+    },
+    "schools": {
+      "title": "Informações da escola",
+      "fields": {
+        "nombre": "Nome",
+        "ciudad": "Cidade",
+        "escolaridad": "Nível escolar",
+        "direccion": "Endereço",
+        "telefono": "Telefone",
+        "correo": "E-mail",
+        "web": "Site"
+      }
+    }
+  },
+  "delete_record": {
+    "estudiante": {
+      "title": "Excluir estudante",
+      "text": "Isso excluirá permanentemente o registro do estudante selecionado."
+    },
+    "acudiente": {
+      "title": "Excluir responsável",
+      "text": "Isso excluirá permanentemente o registro do responsável selecionado."
+    },
+    "conductor": {
+      "title": "Excluir motorista",
+      "text": "Isso excluirá permanentemente o registro do motorista selecionado."
+    },
+    "familia": {
+      "title": "Excluir família",
+      "text": "Isso excluirá permanentemente o registro da família selecionada."
+    },
+    "bus": {
+      "title": "Excluir ônibus",
+      "text": "Isso excluirá permanentemente o registro do ônibus selecionado."
+    },
+    "parada": {
+      "title": "Excluir parada",
+      "text": "Isso excluirá permanentemente o registro da parada selecionada."
+    },
+    "ruta": {
+      "title": "Excluir rota",
+      "text": "Isso excluirá permanentemente o registro da rota selecionada."
+    },
+    "admins": {
+      "title": "Excluir administrador",
+      "text": "Isso excluirá permanentemente o registro do administrador selecionado."
+    },
+    "schools": {
+      "title": "Excluir escola",
+      "text": "Isso excluirá permanentemente o registro da escola selecionada."
+    }
+  },
   "update_record": {
+    "estudiante": {
+      "title": "Atualizar estudante",
+      "fields": {
+        "nombres": "Nomes",
+        "apellidos": "Sobrenomes",
+        "tipoId": "Tipo de documento",
+        "identificacion": "Identificação",
+        "fechaNac": "Data de nascimento",
+        "curso": "Curso",
+        "telefono": "Telefone",
+        "direccion": "Endereço",
+        "correo": "E-mail"
+      }
+    },
+    "acudiente": {
+      "title": "Atualizar responsável",
+      "fields": {
+        "nombre": "Nome",
+        "apellidos": "Sobrenomes",
+        "correo": "E-mail",
+        "tipoId": "Tipo de documento",
+        "identificacion": "Identificação",
+        "fechaNac": "Data de nascimento",
+        "telefono": "Telefone",
+        "direccion": "Endereço"
+      }
+    },
+    "conductor": {
+      "title": "Atualizar motorista",
+      "fields": {
+        "nombres": "Nomes",
+        "apellidos": "Sobrenomes",
+        "tipoId": "Tipo de documento",
+        "identificacion": "Identificação",
+        "fechaNac": "Data de nascimento",
+        "vencLicencia": "Validade da carteira",
+        "licencia": "Carteira",
+        "direccion": "Endereço",
+        "correo": "E-mail"
+      }
+    },
+    "familia": {
+      "title": "Atualizar família",
+      "fields": {
+        "nombre": "Nome",
+        "acudiente": "Responsável",
+        "estudiante": "Estudante",
+        "observaciones": "Observações"
+      }
+    },
+    "bus": {
+      "title": "Atualizar ônibus",
+      "fields": {
+        "matricula": "Placa",
+        "conductor": "Motorista",
+        "modelo": "Modelo",
+        "marca": "Marca",
+        "capacidad": "Capacidade",
+        "gps": "GPS",
+        "soat": "SOAT"
+      }
+    },
+    "parada": {
+      "title": "Atualizar parada",
+      "fields": {
+        "nombre": "Nome",
+        "estudiante": "Estudante",
+        "ciudad": "Cidade",
+        "direccion": "Endereço",
+        "latitud": "Latitude",
+        "longitud": "Longitude"
+      }
+    },
+    "ruta": {
+      "title": "Atualizar rota",
+      "fields": {
+        "nombre": "Nome",
+        "sector": "Setor",
+        "horaInicio": "Hora de início",
+        "horaFin": "Hora final",
+        "destino": "Destino",
+        "sectorRuta": "Setor da rota"
+      }
+    },
+    "admins": {
+      "title": "Atualizar administrador",
+      "fields": {
+        "nombre": "Nome",
+        "apellidos": "Sobrenomes",
+        "correo": "E-mail",
+        "identificacion": "Identificação",
+        "fechaNac": "Data de nascimento",
+        "telefono": "Telefone",
+        "direccion": "Endereço"
+      }
+    },
+    "schools": {
+      "title": "Atualizar escola",
+      "fields": {
+        "nombre": "Nome",
+        "ciudad": "Cidade",
+        "escolaridad": "Nível escolar",
+        "direccion": "Endereço",
+        "telefono": "Telefone",
+        "correo": "E-mail",
+        "web": "Site"
+      }
+    },
     "buttons": {
       "save": "Salvar alterações",
       "select": "Selecionar…"
@@ -426,7 +682,116 @@
   },
   "register": {
     "select": "Selecionar…",
-    "button": "Registrar"
+    "button": "Registrar",
+    "estudiante": {
+      "title": "Registrar estudante",
+      "fields": {
+        "nombres": "Nomes",
+        "apellidos": "Sobrenomes",
+        "tipoId": "Tipo de documento",
+        "identificacion": "Número de identificação",
+        "fechaNac": "Data de nascimento",
+        "curso": "Curso",
+        "telefono": "Telefone",
+        "direccion": "Endereço",
+        "correo": "E-mail"
+      }
+    },
+    "acudiente": {
+      "title": "Registrar responsável",
+      "fields": {
+        "nombres": "Nomes",
+        "apellidos": "Sobrenomes",
+        "correo": "E-mail",
+        "tipoId": "Tipo de documento",
+        "identificacion": "Número de identificação",
+        "fechaNac": "Data de nascimento",
+        "telefono": "Telefone",
+        "direccion": "Endereço"
+      }
+    },
+    "conductor": {
+      "title": "Registrar motorista",
+      "fields": {
+        "nombres": "Nomes",
+        "apellidos": "Sobrenomes",
+        "tipoId": "Tipo de documento",
+        "identificacion": "Número de identificação",
+        "fechaNac": "Data de nascimento",
+        "vencLicencia": "Validade da carteira",
+        "licencia": "Número da carteira",
+        "direccion": "Endereço",
+        "correo": "E-mail"
+      }
+    },
+    "familia": {
+      "title": "Registrar família",
+      "fields": {
+        "nombre": "Nome da família",
+        "acudiente": "Responsável",
+        "estudiante": "Estudante",
+        "observaciones": "Observações"
+      }
+    },
+    "bus": {
+      "title": "Registrar ônibus",
+      "fields": {
+        "matricula": "Placa",
+        "conductor": "Motorista",
+        "modelo": "Modelo",
+        "marca": "Marca",
+        "capacidad": "Capacidade",
+        "soat": "Validade do SOAT",
+        "gps": "Status do GPS"
+      }
+    },
+    "parada": {
+      "title": "Registrar parada",
+      "fields": {
+        "nombre": "Nome da parada",
+        "ciudad": "Cidade",
+        "direccion": "Endereço",
+        "latitud": "Latitude",
+        "longitud": "Longitude",
+        "estudiante": "Estudante"
+      }
+    },
+    "ruta": {
+      "title": "Registrar rota",
+      "fields": {
+        "nombre": "Nome da rota",
+        "sector": "Setor / bairro",
+        "horaInicio": "Hora de início",
+        "horaFin": "Hora final",
+        "destino": "Destino",
+        "sectorRuta": "Setor"
+      }
+    },
+    "admins": {
+      "title": "Registrar administrador",
+      "fields": {
+        "nombre": "Nome",
+        "apellidos": "Sobrenomes",
+        "correo": "E-mail",
+        "identificacion": "Identificação",
+        "fechaNac": "Data de nascimento",
+        "telefono": "Telefone",
+        "direccion": "Endereço"
+      }
+    },
+    "schools": {
+      "title": "Registrar escola",
+      "fields": {
+        "nombre": "Nome da escola",
+        "logo": "Logo",
+        "ciudad": "Cidade",
+        "direccion": "Endereço",
+        "telefono": "Telefone",
+        "escolaridad": "Nível escolar",
+        "correo": "E-mail",
+        "web": "Site"
+      }
+    }
   },
   "search": {
     "search": "Buscar..."

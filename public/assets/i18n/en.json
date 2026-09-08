@@ -418,7 +418,263 @@
     "close": "Close",
     "accept": "Accept"
   },
+  "record_information": {
+    "estudiante": {
+      "title": "Student information",
+      "fields": {
+        "nombres": "Names",
+        "apellidos": "Last names",
+        "tipoId": "ID type",
+        "identificacion": "Identification",
+        "fechaNac": "Date of birth",
+        "curso": "Grade",
+        "telefono": "Phone",
+        "direccion": "Address",
+        "correo": "Email"
+      }
+    },
+    "acudiente": {
+      "title": "Guardian information",
+      "fields": {
+        "nombre": "Name",
+        "apellidos": "Last names",
+        "correo": "Email",
+        "tipoId": "ID type",
+        "identificacion": "Identification",
+        "fechaNac": "Date of birth",
+        "telefono": "Phone",
+        "direccion": "Address"
+      }
+    },
+    "conductor": {
+      "title": "Driver information",
+      "fields": {
+        "nombres": "Names",
+        "apellidos": "Last names",
+        "tipoId": "ID type",
+        "identificacion": "Identification",
+        "fechaNac": "Date of birth",
+        "vencLicencia": "License expiration",
+        "licencia": "License",
+        "direccion": "Address",
+        "correo": "Email"
+      }
+    },
+    "familia": {
+      "title": "Family information",
+      "fields": {
+        "nombre": "Name",
+        "acudiente": "Guardian",
+        "estudiante": "Student",
+        "observaciones": "Observations"
+      }
+    },
+    "bus": {
+      "title": "Bus information",
+      "fields": {
+        "matricula": "License plate",
+        "conductor": "Driver",
+        "modelo": "Model",
+        "marca": "Brand",
+        "capacidad": "Capacity",
+        "gps": "GPS",
+        "soat": "SOAT"
+      }
+    },
+    "parada": {
+      "title": "Stop information",
+      "fields": {
+        "nombre": "Name",
+        "estudiante": "Student",
+        "ciudad": "City",
+        "direccion": "Address",
+        "latitud": "Latitude",
+        "longitud": "Longitude"
+      }
+    },
+    "ruta": {
+      "title": "Route information",
+      "fields": {
+        "nombre": "Name",
+        "sector": "Sector",
+        "horaInicio": "Start time",
+        "horaFin": "End time",
+        "destino": "Destination",
+        "sectorRuta": "Route sector"
+      }
+    },
+    "admins": {
+      "title": "Administrator information",
+      "fields": {
+        "nombre": "Name",
+        "apellidos": "Last names",
+        "correo": "Email",
+        "identificacion": "Identification",
+        "fechaNac": "Date of birth",
+        "telefono": "Phone",
+        "direccion": "Address"
+      }
+    },
+    "schools": {
+      "title": "School information",
+      "fields": {
+        "nombre": "Name",
+        "ciudad": "City",
+        "escolaridad": "School level",
+        "direccion": "Address",
+        "telefono": "Phone",
+        "correo": "Email",
+        "web": "Website"
+      }
+    }
+  },
+  "delete_record": {
+    "estudiante": {
+      "title": "Delete student",
+      "text": "This will permanently delete the selected student record."
+    },
+    "acudiente": {
+      "title": "Delete guardian",
+      "text": "This will permanently delete the selected guardian record."
+    },
+    "conductor": {
+      "title": "Delete driver",
+      "text": "This will permanently delete the selected driver record."
+    },
+    "familia": {
+      "title": "Delete family",
+      "text": "This will permanently delete the selected family record."
+    },
+    "bus": {
+      "title": "Delete bus",
+      "text": "This will permanently delete the selected bus record."
+    },
+    "parada": {
+      "title": "Delete stop",
+      "text": "This will permanently delete the selected stop record."
+    },
+    "ruta": {
+      "title": "Delete route",
+      "text": "This will permanently delete the selected route record."
+    },
+    "admins": {
+      "title": "Delete administrator",
+      "text": "This will permanently delete the selected administrator record."
+    },
+    "schools": {
+      "title": "Delete school",
+      "text": "This will permanently delete the selected school record."
+    }
+  },
   "update_record": {
+    "estudiante": {
+      "title": "Update student",
+      "fields": {
+        "nombres": "Names",
+        "apellidos": "Last names",
+        "tipoId": "ID type",
+        "identificacion": "Identification",
+        "fechaNac": "Date of birth",
+        "curso": "Grade",
+        "telefono": "Phone",
+        "direccion": "Address",
+        "correo": "Email"
+      }
+    },
+    "acudiente": {
+      "title": "Update guardian",
+      "fields": {
+        "nombre": "Name",
+        "apellidos": "Last names",
+        "correo": "Email",
+        "tipoId": "ID type",
+        "identificacion": "Identification",
+        "fechaNac": "Date of birth",
+        "telefono": "Phone",
+        "direccion": "Address"
+      }
+    },
+    "conductor": {
+      "title": "Update driver",
+      "fields": {
+        "nombres": "Names",
+        "apellidos": "Last names",
+        "tipoId": "ID type",
+        "identificacion": "Identification",
+        "fechaNac": "Date of birth",
+        "vencLicencia": "License expiration",
+        "licencia": "License",
+        "direccion": "Address",
+        "correo": "Email"
+      }
+    },
+    "familia": {
+      "title": "Update family",
+      "fields": {
+        "nombre": "Name",
+        "acudiente": "Guardian",
+        "estudiante": "Student",
+        "observaciones": "Observations"
+      }
+    },
+    "bus": {
+      "title": "Update bus",
+      "fields": {
+        "matricula": "License plate",
+        "conductor": "Driver",
+        "modelo": "Model",
+        "marca": "Brand",
+        "capacidad": "Capacity",
+        "gps": "GPS",
+        "soat": "SOAT"
+      }
+    },
+    "parada": {
+      "title": "Update stop",
+      "fields": {
+        "nombre": "Name",
+        "estudiante": "Student",
+        "ciudad": "City",
+        "direccion": "Address",
+        "latitud": "Latitude",
+        "longitud": "Longitude"
+      }
+    },
+    "ruta": {
+      "title": "Update route",
+      "fields": {
+        "nombre": "Name",
+        "sector": "Sector",
+        "horaInicio": "Start time",
+        "horaFin": "End time",
+        "destino": "Destination",
+        "sectorRuta": "Route sector"
+      }
+    },
+    "admins": {
+      "title": "Update administrator",
+      "fields": {
+        "nombre": "Name",
+        "apellidos": "Last names",
+        "correo": "Email",
+        "identificacion": "Identification",
+        "fechaNac": "Date of birth",
+        "telefono": "Phone",
+        "direccion": "Address"
+      }
+    },
+    "schools": {
+      "title": "Update school",
+      "fields": {
+        "nombre": "Name",
+        "ciudad": "City",
+        "escolaridad": "School level",
+        "direccion": "Address",
+        "telefono": "Phone",
+        "correo": "Email",
+        "web": "Website"
+      }
+    },
     "buttons": {
       "save": "Save changes",
       "select": "Select…"
@@ -426,7 +682,116 @@
   },
   "register": {
     "select": "Select…",
-    "button": "Register"
+    "button": "Register",
+    "estudiante": {
+      "title": "Register student",
+      "fields": {
+        "nombres": "Names",
+        "apellidos": "Last names",
+        "tipoId": "ID type",
+        "identificacion": "Identification number",
+        "fechaNac": "Date of birth",
+        "curso": "Grade",
+        "telefono": "Phone",
+        "direccion": "Address",
+        "correo": "Email"
+      }
+    },
+    "acudiente": {
+      "title": "Register guardian",
+      "fields": {
+        "nombres": "Names",
+        "apellidos": "Last names",
+        "correo": "Email",
+        "tipoId": "ID type",
+        "identificacion": "Identification number",
+        "fechaNac": "Date of birth",
+        "telefono": "Phone",
+        "direccion": "Address"
+      }
+    },
+    "conductor": {
+      "title": "Register driver",
+      "fields": {
+        "nombres": "Names",
+        "apellidos": "Last names",
+        "tipoId": "ID type",
+        "identificacion": "Identification number",
+        "fechaNac": "Date of birth",
+        "vencLicencia": "License expiration",
+        "licencia": "License number",
+        "direccion": "Address",
+        "correo": "Email"
+      }
+    },
+    "familia": {
+      "title": "Register family",
+      "fields": {
+        "nombre": "Family name",
+        "acudiente": "Guardian",
+        "estudiante": "Student",
+        "observaciones": "Observations"
+      }
+    },
+    "bus": {
+      "title": "Register bus",
+      "fields": {
+        "matricula": "License plate",
+        "conductor": "Driver",
+        "modelo": "Model",
+        "marca": "Brand",
+        "capacidad": "Capacity",
+        "soat": "SOAT validity",
+        "gps": "GPS status"
+      }
+    },
+    "parada": {
+      "title": "Register stop",
+      "fields": {
+        "nombre": "Stop name",
+        "ciudad": "City",
+        "direccion": "Address",
+        "latitud": "Latitude",
+        "longitud": "Longitude",
+        "estudiante": "Student"
+      }
+    },
+    "ruta": {
+      "title": "Register route",
+      "fields": {
+        "nombre": "Route name",
+        "sector": "Sector / neighborhood",
+        "horaInicio": "Start time",
+        "horaFin": "End time",
+        "destino": "Destination",
+        "sectorRuta": "Sector"
+      }
+    },
+    "admins": {
+      "title": "Register administrator",
+      "fields": {
+        "nombre": "Name",
+        "apellidos": "Last names",
+        "correo": "Email",
+        "identificacion": "Identification",
+        "fechaNac": "Date of birth",
+        "telefono": "Phone",
+        "direccion": "Address"
+      }
+    },
+    "schools": {
+      "title": "Register school",
+      "fields": {
+        "nombre": "School name",
+        "logo": "Logo",
+        "ciudad": "City",
+        "direccion": "Address",
+        "telefono": "Phone",
+        "escolaridad": "Education level",
+        "correo": "Email",
+        "web": "Website"
+      }
+    }
   },
   "search": {
     "search": "Search..."

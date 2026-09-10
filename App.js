@@ -1,9 +1,10 @@
 import './src/core/i18n/i18n';
 import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Text } from 'react-native';
 import { ThemeProvider } from '@core/services/ThemeService';
+import { RoleSwitcherProvider } from '@core/dev/RoleSwitcherContext';
 
 import Login from '@features/auth/views/Login/Login';
 import ForgotPassword from '@features/auth/views/ForgotPassword/ForgotPassword';
@@ -20,7 +21,7 @@ import Logout from '@features/profile/views/Logout/Logout';
 import Support from "@features/profile/views/AboutUs/Support/Support";
 import Rating from "@features/profile/views/AboutUs/Rating/Rating";
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 // Pantallas placeholder temporales
@@ -52,28 +53,30 @@ function HomeTabs() {
 
 export default function App() {
   return (
-    <ThemeProvider>
-      <NavigationContainer>
-        <Stack.Navigator 
-          initialRouteName="Login"
-          screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Login" component={Login}/>
-          <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
-          <Stack.Screen name="VerifyCode" component={VerifyCode}/>
-          <Stack.Screen name="NewPassword" component={NewPassword}/>
-          <Stack.Screen name="MainPage" component={MainPage}/>  
-          <Stack.Screen name="Profile" component={Profile}/>
-          <Stack.Screen name="Datas" component={Datas}/>
-          <Stack.Screen name="Family" component={Family}/>
-          <Stack.Screen name="Security" component={Security}/>
-          <Stack.Screen name="PrivacyPolicies" component={PrivacyPolicies}/>
-          <Stack.Screen name="AboutUs" component={AboutUs}/>
-          <Stack.Screen name="Logout"  component={Logout}/>
-          <Stack.Screen name="Support" component={Support}/>
-          <Stack.Screen name="Rating" component={Rating}/>
-          <Stack.Screen name="HomeTabs" component={HomeTabs}/>
-        </Stack.Navigator>
-      </NavigationContainer>
-    </ThemeProvider>
+    <RoleSwitcherProvider>
+      <ThemeProvider>
+        <NavigationContainer>
+          <Stack.Navigator 
+            initialRouteName="Login"
+            screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Login" component={Login}/>
+            <Stack.Screen name="ForgotPassword" component={ForgotPassword}/>
+            <Stack.Screen name="VerifyCode" component={VerifyCode}/>
+            <Stack.Screen name="NewPassword" component={NewPassword}/>
+            <Stack.Screen name="MainPage" component={MainPage}/>  
+            <Stack.Screen name="Profile" component={Profile}/>
+            <Stack.Screen name="Datas" component={Datas}/>
+            <Stack.Screen name="Family" component={Family}/>
+            <Stack.Screen name="Security" component={Security}/>
+            <Stack.Screen name="PrivacyPolicies" component={PrivacyPolicies}/>
+            <Stack.Screen name="AboutUs" component={AboutUs}/>
+            <Stack.Screen name="Logout"  component={Logout}/>
+            <Stack.Screen name="Support" component={Support}/>
+            <Stack.Screen name="Rating" component={Rating}/>
+            <Stack.Screen name="HomeTabs" component={HomeTabs}/>
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ThemeProvider>
+    </RoleSwitcherProvider>
   );
 }

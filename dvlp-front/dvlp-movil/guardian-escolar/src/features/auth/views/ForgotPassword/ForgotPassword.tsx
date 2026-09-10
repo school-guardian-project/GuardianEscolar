@@ -6,7 +6,7 @@ import {
   TextInput,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import type { StackNavigationProp } from "@react-navigation/stack";
+import type { NativeStackNavigationProp } from "@react-navigation/native-stack";
 import { useTranslation } from "react-i18next";
 
 import { useTheme } from "@core/services/ThemeService";
@@ -25,7 +25,7 @@ type RootStackParamList = {
 export default function ForgotPassword() {
   const { t } = useTranslation();
   const { theme } = useTheme();
-  const navigation = useNavigation<StackNavigationProp<RootStackParamList>>();
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
 
   const [email, setEmail] = useState("");
 

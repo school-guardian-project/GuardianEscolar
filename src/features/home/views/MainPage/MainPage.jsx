@@ -50,7 +50,10 @@ export default function MainPage() {
         ]}
         pointerEvents="box-none"
       >
-        <TopBar config={config.topBar} />
+        <TopBar
+          config={config.topBar}
+          onNotificationPress={() => navigation.navigate("Notifications")}
+        />
       </View>
 
       <View

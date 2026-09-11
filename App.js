@@ -23,6 +23,7 @@ import ChangePasswordForm from "@features/account/views/Password/UpdatePassword/
 
 // Página principal
 import MainPage from "@features/home/views/MainPage/MainPage";
+import Notifications from "@features/home/views/Notifications/Notifications";
 
 // Mi perfil
 import Profile from "@features/profile/views/Profile/Profile";
@@ -140,6 +141,8 @@ export default function App() {
             <Stack.Screen name="NewPassword" component={NewPassword} />
 
             <Stack.Screen name="MainPage" component={MainPage} />
+
+            <Stack.Screen name="Notifications" component={Notifications} />
 
             <Stack.Screen name="Profile" component={Profile} />
 

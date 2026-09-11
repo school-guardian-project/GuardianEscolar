@@ -2,7 +2,7 @@ import SearchInput from "@components/inputs/SearchInput";
 import NotificationButton from "@components/buttons/NotificationButton";
 import { StyleSheet, View } from "react-native";
 
-export default function TopBar({ config }) {
+export default function TopBar({ config, onNotificationPress }) {
   return (
     <View
       style={[styles.topBar, !config.showSearchInput && styles.topBarNoSearch]}
@@ -12,7 +12,9 @@ export default function TopBar({ config }) {
           <SearchInput />
         </View>
       )}
-      {config.showNotifications && <NotificationButton />}
+      {config.showNotifications && (
+        <NotificationButton onPress={onNotificationPress} />
+      )}
     </View>
   );
 }

@@ -110,6 +110,36 @@
     "subtitle": "Manage your account and preferences"
   },
 
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Mark all as read",
+    "empty": "You have no new notifications",
+    "routeStartedTitle": "Route started",
+    "routeStartedMessage": "The Route Centro bus has started its trip.",
+    "studentBoardedTitle": "Boarding registered",
+    "studentBoardedMessage": "The student's boarding on the bus was registered.",
+    "routeArrivingTitle": "Bus approaching",
+    "routeArrivingMessage": "The bus will arrive at your stop in approximately 10 minutes.",
+    "studentLeftTitle": "Drop-off registered",
+    "studentLeftMessage": "The student's drop-off from the bus was registered.",
+    "routeDetourTitle": "Route detour",
+    "routeDetourMessage": "The route has a temporary detour.",
+    "justNow": "Now",
+    "emptySaved": "You have no saved notifications",
+    "saveNotification": "Save notification",
+    "removeSaved": "Remove from saved notifications",
+    "filters": {
+      "button": "Filter",
+      "title": "Filter notifications",
+      "all": "All",
+      "boarding": "Bus boarding",
+      "alighting": "Bus drop-off",
+      "delays": "Delays",
+      "detours": "Route detours",
+      "saved": "Saved notifications"
+    }
+  },
+
   "Family": {
     "holder": "Account holder",
     "members": "Other members"

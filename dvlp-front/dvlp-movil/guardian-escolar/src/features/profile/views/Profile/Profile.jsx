@@ -11,7 +11,7 @@ import styles from "./Profile.style";
 
 export default function Profile() {
     const { theme } = useTheme();
-    const { t } =  useTranslation();
+    const { t } = useTranslation();
     const navigation = useNavigation();
     return (
         <View style={[styles.container, { backgroundColor: theme.bgColor }]}>
@@ -20,16 +20,16 @@ export default function Profile() {
                 showsVerticalScrollIndicator={false}
             >
                 <Text style={[styles.title, { color: theme.titleColor }]}>{t("profile.title")}</Text>
-                <Text style={styles.subtitle}>{t("profile.subtitle")}</Text>
+                <Text style={[styles.subtitle, { color: theme.titleColor }]}>{t("profile.subtitle")}</Text>
 
                 <View style={styles.card}>
                     <SettingsItem
                         icon={<Ionicons name="person" size={22} color={theme.iconColor} />}
                         title={t("inputs.data")}
                         onPress={() => navigation.navigate("Datas")}
-                        
+
                     />
-                  
+
                 </View>
 
                 <View style={styles.card}>
@@ -47,6 +47,23 @@ export default function Profile() {
                         onPress={() => navigation.navigate("Security")}
                     />
                 </View>
+
+                <View style={styles.card}>
+                    <SettingsItem
+                        icon={<MaterialIcons name="palette" size={22} color={theme.iconColor} />}
+                        title={t("inputs.appearance")}
+                        onPress={() => navigation.navigate("Appearance")}
+                    />
+                </View>
+
+                <View style={styles.card}>
+                    <SettingsItem
+                        icon={<MaterialIcons name="language" size={22} color={theme.iconColor} />}
+                        title={t("inputs.language")}
+                        onPress={() => navigation.navigate("Language")}
+                    />
+                </View>
+
 
                 <View style={styles.card}>
                     <SettingsItem

@@ -10,10 +10,7 @@
     "line3": "escolar",
     "line4": "em",
     "line5": "tempo",
-    "line6": "real",
-    "paragraph": "Monitoramento GPS de rotas, alertas instantâneos e controle de presença. Tranquilidade para as famílias, eficiência para as escolas.",
-    "btn_download": "Baixar",
-    "btn_video": "Assistir vídeo"
+    "line6": "real"
   },
   "card_panel": {
     "badge": "+ 12 este mês",
@@ -132,17 +129,10 @@
     "links_product": [
       "Funcionalidades",
       "Como funciona",
-      "Preços",
-      "Para escolas"
-    ],
-    "links_company": [
-      "Sobre nós",
-      "Blog",
       "Contato"
     ],
     "links_legal": [
-      "Privacidade",
-      "Termos"
+      "Privacidade e termos"
     ],
     "rights": "© 2026 Guardian Escolar · Todos os direitos reservados"
   },
@@ -150,9 +140,6 @@
     "left": {
       "title": "Bem-vindo de volta",
       "description": "Acesse o sistema completo de monitoramento de rotas escolares.",
-      "gps": "GPS em tempo real",
-      "alerts": "Alertas instantâneos",
-      "reports": "Relatórios e métricas",
       "footer": "guardian.edu · Suporte 24/7"
     },
     "right": {
@@ -565,6 +552,7 @@
       "title": "Informações da Parada",
       "fields": {
         "nombre": "Nome",
+        "estudiante": "Estudante",
         "ciudad": "Cidade",
         "direccion": "Endereço",
         "latitud": "Latitude",
@@ -609,7 +597,7 @@
   },
   "update_record": {
     "estudiante": {
-      "title": "Atualizar Estudante",
+      "title": "Atualizar estudante",
       "fields": {
         "nombres": "Nomes",
         "apellidos": "Sobrenome",
@@ -623,7 +611,7 @@
       }
     },
     "acudiente": {
-      "title": "Atualizar Responsável",
+      "title": "Atualizar responsável",
       "fields": {
         "nombre": "Nome",
         "apellidos": "Sobrenome",
@@ -636,7 +624,7 @@
       }
     },
     "conductor": {
-      "title": "Atualizar Motorista",
+      "title": "Atualizar motorista",
       "fields": {
         "nombres": "Nomes",
         "apellidos": "Sobrenome",
@@ -650,7 +638,7 @@
       }
     },
     "familia": {
-      "title": "Atualizar Família",
+      "title": "Atualizar família",
       "fields": {
         "nombre": "Nome",
         "acudiente": "Responsável",
@@ -659,21 +647,22 @@
       }
     },
     "bus": {
-      "title": "Atualizar Ônibus",
+      "title": "Atualizar ônibus",
       "fields": {
         "matricula": "Matrícula do ônibus",
         "conductor": "Motorista",
         "modelo": "Modelo",
         "marca": "Marca",
-        "capacidad": "Capacidade máxima",
+        "capacidade": "Capacidade máxima",
         "soat": "Validade do SOAT",
         "gps": "Status do GPS"
       }
     },
     "parada": {
-      "title": "Atualizar Parada",
+      "title": "Atualizar parada",
       "fields": {
         "nombre": "Nome",
+        "estudiante": "Estudante",
         "ciudad": "Cidade",
         "direccion": "Endereço",
         "latitud": "Latitude",
@@ -681,7 +670,7 @@
       }
     },
     "ruta": {
-      "title": "Atualizar Rota",
+      "title": "Atualizar rota",
       "fields": {
         "nombre": "Nome",
         "sector": "Setor ou bairro",
@@ -692,7 +681,7 @@
       }
     },
     "admins": {
-      "title": "Atualizar Administrador",
+      "title": "Atualizar administrador",
       "fields": {
         "nombre": "Nome",
         "apellidos": "Sobrenome",
@@ -704,7 +693,7 @@
       }
     },
     "schools": {
-      "title": "Atualizar Escola",
+      "title": "Atualizar escola",
       "fields": {
         "nombre": "Nome",
         "ciudad": "Cidade",
@@ -724,7 +713,7 @@
     "select": "Selecionar…",
     "button": "Registrar",
     "estudiante": {
-      "title": "Registrar Estudante",
+      "title": "Registrar estudante",
       "fields": {
         "nombres": "Nomes",
         "apellidos": "Sobrenome",
@@ -738,7 +727,7 @@
       }
     },
     "acudiente": {
-      "title": "Registrar Responsável",
+      "title": "Registrar responsável",
       "fields": {
         "nombres": "Nomes",
         "apellidos": "Sobrenome",
@@ -751,7 +740,7 @@
       }
     },
     "conductor": {
-      "title": "Registrar Motorista",
+      "title": "Registrar motorista",
       "fields": {
         "nombres": "Nomes",
         "apellidos": "Sobrenome",
@@ -765,7 +754,7 @@
       }
     },
     "familia": {
-      "title": "Registrar Família",
+      "title": "Registrar família",
       "fields": {
         "nombre": "Nome da família",
         "acudiente": "Responsável",
@@ -774,21 +763,22 @@
       }
     },
     "bus": {
-      "title": "Registrar Ônibus",
+      "title": "Registrar ônibus",
       "fields": {
         "matricula": "Matrícula",
         "conductor": "Motorista",
         "modelo": "Modelo",
         "marca": "Marca",
-        "capacidad": "Capacidade",
+        "capacidade": "Capacidade",
         "soat": "Validade do SOAT",
         "gps": "Status do GPS"
       }
     },
     "parada": {
-      "title": "Registrar Parada",
+      "title": "Registrar parada",
       "fields": {
-        "nombre": "Nome da Parada",
+        "nombre": "Nome da parada",
+        "estudiante": "Estudante",
         "ciudad": "Cidade",
         "direccion": "Endereço",
         "latitud": "Latitude",
@@ -796,10 +786,10 @@
       }
     },
     "ruta": {
-      "title": "Registrar Rota",
+      "title": "Registrar rota",
       "fields": {
-        "nombre": "Nome da Rota",
-        "sector": "Setor / Bairro",
+        "nombre": "Nome da rota",
+        "sector": "Setor / bairro",
         "horaInicio": "Hora de início",
         "horaFin": "Hora de término",
         "destino": "Destino",
@@ -807,7 +797,7 @@
       }
     },
     "admins": {
-      "title": "Registrar Administrador",
+      "title": "Registrar administrador",
       "fields": {
         "nombre": "Nome",
         "apellidos": "Sobrenome",
@@ -819,7 +809,7 @@
       }
     },
     "schools": {
-      "title": "Registrar Escola",
+      "title": "Registrar escola",
       "fields": {
         "nombre": "Nome da escola",
         "logo": "Logo",
@@ -912,9 +902,8 @@
         "no_match": "*As senhas não coincidem"
       }
     },
-    "links_product": ["Funcionalidades", "Como funciona", "Preços", "Para escolas"],
-    "links_company": ["Sobre nós", "Blog", "Contato"],
-    "links_legal": ["Privacidade", "Termos"],
+    "links_product": ["Funcionalidades", "Como funciona", "Contato"],
+    "links_legal": ["Privacidade e termos"],
     "rights": "© 2026 Guardian Escolar · Todos os direitos reservados"
   }
 }

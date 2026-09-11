@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { View, Text } from "react-native";
-
+import { RoleSwitcherProvider } from "@core/dev/RoleSwitcherContext";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { ThemeProvider } from "@core/services/ThemeService";
@@ -63,218 +63,144 @@ import Language from "@features/profile/views/language/language";
 // Cerrar sesión
 import Logout from "@features/profile/views/Logout/Logout";
 
-const Stack = createStackNavigator();
+const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
 function HomeTabs() {
-    return (
-        <Tab.Navigator
-            screenOptions={{
-                headerShown: false,
-            }}
-        >
-            <Tab.Screen
-                name="MainPage"
-                component={MainPage}
-                options={{
-                    tabBarLabel: "Rutas",
-                    tabBarIcon: () => "🚌",
-                }}
-            />
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+      }}
+    >
+      <Tab.Screen
+        name="MainPage"
+        component={MainPage}
+        options={{
+          tabBarLabel: "Rutas",
+          tabBarIcon: () => "🚌",
+        }}
+      />
 
-            <Tab.Screen
-                name="Profile"
-                component={Profile}
-                options={{
-                    tabBarLabel: "Perfil",
-                    tabBarIcon: () => "🧍",
-                }}
-            />
-        </Tab.Navigator>
-    );
+      <Tab.Screen
+        name="Profile"
+        component={Profile}
+        options={{
+          tabBarLabel: "Perfil",
+          tabBarIcon: () => "🧍",
+        }}
+      />
+    </Tab.Navigator>
+  );
 }
 
 export default function App() {
+  const [languageLoaded, setLanguageLoaded] = useState(false);
 
-    const [languageLoaded, setLanguageLoaded] = useState(false);
+  useEffect(() => {
+    const initializeLanguage = async () => {
+      await loadLanguage();
+      setLanguageLoaded(true);
+    };
 
-    useEffect(() => {
-        const initializeLanguage = async () => {
-            await loadLanguage();
-            setLanguageLoaded(true);
-        };
+    initializeLanguage();
+  }, []);
 
-        initializeLanguage();
-    }, []);
-
-    // Esperar a que se cargue el idioma guardado
-    if (!languageLoaded) {
-        return (
-            <View
-                style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                }}
-            >
-                <Text>Cargando...</Text>
-            </View>
-        );
-    }
-
+  // Esperar a que se cargue el idioma guardado
+  if (!languageLoaded) {
     return (
-        <ThemeProvider>
-            <NavigationContainer>
-
-                <Stack.Navigator
-                    initialRouteName="Login"
-                    screenOptions={{
-                        headerShown: false,
-                    }}
-                >
-                    <Stack.Screen
-                        name="Login"
-                        component={Login}
-                    />
-
-                    <Stack.Screen
-                        name="ForgotPassword"
-                        component={ForgotPassword}
-                    />
-
-                    <Stack.Screen
-                        name="VerifyCode"
-                        component={VerifyCode}
-                    />
-
-                    <Stack.Screen
-                        name="NewPassword"
-                        component={NewPassword}
-                    />
-
-                    <Stack.Screen
-                        name="MainPage"
-                        component={MainPage}
-                    />
-
-                    <Stack.Screen
-                        name="Profile"
-                        component={Profile}
-                    />
-
-                    <Stack.Screen
-                        name="Datas"
-                        component={Datas}
-                    />
-
-                    <Stack.Screen
-                        name="UpdateEmail"
-                        component={UpdateEmail}
-                    />
-
-                    <Stack.Screen
-                        name="VerifyUpdateEmail"
-                        component={VerifyUpdateEmail}
-                    />
-
-                    <Stack.Screen
-                        name="NewEmail"
-                        component={NewEmail}
-                    />
-
-                    <Stack.Screen
-                        name="VerifyNewEmail"
-                        component={VerifyNewEmail}
-                    />
-
-                    <Stack.Screen
-                        name="UpdatePhone"
-                        component={UpdatePhone}
-                    />
-
-                    <Stack.Screen
-                        name="VerifyUpdatePhone"
-                        component={VerifyUpdatePhone}
-                    />
-
-                    <Stack.Screen
-                        name="NewPhone"
-                        component={NewPhone}
-                    />
-
-                    <Stack.Screen
-                        name="VerifyNewPhone"
-                        component={VerifyNewPhone}
-                    />
-
-                    <Stack.Screen
-                        name="UpdatePassword"
-                        component={UpdatePassword}
-                    />
-
-                    <Stack.Screen
-                        name="VerifyCodePassword"
-                        component={VerifyCodePassword}
-                    />
-
-                    <Stack.Screen
-                        name="ChangePasswordForm"
-                        component={ChangePasswordForm}
-                    />
-
-                    <Stack.Screen
-                        name="Family"
-                        component={Family}
-                    />
-
-                    <Stack.Screen
-                        name="Security"
-                        component={Security}
-                    />
-
-                    <Stack.Screen
-                        name="PrivacyPolicies"
-                        component={PrivacyPolicies}
-                    />
-
-                    <Stack.Screen
-                        name="AboutUs"
-                        component={AboutUs}
-                    />
-
-                    <Stack.Screen
-                        name="Logout"
-                        component={Logout}
-                    />
-
-                    <Stack.Screen
-                        name="Support"
-                        component={Support}
-                    />
-
-                    <Stack.Screen
-                        name="Rating"
-                        component={Rating}
-                    />
-
-                    <Stack.Screen
-                        name="Appearance"
-                        component={Appearance}
-                    />
-
-                    <Stack.Screen
-                        name="Language"
-                        component={Language}
-                    />
-
-                    <Stack.Screen
-                        name="HomeTabs"
-                        component={HomeTabs}
-                    />
-
-                </Stack.Navigator>
-
-            </NavigationContainer>
-        </ThemeProvider>
+      <View
+        style={{
+          flex: 1,
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Text>Cargando...</Text>
+      </View>
     );
+  }
+
+  return (
+    <RoleSwitcherProvider>
+      <ThemeProvider>
+        <NavigationContainer>
+          <Stack.Navigator
+            initialRouteName="Login"
+            screenOptions={{
+              headerShown: false,
+            }}
+          >
+            <Stack.Screen name="Login" component={Login} />
+
+            <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+
+            <Stack.Screen name="VerifyCode" component={VerifyCode} />
+
+            <Stack.Screen name="NewPassword" component={NewPassword} />
+
+            <Stack.Screen name="MainPage" component={MainPage} />
+
+            <Stack.Screen name="Profile" component={Profile} />
+
+            <Stack.Screen name="Datas" component={Datas} />
+
+            <Stack.Screen name="UpdateEmail" component={UpdateEmail} />
+
+            <Stack.Screen
+              name="VerifyUpdateEmail"
+              component={VerifyUpdateEmail}
+            />
+
+            <Stack.Screen name="NewEmail" component={NewEmail} />
+
+            <Stack.Screen name="VerifyNewEmail" component={VerifyNewEmail} />
+
+            <Stack.Screen name="UpdatePhone" component={UpdatePhone} />
+
+            <Stack.Screen
+              name="VerifyUpdatePhone"
+              component={VerifyUpdatePhone}
+            />
+
+            <Stack.Screen name="NewPhone" component={NewPhone} />
+
+            <Stack.Screen name="VerifyNewPhone" component={VerifyNewPhone} />
+
+            <Stack.Screen name="UpdatePassword" component={UpdatePassword} />
+
+            <Stack.Screen
+              name="VerifyCodePassword"
+              component={VerifyCodePassword}
+            />
+
+            <Stack.Screen
+              name="ChangePasswordForm"
+              component={ChangePasswordForm}
+            />
+
+            <Stack.Screen name="Family" component={Family} />
+
+            <Stack.Screen name="Security" component={Security} />
+
+            <Stack.Screen name="PrivacyPolicies" component={PrivacyPolicies} />
+
+            <Stack.Screen name="AboutUs" component={AboutUs} />
+
+            <Stack.Screen name="Logout" component={Logout} />
+
+            <Stack.Screen name="Support" component={Support} />
+
+            <Stack.Screen name="Rating" component={Rating} />
+
+            <Stack.Screen name="Appearance" component={Appearance} />
+
+            <Stack.Screen name="Language" component={Language} />
+
+            <Stack.Screen name="HomeTabs" component={HomeTabs} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </ThemeProvider>
+    </RoleSwitcherProvider>
+  );
 }

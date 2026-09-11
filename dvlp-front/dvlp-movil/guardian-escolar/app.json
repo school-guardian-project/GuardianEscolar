@@ -24,6 +24,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      ["expo-camera", {
+        "cameraPermission": "Guardian Escolar necesita la camara para escanear el QR del estudiante."
+      }]
+    ]
   }
 }

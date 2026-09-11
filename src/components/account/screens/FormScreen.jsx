@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import AccountLayout from "@components/account/AccountLayout";
@@ -16,6 +16,7 @@ export default function FormScreen({
 }) {
 
     const navigation = useNavigation();
+    const [value, setValue] = useState("");
 
     
     return (
@@ -29,6 +30,8 @@ export default function FormScreen({
             <InputField
                 label={label}
                 placeholder={placeholder}
+                value={value}
+                onChangeText={setValue}
             />
 
             <PrimaryButton

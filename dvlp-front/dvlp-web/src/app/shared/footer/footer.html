@@ -2,19 +2,14 @@
     <div class="footer-header">
         <div class="col1">
             <span class="icon">
-                <img src="assets/logo-blue.svg" alt="Guardian Escolar"> &nbsp;
+                <img src="assets/logo-blue.svg" alt="Guardian Escolar"> 
                 <div class="guardian">Guardian Escolar</div>
             </span>
-            <p class="description">{{ 'footer.description' | translate }}</p>
         </div>
         <div class="cols">
             <div class="col">
                 <div class="title">{{ 'footer.col_product' | translate }}</div>
-                <p class="link" *ngFor="let link of linksProduct">{{ link }}</p>
-            </div>
-            <div class="col">
-                <div class="title">{{ 'footer.col_company' | translate }}</div>
-                <p class="link" *ngFor="let link of linksCompany">{{ link }}</p>
+                <p class="link" *ngFor="let link of linksProduct; let i = index" (click)="navigateProduct(i)">{{ link }}</p>
             </div>
             <div class="col">
                 <div class="title">{{ 'footer.col_legal' | translate }}</div>
@@ -26,8 +21,8 @@
     <div class="footer-down">
         <div class="down-left">{{ 'footer.rights' | translate }}</div>
         <div class="down-right">
-            <div class="social">guardianescolar0@gmail.com</div>
-            <div class="social">guardian.edu</div>
+            <a class="social" href="mailto:guardianescolar0@gmail.com" target="_blank"
+                rel="noopener noreferrer">guardianescolar0@gmail.com</a>
         </div>
     </div>
 </footer>

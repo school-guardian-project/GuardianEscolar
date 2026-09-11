@@ -10,10 +10,7 @@
     "line3": "in",
     "line4": "real",
     "line5": "time",
-    "line6": "",
-    "paragraph": "GPS route monitoring, instant alerts and attendance control. Peace of mind for families, efficiency for schools.",
-    "btn_download": "Download",
-    "btn_video": "Watch video"
+    "line6": ""
   },
   "card_panel": {
     "badge": "+ 12 this month",
@@ -32,7 +29,6 @@
     "title": "Everything you need for school safety",
     "description": "A complete platform for administrators, drivers and families.",
     "cards": [
-
       {
         "icon": "satellite_alt",
         "title": "Real-time GPS",
@@ -69,7 +65,6 @@
     "label": "HOW IT WORKS",
     "title": "Simple for everyone",
     "steps": [
-
       {
         "title": "Register your institution",
         "description": "Create your account, add your routes and drivers in minutes."
@@ -86,9 +81,7 @@
         "title": "Active monitoring",
         "description": "Real-time monitoring from the administration panel."
       }
-
-  
- ]
+    ]
   },
   "cta": {
     "title": "Ready to protect your students?",
@@ -133,21 +126,13 @@
     "col_product": "Product",
     "col_company": "Company",
     "col_legal": "Legal",
-
     "links_product": [
       "Features",
       "How it works",
-      "Pricing",
-      "For schools"
-    ],
-    "links_company": [
-      "About us",
-      "Blog",
       "Contact"
     ],
     "links_legal": [
-      "Privacy",
-      "Terms"
+      "Privacy and terms"
     ],
     "rights": "© 2026 Guardian Escolar · All rights reserved"
   },
@@ -155,12 +140,8 @@
     "left": {
       "title": "Welcome back",
       "description": "Access the complete school route monitoring system.",
-      "gps": "Real-time GPS",
-      "alerts": "Instant alerts",
-      "reports": "Reports and metrics",
       "footer": "guardian.edu · 24/7 Support"
     },
-
     "right": {
       "title": "Sign in",
       "description": "Enter your credentials to access the dashboard",
@@ -233,7 +214,6 @@
       "pin_error": "*The entered code is invalid.",
       "confirmationTitle": "Phone updated",
       "confirmationDescription": "Your phone number has been updated successfully."
-      
     }
   },
   "change_email": {
@@ -534,21 +514,21 @@
       }
     },
     "conductor": {
-      "title": "Driver Information",
+      "title": "Driver information",
       "fields": {
         "nombres": "Names",
         "apellidos": "Last names",
         "tipoId": "ID Type",
-        "identificacion": "ID Number",
+        "identificacion": "ID number",
         "fechaNac": "Birth Date",
-        "vencLicencia": "License Expiry",
-        "licencia": "Driver License",
+        "vencLicencia": "License expiry",
+        "licencia": "Driver license",
         "direccion": "Address",
         "correo": "Email"
       }
     },
     "familia": {
-      "title": "Family Information",
+      "title": "Family information",
       "fields": {
         "nombre": "Name",
         "acudiente": "Guardian",
@@ -557,7 +537,7 @@
       }
     },
     "bus": {
-      "title": "Bus Information",
+      "title": "Bus information",
       "fields": {
         "matricula": "License Plate",
         "conductor": "Driver",
@@ -572,6 +552,7 @@
       "title": "Stop Information",
       "fields": {
         "nombre": "Name",
+        "estudiante": "Student",
         "ciudad": "City",
         "direccion": "Address",
         "latitud": "Latitude",
@@ -616,12 +597,12 @@
   },
   "update_record": {
     "estudiante": {
-      "title": "Update Student",
+      "title": "Update student",
       "fields": {
         "nombres": "Names",
         "apellidos": "Last names",
-        "tipoId": "ID Type",
-        "identificacion": "ID Number",
+        "tipoId": "ID type",
+        "identificacion": "ID number",
         "fechaNac": "Birth date",
         "curso": "Grade",
         "telefono": "Phone",
@@ -630,25 +611,25 @@
       }
     },
     "acudiente": {
-      "title": "Update Guardian",
+      "title": "Update guardian",
       "fields": {
         "nombre": "Name",
         "apellidos": "Last names",
         "correo": "Email",
-        "tipoId": "ID Type",
-        "identificacion": "ID Number",
+        "tipoId": "ID type",
+        "identificacion": "ID number",
         "fechaNac": "Birth date",
         "telefono": "Phone",
         "direccion": "Home address"
       }
     },
     "conductor": {
-      "title": "Update Driver",
+      "title": "Update driver",
       "fields": {
         "nombres": "Names",
         "apellidos": "Last names",
-        "tipoId": "ID Type",
-        "identificacion": "ID Number",
+        "tipoId": "ID type",
+        "identificacion": "ID number",
         "fechaNac": "Birth date",
         "vencLicencia": "License expiry",
         "licencia": "Driver license",
@@ -657,7 +638,7 @@
       }
     },
     "familia": {
-      "title": "Update Family",
+      "title": "Update family",
       "fields": {
         "nombre": "Name",
         "acudiente": "Guardian",
@@ -666,7 +647,7 @@
       }
     },
     "bus": {
-      "title": "Update Bus",
+      "title": "Update bus",
       "fields": {
         "matricula": "License plate",
         "conductor": "Driver",
@@ -678,9 +659,10 @@
       }
     },
     "parada": {
-      "title": "Update Stop",
+      "title": "Update stop",
       "fields": {
         "nombre": "Name",
+        "estudiante": "Student",
         "ciudad": "City",
         "direccion": "Address",
         "latitud": "Latitude",
@@ -688,7 +670,7 @@
       }
     },
     "ruta": {
-      "title": "Update Route",
+      "title": "Update route",
       "fields": {
         "nombre": "Name",
         "sector": "Sector or neighborhood",
@@ -699,19 +681,19 @@
       }
     },
     "admins": {
-      "title": "Update Administrator",
+      "title": "Update administrator",
       "fields": {
         "nombre": "Name",
         "apellidos": "Last names",
         "correo": "Email",
-        "identificacion": "ID Number",
+        "identificacion": "ID number",
         "fechaNac": "Birth date",
         "telefono": "Phone",
         "direccion": "Home address"
       }
     },
     "schools": {
-      "title": "Update School",
+      "title": "Update school",
       "fields": {
         "nombre": "Name",
         "ciudad": "City",
@@ -731,13 +713,13 @@
     "select": "Select…",
     "button": "Register",
     "estudiante": {
-      "title": "Register Student",
+      "title": "Register student",
       "fields": {
         "nombres": "Names",
-        "apellidos": "Last Names",
-        "tipoId": "ID Type",
-        "identificacion": "ID Number",
-        "fechaNac": "Birth Date",
+        "apellidos": "Last names",
+        "tipoId": "ID type",
+        "identificacion": "ID number",
+        "fechaNac": "Birth date",
         "curso": "Grade",
         "telefono": "Phone",
         "direccion": "Address",
@@ -745,57 +727,58 @@
       }
     },
     "acudiente": {
-      "title": "Register Guardian",
+      "title": "Register guardian",
       "fields": {
         "nombres": "Names",
-        "apellidos": "Last Names",
+        "apellidos": "Last names",
         "correo": "Email",
-        "tipoId": "ID Type",
-        "identificacion": "ID Number",
-        "fechaNac": "Birth Date",
+        "tipoId": "ID type",
+        "identificacion": "ID number",
+        "fechaNac": "Birth date",
         "telefono": "Phone",
         "direccion": "Address"
       }
     },
     "conductor": {
-      "title": "Register Driver",
+      "title": "Register driver",
       "fields": {
         "nombres": "Names",
-        "apellidos": "Last Names",
-        "tipoId": "ID Type",
-        "identificacion": "ID Number",
-        "fechaNac": "Birth Date",
-        "vencLicencia": "License Expiry",
-        "licencia": "License Number",
+        "apellidos": "Last names",
+        "tipoId": "ID type",
+        "identificacion": "ID number",
+        "fechaNac": "Birth date",
+        "vencLicencia": "License expiry",
+        "licencia": "License number",
         "direccion": "Address",
         "correo": "Email"
       }
     },
     "familia": {
-      "title": "Register Family",
+      "title": "Register family",
       "fields": {
-        "nombre": "Family Name",
+        "nombre": "Family name",
         "acudiente": "Guardian",
         "estudiante": "Student",
         "observaciones": "Observations"
       }
     },
     "bus": {
-      "title": "Register Bus",
+      "title": "Register bus",
       "fields": {
-        "matricula": "License Plate",
+        "matricula": "License plate",
         "conductor": "Driver",
         "modelo": "Model",
         "marca": "Brand",
         "capacidad": "Capacity",
-        "soat": "SOAT Validity",
-        "gps": "GPS Status"
+        "soat": "SOAT validity",
+        "gps": "GPS status"
       }
     },
     "parada": {
-      "title": "Register Stop",
+      "title": "Register stop",
       "fields": {
-        "nombre": "Stop Name",
+        "nombre": "Stop name",
+        "estudiante": "Student",
         "ciudad": "City",
         "direccion": "Address",
         "latitud": "Latitude",
@@ -803,37 +786,37 @@
       }
     },
     "ruta": {
-      "title": "Register Route",
+      "title": "Register route",
       "fields": {
-        "nombre": "Route Name",
-        "sector": "Sector / Neighborhood",
-        "horaInicio": "Start Time",
-        "horaFin": "End Time",
+        "nombre": "Route name",
+        "sector": "Sector / neighborhood",
+        "horaInicio": "Start time",
+        "horaFin": "End time",
         "destino": "Destination",
         "sectorRuta": "Sector"
       }
     },
     "admins": {
-      "title": "Register Administrator",
+      "title": "Register administrator",
       "fields": {
         "nombre": "Name",
-        "apellidos": "Last Names",
+        "apellidos": "Last names",
         "correo": "Email",
-        "identificacion": "ID Number",
-        "fechaNac": "Birth Date",
+        "identificacion": "ID number",
+        "fechaNac": "Birth date",
         "telefono": "Phone",
         "direccion": "Address"
       }
     },
     "schools": {
-      "title": "Register School",
+      "title": "Register school",
       "fields": {
-        "nombre": "School Name",
+        "nombre": "School name",
         "logo": "Logo",
         "ciudad": "City",
         "direccion": "Address",
         "telefono": "Phone",
-        "escolaridad": "Education Level",
+        "escolaridad": "Education level",
         "correo": "Email",
         "web": "Website"
       }
@@ -919,11 +902,14 @@
         "no_match": "*Passwords do not match"
       }
     },
-
-    "links_product": ["Features", "How it works", "Pricing", "For schools"],
-    "links_company": ["About us", "Blog", "Contact"],
-    "links_legal": ["Privacy", "Terms"],
+    "links_product": [
+      "Features",
+      "How it works",
+      "Contact"
+    ],
+    "links_legal": [
+      "Privacy and terms"
+    ],
     "rights": "© 2026 Guardian Escolar · All rights reserved"
-
   }
 }

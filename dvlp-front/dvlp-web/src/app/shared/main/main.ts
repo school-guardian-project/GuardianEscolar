@@ -4,10 +4,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-main',
-  imports: [MatToolbarModule, MatButtonModule, MatIconModule, TranslateModule, CommonModule],
+  imports: [MatToolbarModule, MatButtonModule, MatIconModule, TranslateModule, CommonModule, RouterLink],
   templateUrl: './main.html',
   styleUrl: './main.css',
 })

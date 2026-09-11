@@ -11,7 +11,7 @@ const RECORD_CONFIG: Record<RegisterType, { icon: string; fields: string[] }> = 
   conductor:  { icon: 'directions_car',     fields: ['nombres', 'apellidos', 'tipoId', 'identificacion', 'fechaNac', 'vencLicencia', 'licencia', 'direccion', 'correo'] },
   familia:    { icon: 'family_restroom',    fields: ['nombre', 'acudiente', 'estudiante', 'observaciones'] },
   bus:        { icon: 'directions_bus',     fields: ['matricula', 'conductor', 'modelo', 'marca', 'capacidad', 'gps', 'soat'] },
-  parada:     { icon: 'location_on',        fields: ['nombre', 'ciudad', 'direccion', 'latitud', 'longitud'] },
+  parada:     { icon: 'location_on',        fields: ['nombre', 'estudiante', 'ciudad', 'direccion', 'latitud', 'longitud'] },
   ruta:       { icon: 'route',              fields: ['nombre', 'sector', 'horaInicio', 'horaFin', 'destino', 'sectorRuta'] },
   admins:     { icon: 'admin_panel_settings', fields: ['nombre', 'apellidos', 'correo', 'identificacion', 'telefono', 'fechaNac', 'direccion'] },
   schools:    { icon: 'school',             fields: ['nombre', 'ciudad', 'escolaridad', 'direccion', 'telefono', 'correo', 'web'] },

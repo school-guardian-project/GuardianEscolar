@@ -15,11 +15,10 @@ export default function InfoRow({
   value,
   subtitle,
   editable = false,
-  arrow = false,
-  hidden = false,
   onPress,
   last = false,
   rightComponent,
+  editOnPress,
 }) {
   const { theme } = useTheme();
 
@@ -77,11 +76,13 @@ export default function InfoRow({
         {rightComponent ? (
           rightComponent
         ) : editable ? (
-          <Ionicons
-            name="create-outline"
-            size={25}
-            color={theme.iconColor}
-          />
+          <Pressable onPress={editOnPress} hitSlop={10}>
+            <Ionicons
+              name="create-outline"
+              size={25}
+              color={theme.iconColor}
+            />
+          </Pressable>
         ) : null}
 
 

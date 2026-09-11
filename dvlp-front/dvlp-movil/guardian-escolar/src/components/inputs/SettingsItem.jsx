@@ -53,11 +53,11 @@ export default function SettingsItem({
 
 const styles = StyleSheet.create({
     container: {
-        height: 60,
+        height: 70,
         borderRadius: 18,
         borderWidth: 1,
         paddingHorizontal: 16,
-
+        marginBottom: 12,
         flexDirection: "row",
         alignItems: "center",
     },

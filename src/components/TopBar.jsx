@@ -1,6 +1,6 @@
 import SearchInput from "@components/inputs/SearchInput";
 import NotificationButton from "@components/buttons/NotificationButton";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 export default function TopBar({ config }) {
   return (

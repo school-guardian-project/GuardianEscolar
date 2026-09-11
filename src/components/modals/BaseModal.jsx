@@ -1,4 +1,4 @@
-import { Modal, StyleSheet } from "react-native";
+import { Modal, TouchableOpacity, StyleSheet } from "react-native";
 import React from "react";
 
 export default function BaseModal({ visible, onClose, animationType = "", children }) {
@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     backdrop: {
         flex: 1,
         backgroundColor: "rgba(0, 0, 0, 0.5)",
-        justifyContent: "flex-end"
+        justifyContent: "center"
     },
 
     sheet: {

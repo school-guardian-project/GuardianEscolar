@@ -15,6 +15,7 @@
             <div class="card-register__input-wrap">
               <select *ngIf="field.type === 'select'" 
                       class="card-register__input" 
+                      [class.card-register__input--error]="isFieldInvalid(field)"
                       [(ngModel)]="formData[field.name]"
                       [name]="field.name">
                 <option value="" disabled>{{ 'register.select' | translate }}</option>
@@ -22,9 +23,11 @@
               </select>
               <input *ngIf="field.type !== 'select'" 
                      class="card-register__input" 
+                     [class.card-register__input--error]="isFieldInvalid(field)"
                      [type]="field.type"
                      [(ngModel)]="formData[field.name]" 
                      [name]="field.name" />
+              <small *ngIf="isFieldInvalid(field)" class="card-register__error">{{ getFieldError(field) }}</small>
             </div>
           </div>
         </ng-container>
@@ -38,6 +41,7 @@
         <div class="card-register__input-wrap">
           <select *ngIf="group.type === 'select'" 
                   class="card-register__input" 
+                  [class.card-register__input--error]="isFieldInvalid(group)"
                   [(ngModel)]="formData[group.name]"
                   [name]="group.name">
             <option value="" disabled>{{ 'register.select' | translate }}</option>
@@ -45,15 +49,18 @@
           </select>
           <input *ngIf="group.type !== 'select'" 
                  class="card-register__input" 
+                 [class.card-register__input--error]="isFieldInvalid(group)"
                  [type]="group.type"
                  [(ngModel)]="formData[group.name]" 
                  [name]="group.name" />
+          <small *ngIf="isFieldInvalid(group)" class="card-register__error">{{ getFieldError(group) }}</small>
         </div>
       </div>
     </ng-container>
 
-    <button class="card-register__btn" type="submit">
-      {{ 'register.button' | translate }}
+    <button class="card-register__btn" type="submit" [disabled]="saving">
+      {{ saving ? 'Guardando...' : ('register.button' | translate) }}
     </button>
+    <div *ngIf="message" style="margin-top:12px;padding:8px;border-radius:6px;background:#e8f5e9;color:#2e7d32;text-align:center;font-size:13px;">{{message}}</div>
   </form>
 </div>

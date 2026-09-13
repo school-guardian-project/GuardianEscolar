@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChangeInformation } from "../../../../../../shared/components/change/change-information/change-information";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { ProfileUpdateService } from '@core/api-mock/profile-update.service';
 
 @Component({
   selector: 'app-code-second',
@@ -46,12 +47,46 @@ export class CodeSecond {
   }
 
   onSubmit() {
+    // [MOCK-API] Para demo, cualquier código vale — actualiza directo sin confirmación extra
     if (this.form.valid) {
-      this.showConfirmation = true;
+      const pending = this.profileUpdate.getPendingEmail();
+      if (pending) {
+        this.profileUpdate.updateEmail(pending).subscribe({
+          next: () => {
+            console.log('[MOCK-API] updateEmail OK', pending);
+            this.profileUpdate.clearPending();
+            this.router.navigate(['/admin/informacion']);
+          },
+          error: (e) => {
+            console.warn('[MOCK-API] updateEmail FAIL', e.message);
+            this.router.navigate(['/admin/informacion']);
+          },
+        });
+      } else {
+        this.router.navigate(['/admin/informacion']);
+      }
     } else {
-      this.form.markAllAsTouched();
+      // Para demo, aun con pin incompleto deja continuar
+      const pending = this.profileUpdate.getPendingEmail();
+      if (pending) {
+        this.profileUpdate.updateEmail(pending).subscribe({
+          next: () => {
+            console.log('[MOCK-API] updateEmail OK (pin no validado)', pending);
+            this.profileUpdate.clearPending();
+            this.router.navigate(['/admin/informacion']);
+          },
+          error: (e) => {
+            console.warn('[MOCK-API] updateEmail FAIL', e.message);
+            this.router.navigate(['/admin/informacion']);
+          },
+        });
+      } else {
+        this.form.markAllAsTouched();
+      }
     }
   }
+
+  private profileUpdate = inject(ProfileUpdateService);
 
   accept() {
     this.showConfirmation = false;

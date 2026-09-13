@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CardListDataService } from '@core/api-mock/card-list.data.service';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,6 +34,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
   styleUrl: './rutas.scss',
 })
 export class Rutas {
+  private dataService = inject(CardListDataService);
   showModal = false;
   showUpdateModal = false;
   routeSelected: RecordData = {};
@@ -56,8 +58,14 @@ export class Rutas {
     this.routeSelected = {};
   }
   onSaved(updatedRecord: RecordData): void {
-    console.log('[Rutas] Datos actualizados:', updatedRecord);
-    // this.rutasService.update(updatedRecord).subscribe(() => { ... });
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.update('ruta', this.routeSelected, updatedRecord).subscribe({
+        next: () => console.log('[MOCK-API] UPDATE ruta OK', updatedRecord),
+        error: (e) => console.warn('[MOCK-API] UPDATE ruta FAIL', e.message),
+      });
+    } else {
+      console.log('[Rutas] Datos actualizados:', updatedRecord);
+    }
     this.closeUpdateModal();
   }
     // ── Eliminar registro ───────────────────────────────────────────────────
@@ -78,8 +86,14 @@ export class Rutas {
    * Aquí puedes llamar a tu servicio para eliminar.
    */
   onConfirmDelete(record: RecordData): void {
-    console.log('[Rutas] Eliminando:', record);
-    // this.rutasService.delete(record.id).subscribe(() => { ... });
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.delete('ruta', record ?? this.routeSelected).subscribe({
+        next: () => console.log('[MOCK-API] DELETE ruta OK', record),
+        error: (e) => console.warn('[MOCK-API] DELETE ruta FAIL', e.message),
+      });
+    } else {
+      console.log('[Rutas] Eliminando:', record);
+    }
     this.closeDeleteModal();
   }
 }

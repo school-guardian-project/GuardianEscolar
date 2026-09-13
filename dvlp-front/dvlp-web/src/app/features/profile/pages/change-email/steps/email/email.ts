@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChangeInformation } from "../../../../../../shared/components/change/change-information/change-information";
 import { TranslateModule } from '@ngx-translate/core';
+import { ProfileUpdateService } from '@core/api-mock/profile-update.service';
 
 @Component({
   selector: 'app-email',
@@ -22,8 +23,12 @@ export class Email {
     });
   }
 
+  private profileUpdate = inject(ProfileUpdateService);
+
   onSubmit() {
     if (this.form.valid) {
+      // [MOCK-API] Guarda email pendiente para el PUT final en code-second
+      this.profileUpdate.setPendingEmail(this.form.value.email);
       this.router.navigate(['/admin/change-email/code-first']);
     } else {
       this.form.markAllAsTouched();

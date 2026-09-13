@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CardListDataService } from '@core/api-mock/card-list.data.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -31,6 +32,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
   styleUrl: './padres.scss',
 })
 export class Padres {
+  private dataService = inject(CardListDataService);
   showModal = false;
   attendantSelected: RecordData = {};
 
@@ -61,8 +63,14 @@ export class Padres {
    * Aquí puedes llamar a tu servicio para persistirlos.
    */
   onSaved(updatedRecord: RecordData): void {
-    console.log('[Acudientes] Datos actualizados:', updatedRecord);
-    // this.acudientesService.update(updatedRecord).subscribe(() => { ... });
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.update('acudiente', this.attendantSelected, updatedRecord).subscribe({
+        next: () => console.log('[MOCK-API] UPDATE acudiente OK', updatedRecord),
+        error: (e) => console.warn('[MOCK-API] UPDATE acudiente FAIL', e.message),
+      });
+    } else {
+      console.log('[Acudientes] Datos actualizados:', updatedRecord);
+    }
     this.closeUpdateModal();
   }
     showDeleteModal = false;
@@ -82,8 +90,14 @@ export class Padres {
    * Aquí puedes llamar a tu servicio para eliminar.
    */
   onConfirmDelete(record: RecordData): void {
-    console.log('[Acudientes] Eliminando:', record);
-    // this.acudientesService.delete(record.id).subscribe(() => { ... });
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.delete('acudiente', record ?? this.attendantSelected).subscribe({
+        next: () => console.log('[MOCK-API] DELETE acudiente OK', record),
+        error: (e) => console.warn('[MOCK-API] DELETE acudiente FAIL', e.message),
+      });
+    } else {
+      console.log('[Acudientes] Eliminando:', record);
+    }
     this.closeDeleteModal();
   }
 }

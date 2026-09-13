@@ -10,7 +10,8 @@ const MOCK_IDS = {
 
 export function RoleSwitcherProvider({ children }) {
     const [role, setRole] = useState("student");
-    const value = { role, setRole, ...MOCK_IDS[role] };
+    const [session, setSession] = useState(null);
+    const value = { role, setRole, session, setSession, ...MOCK_IDS[role] };
 
     return (
         <RoleSwitcherContext.Provider value={value}>{ children }</RoleSwitcherContext.Provider>

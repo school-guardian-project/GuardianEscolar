@@ -13,6 +13,8 @@ export default function FormScreen({
     placeholder,
     buttonText,
     nextScreen,
+    value,
+    onChangeText,
 }) {
 
     const navigation = useNavigation();
@@ -29,6 +31,8 @@ export default function FormScreen({
             <InputField
                 label={label}
                 placeholder={placeholder}
+                value={value}
+                onChangeText={onChangeText}
             />
 
             <PrimaryButton

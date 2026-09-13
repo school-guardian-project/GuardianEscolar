@@ -155,9 +155,33 @@ export class UpdateRecord implements OnInit {
 
   formData: Record<string, string> = {};
   fields: Field[] = [];
+  submitted = false;
 
   get config() {
     return MODAL_CONFIGS[this.type];
+  }
+
+  isFieldInvalid(field: Field): boolean {
+    if (!this.submitted) return false;
+    const v = this.formData[field.name];
+    if (v === undefined || v === null || String(v).trim() === '') return true;
+    if (field.type === 'email' && v) {
+      const re = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+      if (!re.test(String(v).toLowerCase())) return true;
+    }
+    if (field.type === 'tel' && v) {
+      const re = /^\+?[0-9\s\-]{7,15}$/;
+      if (!re.test(String(v))) return true;
+    }
+    return false;
+  }
+
+  getFieldError(field: Field): string | null {
+    const v = this.formData[field.name];
+    if (v === undefined || v === null || String(v).trim() === '') return 'Campo requerido';
+    if (field.type === 'email') return 'Correo inválido';
+    if (field.type === 'tel') return 'Teléfono inválido';
+    return null;
   }
 
   get titleKey(): string {
@@ -186,6 +210,9 @@ export class UpdateRecord implements OnInit {
   }
 
   onSubmit(): void {
+    this.submitted = true;
+    const hasInvalid = this.fields.some(f => this.isFieldInvalid(f));
+    if (hasInvalid) return;
     this.saved.emit({ ...this.record, ...this.formData });
   }
 }

@@ -1,5 +1,5 @@
-import React from "react";
-import { View, ScrollView } from "react-native";
+import React, { useEffect, useState } from "react";
+import { View, ScrollView, Text } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
 
@@ -8,14 +8,47 @@ import BottomTabBar from "@components/layout/BottomTabBar";
 import InfoCard from "@components/cards/InfoCard";
 import InfoRow from "@components/cards/InfoRow";
 
-import { useNavigation } from "@react-navigation/native";
-
-import styles from "@core/styles/profileScreen.style";
+import { useNavigation, useFocusEffect } from "@react-navigation/native";
+import useSession from "@core/hooks/useSession";
+import { API_CONFIG } from "@core/api/api.config";
+import { personService, schoolService } from "@core/api/services";
 
 export default function Datas() {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const { userId, session } = useSession();
+  const [person, setPerson] = useState(null);
+  const [school, setSchool] = useState(null);
+
+  const load = async () => {
+    if (!API_CONFIG.ENABLED) return;
+    try {
+      if (session?.person) {
+        const p = session.person;
+        const persons = await personService.query({ Email: p.email });
+        if (persons[0]) setPerson(persons[0]);
+        else setPerson({ ...p, Phone: '3000000000', ResidenceAddress: 'Calle', Email: p.email });
+        const schools = await schoolService.list();
+        if (schools[0]) setSchool(schools[0]);
+        return;
+      }
+      const emailMap = { 'mock-student-1': 'estudiante1@guardianescolar.demo', 'mock-driver-1': 'admin1@colegio.edu.co', 'mock-father-1': 'admin2@colegio.edu.co' };
+      const email = emailMap[userId] || 'estudiante1@guardianescolar.demo';
+      const persons = await personService.query({ Email: email });
+      const p = persons[0];
+      if (p) {
+        setPerson(p);
+        const schools = await schoolService.list();
+        if (schools[0]) setSchool(schools[0]);
+      }
+    } catch (e) {
+      console.warn('[Datas] API fallo', e.message);
+    }
+  };
+
+  useEffect(() => { load(); }, [userId, session]);
+  useFocusEffect(React.useCallback(() => { load(); }, [userId, session]));
   return (
     <View
       style={[
@@ -37,7 +70,7 @@ export default function Datas() {
           <InfoRow
             icon="call-outline"
             title={t("inputs.phone")}
-            value="+57 *** *** ****"
+            value={person ? `+57 ${person.Phone}` : '+57 *** *** ****'}
             editable
             editOnPress={() => navigation.navigate("UpdatePhone")}
           />
@@ -45,7 +78,7 @@ export default function Datas() {
           <InfoRow
             icon="mail-outline"
             title={t("inputs.email")}
-            value="correoejemplo@gmail.com"
+            value={person?.Email ?? 'correoejemplo@gmail.com'}
             editable
             editOnPress={() => navigation.navigate("UpdateEmail")}
           />
@@ -63,7 +96,7 @@ export default function Datas() {
           <InfoRow
             icon="location-outline"
             title={t("inputs.address")}
-            value="Calle 2 #1W-102"
+            value={person?.ResidenceAddress ?? 'Calle 2 #1W-102'}
             arrow
           />
 
@@ -80,8 +113,8 @@ export default function Datas() {
           <InfoRow
             icon="school-outline"
             title={t("inputs.school")}
-            value="Nombre - Neiva"
-            subtitle="Dirección"
+            value={school ? `${school.Name} - Neiva` : 'Nombre - Neiva'}
+            subtitle={school?.Address ?? 'Dirección'}
             arrow
             last
           />

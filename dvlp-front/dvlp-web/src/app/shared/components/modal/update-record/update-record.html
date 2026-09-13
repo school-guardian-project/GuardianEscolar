@@ -29,7 +29,7 @@
         <ng-container [ngSwitch]="field.type">
 
           <!-- SELECT -->
-          <select *ngSwitchCase="'select'" class="modal__info-value" [(ngModel)]="formData[field.name]"
+          <select *ngSwitchCase="'select'" class="modal__info-value" [class.modal__info-value--error]="isFieldInvalid(field)" [(ngModel)]="formData[field.name]"
             [name]="field.name">
 
             <option value="" disabled>
@@ -42,8 +42,9 @@
           </select>
 
           <!-- INPUT -->
-          <input *ngSwitchDefault class="modal__info-value" [type]="field.type" [name]="field.name"
+          <input *ngSwitchDefault class="modal__info-value" [class.modal__info-value--error]="isFieldInvalid(field)" [type]="field.type" [name]="field.name"
             [(ngModel)]="formData[field.name]" />
+          <small *ngIf="isFieldInvalid(field)" style="color:#d32f2f;font-size:11px;margin-top:4px;display:block;">{{ getFieldError(field) }}</small>
 
         </ng-container>
       </div>

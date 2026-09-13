@@ -1,6 +1,7 @@
 // estudiantes.ts — ejemplo de integración con app-update-record
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { CardListDataService } from '@core/api-mock/card-list.data.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -35,6 +36,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
   styleUrl: './estudiantes.scss',
 })
 export class Estudiantes {
+  private dataService = inject(CardListDataService);
 
   // ── Ver detalles 
   showModal = false;
@@ -68,8 +70,15 @@ export class Estudiantes {
    * Aquí puedes llamar a tu servicio para persistirlos.
    */
   onSaved(updatedRecord: RecordData): void {
-    console.log('[Estudiantes] Datos actualizados:', updatedRecord);
-    // this.estudiantesService.update(updatedRecord).subscribe(() => { ... });
+    // [MOCK-API] Cliente -> PUT :3000 -> DB (persons)
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.update('estudiante', this.studentSelected, updatedRecord).subscribe({
+        next: () => console.log('[MOCK-API] UPDATE estudiante OK', updatedRecord),
+        error: (e) => console.warn('[MOCK-API] UPDATE estudiante FAIL', e.message),
+      });
+    } else {
+      console.log('[Estudiantes] Datos actualizados:', updatedRecord);
+    }
     this.closeUpdateModal();
   }
 
@@ -91,8 +100,15 @@ export class Estudiantes {
    * Aquí puedes llamar a tu servicio para eliminar.
    */
   onConfirmDelete(record: RecordData): void {
-    console.log('[Estudiantes] Eliminando:', record);
-    // this.estudiantesService.delete(record.id).subscribe(() => { ... });
+    // [MOCK-API] Cliente -> DELETE :3000 -> DB
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.delete('estudiante', record ?? this.studentSelected).subscribe({
+        next: () => console.log('[MOCK-API] DELETE estudiante OK', record),
+        error: (e) => console.warn('[MOCK-API] DELETE estudiante FAIL', e.message),
+      });
+    } else {
+      console.log('[Estudiantes] Eliminando:', record);
+    }
     this.closeDeleteModal();
   }
 }

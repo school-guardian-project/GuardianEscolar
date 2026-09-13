@@ -5,6 +5,10 @@
     <span class="card-list__total">{{ filteredItems.length }}</span>
   </div>
 
+  <!-- [MOCK-API] indicador fuente -->
+  <div *ngIf="loading" style="padding:6px;text-align:center;font-size:12px;color:#666;">Cargando desde API :3000...</div>
+  <div *ngIf="!loading" style="padding:4px;text-align:center;font-size:11px;color:#888;">{{ apiItems ? 'API :3000 ('+filteredItems.length+')' : 'Mock local' }} — Cliente→API→DB</div>
+
   <!-- Buscador -->
   <div class="card-list__search">
     <input class="card-list__search-input" type="text" [placeholder]="'search.search' | translate"

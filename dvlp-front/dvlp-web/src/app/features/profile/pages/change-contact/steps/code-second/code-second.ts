@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChangeInformation } from "../../../../../../shared/components/change/change-information/change-information";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgFor, NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
+import { ProfileUpdateService } from '@core/api-mock/profile-update.service';
 
 @Component({
   selector: 'app-code-second',
@@ -45,8 +46,24 @@ export class CodeSecond {
     }
   }
 
+  private profileUpdate = inject(ProfileUpdateService);
+
   onSubmit() {
-    if (this.form.valid) {
+    // Para demo, cualquier código vale — actualiza directo
+    const pending = this.profileUpdate.getPendingPhone();
+    if (pending) {
+      this.profileUpdate.updatePhone(pending).subscribe({
+        next: () => {
+          console.log('[MOCK-API] updatePhone OK', pending);
+          this.profileUpdate.clearPending();
+          this.router.navigate(['/admin/informacion']);
+        },
+        error: (e) => {
+          console.warn('[MOCK-API] updatePhone FAIL', e.message);
+          this.router.navigate(['/admin/informacion']);
+        },
+      });
+    } else if (this.form.valid) {
       this.showConfirmation = true;
     } else {
       this.form.markAllAsTouched();

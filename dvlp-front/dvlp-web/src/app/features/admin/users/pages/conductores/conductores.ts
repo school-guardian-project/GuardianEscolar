@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CardListDataService } from '@core/api-mock/card-list.data.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -31,6 +32,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
   styleUrl: './conductores.scss',
 })
 export class Conductores {
+  private dataService = inject(CardListDataService);
   showModal = false;
   showUpdateModal = false;
   showDeleteModal = false;
@@ -56,8 +58,14 @@ export class Conductores {
     this.driverSelected = {};
   }
   onSaved(updatedRecord: RecordData): void {
-    console.log('[Conductores] Datos actualizados:', updatedRecord);
-    // this.conductoresService.update(updatedRecord).subscribe(() => { ... });
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.update('conductor', this.driverSelected, updatedRecord).subscribe({
+        next: () => console.log('[MOCK-API] UPDATE conductor OK', updatedRecord),
+        error: (e) => console.warn('[MOCK-API] UPDATE conductor FAIL', e.message),
+      });
+    } else {
+      console.log('[Conductores] Datos actualizados:', updatedRecord);
+    }
     this.closeUpdateModal();
   }
 
@@ -72,8 +80,14 @@ export class Conductores {
   }
 
   onConfirmDelete(driver: RecordData): void {
-    console.log('[Conductores] Confirmar eliminación:', driver);
-    // this.conductoresService.delete(driver).subscribe(() => { ... });
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.delete('conductor', driver ?? this.driverSelected).subscribe({
+        next: () => console.log('[MOCK-API] DELETE conductor OK', driver),
+        error: (e) => console.warn('[MOCK-API] DELETE conductor FAIL', e.message),
+      });
+    } else {
+      console.log('[Conductores] Confirmar eliminación:', driver);
+    }
     this.closeDeleteModal();
   }
 }

@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { passwordMatch } from '@shared/validator/password-match.validator';
 import { ChangePassword } from '@shared/components/change/change-password/change-password';
 import { TranslateModule } from '@ngx-translate/core';
+import { ProfileUpdateService } from '@core/api-mock/profile-update.service';
 
 @Component({
   selector: 'app-reset',
@@ -48,9 +49,21 @@ export class Reset {
     return new RegExp(regex).test(value);
   }
 
+  private profileUpdate = inject(ProfileUpdateService);
+
   onSubmit() {
     if (this.form.valid) {
-      this.showConfirmation = true;
+      const newPass = this.form.value.password;
+      this.profileUpdate.updatePassword(newPass).subscribe({
+        next: () => {
+          console.log('[MOCK-API] updatePassword OK');
+          this.router.navigate(['/admin/informacion']);
+        },
+        error: (e) => {
+          console.warn('[MOCK-API] updatePassword FAIL', e.message);
+          this.router.navigate(['/admin/informacion']);
+        },
+      });
     } else {
       this.form.markAllAsTouched();
     }

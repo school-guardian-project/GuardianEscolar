@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CardListDataService } from '@core/api-mock/card-list.data.service';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -32,6 +33,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
   styleUrl: './familia.scss',
 })
 export class Familia {
+  private dataService = inject(CardListDataService);
   showModal = false;
   showUpdateModal = false;
   familySelected: RecordData = {};
@@ -55,8 +57,14 @@ export class Familia {
   }
 
   onSaved(updatedRecord: RecordData): void {
-    console.log('[Familias] Datos actualizados:', updatedRecord);
-    // this.familiasService.update(updatedRecord).subscribe(() => { ... });
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.update('familia', this.familySelected, updatedRecord).subscribe({
+        next: () => console.log('[MOCK-API] UPDATE familia OK', updatedRecord),
+        error: (e) => console.warn('[MOCK-API] UPDATE familia FAIL', e.message),
+      });
+    } else {
+      console.log('[Familias] Datos actualizados:', updatedRecord);
+    }
     this.closeUpdateModal();
   }
     showDeleteModal = false;
@@ -76,8 +84,14 @@ export class Familia {
    * Aquí puedes llamar a tu servicio para eliminar.
    */
   onConfirmDelete(record: RecordData): void {
-    console.log('[Familias] Eliminando:', record);
-    // this.familiasService.delete(record.id).subscribe(() => { ... });
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.delete('familia', record ?? this.familySelected).subscribe({
+        next: () => console.log('[MOCK-API] DELETE familia OK', record),
+        error: (e) => console.warn('[MOCK-API] DELETE familia FAIL', e.message),
+      });
+    } else {
+      console.log('[Familias] Eliminando:', record);
+    }
     this.closeDeleteModal();
   }
 }

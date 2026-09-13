@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter, inject, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { CardListDataService } from '@core/api-mock/card-list.data.service';
 
 export type RegisterType =
   | 'estudiante'
@@ -124,9 +125,38 @@ const FIELDS: Record<RegisterType, Field[]> = {
 })
 export class CardRegister implements OnInit {
   @Input() type: RegisterType = 'estudiante';
+  @Output() created = new EventEmitter<any>();
 
   formData: Record<string, any> = {};
   groupedFields: any[] = [];
+  private dataService = inject(CardListDataService);
+  private cdr = inject(ChangeDetectorRef);
+  saving = false;
+  message: string | null = null;
+  submitted = false;
+
+  isFieldInvalid(field: Field): boolean {
+    if (!this.submitted) return false;
+    const v = this.formData[field.name];
+    if (v === undefined || v === null || String(v).trim() === '') return true;
+    if (field.type === 'email' && v) {
+      const re = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+      if (!re.test(String(v).toLowerCase())) return true;
+    }
+    if (field.type === 'tel' && v) {
+      const re = /^\+?[0-9\s\-]{7,15}$/;
+      if (!re.test(String(v))) return true;
+    }
+    return false;
+  }
+
+  getFieldError(field: Field): string | null {
+    const v = this.formData[field.name];
+    if (v === undefined || v === null || String(v).trim() === '') return 'Campo requerido';
+    if (field.type === 'email') return 'Correo inválido';
+    if (field.type === 'tel') return 'Teléfono inválido';
+    return null;
+  }
 
   get titleKey(): string {
     return `register.${this.type}.title`;
@@ -161,7 +191,48 @@ export class CardRegister implements OnInit {
   }
 
   onSubmit(): void {
-    console.log('Datos del formulario:', this.formData);
-    // Aquí iría el servicio de registro
+    console.log('[MOCK-API] CardRegister onSubmit', this.type, this.formData);
+    this.submitted = true;
+    // Validación estilo forgot-password/telephone: todos los campos visibles son requeridos
+    const fields = (FIELDS as any)[this.type] as Field[];
+    const hasInvalid = fields.some(f => this.isFieldInvalid(f));
+    if (hasInvalid) {
+      this.message = 'Revisa los campos requeridos';
+      this.cdr.detectChanges();
+      return;
+    }
+    if (!this.dataService.isMockEnabled()) {
+      console.log('Datos del formulario:', this.formData);
+      this.message = 'Mock deshabilitado';
+      this.cdr.detectChanges();
+      return;
+    }
+    // Defer para no mutar 'saving' en el mismo ciclo de detección (evita NG0100)
+    queueMicrotask(() => {
+      this.saving = true;
+      this.message = 'Guardando...';
+      this.cdr.detectChanges();
+      this.dataService.create(this.type, this.formData).subscribe({
+        next: (res) => {
+          this.saving = false;
+          console.log(`[MOCK-API] CREATE ${this.type} OK`, res);
+          if (res) {
+            this.message = '✓ Registro creado en DB (ver lista)';
+            this.created.emit(res);
+            this.formData = {};
+            setTimeout(() => { this.message = null; this.cdr.detectChanges(); }, 3000);
+          } else {
+            this.message = 'No se pudo crear (ver consola)';
+          }
+          this.cdr.detectChanges();
+        },
+        error: (e) => {
+          console.error('[MOCK-API] CREATE FAIL', e);
+          this.saving = false;
+          this.message = e?.message ?? 'Error al crear';
+          this.cdr.detectChanges();
+        },
+      });
+    });
   }
 }

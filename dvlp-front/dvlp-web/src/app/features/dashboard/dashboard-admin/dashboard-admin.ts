@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
+import { MockApiService } from '@core/api-mock/mock-api.service';
+import { ProfileUpdateService } from '@core/api-mock/profile-update.service';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -46,7 +48,7 @@ const MOCK_DATA: Partial<Record<CardType, RecordData[]>> = {
   templateUrl: './dashboard-admin.html',
   styleUrls: ['./dashboard-admin.scss']
 })
-export class DashboardAdmin {
+export class DashboardAdmin implements OnInit {
   viewItem: RecordData = {};
   showComments = false;
   showUpdateInformation = false;
@@ -54,9 +56,48 @@ export class DashboardAdmin {
 
   schoolSelected: RecordData = {};
 
-  // dato de prueba
+  // [MOCK-API] reemplaza MOCK_DATA por db.json real según sesión
   schoolExample: RecordData = MOCK_DATA.schools?.[0] || {};
+  private api = inject(MockApiService);
+  private profileUpdate = inject(ProfileUpdateService);
+
   constructor(private router: Router) { }
+
+  ngOnInit(): void {
+    this.loadSchool();
+    this.profileUpdate.refresh$.subscribe(() => this.loadSchool());
+  }
+
+  private loadSchool(): void {
+    // Intenta cargar escuela real de la sesión (admin -> campus -> school)
+    const email = localStorage.getItem('user_email') || 'admin1@colegio.edu.co';
+    this.api.get<any[]>('/persons', { Email: email }).subscribe({
+      next: (persons) => {
+        const p = persons[0];
+        if (!p) return;
+        this.api.get<any[]>('/profiles', { PersonId: p.Id }).subscribe({
+          next: (profiles) => {
+            const prof = profiles[0];
+            if (!prof) return;
+            this.api.get<any[]>('/school-campuses', { Id: prof.CampuseId }).subscribe({
+              next: (campuses) => {
+                const camp = campuses[0];
+                const schoolId = camp?.SchoolId || 'school-0001-0000-0000-000000000000';
+                this.api.get<any[]>('/schools', { Id: schoolId }).subscribe({
+                  next: (schools) => {
+                    const s = schools[0];
+                    if (s) {
+                      this.schoolExample = { nombre: s.Name, direccion: s.Address, ciudad: 'Neiva', telefono: String(s.Phone), correo: s.Email, web: s.Website, escolaridad: '—' };
+                    }
+                  }
+                });
+              }
+            });
+          }
+        });
+      }
+    });
+  }
 
   navegarUsuarios(): void {
     this.router.navigate(['/dashboard-admin/usuarios']);

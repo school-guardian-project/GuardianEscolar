@@ -14,10 +14,16 @@ export default function PasswordScreen({
 }) {
 
     const navigation = useNavigation();
+    const [pwd, setPwd] = React.useState("");
+    const [confirm, setConfirm] = React.useState("");
 
     const handleSubmit = () => {
+        if (pwd && pwd !== confirm) {
+            console.warn('[MOCK-API] passwords no coinciden');
+            return;
+        }
         if (onSuccess) {
-            onSuccess(navigation);
+            onSuccess(navigation, pwd);
             return;
         }
 
@@ -33,11 +39,15 @@ export default function PasswordScreen({
             <InputField
                 label="Nueva contraseña"
                 secureTextEntry
+                value={pwd}
+                onChangeText={setPwd}
             />
 
             <InputField
                 label="Confirmación"
                 secureTextEntry
+                value={confirm}
+                onChangeText={setConfirm}
             />
 
             <PrimaryButton

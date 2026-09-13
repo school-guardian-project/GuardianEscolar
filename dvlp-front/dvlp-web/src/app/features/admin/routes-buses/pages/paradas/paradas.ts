@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CardListDataService } from '@core/api-mock/card-list.data.service';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -33,6 +34,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
   styleUrl: './paradas.scss',
 })
 export class Paradas {
+  private dataService = inject(CardListDataService);
   showModal = false;
   showUpdateModal = false;
   stopSelected: RecordData = {};
@@ -57,8 +59,14 @@ export class Paradas {
     this.stopSelected = {};
   }
   onSaved(updatedRecord: RecordData): void {
-    console.log('[Paradas] Datos actualizados:', updatedRecord);
-    // this.paradasService.update(updatedRecord).subscribe(() => { ... });
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.update('parada', this.stopSelected, updatedRecord).subscribe({
+        next: () => console.log('[MOCK-API] UPDATE parada OK', updatedRecord),
+        error: (e) => console.warn('[MOCK-API] UPDATE parada FAIL', e.message),
+      });
+    } else {
+      console.log('[Paradas] Datos actualizados:', updatedRecord);
+    }
     this.closeUpdateModal();
   }
     // ── Eliminar registro ───────────────────────────────────────────────────
@@ -79,8 +87,14 @@ export class Paradas {
    * Aquí puedes llamar a tu servicio para eliminar.
    */
   onConfirmDelete(record: RecordData): void {
-    console.log('[Paradas] Eliminando:', record);
-    // this.paradasService.delete(record.id).subscribe(() => { ... });
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.delete('parada', record ?? this.stopSelected).subscribe({
+        next: () => console.log('[MOCK-API] DELETE parada OK', record),
+        error: (e) => console.warn('[MOCK-API] DELETE parada FAIL', e.message),
+      });
+    } else {
+      console.log('[Paradas] Eliminando:', record);
+    }
     this.closeDeleteModal();
   }
 }

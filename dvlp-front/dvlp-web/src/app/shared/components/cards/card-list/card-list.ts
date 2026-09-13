@@ -1,9 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, inject, ChangeDetectorRef, AfterViewInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RecordData } from '@shared/components/modal/record-information/record-information.types';
 import { TranslateModule } from '@ngx-translate/core';
+import { CardListDataService } from '@core/api-mock/card-list.data.service';
 
 export type CardType =
   | 'estudiante' | 'acudiente' | 'conductor' | 'familia'
@@ -327,7 +328,7 @@ const MOCK_DATA: Record<CardType, any[]> = {
   templateUrl: './card-list.html',
   styleUrl: './card-list.css',
 })
-export class CardList {
+export class CardList implements OnInit, AfterViewInit {
   @Input() type: CardType = 'estudiante';
 
   @Output() viewItem = new EventEmitter<RecordData>();
@@ -335,6 +336,11 @@ export class CardList {
   @Output() deleteItem = new EventEmitter<RecordData>();
 
   searchText = '';
+  private dataService = inject(CardListDataService);
+  private cdr = inject(ChangeDetectorRef);
+  apiItems: any[] | null = null;
+  loading = false;
+  private initialized = false;
 
   get titleKey(): string {
     return TITLE_KEYS[this.type];
@@ -348,7 +354,47 @@ export class CardList {
     return ITEM_FIELDS[this.type];
   }
 
+  // [MOCK-API] Si apiUrl incluye :3000, usa datos reales de json-server :3000 (Cliente -> API -> DB)
+  ngOnInit(): void {
+    // defer para no tocar change detection en el mismo ciclo (evita NG0100)
+  }
+
+  ngAfterViewInit(): void {
+    if (!this.dataService.isMockEnabled() || this.initialized) return;
+    this.initialized = true;
+    const load = () => {
+      this.loading = true;
+      this.cdr.detectChanges();
+      this.dataService.getByType(this.type).subscribe({
+        next: (data) => {
+          if (data?.length) {
+            this.apiItems = [...data];
+            console.log(`[MOCK-API] CardList ${this.type} <- ${data.length} items (Cliente -> ${'http://localhost:3000'} -> DB)`);
+          } else if (data) {
+            this.apiItems = [];
+          }
+          this.loading = false;
+          this.cdr.detectChanges();
+        },
+        error: () => {
+          this.loading = false;
+          this.cdr.detectChanges();
+        },
+      });
+    };
+    queueMicrotask(() => {
+      load();
+      // [MOCK-API] recarga cuando hay create/update/delete
+      this.dataService.refresh$.subscribe(t => {
+        if (t === this.type || t === 'familias' && this.type==='familia' || t === 'buses' && this.type==='bus' || t === 'rutas' && this.type==='ruta' || t === 'paradas' && this.type==='parada') {
+          load();
+        }
+      });
+    });
+  }
+
   get items(): any[] {
+    if (this.apiItems?.length) return this.apiItems;
     return MOCK_DATA[this.type] || [];
   }
 

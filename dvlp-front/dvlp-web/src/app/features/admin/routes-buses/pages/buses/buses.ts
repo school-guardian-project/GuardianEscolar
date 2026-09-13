@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { CardListDataService } from '@core/api-mock/card-list.data.service';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -34,6 +35,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
   styleUrl: './buses.scss',
 })
 export class Buses {
+  private dataService = inject(CardListDataService);
   showModal = false;
   showUpdateModal = false;
   busSelected: RecordData = {};
@@ -58,8 +60,14 @@ export class Buses {
     this.busSelected = {};
   }
     onSaved(updatedRecord: RecordData): void {
-    console.log('[Buses] Datos actualizados:', updatedRecord);
-    // this.busesService.update(updatedRecord).subscribe(() => { ... });
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.update('bus', this.busSelected, updatedRecord).subscribe({
+        next: () => console.log('[MOCK-API] UPDATE bus OK', updatedRecord),
+        error: (e) => console.warn('[MOCK-API] UPDATE bus FAIL', e.message),
+      });
+    } else {
+      console.log('[Buses] Datos actualizados:', updatedRecord);
+    }
     this.closeUpdateModal();
   }
     // ── Eliminar registro ───────────────────────────────────────────────────
@@ -80,8 +88,14 @@ export class Buses {
    * Aquí puedes llamar a tu servicio para eliminar.
    */
   onConfirmDelete(record: RecordData): void {
-    console.log('[Estudiantes] Eliminando:', record);
-    // this.estudiantesService.delete(record.id).subscribe(() => { ... });
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.delete('bus', record ?? this.busSelected).subscribe({
+        next: () => console.log('[MOCK-API] DELETE bus OK', record),
+        error: (e) => console.warn('[MOCK-API] DELETE bus FAIL', e.message),
+      });
+    } else {
+      console.log('[Buses] Eliminando:', record);
+    }
     this.closeDeleteModal();
   }
 }

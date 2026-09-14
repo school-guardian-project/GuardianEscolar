@@ -9,6 +9,7 @@ export default function InputField({
   onChangeText = () => {},
   keyboardType = "default",
   secureTextEntry = false,
+  error = "",
 }) {
   const { theme } = useTheme();
 
@@ -43,6 +44,8 @@ export default function InputField({
         ]}
       />
 
+      {error ? <Text style={styles.error}>{error}</Text> : null}
+
     </View>
   );
 }
@@ -64,5 +67,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     paddingHorizontal: 10,
+  },
+
+  error: {
+    color: "#D32F2F",
+    marginTop: 4,
   },
 });

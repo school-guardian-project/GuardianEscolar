@@ -31,4 +31,9 @@ export const styles = StyleSheet.create({
     width: '100%',
     marginTop: 15,
   },
+
+    error: {
+    color: "#D32F2F",
+    marginBottom: 10,
+  },
 });

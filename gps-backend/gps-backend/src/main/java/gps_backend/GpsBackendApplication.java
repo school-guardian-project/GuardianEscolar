@@ -10,6 +10,7 @@ import gps_backend.tcp.GpsTcpServer;
 public class GpsBackendApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
+
         SpringApplication.run(GpsBackendApplication.class, args);
     }
 

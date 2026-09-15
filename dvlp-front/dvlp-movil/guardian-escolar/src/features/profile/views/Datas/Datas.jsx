@@ -7,48 +7,53 @@ import BackButton from "@components/buttons/BackButton";
 import BottomTabBar from "@components/layout/BottomTabBar";
 import InfoCard from "@components/cards/InfoCard";
 import InfoRow from "@components/cards/InfoRow";
+import styles from "@core/styles/profileScreen.style";
 
 import { useNavigation, useFocusEffect } from "@react-navigation/native";
 import useSession from "@core/hooks/useSession";
 import { API_CONFIG } from "@core/api/api.config";
-import { personService, schoolService } from "@core/api/services";
+import { apiClient } from "@core/api/api.client";
+import { ENDPOINTS } from "@core/api/api.config";
+import { personService } from "@core/api/services";
 
 export default function Datas() {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const navigation = useNavigation();
-  const { userId, session } = useSession();
+  const { session } = useSession();
   const [person, setPerson] = useState(null);
   const [school, setSchool] = useState(null);
 
   const load = async () => {
     if (!API_CONFIG.ENABLED) return;
     try {
-      if (session?.person) {
-        const p = session.person;
-        const persons = await personService.query({ Email: p.email });
-        if (persons[0]) setPerson(persons[0]);
-        else setPerson({ ...p, Phone: '3000000000', ResidenceAddress: 'Calle', Email: p.email });
-        const schools = await schoolService.list();
-        if (schools[0]) setSchool(schools[0]);
-        return;
-      }
-      const emailMap = { 'mock-student-1': 'estudiante1@guardianescolar.demo', 'mock-driver-1': 'admin1@colegio.edu.co', 'mock-father-1': 'admin2@colegio.edu.co' };
-      const email = emailMap[userId] || 'estudiante1@guardianescolar.demo';
+      const email = session?.person?.email;
+      if (!email) return;
       const persons = await personService.query({ Email: email });
       const p = persons[0];
-      if (p) {
-        setPerson(p);
-        const schools = await schoolService.list();
-        if (schools[0]) setSchool(schools[0]);
+      if (!p) return;
+      setPerson(p);
+      const profiles = await apiClient.query(ENDPOINTS.profiles, { PersonId: p.Id });
+      const profileCampusId = profiles[0]?.CampuseId || null;
+      if (profileCampusId) {
+        const campuses = await apiClient.query(ENDPOINTS.schoolCampuses, { Id: profileCampusId });
+        const campus = campuses[0];
+        if (campus?.SchoolId) {
+          const schools = await apiClient.query(ENDPOINTS.schools, { Id: campus.SchoolId });
+          if (schools[0]) {
+            setSchool(schools[0]);
+            console.log("[Datas] Escuela por campus", { campusId: profileCampusId, school: schools[0].Name });
+            return;
+          }
+        }
       }
     } catch (e) {
       console.warn('[Datas] API fallo', e.message);
     }
   };
 
-  useEffect(() => { load(); }, [userId, session]);
-  useFocusEffect(React.useCallback(() => { load(); }, [userId, session]));
+  useEffect(() => { load(); }, [session]);
+  useFocusEffect(React.useCallback(() => { load(); }, [session]));
   return (
     <View
       style={[

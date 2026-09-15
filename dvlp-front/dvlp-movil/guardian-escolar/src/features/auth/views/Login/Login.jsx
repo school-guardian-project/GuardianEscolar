@@ -10,11 +10,13 @@ import { useTheme } from "@core/services/ThemeService";
 
 import InputField from "@components/inputs/InputField";
 import PrimaryButton from "@components/buttons/PrimaryButton";
-// [MOCK-API] Simulación Cliente -> Backend(API json-server) -> DB (db.json)
-// Para quitar: borrar este import y la lógica de handleLogin, volver al onPress directo.
+// [MOCK-API] Simulación Cliente -> Backend(API json-server :3000 o backend :8080) -> DB
+// Validación compartida con web (login.ts emailPattern + Validators.required)
 import { authService } from "@core/api/services";
 import { API_CONFIG } from "@core/api/api.config";
 import { useRoleSwitcher } from "@core/dev/RoleSwitcherContext";
+
+const EMAIL_PATTERN = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
 export default function Login({ navigation }) {
   const { t } = useTranslation();
@@ -25,10 +27,33 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [emailError, setEmailError] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
 
-  // [MOCK-API] Flujo seguro: valida entrada, no logea password, rate-limit, mensaje genérico.
+  // [MOCK-API] Flujo seguro: valida entrada igual que web, no logea password, rate-limit, mensaje genérico.
   const [attempts, setAttempts] = useState(0);
   const BLOCK_AFTER = 5;
+
+  const validateFields = () => {
+    let valid = true;
+    const e = email.trim().toLowerCase();
+    if (!e) {
+      setEmailError("El correo es requerido.");
+      valid = false;
+    } else if (!EMAIL_PATTERN.test(e)) {
+      setEmailError("Formato de correo inválido.");
+      valid = false;
+    } else {
+      setEmailError(null);
+    }
+    if (!password) {
+      setPasswordError("La contraseña es requerida.");
+      valid = false;
+    } else {
+      setPasswordError(null);
+    }
+    return valid;
+  };
 
   const handleLogin = async () => {
     setError(null);
@@ -36,26 +61,27 @@ export default function Login({ navigation }) {
       navigation.navigate("MainPage");
       return;
     }
+    if (!validateFields()) return;
     if (attempts >= BLOCK_AFTER) {
       setError("Demasiados intentos. Espera 30s.");
       return;
     }
-    if (loading) return; // evita doble tap (rendimiento + seguridad)
+    if (loading) return;
     setLoading(true);
+    const logPayload = { email: email.trim().toLowerCase(), timestamp: new Date().toISOString(), api: API_CONFIG.BASE_URL, attempt: attempts + 1 };
+    if (typeof __DEV__ !== "undefined" && __DEV__) console.log("[Login] intento", logPayload);
     try {
       const session = await authService.login(email, password);
       setAttempts(0);
       if (session?.appRole) setRole(session.appRole);
       if (session) setSession(session);
-      // Seguridad: nunca logear password ni token completo
-      if (typeof __DEV__ !== "undefined" && __DEV__) console.log("[Login] OK role:", session.role);
+      if (typeof __DEV__ !== "undefined" && __DEV__) console.log("[Login] OK", { role: session.role, appRole: session.appRole, email: session.person?.email, tokenPrefix: session.token?.slice(0, 10) });
+      // Roles soportados: admin, padre/parent->father, conductor/driver, estudiante/student (todos logueados en la petición)
       navigation.navigate("MainPage");
     } catch (e) {
       setAttempts((a) => a + 1);
-      // Seguridad: mensaje genérico, no filtrar si email existe. ApiError ya viene sanitizado.
       const msg = e?.message || "No se pudo iniciar sesión. Intenta de nuevo.";
-      // No log PII en prod
-      if (typeof __DEV__ !== "undefined" && __DEV__) console.warn("[Login] fallo:", msg);
+      if (typeof __DEV__ !== "undefined" && __DEV__) console.warn("[Login] fallo", { error: msg, payload: logPayload });
       setError(msg);
     } finally {
       setLoading(false);
@@ -82,23 +108,30 @@ export default function Login({ navigation }) {
       </Text>
 
       <View style={styles.form}>
-        {/* Correo */}
+        {/* Correo - validación igual que web Validators.pattern + required */}
         <InputField
           label={t("inputs.title.email")}
           placeholder="ejemplo@gmail.com"
           value={email}
-          onChangeText={setEmail}
+          onChangeText={(v) => { setEmail(v); if (emailError) setEmailError(null); }}
           keyboardType="email-address"
+          autoCapitalize="none"
         />
+        {emailError ? (
+          <Text style={{ color: "#d32f2f", fontSize: 12, marginTop: -8, marginBottom: 8 }}>{emailError}</Text>
+        ) : null}
 
-        {/* Contraseña */}
+        {/* Contraseña - Validators.required */}
         <InputField
           label={t("inputs.title.password")}
           placeholder="••••••••"
           value={password}
-          onChangeText={setPassword}
+          onChangeText={(v) => { setPassword(v); if (passwordError) setPasswordError(null); }}
           secureTextEntry
         />
+        {passwordError ? (
+          <Text style={{ color: "#d32f2f", fontSize: 12, marginTop: -8, marginBottom: 8 }}>{passwordError}</Text>
+        ) : null}
 
         {/* Olvidó contraseña */}
         <Text
@@ -111,15 +144,9 @@ export default function Login({ navigation }) {
           {t("login.ForgotPassword")}
         </Text>
 
-        {/* [MOCK-API] Error visible de la simulación API */}
+        {/* [MOCK-API] Error visible de la simulación API - genérico, no filtra si email existe */}
         {error ? (
           <Text style={{ color: "#d32f2f", marginTop: 8, textAlign: "center" }}>{error}</Text>
-        ) : null}
-        {/* Hint para demo: credenciales reales del db.json */}
-        {API_CONFIG.ENABLED ? (
-          <Text style={{ color: theme.titleColor, opacity: 0.6, fontSize: 11, marginTop: 8, textAlign: "center" }}>
-            Demo: admin1@colegio.edu.co / cualquier clave (json-server :3000)
-          </Text>
         ) : null}
 
         {/* Botón */}

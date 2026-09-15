@@ -59,7 +59,6 @@ export class CodeSecond {
           },
           error: (e) => {
             console.warn('[MOCK-API] updateEmail FAIL', e.message);
-            this.router.navigate(['/admin/informacion']);
           },
         });
       } else {
@@ -77,7 +76,6 @@ export class CodeSecond {
           },
           error: (e) => {
             console.warn('[MOCK-API] updateEmail FAIL', e.message);
-            this.router.navigate(['/admin/informacion']);
           },
         });
       } else {

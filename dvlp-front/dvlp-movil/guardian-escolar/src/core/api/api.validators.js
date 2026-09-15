@@ -37,20 +37,25 @@ export function validatePassword(password) {
  * Sanitiza y valida query params contra whitelist. Evita `?__proto__` o campos no permitidos.
  * @returns {Record<string,string>} params seguros
  */
+const PAGINATION = new Set(["_page", "_limit", "_sort", "_order", "q"]);
+
 export function sanitizeQuery(path, params = {}) {
   const allowed = ALLOWED_FILTERS[path];
   if (!allowed) {
     // Recurso no listado: solo permitir paginación/ordenamiento seguro
-    const safe = new Set(["_page", "_limit", "_sort", "_order", "q"]);
     const out = {};
     for (const [k, v] of Object.entries(params)) {
-      if (!safe.has(k)) continue;
+      if (!PAGINATION.has(k)) continue;
       out[k] = sanitizeValue(v);
     }
     return out;
   }
   const out = {};
   for (const [k, v] of Object.entries(params)) {
+    if (PAGINATION.has(k)) {
+      out[k] = sanitizeValue(v);
+      continue;
+    }
     if (!allowed.has(k)) throw new ValidationError(`Filtro no permitido: ${k}`);
     out[k] = sanitizeValue(v);
   }

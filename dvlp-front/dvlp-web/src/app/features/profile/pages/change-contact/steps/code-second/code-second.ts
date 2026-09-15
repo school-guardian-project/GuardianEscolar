@@ -60,7 +60,6 @@ export class CodeSecond {
         },
         error: (e) => {
           console.warn('[MOCK-API] updatePhone FAIL', e.message);
-          this.router.navigate(['/admin/informacion']);
         },
       });
     } else if (this.form.valid) {

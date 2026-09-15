@@ -15,11 +15,19 @@ export default function FormScreen({
     nextScreen,
     value,
     onChangeText,
+    onSubmit,
 }) {
 
     const navigation = useNavigation();
 
-    
+    const handlePress = () => {
+        if (onSubmit) {
+            onSubmit(navigation);
+        } else {
+            navigation.navigate(nextScreen);
+        }
+    };
+
     return (
 
         <AccountLayout
@@ -37,7 +45,7 @@ export default function FormScreen({
 
             <PrimaryButton
                 text={buttonText}
-                onPress={() => navigation.navigate(nextScreen)}
+                onPress={handlePress}
             />
 
         </AccountLayout>

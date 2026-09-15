@@ -2,9 +2,11 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 import { resetToSection } from "@core/navigation/navigationHelper";
 import VerifyScreen from "@components/account/screens/VerifyScreen";
+import { useRoleSwitcher } from "@core/dev/RoleSwitcherContext";
 
 export default function VerifyNewPhone() {
     const { t } = useTranslation();
+    const { session } = useRoleSwitcher();
     return (
         <VerifyScreen
             backLabel={t("updateEmail.title")}
@@ -16,8 +18,9 @@ export default function VerifyNewPhone() {
             onSuccess={(navigation) => {
                 const { pendingProfile, profileUpdateService } = require("@core/api/profileUpdate.service");
                 const phone = pendingProfile.getPhone();
-                if (phone) {
-                    profileUpdateService.updatePhone(phone).then(() => {
+                const sessionEmail = session?.person?.email;
+                if (phone && sessionEmail) {
+                    profileUpdateService.updatePhone(phone, sessionEmail).then(() => {
                         console.log('[MOCK-API] móvil updatePhone OK', phone);
                         pendingProfile.clear();
                         resetToSection(navigation, "Datas");
@@ -31,5 +34,4 @@ export default function VerifyNewPhone() {
             }}
         />
     );
-
 }

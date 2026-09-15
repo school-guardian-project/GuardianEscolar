@@ -1,11 +1,12 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { resetToSection } from "@core/navigation/navigationHelper";
-
 import VerifyScreen from "@components/account/screens/VerifyScreen";
+import { useRoleSwitcher } from "@core/dev/RoleSwitcherContext";
 
 export default function VerifyNewEmail() {
     const { t } = useTranslation();
+    const { session, setSession } = useRoleSwitcher();
     return (
         <VerifyScreen
             backLabel={t("profile.title")}
@@ -17,12 +18,14 @@ export default function VerifyNewEmail() {
             nextScreen="Datas"
             onSuccess={(navigation) => {
                 const { pendingProfile, profileUpdateService } = require("@core/api/profileUpdate.service");
-                const { useRoleSwitcher } = require("@core/dev/RoleSwitcherContext");
-                // No podemos usar hook aquí, actualizamos vía require y luego navega — Datas hará refetch por useFocusEffect
                 const email = pendingProfile.getEmail();
-                if (email) {
-                    profileUpdateService.updateEmail(email).then(() => {
+                const sessionEmail = session?.person?.email;
+                if (email && sessionEmail) {
+                    profileUpdateService.updateEmail(email, sessionEmail).then(() => {
                         console.log('[MOCK-API] móvil updateEmail OK', email);
+                        if (session?.person) {
+                            setSession({ ...session, person: { ...session.person, email } });
+                        }
                         pendingProfile.clear();
                         resetToSection(navigation, "Datas");
                     }).catch(e => {
@@ -35,5 +38,4 @@ export default function VerifyNewEmail() {
             }}
         />
     );
-
 }

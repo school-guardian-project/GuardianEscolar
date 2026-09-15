@@ -2,11 +2,27 @@
 // Buenas prácticas: env-aware, timeout razonable, sin secretos, feature flag explícito.
 
 // En Expo, usa EXPO_PUBLIC_API_URL para override sin tocar código (ej. staging)
+// Auto-detecta IP del host en físico para no tener que escribir la URL larga cada vez
+function getAutoHostUrl() {
+  try {
+    // Expo Go expone hostUri como "10.3.232.153:19000" o "192.168.x.x:8081"
+    const { default: Constants } = require("expo-constants");
+    const hostUri = Constants.expoConfig?.hostUri || Constants.manifest?.hostUri || Constants.manifest2?.extra?.expoGo?.hostUri;
+    if (hostUri) {
+      const host = hostUri.split(":")[0];
+      if (host && host !== "localhost" && host !== "127.0.0.1") return `http://${host}:3000`;
+    }
+  } catch {}
+  return null;
+}
+
 const ENV_URL = typeof process !== "undefined" ? process.env?.EXPO_PUBLIC_API_URL : undefined;
+const AUTO_URL = getAutoHostUrl();
 
 export const API_CONFIG = {
   // json-server :3000 (ver school-guardian/json-server/docker-compose.yml), docs Scalar :3001
-  BASE_URL: ENV_URL || "http://localhost:3000",
+  // Prioridad: ENV_URL > IP auto-detectada > localhost (emulador usa 10.0.2.2, físico usa IP)
+  BASE_URL: ENV_URL || AUTO_URL || "http://localhost:3000",
   ENABLED: true,
   TIMEOUT_MS: 8000,
   FALLBACK_TO_MOCK: true,

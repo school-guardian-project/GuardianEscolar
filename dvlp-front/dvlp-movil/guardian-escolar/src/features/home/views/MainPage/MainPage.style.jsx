@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 
-export default StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
@@ -35,3 +35,5 @@ export default StyleSheet.create({
     alignSelf: "stretch",
   },
 });
+
+export default styles;

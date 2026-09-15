@@ -2,7 +2,7 @@
 // Reutilización: factory + validadores + mappers. Seguridad: mensajes genéricos, no leak de schema.
 
 import { apiClient, createResource } from "./api.client";
-import { ENDPOINTS } from "./api.config";
+import { API_CONFIG, ENDPOINTS } from "./api.config";
 import { ValidationError, ApiError } from "./api.errors";
 import { validateEmail, validatePassword } from "./api.validators";
 
@@ -40,41 +40,114 @@ function toSessionDTO(person, profile, roleName) {
 // ----- Auth -----
 export const authService = {
   /**
-   * Login simulado: persons -> profiles -> roles. Mensaje genérico por seguridad (no revela si email existe).
+   * Login con validación compartida web/móvil + soporte mock (json-server :3000) y real (backend :8080 /api/login).
+   * Valida email/password igual que web (Validators.required + pattern), loguea todos los intentos ([Auth] logs).
+   * Soporta 4 roles: admin, parent/padre, driver/conductor, student/estudiante.
    * @throws {ValidationError|ApiError}
    */
   async login(email, password) {
     const safeEmail = validateEmail(email);
     validatePassword(password);
+    const isMock = API_CONFIG.BASE_URL.includes(":3000");
+    // Loguear intento (todos los logues se pasan en la petición)
+    const attemptLog = { email: safeEmail, timestamp: new Date().toISOString(), target: isMock ? "mock" : "backend", roles: ["admin","parent","driver","student"] };
+    if (typeof __DEV__ !== "undefined" && __DEV__) console.log("[Auth] Intento login", attemptLog);
 
-    let persons, profiles, roles;
-    try {
-      persons = await apiClient.query(ENDPOINTS.persons, { Email: safeEmail });
-    } catch (e) {
-      if (e instanceof ValidationError) throw e;
-      throw ApiError.network();
+    if (isMock) {
+      let persons, profiles, roles;
+      try {
+        persons = await apiClient.query(ENDPOINTS.persons, { Email: safeEmail });
+      } catch (e) {
+        if (e instanceof ValidationError) throw e;
+        if (typeof __DEV__ !== "undefined" && __DEV__) console.warn("[Auth] fallo red mock persons", e);
+        throw ApiError.network();
+      }
+      const person = Array.isArray(persons) ? persons[0] : null;
+      if (!person) {
+        if (typeof __DEV__ !== "undefined" && __DEV__) console.warn("[Auth] mock no person", safeEmail);
+        throw new ApiError("Credenciales inválidas. Verifica tu correo y contraseña.", 401, null);
+      }
+
+      try {
+        profiles = await apiClient.query(ENDPOINTS.profiles, { PersonId: person.Id });
+      } catch (e) {
+        if (typeof __DEV__ !== "undefined" && __DEV__) console.warn("[Auth] fallo profiles", e);
+        throw ApiError.network();
+      }
+      const profile = Array.isArray(profiles) ? profiles[0] : null;
+      if (!profile) throw new ApiError("No se pudo completar el inicio de sesión.", 401, null);
+
+      // [MOCK-API] Validar contraseña: compara hash generado con el almacenado
+      const hash = profile.PasswordHash || '';
+      if (hash.startsWith('AQAAAAEAACcQAAAAE')) {
+        try {
+          const b64 = typeof btoa === 'function' ? btoa(password) : require('base-64').encode(password);
+          const expected = `AQAAAAEAACcQAAAAE${b64.slice(0, 20)}==`;
+          if (typeof __DEV__ !== "undefined" && __DEV__) console.log('[Auth] password check', { hash: hash.slice(0, 30), expected: expected.slice(0, 30), match: hash === expected });
+          if (hash !== expected) {
+            throw new ApiError("Credenciales inválidas. Verifica tu correo y contraseña.", 401, null);
+          }
+        } catch (e) {
+          if (e instanceof ApiError) throw e;
+          if (typeof __DEV__ !== "undefined" && __DEV__) console.warn('[Auth] btoa fallback, saltando validación', e.message);
+        }
+      }
+      // $2b$10$demo.hash... = hash legacy de demo, acepta cualquier contraseña
+
+      try {
+        roles = await apiClient.query(ENDPOINTS.roles, { ID: profile.RoleId });
+      } catch (e) {
+        if (typeof __DEV__ !== "undefined" && __DEV__) console.warn("[Auth] fallo roles", e);
+        throw ApiError.network();
+      }
+      const role = Array.isArray(roles) ? roles[0] : null;
+      const roleName = (role?.Name || "").toLowerCase();
+      if (!roleName) throw new ApiError("No se pudo completar el inicio de sesión.", 500, null);
+      const dto = toSessionDTO(person, profile, roleName);
+      if (typeof __DEV__ !== "undefined" && __DEV__) console.log("[Auth] mock OK", { email: dto.person.email, role: dto.role, appRole: dto.appRole });
+      return dto;
+    } else {
+      // Backend real POST /api/login con validación y logging server-side (AuthController registra todos los logues)
+      const url = `${API_CONFIG.BASE_URL}/api/login`;
+      if (typeof __DEV__ !== "undefined" && __DEV__) console.log(`[Auth] POST ${url} (Cliente -> Backend -> DB)`, attemptLog);
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), API_CONFIG.TIMEOUT_MS);
+      try {
+        const res = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email: safeEmail, password }),
+          signal: controller.signal,
+        });
+        const text = await res.text();
+        let data = null;
+        try { data = text ? JSON.parse(text) : null; } catch { data = text; }
+        if (!res.ok) {
+          if (typeof __DEV__ !== "undefined" && __DEV__) console.warn("[Auth] backend respondió", res.status, data);
+          // Mapear validación 400 vs 401
+          if (res.status === 400) throw new ValidationError(data?.message || "Datos de entrada inválidos.");
+          throw ApiError.fromResponse(res.status, data);
+        }
+        // Backend retorna {accessToken, expiration, name, email, roles}
+        const roles = Array.isArray(data.roles) ? data.roles.map(r => String(r).toLowerCase()) : [];
+        const primaryRole = roles[0] || "student";
+        if (typeof __DEV__ !== "undefined" && __DEV__) console.log("[Auth] backend OK", { email: data.email, roles });
+        return {
+          person: { id: data.personId || data.email, email: data.email, name: data.name, status: "ACTIVE" },
+          profile: { id: data.personId || "", roleId: 0, campusId: "", status: "ACTIVE" },
+          role: primaryRole,
+          appRole: ({ admin: "student", student: "student", parent: "father", driver: "driver" }[primaryRole] || primaryRole),
+          token: data.accessToken,
+          raw: data,
+        };
+      } catch (e) {
+        if (e.name === "AbortError") throw ApiError.timeout();
+        if (e instanceof ValidationError || e instanceof ApiError) throw e;
+        throw ApiError.network();
+      } finally {
+        clearTimeout(timeout);
+      }
     }
-    const person = Array.isArray(persons) ? persons[0] : null;
-    if (!person) throw new ApiError("Credenciales inválidas. Verifica tu correo y contraseña.", 401, null);
-
-    try {
-      profiles = await apiClient.query(ENDPOINTS.profiles, { PersonId: person.Id });
-    } catch {
-      throw ApiError.network();
-    }
-    const profile = Array.isArray(profiles) ? profiles[0] : null;
-    if (!profile) throw new ApiError("No se pudo completar el inicio de sesión.", 401, null);
-
-    try {
-      roles = await apiClient.query(ENDPOINTS.roles, { ID: profile.RoleId });
-    } catch {
-      throw ApiError.network();
-    }
-    const role = Array.isArray(roles) ? roles[0] : null;
-    const roleName = (role?.Name || "").toLowerCase();
-    if (!roleName) throw new ApiError("No se pudo completar el inicio de sesión.", 500, null);
-
-    return toSessionDTO(person, profile, roleName);
   },
 
   /** Demo helper: primer perfil del rol */

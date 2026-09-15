@@ -3,6 +3,7 @@ using backend.Shared.Exceptions;
 using backend.Modules.Security.Application.DTOs.Auth;
 using backend.Modules.Security.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace backend.Modules.Security.Application.Services
 {
@@ -13,16 +14,19 @@ namespace backend.Modules.Security.Application.Services
         public readonly IPasswordService _passwordService;
 
         public readonly IJwtService _jwtService;
+        private readonly ILogger<AuthService> _logger;
 
-        public AuthService(AppDbContext context, IPasswordService passwordService, IJwtService jwtService)
+        public AuthService(AppDbContext context, IPasswordService passwordService, IJwtService jwtService, ILogger<AuthService> logger)
         {
             _context = context;
             _passwordService = passwordService;
             _jwtService = jwtService;
+            _logger = logger;
         }
 
         public async Task<LoginResponseDto> LoginAsync(LoginRequestDto request)
         {
+            _logger.LogInformation("[AuthService] Login request Email={Email}", request.Email);
             var person = await _context.Person
                 .Include(x => x.profiles)
                     .ThenInclude(x => x.profileRoles)
@@ -31,12 +35,14 @@ namespace backend.Modules.Security.Application.Services
         
             if (person is null)
             {
+                _logger.LogWarning("[AuthService] Email no encontrado {Email}", request.Email);
                 throw new UnauthorizedException("Credenciales Invalidas");
             }
 
             var profile = person.profiles.FirstOrDefault();
             if (profile is null)
             {
+                _logger.LogWarning("[AuthService] Sin perfil para Email={Email}", request.Email);
                 throw new UnauthorizedException("Credenciales Invalidas");
             }
 
@@ -44,12 +50,15 @@ namespace backend.Modules.Security.Application.Services
 
             if (!passwordCorrect)
             {
+                _logger.LogWarning("[AuthService] Password incorrecto Email={Email}", request.Email);
                 throw new UnauthorizedException("Credenciales Invalidas");
             }
 
             var roles = person.profiles.SelectMany(p => p.profileRoles).Select(pr => pr.role.name).ToList();
+            _logger.LogInformation("[AuthService] Credenciales válidas Email={Email} Roles={Roles}", request.Email, string.Join(",", roles));
 
             var token = _jwtService.GenerateToken(person, roles);
+            _logger.LogInformation("[AuthService] Token generado Email={Email} Expira 15min", request.Email);
 
             return new LoginResponseDto
             {

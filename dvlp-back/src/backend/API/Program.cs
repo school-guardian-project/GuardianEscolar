@@ -65,7 +65,28 @@ builder.Services.AddSwaggerGen(options =>
     {
         Title = "Backend API",
         Version = "v1",
-        Description = "API construida con ASP.NET Core"
+        Description = "API construida con ASP.NET Core - Auth JWT disponible. Usa POST /api/login para obtener token."
+    });
+
+    // JWT en OpenAPI (openapi.json)
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header usando esquema Bearer. Ejemplo: \"Authorization: Bearer {token}\"",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "bearer",
+        BearerFormat = "JWT"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = "Bearer" }
+            },
+            Array.Empty<string>()
+        }
     });
 });
 

@@ -2,16 +2,12 @@ import React, { createContext, useContext, useState } from "react";
 
 const RoleSwitcherContext = createContext(null);
 
-const MOCK_IDS = {
-    student: { userId: "mock-student-1"},
-    driver: { userId: "mock-driver-1"},
-    father: { userId: "mock-father-1", childId: "mock-student-1"}
-}
-
 export function RoleSwitcherProvider({ children }) {
     const [role, setRole] = useState("student");
     const [session, setSession] = useState(null);
-    const value = { role, setRole, session, setSession, ...MOCK_IDS[role] };
+    const userId = session?.person?.email || null;
+    const childId = session?.person?.email || null;
+    const value = { role, setRole, session, setSession, userId, childId };
 
     return (
         <RoleSwitcherContext.Provider value={value}>{ children }</RoleSwitcherContext.Provider>

@@ -61,7 +61,6 @@ export class Reset {
         },
         error: (e) => {
           console.warn('[MOCK-API] updatePassword FAIL', e.message);
-          this.router.navigate(['/admin/informacion']);
         },
       });
     } else {

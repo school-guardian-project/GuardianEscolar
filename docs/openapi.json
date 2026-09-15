@@ -1,0 +1,110 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "School Guardian API",
+    "description": "API con autenticación JWT y validación. Endpoint POST /api/login autentica 4 roles: admin, padre (parent), conductor (driver), estudiante (student). Todos los intentos son logueados server-side (ILogger) y cliente-side (console).",
+    "version": "v1"
+  },
+  "servers": [
+    { "url": "http://localhost:8080", "description": "Backend ASP.NET Core" },
+    { "url": "http://localhost:3000", "description": "Mock json-server (móvil/web en modo mock)" }
+  ],
+  "components": {
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "JWT obtenido de POST /api/login. Usar: Authorization: Bearer {token}"
+      }
+    },
+    "schemas": {
+      "LoginRequestDto": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "maxLength": 254,
+            "pattern": "^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$",
+            "description": "Correo del usuario (validación igual que web: Validators.required + pattern /^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$/)",
+            "example": "acudiente1@guardianescolar.demo"
+          },
+          "password": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128,
+            "description": "Contraseña (Validators.required, 1-128 chars). En mock json-server cualquier valor no vacío es válido; en backend real se verifica hash.",
+            "example": "Demo123!"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginResponseDto": {
+        "type": "object",
+        "properties": {
+          "accessToken": { "type": "string", "description": "JWT Bearer token", "example": "eyJhbGciOiJIUzI1NiIs..." },
+          "expiration": { "type": "string", "format": "date-time" },
+          "name": { "type": "string", "example": "Pedro Acudiente 1" },
+          "email": { "type": "string", "format": "email" },
+          "roles": { "type": "array", "items": { "type": "string" }, "example": ["parent"] }
+        }
+      },
+      "ValidationError": {
+        "type": "object",
+        "properties": {
+          "message": { "type": "string", "example": "Datos de entrada inválidos." },
+          "errors": { "type": "object", "additionalProperties": { "type": "array", "items": { "type": "string" } } }
+        }
+      }
+    }
+  },
+  "paths": {
+    "/api/login": {
+      "post": {
+        "tags": ["auth"],
+        "summary": "Autentica usuario (admin/padre/conductor/estudiante) - con validación y logging",
+        "description": "Valida email/password (DataAnnotations Required/EmailAddress/StringLength). Loguea todos los intentos (IP, email, hora, resultado) en AuthController y AuthService via ILogger. Retorna JWT + roles. En petición se pasan todos los logues (attemptLog con timestamp, api target, roles).",
+        "operationId": "login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/LoginRequestDto" },
+              "examples": {
+                "admin": { "value": { "email": "admin1@colegio.edu.co", "password": "Demo123!" } },
+                "padre": { "value": { "email": "acudiente1@guardianescolar.demo", "password": "Demo123!" } },
+                "conductor": { "value": { "email": "conductor1@guardianescolar.demo", "password": "Demo123!" } },
+                "estudiante": { "value": { "email": "estudiante1@guardianescolar.demo", "password": "Demo123!" } }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Autenticado - retorna JWT y roles",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/LoginResponseDto" } } }
+          },
+          "400": {
+            "description": "Validación fallida (email formato, requerido, longitud)",
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/ValidationError" } } }
+          },
+          "401": {
+            "description": "Credenciales inválidas (mensaje genérico por seguridad)",
+            "content": { "application/json": { "schema": { "type": "object", "properties": { "message": { "type": "string", "example": "Credenciales Invalidas" } } } } }
+          }
+        },
+        "security": []
+      }
+    },
+    "/api/person": {
+      "get": {
+        "tags": ["person"],
+        "summary": "Lista personas (requiere JWT)",
+        "security": [{ "Bearer": [] }],
+        "responses": { "200": { "description": "OK" }, "401": { "description": "No autorizado" } }
+      }
+    }
+  }
+}

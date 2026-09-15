@@ -1,6 +1,6 @@
 // [MOCK-API] Servicio para cambiar email/teléfono/contraseña — Cliente -> :3000 -> DB
 import { Injectable, inject } from '@angular/core';
-import { Observable, switchMap, map, tap, Subject } from 'rxjs';
+import { Observable, switchMap, map, tap, Subject, of } from 'rxjs';
 import { MockApiService } from './mock-api.service';
 import { clearMockCache } from './mock-api.cache';
 
@@ -22,8 +22,17 @@ export class ProfileUpdateService {
   clearPending() { this.pendingEmail = null; this.pendingPhone = null; }
 
   private currentPersonId$(): Observable<string> {
-    const email = localStorage.getItem('user_email') || 'admin1@colegio.edu.co';
-    return this.api.get<any[]>('/persons', { Email: email }).pipe(map(arr => arr[0]?.Id ?? ''));
+    const personId = localStorage.getItem('user_person_id');
+    if (personId) return of(personId);
+    const email = localStorage.getItem('user_email') || 'ejemplo@gmail.com';
+    return this.api.get<any[]>('/persons', { Email: email }).pipe(
+      switchMap((arr) => {
+        if (arr[0]?.Id) return of(arr[0].Id);
+        return this.api.get<any[]>('/persons', { Email: 'ejemplo@gmail.com' }).pipe(
+          map(fallback => fallback[0]?.Id ?? '')
+        );
+      })
+    );
   }
 
   updateEmail(newEmail: string): Observable<any> {

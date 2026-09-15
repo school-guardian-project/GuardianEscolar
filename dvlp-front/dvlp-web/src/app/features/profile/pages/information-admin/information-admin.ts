@@ -11,6 +11,7 @@ import { NgIf } from '@angular/common';
 import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-manage';
 import { MockApiService } from '@core/api-mock/mock-api.service';
 import { ProfileUpdateService } from '@core/api-mock/profile-update.service';
+import { catchError, map, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-information-admin',
@@ -45,19 +46,16 @@ export class InformationAdmin implements OnInit {
   loading = true;
 
   // Fallback para que nunca quede en blanco (datos quemados previos)
-  private fallbackUser = { name: 'Carlos Andrés Pérez Gómez', email: 'admin1@colegio.edu.co', phone: 310555100, address: 'Calle 10 #8-20', id: '900000001', birth: '1985-03-15' };
+  private fallbackUser = { name: 'Carlos Andrés Pérez Gómez', email: 'ejemplo@gmail.com', phone: 310555100, address: 'Calle 10 #8-20', id: '900000001', birth: '1985-03-15' };
   private fallbackSchool = { Name: 'Colegio Técnico Neiva', Address: 'Calle 55 #20-40' };
 
   private profileUpdate = inject(ProfileUpdateService);
+  private profileLoad = 0;
 
   ngOnInit(): void {
     this.loadProfile();
     // [MOCK-API] refresca sin recargar página cuando se cambia email/teléfono
     this.profileUpdate.refresh$.subscribe(() => {
-      // Actualiza visual al instante con el valor de localStorage antes de refetch
-      const freshEmail = localStorage.getItem('user_email');
-      if (freshEmail && this.user) this.user = { ...this.user, email: freshEmail };
-      // También actualiza phone si cambió (lo leemos del pending)
       this.loadProfile();
     });
     // También recarga cuando se vuelve a la ruta (sin F5) — Angular reutiliza el componente
@@ -69,45 +67,43 @@ export class InformationAdmin implements OnInit {
   }
 
   private loadProfile(): void {
-    const email = localStorage.getItem('user_email') || 'admin1@colegio.edu.co';
-    // [MOCK-API] Cliente -> :3000 -> DB — con fallback para no dejar en blanco
-    this.api.get<any[]>('/persons', { Email: email }).subscribe({
-      next: (persons) => {
-        const p = persons[0] ?? null;
-        if (!p) {
-          this.person = this.fallbackUser as any;
-          this.user = this.fallbackUser;
-          this.school = this.fallbackSchool;
-          this.loading = false;
-          return;
-        }
-        this.person = p;
-        this.user = { name: `${p.Name} ${p.LastName}`, email: p.Email, phone: p.Phone, address: p.ResidenceAddress, id: p.IdentificationNumber, birth: p.DateBirth };
-        this.api.get<any[]>('/profiles', { PersonId: p.Id }).subscribe({
-          next: (profiles) => {
-            const prof = profiles[0];
-            if (!prof) { this.school = this.fallbackSchool; this.loading = false; return; }
-            this.api.get<any[]>('/school-campuses', { Id: prof.CampuseId }).subscribe({
-              next: (campuses) => {
-                const camp = campuses[0];
-                const schoolId = camp?.SchoolId || 'school-0001-0000-0000-000000000000';
-                this.api.get<any[]>('/schools', { Id: schoolId }).subscribe({
-                  next: (schools) => { this.school = schools[0] ?? this.fallbackSchool; this.loading = false; },
-                  error: () => { this.school = this.fallbackSchool; this.loading = false; },
-                });
-              },
-              error: () => { this.school = this.fallbackSchool; this.loading = false; },
-            });
-          },
-          error: () => { this.school = this.fallbackSchool; this.loading = false; },
-        });
-      },
-      error: () => {
-        this.person = this.fallbackUser as any;
-        this.user = this.fallbackUser;
-        this.school = this.fallbackSchool;
-        this.loading = false;
-      },
+    const requestId = ++this.profileLoad;
+    const personId = localStorage.getItem('user_person_id');
+    const email = localStorage.getItem('user_email') || 'ejemplo@gmail.com';
+    const personRequest = personId
+      ? this.api.get<any[]>('/persons', { Id: personId })
+      : this.api.get<any[]>('/persons', { Email: email }).pipe(
+          switchMap((persons) => persons.length
+            ? of(persons)
+            : this.api.get<any[]>('/persons', { Email: 'ejemplo@gmail.com' }))
+        );
+    personRequest.pipe(
+      switchMap((persons) => {
+        const person = persons[0];
+        if (!person) return of({ person: null, user: this.fallbackUser, school: this.fallbackSchool });
+        const user = { name: `${person.Name} ${person.LastName}`, email: person.Email, phone: person.Phone, address: person.ResidenceAddress, id: person.IdentificationNumber, birth: person.DateBirth };
+        return this.api.get<any[]>('/profiles', { PersonId: person.Id }).pipe(
+          switchMap((profiles) => {
+            const profile = profiles[0];
+            if (!profile) return of({ person, user, school: this.fallbackSchool });
+            return this.api.get<any[]>('/school-campuses', { Id: profile.CampuseId }).pipe(
+              switchMap((campuses) => {
+                const schoolId = campuses[0]?.SchoolId || 'school-0001-0000-0000-000000000000';
+                return this.api.get<any[]>('/schools', { Id: schoolId }).pipe(
+                  map((schools) => ({ person, user, school: schools[0] ?? this.fallbackSchool }))
+                );
+              })
+            );
+          })
+        );
+      }),
+      catchError(() => of({ person: this.fallbackUser, user: this.fallbackUser, school: this.fallbackSchool }))
+    ).subscribe(({ person, user, school }) => {
+      if (requestId !== this.profileLoad) return;
+      this.person = person;
+      this.user = user;
+      this.school = school;
+      this.loading = false;
     });
   }
 

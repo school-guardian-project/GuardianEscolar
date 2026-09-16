@@ -2,10 +2,26 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
+import { dashboardService } from "@core/api/services";
+import { API_CONFIG } from "@core/api/api.config";
+import useSession from "@core/hooks/useSession";
 
 export default function RouteInfoCard() {
   const { t } = useTranslation();
   const { theme } = useTheme();
+  const { session } = useSession();
+  const [route, setRoute] = React.useState(null);
+
+  React.useEffect(() => {
+    if (!API_CONFIG.ENABLED) return;
+    const studentProfileId = session?.profile?.id || null;
+    if (!studentProfileId) return;
+    
+    dashboardService.getStudentRoute(studentProfileId).then(routeData => {
+      if (routeData) setRoute(routeData);
+    }).catch(() => {});
+  }, [session]);
+
   return (
     <View
       style={[
@@ -26,7 +42,7 @@ export default function RouteInfoCard() {
               { color: theme.textColor },
             ]}
           >
-            Ruta Centro
+            {route?.Name || 'Ruta Centro'}
           </Text>
 
           <Text
@@ -35,7 +51,7 @@ export default function RouteInfoCard() {
               { color: theme.textSecondary },
             ]}
           >
-            Carlos Pérez
+            {route?.driverName || 'Carlos Pérez'}
           </Text>
         </View>
 
@@ -46,7 +62,7 @@ export default function RouteInfoCard() {
               { color: theme.textColor },
             ]}
           >
-            ABC-123
+            {route?.Plate || 'ABC-123'}
           </Text>
 
           <Text
@@ -88,7 +104,7 @@ export default function RouteInfoCard() {
               { color: theme.textSecondary },
             ]}
           >
-            12
+            {route?.stopsCount ?? 12}
           </Text>
         </View>
 
@@ -108,7 +124,7 @@ export default function RouteInfoCard() {
               { color: theme.textSecondary },
             ]}
           >
-            {t("cards.school")}
+            {route?.TargetSector || t("cards.school")}
           </Text>
         </View>
 

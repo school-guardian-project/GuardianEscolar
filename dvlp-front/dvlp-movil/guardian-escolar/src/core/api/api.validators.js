@@ -8,12 +8,19 @@ const ALLOWED_FILTERS = {
   "/roles": new Set(["ID", "Name", "Status"]),
   "/routes": new Set(["Id", "CampusId", "Name", "Status"]),
   "/route-stops": new Set(["Id", "RouteId", "StopId", "Status"]),
+  "/route-student-assignments": new Set(["Id", "ProfileId", "RouteStopId", "Status"]),
+  "/route-bus-assignments": new Set(["Id", "RouteId", "BusId", "Status"]),
+  "/driver-assignments": new Set(["Id", "ProfileId", "BusId", "Status"]),
   "/stops": new Set(["Id", "CityId", "SchoolId", "Status"]),
   "/families": new Set(["Id", "Name", "Status"]),
   "/family-members": new Set(["Id", "FamilyId", "ProfileId", "RelationshipType", "Status"]),
   "/buses": new Set(["Id", "CampusId", "Plate", "Status"]),
   "/boardings": new Set(["Id", "RouteExecutionId", "ProfileId", "RouteStopId"]),
   "/alerts": new Set(["Id", "RouteExecutionId", "AlertTypeId", "ProfileId"]),
+  "/driver-licenses": new Set(["Id", "ProfileId", "Status"]),
+  "/route-executions": new Set(["Id", "RouteId", "Status"]),
+  "/gps-devices": new Set(["Id", "BusId", "Status"]),
+  "/gps-locations": new Set(["Id", "GpsDeviceId"]),
 };
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;

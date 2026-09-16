@@ -5,6 +5,7 @@ import { apiClient, createResource } from "./api.client";
 import { API_CONFIG, ENDPOINTS } from "./api.config";
 import { ValidationError, ApiError } from "./api.errors";
 import { validateEmail, validatePassword } from "./api.validators";
+import { verifyPasswordAsync } from "./password.service";
 
 // ----- Recursos genéricos -----
 export const permissionService = createResource(ENDPOINTS.permissions);
@@ -77,22 +78,12 @@ export const authService = {
       const profile = Array.isArray(profiles) ? profiles[0] : null;
       if (!profile) throw new ApiError("No se pudo completar el inicio de sesión.", 401, null);
 
-      // [MOCK-API] Validar contraseña: compara hash generado con el almacenado
+      // Usar servicio centralizado de hashing
       const hash = profile.PasswordHash || '';
-      if (hash.startsWith('AQAAAAEAACcQAAAAE')) {
-        try {
-          const b64 = typeof btoa === 'function' ? btoa(password) : require('base-64').encode(password);
-          const expected = `AQAAAAEAACcQAAAAE${b64.slice(0, 20)}==`;
-          if (typeof __DEV__ !== "undefined" && __DEV__) console.log('[Auth] password check', { hash: hash.slice(0, 30), expected: expected.slice(0, 30), match: hash === expected });
-          if (hash !== expected) {
-            throw new ApiError("Credenciales inválidas. Verifica tu correo y contraseña.", 401, null);
-          }
-        } catch (e) {
-          if (e instanceof ApiError) throw e;
-          if (typeof __DEV__ !== "undefined" && __DEV__) console.warn('[Auth] btoa fallback, saltando validación', e.message);
-        }
+      const isValid = await verifyPasswordAsync(password, hash);
+      if (!isValid) {
+        throw new ApiError("Credenciales inválidas. Verifica tu correo y contraseña.", 401, null);
       }
-      // $2b$10$demo.hash... = hash legacy de demo, acepta cualquier contraseña
 
       try {
         roles = await apiClient.query(ENDPOINTS.roles, { ID: profile.RoleId });
@@ -168,7 +159,61 @@ export const authService = {
 
 // ----- Dominio -----
 export const dashboardService = {
-  /** Rutas con conteo de paradas — paginado y con cache del client */
+  /** Obtiene la ruta asignada a un estudiante específico */
+  async getStudentRoute(studentProfileId) {
+    if (!studentProfileId) return null;
+
+    // 1. Buscar asignación de ruta-estudiante (campo: ProfileId, RouteStopId)
+    const assignments = await apiClient.query(ENDPOINTS.routeStudentAssignments, { ProfileId: studentProfileId });
+    const assignment = Array.isArray(assignments) ? assignments[0] : null;
+    if (!assignment?.RouteStopId) return null;
+
+    // 2. Obtener la ruta a través de route-stops
+    const routeStops = await apiClient.query(ENDPOINTS.routeStops, { Id: assignment.RouteStopId });
+    const routeStop = Array.isArray(routeStops) ? routeStops[0] : null;
+    if (!routeStop?.RouteId) return null;
+
+    const routes = await apiClient.query(ENDPOINTS.routes, { Id: routeStop.RouteId });
+    const route = Array.isArray(routes) ? routes[0] : null;
+    if (!route) return null;
+
+    // 3. Contar paradas de la ruta
+    const allRouteStops = await apiClient.query(ENDPOINTS.routeStops, { RouteId: route.Id });
+    const stopsCount = Array.isArray(allRouteStops) ? allRouteStops.length : 0;
+
+    // 4. Obtener bus y conductor asignados
+    let bus = null, driverName = null;
+    try {
+      const rbas = await apiClient.query(ENDPOINTS.routeBusAssignments, { RouteId: route.Id });
+      const rba = Array.isArray(rbas) ? rbas[0] : null;
+      if (rba?.BusId) {
+        const buses = await apiClient.query(ENDPOINTS.buses, { Id: rba.BusId });
+        bus = Array.isArray(buses) ? buses[0] : null;
+
+        // El conductor está en driver-assignments vinculado por BusId
+        const driverAssignments = await apiClient.query(ENDPOINTS.driverAssignments, { BusId: rba.BusId });
+        const da = Array.isArray(driverAssignments) ? driverAssignments[0] : null;
+        if (da?.ProfileId) {
+          const profs = await apiClient.query(ENDPOINTS.profiles, { Id: da.ProfileId });
+          const prof = Array.isArray(profs) ? profs[0] : null;
+          if (prof?.PersonId) {
+            const persons = await apiClient.query(ENDPOINTS.persons, { Id: prof.PersonId });
+            const person = Array.isArray(persons) ? persons[0] : null;
+            if (person) driverName = `${person.Name} ${person.LastName}`.trim();
+          }
+        }
+      }
+    } catch {}
+
+    return {
+      ...route,
+      stopsCount,
+      Plate: bus?.Plate || null,
+      driverName,
+    };
+  },
+
+  /** Rutas con conteo de paradas + bus/placa/conductor reales de db.json */
   async getRoutesWithStops(campusId, opts = {}) {
     const limit = Math.min(opts.limit ?? 50, 100);
     const routes = campusId
@@ -177,7 +222,34 @@ export const dashboardService = {
     const routeStops = await apiClient.query(ENDPOINTS.routeStops, { _limit: 100 });
     const byRoute = new Map();
     for (const rs of routeStops) byRoute.set(rs.RouteId, (byRoute.get(rs.RouteId) || 0) + 1);
-    return routes.map((r) => ({ ...r, stopsCount: byRoute.get(r.Id) || 0 }));
+    // Enriquecer primera ruta con bus/placa/conductor reales para RouteInfoCard
+    const enriched = await Promise.all(routes.slice(0, 5).map(async (r) => {
+      let bus = null, driverName = null;
+      try {
+        const rbas = await apiClient.query(ENDPOINTS.routeBusAssignments, { RouteId: r.Id });
+        const rba = Array.isArray(rbas) ? rbas[0] : null;
+        if (rba?.BusId) {
+          const buses = await apiClient.query(ENDPOINTS.buses, { Id: rba.BusId });
+          bus = Array.isArray(buses) ? buses[0] : null;
+
+          const driverAssignments = await apiClient.query(ENDPOINTS.driverAssignments, { BusId: rba.BusId });
+          const da = Array.isArray(driverAssignments) ? driverAssignments[0] : null;
+          if (da?.ProfileId) {
+            const profs = await apiClient.query(ENDPOINTS.profiles, { Id: da.ProfileId });
+            const prof = Array.isArray(profs) ? profs[0] : null;
+            if (prof?.PersonId) {
+              const persons = await apiClient.query(ENDPOINTS.persons, { Id: prof.PersonId });
+              const person = Array.isArray(persons) ? persons[0] : null;
+              if (person) driverName = `${person.Name} ${person.LastName}`.trim();
+            }
+          }
+        }
+      } catch {}
+      return { ...r, stopsCount: byRoute.get(r.Id) || 0, Plate: bus?.Plate || null, driverName };
+    }));
+    // Resto sin enriquecer
+    const rest = routes.slice(5).map((r) => ({ ...r, stopsCount: byRoute.get(r.Id) || 0 }));
+    return [...enriched, ...rest];
   },
 
   async getFamilyForProfile(profileId) {

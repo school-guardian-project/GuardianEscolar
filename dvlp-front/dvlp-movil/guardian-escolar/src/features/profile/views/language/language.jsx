@@ -49,7 +49,7 @@ export default function Language() {
         >
             {/* Encabezado */}
             <View style={styles.header}>
-                <BackButton label={t("inputs.appearance")}
+                <BackButton label={t("inputs.language")}
                     backTo="Profile" />
             </View>
 
@@ -74,7 +74,7 @@ export default function Language() {
                         onPress={() => changeLanguage("en")}
                         rightContent={renderRadio("en")}
                     />
-                    </View>
+                    </View>5
                     <View style={styles.card}>
 
                     <SettingsItem

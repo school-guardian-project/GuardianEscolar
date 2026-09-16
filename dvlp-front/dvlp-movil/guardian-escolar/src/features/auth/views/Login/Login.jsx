@@ -10,6 +10,7 @@ import { useTheme } from "@core/services/ThemeService";
 
 import InputField from "@components/inputs/InputField";
 import PrimaryButton from "@components/buttons/PrimaryButton";
+import { validateEmail, validateRequired } from "@core/validation/validators";
 
 export default function Login({ navigation }) {
   const { t } = useTranslation();
@@ -17,6 +18,41 @@ export default function Login({ navigation }) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
+  const handleEmailChange = (value) => {
+    setEmail(value);
+
+    if (emailError) {
+      setEmailError("");
+    }
+  };
+
+  const handlePasswordChange = (value) => {
+    setPassword(value);
+
+    if (passwordError) {
+      setPasswordError("");
+    }
+  };
+
+  const handleSubmit = () => {
+    const nextEmailError = validateEmail(email);
+    const nextPasswordError = validateRequired(
+      password,
+      "Ingresa tu contraseña"
+    );
+
+    setEmailError(nextEmailError);
+    setPasswordError(nextPasswordError);
+
+    if (nextEmailError || nextPasswordError) {
+      return;
+    }
+
+    navigation.navigate("MainPage");
+  };
 
   return (
     <ScrollView
@@ -43,8 +79,9 @@ export default function Login({ navigation }) {
           label={t("inputs.title.email")}
           placeholder="ejemplo@gmail.com"
           value={email}
-          onChangeText={setEmail}
+          onChangeText={handleEmailChange}
           keyboardType="email-address"
+          error={emailError}
         />
 
         {/* Contraseña */}
@@ -52,8 +89,9 @@ export default function Login({ navigation }) {
           label={t("inputs.title.password")}
           placeholder="••••••••"
           value={password}
-          onChangeText={setPassword}
+          onChangeText={handlePasswordChange}
           secureTextEntry
+          error={passwordError}
         />
 
         {/* Olvidó contraseña */}
@@ -71,10 +109,13 @@ export default function Login({ navigation }) {
         <View style={styles.buttonWrap}>
           <PrimaryButton
             text={t("button.enter")}
-            onPress={() => navigation.navigate("MainPage")}
+            onPress={handleSubmit}
           />
         </View>
       </View>
     </ScrollView>
   );
 }
+
+
+

@@ -1,0 +1,23 @@
+{
+  "name": "@school-guardian/simulate-api-backend",
+  "version": "1.0.0",
+  "description": "Lógica de negocio simulada para el backend - aislada del frontend",
+  "main": "index.js",
+  "type": "module",
+  "exports": {
+    ".": "./index.js",
+    "./config/*": "./config/*",
+    "./services/*": "./services/*",
+    "./shared/*": "./shared/*"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mock-api",
+    "simulate-backend",
+    "school-guardian"
+  ],
+  "author": "",
+  "license": "ISC"
+}

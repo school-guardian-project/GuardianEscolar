@@ -34,4 +34,12 @@ export default StyleSheet.create({
   bottomSection: {
     alignSelf: "stretch",
   },
+
+  qrButtonContainer: {
+    position: "absolute",
+    left: 16,
+    bottom: 200,
+    zIndex: 3,
+    elevation: 8,
+  },
 });

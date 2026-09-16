@@ -84,6 +84,11 @@
   gap: 6px;
 }
 
+.card-register__input-wrap--multiple {
+  flex-direction: column;
+  align-items: stretch;
+}
+
 /* ── INPUT ──────────────────────────────────────────────── */
 .card-register__input {
   flex: 1;
@@ -108,6 +113,42 @@
 
 .card-register__input::placeholder {
   color: var(--card-color-input);
+}
+
+.card-register__selected-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 100%;
+}
+
+.card-register__selected-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  padding: 6px 8px 6px 10px;
+  border: 1px solid var(--accent-color);
+  border-radius: 6px;
+  background-color: color-mix(in srgb, var(--accent-color) 15%, var(--card-bg));
+  color: var(--text-color);
+  font-size: 0.8rem;
+}
+
+.card-register__remove-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid var(--contrast-color);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--contrast-color);
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
 }
 
 

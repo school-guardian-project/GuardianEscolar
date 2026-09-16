@@ -20,26 +20,25 @@ export default function QRButtom({ config, onOpenModel }) {
 
 const style = StyleSheet.create({
     container: {
-        width: "100",
-        height: "auto",
-        padding: 8,
+        width: 76,
+        height: 76,
+        padding: 6,
         backgroundColor: themes.lightBlue.navbarColor,
-        borderTopLeftRadius: 16,
-        borderTopRightRadius: 16,
-        marginLeft: 12,
+        borderRadius: 12,
         justifyContent: "center",
         alignItems: "center"
     },
 
     icon: {
-        borderRadius: 20,
+        width: 67,
+        height: 67,
+        borderRadius: 8,
         backgroundColor: "#fff",
-        padding: 8,
         justifyContent: "center",
         alignItems: "center"
     },
 
     containerNoQR: {
-        flex: "none"
+        display: "none"
     }
 });

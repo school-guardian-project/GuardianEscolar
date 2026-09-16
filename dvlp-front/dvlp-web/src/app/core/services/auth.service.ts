@@ -1,8 +1,9 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, switchMap, map, throwError } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { Observable, switchMap, map, throwError, from } from 'rxjs';
+import { tap, switchMap as switchMapOperator } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
+import { verifyPasswordAsync } from './password.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -40,37 +41,40 @@ export class AuthService {
             }),
             switchMap(({ person, profile }) => {
                 if (!profile) return throwError(() => new Error('Perfil no encontrado'));
-                // [MOCK-API] Validar contraseña: compara hash generado con el almacenado
+                // Usar servicio centralizado de hashing
                 const hash = profile.PasswordHash || '';
-                if (hash.startsWith('AQAAAAEAACcQAAAAE')) {
-                    const expected = `AQAAAAEAACcQAAAAE${btoa(password).slice(0, 20)}==`;
-                    if (hash !== expected) {
-                        return throwError(() => new Error('Credenciales inválidas. Verifica tu correo y contraseña.'));
-                    }
-                }
-                // $2b$10$demo.hash... = hash legacy de demo, acepta cualquier contraseña
-                return this.http.get<any[]>(`${base}/roles`, { params: new HttpParams().set('ID', profile.RoleId) }).pipe(
-                    map((roles) => {
-                        const role = roles[0];
-                        const roleName = (role?.Name ?? '').toLowerCase();
-                        const token = `mock-jwt-${profile.Id}-${Date.now()}`;
-                        const response = {
-                            accessToken: token,
-                            personId: person.Id,
-                            name: `${person.Name} ${person.LastName}`.trim(),
-                            email: person.Email,
-                            roles: [roleName],
-                        };
-                        return response;
+                return from(verifyPasswordAsync(password, hash)).pipe(
+                    switchMapOperator((isValid) => {
+                        if (!isValid) {
+                            return throwError(() => new Error('Credenciales inválidas. Verifica tu correo y contraseña.'));
+                        }
+                        return this.http.get<any[]>(`${base}/roles`, { params: new HttpParams().set('ID', profile.RoleId) }).pipe(
+                            map((roles) => {
+                                const role = roles[0];
+                                const roleName = (role?.Name ?? '').toLowerCase();
+                                const token = `mock-jwt-${profile.Id}-${Date.now()}`;
+                                const response = {
+                                    accessToken: token,
+                                    personId: person.Id,
+                                    campuseId: profile.CampuseId,
+                                    name: `${person.Name} ${person.LastName}`.trim(),
+                                    email: person.Email,
+                                    roles: [roleName],
+                                };
+                                return response;
+                            })
+                        );
                     })
                 );
             }),
             tap((response: any) => {
                 localStorage.setItem('access_token', response.accessToken);
                 if (response.personId) localStorage.setItem('user_person_id', response.personId);
+                if (response.campuseId) localStorage.setItem('user_campuse_id', response.campuseId);
                 localStorage.setItem('user_name', response.name);
                 localStorage.setItem('user_email', response.email);
                 localStorage.setItem('user_roles', JSON.stringify(response.roles));
+                try { sessionStorage.setItem('user_campuse_id', response.campuseId); } catch {}
                 console.log('[MOCK-API] Cliente -> json-server :3000 -> DB login OK', response.email, response.roles);
             })
         );

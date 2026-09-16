@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,6 +10,7 @@ import { SidebarSuperadmin } from '@shared/components/navbar/sidebar-superadmin/
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
+import { CardListDataService } from '@core/api-mock/card-list.data.service';
 
 
 @Component({
@@ -31,6 +32,8 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
   styleUrl: './admins.scss',
 })
 export class Admins {
+  private dataService = inject(CardListDataService);
+
   showModal = false;
   showUpdateModal = false;
   adminSelected: RecordData = {};
@@ -57,8 +60,14 @@ export class Admins {
   }
 
   onSaved(updatedRecord: RecordData): void {
-    console.log('[Admins] Datos actualizados:', updatedRecord);
-    // this.adminsService.update(updatedRecord).subscribe(() => { ... });
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.update('admins', this.adminSelected, updatedRecord).subscribe({
+        next: () => console.log('[MOCK-API] UPDATE admins OK', updatedRecord),
+        error: (e) => console.warn('[MOCK-API] UPDATE admins FAIL', e.message),
+      });
+    } else {
+      console.log('[Admins] Datos actualizados:', updatedRecord);
+    }
     this.closeUpdateModal();
   }
    showDeleteModal = false;
@@ -78,8 +87,14 @@ export class Admins {
    * Aquí puedes llamar a tu servicio para eliminar.
    */
   onConfirmDelete(record: RecordData): void {
-    console.log('[Admins] Eliminando:', record);
-    // this.adminsService.delete(record.id).subscribe(() => { ... });
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.delete('admins', record ?? this.adminSelected).subscribe({
+        next: () => console.log('[MOCK-API] DELETE admins OK', record),
+        error: (e) => console.warn('[MOCK-API] DELETE admins FAIL', e.message),
+      });
+    } else {
+      console.log('[Admins] Eliminando:', record);
+    }
     this.closeDeleteModal();
   }
 }

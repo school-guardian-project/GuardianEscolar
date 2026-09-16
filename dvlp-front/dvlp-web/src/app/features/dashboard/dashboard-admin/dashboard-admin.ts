@@ -70,8 +70,8 @@ export class DashboardAdmin implements OnInit {
 
   private loadSchool(): void {
     // Intenta cargar escuela real de la sesión (admin -> campus -> school)
-    const personId = localStorage.getItem('user_person_id');
-    const email = localStorage.getItem('user_email') || 'ejemplo@gmail.com';
+    const personId = (() => { try { return sessionStorage.getItem('user_person_id') || localStorage.getItem('user_person_id'); } catch { return localStorage.getItem('user_person_id'); } })();
+    const email = (() => { try { return sessionStorage.getItem('user_email') || localStorage.getItem('user_email') || 'ejemplo@gmail.com'; } catch { return localStorage.getItem('user_email') || 'ejemplo@gmail.com'; } })();
     const personRequest = personId
       ? this.api.get<any[]>('/persons', { Id: personId })
       : this.api.get<any[]>('/persons', { Email: email });

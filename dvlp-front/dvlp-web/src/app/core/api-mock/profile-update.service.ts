@@ -22,9 +22,9 @@ export class ProfileUpdateService {
   clearPending() { this.pendingEmail = null; this.pendingPhone = null; }
 
   private currentPersonId$(): Observable<string> {
-    const personId = localStorage.getItem('user_person_id');
+    const personId = (() => { try { return sessionStorage.getItem('user_person_id') || localStorage.getItem('user_person_id'); } catch { return localStorage.getItem('user_person_id'); } })();
     if (personId) return of(personId);
-    const email = localStorage.getItem('user_email') || 'ejemplo@gmail.com';
+    const email = (() => { try { return sessionStorage.getItem('user_email') || localStorage.getItem('user_email') || 'ejemplo@gmail.com'; } catch { return localStorage.getItem('user_email') || 'ejemplo@gmail.com'; } })();
     return this.api.get<any[]>('/persons', { Email: email }).pipe(
       switchMap((arr) => {
         if (arr[0]?.Id) return of(arr[0].Id);
@@ -46,7 +46,7 @@ export class ProfileUpdateService {
         return this.api.put<any>(`/persons/${merged.id}`, merged);
       }),
       tap(() => {
-        localStorage.setItem('user_email', email!);
+        try { sessionStorage.setItem('user_email', email!); localStorage.removeItem('user_email'); } catch { localStorage.setItem('user_email', email!); }
         clearMockCache();
         this.emitRefresh();
         // Actualiza también el objeto en memoria para que el siguiente GET no cachee viejo

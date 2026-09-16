@@ -1,0 +1,558 @@
+{
+  "persons": [
+    {
+      "Id": "person-001",
+      "Name": "Admin",
+      "LastName": "Principal",
+      "IdentificationType": "CC",
+      "IdentificationNumber": "1234567890",
+      "Email": "admin1@colegio.edu.co",
+      "Phone": "3001234567",
+      "ResidenceAddress": "Calle Principal #123",
+      "DateBirth": "1990-01-01",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "person-driver-1",
+      "Name": "Carlos",
+      "LastName": "Garcia",
+      "IdentificationType": "CC",
+      "IdentificationNumber": "1234567891",
+      "Email": "carlos.garcia@colegio.edu.co",
+      "Phone": "3001234568",
+      "ResidenceAddress": "Calle 45 #67-89",
+      "DateBirth": "1985-03-15",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "person-driver-2",
+      "Name": "Maria",
+      "LastName": "Lopez",
+      "IdentificationType": "CC",
+      "IdentificationNumber": "1234567892",
+      "Email": "maria.lopez@colegio.edu.co",
+      "Phone": "3001234569",
+      "ResidenceAddress": "Carrera 10 #23-45",
+      "DateBirth": "1988-07-22",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "person-parent-1",
+      "Name": "Pedro",
+      "LastName": "Martinez",
+      "IdentificationType": "CC",
+      "IdentificationNumber": "1234567893",
+      "Email": "pedro.martinez@colegio.edu.co",
+      "Phone": "3001234570",
+      "ResidenceAddress": "Avenida 5 #12-34",
+      "DateBirth": "1992-11-10",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "person-parent-2",
+      "Name": "Ana",
+      "LastName": "Rodriguez",
+      "IdentificationType": "CC",
+      "IdentificationNumber": "1234567894",
+      "Email": "ana.rodriguez@colegio.edu.co",
+      "Phone": "3001234571",
+      "ResidenceAddress": "Calle 78 #90-12",
+      "DateBirth": "1990-05-18",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "person-student-1",
+      "Name": "Juan",
+      "LastName": "Perez",
+      "IdentificationType": "TI",
+      "IdentificationNumber": "1001234567",
+      "Email": "juan.perez@estudiante.edu.co",
+      "Phone": "3001234572",
+      "ResidenceAddress": "Calle 100 #15-20",
+      "DateBirth": "2010-02-14",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "person-student-2",
+      "Name": "Laura",
+      "LastName": "Gomez",
+      "IdentificationType": "TI",
+      "IdentificationNumber": "1001234568",
+      "Email": "laura.gomez@estudiante.edu.co",
+      "Phone": "3001234573",
+      "ResidenceAddress": "Carrera 25 #50-60",
+      "DateBirth": "2010-06-20",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "person-student-3",
+      "Name": "Diego",
+      "LastName": "Hernandez",
+      "IdentificationType": "TI",
+      "IdentificationNumber": "1001234569",
+      "Email": "diego.hernandez@estudiante.edu.co",
+      "Phone": "3001234574",
+      "ResidenceAddress": "Avenida 30 #70-80",
+      "DateBirth": "2011-01-05",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "person-student-4",
+      "Name": "Sofia",
+      "LastName": "Diaz",
+      "IdentificationType": "TI",
+      "IdentificationNumber": "1001234570",
+      "Email": "sofia.diaz@estudiante.edu.co",
+      "Phone": "3001234575",
+      "ResidenceAddress": "Calle 40 #85-95",
+      "DateBirth": "2011-09-12",
+      "Status": "ACTIVE"
+    }
+  ],
+  "profiles": [
+    {
+      "Id": "profile-001",
+      "PersonId": "person-001",
+      "RoleId": 1,
+      "CampuseId": "campus-001",
+      "Status": "ACTIVE",
+      "PasswordHash": "mock-Admin123!"
+    },
+    {
+      "Id": "profile-driver-1",
+      "PersonId": "person-driver-1",
+      "RoleId": 4,
+      "CampuseId": "campus-001",
+      "Status": "ACTIVE",
+      "PasswordHash": "mock-Driver123!"
+    },
+    {
+      "Id": "profile-driver-2",
+      "PersonId": "person-driver-2",
+      "RoleId": 4,
+      "CampuseId": "campus-002",
+      "Status": "ACTIVE",
+      "PasswordHash": "mock-Driver123!"
+    },
+    {
+      "Id": "profile-parent-1",
+      "PersonId": "person-parent-1",
+      "RoleId": 3,
+      "CampuseId": "campus-001",
+      "Status": "ACTIVE",
+      "PasswordHash": "mock-Parent123!"
+    },
+    {
+      "Id": "profile-parent-2",
+      "PersonId": "person-parent-2",
+      "RoleId": 3,
+      "CampuseId": "campus-002",
+      "Status": "ACTIVE",
+      "PasswordHash": "mock-Parent123!"
+    },
+    {
+      "Id": "profile-student-1",
+      "PersonId": "person-student-1",
+      "RoleId": 2,
+      "CampuseId": "campus-001",
+      "Status": "ACTIVE",
+      "PasswordHash": "mock-Student123!"
+    },
+    {
+      "Id": "profile-student-2",
+      "PersonId": "person-student-2",
+      "RoleId": 2,
+      "CampuseId": "campus-001",
+      "Status": "ACTIVE",
+      "PasswordHash": "mock-Student123!"
+    },
+    {
+      "Id": "profile-student-3",
+      "PersonId": "person-student-3",
+      "RoleId": 2,
+      "CampuseId": "campus-002",
+      "Status": "ACTIVE",
+      "PasswordHash": "mock-Student123!"
+    },
+    {
+      "Id": "profile-student-4",
+      "PersonId": "person-student-4",
+      "RoleId": 2,
+      "CampuseId": "campus-002",
+      "Status": "ACTIVE",
+      "PasswordHash": "mock-Student123!"
+    }
+  ],
+  "roles": [
+    {
+      "ID": 1,
+      "Name": "Admin",
+      "Status": "ACTIVE"
+    },
+    {
+      "ID": 2,
+      "Name": "Student",
+      "Status": "ACTIVE"
+    },
+    {
+      "ID": 3,
+      "Name": "Parent",
+      "Status": "ACTIVE"
+    },
+    {
+      "ID": 4,
+      "Name": "Driver",
+      "Status": "ACTIVE"
+    }
+  ],
+  "schools": [
+    {
+      "Id": "school-001",
+      "Name": "Colegio San Jose",
+      "Address": "Calle 50 #10-20",
+      "Phone": "6012345678",
+      "Email": "info@sanjose.edu.co",
+      "Website": "www.sanjose.edu.co",
+      "CityId": "city-001",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "school-002",
+      "Name": "Colegio Nueva Era",
+      "Address": "Carrera 15 #30-40",
+      "Phone": "6012345679",
+      "Email": "info@nuevaera.edu.co",
+      "Website": "www.nuevaera.edu.co",
+      "CityId": "city-001",
+      "Status": "ACTIVE"
+    }
+  ],
+  "school-campuses": [
+    {
+      "Id": "campus-001",
+      "SchoolId": "school-001",
+      "Name": "Sede Principal San Jose",
+      "Address": "Calle 50 #10-20",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "campus-002",
+      "SchoolId": "school-002",
+      "Name": "Sede Principal Nueva Era",
+      "Address": "Carrera 15 #30-40",
+      "Status": "ACTIVE"
+    }
+  ],
+  "buses": [
+    {
+      "Id": "bus-001",
+      "CampusId": "campus-001",
+      "Plate": "ABC-123",
+      "Capacity": 40,
+      "ModelId": 1,
+      "GpsDeviceId": "gps-001",
+      "SoatValidity": "2025-12-31",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "bus-002",
+      "CampusId": "campus-001",
+      "Plate": "DEF-456",
+      "Capacity": 35,
+      "ModelId": 1,
+      "GpsDeviceId": "gps-002",
+      "SoatValidity": "2025-11-30",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "bus-003",
+      "CampusId": "campus-002",
+      "Plate": "GHI-789",
+      "Capacity": 45,
+      "ModelId": 2,
+      "GpsDeviceId": "gps-003",
+      "SoatValidity": "2025-10-31",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "bus-004",
+      "CampusId": "campus-002",
+      "Plate": "JKL-012",
+      "Capacity": 38,
+      "ModelId": 2,
+      "GpsDeviceId": "gps-004",
+      "SoatValidity": "2025-09-30",
+      "Status": "ACTIVE"
+    }
+  ],
+  "routes": [
+    {
+      "Id": "route-001",
+      "CampusId": "campus-001",
+      "Name": "Ruta Norte San Jose",
+      "TargetSector": "Zona Norte - Barrio El Prado",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "route-002",
+      "CampusId": "campus-001",
+      "Name": "Ruta Sur San Jose",
+      "TargetSector": "Zona Sur - Ciudad Kennedy",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "route-003",
+      "CampusId": "campus-002",
+      "Name": "Ruta Este Nueva Era",
+      "TargetSector": "Zona Este - Barrio Chapinero",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "route-004",
+      "CampusId": "campus-002",
+      "Name": "Ruta Oeste Nueva Era",
+      "TargetSector": "Zona Oeste - Ciudad Bolivar",
+      "Status": "ACTIVE"
+    }
+  ],
+  "route-stops": [
+    {
+      "Id": "rs-001",
+      "RouteId": "route-001",
+      "StopId": "stop-001",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "rs-002",
+      "RouteId": "route-001",
+      "StopId": "stop-002",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "rs-003",
+      "RouteId": "route-001",
+      "StopId": "stop-003",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "rs-004",
+      "RouteId": "route-002",
+      "StopId": "stop-004",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "rs-005",
+      "RouteId": "route-002",
+      "StopId": "stop-005",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "rs-006",
+      "RouteId": "route-003",
+      "StopId": "stop-006",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "rs-007",
+      "RouteId": "route-003",
+      "StopId": "stop-007",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "rs-008",
+      "RouteId": "route-004",
+      "StopId": "stop-008",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "rs-009",
+      "RouteId": "route-004",
+      "StopId": "stop-009",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "rs-010",
+      "RouteId": "route-004",
+      "StopId": "stop-010",
+      "Status": "ACTIVE"
+    }
+  ],
+  "stops": [
+    {
+      "Id": "stop-001",
+      "CityId": "city-001",
+      "SchoolId": "school-001",
+      "Address": "Calle 100 #15-20",
+      "Latitude": 6.2442,
+      "Longitude": -75.5812,
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "stop-002",
+      "CityId": "city-001",
+      "SchoolId": "school-001",
+      "Address": "Carrera 25 #50-60",
+      "Latitude": 6.25,
+      "Longitude": -75.575,
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "stop-003",
+      "CityId": "city-001",
+      "SchoolId": "school-001",
+      "Address": "Avenida 30 #70-80",
+      "Latitude": 6.26,
+      "Longitude": -75.57,
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "stop-004",
+      "CityId": "city-001",
+      "SchoolId": "school-001",
+      "Address": "Calle 40 #85-95",
+      "Latitude": 6.23,
+      "Longitude": -75.59,
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "stop-005",
+      "CityId": "city-001",
+      "SchoolId": "school-001",
+      "Address": "Carrera 5 #100-110",
+      "Latitude": 6.22,
+      "Longitude": -75.595,
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "stop-006",
+      "CityId": "city-001",
+      "SchoolId": "school-002",
+      "Address": "Calle 20 #30-40",
+      "Latitude": 6.21,
+      "Longitude": -75.56,
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "stop-007",
+      "CityId": "city-001",
+      "SchoolId": "school-002",
+      "Address": "Carrera 40 #55-65",
+      "Latitude": 6.205,
+      "Longitude": -75.555,
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "stop-008",
+      "CityId": "city-001",
+      "SchoolId": "school-002",
+      "Address": "Avenida 8 #20-30",
+      "Latitude": 6.19,
+      "Longitude": -75.57,
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "stop-009",
+      "CityId": "city-001",
+      "SchoolId": "school-002",
+      "Address": "Calle 60 #10-15",
+      "Latitude": 6.185,
+      "Longitude": -75.575,
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "stop-010",
+      "CityId": "city-001",
+      "SchoolId": "school-002",
+      "Address": "Carrera 12 #75-85",
+      "Latitude": 6.18,
+      "Longitude": -75.58,
+      "Status": "ACTIVE"
+    }
+  ],
+  "route-bus-assignments": [
+    {
+      "Id": "rba-001",
+      "RouteId": "route-001",
+      "BusId": "bus-001",
+      "DriverProfileId": "profile-driver-1",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "rba-002",
+      "RouteId": "route-002",
+      "BusId": "bus-002",
+      "DriverProfileId": "profile-driver-1",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "rba-003",
+      "RouteId": "route-003",
+      "BusId": "bus-003",
+      "DriverProfileId": "profile-driver-2",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "rba-004",
+      "RouteId": "route-004",
+      "BusId": "bus-004",
+      "DriverProfileId": "profile-driver-2",
+      "Status": "ACTIVE"
+    }
+  ],
+  "driver-licenses": [
+    {
+      "Id": "dl-001",
+      "ProfileId": "profile-driver-1",
+      "LicenseNumber": "LIC-12345",
+      "LicenseExpirationDate": "2027-12-31",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "dl-002",
+      "ProfileId": "profile-driver-2",
+      "LicenseNumber": "LIC-67890",
+      "LicenseExpirationDate": "2028-06-30",
+      "Status": "ACTIVE"
+    }
+  ],
+  "families": [],
+  "family-members": [],
+  "boardings": [],
+  "alerts": [],
+  "permissions": [],
+  "permission-roles": [],
+  "route-executions": [],
+  "gps-devices": [],
+  "gps-locations": [],
+  "audits": [],
+  "log-errors": [],
+  "password-policies": [],
+  "security-settings": [],
+  "session-profiles": [],
+  "route-student-assignments": [
+    {
+      "Id": "rsa-001",
+      "RouteId": "route-001",
+      "StudentProfileId": "profile-student-1",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "rsa-002",
+      "RouteId": "route-002",
+      "StudentProfileId": "profile-student-2",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "rsa-003",
+      "RouteId": "route-003",
+      "StudentProfileId": "profile-student-3",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "rsa-004",
+      "RouteId": "route-004",
+      "StudentProfileId": "profile-student-4",
+      "Status": "ACTIVE"
+    }
+  ]
+}

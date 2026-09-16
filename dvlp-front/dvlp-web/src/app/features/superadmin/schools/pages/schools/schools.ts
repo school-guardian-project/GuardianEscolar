@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,6 +10,7 @@ import { SidebarSuperadmin } from '@shared/components/navbar/sidebar-superadmin/
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
+import { CardListDataService } from '@core/api-mock/card-list.data.service';
 
 
 @Component({
@@ -31,6 +32,8 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
   styleUrl: './schools.scss',
 })
 export class Schools {
+  private dataService = inject(CardListDataService);
+
   showModal = false;
   showUpdateModal = false;
   schoolSelected: RecordData = {};
@@ -57,8 +60,14 @@ export class Schools {
   }
 
   onSaved(updatedRecord: RecordData): void {
-    console.log('[Schools] Datos actualizados:', updatedRecord);
-    // this.schoolsService.update(updatedRecord).subscribe(() => { ... });
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.update('schools', this.schoolSelected, updatedRecord).subscribe({
+        next: () => console.log('[MOCK-API] UPDATE schools OK', updatedRecord),
+        error: (e) => console.warn('[MOCK-API] UPDATE schools FAIL', e.message),
+      });
+    } else {
+      console.log('[Schools] Datos actualizados:', updatedRecord);
+    }
     this.closeUpdateModal();
   }
    showDeleteModal = false;
@@ -78,8 +87,14 @@ export class Schools {
    * Aquí puedes llamar a tu servicio para eliminar.
    */
   onConfirmDelete(record: RecordData): void {
-    console.log('[Schools] Eliminando:', record);
-    // this.schoolsService.delete(record.id).subscribe(() => { ... });
+    if (this.dataService.isMockEnabled()) {
+      this.dataService.delete('schools', record ?? this.schoolSelected).subscribe({
+        next: () => console.log('[MOCK-API] DELETE schools OK', record),
+        error: (e) => console.warn('[MOCK-API] DELETE schools FAIL', e.message),
+      });
+    } else {
+      console.log('[Schools] Eliminando:', record);
+    }
     this.closeDeleteModal();
   }
 }

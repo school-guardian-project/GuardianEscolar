@@ -172,6 +172,60 @@ export const authService = {
 
 // ----- Dominio -----
 export const dashboardService = {
+  /** Obtiene la ruta asignada a un estudiante específico */
+  async getStudentRoute(studentProfileId) {
+    if (!studentProfileId) return null;
+
+    // 1. Buscar asignación de ruta-estudiante (campo: ProfileId, RouteStopId)
+    const assignments = await apiClient.query(ENDPOINTS.routeStudentAssignments, { ProfileId: studentProfileId });
+    const assignment = Array.isArray(assignments) ? assignments[0] : null;
+    if (!assignment?.RouteStopId) return null;
+
+    // 2. Obtener la ruta a través de route-stops
+    const routeStops = await apiClient.query(ENDPOINTS.routeStops, { Id: assignment.RouteStopId });
+    const routeStop = Array.isArray(routeStops) ? routeStops[0] : null;
+    if (!routeStop?.RouteId) return null;
+
+    const routes = await apiClient.query(ENDPOINTS.routes, { Id: routeStop.RouteId });
+    const route = Array.isArray(routes) ? routes[0] : null;
+    if (!route) return null;
+
+    // 3. Contar paradas de la ruta
+    const allRouteStops = await apiClient.query(ENDPOINTS.routeStops, { RouteId: route.Id });
+    const stopsCount = Array.isArray(allRouteStops) ? allRouteStops.length : 0;
+
+    // 4. Obtener bus y conductor asignados
+    let bus = null, driverName = null;
+    try {
+      const rbas = await apiClient.query(ENDPOINTS.routeBusAssignments, { RouteId: route.Id });
+      const rba = Array.isArray(rbas) ? rbas[0] : null;
+      if (rba?.BusId) {
+        const buses = await apiClient.query(ENDPOINTS.buses, { Id: rba.BusId });
+        bus = Array.isArray(buses) ? buses[0] : null;
+
+        // El conductor está en driver-assignments vinculado por BusId
+        const driverAssignments = await apiClient.query(ENDPOINTS.driverAssignments, { BusId: rba.BusId });
+        const da = Array.isArray(driverAssignments) ? driverAssignments[0] : null;
+        if (da?.ProfileId) {
+          const profs = await apiClient.query(ENDPOINTS.profiles, { Id: da.ProfileId });
+          const prof = Array.isArray(profs) ? profs[0] : null;
+          if (prof?.PersonId) {
+            const persons = await apiClient.query(ENDPOINTS.persons, { Id: prof.PersonId });
+            const person = Array.isArray(persons) ? persons[0] : null;
+            if (person) driverName = `${person.Name} ${person.LastName}`.trim();
+          }
+        }
+      }
+    } catch {}
+
+    return {
+      ...route,
+      stopsCount,
+      Plate: bus?.Plate || null,
+      driverName,
+    };
+  },
+
   /** Rutas con conteo de paradas + bus/placa/conductor reales de db.json */
   async getRoutesWithStops(campusId, opts = {}) {
     const limit = Math.min(opts.limit ?? 50, 100);
@@ -186,18 +240,21 @@ export const dashboardService = {
       let bus = null, driverName = null;
       try {
         const rbas = await apiClient.query(ENDPOINTS.routeBusAssignments, { RouteId: r.Id });
-        const rba = rbas[0];
+        const rba = Array.isArray(rbas) ? rbas[0] : null;
         if (rba?.BusId) {
           const buses = await apiClient.query(ENDPOINTS.buses, { Id: rba.BusId });
-          bus = buses[0] || null;
-        }
-        if (rba?.DriverProfileId) {
-          const profs = await apiClient.query(ENDPOINTS.profiles, { Id: rba.DriverProfileId });
-          const prof = profs[0];
-          if (prof?.PersonId) {
-            const persons = await apiClient.query(ENDPOINTS.persons, { Id: prof.PersonId });
-            const person = persons[0];
-            if (person) driverName = `${person.Name} ${person.LastName}`.trim();
+          bus = Array.isArray(buses) ? buses[0] : null;
+
+          const driverAssignments = await apiClient.query(ENDPOINTS.driverAssignments, { BusId: rba.BusId });
+          const da = Array.isArray(driverAssignments) ? driverAssignments[0] : null;
+          if (da?.ProfileId) {
+            const profs = await apiClient.query(ENDPOINTS.profiles, { Id: da.ProfileId });
+            const prof = Array.isArray(profs) ? profs[0] : null;
+            if (prof?.PersonId) {
+              const persons = await apiClient.query(ENDPOINTS.persons, { Id: prof.PersonId });
+              const person = Array.isArray(persons) ? persons[0] : null;
+              if (person) driverName = `${person.Name} ${person.LastName}`.trim();
+            }
           }
         }
       } catch {}

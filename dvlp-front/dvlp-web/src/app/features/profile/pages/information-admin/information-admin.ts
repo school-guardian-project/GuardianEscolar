@@ -6,12 +6,12 @@ import { SidebarAdmin } from '@shared/components/navbar/sidebar-admin/sidebar-ad
 import { Themes } from '@shared/components/modal/themes/themes';
 import { Language } from '@shared/components/modal/language/language'
 import { TranslateModule } from '@ngx-translate/core';
-import { Router } from '@angular/router';
+import { Router, NavigationEnd } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-manage';
 import { MockApiService } from '@core/api-mock/mock-api.service';
 import { ProfileUpdateService } from '@core/api-mock/profile-update.service';
-import { catchError, map, of, switchMap } from 'rxjs';
+import { catchError, map, of, switchMap, filter } from 'rxjs';
 
 @Component({
   selector: 'app-information-admin',
@@ -59,7 +59,7 @@ export class InformationAdmin implements OnInit {
       this.loadProfile();
     });
     // También recarga cuando se vuelve a la ruta (sin F5) — Angular reutiliza el componente
-    this.router.events.subscribe((e: any) => {
+    this.router.events.pipe(filter((e: any) => e instanceof NavigationEnd)).subscribe((e: any) => {
       if (e?.urlAfterRedirects?.includes('/admin/informacion') || e?.url?.includes('/admin/informacion')) {
         this.loadProfile();
       }
@@ -68,8 +68,8 @@ export class InformationAdmin implements OnInit {
 
   private loadProfile(): void {
     const requestId = ++this.profileLoad;
-    const personId = localStorage.getItem('user_person_id');
-    const email = localStorage.getItem('user_email') || 'ejemplo@gmail.com';
+    const personId = (() => { try { return sessionStorage.getItem('user_person_id') || localStorage.getItem('user_person_id'); } catch { return localStorage.getItem('user_person_id'); } })();
+    const email = (() => { try { return sessionStorage.getItem('user_email') || localStorage.getItem('user_email') || 'ejemplo@gmail.com'; } catch { return localStorage.getItem('user_email') || 'ejemplo@gmail.com'; } })();
     const personRequest = personId
       ? this.api.get<any[]>('/persons', { Id: personId })
       : this.api.get<any[]>('/persons', { Email: email }).pipe(

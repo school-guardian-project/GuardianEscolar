@@ -120,6 +120,36 @@
     "subtitle": "Gestioná tu cuenta y preferencias"
   },
 
+  "notifications": {
+    "title": "Notificaciones",
+    "markAllRead": "Marcar todas como leídas",
+    "empty": "No tienes notificaciones nuevas",
+    "routeStartedTitle": "Ruta iniciada",
+    "routeStartedMessage": "El bus de la Ruta Centro inició su recorrido.",
+    "studentBoardedTitle": "Ingreso registrado",
+    "studentBoardedMessage": "Se registró el ingreso del estudiante al bus.",
+    "routeArrivingTitle": "Bus próximo",
+    "routeArrivingMessage": "El bus llegará a tu parada en aproximadamente 10 minutos.",
+    "studentLeftTitle": "Descenso registrado",
+    "studentLeftMessage": "Se registró el descenso del estudiante del bus.",
+    "routeDetourTitle": "Desvío de ruta",
+    "routeDetourMessage": "La ruta presenta un desvío temporal.",
+    "justNow": "Ahora",
+    "emptySaved": "No tienes notificaciones guardadas",
+    "saveNotification": "Guardar notificación",
+    "removeSaved": "Quitar de notificaciones guardadas",
+    "filters": {
+      "button": "Filtrar",
+      "title": "Filtrar notificaciones",
+      "all": "Todas",
+      "boarding": "Ascenso al bus",
+      "alighting": "Descenso del bus",
+      "delays": "Retardos",
+      "detours": "Desvíos de ruta",
+      "saved": "Notificaciones guardadas"
+    }
+  },
+
   "Family": {
     "holder": "Titular",
     "members": "Otros miembros"

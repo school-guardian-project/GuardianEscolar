@@ -49,7 +49,7 @@ export default function Language() {
         >
             {/* Encabezado */}
             <View style={styles.header}>
-                <BackButton label={t("inputs.appearance")}
+                <BackButton label={t("inputs.language")}
                     backTo="Profile" />
             </View>
 

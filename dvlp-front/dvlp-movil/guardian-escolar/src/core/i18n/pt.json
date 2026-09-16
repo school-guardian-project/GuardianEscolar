@@ -110,6 +110,36 @@
     "subtitle": "Gerencie sua conta e preferências"
   },
 
+  "notifications": {
+    "title": "Notificações",
+    "markAllRead": "Marcar todas como lidas",
+    "empty": "Você não tem novas notificações",
+    "routeStartedTitle": "Rota iniciada",
+    "routeStartedMessage": "O ônibus da Rota Centro iniciou seu trajeto.",
+    "studentBoardedTitle": "Embarque registrado",
+    "studentBoardedMessage": "O embarque do estudante no ônibus foi registrado.",
+    "routeArrivingTitle": "Ônibus próximo",
+    "routeArrivingMessage": "O ônibus chegará à sua parada em aproximadamente 10 minutos.",
+    "studentLeftTitle": "Desembarque registrado",
+    "studentLeftMessage": "O desembarque do estudante do ônibus foi registrado.",
+    "routeDetourTitle": "Desvio de rota",
+    "routeDetourMessage": "A rota apresenta um desvio temporário.",
+    "justNow": "Agora",
+    "emptySaved": "Você não tem notificações salvas",
+    "saveNotification": "Salvar notificação",
+    "removeSaved": "Remover das notificações salvas",
+    "filters": {
+      "button": "Filtrar",
+      "title": "Filtrar notificações",
+      "all": "Todas",
+      "boarding": "Embarque no ônibus",
+      "alighting": "Desembarque do ônibus",
+      "delays": "Atrasos",
+      "detours": "Desvios de rota",
+      "saved": "Notificações salvas"
+    }
+  },
+
   "Family": {
     "holder": "Titular",
     "members": "Outros membros"

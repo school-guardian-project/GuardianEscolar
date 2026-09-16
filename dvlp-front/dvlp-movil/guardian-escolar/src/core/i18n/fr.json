@@ -110,6 +110,36 @@
     "subtitle": "Gérez votre compte et vos préférences"
   },
 
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Tout marquer comme lu",
+    "empty": "Vous n'avez aucune nouvelle notification",
+    "routeStartedTitle": "Itinéraire démarré",
+    "routeStartedMessage": "Le bus de l'itinéraire Centro a commencé son trajet.",
+    "studentBoardedTitle": "Montée enregistrée",
+    "studentBoardedMessage": "La montée de l'élève dans le bus a été enregistrée.",
+    "routeArrivingTitle": "Bus proche",
+    "routeArrivingMessage": "Le bus arrivera à votre arrêt dans environ 10 minutes.",
+    "studentLeftTitle": "Descente enregistrée",
+    "studentLeftMessage": "La descente de l'élève du bus a été enregistrée.",
+    "routeDetourTitle": "Déviation de l'itinéraire",
+    "routeDetourMessage": "L'itinéraire présente une déviation temporaire.",
+    "justNow": "Maintenant",
+    "emptySaved": "Vous n'avez aucune notification enregistrée",
+    "saveNotification": "Enregistrer la notification",
+    "removeSaved": "Retirer des notifications enregistrées",
+    "filters": {
+      "button": "Filtrer",
+      "title": "Filtrer les notifications",
+      "all": "Toutes",
+      "boarding": "Montée dans le bus",
+      "alighting": "Descente du bus",
+      "delays": "Retards",
+      "detours": "Déviations de l'itinéraire",
+      "saved": "Notifications enregistrées"
+    }
+  },
+
   "Family": {
     "holder": "Titulaire",
     "members": "Autres membres"

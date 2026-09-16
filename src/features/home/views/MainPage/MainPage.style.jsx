@@ -5,24 +5,32 @@ export default StyleSheet.create({
     flex: 1,
     width: "100%",
     height: "100%",
+    position: "relative",
   },
   map: {
     flex: 1,
+    zIndex: 0,
+  },
+
+  topBarContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    right: 0,
+    zIndex: 2,
+    elevation: 10,
   },
   overlay: {
     ...StyleSheet.absoluteFillObject,
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
+    zIndex: 1,
+    elevation: 5,
   },
-  topBar: {
-    flexDirection: "row",
-    alignItems: "center",
-    paddingTop: 12,
-    gap: 8,
-  },
-  searchWrapper: {
+
+  spacer: {
     flex: 1,
-    minWidth: 0,
   },
+  
   bottomSection: {
     alignSelf: "stretch",
   },

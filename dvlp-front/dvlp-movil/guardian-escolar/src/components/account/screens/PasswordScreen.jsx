@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
 import AccountLayout from "@components/account/AccountLayout";
@@ -14,6 +14,8 @@ export default function PasswordScreen({
 }) {
 
     const navigation = useNavigation();
+    const [password, setPassword] = useState("");
+    const [confirmation, setConfirmation] = useState("");
 
     const handleSubmit = () => {
         if (onSuccess) {
@@ -33,11 +35,15 @@ export default function PasswordScreen({
             <InputField
                 label="Nueva contraseña"
                 secureTextEntry
+                value={password}
+                onChangeText={setPassword}
             />
 
             <InputField
                 label="Confirmación"
                 secureTextEntry
+                value={confirmation}
+                onChangeText={setConfirmation}
             />
 
             <PrimaryButton

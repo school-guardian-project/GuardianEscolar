@@ -5,10 +5,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { useTheme } from "@core/services/ThemeService";
 
-export default function BackButton({
-  label,
-  backTo,
-}) {
+export default function BackButton({ label = undefined, backTo = undefined }) {
   const navigation = useNavigation();
   const { theme } = useTheme();
 

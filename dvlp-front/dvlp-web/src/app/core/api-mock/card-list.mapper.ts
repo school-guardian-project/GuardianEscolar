@@ -46,16 +46,16 @@ export function mapFamilia(family: any): any {
   };
 }
 
-export function mapBus(bus: any, model: any, brand: any, gps: any): any {
+export function mapBus(bus: any, model: any, brand: any, driverName: string | null): any {
   return {
     id: bus.Id,
     matricula: bus.Plate,
     placa: bus.Plate,
-    conductor: '—', // se resuelve vía driver-assignments si existe
+    conductor: driverName ?? '—',
     marca: brand?.Name ?? '—',
     modelo: model?.Name ?? '—',
     capacidad: String(bus.Capacity),
-    gps: gps?.GpsStatus ? 'Activo' : 'Inactivo',
+    gps: '—',
     soat: bus.SoatValidity,
   };
 }
@@ -72,10 +72,11 @@ export function mapRuta(route: any): any {
   };
 }
 
-export function mapParada(stop: any, city: any): any {
+export function mapParada(stop: any, city: any, studentNames: string[] = []): any {
   return {
     id: stop.Id,
     nombre: stop.Address,
+    estudiante: studentNames.length ? studentNames.join(', ') : '—',
     direccion: stop.Address,
     ciudad: city?.Name ?? '—',
     latitud: String(stop.Latitude),

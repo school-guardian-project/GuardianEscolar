@@ -168,6 +168,28 @@ export class CardRegister implements OnInit {
 
   ngOnInit(): void {
     this.groupedFields = this.buildGroupedFields();
+    if (this.type === 'familia') this.loadFamiliaOptions();
+  }
+
+  private loadFamiliaOptions(): void {
+    // Poblar selects de acudiente/estudiante con datos reales del colegio actual
+    const familiaFields = FIELDS['familia'];
+    const acudienteField = familiaFields.find(f => f.name === 'acudiente');
+    const estudianteField = familiaFields.find(f => f.name === 'estudiante');
+    if (!acudienteField || !estudianteField) return;
+    // Usar CardListDataService para traer datos filtrados por colegio
+    (this.dataService as any).getAcudientes?.().subscribe((list: any[]) => {
+      const opts = (list || []).slice(0, 20).map((r: any) => r.correo || r.nombre || r.id).filter(Boolean);
+      if (opts.length) acudienteField.options = opts;
+      this.groupedFields = this.buildGroupedFields();
+      this.cdr.detectChanges();
+    });
+    (this.dataService as any).getEstudiantes?.().subscribe((list: any[]) => {
+      const opts = (list || []).slice(0, 20).map((r: any) => r.correo || r.nombre || r.id).filter(Boolean);
+      if (opts.length) estudianteField.options = opts;
+      this.groupedFields = this.buildGroupedFields();
+      this.cdr.detectChanges();
+    });
   }
 
   private buildGroupedFields() {

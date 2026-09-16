@@ -21,6 +21,10 @@ export class CardListDataService {
   triggerRefresh(type: string): void { this.refreshSubject.next(type); }
   private genId(prefix: string): string { return `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2,6)}`; }
 
+  private getCurrentCampusId(): string | null {
+    try { return sessionStorage.getItem('user_campuse_id') || localStorage.getItem('user_campuse_id'); } catch { return null; }
+  }
+
   getByType(type: string): Observable<any[]> {
     if (!this.isMock) return of([]);
     switch (type) {
@@ -37,9 +41,11 @@ export class CardListDataService {
     }
   }
 
-  private getEstudiantes(): Observable<any[]> {
-    // profiles RoleId=2 + persons
-    return this.api.get<any[]>('/profiles', { RoleId: 2, _limit: 50 }).pipe(
+  getEstudiantes(): Observable<any[]> {
+    const campusId = this.getCurrentCampusId();
+    const params: any = { RoleId: 2, _limit: 50, _sort: 'Id', _order: 'desc' };
+    if (campusId) params.CampuseId = campusId;
+    return this.api.get<any[]>('/profiles', params).pipe(
       switchMap((profiles) => {
         if (!profiles.length) return of([]);
         // batch persons por Id (json-server no soporta _in, hacemos forkJoin limitado)
@@ -54,7 +60,10 @@ export class CardListDataService {
   }
 
   private getConductores(): Observable<any[]> {
-    return this.api.get<any[]>('/profiles', { RoleId: 4, _limit: 50 }).pipe(
+    const campusId = this.getCurrentCampusId();
+    const params: any = { RoleId: 4, _limit: 50, _sort: 'Id', _order: 'desc' };
+    if (campusId) params.CampuseId = campusId;
+    return this.api.get<any[]>('/profiles', params).pipe(
       switchMap((profiles) => {
         if (!profiles.length) return of([]);
         const limited = profiles.slice(0, 20);
@@ -70,8 +79,11 @@ export class CardListDataService {
     );
   }
 
-  private getAcudientes(): Observable<any[]> {
-    return this.api.get<any[]>('/profiles', { RoleId: 3, _limit: 50 }).pipe(
+  getAcudientes(): Observable<any[]> {
+    const campusId = this.getCurrentCampusId();
+    const params: any = { RoleId: 3, _limit: 50, _sort: 'Id', _order: 'desc' };
+    if (campusId) params.CampuseId = campusId;
+    return this.api.get<any[]>('/profiles', params).pipe(
       switchMap((profiles) => {
         const limited = profiles.slice(0, 20);
         const obs = limited.map(p => this.api.get<any[]>('/persons', { Id: p.PersonId }).pipe(map(a => ({ p, person: a[0] }))));
@@ -82,7 +94,10 @@ export class CardListDataService {
   }
 
   private getAdmins(): Observable<any[]> {
-    return this.api.get<any[]>('/profiles', { RoleId: 1, _limit: 20 }).pipe(
+    const campusId = this.getCurrentCampusId();
+    const params: any = { RoleId: 1, _limit: 20, _sort: 'Id', _order: 'desc' };
+    if (campusId) params.CampuseId = campusId;
+    return this.api.get<any[]>('/profiles', params).pipe(
       switchMap((profiles) => {
         const obs = profiles.map(p => this.api.get<any[]>('/persons', { Id: p.PersonId }).pipe(map(a => ({ p, person: a[0] }))));
         return obs.length ? forkJoin(obs).pipe(map(list => list.filter(x => x.person).map(x => mapEstudiante(x.person, x.p)))) : of([]);
@@ -92,8 +107,8 @@ export class CardListDataService {
   }
 
   private getFamilias(): Observable<any[]> {
-    return this.api.get<any[]>('/families', { _limit: 20 }).pipe(
-      map(arr => arr.map(mapFamilia)),
+    return this.api.get<any[]>('/families', { _limit: 1000 }).pipe(
+      map(arr => [...arr].reverse().slice(0, 20).map(mapFamilia)),
       catchError(() => of([]))
     );
   }
@@ -102,21 +117,42 @@ export class CardListDataService {
     return this.api.get<any[]>('/buses', { _limit: 20 }).pipe(
       switchMap((buses) => {
         if (!buses.length) return of([]);
-        // enrich with model/brand/gps (limit)
         const obs = buses.slice(0, 10).map(b =>
           forkJoin({
             model: b.ModelId ? this.api.get<any[]>('/models', { Id: b.ModelId }).pipe(map(a => a[0]), catchError(() => of(null))) : of(null),
-            gps: b.GpsDeviceId ? this.api.get<any[]>('/gps-devices', { ID: b.GpsDeviceId }).pipe(map(a => a[0]), catchError(() => of(null))) : of(null),
+            driverName: this.resolveDriverName(b.Id),
           }).pipe(
-            switchMap(({ model }) => {
+            switchMap(({ model, driverName }) => {
               const brandObs = model?.BrandId ? this.api.get<any[]>('/brands', { Id: model.BrandId }).pipe(map(a => a[0]), catchError(() => of(null))) : of(null);
-              return brandObs.pipe(map(brand => mapBus(b, model, brand, null)));
+              return brandObs.pipe(map(brand => mapBus(b, model, brand, driverName)));
             })
           )
         );
         return forkJoin(obs);
       }),
       catchError(() => of([]))
+    );
+  }
+
+  private resolveDriverName(busId: string): Observable<string | null> {
+    return this.api.get<any[]>('/driver-assignments', { BusId: busId }).pipe(
+      switchMap(assignments => {
+        const da = Array.isArray(assignments) ? assignments[0] : null;
+        if (!da?.ProfileId) return of(null);
+        return this.api.get<any[]>('/profiles', { Id: da.ProfileId }).pipe(
+          switchMap(profiles => {
+            const prof = Array.isArray(profiles) ? profiles[0] : null;
+            if (!prof?.PersonId) return of(null);
+            return this.api.get<any[]>('/persons', { Id: prof.PersonId }).pipe(
+              map(persons => {
+                const person = Array.isArray(persons) ? persons[0] : null;
+                return person ? `${person.Name} ${person.LastName}`.trim() : null;
+              })
+            );
+          })
+        );
+      }),
+      catchError(() => of(null))
     );
   }
 
@@ -128,14 +164,39 @@ export class CardListDataService {
   }
 
   private getParadas(): Observable<any[]> {
-    return this.api.get<any[]>('/stops', { _limit: 20 }).pipe(
-      switchMap((stops) => {
-        if (!stops.length) return of([]);
-        // city join para 5 primeras
-        const obs = stops.slice(0, 10).map(s =>
-          s.CityId ? this.api.get<any[]>('/cities', { Id: s.CityId }).pipe(map(a => mapParada(s, a[0])), catchError(() => of(mapParada(s, null)))) : of(mapParada(s, null))
-        );
-        return forkJoin(obs);
+    return forkJoin({
+      stops: this.api.get<any[]>('/stops', { _limit: 20 }).pipe(catchError(() => of([]))),
+      routeStops: this.api.get<any[]>('/route-stops', {}).pipe(catchError(() => of([]))),
+      assignments: this.api.get<any[]>('/route-student-assignments', {}).pipe(catchError(() => of([]))),
+      profiles: this.api.get<any[]>('/profiles', {}).pipe(catchError(() => of([]))),
+      persons: this.api.get<any[]>('/persons', {}).pipe(catchError(() => of([]))),
+      cities: this.api.get<any[]>('/cities', {}).pipe(catchError(() => of([]))),
+    }).pipe(
+      map(({ stops, routeStops, assignments, profiles, persons, cities }) => {
+        const stopsArr = Array.isArray(stops) ? stops.slice(0, 10) : [];
+        if (!stopsArr.length) return [];
+
+        const profMap = new Map<string, any>((Array.isArray(profiles) ? profiles : []).map((p: any) => [p.Id, p]));
+        const personMap = new Map<string, any>((Array.isArray(persons) ? persons : []).map((p: any) => [p.Id, p]));
+        const cityMap = new Map<string, any>((Array.isArray(cities) ? cities : []).map((c: any) => [c.Id, c]));
+        const rsArr = Array.isArray(routeStops) ? routeStops : [];
+        const assignArr = Array.isArray(assignments) ? assignments : [];
+
+        return stopsArr.map(s => {
+          const city = s.CityId ? cityMap.get(s.CityId) ?? null : null;
+
+          const stopRouteStopIds = rsArr.filter((rs: any) => rs.StopId === s.Id).map((rs: any) => rs.Id);
+          const stopAssignments = assignArr.filter((a: any) => stopRouteStopIds.includes(a.RouteStopId));
+          const profileIds = [...new Set(stopAssignments.map((a: any) => a.ProfileId).filter(Boolean))];
+          const studentNames = profileIds.slice(0, 5).map((pid: string) => {
+            const prof = profMap.get(pid);
+            if (!prof?.PersonId) return null;
+            const person = personMap.get(prof.PersonId);
+            return person ? `${person.Name} ${person.LastName}`.trim() : null;
+          }).filter(Boolean);
+
+          return mapParada(s, city, studentNames);
+        });
       }),
       catchError(() => of([]))
     );
@@ -154,6 +215,43 @@ export class CardListDataService {
     // estudiantes/conductores/acudientes/admins requieren persons+profiles
     const roleMap:any={ estudiante:2, acudiente:3, conductor:4, admins:1 };
     if (roleMap[type]) return this.createEstudiante(formData, roleMap[type]);
+    // familia: crear familia + asociar miembros si se seleccionaron
+    if (type === 'familia' || type === 'familias') {
+      const payload = this.toCreatePayload(type, formData);
+      const withIds = { id: payload.Id ?? payload.id, ...payload };
+      if (!withIds.id && withIds.Id) withIds.id = withIds.Id;
+      if (!withIds.Id && withIds.id) withIds.Id = withIds.id;
+      return this.api.post<any>('/families', withIds).pipe(
+        switchMap(family => {
+          const familyId = (family as any).Id || (family as any).id;
+          const tasks: Observable<any>[] = [];
+          const acudienteVal = formData['acudiente'];
+          const estudianteVal = formData['estudiante'];
+          if (acudienteVal) {
+            tasks.push(this.findProfileByDisplay(acudienteVal, 3).pipe(
+              switchMap(profile => {
+                if (!profile) return of(null);
+                const fmId = this.genId('family-member');
+                return this.api.post<any>('/family-members', { id: fmId, Id: fmId, FamilyId: familyId, ProfileId: profile.Id, RelationshipType: 'PARENT', Status: 'ACTIVE' });
+              }), catchError(() => of(null))
+            ));
+          }
+          if (estudianteVal) {
+            tasks.push(this.findProfileByDisplay(estudianteVal, 2).pipe(
+              switchMap(profile => {
+                if (!profile) return of(null);
+                const fmId = this.genId('family-member');
+                return this.api.post<any>('/family-members', { id: fmId, Id: fmId, FamilyId: familyId, ProfileId: profile.Id, RelationshipType: 'STUDENT', Status: 'ACTIVE' });
+              }), catchError(() => of(null))
+            ));
+          }
+          if (tasks.length) return forkJoin(tasks).pipe(map(() => family));
+          return of(family);
+        }),
+        tap(() => { clearMockCache(); this.triggerRefresh(type); }),
+        catchError(() => of(null))
+      );
+    }
     const payload = this.toCreatePayload(type, formData);
     const endpoint = this.endpointFor(type);
     if (!endpoint) return of(null);
@@ -163,6 +261,28 @@ export class CardListDataService {
     if (!withIds.Id && withIds.id) withIds.Id = withIds.id;
     return this.api.post<any>(endpoint, withIds).pipe(
       tap(() => { clearMockCache(); this.triggerRefresh(type); }),
+      catchError(() => of(null))
+    );
+  }
+
+  private findProfileByDisplay(display: string, roleId: number): Observable<any | null> {
+    const val = String(display).trim();
+    return this.api.get<any[]>('/persons', { Email: val }).pipe(
+      switchMap(persons => {
+        if (persons[0]) {
+          return this.api.get<any[]>('/profiles', { PersonId: persons[0].Id }).pipe(
+            map(profiles => profiles.find(p => p.RoleId === roleId) || profiles[0] || null)
+          );
+        }
+        return this.api.get<any[]>('/persons', { Name: val }).pipe(
+          switchMap(persons2 => {
+            if (!persons2[0]) return of(null);
+            return this.api.get<any[]>('/profiles', { PersonId: persons2[0].Id }).pipe(
+              map(profiles => profiles.find(p => p.RoleId === roleId) || profiles[0] || null)
+            );
+          })
+        );
+      }),
       catchError(() => of(null))
     );
   }
@@ -183,13 +303,17 @@ export class CardListDataService {
       DateBirth: formData['fechaNac'] ?? '2010-01-01',
       Status: 'ACTIVE',
     };
+    const campusId = this.getCurrentCampusId();
+    if (!campusId) throw new Error('Sesión sin colegio — inicia sesión de nuevo');
+    // Mock: password = identificacion (el backend real hashea con PBKDF2, aquí se guarda mock para validar en login mock)
+    const rawPass = String(formData['identificacion'] ?? '').trim() || 'Admin123!';
     const profile: any = {
       id: profileId, Id: profileId,
       PersonId: personId,
-      CampuseId: 'campus-0001-0000-0000-000000000000',
+      CampuseId: campusId,
       RoleId: roleId,
       Status: 'ACTIVE',
-      PasswordHash: 'AQAAAAEAACcQAAAAECcbHcK+WTUmdUZgHgSml4AIZgL435OqEdiHhOkakd1ZJnQ+AlT51c44DemZyDgDJg==', // Admin123!
+      PasswordHash: `mock-${rawPass}`,
     };
     return this.api.post<any>('/persons', person).pipe(
       switchMap(() => this.api.post<any>('/profiles', profile)),

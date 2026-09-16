@@ -839,6 +839,7 @@
       "licencia_vigente": "Valid License",
       "placa": "License Plate",
       "nombre_conductor": "Driver Name",
+      "estudiante": "Student",
       "acudiente": "Guardian",
       "direccion": "Address",
       "destino_final": "Final Destination",

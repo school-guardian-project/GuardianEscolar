@@ -4,9 +4,10 @@ import { MockValidationError } from './mock-api.errors';
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const ALLOWED: Record<string, Set<string>> = {
   '/persons': new Set(['Id', 'Email', 'Name', 'Status']),
-  '/profiles': new Set(['Id', 'PersonId', 'RoleId', 'Status']),
+  '/profiles': new Set(['Id', 'PersonId', 'RoleId', 'CampuseId', 'Status']),
   '/roles': new Set(['ID', 'Name', 'Status']),
   '/routes': new Set(['Id', 'CampusId', 'Status']),
+  '/buses': new Set(['Id', 'CampusId', 'Plate', 'Status']),
 };
 
 export function validateEmail(v: string): string {

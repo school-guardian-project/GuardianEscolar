@@ -75,6 +75,7 @@ const ITEM_FIELDS: Record<CardType, ItemField[]> = {
   ],
   parada: [
     { key: 'nombre' },
+    { key: 'estudiante', labelKey: 'card_list.labels.estudiante' },
     { key: 'direccion', labelKey: 'card_list.labels.direccion' },
     { key: 'latitud', halfWidth: true },
     { key: 'longitud', halfWidth: true },

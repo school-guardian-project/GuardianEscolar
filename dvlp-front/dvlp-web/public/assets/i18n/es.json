@@ -10,7 +10,24 @@
     "line3": "escolar",
     "line4": "en",
     "line5": "tiempo",
-    "line6": "real"
+    "line6": "real",
+    "paragraph": "Monitoreo GPS de rutas, alertas instantáneas y control de asistencia. Tranquilidad para las familias, eficiencia para las escuelas.",
+    "btn_download": "Descargar",
+    "btn_video": "Ver video"
+  },
+  "card_panel": {
+    "badge": "+ 12 este mes",
+    "title": "Panel Guardian Escolar",
+    "live": "● En vivo",
+    "students": "Estudiantes",
+    "routes": "Rutas",
+    "alerts": "Alertas",
+
+    "alert_msg": "Bus fuera de ruta",
+    "alert_sub": "Ruta LOL85 · 6:45 am",
+
+    "success_msg": "18 rutas operando",
+    "success_sub": "Todas en tiempo normal"
   },
   "features": {
     "label": "FUNCIONALIDADES",
@@ -117,10 +134,17 @@
     "links_product": [
       "Funcionalidades",
       "Cómo funciona",
+      "Precios",
+      "Para escuelas"
+    ],
+    "links_company": [
+      "Nosotros",
+      "Blog",
       "Contacto"
     ],
     "links_legal": [
-      "Privacidad y términos"
+      "Privacidad",
+      "Términos"
     ],
     "rights": "© 2026 Guardian Escolar · Todos los derechos reservados"
   },
@@ -128,6 +152,9 @@
     "left": {
       "title": "Bienvenido de nuevo",
       "description": "Accede al sistema completo de monitoreo de rutas escolares.",
+      "gps": "GPS en tiempo real",
+      "alerts": "Alertas instantáneas",
+      "reports": "Reportes y métricas",
       "footer": "guardian.edu · Soporte 24/7"
     },
     "right": {
@@ -542,7 +569,6 @@
       "title": "Información de la Parada",
       "fields": {
         "nombre": "Nombre",
-        "estudiante": "Estudiante",
         "ciudad": "Ciudad",
         "direccion": "Dirección",
         "latitud": "Latitud",
@@ -587,48 +613,48 @@
   },
   "update_record": {
     "estudiante": {
-      "title": "Actualizar estudiante",
+      "title": "Actualizar Estudiante",
       "fields": {
         "nombres": "Nombres",
         "apellidos": "Apellidos",
-        "tipoId": "Tipo de identificación",
+        "tipoId": "Tipo Identificación",
         "identificacion": "Identificación",
-        "fechaNac": "Fecha de nacimiento",
+        "fechaNac": "Fecha nacimiento",
         "curso": "Curso",
         "telefono": "Teléfono",
-        "direccion": "Dirección de residencia",
+        "direccion": "Dirección residencia",
         "correo": "Correo electrónico"
       }
     },
     "acudiente": {
-      "title": "Actualizar acudiente",
+      "title": "Actualizar Acudiente",
       "fields": {
         "nombre": "Nombre",
         "apellidos": "Apellidos",
         "correo": "Correo electrónico",
-        "tipoId": "Tipo de identificación",
+        "tipoId": "Tipo Identificación",
         "identificacion": "Identificación",
-        "fechaNac": "Fecha de nacimiento",
+        "fechaNac": "Fecha nacimiento",
         "telefono": "Teléfono",
-        "direccion": "Dirección de residencia"
+        "direccion": "Dirección residencia"
       }
     },
     "conductor": {
-      "title": "Actualizar conductor",
+      "title": "Actualizar Conductor",
       "fields": {
         "nombres": "Nombres",
         "apellidos": "Apellidos",
-        "tipoId": "Tipo de identificación",
+        "tipoId": "Tipo Identificación",
         "identificacion": "Identificación",
-        "fechaNac": "Fecha de nacimiento",
-        "vencLicencia": "Vencimiento de licencia",
-        "licencia": "Licencia de conducción",
-        "direccion": "Dirección de residencia",
+        "fechaNac": "Fecha nacimiento",
+        "vencLicencia": "Vencimiento licencia",
+        "licencia": "Licencia conducción",
+        "direccion": "Dirección residencia",
         "correo": "Correo electrónico"
       }
     },
     "familia": {
-      "title": "Actualizar familia",
+      "title": "Actualizar Familia",
       "fields": {
         "nombre": "Nombre",
         "acudiente": "Acudiente",
@@ -637,7 +663,7 @@
       }
     },
     "bus": {
-      "title": "Actualizar bus",
+      "title": "Actualizar Bus",
       "fields": {
         "matricula": "Matrícula del bus",
         "conductor": "Conductor",
@@ -649,10 +675,9 @@
       }
     },
     "parada": {
-      "title": "Actualizar parada",
+      "title": "Actualizar Parada",
       "fields": {
         "nombre": "Nombre",
-        "estudiante": "Estudiante",
         "ciudad": "Ciudad",
         "direccion": "Dirección",
         "latitud": "Latitud",
@@ -660,7 +685,7 @@
       }
     },
     "ruta": {
-      "title": "Actualizar ruta",
+      "title": "Actualizar Ruta",
       "fields": {
         "nombre": "Nombre",
         "sector": "Sector o barrio",
@@ -671,19 +696,19 @@
       }
     },
     "admins": {
-      "title": "Actualizar administrador",
+      "title": "Actualizar Administrador",
       "fields": {
         "nombre": "Nombre",
         "apellidos": "Apellidos",
         "correo": "Correo electrónico",
         "identificacion": "Identificación",
-        "fechaNac": "Fecha de nacimiento",
+        "fechaNac": "Fecha nacimiento",
         "telefono": "Teléfono",
-        "direccion": "Dirección de residencia"
+        "direccion": "Dirección residencia"
       }
     },
     "schools": {
-      "title": "Actualizar escuela",
+      "title": "Actualizar Escuela",
       "fields": {
         "nombre": "Nombre",
         "ciudad": "Ciudad",
@@ -703,57 +728,57 @@
     "select": "Seleccionar…",
     "button": "Registrar",
     "estudiante": {
-      "title": "Registrar estudiante",
+      "title": "Registrar Estudiante",
       "fields": {
         "nombres": "Nombres",
         "apellidos": "Apellidos",
-        "tipoId": "Tipo de identificación",
-        "identificacion": "Número de identificación",
-        "fechaNac": "Fecha de nacimiento",
+        "tipoId": "Tipo de Identificación",
+        "identificacion": "Número de Identificación",
+        "fechaNac": "Fecha de Nacimiento",
         "curso": "Curso",
         "telefono": "Teléfono",
         "direccion": "Dirección",
-        "correo": "Correo electrónico"
+        "correo": "Correo Electrónico"
       }
     },
     "acudiente": {
-      "title": "Registrar acudiente",
+      "title": "Registrar Acudiente",
       "fields": {
         "nombres": "Nombres",
         "apellidos": "Apellidos",
-        "correo": "Correo electrónico",
-        "tipoId": "Tipo de identificación",
-        "identificacion": "Número de identificación",
-        "fechaNac": "Fecha de nacimiento",
+        "correo": "Correo Electrónico",
+        "tipoId": "Tipo de Identificación",
+        "identificacion": "Número de Identificación",
+        "fechaNac": "Fecha de Nacimiento",
         "telefono": "Teléfono",
         "direccion": "Dirección"
       }
     },
     "conductor": {
-      "title": "Registrar conductor",
+      "title": "Registrar Conductor",
       "fields": {
         "nombres": "Nombres",
         "apellidos": "Apellidos",
-        "tipoId": "Tipo de identificación",
-        "identificacion": "Número de identificación",
-        "fechaNac": "Fecha de nacimiento",
-        "vencLicencia": "Vencimiento de licencia",
-        "licencia": "Número de licencia",
+        "tipoId": "Tipo de Identificación",
+        "identificacion": "Número de Identificación",
+        "fechaNac": "Fecha de Nacimiento",
+        "vencLicencia": "Vencimiento de Licencia",
+        "licencia": "Número de Licencia",
         "direccion": "Dirección",
-        "correo": "Correo electrónico"
+        "correo": "Correo Electrónico"
       }
     },
     "familia": {
-      "title": "Registrar familia",
+      "title": "Registrar Familia",
       "fields": {
-        "nombre": "Nombre de la familia",
+        "nombre": "Nombre de Familia",
         "acudiente": "Acudiente",
         "estudiante": "Estudiante",
         "observaciones": "Observaciones"
       }
     },
     "bus": {
-      "title": "Registrar bus",
+      "title": "Registrar Bus",
       "fields": {
         "matricula": "Matrícula",
         "conductor": "Conductor",
@@ -765,10 +790,9 @@
       }
     },
     "parada": {
-      "title": "Registrar parada",
+      "title": "Registrar Parada",
       "fields": {
-        "nombre": "Nombre de la parada",
-        "estudiante": "Estudiante",
+        "nombre": "Nombre de la Parada",
         "ciudad": "Ciudad",
         "direccion": "Dirección",
         "latitud": "Latitud",
@@ -776,39 +800,39 @@
       }
     },
     "ruta": {
-      "title": "Registrar ruta",
+      "title": "Registrar Ruta",
       "fields": {
-        "nombre": "Nombre de la ruta",
-        "sector": "Sector / barrio",
-        "horaInicio": "Hora de inicio",
-        "horaFin": "Hora de finalización",
+        "nombre": "Nombre de la Ruta",
+        "sector": "Sector / Barrio",
+        "horaInicio": "Hora de Inicio",
+        "horaFin": "Hora de Finalización",
         "destino": "Destino",
         "sectorRuta": "Sector"
       }
     },
     "admins": {
-      "title": "Registrar administrador",
+      "title": "Registrar Administrador",
       "fields": {
         "nombre": "Nombre",
         "apellidos": "Apellidos",
-        "correo": "Correo electrónico",
+        "correo": "Correo Electrónico",
         "identificacion": "Identificación",
-        "fechaNac": "Fecha de nacimiento",
+        "fechaNac": "Fecha de Nacimiento",
         "telefono": "Teléfono",
         "direccion": "Dirección"
       }
     },
     "schools": {
-      "title": "Registrar escuela",
+      "title": "Registrar Escuela",
       "fields": {
-        "nombre": "Nombre de la escuela",
+        "nombre": "Nombre de la Escuela",
         "logo": "Logo",
         "ciudad": "Ciudad",
         "direccion": "Dirección",
         "telefono": "Teléfono",
-        "escolaridad": "Nivel educativo",
-        "correo": "Correo electrónico",
-        "web": "Página web"
+        "escolaridad": "Nivel Educativo",
+        "correo": "Correo Electrónico",
+        "web": "Página Web"
       }
     }
   },
@@ -895,9 +919,40 @@
       }
     },
 
-    "links_product": ["Funcionalidades", "Como funciona", "Contacto"],
-    "links_legal": ["Privacidad y términos"],
+    "links_product": ["Funcionalidades", "Como funciona", "Precios", "Para escuelas"],
+    "links_company": ["Nosotros", "Blog", "Contacto"],
+    "links_legal": ["Privacidad", "Terminos"],
     "rights": "© 2026 Guardian Escolar · Todos los derechos reservados"
-
+  },
+  "right_index": {
+    "brand": "Guardian Escolar",
+    "dashboardTitle": "Seguimiento en vivo",
+    "allVehicles": "Todos los vehículos",
+    "filters": "Filtros",
+    "live": "En vivo",
+    "totalVehicles": "Vehículos totales",
+    "onRoute": "En ruta",
+    "alerts": "Alertas",
+    "active": "Activas",
+    "students": "Estudiantes",
+    "pickupPoint": "Punto de recogida",
+    "greenStreet": "Calle Verde",
+    "school": "Escuela",
+    "springfieldSchool": "Escuela Springfield",
+    "bus": "Bus 02",
+    "bus05": "Bus 05",
+    "bus08": "Bus 08",
+    "liveActivity": "Actividad en vivo",
+    "delayed": "Retrasado",
+    "mapleAvenue": "Avenida Maple",
+    "oakBoulevard": "Bulevar Oak",
+    "geofenceAlert": "Alerta de geovalla",
+    "geofenceMessage": "El bus 02 llegó a la Escuela Springfield",
+    "eta": "ETA",
+    "etaValue": "7:45 AM",
+    "speedLabel": "Velocidad",
+    "busSpeed": "45 km/h",
+    "nextStop": "Próxima parada",
+    "nextStopValue": "Escuela Springfield"
   }
 }

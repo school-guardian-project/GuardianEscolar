@@ -34,7 +34,7 @@ body {
 .light-theme-blue {
   --white: #FFFFFF;
   --black: #000000;
-  --bg-color: #F0F4F8;
+  --bg-color: #EDF5FF;
   --text-color: #111827;
 
   --color-navbar: #1A56DB;
@@ -80,8 +80,8 @@ body {
 .light-theme-green {
   --white: #FFFFFF;
   --black: #000000;
-  --bg-color: #F0F4F8;
-  --text-color: #111827;
+  --bg-color: #F0FBF4;
+  --text-color: #123A2C;
 
   --color-navbar: #16A34A;
   --navbar-gradient: linear-gradient(135deg, #0a4d22, #2dbe65);
@@ -93,9 +93,9 @@ body {
 
   --border-color: #E2E8F0;
 
-  --text-secondary: #64748B;
-  --title-color: #1A2E4A;
-  --navbar-item: #e8f0ff;
+  --text-secondary: #496d59;
+  --title-color: #123a2c;
+  --navbar-item: #edfdf0;
   --navbar-item-hover: #FFFFFF;
 
   --hover-color: #16A34A;
@@ -126,8 +126,8 @@ body {
 .light-theme-yellow {
   --white: #FFFFFF;
   --black: #000000;
-  --bg-color: #FAF8F1;
-  --text-color: #1F2937;
+  --bg-color: #FFF9EA;
+  --text-color: #4B3A12;
 
   --color-navbar: #D4A017;
   --navbar-gradient: linear-gradient(135deg, #7a5800, #f0bc30);
@@ -139,7 +139,7 @@ body {
 
   --border-color: #E7D7A5;
 
-  --text-secondary: #6B7280;
+  --text-secondary: #6b5f39;
   --title-color: #4B3A12;
   --navbar-item: #fefce8;
   --navbar-item-hover: #ffffff;
@@ -172,8 +172,8 @@ body {
 .light-theme-red {
   --white: #FFFFFF;
   --black: #000000;
-  --bg-color: #F8F4F4;
-  --text-color: #1F2937;
+  --bg-color: #FFF5F5;
+  --text-color: #4A1D1F;
 
   --color-navbar: #B42318;
   --navbar-gradient: linear-gradient(135deg, #6b0d09, #d94035);
@@ -185,9 +185,9 @@ body {
 
   --border-color: #E5E7EB;
 
-  --text-secondary: #6B7280;
+  --text-secondary: #7a5353;
   --title-color: #4A1D1F;
-  --navbar-item: #e8f0ff;
+  --navbar-item: #fff1f1;
   --navbar-item-hover: #FFFFFF;
 
   --hover-color: #C53030;
@@ -218,8 +218,8 @@ body {
 .dark-theme-blue {
   --white: #FFFFFF;
   --black: #000000;
-  --bg-color: #0F1115;
-  --text-color: #E5E7EB;
+  --bg-color: #0D1524;
+  --text-color: #EAF3FF;
 
   --color-navbar: #0F2E6B;
   --navbar-gradient: linear-gradient(135deg, #071840, #1a4baa);
@@ -265,8 +265,8 @@ body {
 .dark-theme-green {
   --white: #FFFFFF;
   --black: #000000;
-  --bg-color: #0F1115;
-  --text-color: #E5E7EB;
+  --bg-color: #0E1712;
+  --text-color: #EAFBF0;
 
   --color-navbar: #0B4A24;
   --navbar-gradient: linear-gradient(135deg, #052912, #12853f);
@@ -278,9 +278,9 @@ body {
 
   --border-color: #252A34;
 
-  --text-secondary: #f1f3f7;
-  --title-color: #F9FAFB;
-  --navbar-item: #e8f0ff;
+  --text-secondary: #d3efd8;
+  --title-color: #F5FFF7;
+  --navbar-item: #ebfff1;
   --navbar-item-hover: #FFFFFF;
 
   --hover-color: #1eda63;
@@ -312,8 +312,8 @@ body {
 .dark-theme-yellow {
   --white: #FFFFFF;
   --black: #000000;
-  --bg-color: #111315;
-  --text-color: #E5E7EB;
+  --bg-color: #17150F;
+  --text-color: #FFF9DA;
 
   --color-navbar: #B8860B;
   --navbar-gradient: linear-gradient(135deg, #5c4000, #d4a020);
@@ -325,9 +325,9 @@ body {
 
   --border-color: #3A320F;
 
-  --text-secondary: #f1f3f7;
+  --text-secondary: #f0e1a6;
   --title-color: #FFF4C2;
-  --navbar-item: #fefce8;
+  --navbar-item: #fffbea;
   --navbar-item-hover: #FFFFFF;
 
   --hover-color: #FACC15;
@@ -359,8 +359,8 @@ body {
 .dark-theme-red {
   --white: #FFFFFF;
   --black: #000000;
-  --bg-color: #101214;
-  --text-color: #E5E7EB;
+  --bg-color: #181112;
+  --text-color: #FFF1F1;
 
   --color-navbar: #5B1215;
   --navbar-gradient: linear-gradient(135deg, #300508, #8c1f24);
@@ -372,9 +372,9 @@ body {
 
   --border-color: #2B3138;
 
-  --text-secondary: #f1f3f7;
+  --text-secondary: #f4d0d0;
   --title-color: #FFE4E6;
-  --navbar-item: #e8f0ff;
+  --navbar-item: #fff4f4;
   --navbar-item-hover: #FFFFFF;
 
   --hover-color: #EF4444;

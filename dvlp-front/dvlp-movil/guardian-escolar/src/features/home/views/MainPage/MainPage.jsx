@@ -70,13 +70,16 @@ export default function MainPage() {
         <View style={styles.spacer} />
 
         <View style={[styles.bottomSection, { marginHorizontal: -horizontalPadding}]}>
-          <QRButtom config={config.card} onOpenModel={handleOpenModal} />
           <RouteInfoCard />
           <BottomTabBar
             onRoutePress={() => navigation.navigate("MainPage")}
             onLocationPress={() => navigation.navigate("Location")}
             onProfilePress={() => navigation.navigate("Profile")}
           />
+        </View>
+
+        <View style={styles.qrButtonContainer} pointerEvents="box-none">
+          <QRButtom config={config.card} onOpenModel={handleOpenModal} />
         </View>
       </View>
 

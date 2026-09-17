@@ -17,6 +17,7 @@ import { API_CONFIG } from "@core/api/api.config";
 import { useRoleSwitcher } from "@core/dev/RoleSwitcherContext";
 
 const EMAIL_PATTERN = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+import { validateEmail, validateRequired } from "@core/validation/validators";
 
 export default function Login({ navigation }) {
   const { t } = useTranslation();
@@ -116,6 +117,7 @@ export default function Login({ navigation }) {
           onChangeText={(v) => { setEmail(v); if (emailError) setEmailError(null); }}
           keyboardType="email-address"
           autoCapitalize="none"
+          error={emailError}
         />
         {emailError ? (
           <Text style={{ color: "#d32f2f", fontSize: 12, marginTop: -8, marginBottom: 8 }}>{emailError}</Text>
@@ -128,6 +130,7 @@ export default function Login({ navigation }) {
           value={password}
           onChangeText={(v) => { setPassword(v); if (passwordError) setPasswordError(null); }}
           secureTextEntry
+          error={passwordError}
         />
         {passwordError ? (
           <Text style={{ color: "#d32f2f", fontSize: 12, marginTop: -8, marginBottom: 8 }}>{passwordError}</Text>
@@ -160,3 +163,6 @@ export default function Login({ navigation }) {
     </ScrollView>
   );
 }
+
+
+

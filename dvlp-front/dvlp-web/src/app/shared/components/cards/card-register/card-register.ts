@@ -115,6 +115,19 @@ const FIELDS: Record<RegisterType, Field[]> = {
   ],
 };
 
+// TODO: Reemplazar estos datos quemados cuando el formulario se conecte al servicio de familias.
+const FAMILY_FORM_DATA = {
+  nombre: 'Familia García López',
+  acudiente: 'Rosa María González',
+  estudiante: 'Juan Carlos García',
+  observaciones: 'Familia con 2 hijos en el colegio',
+};
+
+const FAMILY_OPTIONS = {
+  acudiente: ['Rosa María González', 'Pedro José López'],
+  estudiante: ['Juan Carlos García', 'María Elena Ruiz'],
+};
+
 
 @Component({
   selector: 'app-card-register',

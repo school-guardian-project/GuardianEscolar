@@ -188,12 +188,12 @@ export class CardListDataService {
           const stopRouteStopIds = rsArr.filter((rs: any) => rs.StopId === s.Id).map((rs: any) => rs.Id);
           const stopAssignments = assignArr.filter((a: any) => stopRouteStopIds.includes(a.RouteStopId));
           const profileIds = [...new Set(stopAssignments.map((a: any) => a.ProfileId).filter(Boolean))];
-          const studentNames = profileIds.slice(0, 5).map((pid: string) => {
+          const studentNames: string[] = profileIds.slice(0, 5).map((pid: string) => {
             const prof = profMap.get(pid);
             if (!prof?.PersonId) return null;
             const person = personMap.get(prof.PersonId);
             return person ? `${person.Name} ${person.LastName}`.trim() : null;
-          }).filter(Boolean);
+          }).filter((n): n is string => !!n);
 
           return mapParada(s, city, studentNames);
         });

@@ -515,8 +515,62 @@
       "Status": "ACTIVE"
     }
   ],
-  "families": [],
-  "family-members": [],
+  "families": [
+    {
+      "Id": "family-001",
+      "Name": "Familia Martinez",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "family-002",
+      "Name": "Familia Rodriguez",
+      "Status": "ACTIVE"
+    }
+  ],
+  "family-members": [
+    {
+      "Id": "family-member-001",
+      "FamilyId": "family-001",
+      "ProfileId": "profile-parent-1",
+      "RelationshipType": "PARENT",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "family-member-002",
+      "FamilyId": "family-001",
+      "ProfileId": "profile-student-1",
+      "RelationshipType": "STUDENT",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "family-member-005",
+      "FamilyId": "family-001",
+      "ProfileId": "profile-student-2",
+      "RelationshipType": "STUDENT",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "family-member-003",
+      "FamilyId": "family-002",
+      "ProfileId": "profile-parent-2",
+      "RelationshipType": "PARENT",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "family-member-004",
+      "FamilyId": "family-002",
+      "ProfileId": "profile-student-3",
+      "RelationshipType": "STUDENT",
+      "Status": "ACTIVE"
+    },
+    {
+      "Id": "family-member-006",
+      "FamilyId": "family-002",
+      "ProfileId": "profile-student-4",
+      "RelationshipType": "STUDENT",
+      "Status": "ACTIVE"
+    }
+  ],
   "boardings": [],
   "alerts": [],
   "permissions": [],

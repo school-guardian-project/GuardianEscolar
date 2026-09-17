@@ -9,18 +9,17 @@ import useSession from "@core/hooks/useSession";
 export default function RouteInfoCard() {
   const { t } = useTranslation();
   const { theme } = useTheme();
-  const { session } = useSession();
+  const { role, session } = useSession();
   const [route, setRoute] = React.useState(null);
 
   React.useEffect(() => {
     if (!API_CONFIG.ENABLED) return;
-    const studentProfileId = session?.profile?.id || null;
-    if (!studentProfileId) return;
+    if (!session?.profile?.id || !role) return;
     
-    dashboardService.getStudentRoute(studentProfileId).then(routeData => {
+    dashboardService.getRouteForProfile(session.profile, role).then(routeData => {
       if (routeData) setRoute(routeData);
     }).catch(() => {});
-  }, [session]);
+  }, [role, session]);
 
   return (
     <View
@@ -42,7 +41,7 @@ export default function RouteInfoCard() {
               { color: theme.textColor },
             ]}
           >
-            {route?.Name || 'Ruta Centro'}
+            {route?.Name || 'Sin ruta asignada'}
           </Text>
 
           <Text
@@ -51,7 +50,7 @@ export default function RouteInfoCard() {
               { color: theme.textSecondary },
             ]}
           >
-            {route?.driverName || 'Carlos Pérez'}
+            {route?.driverName || 'Sin conductor'}
           </Text>
         </View>
 
@@ -62,7 +61,7 @@ export default function RouteInfoCard() {
               { color: theme.textColor },
             ]}
           >
-            {route?.Plate || 'ABC-123'}
+            {route?.Plate || '—'}
           </Text>
 
           <Text
@@ -71,7 +70,7 @@ export default function RouteInfoCard() {
               { color: theme.textSecondary },
             ]}
           >
-            06:00 AM - 07:30 AM
+            {route?.TargetSector || '—'}
           </Text>
         </View>
 
@@ -104,7 +103,7 @@ export default function RouteInfoCard() {
               { color: theme.textSecondary },
             ]}
           >
-            {route?.stopsCount ?? 12}
+            {route?.stopsCount ?? '—'}
           </Text>
         </View>
 

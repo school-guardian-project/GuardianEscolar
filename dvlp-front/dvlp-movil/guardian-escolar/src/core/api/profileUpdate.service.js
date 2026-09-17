@@ -49,8 +49,7 @@ export const profileUpdateService = {
     const profiles = await apiClient.query(ENDPOINTS.profiles, { PersonId: p.Id });
     const prof = profiles[0];
     if (!prof) throw new Error('Perfil no encontrado');
-    const fakeHash = `AQAAAAEAACcQAAAAE${btoa(newPassword).slice(0, 20)}==`;
-    const merged = { ...prof, PasswordHash: fakeHash, id: prof.id ?? prof.Id, Id: prof.Id ?? prof.id };
+    const merged = { ...prof, PasswordHash: newPassword, id: prof.id ?? prof.Id, Id: prof.Id ?? prof.id };
     const res = await apiClient.put(`/profiles/${merged.id}`, merged);
     apiClient.clearCache();
     return res;

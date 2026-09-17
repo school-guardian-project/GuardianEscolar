@@ -203,7 +203,7 @@ export const dashboardService = {
         const buses = await apiClient.query(ENDPOINTS.buses, { Id: rba.BusId });
         bus = Array.isArray(buses) ? buses[0] : null;
 
-        // El conductor está en driver-assignments vinculado por BusId
+        // Conductor via driver-assignments (vinculado por BusId)
         const driverAssignments = await apiClient.query(ENDPOINTS.driverAssignments, { BusId: rba.BusId });
         const da = Array.isArray(driverAssignments) ? driverAssignments[0] : null;
         if (da?.ProfileId) {
@@ -235,8 +235,8 @@ export const dashboardService = {
     const routeStops = await apiClient.query(ENDPOINTS.routeStops, { _limit: 100 });
     const byRoute = new Map();
     for (const rs of routeStops) byRoute.set(rs.RouteId, (byRoute.get(rs.RouteId) || 0) + 1);
-    // Enriquecer primera ruta con bus/placa/conductor reales para RouteInfoCard
-    const enriched = await Promise.all(routes.slice(0, 5).map(async (r) => {
+    // Enriquecer cada ruta con bus/placa/conductor reales
+    const enriched = await Promise.all(routes.map(async (r) => {
       let bus = null, driverName = null;
       try {
         const rbas = await apiClient.query(ENDPOINTS.routeBusAssignments, { RouteId: r.Id });
@@ -245,6 +245,7 @@ export const dashboardService = {
           const buses = await apiClient.query(ENDPOINTS.buses, { Id: rba.BusId });
           bus = Array.isArray(buses) ? buses[0] : null;
 
+          // Conductor via driver-assignments
           const driverAssignments = await apiClient.query(ENDPOINTS.driverAssignments, { BusId: rba.BusId });
           const da = Array.isArray(driverAssignments) ? driverAssignments[0] : null;
           if (da?.ProfileId) {
@@ -260,9 +261,7 @@ export const dashboardService = {
       } catch {}
       return { ...r, stopsCount: byRoute.get(r.Id) || 0, Plate: bus?.Plate || null, driverName };
     }));
-    // Resto sin enriquecer
-    const rest = routes.slice(5).map((r) => ({ ...r, stopsCount: byRoute.get(r.Id) || 0 }));
-    return [...enriched, ...rest];
+    return enriched;
   },
 
   async getFamilyForProfile(profileId) {

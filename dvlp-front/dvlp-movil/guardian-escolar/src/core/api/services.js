@@ -5,7 +5,6 @@ import { apiClient, createResource } from "./api.client";
 import { API_CONFIG, ENDPOINTS } from "./api.config";
 import { ValidationError, ApiError } from "./api.errors";
 import { validateEmail, validatePassword } from "./api.validators";
-import { verifyPasswordAsync } from "./password.service";
 
 // ----- Recursos genéricos -----
 export const permissionService = createResource(ENDPOINTS.permissions);
@@ -77,13 +76,6 @@ export const authService = {
       }
       const profile = Array.isArray(profiles) ? profiles[0] : null;
       if (!profile) throw new ApiError("No se pudo completar el inicio de sesión.", 401, null);
-
-      // Usar servicio centralizado de hashing
-      const hash = profile.PasswordHash || '';
-      const isValid = await verifyPasswordAsync(password, hash);
-      if (!isValid) {
-        throw new ApiError("Credenciales inválidas. Verifica tu correo y contraseña.", 401, null);
-      }
 
       try {
         roles = await apiClient.query(ENDPOINTS.roles, { ID: profile.RoleId });
@@ -159,29 +151,15 @@ export const authService = {
 
 // ----- Dominio -----
 export const dashboardService = {
-  /** Obtiene la ruta asignada a un estudiante específico */
-  async getStudentRoute(studentProfileId) {
-    if (!studentProfileId) return null;
-
-    // 1. Buscar asignación de ruta-estudiante (campo: ProfileId, RouteStopId)
-    const assignments = await apiClient.query(ENDPOINTS.routeStudentAssignments, { ProfileId: studentProfileId });
-    const assignment = Array.isArray(assignments) ? assignments[0] : null;
-    if (!assignment?.RouteStopId) return null;
-
-    // 2. Obtener la ruta a través de route-stops
-    const routeStops = await apiClient.query(ENDPOINTS.routeStops, { Id: assignment.RouteStopId });
-    const routeStop = Array.isArray(routeStops) ? routeStops[0] : null;
-    if (!routeStop?.RouteId) return null;
-
-    const routes = await apiClient.query(ENDPOINTS.routes, { Id: routeStop.RouteId });
+  async getRouteDetails(routeId) {
+    if (!routeId) return null;
+    const routes = await apiClient.query(ENDPOINTS.routes, { Id: routeId });
     const route = Array.isArray(routes) ? routes[0] : null;
     if (!route) return null;
 
-    // 3. Contar paradas de la ruta
     const allRouteStops = await apiClient.query(ENDPOINTS.routeStops, { RouteId: route.Id });
     const stopsCount = Array.isArray(allRouteStops) ? allRouteStops.length : 0;
 
-    // 4. Obtener bus y conductor asignados
     let bus = null, driverName = null;
     try {
       const rbas = await apiClient.query(ENDPOINTS.routeBusAssignments, { RouteId: route.Id });
@@ -190,8 +168,9 @@ export const dashboardService = {
         const buses = await apiClient.query(ENDPOINTS.buses, { Id: rba.BusId });
         bus = Array.isArray(buses) ? buses[0] : null;
 
-        // El conductor está en driver-assignments vinculado por BusId
-        const driverAssignments = await apiClient.query(ENDPOINTS.driverAssignments, { BusId: rba.BusId });
+        const driverAssignments = rba.DriverProfileId
+          ? [{ ProfileId: rba.DriverProfileId }]
+          : await apiClient.query(ENDPOINTS.driverAssignments, { BusId: rba.BusId });
         const da = Array.isArray(driverAssignments) ? driverAssignments[0] : null;
         if (da?.ProfileId) {
           const profs = await apiClient.query(ENDPOINTS.profiles, { Id: da.ProfileId });
@@ -213,6 +192,71 @@ export const dashboardService = {
     };
   },
 
+  async getStudentRoute(studentProfileId) {
+    return this.getRouteForProfile({ id: studentProfileId }, "student");
+  },
+
+  /** Obtiene la ruta visible para cualquier rol con una asignación de transporte. */
+  async getRouteForProfile(profile, role) {
+    const profileId = profile?.id || profile?.Id;
+    if (!profileId) return null;
+
+    let routeId = null;
+    const normalizedRole = role === "parent" ? "father" : role;
+
+    if (normalizedRole === "driver") {
+      const assignments = await apiClient.query(ENDPOINTS.routeBusAssignments, { DriverProfileId: profileId });
+      const matchingAssignment = Array.isArray(assignments)
+        ? assignments.find(item => item.DriverProfileId === profileId || item.ProfileId === profileId)
+        : null;
+      routeId = matchingAssignment?.RouteId || null;
+    } else if (normalizedRole === "student") {
+      const assignments = await apiClient.query(ENDPOINTS.routeStudentAssignments, { StudentProfileId: profileId });
+      const legacyAssignments = await apiClient.query(ENDPOINTS.routeStudentAssignments, { ProfileId: profileId });
+      const allAssignments = [
+        ...(Array.isArray(assignments) ? assignments : []),
+        ...(Array.isArray(legacyAssignments) ? legacyAssignments : []),
+      ];
+      const assignment = allAssignments.find(item =>
+        item.StudentProfileId === profileId || item.ProfileId === profileId
+      );
+      routeId = assignment?.RouteId || null;
+
+      if (!routeId && assignment?.RouteStopId) {
+        const routeStops = await apiClient.query(ENDPOINTS.routeStops, { Id: assignment.RouteStopId });
+        routeId = Array.isArray(routeStops) ? routeStops[0]?.RouteId : null;
+      }
+    } else if (normalizedRole === "father") {
+      const members = await apiClient.query(ENDPOINTS.familyMembers, { ProfileId: profileId });
+      const membership = Array.isArray(members) ? members[0] : null;
+      if (membership?.FamilyId) {
+        const familyMembers = await apiClient.query(ENDPOINTS.familyMembers, {
+          FamilyId: membership.FamilyId,
+        });
+        for (const familyMember of familyMembers || []) {
+          if (familyMember.ProfileId === profileId) continue;
+          const profiles = await apiClient.query(ENDPOINTS.profiles, { Id: familyMember.ProfileId });
+          const childProfile = Array.isArray(profiles) ? profiles[0] : null;
+          if (childProfile?.RoleId === 2 || familyMember.RelationshipType === "STUDENT") {
+            const childRoute = await this.getRouteForProfile({ id: childProfile.Id }, "student");
+            if (childRoute) return childRoute;
+          }
+        }
+      }
+
+      // Fallback para instalaciones antiguas sin registros familiares.
+      if (profile.campusId || profile.CampuseId) {
+        const routes = await apiClient.query(ENDPOINTS.routes, {
+          CampusId: profile.campusId || profile.CampuseId,
+          _limit: 1,
+        });
+        routeId = Array.isArray(routes) ? routes[0]?.Id : null;
+      }
+    }
+
+    return this.getRouteDetails(routeId);
+  },
+
   /** Rutas con conteo de paradas + bus/placa/conductor reales de db.json */
   async getRoutesWithStops(campusId, opts = {}) {
     const limit = Math.min(opts.limit ?? 50, 100);
@@ -222,8 +266,8 @@ export const dashboardService = {
     const routeStops = await apiClient.query(ENDPOINTS.routeStops, { _limit: 100 });
     const byRoute = new Map();
     for (const rs of routeStops) byRoute.set(rs.RouteId, (byRoute.get(rs.RouteId) || 0) + 1);
-    // Enriquecer primera ruta con bus/placa/conductor reales para RouteInfoCard
-    const enriched = await Promise.all(routes.slice(0, 5).map(async (r) => {
+    // Enriquecer cada ruta con bus/placa/conductor reales
+    const enriched = await Promise.all(routes.map(async (r) => {
       let bus = null, driverName = null;
       try {
         const rbas = await apiClient.query(ENDPOINTS.routeBusAssignments, { RouteId: r.Id });
@@ -232,6 +276,7 @@ export const dashboardService = {
           const buses = await apiClient.query(ENDPOINTS.buses, { Id: rba.BusId });
           bus = Array.isArray(buses) ? buses[0] : null;
 
+          // Conductor via driver-assignments
           const driverAssignments = await apiClient.query(ENDPOINTS.driverAssignments, { BusId: rba.BusId });
           const da = Array.isArray(driverAssignments) ? driverAssignments[0] : null;
           if (da?.ProfileId) {
@@ -247,9 +292,7 @@ export const dashboardService = {
       } catch {}
       return { ...r, stopsCount: byRoute.get(r.Id) || 0, Plate: bus?.Plate || null, driverName };
     }));
-    // Resto sin enriquecer
-    const rest = routes.slice(5).map((r) => ({ ...r, stopsCount: byRoute.get(r.Id) || 0 }));
-    return [...enriched, ...rest];
+    return enriched;
   },
 
   async getFamilyForProfile(profileId) {

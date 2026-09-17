@@ -8,6 +8,10 @@ const ALLOWED: Record<string, Set<string>> = {
   '/roles': new Set(['ID', 'Name', 'Status']),
   '/routes': new Set(['Id', 'CampusId', 'Status']),
   '/buses': new Set(['Id', 'CampusId', 'Plate', 'Status']),
+  '/route-student-assignments': new Set(['Id', 'ProfileId', 'StudentProfileId', 'RouteId', 'RouteStopId', 'Status']),
+  '/route-bus-assignments': new Set(['Id', 'RouteId', 'BusId', 'DriverProfileId', 'Status']),
+  '/family-members': new Set(['Id', 'FamilyId', 'ProfileId', 'RelationshipType', 'Status']),
+  '/families': new Set(['Id', 'Name', 'Status']),
 };
 
 export function validateEmail(v: string): string {

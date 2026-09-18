@@ -147,6 +147,8 @@ export class CardRegister implements OnInit {
   saving = false;
   message: string | null = null;
   submitted = false;
+  selectedStudent = '';
+  selectedStudents: string[] = [];
 
   isFieldInvalid(field: Field): boolean {
     if (!this.submitted) return false;
@@ -182,6 +184,31 @@ export class CardRegister implements OnInit {
   ngOnInit(): void {
     this.groupedFields = this.buildGroupedFields();
     if (this.type === 'familia') this.loadFamiliaOptions();
+    if (this.type === 'bus' || this.type === 'parada') this.loadTransportOptions();
+  }
+
+  isFamilyStudentField(name: string): boolean {
+    return this.type === 'familia' && name === 'estudiante';
+  }
+
+  onSelectChange(fieldName: string, value: string): void {
+    if (this.isFamilyStudentField(fieldName)) {
+      if (value && !this.selectedStudents.includes(value)) {
+        this.selectedStudents = [...this.selectedStudents, value];
+        this.formData[fieldName] = this.selectedStudents[0];
+        this.formData.estudiantes = [...this.selectedStudents];
+      }
+      this.selectedStudent = '';
+      return;
+    }
+
+    this.formData[fieldName] = value;
+  }
+
+  removeStudent(student: string): void {
+    this.selectedStudents = this.selectedStudents.filter(item => item !== student);
+    this.formData.estudiante = this.selectedStudents[0] ?? '';
+    this.formData.estudiantes = [...this.selectedStudents];
   }
 
   private loadFamiliaOptions(): void {
@@ -190,6 +217,8 @@ export class CardRegister implements OnInit {
     const acudienteField = familiaFields.find(f => f.name === 'acudiente');
     const estudianteField = familiaFields.find(f => f.name === 'estudiante');
     if (!acudienteField || !estudianteField) return;
+    acudienteField.options = [...FAMILY_OPTIONS.acudiente];
+    estudianteField.options = [...FAMILY_OPTIONS.estudiante];
     // Usar CardListDataService para traer datos filtrados por colegio
     (this.dataService as any).getAcudientes?.().subscribe((list: any[]) => {
       const opts = (list || []).slice(0, 20).map((r: any) => r.correo || r.nombre || r.id).filter(Boolean);
@@ -200,6 +229,21 @@ export class CardRegister implements OnInit {
     (this.dataService as any).getEstudiantes?.().subscribe((list: any[]) => {
       const opts = (list || []).slice(0, 20).map((r: any) => r.correo || r.nombre || r.id).filter(Boolean);
       if (opts.length) estudianteField.options = opts;
+      this.groupedFields = this.buildGroupedFields();
+      this.cdr.detectChanges();
+    });
+  }
+
+  private loadTransportOptions(): void {
+    const fieldName = this.type === 'bus' ? 'conductor' : 'estudiante';
+    const field = FIELDS[this.type].find(item => item.name === fieldName);
+    if (!field) return;
+
+    const sourceType = this.type === 'bus' ? 'conductor' : 'estudiante';
+    this.dataService.getByType(sourceType).subscribe((list: any[]) => {
+      field.options = (list || [])
+        .map((item: any) => item.nombre || item.nombres || item.correo || item.id)
+        .filter(Boolean);
       this.groupedFields = this.buildGroupedFields();
       this.cdr.detectChanges();
     });

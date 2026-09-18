@@ -1,8 +1,9 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { CardListDataService } from '@core/api-mock/card-list.data.service';
 
 export type RegisterType =
   | 'estudiante'
@@ -156,6 +157,7 @@ export class UpdateRecord implements OnInit {
   formData: Record<string, string> = {};
   fields: Field[] = [];
   submitted = false;
+  private dataService = inject(CardListDataService);
 
   get config() {
     return MODAL_CONFIGS[this.type];
@@ -198,6 +200,19 @@ export class UpdateRecord implements OnInit {
 
     this.fields.forEach(f => {
       this.formData[f.name] = (this.record[f.name] as string) || '';
+    });
+    if (this.type === 'bus' || this.type === 'parada') this.loadTransportOptions();
+  }
+
+  private loadTransportOptions(): void {
+    const fieldName = this.type === 'bus' ? 'conductor' : 'estudiante';
+    const field = this.fields.find(item => item.name === fieldName);
+    if (!field) return;
+    const sourceType = this.type === 'bus' ? 'conductor' : 'estudiante';
+    this.dataService.getByType(sourceType).subscribe(list => {
+      field.options = (list || [])
+        .map(item => item.nombre || item.nombres || item.correo || item.id)
+        .filter(Boolean);
     });
   }
 

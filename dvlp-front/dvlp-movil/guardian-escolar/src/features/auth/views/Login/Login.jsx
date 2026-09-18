@@ -119,9 +119,6 @@ export default function Login({ navigation }) {
           autoCapitalize="none"
           error={emailError}
         />
-        {emailError ? (
-          <Text style={{ color: "#d32f2f", fontSize: 12, marginTop: -8, marginBottom: 8 }}>{emailError}</Text>
-        ) : null}
 
         {/* Contraseña - Validators.required */}
         <InputField
@@ -132,9 +129,6 @@ export default function Login({ navigation }) {
           secureTextEntry
           error={passwordError}
         />
-        {passwordError ? (
-          <Text style={{ color: "#d32f2f", fontSize: 12, marginTop: -8, marginBottom: 8 }}>{passwordError}</Text>
-        ) : null}
 
         {/* Olvidó contraseña */}
         <Text

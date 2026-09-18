@@ -108,8 +108,49 @@ export class CardListDataService {
 
   private getFamilias(): Observable<any[]> {
     return this.api.get<any[]>('/families', { _limit: 1000 }).pipe(
-      map(arr => [...arr].reverse().slice(0, 20).map(mapFamilia)),
+      switchMap(arr => {
+        const families = [...arr].reverse().slice(0, 20);
+        if (!families.length) return of([]);
+        return forkJoin(families.map(family =>
+          this.getFamilyMembers(family.Id).pipe(
+            map(({ parents, students }) => mapFamilia(family, parents, students)),
+            catchError(() => of(mapFamilia(family)))
+          )
+        ));
+      }),
       catchError(() => of([]))
+    );
+  }
+
+  private getFamilyMembers(familyId: string): Observable<{ parents: string[]; students: string[] }> {
+    return this.api.get<any[]>('/family-members', { FamilyId: familyId, Status: 'ACTIVE' }).pipe(
+      switchMap(members => {
+        if (!members.length) return of({ parents: [], students: [] });
+        return forkJoin(members.map(member =>
+          this.api.get<any[]>('/profiles', { Id: member.ProfileId }).pipe(
+            map(profiles => profiles[0]),
+            switchMap(profile => profile
+              ? this.api.get<any[]>('/persons', { Id: profile.PersonId }).pipe(map(persons => persons[0]))
+              : of(null)
+            ),
+            map(person => ({
+              relationship: member.RelationshipType,
+              name: person ? `${person.Name} ${person.LastName}`.trim() : '',
+            })),
+            catchError(() => of({ relationship: member.RelationshipType, name: '' }))
+          )
+        )).pipe(
+          map(resolved => resolved.reduce(
+            (result, member) => {
+              if (member.name && member.relationship === 'PARENT') result.parents.push(member.name);
+              if (member.name && member.relationship === 'STUDENT') result.students.push(member.name);
+              return result;
+            },
+            { parents: [] as string[], students: [] as string[] }
+          ))
+        );
+      }),
+      catchError(() => of({ parents: [], students: [] }))
     );
   }
 
@@ -226,7 +267,9 @@ export class CardListDataService {
           const familyId = (family as any).Id || (family as any).id;
           const tasks: Observable<any>[] = [];
           const acudienteVal = formData['acudiente'];
-          const estudianteVal = formData['estudiante'];
+          const estudianteValues = Array.isArray(formData['estudiantes'])
+            ? formData['estudiantes']
+            : formData['estudiante'] ? [formData['estudiante']] : [];
           if (acudienteVal) {
             tasks.push(this.findProfileByDisplay(acudienteVal, 3).pipe(
               switchMap(profile => {
@@ -236,7 +279,7 @@ export class CardListDataService {
               }), catchError(() => of(null))
             ));
           }
-          if (estudianteVal) {
+          estudianteValues.forEach((estudianteVal: string) => {
             tasks.push(this.findProfileByDisplay(estudianteVal, 2).pipe(
               switchMap(profile => {
                 if (!profile) return of(null);
@@ -244,7 +287,7 @@ export class CardListDataService {
                 return this.api.post<any>('/family-members', { id: fmId, Id: fmId, FamilyId: familyId, ProfileId: profile.Id, RelationshipType: 'STUDENT', Status: 'ACTIVE' });
               }), catchError(() => of(null))
             ));
-          }
+          });
           if (tasks.length) return forkJoin(tasks).pipe(map(() => family));
           return of(family);
         }),
@@ -260,9 +303,48 @@ export class CardListDataService {
     if (!withIds.id && withIds.Id) withIds.id = withIds.Id;
     if (!withIds.Id && withIds.id) withIds.Id = withIds.id;
     return this.api.post<any>(endpoint, withIds).pipe(
+      switchMap(record => this.createTransportAssignment(type, record, formData)),
       tap(() => { clearMockCache(); this.triggerRefresh(type); }),
       catchError(() => of(null))
     );
+  }
+
+  private createTransportAssignment(type: string, record: any, formData: Record<string, any>): Observable<any> {
+    const recordId = record?.Id ?? record?.id;
+    if (type === 'bus' && formData['conductor']) {
+      const assignmentId = this.genId('driver-assignment');
+      return this.findProfileByDisplay(formData['conductor'], 4).pipe(
+        switchMap(profile => profile
+          ? this.api.post('/driver-assignments', {
+              id: assignmentId,
+              Id: assignmentId,
+              BusId: recordId,
+              ProfileId: profile.Id,
+              Status: 'ACTIVE',
+            })
+          : of(record)),
+        map(() => record),
+        catchError(() => of(record))
+      );
+    }
+    if (type === 'ruta' && Array.isArray(formData['estudiantes']) && formData['estudiantes'].length) {
+      return forkJoin(formData['estudiantes'].map((student: string) => {
+        const assignmentId = this.genId('route-student');
+        return this.findProfileByDisplay(student, 2).pipe(
+          switchMap(profile => profile
+            ? this.api.post('/route-student-assignments', {
+                id: assignmentId,
+                Id: assignmentId,
+                RouteId: recordId,
+                StudentProfileId: profile.Id,
+                Status: 'ACTIVE',
+              })
+            : of(null)),
+          catchError(() => of(null))
+        );
+      })).pipe(map(() => record));
+    }
+    return of(record);
   }
 
   private findProfileByDisplay(display: string, roleId: number): Observable<any | null> {

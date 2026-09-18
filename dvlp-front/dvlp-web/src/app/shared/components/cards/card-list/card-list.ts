@@ -65,6 +65,7 @@ const ITEM_FIELDS: Record<CardType, ItemField[]> = {
   familia: [
     { key: 'nombre' },
     { key: 'acudiente', labelKey: 'card_list.labels.acudiente' },
+    { key: 'estudiante', labelKey: 'card_list.labels.estudiante' },
     { key: 'telefono' },
   ],
   bus: [

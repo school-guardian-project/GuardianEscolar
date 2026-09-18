@@ -29,25 +29,40 @@ export default function Family() {
         if (!API_CONFIG.ENABLED) { setLoading(false); return; }
         setLoading(true);
         try {
-            // Buscar perfil por email del usuario logueado
-            const email = session?.person?.email;
-            if (!email) { setLoading(false); return; }
-            const persons = await apiClient.query(ENDPOINTS.persons, { Email: email });
-            const person = persons[0];
-            if (!person) { setLoading(false); return; }
-            const profiles = await apiClient.query(ENDPOINTS.profiles, { PersonId: person.Id });
-            const profileId = profiles[0]?.Id;
+            // La familia puede haberse creado desde otro cliente mientras la app estaba abierta.
+            apiClient.clearCache();
+            // El login ya conoce el perfil; el email queda como fallback para sesiones antiguas.
+            let profileId = session?.profile?.id;
+            if (!profileId) {
+                const email = session?.person?.email;
+                if (!email) { setLoading(false); return; }
+                const persons = await apiClient.query(ENDPOINTS.persons, { Email: email });
+                const person = persons[0];
+                if (!person) { setLoading(false); return; }
+                const profiles = await apiClient.query(ENDPOINTS.profiles, { PersonId: person.Id });
+                profileId = profiles[0]?.Id;
+            }
             if (!profileId) { setLoading(false); return; }
             console.log("[Family] Cargando familia para profile", profileId);
 
-            const myMembership = await apiClient.query(ENDPOINTS.familyMembers, { ProfileId: profileId });
-            const familyId = myMembership[0]?.FamilyId;
+            const myMemberships = await apiClient.query(ENDPOINTS.familyMembers, { ProfileId: profileId, Status: "ACTIVE" });
+            const candidateFamilyIds = [...new Set(myMemberships.map(membership => membership.FamilyId).filter(Boolean))];
+            if (!candidateFamilyIds.length) { setLoading(false); return; }
+
+            // Un usuario puede conservar asociaciones antiguas; elegir la familia con más miembros
+            // evita mostrar una relación histórica incompleta.
+            const familyCandidates = await Promise.all(candidateFamilyIds.map(async (candidateId) => ({
+                familyId: candidateId,
+                members: await apiClient.query(ENDPOINTS.familyMembers, { FamilyId: candidateId, Status: "ACTIVE" }),
+            })));
+            const selectedFamily = familyCandidates.sort((left, right) => right.members.length - left.members.length)[0];
+            const familyId = selectedFamily.familyId;
             if (!familyId) { setLoading(false); return; }
 
             const family = await apiClient.query(ENDPOINTS.families, { Id: familyId });
             if (family[0]) setFamilyName(family[0].Name);
 
-            const allMembers = await apiClient.query(ENDPOINTS.familyMembers, { FamilyId: familyId });
+            const allMembers = selectedFamily.members;
             // Enriquecer cada miembro con Profile -> Person + Role
             const enriched = [];
             for (const fm of allMembers) {
@@ -60,9 +75,9 @@ export default function Family() {
                 const roleName = roles[0]?.Name || fm.RelationshipType;
                 enriched.push({ fm, person, roleName, profile });
             }
-            // Holder = PARENT, Members = resto
-            const holderMember = enriched.find(e => e.fm.RelationshipType === 'PARENT') || enriched[0];
-            const otherMembers = enriched.filter(e => e !== holderMember);
+            // El usuario autenticado debe aparecer siempre, independientemente de su rol.
+            const holderMember = enriched.find(e => e.profile?.Id === profileId) || null;
+            const otherMembers = enriched.filter(e => e.profile?.Id !== profileId);
             setHolder(holderMember || null);
             setMembers(otherMembers);
             console.log("[Family] OK", { familyId, holder: holderMember?.person?.Email, members: enriched.length });

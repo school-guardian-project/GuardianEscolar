@@ -31,10 +31,21 @@ export class App {
       const savedTheme = localStorage.getItem('theme') || 'light-theme-blue';
       this.setTheme(savedTheme);
 
- 
-      const savedLang = localStorage.getItem('lang') ?? 'es';
+      const supportedLangs = ['es', 'en', 'pt', 'fr'];
+      const savedLang = localStorage.getItem('lang');
+      const selectedLang = savedLang && supportedLangs.includes(savedLang) ? savedLang : 'es';
+
+      this.translate.addLangs(supportedLangs);
       this.translate.setDefaultLang('es');
-      this.translate.use(savedLang);
+      this.translate.use(selectedLang).subscribe({
+        next: () => {
+          localStorage.setItem('lang', selectedLang);
+        },
+        error: () => {
+          this.translate.use('es');
+          localStorage.setItem('lang', 'es');
+        }
+      });
     }
   }
 }

@@ -36,12 +36,13 @@ export function mapConductor(person: any, profile: any, license: any): any {
   };
 }
 
-export function mapFamilia(family: any): any {
+export function mapFamilia(family: any, parents: string[] = [], students: string[] = []): any {
   return {
     id: family.Id,
     nombre: family.Name,
     observaciones: family.Observations,
-    acudiente: family.Name, // simplified
+    acudiente: parents.length ? parents.join(', ') : '—',
+    estudiante: students.length ? students.join(', ') : '—',
     telefono: '—',
   };
 }

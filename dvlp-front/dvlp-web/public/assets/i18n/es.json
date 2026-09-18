@@ -131,21 +131,9 @@
     "col_product": "Producto",
     "col_company": "Empresa",
     "col_legal": "Legal",
-    "links_product": [
-      "Funcionalidades",
-      "Cómo funciona",
-      "Precios",
-      "Para escuelas"
-    ],
-    "links_company": [
-      "Nosotros",
-      "Blog",
-      "Contacto"
-    ],
-    "links_legal": [
-      "Privacidad",
-      "Términos"
-    ],
+    "links_product": ["Funcionalidades", "Cómo funciona", "Precios", "Para escuelas"],
+    "links_company": ["Nosotros", "Blog", "Contacto"],
+    "links_legal": ["Privacidad", "Términos"],
     "rights": "© 2026 Guardian Escolar · Todos los derechos reservados"
   },
   "login": {
@@ -227,11 +215,9 @@
       "stepText": "4 de 4",
       "description": "Introduce el código para finalizar el cambio de teléfono.",
       "pin_error": "*El código ingresado no es válido.",
-      "confirmationTitle":"Teléfono actualizado",
-      "confirmationDescription":"Su teléfono ha sido actualizado correctamente."
+      "confirmationTitle": "Teléfono actualizado",
+      "confirmationDescription": "Su teléfono ha sido actualizado correctamente."
     }
-    
-    
   },
   "change_email": {
     "email": {
@@ -266,8 +252,8 @@
       "stepText": "4 de 4",
       "description": "Introduce el código final para actualizar tu correo.",
       "pin_error": "*El código ingresado no es válido.",
-      "confirmationTitle":"Correo actualizado",
-      "confirmationDescription":"Su correo ha sido actualizado correctamente."
+      "confirmationTitle": "Correo actualizado",
+      "confirmationDescription": "Su correo ha sido actualizado correctamente."
     },
     "reset": {
       "title": "Casi terminamos",
@@ -322,8 +308,8 @@
       "buttonText": "Guardar contraseña",
       "returnStep": "Volver",
       "stepText": "3 de 3",
-      "confirmationTitle":"Contraseña actualizada",
-      "confirmationDescription":"Su contraseña ha sido actualizada correctamente."
+      "confirmationTitle": "Contraseña actualizada",
+      "confirmationDescription": "Su contraseña ha sido actualizada correctamente."
     }
   },
   "dashboard": {
@@ -853,7 +839,6 @@
       "licencia_vigente": "Licencia vigente",
       "placa": "Placa",
       "nombre_conductor": "Nombre conductor",
-      "estudiante": "Estudiante",
       "acudiente": "Acudiente",
       "direccion": "Dirección",
       "destino_final": "Destino final",
@@ -887,7 +872,7 @@
     "return": "Volver al inicio de sesión",
     "step_text": "1 de 3",
     "hint": "Recibirás un código de 6 dígitos",
-    
+
     "code": {
       "title": "Verifica tu correo",
       "session_description": "Enviamos un código de 6 dígitos a tu correo.",

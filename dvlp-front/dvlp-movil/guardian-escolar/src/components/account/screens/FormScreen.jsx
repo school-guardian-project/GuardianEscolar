@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useNavigation } from "@react-navigation/native";
 
@@ -20,11 +19,13 @@ export default function FormScreen({
 }) {
 
     const navigation = useNavigation();
-    const [value, setValue] = useState("");
+    const [internalValue, setInternalValue] = useState("");
     const [error, setError] = useState("");
+    const fieldValue = value ?? internalValue;
 
     const handleChangeText = (text) => {
-        setValue(text);
+        setInternalValue(text);
+        onChangeText?.(text);
 
         if (error) {
             setError("");
@@ -42,10 +43,10 @@ export default function FormScreen({
             fieldName.includes("numero");
 
         const validationError = isEmail
-            ? validateEmail(value)
+            ? validateEmail(fieldValue)
             : isPhone
-                ? validatePhone(value)
-                : value.trim()
+                ? validatePhone(fieldValue)
+                : fieldValue.trim()
                     ? ""
                     : "Este campo es obligatorio";
 
@@ -77,8 +78,9 @@ export default function FormScreen({
             <InputField
                 label={label}
                 placeholder={placeholder}
-                value={value}
-                onChangeText={onChangeText}
+                value={fieldValue}
+                onChangeText={handleChangeText}
+                error={error}
             />
 
             <PrimaryButton

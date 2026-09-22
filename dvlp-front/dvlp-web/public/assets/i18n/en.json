@@ -751,20 +751,20 @@
         "nombre": "Stop name",
         "ciudad": "City",
         "direccion": "Address",
-        "latitud": "Latitude",
-        "longitud": "Longitude",
-        "estudiante": "Student"
+        "estudiante": "Student",
+        "ruta": "Route"
       }
     },
     "ruta": {
       "title": "Register route",
       "fields": {
         "nombre": "Route name",
-        "sector": "Sector / neighborhood",
+        "sector": "Neighborhood",
         "horaInicio": "Start time",
         "horaFin": "End time",
         "destino": "Destination",
-        "sectorRuta": "Sector"
+        "sectorRuta": "Sector",
+        "bus": "Bus"
       }
     },
     "admins": {

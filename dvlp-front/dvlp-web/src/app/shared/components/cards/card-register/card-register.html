@@ -66,6 +66,17 @@
       </div>
     </ng-container>
 
+    <div class="card-register__map" *ngIf="type === 'parada'" aria-label="Mapa de Google Maps">
+      <iframe
+        class="card-register__map-frame"
+        src="https://www.google.com/maps?q=Colombia&output=embed"
+        title="Mapa de Google Maps"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen>
+      </iframe>
+    </div>
+
     <button class="card-register__btn" type="submit">
       {{ 'register.button' | translate }}
     </button>

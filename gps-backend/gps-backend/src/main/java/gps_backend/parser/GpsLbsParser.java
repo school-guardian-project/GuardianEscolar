@@ -1,15 +1,33 @@
 package gps_backend.parser;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 import org.springframework.stereotype.Component;
 
 import gps_backend.model.GpsLbsData;
+import gps_backend.model.GpsTimestampStatus;
 
 @Component
 public class GpsLbsParser {
 
+    private static final ZoneId COLOMBIA_ZONE = ZoneId.of("America/Bogota");
+    private static final DateTimeFormatter DISPLAY_FORMAT =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     public GpsLbsData parse(byte[] data, int length, String imei) {
+
+        return parse(data, length, imei, null);
+        }
+
+        public GpsLbsData parse(
+            byte[] data,
+            int length,
+            String imei,
+            Instant receivedAt) {
 
         if (data == null || length < 22) {
             System.err.println("Paquete LBS demasiado corto.");
@@ -44,22 +62,29 @@ public class GpsLbsParser {
 
         System.out.println("-----------------------------------");
 
+        System.out.println();
+        System.out.println("========== BYTES FECHA 0x50 ==========");
+        for (int i = 4; i <= 9; i++) {
+            System.out.printf(
+                    "data[%d] = 0x%02X = %d%n",
+                    i,
+                    data[i] & 0xFF,
+                    data[i] & 0xFF
+            );
+        }
+        System.out.println("=======================================");
         try {
+            OffsetDateTime dateTime = GpsPacketParser.parseGpsDate(data, 4, "0x50");
 
-            int year = 2000 + bcdToDecimal(data[4]);
-            int month = bcdToDecimal(data[5]);
-            int day = bcdToDecimal(data[6]);
-            int hour = bcdToDecimal(data[7]);
-            int minute = bcdToDecimal(data[8]);
-            int second = bcdToDecimal(data[9]);
-
-            LocalDateTime dateTime = LocalDateTime.of(
-                    year,
-                    month,
-                    day,
-                    hour,
-                    minute,
-                    second
+            System.out.println(
+                    "GPS date 0x50 data[4..9]: " + dateTime + " (UTC)"
+            );
+            System.out.println(
+                    "Colombia: " + dateTime.withOffsetSameInstant(ZoneOffset.of("-05:00"))
+            );
+            System.out.println(
+                    "Importante: la fecha del protocolo 0x50 se conserva tal cual la reporta el GPS. "
+                            + "No se aplica corrección manual de zona horaria a partir de la fecha del paquete."
             );
 
             int ta = data[10] & 0xFF;
@@ -70,10 +95,18 @@ public class GpsLbsParser {
             long cellId = readUnsignedInt(data, 16);
             int signalStrength = data[20] & 0xFF;
 
+            GpsTimestampStatus timestampStatus = GpsPacketParser.determineTimestampStatus(
+                    dateTime.toInstant(),
+                    receivedAt
+            );
+
             GpsLbsData lbs = new GpsLbsData();
 
             lbs.setImei(imei);
             lbs.setDateTime(dateTime);
+            lbs.setGpsDateTime(dateTime.toInstant());
+            lbs.setReceivedAt(receivedAt);
+            lbs.setTimestampStatus(timestampStatus);
             lbs.setTa(ta);
             lbs.setMcc(mcc);
             lbs.setMnc(mnc);
@@ -85,7 +118,12 @@ public class GpsLbsParser {
             System.out.println();
             System.out.println("========== LBS 0x50 ==========");
             System.out.println("IMEI: " + lbs.getImei());
-            System.out.println("Fecha/hora: " + lbs.getDateTime());
+            System.out.println("GPS date: " + lbs.getDateTime() + " (UTC)");
+                System.out.println(
+                    "Servidor received Colombia: "
+                        + formatColombiaTime(lbs.getReceivedAt())
+                );
+            System.out.println("Timestamp status: " + lbs.getTimestampStatus());
             System.out.println("TA: " + lbs.getTa());
             System.out.println("MCC: " + lbs.getMcc());
             System.out.println("MNC: " + lbs.getMnc());
@@ -122,11 +160,11 @@ public class GpsLbsParser {
                 | (long) (data[index + 3] & 0xFF);
     }
 
-    private int bcdToDecimal(byte value) {
+    private String formatColombiaTime(Instant instant) {
+        if (instant == null) {
+            return "NO DISPONIBLE";
+        }
 
-        int high = (value >> 4) & 0x0F;
-        int low = value & 0x0F;
-
-        return high * 10 + low;
+        return instant.atZone(COLOMBIA_ZONE).format(DISPLAY_FORMAT);
     }
 }

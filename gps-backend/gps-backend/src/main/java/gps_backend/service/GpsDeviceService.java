@@ -1,6 +1,6 @@
 package gps_backend.service;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,7 +21,7 @@ public class GpsDeviceService {
                 new GpsDevice(
                         imei,
                         true,
-                        LocalDateTime.now()
+                        Instant.now()
                 )
         );
     }
@@ -42,7 +42,7 @@ public class GpsDeviceService {
         }
 
         device.setGpsStatus(true);
-        device.setLastConnection(LocalDateTime.now());
+        device.setLastConnection(Instant.now());
     }
 
     public GpsDevice getDevice(String imei) {

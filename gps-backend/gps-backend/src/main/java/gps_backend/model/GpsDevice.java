@@ -1,6 +1,6 @@
 package gps_backend.model;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -11,7 +11,7 @@ public class GpsDevice {
 
     private String imei;
     private boolean gpsStatus;
-    private LocalDateTime lastConnection;
+    private Instant lastConnection;
 
     public GpsDevice() {
     }
@@ -19,7 +19,7 @@ public class GpsDevice {
     public GpsDevice(
             String imei,
             boolean gpsStatus,
-            LocalDateTime lastConnection) {
+            Instant lastConnection) {
 
         this.imei = imei;
         this.gpsStatus = gpsStatus;

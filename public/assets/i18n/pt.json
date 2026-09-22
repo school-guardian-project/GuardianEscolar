@@ -681,7 +681,7 @@
     }
   },
   "register": {
-    "select": "Selecionar…",
+    "select": "Selecionar Estudante",
     "button": "Registrar",
     "estudiante": {
       "title": "Registrar estudante",
@@ -751,20 +751,20 @@
         "nombre": "Nome da parada",
         "ciudad": "Cidade",
         "direccion": "Endereço",
-        "latitud": "Latitude",
-        "longitud": "Longitude",
-        "estudiante": "Estudante"
+        "estudiante": "Estudante",
+        "ruta": "Rota"
       }
     },
     "ruta": {
       "title": "Registrar rota",
       "fields": {
         "nombre": "Nome da rota",
-        "sector": "Setor / bairro",
+        "sector": "bairro",
         "horaInicio": "Hora de início",
         "horaFin": "Hora final",
         "destino": "Destino",
-        "sectorRuta": "Setor"
+        "sectorRuta": "Setor",
+        "bus": "Ônibus"
       }
     },
     "admins": {

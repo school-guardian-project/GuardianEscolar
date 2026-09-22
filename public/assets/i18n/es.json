@@ -793,21 +793,22 @@
       "title": "Registrar Parada",
       "fields": {
         "nombre": "Nombre de la Parada",
+        "estudiante": "Estudiante",
         "ciudad": "Ciudad",
         "direccion": "Dirección",
-        "latitud": "Latitud",
-        "longitud": "Longitud"
+        "ruta": "Ruta"
       }
     },
     "ruta": {
       "title": "Registrar Ruta",
       "fields": {
         "nombre": "Nombre de la Ruta",
-        "sector": "Sector / Barrio",
+        "sector": "Barrio",
         "horaInicio": "Hora de Inicio",
         "horaFin": "Hora de Finalización",
         "destino": "Destino",
-        "sectorRuta": "Sector"
+        "sectorRuta": "Sector",
+        "bus": "Bus"
       }
     },
     "admins": {

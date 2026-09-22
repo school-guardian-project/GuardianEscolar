@@ -79,8 +79,7 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { name: 'estudiante', type: 'select', options: [] },
     { name: 'ciudad', type: 'select', options: [] },
     { name: 'direccion', type: 'text' },
-    { name: 'latitud', type: 'text' },
-    { name: 'longitud', type: 'text' },
+    { name: 'ruta', type: 'select', options: [] },
   ],
 
   ruta: [
@@ -90,6 +89,7 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { name: 'horaFin', type: 'text' },
     { name: 'destino', type: 'text' },
     { name: 'sectorRuta', type: 'select', options: [] },
+    { name: 'bus', type: 'select', options: [] },
   ],
 
   admins: [

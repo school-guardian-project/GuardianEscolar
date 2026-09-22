@@ -751,20 +751,20 @@
         "nombre": "Nom de l'arrêt",
         "ciudad": "Ville",
         "direccion": "Adresse",
-        "latitud": "Latitude",
-        "longitud": "Longitude",
-        "estudiante": "Étudiant"
+        "estudiante": "Étudiant",
+        "ruta": "Itinéraire"
       }
     },
     "ruta": {
       "title": "Enregistrer l'itinéraire",
       "fields": {
         "nombre": "Nom de l'itinéraire",
-        "sector": "Secteur / quartier",
+        "sector": "Quartier",
         "horaInicio": "Heure de début",
         "horaFin": "Heure de fin",
         "destino": "Destination",
-        "sectorRuta": "Secteur"
+        "sectorRuta": "Secteur",
+        "bus": "Bus"
       }
     },
     "admins": {

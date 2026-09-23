@@ -3,7 +3,14 @@ import { View, Text, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
 
-export default function RouteInfoCard() {
+export default function RouteInfoCard({
+  routeName = "",
+  driverName = "",
+  plate = "",
+  schedule = "",
+  stopsCount = "",
+  finalDestination = "",
+}) {
   const { t } = useTranslation();
   const { theme } = useTheme();
   return (
@@ -26,7 +33,7 @@ export default function RouteInfoCard() {
               { color: theme.textColor },
             ]}
           >
-            Ruta Centro
+            {routeName}
           </Text>
 
           <Text
@@ -35,7 +42,7 @@ export default function RouteInfoCard() {
               { color: theme.textSecondary },
             ]}
           >
-            Carlos Pérez
+            {driverName}
           </Text>
         </View>
 
@@ -46,7 +53,7 @@ export default function RouteInfoCard() {
               { color: theme.textColor },
             ]}
           >
-            ABC-123
+            {plate}
           </Text>
 
           <Text
@@ -55,7 +62,7 @@ export default function RouteInfoCard() {
               { color: theme.textSecondary },
             ]}
           >
-            06:00 AM - 07:30 AM
+            {schedule}
           </Text>
         </View>
 
@@ -88,7 +95,7 @@ export default function RouteInfoCard() {
               { color: theme.textSecondary },
             ]}
           >
-            12
+            {stopsCount}
           </Text>
         </View>
 
@@ -108,7 +115,7 @@ export default function RouteInfoCard() {
               { color: theme.textSecondary },
             ]}
           >
-            {t("cards.school")}
+            {finalDestination}
           </Text>
         </View>
 

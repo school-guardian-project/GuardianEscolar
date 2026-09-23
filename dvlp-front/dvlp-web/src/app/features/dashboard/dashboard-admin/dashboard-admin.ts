@@ -11,22 +11,6 @@ import { UpdateInformation } from '@shared/components/modal/update-information/u
 import { SidebarAdmin } from '@shared/components/navbar/sidebar-admin/sidebar-admin';
 import {  RecordInformation,  RecordData} from '@shared/components/modal/record-information/record-information';
 
-import { CardType } from '@shared/components/cards/card-list/card-list';
-
-const MOCK_DATA: Partial<Record<CardType, RecordData[]>> = {
-  schools: [
-    {
-      nombre: 'Colegio Técnico Neiva',
-      direccion: 'Calle 50 #20-30',
-      ciudad: 'Neiva',
-      escolaridad: 'Primaria y Bachillerato',
-      telefono: '+57 8 876 5432',
-      correo: 'info@colegiotecnico.edu.co',
-      web: 'www.colegiotecnico.edu.co'
-    }
-  ]
-};
-
 @Component({
   selector: 'app-dashboard-admin',
   standalone: true,
@@ -54,8 +38,6 @@ export class DashboardAdmin {
 
   schoolSelected: RecordData = {};
 
-  // dato de prueba
-  schoolExample: RecordData = MOCK_DATA.schools?.[0] || {};
   constructor(private router: Router) { }
 
   navegarUsuarios(): void {

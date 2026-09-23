@@ -6,49 +6,6 @@ import { useTheme } from "@core/services/ThemeService";
 import BackButton from "@components/buttons/BackButton";
 import styles from "./Notifications.style";
 
-const initialNotifications = [
-  {
-    id: "route-started",
-    icon: "bus-outline",
-    type: "boarding",
-    saved: false,
-    titleKey: "notifications.routeStartedTitle",
-    messageKey: "notifications.routeStartedMessage",
-  },
-  {
-    id: "student-boarded",
-    icon: "checkmark-circle-outline",
-    type: "boarding",
-    saved: false,
-    titleKey: "notifications.studentBoardedTitle",
-    messageKey: "notifications.studentBoardedMessage",
-  },
-  {
-    id: "route-arriving",
-    icon: "location-outline",
-    type: "delay",
-    saved: false,
-    titleKey: "notifications.routeArrivingTitle",
-    messageKey: "notifications.routeArrivingMessage",
-  },
-  {
-    id: "student-left",
-    icon: "exit-outline",
-    type: "alighting",
-    saved: false,
-    titleKey: "notifications.studentLeftTitle",
-    messageKey: "notifications.studentLeftMessage",
-  },
-  {
-    id: "route-detour",
-    icon: "git-branch-outline",
-    type: "detour",
-    saved: false,
-    titleKey: "notifications.routeDetourTitle",
-    messageKey: "notifications.routeDetourMessage",
-  },
-];
-
 const filterOptions = [
   { key: "all", labelKey: "notifications.filters.all" },
   { key: "boarding", labelKey: "notifications.filters.boarding" },
@@ -61,7 +18,7 @@ const filterOptions = [
 export default function Notifications() {
   const { theme } = useTheme();
   const { t } = useTranslation();
-  const [notifications, setNotifications] = useState(initialNotifications);
+  const [notifications, setNotifications] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [filtersVisible, setFiltersVisible] = useState(false);
 

@@ -1,3 +1,3 @@
 export const environment = {
-    apiUrl: 'http://localhost:8080'
+  apiUrl: import.meta.env.API_URL
 };

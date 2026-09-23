@@ -6,7 +6,7 @@ import { RecordData, RegisterType } from './record-information.types';
 export type { RecordData, RegisterType } from './record-information.types';
 
 const RECORD_CONFIG: Record<RegisterType, { icon: string; fields: string[] }> = {
-  estudiante: { icon: 'person',             fields: ['nombres', 'apellidos', 'tipoId', 'identificacion', 'fechaNac', 'curso', 'telefono', 'direccion', 'correo'] },
+  estudiante: { icon: 'person',             fields: ['nombres', 'apellidos', 'tipoId', 'identificacion', 'fechaNac', 'telefono', 'direccion', 'correo'] },
   acudiente:  { icon: 'people',             fields: ['nombre', 'apellidos', 'correo', 'tipoId', 'identificacion', 'fechaNac', 'telefono', 'direccion'] },
   conductor:  { icon: 'directions_car',     fields: ['nombres', 'apellidos', 'tipoId', 'identificacion', 'fechaNac', 'vencLicencia', 'licencia', 'direccion', 'correo'] },
   familia:    { icon: 'family_restroom',    fields: ['nombre', 'acudiente', 'estudiante', 'observaciones'] },

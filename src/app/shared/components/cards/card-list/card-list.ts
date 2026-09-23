@@ -47,8 +47,7 @@ const ITEM_FIELDS: Record<CardType, ItemField[]> = {
   estudiante: [
     { key: 'nombre' },
     { key: 'identificacion' },
-    { key: 'curso', halfWidth: true },
-    { key: 'telefono', halfWidth: true },
+    { key: 'telefono' },
   ],
   acudiente: [
     { key: 'nombre' },
@@ -105,7 +104,6 @@ const MOCK_DATA: Record<CardType, any[]> = {
       nombre: 'Juan Carlos García',
       tipoId: 'CC',
       identificacion: '1234567890',
-      curso: '9°',
       telefono: '+57 321 456 7890',
       fechaNac: '2010-05-15',
       direccion: 'Calle 5 #12-34',
@@ -117,7 +115,6 @@ const MOCK_DATA: Record<CardType, any[]> = {
       nombre: 'María Elena Ruiz',
       tipoId: 'TI',
       identificacion: '9876543210',
-      curso: '8°',
       telefono: '+57 312 345 6789',
       fechaNac: '2011-08-22',
       direccion: 'Calle 10 #8-20',
@@ -129,7 +126,6 @@ const MOCK_DATA: Record<CardType, any[]> = {
       nombre: 'Carlos Andrés Silva',
       tipoId: 'CC',
       identificacion: '1111222233',
-      curso: '10°',
       telefono: '+57 315 678 9012',
       fechaNac: '2009-12-03',
       direccion: 'Calle 15 #10-40',
@@ -141,7 +137,6 @@ const MOCK_DATA: Record<CardType, any[]> = {
       nombre: 'Ana Patricia Gómez',
       tipoId: 'CC',
       identificacion: '4444555566',
-      curso: '9°',
       telefono: '+57 318 901 2345',
       fechaNac: '2010-01-20',
       direccion: 'Calle 20 #5-15',
@@ -329,6 +324,8 @@ const MOCK_DATA: Record<CardType, any[]> = {
 })
 export class CardList {
   @Input() type: CardType = 'estudiante';
+  /** Datos externos; si es null se usa MOCK_DATA (demo de otras páginas). */
+  @Input() data: any[] | null = null;
 
   @Output() viewItem = new EventEmitter<RecordData>();
   @Output() editItem = new EventEmitter<RecordData>();
@@ -349,7 +346,7 @@ export class CardList {
   }
 
   get items(): any[] {
-    return MOCK_DATA[this.type] || [];
+    return this.data ?? MOCK_DATA[this.type] ?? [];
   }
 
   get filteredItems(): any[] {

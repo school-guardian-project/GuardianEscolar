@@ -38,10 +38,9 @@ const UPDATE_FIELDS: Record<RegisterType, Field[]> = {
   estudiante: [
     { name: 'nombres', type: 'text' },
     { name: 'apellidos', type: 'text' },
-    { name: 'tipoId', type: 'select', options: ['CC', 'TI', 'CE'] },
+    { name: 'tipoId', type: 'select', options: ['CC', 'TI'] },
     { name: 'identificacion', type: 'text' },
     { name: 'fechaNac', type: 'date' },
-    { name: 'curso', type: 'select', options: ['1°', '2°', '3°'], halfWidth: true },
     { name: 'telefono', type: 'tel', halfWidth: true },
     { name: 'direccion', type: 'text' },
     { name: 'correo', type: 'email' },
@@ -128,7 +127,7 @@ const UPDATE_FIELDS: Record<RegisterType, Field[]> = {
 };
 
 const MODAL_CONFIGS: Record<RegisterType, ModalConfig> = {
-  estudiante: { icon: 'person', displayName: 'nombres', displayType: 'curso' },
+  estudiante: { icon: 'person', displayName: 'nombres', displayType: 'identificacion' },
   acudiente: { icon: 'people', displayName: 'nombre', displayType: 'tipoId' },
   conductor: { icon: 'directions_car', displayName: 'nombres', displayType: 'licencia' },
   familia: { icon: 'home', displayName: 'nombre' },

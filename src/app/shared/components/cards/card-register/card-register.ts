@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -26,10 +26,9 @@ const FIELDS: Record<RegisterType, Field[]> = {
   estudiante: [
     { name: 'nombres', type: 'text' },
     { name: 'apellidos', type: 'text' },
-    { name: 'tipoId', type: 'select', options: ['CC', 'TI', 'CE'] },
+    { name: 'tipoId', type: 'select', options: ['CC', 'TI'] },
     { name: 'identificacion', type: 'text' },
     { name: 'fechaNac', type: 'date' },
-    { name: 'curso', type: 'select', options: ['1°', '2°', '3°', '4°', '5°', '6°', '7°', '8°', '9°', '10°', '11°'], halfWidth: true },
     { name: 'telefono', type: 'tel', halfWidth: true },
     { name: 'direccion', type: 'text' },
     { name: 'correo', type: 'email' },
@@ -137,6 +136,8 @@ const FAMILY_OPTIONS = {
 })
 export class CardRegister implements OnInit {
   @Input() type: RegisterType = 'estudiante';
+  /** Emite el formulario al padre; si nadie escucha se hace fallback a console.log. */
+  @Output() formSubmit = new EventEmitter<Record<string, any>>();
 
   formData: Record<string, any> = {};
   groupedFields: any[] = [];
@@ -153,6 +154,12 @@ export class CardRegister implements OnInit {
 
   ngOnInit(): void {
     this.groupedFields = this.buildGroupedFields();
+
+    for (const field of FIELDS[this.type]) {
+      if (this.formData[field.name] === undefined) {
+        this.formData[field.name] = '';
+      }
+    }
 
     if (this.type === 'familia') {
       this.formData = { ...FAMILY_FORM_DATA };
@@ -212,7 +219,19 @@ export class CardRegister implements OnInit {
   }
 
   onSubmit(): void {
+    if (this.formSubmit.observed) {
+      this.formSubmit.emit({ ...this.formData });
+      return;
+    }
     console.log('Datos del formulario:', this.formData);
-    // Aquí iría el servicio de registro
+  }
+
+  resetForm(): void {
+    this.formData = {};
+    this.selectedStudents = [];
+    this.selectedStudent = '';
+    for (const field of FIELDS[this.type]) {
+      this.formData[field.name] = '';
+    }
   }
 }

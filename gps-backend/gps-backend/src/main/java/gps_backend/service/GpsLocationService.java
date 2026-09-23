@@ -8,6 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.stereotype.Service;
 
 import gps_backend.model.GpsLocation;
+import gps_backend.model.PositionType;
 
 @Service
 public class GpsLocationService {
@@ -23,6 +24,13 @@ public class GpsLocationService {
                         key -> new ArrayList<>()
                 )
                 .add(location);
+
+        System.out.println(
+                "Ubicación guardada como "
+                        + location.getPositionType()
+                        + " para "
+                        + location.getImei()
+        );
     }
 
     public GpsLocation getLatest(String imei) {
@@ -36,9 +44,15 @@ public class GpsLocationService {
             return null;
         }
 
-        return gpsLocations.get(
-                gpsLocations.size() - 1
-        );
+                for (int i = gpsLocations.size() - 1; i >= 0; i--) {
+                        GpsLocation location = gpsLocations.get(i);
+
+                        if (location.getPositionType() == PositionType.REAL_TIME) {
+                                return location;
+                        }
+                }
+
+                return gpsLocations.get(gpsLocations.size() - 1);
     }
 
     public List<GpsLocation> getHistory(String imei) {

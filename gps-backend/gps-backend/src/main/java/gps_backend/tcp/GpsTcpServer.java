@@ -5,6 +5,10 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.time.Duration;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -21,6 +25,8 @@ import gps_backend.service.GpsLocationService;
 public class GpsTcpServer {
 
     private static final int PORT = 8842;
+    private static final DateTimeFormatter DISPLAY_FORMAT =
+            DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private final GpsLocationService gpsLocationService;
     private final GpsDeviceService gpsDeviceService;
@@ -42,15 +48,12 @@ public class GpsTcpServer {
         this.gpsLbsParser = gpsLbsParser;
     }
 
-    // ============================================================
-    // INICIAR SERVIDOR TCP
-    // ============================================================
-
     public void start() {
 
         Thread serverThread = new Thread(() -> {
 
-            try (ServerSocket serverSocket = new ServerSocket(PORT)) {
+            try (ServerSocket serverSocket =
+                         new ServerSocket(PORT)) {
 
                 System.out.println();
                 System.out.println("=================================");
@@ -65,7 +68,7 @@ public class GpsTcpServer {
 
                     System.out.println(
                             "GPS conectado desde: "
-                            + socket.getRemoteSocketAddress()
+                                    + socket.getRemoteSocketAddress()
                     );
 
                     Thread gpsThread = new Thread(
@@ -80,7 +83,7 @@ public class GpsTcpServer {
 
                 System.err.println(
                         "Error iniciando servidor TCP: "
-                        + e.getMessage()
+                                + e.getMessage()
                 );
             }
 
@@ -89,23 +92,21 @@ public class GpsTcpServer {
         serverThread.start();
     }
 
-    // ============================================================
-    // MANEJAR CONEXIÓN GPS
-    // ============================================================
-
     private void handleGpsConnection(Socket socket) {
 
         String currentImei = null;
 
         try (
-                InputStream inputStream = socket.getInputStream()
+                InputStream inputStream =
+                        socket.getInputStream()
         ) {
 
             byte[] buffer = new byte[4096];
 
             while (true) {
 
-                int bytesRead = inputStream.read(buffer);
+                int bytesRead =
+                        inputStream.read(buffer);
 
                 if (bytesRead == -1) {
                     break;
@@ -115,7 +116,8 @@ public class GpsTcpServer {
                     continue;
                 }
 
-                byte[] data = new byte[bytesRead];
+                byte[] data =
+                        new byte[bytesRead];
 
                 System.arraycopy(
                         buffer,
@@ -126,22 +128,29 @@ public class GpsTcpServer {
                 );
 
                 System.out.println();
+
                 System.out.println(
-                        "Datos recibidos (" + bytesRead + " bytes):"
+                        "Datos recibidos ("
+                                + bytesRead
+                                + " bytes):"
                 );
 
-                System.out.println(bytesToHex(data));
-
-                String detectedImei = processPacket(
-                        socket,
-                        data,
-                        bytesRead,
-                        currentImei
+                System.out.println(
+                        bytesToHex(data)
                 );
+
+                String detectedImei =
+                        processPacket(
+                                socket,
+                                data,
+                                bytesRead,
+                                currentImei
+                        );
 
                 if (detectedImei != null) {
 
-                    currentImei = detectedImei;
+                    currentImei =
+                            detectedImei;
 
                     gpsConnections.put(
                             currentImei,
@@ -154,7 +163,7 @@ public class GpsTcpServer {
 
             System.err.println(
                     "Error en conexión GPS: "
-                    + e.getMessage()
+                            + e.getMessage()
             );
 
         } finally {
@@ -174,14 +183,10 @@ public class GpsTcpServer {
 
             System.out.println(
                     "Conexión GPS cerrada: "
-                    + socket.getRemoteSocketAddress()
+                            + socket.getRemoteSocketAddress()
             );
         }
     }
-
-    // ============================================================
-    // PROCESAR PAQUETE
-    // ============================================================
 
     private String processPacket(
             Socket socket,
@@ -193,33 +198,41 @@ public class GpsTcpServer {
             return currentImei;
         }
 
-        // ========================================================
-        // PROTOCOLO 78 78
-        // ========================================================
+        /*
+         * ==========================================
+         * PROTOCOLO 78 78
+         * ==========================================
+         */
 
         if ((data[0] & 0xFF) == 0x78
                 && (data[1] & 0xFF) == 0x78) {
 
-            int protocol = data[3] & 0xFF;
+            int protocol =
+                    data[3] & 0xFF;
 
             switch (protocol) {
 
-                // =================================================
-                // LOGIN
-                // =================================================
-
+                /*
+                 * ==================================
+                 * LOGIN 0x01
+                 * ==================================
+                 */
                 case 0x01:
 
                     System.out.println();
-                    System.out.println("========== GPS LOGIN ==========");
-
-                    String detectedImei = extractImei(
-                            data,
-                            length
+                    System.out.println(
+                            "========== GPS LOGIN =========="
                     );
 
+                    String detectedImei =
+                            extractImei(
+                                    data,
+                                    length
+                            );
+
                     System.out.println(
-                            "IMEI: " + detectedImei
+                            "IMEI: "
+                                    + detectedImei
                     );
 
                     System.out.println(
@@ -237,7 +250,7 @@ public class GpsTcpServer {
 
                         System.err.println(
                                 "No se pudo registrar GPS: "
-                                + e.getMessage()
+                                        + e.getMessage()
                         );
                     }
 
@@ -249,10 +262,11 @@ public class GpsTcpServer {
 
                     return detectedImei;
 
-                // =================================================
-                // HEARTBEAT
-                // =================================================
-
+                /*
+                 * ==================================
+                 * HEARTBEAT 0x13
+                 * ==================================
+                 */
                 case 0x13:
 
                     System.out.println(
@@ -267,10 +281,11 @@ public class GpsTcpServer {
 
                     return currentImei;
 
-                // =================================================
-                // GPS LOCATION
-                // =================================================
-
+                /*
+                 * ==================================
+                 * GPS LOCATION 0x31
+                 * ==================================
+                 */
                 case 0x31:
 
                     System.out.println();
@@ -285,14 +300,27 @@ public class GpsTcpServer {
 
                     if (currentImei != null) {
 
+                        Instant receivedAt = Instant.now();
+
                         GpsLocation location =
                                 gpsPacketParser.parseLocation(
                                         data,
                                         length,
-                                        currentImei
+                                        currentImei,
+                                        receivedAt
                                 );
 
                         if (location != null) {
+
+                            /*
+                             * Comparación de la hora
+                             * enviada por el GPS contra
+                             * la hora real del servidor
+                             * en Colombia.
+                             */
+                            printTimeComparison(
+                                    location
+                            );
 
                             try {
 
@@ -312,6 +340,7 @@ public class GpsTcpServer {
                                 );
                             }
                         }
+
                     } else {
 
                         System.err.println(
@@ -327,10 +356,11 @@ public class GpsTcpServer {
 
                     break;
 
-                // =================================================
-                // ALARMA
-                // =================================================
-
+                /*
+                 * ==================================
+                 * ALARMA 0x32
+                 * ==================================
+                 */
                 case 0x32:
 
                     System.out.println();
@@ -338,10 +368,30 @@ public class GpsTcpServer {
                             "========== GPS ALARMA =========="
                     );
 
-                    analyzeAlarmPacket(
-                            data,
-                            length
-                    );
+                    Instant receivedAt = Instant.now();
+
+                    if (currentImei != null) {
+
+                        analyzeAlarmPacket(
+                                data,
+                                length,
+                                currentImei,
+                                receivedAt
+                        );
+
+                    } else {
+
+                        System.err.println(
+                                "No hay IMEI asociado al GPS."
+                        );
+
+                        analyzeAlarmPacket(
+                                data,
+                                length,
+                                null,
+                                receivedAt
+                        );
+                    }
 
                     sendAck(
                             socket,
@@ -351,10 +401,11 @@ public class GpsTcpServer {
 
                     break;
 
-                // =================================================
-                // LBS MULTIPLE BASES
-                // =================================================
-
+                /*
+                 * ==================================
+                 * LBS 0x50
+                 * ==================================
+                 */
                 case 0x50:
 
                     System.out.println();
@@ -366,7 +417,8 @@ public class GpsTcpServer {
                             gpsLbsParser.parse(
                                     data,
                                     length,
-                                    currentImei
+                                    currentImei,
+                                    Instant.now()
                             );
 
                     if (lbs != null) {
@@ -384,10 +436,11 @@ public class GpsTcpServer {
 
                     break;
 
-                // =================================================
-                // COMANDO
-                // =================================================
-
+                /*
+                 * ==================================
+                 * COMANDO 0x80
+                 * ==================================
+                 */
                 case 0x80:
 
                     System.out.println();
@@ -407,10 +460,11 @@ public class GpsTcpServer {
 
                     break;
 
-                // =================================================
-                // DESCONOCIDO
-                // =================================================
-
+                /*
+                 * ==================================
+                 * PROTOCOLO DESCONOCIDO
+                 * ==================================
+                 */
                 default:
 
                     System.out.println();
@@ -429,9 +483,11 @@ public class GpsTcpServer {
             return currentImei;
         }
 
-        // ========================================================
-        // PROTOCOLO 79 79
-        // ========================================================
+        /*
+         * ==========================================
+         * PROTOCOLO 79 79
+         * ==========================================
+         */
 
         if ((data[0] & 0xFF) == 0x79
                 && (data[1] & 0xFF) == 0x79) {
@@ -444,9 +500,11 @@ public class GpsTcpServer {
             return currentImei;
         }
 
-        // ========================================================
-        // HEADER DESCONOCIDO
-        // ========================================================
+        /*
+         * ==========================================
+         * HEADER DESCONOCIDO
+         * ==========================================
+         */
 
         System.out.println(
                 "Header desconocido: "
@@ -460,18 +518,135 @@ public class GpsTcpServer {
         return currentImei;
     }
 
-    // ============================================================
-    // ANALIZAR GPS 0x31
-    // ============================================================
+    /*
+     * ============================================================
+     * COMPARACIÓN DE TIEMPOS
+     * ============================================================
+     *
+     * IMPORTANTE:
+     *
+     * No convertimos la hora GPS a UTC-5.
+     *
+     * En esta etapa queremos comparar directamente:
+     *
+     *   Hora enviada por GPS
+     *              VS
+        *   Momento de recepción del servidor
+     *
+     * Esto nos permite determinar el desfase real del reloj
+     * interno del GPS sin introducir una conversión de zona
+     * horaria adicional.
+     */
+    private void printTimeComparison(
+            GpsLocation location) {
 
+        ZoneId colombiaZone =
+                ZoneId.of("America/Bogota");
+
+        Instant gpsTime = location.getGpsDateTime();
+        Instant receivedAt = location.getReceivedAt();
+
+        System.out.println();
+        System.out.println(
+                "========== COMPARACIÓN DE TIEMPOS =========="
+        );
+
+        System.out.println(
+                "GPS date:       "
+                        + location.getDateTime()
+        );
+
+        System.out.println(
+                "Colombia:       "
+                        + gpsTime.atZone(colombiaZone)
+        );
+
+        System.out.println(
+                "Server received: "
+                        + receivedAt
+                        + " (UTC) / "
+                        + receivedAt.atZone(colombiaZone).format(DISPLAY_FORMAT)
+                        + " (Colombia)"
+        );
+
+        if (gpsTime != null && receivedAt != null) {
+
+            Duration difference =
+                    Duration.between(
+                            gpsTime,
+                            receivedAt
+                    );
+
+            long totalSeconds =
+                    Math.abs(
+                            difference.getSeconds()
+                    );
+
+            long hours =
+                    totalSeconds / 3600;
+
+            long minutes =
+                    (totalSeconds % 3600) / 60;
+
+            long seconds =
+                    totalSeconds % 60;
+
+            double differenceMinutes =
+                    totalSeconds / 60.0;
+
+            System.out.println(
+                    "Diferencia: "
+                            + hours
+                            + " horas, "
+                            + minutes
+                            + " minutos, "
+                            + seconds
+                            + " segundos"
+            );
+
+            System.out.println(
+                    String.format(
+                            "Diferencia total: %.2f minutos",
+                            differenceMinutes
+                    )
+            );
+
+        } else {
+
+            System.out.println(
+                    "Diferencia: No disponible"
+            );
+        }
+
+        System.out.println(
+                "Timestamp status: " + location.getTimestampStatus()
+        );
+
+        System.out.println(
+                "Tipo posición: "
+                        + location.getPositionType()
+        );
+
+        System.out.println(
+                "============================================="
+        );
+
+        System.out.println();
+    }
+
+    /* 
+      ANÁLISIS DEL PAQUETE GPS 0x31
+     */
     private void analyzeGpsPacket(
             byte[] data,
             int length) {
 
         if (length < 22) {
+
             System.out.println(
                     "Paquete GPS demasiado corto."
             );
+
             return;
         }
 
@@ -487,10 +662,16 @@ public class GpsTcpServer {
                 data[10] & 0x0F;
 
         long latitudeRaw =
-                readUnsignedInt(data, 11);
+                readUnsignedInt(
+                        data,
+                        11
+                );
 
         long longitudeRaw =
-                readUnsignedInt(data, 15);
+                readUnsignedInt(
+                        data,
+                        15
+                );
 
         double latitude =
                 latitudeRaw / 1800000.0;
@@ -513,61 +694,63 @@ public class GpsTcpServer {
                 courseStatus & 0x03FF;
 
         System.out.println(
-                "Satélites: " + satellites
+                "Satélites: "
+                        + satellites
         );
 
         System.out.println(
-                "Latitud: " + latitude
+                "Latitud: "
+                        + latitude
         );
 
         System.out.println(
-                "Longitud: " + longitude
+                "Longitud: "
+                        + longitude
         );
 
         System.out.println(
-                "Velocidad: " + speed
+                "Velocidad: "
+                        + speed
         );
 
         System.out.println(
-                "Curso: " + course
+                "Curso: "
+                        + course
         );
     }
 
-    // ============================================================
-    // ANALIZAR ALARMA 0x32
-    // ============================================================
+    /*
+     * ANÁLISIS DE ALARMA 0x32
 
+     */
     private void analyzeAlarmPacket(
             byte[] data,
-            int length) {
+            int length,
+            String imei,
+            Instant receivedAt) {
 
-        System.out.println(
-                "Longitud recibida: "
-                        + length
-        );
-
-        System.out.println(
-                "Paquete de alarma detectado."
-        );
-
-        System.out.println(
-                "Datos: "
-                        + bytesToHex(data)
+        gpsPacketParser.parseAlarm(
+                data,
+                length,
+                imei,
+                receivedAt
         );
     }
 
-    // ============================================================
-    // ANALIZAR 79 79
-    // ============================================================
+    /*
+     * ANÁLISIS PROTOCOLO 79 79
 
+     */
     private void analyze7979Packet(
             byte[] data,
             int length) {
 
         if (length < 6) {
+
             System.out.println(
                     "Paquete 79 79 demasiado corto."
             );
+
             return;
         }
 
@@ -597,6 +780,7 @@ public class GpsTcpServer {
         );
 
         System.out.println();
+
         System.out.println(
                 "ÍNDICE | HEX | DECIMAL"
         );
@@ -618,6 +802,7 @@ public class GpsTcpServer {
         if (protocol == 0x94) {
 
             System.out.println();
+
             System.out.println(
                     "Protocolo 0x94 detectado"
             );
@@ -649,7 +834,8 @@ public class GpsTcpServer {
                 }
             }
 
-            int payloadEnd = length - 2;
+            int payloadEnd =
+                    length - 2;
 
             if (payloadEnd > 5) {
 
@@ -669,10 +855,11 @@ public class GpsTcpServer {
         );
     }
 
-    // ============================================================
-    // EXTRAER IMEI
-    // ============================================================
-
+    /*
+     * ============================================================
+     * EXTRAER IMEI
+     * ============================================================
+     */
     private String extractImei(
             byte[] data,
             int length) {
@@ -700,37 +887,42 @@ public class GpsTcpServer {
         if (result.length() > 15
                 && result.startsWith("0")) {
 
-            result = result.substring(1);
+            result =
+                    result.substring(1);
         }
 
         return result;
     }
 
-    // ============================================================
-    // SERIAL
-    // ============================================================
-
+    /*
+     * ============================================================
+     * OBTENER NÚMERO DE SECUENCIA
+     * ============================================================
+     */
     private int getSerialNumber(
             byte[] data,
             int length) {
 
-        if (length < 6) {
+        if (data == null || length < 6) {
             return 0;
         }
 
+        int serialIndex = length - 6;
+
         int high =
-                data[length - 4] & 0xFF;
+                data[serialIndex] & 0xFF;
 
         int low =
-                data[length - 3] & 0xFF;
+                data[serialIndex + 1] & 0xFF;
 
         return (high << 8) | low;
     }
 
-    // ============================================================
-    // ENVIAR ACK
-    // ============================================================
-
+    /*
+     * ============================================================
+     * ENVIAR ACK
+     * ============================================================
+     */
     private void sendAck(
             Socket socket,
             byte[] data,
@@ -764,10 +956,11 @@ public class GpsTcpServer {
         }
     }
 
-    // ============================================================
-    // CONSTRUIR ACK
-    // ============================================================
-
+    /*
+     * ============================================================
+     * CONSTRUIR ACK
+     * ============================================================
+     */
     private byte[] buildAck(
             byte[] data,
             int length) {
@@ -786,9 +979,7 @@ public class GpsTcpServer {
 
         ack[0] = 0x78;
         ack[1] = 0x78;
-
         ack[2] = 0x05;
-
         ack[3] = (byte) protocol;
 
         ack[4] =
@@ -816,10 +1007,11 @@ public class GpsTcpServer {
         return ack;
     }
 
-    // ============================================================
-    // CRC
-    // ============================================================
-
+    /*
+     * ============================================================
+     * CRC
+     * ============================================================
+     */
     private int calculateCrc(
             byte[] data,
             int start,
@@ -851,10 +1043,11 @@ public class GpsTcpServer {
         return crc;
     }
 
-    // ============================================================
-    // LEER UINT32
-    // ============================================================
-
+    /*
+     * ============================================================
+     * LEER ENTERO SIN SIGNO
+     * ============================================================
+     */
     private long readUnsignedInt(
             byte[] data,
             int index) {
@@ -865,10 +1058,14 @@ public class GpsTcpServer {
                 | (long) (data[index + 3] & 0xFF);
     }
 
-    // ============================================================
-    // BCD
-    // ============================================================
-
+    /*
+     * ============================================================
+     * BCD
+     * ============================================================
+     *
+     * Se conserva porque puede ser utilizado posteriormente
+     * para otros formatos del dispositivo.
+     */
     private int bcdToDecimal(
             byte value) {
 
@@ -881,10 +1078,11 @@ public class GpsTcpServer {
         return high * 10 + low;
     }
 
-    // ============================================================
-    // BYTES → HEX
-    // ============================================================
-
+    /*
+     * ============================================================
+     * BYTES -> HEX
+     * ============================================================
+     */
     private String bytesToHex(
             byte[] data) {
 
@@ -920,10 +1118,11 @@ public class GpsTcpServer {
         return result.toString();
     }
 
-    // ============================================================
-    // ESTADO DE CONEXIÓN
-    // ============================================================
-
+    /*
+     * ============================================================
+     * ESTADO DE CONEXIÓN DEL GPS
+     * ============================================================
+     */
     public boolean isGpsConnected(
             String imei) {
 
@@ -935,10 +1134,11 @@ public class GpsTcpServer {
                 && socket.isConnected();
     }
 
-    // ============================================================
-    // ENVIAR COMANDO AL GPS
-    // ============================================================
-
+    /*
+     * ============================================================
+     * ENVIAR COMANDO AL GPS
+     * ============================================================
+     */
     public boolean sendToGps(
             String imei,
             byte[] command) {

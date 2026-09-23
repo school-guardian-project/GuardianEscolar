@@ -1,6 +1,7 @@
 package gps_backend.controller;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
+import java.time.ZoneOffset;
 
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +35,7 @@ public class GpsTestController {
                         -75.307000,
                         19.5,
                         20,
-                        LocalDateTime.now(),
+                        OffsetDateTime.now(ZoneOffset.UTC),
                         "ACTIVE"
                 );
 

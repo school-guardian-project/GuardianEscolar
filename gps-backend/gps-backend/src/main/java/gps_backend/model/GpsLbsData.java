@@ -1,6 +1,7 @@
 package gps_backend.model;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.OffsetDateTime;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -10,7 +11,10 @@ import lombok.Setter;
 public class GpsLbsData {
 
     private String imei;
-    private LocalDateTime dateTime;
+    private OffsetDateTime dateTime;
+    private Instant gpsDateTime;
+    private Instant receivedAt;
+    private GpsTimestampStatus timestampStatus;
 
     private int ta;
     private int mcc;
@@ -27,6 +31,9 @@ public class GpsLbsData {
         return "GpsLbsData{" +
                 "imei='" + imei + '\'' +
                 ", dateTime=" + dateTime +
+                ", gpsDateTime=" + gpsDateTime +
+                ", receivedAt=" + receivedAt +
+                ", timestampStatus=" + timestampStatus +
                 ", ta=" + ta +
                 ", mcc=" + mcc +
                 ", mnc=" + mnc +

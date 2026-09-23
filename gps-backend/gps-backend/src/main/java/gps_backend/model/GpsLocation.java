@@ -1,6 +1,7 @@
 package gps_backend.model;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
+import java.time.OffsetDateTime;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,8 +15,12 @@ public class GpsLocation {
     private double longitude;
     private double speed;
     private double course;
-    private LocalDateTime dateTime;
+    private OffsetDateTime dateTime;
+    private Instant gpsDateTime;
+    private Instant receivedAt;
+    private GpsTimestampStatus timestampStatus;
     private String status;
+    private PositionType positionType;
 
     public GpsLocation() {
     }
@@ -26,8 +31,30 @@ public class GpsLocation {
             double longitude,
             double speed,
             double course,
-            LocalDateTime dateTime,
+            OffsetDateTime dateTime,
             String status) {
+
+        this(
+                imei,
+                latitude,
+                longitude,
+                speed,
+                course,
+                dateTime,
+                status,
+                PositionType.UNKNOWN
+        );
+    }
+
+    public GpsLocation(
+            String imei,
+            double latitude,
+            double longitude,
+            double speed,
+            double course,
+            OffsetDateTime dateTime,
+            String status,
+            PositionType positionType) {
 
         this.imei = imei;
         this.latitude = latitude;
@@ -35,7 +62,9 @@ public class GpsLocation {
         this.speed = speed;
         this.course = course;
         this.dateTime = dateTime;
+        this.gpsDateTime = dateTime == null ? null : dateTime.toInstant();
         this.status = status;
+        this.positionType = positionType;
     }
 
     @Override
@@ -47,7 +76,11 @@ public class GpsLocation {
                 ", speed=" + speed +
                 ", course=" + course +
                 ", dateTime=" + dateTime +
+                ", gpsDateTime=" + gpsDateTime +
+                ", receivedAt=" + receivedAt +
+                ", timestampStatus=" + timestampStatus +
                 ", status='" + status + '\'' +
+                ", positionType=" + positionType +
                 '}';
     }
 }

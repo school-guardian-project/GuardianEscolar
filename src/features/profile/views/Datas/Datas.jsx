@@ -37,7 +37,7 @@ export default function Datas() {
           <InfoRow
             icon="call-outline"
             title={t("inputs.phone")}
-            value="+57 *** *** ****"
+            value=""
             editable
             editOnPress={() => navigation.navigate("UpdatePhone")}
           />
@@ -45,7 +45,7 @@ export default function Datas() {
           <InfoRow
             icon="mail-outline"
             title={t("inputs.email")}
-            value="correoejemplo@gmail.com"
+            value=""
             editable
             editOnPress={() => navigation.navigate("UpdateEmail")}
           />
@@ -53,7 +53,7 @@ export default function Datas() {
           <InfoRow
             icon="lock-closed-outline"
             title={t("inputs.password")}
-            value="••••••••••••"
+            value=""
             hidden
             last
           />
@@ -63,14 +63,14 @@ export default function Datas() {
           <InfoRow
             icon="location-outline"
             title={t("inputs.address")}
-            value="Calle 2 #1W-102"
+            value=""
             arrow
           />
 
           <InfoRow
             icon="business-outline"
             title={t("inputs.city")}
-            value="Neiva"
+            value=""
             arrow
             last
           />
@@ -80,8 +80,8 @@ export default function Datas() {
           <InfoRow
             icon="school-outline"
             title={t("inputs.school")}
-            value="Nombre - Neiva"
-            subtitle="Dirección"
+            value=""
+            subtitle=""
             arrow
             last
           />

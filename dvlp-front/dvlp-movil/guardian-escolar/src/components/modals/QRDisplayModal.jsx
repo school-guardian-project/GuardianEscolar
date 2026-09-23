@@ -13,7 +13,7 @@ export default function QRDisplayModal({ visible, onClose, studentData }) {
         name: studentData.name,
         route: studentData.route,
       })
-    : "guardian-escolar-demo-qr";
+    : null;
 
   return (
     <BaseModal visible={visible} onClose={onClose} animationType="slide">

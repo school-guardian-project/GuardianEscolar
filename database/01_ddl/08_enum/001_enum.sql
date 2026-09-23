@@ -1,3 +1,0 @@
-CREATE TYPE Status AS ENUM ('ACTIVE', 'INACTIVE');
-CREATE TYPE BoardingType AS ENUM ('ON_BOARD', 'OFF_BOARD');
-CREATE TYPE IdentificationType AS ENUM ('CC', 'TI');

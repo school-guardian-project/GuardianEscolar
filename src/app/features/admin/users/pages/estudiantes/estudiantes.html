@@ -1,15 +1,18 @@
-<!-- ── estudiantes.html (ejemplo de integración) ─────────────────────────── -->
+<!-- ── estudiantes.html — CRUD conectado a ms-user-management vía gateway ── -->
 <app-navbar-manage backRoute="/dashboard-admin"></app-navbar-manage>
 
 <div class="page-wrapper">
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
-    <app-card-register type="estudiante"></app-card-register>
+    <app-card-register type="estudiante" (formSubmit)="onCreated($event)"> </app-card-register>
+
     <app-card-list
       type="estudiante"
+      [data]="students()"
       (viewItem)="showDetails($event)"
       (editItem)="showUpdate($event)"
-      (deleteItem)="showDelete($event)">
+      (deleteItem)="showDelete($event)"
+    >
     </app-card-list>
   </div>
 </div>
@@ -19,7 +22,8 @@
   *ngIf="showModal"
   type="estudiante"
   [record]="studentSelected"
-  (closed)="closeModal()">
+  (closed)="closeModal()"
+>
 </app-record-information>
 
 <!-- Modal: actualizar registro -->
@@ -28,7 +32,8 @@
   type="estudiante"
   [record]="studentSelected"
   (saved)="onSaved($event)"
-  (closed)="closeUpdateModal()">
+  (closed)="closeUpdateModal()"
+>
 </app-update-record>
 
 <!-- Modal: eliminar registro -->
@@ -37,5 +42,6 @@
   type="estudiante"
   [record]="studentSelected"
   (confirm)="onConfirmDelete($event)"
-  (cancel)="closeDeleteModal()">  
+  (cancel)="closeDeleteModal()"
+>
 </app-delete-record>

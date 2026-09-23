@@ -903,15 +903,17 @@ public class GpsTcpServer {
             byte[] data,
             int length) {
 
-        if (length < 6) {
+        if (data == null || length < 6) {
             return 0;
         }
 
+        int serialIndex = length - 6;
+
         int high =
-                data[length - 4] & 0xFF;
+                data[serialIndex] & 0xFF;
 
         int low =
-                data[length - 3] & 0xFF;
+                data[serialIndex + 1] & 0xFF;
 
         return (high << 8) | low;
     }

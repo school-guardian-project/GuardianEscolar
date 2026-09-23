@@ -126,6 +126,37 @@ class GpsBackendApplicationTests {
     }
 
     @Test
+    void gpsTcpServerShouldUseTheRealSerialForGpsPositionAck() throws Exception {
+        GpsTcpServer server = new GpsTcpServer(null, null, null, null);
+        byte[] packet = new byte[] {
+                (byte) 0x78, (byte) 0x78, (byte) 0x28, (byte) 0x31,
+                (byte) 0x1A, (byte) 0x09, (byte) 0x16, (byte) 0x0D,
+                (byte) 0x14, (byte) 0x29, (byte) 0xC0, (byte) 0x00,
+                (byte) 0x51, (byte) 0x63, (byte) 0xC9, (byte) 0x08,
+                (byte) 0x13, (byte) 0xCB, (byte) 0x7B, (byte) 0x00,
+                (byte) 0x0C, (byte) 0xAD, (byte) 0x02, (byte) 0xDC,
+                (byte) 0x00, (byte) 0x65, (byte) 0x56, (byte) 0xB9,
+                (byte) 0x00, (byte) 0x1B, (byte) 0x5C, (byte) 0x65,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x00, (byte) 0x00, (byte) 0x00, (byte) 0x00,
+                (byte) 0x02, (byte) 0xE4, (byte) 0x1E, (byte) 0x0D,
+                (byte) 0x0A
+        };
+
+        Method buildAck = GpsTcpServer.class.getDeclaredMethod(
+                "buildAck",
+                byte[].class,
+                int.class
+        );
+        buildAck.setAccessible(true);
+
+        byte[] ack = (byte[]) buildAck.invoke(server, packet, packet.length);
+
+        assertEquals(0x00, ack[4] & 0xFF);
+        assertEquals(0x02, ack[5] & 0xFF);
+    }
+
+    @Test
     void gpsTcpServerShouldBuildAckForLbsPacket() throws Exception {
         GpsTcpServer server = new GpsTcpServer(null, null, null, null);
         byte[] packet = new byte[22];

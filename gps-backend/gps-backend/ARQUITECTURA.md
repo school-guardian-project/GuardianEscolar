@@ -42,8 +42,14 @@ src/
 │   │   │   ├── GpsTimestampStatus.java
 │   │   │   └── PositionType.java
 │   │   ├── parser/
+│   │   │   ├── GpsAlarmDecoder.java
+│   │   │   ├── GpsDateParser.java
+│   │   │   ├── GpsLocationDecoder.java
+│   │   │   ├── GpsLbsParser.java
+│   │   │   ├── GpsPacketDebugPrinter.java
 │   │   │   ├── GpsPacketParser.java
-│   │   │   └── GpsLbsParser.java
+│   │   │   ├── GpsPositionTypeDetector.java
+│   │   │   └── GpsTimestampService.java
 │   │   ├── service/
 │   │   │   ├── GpsDeviceService.java
 │   │   │   └── GpsLocationService.java
@@ -311,7 +317,14 @@ Los parsers reciben bytes y los convierten en modelos Java.
 
 ### `GpsPacketParser.java`
 
-Procesa paquetes generales del protocolo `78 78`, especialmente:
+Es la fachada publica del parseo de paquetes generales del protocolo `78 78`. Mantiene los metodos que usan los handlers y las pruebas, pero delega el trabajo en clases especializadas:
+
+- `GpsLocationDecoder` para ubicaciones `0x31`.
+- `GpsAlarmDecoder` para alarmas `0x32`.
+- `GpsDateParser` para fechas.
+- `GpsTimestampService` para comparar timestamps.
+
+Procesa especialmente:
 
 - Ubicacion `0x31`.
 - Alarma `0x32`.
@@ -319,7 +332,17 @@ Procesa paquetes generales del protocolo `78 78`, especialmente:
 - Estado temporal del paquete.
 - Tipo de posicion.
 
-#### Ubicacion `0x31`
+### `GpsDateParser.java`
+
+Convierte los seis bytes de fecha del protocolo en un `OffsetDateTime` UTC. El formato es `yy mm dd hh mi ss`.
+
+### `GpsTimestampService.java`
+
+Compara la fecha enviada por el GPS con la fecha de recepcion del servidor y devuelve `VALID`, `STALE` o `INVALID`. Tambien formatea fechas para la zona horaria de Colombia.
+
+### `GpsLocationDecoder.java`
+
+Decodifica exclusivamente la ubicacion `0x31`:
 
 Extrae:
 
@@ -332,39 +355,23 @@ Extrae:
 
 La fecha del dispositivo se interpreta en UTC. Luego se guarda tambien el instante de recepcion del servidor para comparar el desfase.
 
-#### Alarma `0x32`
+Ademas crea el objeto `GpsLocation` y solicita al printer la salida diagnostica.
 
-Valida el protocolo y muestra informacion diagnostica del paquete, incluyendo:
+### `GpsAlarmDecoder.java`
 
-- Bytes recibidos.
-- Protocolo.
-- Fecha del GPS.
-- Conversion visual a hora de Colombia.
-- Estado de la fecha.
+Decodifica exclusivamente la alarma `0x32`. Usa `GpsDateParser`, `GpsTimestampService` y `GpsPacketDebugPrinter`.
 
-#### `parseGpsDate`
+### `GpsPositionTypeDetector.java`
 
-Convierte seis bytes de fecha del protocolo en un `OffsetDateTime` UTC.
+Determina si una ubicacion `0x31` es `REAL_TIME`, `RE_UPLOAD` o `UNKNOWN`, revisando la extension de upload y la longitud de la trama.
 
-La fecha usa el formato:
+### `GpsPacketDebugPrinter.java`
 
-```text
-yy mm dd hh mi ss
-```
-
-El ano se calcula como `2000 + yy`.
-
-#### `determineTimestampStatus`
-
-Compara la fecha del GPS con `receivedAt`:
-
-- Hasta 300 segundos: `VALID`.
-- Mas de 300 segundos: `STALE`.
-- Alguna fecha nula: `INVALID`.
+Contiene la salida diagnostica de ubicaciones y alarmas: fechas, coordenadas, bytes hexadecimales y estados. Mantener esta responsabilidad separada evita que los decoders mezclen interpretacion de datos con impresion en consola.
 
 ### `GpsLbsParser.java`
 
-Procesa paquetes LBS `0x50`.
+Procesa el protocolo LBS `0x50`.
 
 Extrae:
 

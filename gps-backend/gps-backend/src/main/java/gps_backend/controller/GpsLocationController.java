@@ -1,7 +1,5 @@
 package gps_backend.controller;
 
-import java.util.List;
-
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,10 +27,4 @@ public class GpsLocationController {
         return gpsLocationService.getLatest(imei);
     }
 
-    @GetMapping("/devices/{imei}/history")
-    public List<GpsLocation> getHistory(
-            @PathVariable String imei) {
-
-        return gpsLocationService.getHistory(imei);
-    }
 }

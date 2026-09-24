@@ -58,7 +58,7 @@ export class Reset {
 
   accept() {
     this.showConfirmation = false;
-    this.router.navigate(['/admin/informacion']);
+    this.router.navigate(['/admin/profile']);
   }
 
   return() {

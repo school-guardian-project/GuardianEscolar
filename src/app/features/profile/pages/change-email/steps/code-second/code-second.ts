@@ -55,7 +55,7 @@ export class CodeSecond {
 
   accept() {
     this.showConfirmation = false;
-    this.router.navigate(['/admin/informacion']);
+    this.router.navigate(['/admin/profile']);
   }
 
   return() {

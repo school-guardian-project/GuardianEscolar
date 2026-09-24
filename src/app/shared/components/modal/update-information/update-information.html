@@ -1,4 +1,4 @@
-<div class="modal-overlay" (click)="cerrar()">
+<div class="modal-overlay" (click)="close()">
   <div class="modal" (click)="$event.stopPropagation()">
 
     <div class="modal_header">
@@ -99,11 +99,11 @@
 
       <!-- Footer -->
       <div class="modal_footer">
-        <button class="modal_btn modal_btn--submit" type="button" (click)="cerrar()">
+        <button class="modal_btn modal_btn--submit" type="button" (click)="close()">
           {{ 'update_school.buttons.cancel' | translate }}
         </button>
 
-        <button class="modal_btn modal_btn--cancel" type="button" (click)="actualizar()">
+        <button class="modal_btn modal_btn--cancel" type="button" (click)="update()">
           {{ 'update_school.buttons.update' | translate }}
         </button>
       </div>
@@ -126,7 +126,7 @@
     </div>
 
     <div class="modal_footer modal__footer--center">
-      <button class="modal_btn modal_btn--cancel" type="button" (click)="cerrar()">
+      <button class="modal_btn modal_btn--cancel" type="button" (click)="close()">
         {{ 'update_school.buttons.exit' | translate }}
       </button>
     </div>

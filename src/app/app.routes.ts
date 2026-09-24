@@ -5,13 +5,13 @@ import { ForgotPassword } from './features/public/auth/forgot-password/forgot-pa
 import { DashboardSuperadmin } from './features/dashboard/dashboard-superadmin/dashboard-superadmin';
 import { DashboardAdmin } from './features/dashboard/dashboard-admin/dashboard-admin';
 import { InformationAdmin } from './features/profile/pages/information-admin/information-admin';
-import { Estudiantes } from './features/admin/users/pages/estudiantes/estudiantes';
-import { Padres } from './features/admin/users/pages/padres/padres';
-import { Conductores } from './features/admin/users/pages/conductores/conductores';
-import { Familia } from './features/admin/users/pages/familias/familia';
+import { Students } from './features/admin/users/pages/students/students';
+import { Guardians } from './features/admin/users/pages/guardians/guardians';
+import { Drivers } from './features/admin/users/pages/drivers/drivers';
+import { Families } from './features/admin/users/pages/families/families';
 import { Buses } from './features/admin/routes-buses/pages/buses/buses';
-import { Paradas } from './features/admin/routes-buses/pages/paradas/paradas';
-import { Rutas } from './features/admin/routes-buses/pages/rutas/rutas';
+import { Stops } from './features/admin/routes-buses/pages/stops/stops';
+import { RoutesPage } from './features/admin/routes-buses/pages/routes/routes';
 import { routes as forgotPasswordRoutes } from './features/public/auth/forgot-password/forgot-password.routes';
 import { ChangeEmail } from './features/profile/pages/change-email/change-email';
 import { routes as changeEmailRoutes } from './features/profile/pages/change-email/change-email.routes';
@@ -40,16 +40,16 @@ export const routes: Routes = [
   { path: 'dashboard-superadmin', component: DashboardSuperadmin },
 
   /* ADMIN */
-  { path: 'admin/usuarios', component: Estudiantes },
-  { path: 'admin/padres', component: Padres },
-  { path: 'admin/conductores', component: Conductores },
-  { path: 'admin/familias', component: Familia },
+  { path: 'admin/users', component: Students },
+  { path: 'admin/guardians', component: Guardians },
+  { path: 'admin/drivers', component: Drivers },
+  { path: 'admin/families', component: Families },
   { path: 'admin/buses', component: Buses },
-  { path: 'admin/paradas', component: Paradas },
-  { path: 'admin/rutas', component: Rutas },
+  { path: 'admin/stops', component: Stops },
+  { path: 'admin/routes', component: RoutesPage },
 
   /* INFORMATION */
-  { path: 'admin/informacion', component: InformationAdmin },
+  { path: 'admin/profile', component: InformationAdmin },
 
   /* PROFILE CHANGES */
   { path: 'admin/change-email', component: ChangeEmail, children: changeEmailRoutes },

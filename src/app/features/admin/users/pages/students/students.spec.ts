@@ -2,19 +2,19 @@ import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Estudiantes } from './estudiantes';
+import { Students } from './students';
 
-describe('Estudiantes', () => {
-  let component: Estudiantes;
-  let fixture: ComponentFixture<Estudiantes>;
+describe('Students', () => {
+  let component: Students;
+  let fixture: ComponentFixture<Students>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Estudiantes],
+      imports: [Students],
       providers: [provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Estudiantes);
+    fixture = TestBed.createComponent(Students);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

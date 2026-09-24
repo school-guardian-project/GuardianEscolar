@@ -224,3 +224,11 @@
 .card-register__btn:active {
   transform: scale(0.98);
 }
+
+.card-register__message {
+  margin: 10px 0 0;
+  color: var(--alert-icon);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  text-align: center;
+}

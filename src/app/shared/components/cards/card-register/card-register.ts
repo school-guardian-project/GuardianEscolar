@@ -4,13 +4,13 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 
 export type RegisterType =
-  | 'estudiante'
-  | 'acudiente'
-  | 'conductor'
-  | 'familia'
+  | 'student'
+  | 'guardian'
+  | 'driver'
+  | 'family'
   | 'bus'
-  | 'parada'
-  | 'ruta'
+  | 'stop'
+  | 'route'
   | 'admins'
   | 'schools';
 
@@ -23,93 +23,93 @@ export interface Field {
 }
 
 const FIELDS: Record<RegisterType, Field[]> = {
-  estudiante: [
-    { name: 'nombres', type: 'text' },
-    { name: 'apellidos', type: 'text' },
-    { name: 'tipoId', type: 'select', options: ['CC', 'TI'] },
-    { name: 'identificacion', type: 'text' },
-    { name: 'fechaNac', type: 'date' },
-    { name: 'telefono', type: 'tel', halfWidth: true },
-    { name: 'direccion', type: 'text' },
-    { name: 'correo', type: 'email' },
+  student: [
+    { name: 'names', type: 'text' },
+    { name: 'lastNames', type: 'text' },
+    { name: 'documentType', type: 'select', options: ['CC', 'TI'] },
+    { name: 'identification', type: 'text' },
+    { name: 'birthDate', type: 'date' },
+    { name: 'phone', type: 'tel', halfWidth: true },
+    { name: 'address', type: 'text' },
+    { name: 'email', type: 'email' },
   ],
-  acudiente: [
-    { name: 'nombres', type: 'text' },
-    { name: 'apellidos', type: 'text' },
-    { name: 'correo', type: 'email' },
-    { name: 'tipoId', type: 'select', options: ['CC','CE'] },
-    { name: 'identificacion', type: 'text' },
-    { name: 'fechaNac', type: 'date' },
-    { name: 'telefono', type: 'tel' },
-    { name: 'direccion', type: 'text' },
-  ],
-
-  conductor: [
-    { name: 'nombres', type: 'text' },
-    { name: 'apellidos', type: 'text' },
-    { name: 'tipoId', type: 'select', options: ['CC','CE'] },
-    { name: 'identificacion', type: 'text' },
-    { name: 'fechaNac', type: 'date' },
-    { name: 'vencLicencia', type: 'date', halfWidth: true },
-    { name: 'licencia', type: 'text', halfWidth: true },
-    { name: 'direccion', type: 'text' },
-    { name: 'correo', type: 'email' },
+  guardian: [
+    { name: 'names', type: 'text' },
+    { name: 'lastNames', type: 'text' },
+    { name: 'email', type: 'email' },
+    { name: 'documentType', type: 'select', options: ['CC','CE'] },
+    { name: 'identification', type: 'text' },
+    { name: 'birthDate', type: 'date' },
+    { name: 'phone', type: 'tel' },
+    { name: 'address', type: 'text' },
   ],
 
-  familia: [
-    { name: 'nombre', type: 'text' },
-    { name: 'acudiente', type: 'select', options: [] },
-    { name: 'estudiante', type: 'select', options: [] },
+  driver: [
+    { name: 'names', type: 'text' },
+    { name: 'lastNames', type: 'text' },
+    { name: 'documentType', type: 'select', options: ['CC','CE'] },
+    { name: 'identification', type: 'text' },
+    { name: 'birthDate', type: 'date' },
+    { name: 'licenseExpiration', type: 'date', halfWidth: true },
+    { name: 'licenseNumber', type: 'text', halfWidth: true },
+    { name: 'address', type: 'text' },
+    { name: 'email', type: 'email' },
+  ],
+
+  family: [
+    { name: 'name', type: 'text' },
+    { name: 'guardian', type: 'select', options: [] },
+    { name: 'student', type: 'select', options: [] },
     { name: 'observaciones', type: 'text' },
   ],
 
   bus: [
     { name: 'matricula', type: 'text' },
-    { name: 'conductor', type: 'select', options: [] },
-    { name: 'modelo', type: 'text' },
-    { name: 'marca', type: 'text' },
-    { name: 'capacidad', type: 'text' },
+    { name: 'driver', type: 'select', options: [] },
+    { name: 'model', type: 'text' },
+    { name: 'brand', type: 'text' },
+    { name: 'capacity', type: 'text' },
     { name: 'soat', type: 'date', halfWidth: true },
     { name: 'gps', type: 'select', options: ['Activo','Inactivo'], halfWidth: true },
   ],
 
-  parada: [
-    { name: 'nombre', type: 'text' },
-    { name: 'estudiante', type: 'select', options: [] },
-    { name: 'ciudad', type: 'select', options: [] },
-    { name: 'direccion', type: 'text' },
-    { name: 'ruta', type: 'select', options: [] },
+  stop: [
+    { name: 'name', type: 'text' },
+    { name: 'student', type: 'select', options: [] },
+    { name: 'city', type: 'select', options: [] },
+    { name: 'address', type: 'text' },
+    { name: 'route', type: 'select', options: [] },
   ],
 
-  ruta: [
-    { name: 'nombre', type: 'text' },
+  route: [
+    { name: 'name', type: 'text' },
     { name: 'sector', type: 'text' },
-    { name: 'horaInicio', type: 'text' },
-    { name: 'horaFin', type: 'text' },
-    { name: 'destino', type: 'text' },
-    { name: 'sectorRuta', type: 'select', options: [] },
+    { name: 'startTime', type: 'text' },
+    { name: 'endTime', type: 'text' },
+    { name: 'destination', type: 'text' },
+    { name: 'routeSector', type: 'select', options: [] },
     { name: 'bus', type: 'select', options: [] },
   ],
 
   admins: [
-    { name: 'nombre', type: 'text' },
-    { name: 'apellidos', type: 'text' },
-    { name: 'correo', type: 'email' },
-    { name: 'identificacion', type: 'text' },
-    { name: 'fechaNac', type: 'date' },
-    { name: 'telefono', type: 'tel' },
-    { name: 'direccion', type: 'text' },
+    { name: 'name', type: 'text' },
+    { name: 'lastNames', type: 'text' },
+    { name: 'email', type: 'email' },
+    { name: 'identification', type: 'text' },
+    { name: 'birthDate', type: 'date' },
+    { name: 'phone', type: 'tel' },
+    { name: 'address', type: 'text' },
   ],
 
   schools: [
-    { name: 'nombre', type: 'text' },
+    { name: 'name', type: 'text' },
     { name: 'logo', type: 'file' },
-    { name: 'ciudad', type: 'select', options: ['Bogotá'] },
-    { name: 'direccion', type: 'text' },
-    { name: 'telefono', type: 'tel' },
-    { name: 'escolaridad', type: 'select', options: ['Primaria'] },
-    { name: 'correo', type: 'email' },
-    { name: 'web', type: 'text' },
+    { name: 'city', type: 'select', options: ['Bogotá'] },
+    { name: 'address', type: 'text' },
+    { name: 'phone', type: 'tel' },
+    { name: 'schooling', type: 'select', options: ['Primaria'] },
+    { name: 'email', type: 'email' },
+    { name: 'website', type: 'text' },
   ],
 };
 
@@ -121,7 +121,7 @@ const FIELDS: Record<RegisterType, Field[]> = {
   styleUrl: './card-register.css',
 })
 export class CardRegister implements OnInit {
-  @Input() type: RegisterType = 'estudiante';
+  @Input() type: RegisterType = 'student';
   /** Emite el formulario al padre; si nadie escucha se hace fallback a console.log. */
   @Output() formSubmit = new EventEmitter<Record<string, any>>();
 
@@ -129,6 +129,7 @@ export class CardRegister implements OnInit {
   groupedFields: any[] = [];
   selectedStudents: string[] = [];
   selectedStudent = '';
+  validationMessage = '';
 
   get titleKey(): string {
     return `register.${this.type}.title`;
@@ -149,7 +150,7 @@ export class CardRegister implements OnInit {
   }
 
   isFamilyStudentField(fieldName: string): boolean {
-    return this.type === 'familia' && fieldName === 'estudiante';
+    return this.type === 'family' && fieldName === 'student';
   }
 
   onSelectChange(fieldName: string, value: string): void {
@@ -165,7 +166,7 @@ export class CardRegister implements OnInit {
   onStudentSelected(): void {
     if (this.selectedStudent && !this.selectedStudents.includes(this.selectedStudent)) {
       this.selectedStudents = [...this.selectedStudents, this.selectedStudent];
-      this.formData['estudiante'] = [...this.selectedStudents];
+      this.formData['student'] = [...this.selectedStudents];
     }
 
     this.selectedStudent = '';
@@ -173,7 +174,7 @@ export class CardRegister implements OnInit {
 
   removeStudent(student: string): void {
     this.selectedStudents = this.selectedStudents.filter((selected) => selected !== student);
-    this.formData['estudiante'] = [...this.selectedStudents];
+    this.formData['student'] = [...this.selectedStudents];
   }
 
   private buildGroupedFields() {
@@ -197,17 +198,33 @@ export class CardRegister implements OnInit {
   }
 
   onSubmit(): void {
+    const hasEmptyField = FIELDS[this.type].some((field) => {
+      const value = this.formData[field.name];
+      return Array.isArray(value) ? value.length === 0 : !String(value ?? '').trim();
+    });
+
+    if (hasEmptyField) {
+      this.validationMessage = 'Completa todos los campos antes de registrar.';
+      return;
+    }
+
+    this.validationMessage = '';
     if (this.formSubmit.observed) {
       this.formSubmit.emit({ ...this.formData });
       return;
     }
-    console.log('Datos del formulario:', this.formData);
+    this.validationMessage = 'Este formulario todavía no está conectado a un servicio de registro.';
+  }
+
+  setValidationMessage(message: string): void {
+    this.validationMessage = message;
   }
 
   resetForm(): void {
     this.formData = {};
     this.selectedStudents = [];
     this.selectedStudent = '';
+    this.validationMessage = '';
     for (const field of FIELDS[this.type]) {
       this.formData[field.name] = '';
     }

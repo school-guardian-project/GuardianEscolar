@@ -66,7 +66,7 @@
       </div>
     </ng-container>
 
-    <div class="card-register__map" *ngIf="type === 'parada'" aria-label="Mapa de Google Maps">
+    <div class="card-register__map" *ngIf="type === 'stop'" aria-label="Mapa de Google Maps">
       <iframe
         class="card-register__map-frame"
         src="https://www.google.com/maps?q=Colombia&output=embed"
@@ -80,5 +80,9 @@
     <button class="card-register__btn" type="submit">
       {{ 'register.button' | translate }}
     </button>
+
+    <p class="card-register__message" *ngIf="validationMessage" role="alert">
+      {{ validationMessage }}
+    </p>
   </form>
 </div>

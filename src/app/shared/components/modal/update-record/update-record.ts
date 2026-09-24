@@ -5,13 +5,13 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 
 export type RegisterType =
-  | 'estudiante'
-  | 'acudiente'
-  | 'conductor'
-  | 'familia'
+  | 'student'
+  | 'guardian'
+  | 'driver'
+  | 'family'
   | 'bus'
-  | 'parada'
-  | 'ruta'
+  | 'stop'
+  | 'route'
   | 'admins'
   | 'schools';
 
@@ -35,107 +35,107 @@ interface ModalConfig {
 
 //  quitamos labels hardcodeados
 const UPDATE_FIELDS: Record<RegisterType, Field[]> = {
-  estudiante: [
-    { name: 'nombres', type: 'text' },
-    { name: 'apellidos', type: 'text' },
-    { name: 'tipoId', type: 'select', options: ['CC', 'TI'] },
-    { name: 'identificacion', type: 'text' },
-    { name: 'fechaNac', type: 'date' },
-    { name: 'telefono', type: 'tel', halfWidth: true },
-    { name: 'direccion', type: 'text' },
-    { name: 'correo', type: 'email' },
+  student: [
+    { name: 'names', type: 'text' },
+    { name: 'lastNames', type: 'text' },
+    { name: 'documentType', type: 'select', options: ['CC', 'TI'] },
+    { name: 'identification', type: 'text' },
+    { name: 'birthDate', type: 'date' },
+    { name: 'phone', type: 'tel', halfWidth: true },
+    { name: 'address', type: 'text' },
+    { name: 'email', type: 'email' },
   ],
 
   // los demás igual, solo con name/type sin label
-  acudiente: [
-    { name: 'nombre', type: 'text' },
-    { name: 'apellidos', type: 'text' },
-    { name: 'correo', type: 'email' },
-    { name: 'tipoId', type: 'select', options: ['CC', 'CE'] },
-    { name: 'identificacion', type: 'text' },
-    { name: 'fechaNac', type: 'date' },
-    { name: 'telefono', type: 'tel' },
-    { name: 'direccion', type: 'text' },
+  guardian: [
+    { name: 'name', type: 'text' },
+    { name: 'lastNames', type: 'text' },
+    { name: 'email', type: 'email' },
+    { name: 'documentType', type: 'select', options: ['CC', 'CE'] },
+    { name: 'identification', type: 'text' },
+    { name: 'birthDate', type: 'date' },
+    { name: 'phone', type: 'tel' },
+    { name: 'address', type: 'text' },
   ],
 
-  conductor: [
-    { name: 'nombres', type: 'text' },
-    { name: 'apellidos', type: 'text' },
-    { name: 'tipoId', type: 'select', options: ['CC', 'CE'] },
-    { name: 'identificacion', type: 'text' },
-    { name: 'fechaNac', type: 'date' },
-    { name: 'vencLicencia', type: 'date', halfWidth: true },
-    { name: 'licencia', type: 'text', halfWidth: true },
-    { name: 'direccion', type: 'text' },
-    { name: 'correo', type: 'email' },
+  driver: [
+    { name: 'names', type: 'text' },
+    { name: 'lastNames', type: 'text' },
+    { name: 'documentType', type: 'select', options: ['CC', 'CE'] },
+    { name: 'identification', type: 'text' },
+    { name: 'birthDate', type: 'date' },
+    { name: 'licenseExpiration', type: 'date', halfWidth: true },
+    { name: 'licenseNumber', type: 'text', halfWidth: true },
+    { name: 'address', type: 'text' },
+    { name: 'email', type: 'email' },
   ],
 
-  familia: [
-    { name: 'nombre', type: 'text' },
-    { name: 'acudiente', type: 'select', options: [] },
-    { name: 'estudiante', type: 'select', options: [] },
-    { name: 'observaciones', type: 'text' },
+  family: [
+    { name: 'name', type: 'text' },
+    { name: 'guardian', type: 'select', options: [] },
+    { name: 'student', type: 'select', options: [] },
+    { name: 'observations', type: 'text' },
   ],
 
   bus: [
-    { name: 'matricula', type: 'text' },
-    { name: 'conductor', type: 'select', options: [] },
-    { name: 'modelo', type: 'text' },
-    { name: 'marca', type: 'text' },
-    { name: 'capacidad', type: 'text' },
+    { name: 'plate', type: 'text' },
+    { name: 'driver', type: 'select', options: [] },
+    { name: 'model', type: 'text' },
+    { name: 'brand', type: 'text' },
+    { name: 'capacity', type: 'text' },
     { name: 'soat', type: 'date', halfWidth: true },
     { name: 'gps', type: 'select', options: ['Activo', 'Inactivo'], halfWidth: true },
   ],
 
-  parada: [
-    { name: 'nombre', type: 'text' },
-    { name: 'estudiante', type: 'select', options: [] },
-    { name: 'ciudad', type: 'select', options: [] },
-    { name: 'direccion', type: 'text' },
-    { name: 'latitud', type: 'text' },
-    { name: 'longitud', type: 'text' },
+  stop: [
+    { name: 'name', type: 'text' },
+    { name: 'student', type: 'select', options: [] },
+    { name: 'city', type: 'select', options: [] },
+    { name: 'address', type: 'text' },
+    { name: 'latitude', type: 'text' },
+    { name: 'longitude', type: 'text' },
   ],
 
-  ruta: [
-    { name: 'nombre', type: 'text' },
+  route: [
+    { name: 'name', type: 'text' },
     { name: 'sector', type: 'text' },
-    { name: 'horaInicio', type: 'text' },
-    { name: 'horaFin', type: 'text' },
-    { name: 'destino', type: 'text' },
-    { name: 'sectorRuta', type: 'select', options: [] },
+    { name: 'startTime', type: 'text' },
+    { name: 'endTime', type: 'text' },
+    { name: 'destination', type: 'text' },
+    { name: 'routeSector', type: 'select', options: [] },
   ],
 
   admins: [
-    { name: 'nombre', type: 'text' },
-    { name: 'apellidos', type: 'text' },
-    { name: 'correo', type: 'email' },
-    { name: 'identificacion', type: 'text' },
-    { name: 'fechaNac', type: 'date' },
-    { name: 'telefono', type: 'tel' },
-    { name: 'direccion', type: 'text' },
+    { name: 'name', type: 'text' },
+    { name: 'lastNames', type: 'text' },
+    { name: 'email', type: 'email' },
+    { name: 'identification', type: 'text' },
+    { name: 'birthDate', type: 'date' },
+    { name: 'phone', type: 'tel' },
+    { name: 'address', type: 'text' },
   ],
 
   schools: [
-    { name: 'nombre', type: 'text' },
-    { name: 'ciudad', type: 'select', options: ['Bogotá'] },
-    { name: 'direccion', type: 'text' },
-    { name: 'telefono', type: 'tel' },
-    { name: 'escolaridad', type: 'select', options: ['Primaria'] },
-    { name: 'correo', type: 'email' },
-    { name: 'web', type: 'text' },
+    { name: 'name', type: 'text' },
+    { name: 'city', type: 'select', options: ['Bogotá'] },
+    { name: 'address', type: 'text' },
+    { name: 'phone', type: 'tel' },
+    { name: 'schooling', type: 'select', options: ['Primaria'] },
+    { name: 'email', type: 'email' },
+    { name: 'website', type: 'text' },
   ],
 };
 
 const MODAL_CONFIGS: Record<RegisterType, ModalConfig> = {
-  estudiante: { icon: 'person', displayName: 'nombres', displayType: 'identificacion' },
-  acudiente: { icon: 'people', displayName: 'nombre', displayType: 'tipoId' },
-  conductor: { icon: 'directions_car', displayName: 'nombres', displayType: 'licencia' },
-  familia: { icon: 'home', displayName: 'nombre' },
-  bus: { icon: 'directions_bus', displayName: 'matricula' },
-  parada: { icon: 'location_on', displayName: 'nombre' },
-  ruta: { icon: 'route', displayName: 'nombre' },
-  admins: { icon: 'admin_panel_settings', displayName: 'nombre' },
-  schools: { icon: 'school', displayName: 'nombre' },
+  student: { icon: 'person', displayName: 'names', displayType: 'identification' },
+  guardian: { icon: 'people', displayName: 'name', displayType: 'documentType' },
+  driver: { icon: 'directions_car', displayName: 'names', displayType: 'licenseNumber' },
+  family: { icon: 'home', displayName: 'name' },
+  bus: { icon: 'directions_bus', displayName: 'plate' },
+  stop: { icon: 'location_on', displayName: 'name' },
+  route: { icon: 'route', displayName: 'name' },
+  admins: { icon: 'admin_panel_settings', displayName: 'name' },
+  schools: { icon: 'school', displayName: 'name' },
 };
 
 @Component({
@@ -146,7 +146,7 @@ const MODAL_CONFIGS: Record<RegisterType, ModalConfig> = {
   styleUrl: './update-record.css',
 })
 export class UpdateRecord implements OnInit {
-  @Input() type: RegisterType = 'estudiante';
+  @Input() type: RegisterType = 'student';
   @Input() record: RecordData = {};
 
   @Output() saved = new EventEmitter<RecordData>();
@@ -180,7 +180,7 @@ export class UpdateRecord implements OnInit {
     return `update_record.${this.type}.fields.${field.name}`;
   }
 
-  cerrar(): void {
+  close(): void {
     this.closed.emit();
   }
 

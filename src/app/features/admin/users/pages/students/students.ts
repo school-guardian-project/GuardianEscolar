@@ -17,27 +17,27 @@ import { PersonListDto, PersonRequestDto, PersonResponseDto } from '@core/models
 
 interface StudentView extends RecordData {
   id?: string;
-  nombres: string;
-  apellidos: string;
-  nombre: string;
-  identificacion: string;
-  telefono: string;
-  tipoId?: string;
-  fechaNac?: string;
-  direccion?: string;
-  correo?: string;
+  names: string;
+  lastNames: string;
+  name: string;
+  identification: string;
+  phone: string;
+  documentType?: string;
+  birthDate?: string;
+  address?: string;
+  email?: string;
 }
 
 function fromApi(api: PersonListDto): StudentView {
-  const nombres = api.name ?? '';
-  const apellidos = api.lastName ?? '';
+  const names = api.name ?? '';
+  const lastNames = api.lastName ?? '';
   return {
     id: api.id,
-    nombres,
-    apellidos,
-    nombre: `${nombres} ${apellidos}`.trim(),
-    identificacion: api.identificationNumber ?? '',
-    telefono: api.phone != null ? String(api.phone) : '',
+    names,
+    lastNames,
+    name: `${names} ${lastNames}`.trim(),
+    identification: api.identificationNumber ?? '',
+    phone: api.phone != null ? String(api.phone) : '',
   };
 }
 
@@ -46,44 +46,44 @@ const IDENTIFICATION_LABELS = ['TI', 'CC'];
 function fromDetail(api: PersonResponseDto): StudentView {
   return {
     ...fromApi(api),
-    tipoId: IDENTIFICATION_LABELS[api.identificationType] ?? '',
-    fechaNac: api.dateBirth ?? '',
-    direccion: api.residenceAddress ?? '',
-    correo: api.email ?? '',
+    documentType: IDENTIFICATION_LABELS[api.identificationType] ?? '',
+    birthDate: api.dateBirth ?? '',
+    address: api.residenceAddress ?? '',
+    email: api.email ?? '',
   };
 }
 
 function toPayload(form: RecordData): PersonRequestDto {
-  const digits = String(form['telefono'] ?? '').replace(/\D/g, '');
+  const digits = String(form['phone'] ?? '').replace(/\D/g, '');
   return {
-    name: String(form['nombres'] ?? '').trim(),
-    lastName: String(form['apellidos'] ?? '').trim(),
-    identificationType: String(form['tipoId'] ?? '').trim(),
-    identificationNumber: String(form['identificacion'] ?? '').trim(),
-    email: String(form['correo'] ?? '').trim(),
+    name: String(form['names'] ?? '').trim(),
+    lastName: String(form['lastNames'] ?? '').trim(),
+    identificationType: String(form['documentType'] ?? '').trim(),
+    identificationNumber: String(form['identification'] ?? '').trim(),
+    email: String(form['email'] ?? '').trim(),
     phone: Number(digits),
-    residenceAddress: String(form['direccion'] ?? '').trim(),
-    dateBirth: String(form['fechaNac'] ?? '').trim(),
+    residenceAddress: String(form['address'] ?? '').trim(),
+    dateBirth: String(form['birthDate'] ?? '').trim(),
   };
 }
 
 const REQUIRED_FIELDS = [
-  'nombres',
-  'apellidos',
-  'tipoId',
-  'identificacion',
-  'fechaNac',
-  'telefono',
-  'direccion',
-  'correo',
+  'names',
+  'lastNames',
+  'documentType',
+  'identification',
+  'birthDate',
+  'phone',
+  'address',
+  'email',
 ] as const;
 
 const MAX_LENGTHS: Record<string, number> = {
-  nombres: 50,
-  apellidos: 50,
-  identificacion: 20,
-  correo: 50,
-  direccion: 50,
+  names: 50,
+  lastNames: 50,
+  identification: 20,
+  email: 50,
+  address: 50,
 };
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -97,7 +97,7 @@ function isValidStudentForm(form: RecordData): boolean {
     }
   }
 
-  if (!['CC', 'TI'].includes(String(form['tipoId']))) {
+  if (!['CC', 'TI'].includes(String(form['documentType']))) {
     return false;
   }
 
@@ -107,15 +107,15 @@ function isValidStudentForm(form: RecordData): boolean {
     }
   }
 
-  if (!EMAIL_PATTERN.test(String(form['correo']))) {
+  if (!EMAIL_PATTERN.test(String(form['email']))) {
     return false;
   }
 
-  if (!DATE_PATTERN.test(String(form['fechaNac']))) {
+  if (!DATE_PATTERN.test(String(form['birthDate']))) {
     return false;
   }
 
-  const digits = String(form['telefono'] ?? '').replace(/\D/g, '');
+  const digits = String(form['phone'] ?? '').replace(/\D/g, '');
   const phone = Number(digits);
   if (!digits || phone < 1 || phone > INT_MAX) {
     return false;
@@ -125,7 +125,7 @@ function isValidStudentForm(form: RecordData): boolean {
 }
 
 @Component({
-  selector: 'app-estudiantes',
+  selector: 'app-students',
   standalone: true,
   imports: [
     RouterModule,
@@ -141,10 +141,10 @@ function isValidStudentForm(form: RecordData): boolean {
     UpdateRecord,
     DeleteRecord,
   ],
-  templateUrl: './estudiantes.html',
-  styleUrl: './estudiantes.scss',
+  templateUrl: './students.html',
+  styleUrl: './students.scss',
 })
-export class Estudiantes implements OnInit {
+export class Students implements OnInit {
   private studentsService = inject(StudentsService);
 
   @ViewChild(CardRegister) register?: CardRegister;
@@ -163,13 +163,22 @@ export class Estudiantes implements OnInit {
 
   onCreated(form: RecordData): void {
     if (!isValidStudentForm(form)) {
+      this.register?.setValidationMessage(
+        'Revisa los datos: todos los campos son obligatorios y deben tener un formato válido.'
+      );
       return;
     }
 
     this.studentsService.create(toPayload(form)).subscribe({
       next: () => {
+        this.register?.setValidationMessage('');
         this.register?.resetForm();
         this.load();
+      },
+      error: () => {
+        this.register?.setValidationMessage(
+          'No se pudo registrar el estudiante. Verifica que el backend esté disponible.'
+        );
       },
     });
   }

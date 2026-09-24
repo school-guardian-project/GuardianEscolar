@@ -1,11 +1,11 @@
 export type RegisterType =
-  | 'estudiante'
-  | 'acudiente'
-  | 'conductor'
-  | 'familia'
+  | 'student'
+  | 'guardian'
+  | 'driver'
+  | 'family'
   | 'bus'
-  | 'parada'
-  | 'ruta'
+  | 'stop'
+  | 'route'
   | 'admins'
   | 'schools';
 

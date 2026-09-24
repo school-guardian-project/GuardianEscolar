@@ -36,7 +36,7 @@ export class Comments {
     this.mostrandoError = false;
   }
 
-  cerrar(): void {
+  close(): void {
     this.enviado = false;
     this.comentario = '';
     this.mostrandoError = false;

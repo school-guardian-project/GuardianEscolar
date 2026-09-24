@@ -5,13 +5,13 @@ import { TranslateModule } from '@ngx-translate/core';
 import { RecordData, RegisterType } from '@shared/components/modal/record-information/record-information.types';
 
 const DELETE_CONFIG: Record<RegisterType, { icon: string }> = {
-  estudiante: { icon: 'person' },
-  acudiente: { icon: 'people' },
-  conductor: { icon: 'directions_car' },
-  familia: { icon: 'family_restroom' },
+  student: { icon: 'person' },
+  guardian: { icon: 'people' },
+  driver: { icon: 'directions_car' },
+  family: { icon: 'family_restroom' },
   bus: { icon: 'directions_bus' },
-  parada: { icon: 'location_on' },
-  ruta: { icon: 'route' },
+  stop: { icon: 'location_on' },
+  route: { icon: 'route' },
   admins: { icon: 'admin_panel_settings' },
   schools: { icon: 'school' },
 };
@@ -24,7 +24,7 @@ const DELETE_CONFIG: Record<RegisterType, { icon: string }> = {
   styleUrl: './delete-record.css',
 })
 export class DeleteRecord {
-  @Input() type: RegisterType = 'estudiante';
+  @Input() type: RegisterType = 'student';
   @Input() record: RecordData = {};
 
   @Output() confirm = new EventEmitter<RecordData>();

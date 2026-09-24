@@ -14,7 +14,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
 
 
 @Component({
-  selector: 'app-rutas',
+  selector: 'app-routes',
   imports: [
     RouterModule,
     CommonModule,
@@ -29,10 +29,10 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
     UpdateRecord,
     DeleteRecord,
   ],
-  templateUrl: './rutas.html',
-  styleUrl: './rutas.scss',
+  templateUrl: './routes.html',
+  styleUrl: './routes.scss',
 })
-export class Rutas {
+export class RoutesPage {
   showModal = false;
   showUpdateModal = false;
   routeSelected: RecordData = {};

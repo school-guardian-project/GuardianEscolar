@@ -14,7 +14,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
 
 
 @Component({
-  selector: 'app-paradas',
+  selector: 'app-stops',
   imports: [
     RouterModule,
     CommonModule,
@@ -29,10 +29,10 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
     UpdateRecord,
     DeleteRecord,
   ],
-  templateUrl: './paradas.html',
-  styleUrl: './paradas.scss',
+  templateUrl: './stops.html',
+  styleUrl: './stops.scss',
 })
-export class Paradas {
+export class Stops {
   showModal = false;
   showUpdateModal = false;
   stopSelected: RecordData = {};

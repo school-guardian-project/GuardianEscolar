@@ -6,8 +6,8 @@ import { RecordData } from '@shared/components/modal/record-information/record-i
 import { TranslateModule } from '@ngx-translate/core';
 
 export type CardType =
-  | 'estudiante' | 'acudiente' | 'conductor' | 'familia'
-  | 'bus' | 'parada' | 'ruta' | 'admins' | 'schools';
+  | 'student' | 'guardian' | 'driver' | 'family'
+  | 'bus' | 'stop' | 'route' | 'admins' | 'schools';
 
 export interface ItemField {
   key: string;
@@ -18,80 +18,80 @@ export interface ItemField {
 
 // Iconos
 const ICONS: Record<CardType, string> = {
-  estudiante: 'person',
-  acudiente: 'escalator_warning',
-  conductor: 'engineering',
-  familia: 'family_restroom',
+  student: 'person',
+  guardian: 'escalator_warning',
+  driver: 'engineering',
+  family: 'family_restroom',
   bus: 'directions_bus',
-  parada: 'location_on',
-  ruta: 'route',
+  stop: 'location_on',
+  route: 'route',
   schools: 'school',
   admins: 'admin_panel_settings',
 };
 
 // Claves de traducción para títulos
 const TITLE_KEYS: Record<CardType, string> = {
-  estudiante: 'card_list.estudiante',
-  acudiente: 'card_list.acudiente',
-  conductor: 'card_list.conductor',
-  familia: 'card_list.familia',
+  student: 'card_list.student',
+  guardian: 'card_list.guardian',
+  driver: 'card_list.driver',
+  family: 'card_list.family',
   bus: 'card_list.bus',
-  parada: 'card_list.parada',
-  ruta: 'card_list.ruta',
+  stop: 'card_list.stop',
+  route: 'card_list.route',
   admins: 'card_list.admins',
   schools: 'card_list.schools',
 };
 
 // Campos a mostrar (con claves de traducción)
 const ITEM_FIELDS: Record<CardType, ItemField[]> = {
-  estudiante: [
-    { key: 'nombre' },
-    { key: 'identificacion' },
-    { key: 'telefono' },
+  student: [
+    { key: 'name' },
+    { key: 'identification' },
+    { key: 'phone' },
   ],
-  acudiente: [
-    { key: 'nombre' },
-    { key: 'identificacion' },
-    { key: 'telefono' },
+  guardian: [
+    { key: 'name' },
+    { key: 'identification' },
+    { key: 'phone' },
   ],
-  conductor: [
-    { key: 'nombre' },
-    { key: 'identificacion' },
-    { key: 'licencia', labelKey: 'card_list.labels.licencia_vigente', halfWidth: true },
-    { key: 'telefono', halfWidth: true },
+  driver: [
+    { key: 'name' },
+    { key: 'identification' },
+    { key: 'licenseNumber', labelKey: 'card_list.labels.validLicense', halfWidth: true },
+    { key: 'phone', halfWidth: true },
   ],
-  familia: [
-    { key: 'nombre' },
-    { key: 'acudiente', labelKey: 'card_list.labels.acudiente' },
-    { key: 'telefono' },
+  family: [
+    { key: 'name' },
+    { key: 'guardian', labelKey: 'card_list.labels.guardian' },
+    { key: 'phone' },
   ],
   bus: [
-    { key: 'matricula', labelKey: 'card_list.labels.placa' },
-    { key: 'conductor', labelKey: 'card_list.labels.nombre_conductor' },
-    { key: 'marca', halfWidth: true },
-    { key: 'modelo', halfWidth: true },
+    { key: 'plate', labelKey: 'card_list.labels.plate' },
+    { key: 'driver', labelKey: 'card_list.labels.driverName' },
+    { key: 'brand', halfWidth: true },
+    { key: 'model', halfWidth: true },
   ],
-  parada: [
-    { key: 'nombre' },
-    { key: 'direccion', labelKey: 'card_list.labels.direccion' },
+  stop: [
+    { key: 'name' },
+    { key: 'address', labelKey: 'card_list.labels.address' },
     { key: 'latitud', halfWidth: true },
     { key: 'longitud', halfWidth: true },
   ],
-  ruta: [
-    { key: 'nombre' },
-    { key: 'destino', labelKey: 'card_list.labels.destino_final' },
-    { key: 'horaInicio', labelKey: 'card_list.labels.hora_inicio', halfWidth: true },
-    { key: 'horaFin', labelKey: 'card_list.labels.hora_final', halfWidth: true },
+  route: [
+    { key: 'name' },
+    { key: 'destination', labelKey: 'card_list.labels.finalDestination' },
+    { key: 'startTime', labelKey: 'card_list.labels.startTime', halfWidth: true },
+    { key: 'endTime', labelKey: 'card_list.labels.endTime', halfWidth: true },
   ],
   admins: [
-    { key: 'nombre' },
-    { key: 'identificacion' },
-    { key: 'correo', labelKey: 'card_list.labels.correo_electronico', halfWidth: true },
-    { key: 'telefono', halfWidth: true },
+    { key: 'name' },
+    { key: 'identification' },
+    { key: 'email', labelKey: 'card_list.labels.email', halfWidth: true },
+    { key: 'phone', halfWidth: true },
   ],
   schools: [
-    { key: 'nombre' },
-    { key: 'direccion', labelKey: 'card_list.labels.direccion' },
+    { key: 'name' },
+    { key: 'address', labelKey: 'card_list.labels.address' },
   ],
 };
 
@@ -103,7 +103,7 @@ const ITEM_FIELDS: Record<CardType, ItemField[]> = {
   styleUrl: './card-list.css',
 })
 export class CardList {
-  @Input() type: CardType = 'estudiante';
+  @Input() type: CardType = 'student';
   /** Datos externos; si es null la lista queda vacía. */
   @Input() data: any[] | null = null;
 

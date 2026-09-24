@@ -29,6 +29,6 @@ export class Telephone {
   }
 
   return() {
-    this.router.navigate(['/admin/informacion']);
+    this.router.navigate(['/admin/profile']);
   }
 }

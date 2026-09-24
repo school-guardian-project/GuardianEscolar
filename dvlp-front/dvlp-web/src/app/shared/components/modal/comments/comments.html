@@ -1,4 +1,4 @@
-<div class="modal-overlay" (click)="cerrar()">
+<div class="modal-overlay" (click)="close()">
   <div class="modal" (click)="$event.stopPropagation()">
 
     <div *ngIf="!enviado">
@@ -31,7 +31,7 @@
       </div>
 
       <div class="modal__footer">
-        <button class="modal__btn modal__btn--cancel" (click)="cerrar()">
+        <button class="modal__btn modal__btn--cancel" (click)="close()">
           {{ 'comments_modal.buttons.cancel' | translate }}
         </button>
 
@@ -56,7 +56,7 @@
         </div>
 
         <div class="modal__footer modal__footer--center">
-          <button class="modal__btn modal__btn--submit" type="button" (click)="cerrar()">
+          <button class="modal__btn modal__btn--submit" type="button" (click)="close()">
             {{ 'comments_modal.buttons.exit' | translate }}
           </button>
         </div>

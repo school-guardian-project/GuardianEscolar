@@ -12,9 +12,8 @@ import { UpdateRecord } from '@shared/components/modal/update-record/update-reco
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
 
 
-
 @Component({
-  selector: 'app-familia',
+  selector: 'app-drivers',
   imports: [
     CommonModule,
     MatIconModule,
@@ -28,56 +27,53 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
     UpdateRecord,
     DeleteRecord,
   ],
-  templateUrl: './familia.html',
-  styleUrl: './familia.scss',
+  templateUrl: './drivers.html',
+  styleUrl: './drivers.scss',
 })
-export class Familia {
+export class Drivers {
   showModal = false;
   showUpdateModal = false;
-  familySelected: RecordData = {};
+  showDeleteModal = false;
+  driverSelected: RecordData = {};
 
-  showDetails(family: RecordData): void {
-    this.familySelected = family;
+  showDetails(driver: RecordData): void {
+    this.driverSelected = driver;
     this.showModal = true;
+  }
+
+  showUpdate(driver: RecordData): void {
+    this.driverSelected = driver;
+    this.showUpdateModal = true;
   }
 
   closeModal(): void {
     this.showModal = false;
-    this.familySelected = {};
+    this.driverSelected = {};
   }
-  showUpdate(family: RecordData): void {
-    this.familySelected = family;
-    this.showUpdateModal = true;
-  }
+
   closeUpdateModal(): void {
     this.showUpdateModal = false;
-    this.familySelected = {};
+    this.driverSelected = {};
   }
-
   onSaved(updatedRecord: RecordData): void {
-    console.log('[Familias] Datos actualizados:', updatedRecord);
-    // this.familiasService.update(updatedRecord).subscribe(() => { ... });
+    console.log('[Conductores] Datos actualizados:', updatedRecord);
+    // this.conductoresService.update(updatedRecord).subscribe(() => { ... });
     this.closeUpdateModal();
   }
-    showDeleteModal = false;
 
-  showDelete(family: RecordData): void {
-    this.familySelected = family;
+  showDelete(driver: RecordData): void {
+    this.driverSelected = driver;
     this.showDeleteModal = true;
   }
 
   closeDeleteModal(): void {
     this.showDeleteModal = false;
-    this.familySelected = {};
+    this.driverSelected = {};
   }
 
-  /**
-   * Confirma la eliminación del registro.
-   * Aquí puedes llamar a tu servicio para eliminar.
-   */
-  onConfirmDelete(record: RecordData): void {
-    console.log('[Familias] Eliminando:', record);
-    // this.familiasService.delete(record.id).subscribe(() => { ... });
+  onConfirmDelete(driver: RecordData): void {
+    console.log('[Conductores] Confirmar eliminación:', driver);
+    // this.conductoresService.delete(driver).subscribe(() => { ... });
     this.closeDeleteModal();
   }
 }

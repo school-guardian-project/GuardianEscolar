@@ -13,7 +13,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
 
 
 @Component({
-  selector: 'app-padres',
+  selector: 'app-guardians',
   imports: [
     CommonModule,
     MatIconModule,
@@ -27,10 +27,10 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
     UpdateRecord,
     DeleteRecord,
   ],
-  templateUrl: './padres.html',
-  styleUrl: './padres.scss',
+  templateUrl: './guardians.html',
+  styleUrl: './guardians.scss',
 })
-export class Padres {
+export class Guardians {
   showModal = false;
   attendantSelected: RecordData = {};
 

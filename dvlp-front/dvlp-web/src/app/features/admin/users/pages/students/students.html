@@ -4,10 +4,10 @@
 <div class="page-wrapper">
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
-    <app-card-register type="estudiante" (formSubmit)="onCreated($event)"> </app-card-register>
+    <app-card-register type="student" (formSubmit)="onCreated($event)"> </app-card-register>
 
     <app-card-list
-      type="estudiante"
+      type="student"
       [data]="students()"
       (viewItem)="showDetails($event)"
       (editItem)="showUpdate($event)"
@@ -20,7 +20,7 @@
 <!-- Modal: ver detalles -->
 <app-record-information
   *ngIf="showModal"
-  type="estudiante"
+  type="student"
   [record]="studentSelected"
   (closed)="closeModal()"
 >
@@ -29,7 +29,7 @@
 <!-- Modal: actualizar registro -->
 <app-update-record
   *ngIf="showUpdateModal"
-  type="estudiante"
+  type="student"
   [record]="studentSelected"
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()"
@@ -39,7 +39,7 @@
 <!-- Modal: eliminar registro -->
 <app-delete-record
   *ngIf="showDeleteModal"
-  type="estudiante"
+  type="student"
   [record]="studentSelected"
   (confirm)="onConfirmDelete($event)"
   (cancel)="closeDeleteModal()"

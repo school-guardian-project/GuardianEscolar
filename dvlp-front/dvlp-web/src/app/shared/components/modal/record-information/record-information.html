@@ -1,4 +1,4 @@
-<div class="modal-overlay" (click)="cerrar()">
+<div class="modal-overlay" (click)="close()">
   <div class="modal" (click)="$event.stopPropagation()">
 
     <!-- HEADER -->
@@ -43,7 +43,7 @@
       <button
         class="modal__btn modal__btn--submit"
         type="button"
-        (click)="cerrar()"
+        (click)="close()"
       >
         {{ 'common.close' | translate }}
       </button>

@@ -3,8 +3,8 @@
 <div class="page-wrapper">
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
-    <app-card-register type="parada"></app-card-register>
-    <app-card-list type="parada" 
+    <app-card-register type="stop"></app-card-register>
+    <app-card-list type="stop"
     (viewItem)="showDetails($event)"
     (editItem)="showUpdateDetails($event)"
     (deleteItem)="showDelete($event)">
@@ -16,14 +16,14 @@
 <!-- Modal de detalles a nivel de página -->
 <app-record-information 
   *ngIf="showModal"
-  type="parada"
+  type="stop"
   [record]="stopSelected"
   (closed)="closeModal()">
 </app-record-information>
 
 <app-update-record
   *ngIf="showUpdateModal"
-  type="parada"
+  type="stop"
   [record]="stopSelected"
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()">
@@ -32,7 +32,7 @@
 <!-- Modal: eliminar registro -->
 <app-delete-record
   *ngIf="showDeleteModal"
-  type="parada"
+  type="stop"
   [record]="stopSelected"
   (confirm)="onConfirmDelete($event)"
   (cancel)="closeDeleteModal()">

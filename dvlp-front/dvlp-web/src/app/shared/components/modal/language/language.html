@@ -7,19 +7,19 @@
 
     <div class="lang-grid">
       <div class="lang-card"
-           *ngFor="let lang of language"
-           [class.active]="selectedLang === lang.code"
-           (click)="selectLang(lang.code)">
+           *ngFor="let languageOption of languages"
+           [class.active]="selectedLanguage === languageOption.code"
+           (click)="selectLanguage(languageOption.code)">
 
-        <span class="lang-flag">{{ lang.flag }}</span>
+        <span class="lang-flag">{{ languageOption.flag }}</span>
         <div>
-          <p class="lang-name">{{ lang.name }}</p>
-          <p class="lang-native">{{ lang.native }}</p>
+          <p class="lang-name">{{ languageOption.name }}</p>
+          <p class="lang-native">{{ languageOption.native }}</p>
         </div>
 
         <span class="radio-wrapper">
           <input type="radio" name="lang"
-                 [checked]="selectedLang === lang.code"
+                 [checked]="selectedLanguage === languageOption.code"
                  (click)="$event.stopPropagation()" />
           <span class="custom-radio"></span>
         </span>

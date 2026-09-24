@@ -23,7 +23,7 @@ export class UpdateInformation {
   enviado: boolean = false;
   mostrandoError: boolean = false;
 
-  actualizar(): void {
+  update(): void {
     const alguno =
       this.nombreEscuela.trim() ||
       this.ciudad.trim() ||
@@ -50,7 +50,7 @@ export class UpdateInformation {
     });
   }
 
-  cerrar(): void {
+  close(): void {
     this.enviado = false;
     this.mostrandoError = false;
     this.nombreEscuela = '';

@@ -18,10 +18,10 @@ import { TranslateModule } from '@ngx-translate/core';
 export class NavbarAdmin {
   
 navItems = [
-  { icon: 'person_raised_hand', route: '/admin/usuarios' },
-  { icon: 'escalator_warning',  route: '/admin/padres' },
-  { icon: 'engineering',        route: '/admin/conductores' },
-  { icon: 'family_restroom',    route: '/admin/familias' },
+  { icon: 'person_raised_hand', route: '/admin/users' },
+  { icon: 'escalator_warning',  route: '/admin/guardians' },
+  { icon: 'engineering',        route: '/admin/drivers' },
+  { icon: 'family_restroom',    route: '/admin/families' },
 ];
 
   activeRoute = '';

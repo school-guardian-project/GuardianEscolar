@@ -36,10 +36,42 @@ export default StyleSheet.create({
   },
 
   qrButtonContainer: {
-    position: "absolute",
+    position: 'absolute',
     left: 16,
     bottom: 200,
     zIndex: 3,
     elevation: 8,
+  },
+
+  scanModeContainer: {
+    position: 'absolute',
+    top: '40%',
+    left: 0,
+    right: 0,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    gap: 16,
+    zIndex: 10,
+    elevation: 10,
+  },
+
+  scanModeButton: {
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 8,
+    backgroundColor: '#fff',
+    borderWidth: 2,
+    borderColor: '#ccc',
+  },
+
+  scanModeActive: {
+    borderColor: '#00E676',
+    backgroundColor: '#E8F5E9',
+  },
+
+  scanModeText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#333',
   },
 });

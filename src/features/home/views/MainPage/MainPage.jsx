@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View } from "react-native";
+import { View, Text, Pressable } from "react-native";
 import MapView from "react-native-maps";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import RouteInfoCard from "@components/cards/RouteInfoCard";
@@ -30,6 +30,7 @@ export default function MainPage() {
   const [modalType, setModalType] = useState(null);
   const [routeInfo, setRouteInfo] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [scanMode, setScanMode] = useState("ON_BOARD");
 
   const handleOpenModal = (type) => setModalType(type);
   const handleCloseModal = () => setModalType(null);
@@ -47,7 +48,7 @@ export default function MainPage() {
         routeExecutionId: route.id,
         studentProfileId: qrData.id,
         routeStopId: qrData.routeStopId || route.id,
-        boardingType: "ON_BOARD",
+        boardingType: scanMode,
       });
     } catch (error) {
       console.error("Error processing QR scan:", error);
@@ -167,6 +168,23 @@ export default function MainPage() {
         onClose={handleCloseModal}
         studentData={null}
       />
+
+      {modalType === "qrScanner" && (
+        <View style={styles.scanModeContainer}>
+          <Pressable
+            style={[styles.scanModeButton, scanMode === "ON_BOARD" && styles.scanModeActive]}
+            onPress={() => setScanMode("ON_BOARD")}
+          >
+            <Text style={styles.scanModeText}>ABORDAR</Text>
+          </Pressable>
+          <Pressable
+            style={[styles.scanModeButton, scanMode === "OFF_BOARD" && styles.scanModeActive]}
+            onPress={() => setScanMode("OFF_BOARD")}
+          >
+            <Text style={styles.scanModeText}>DESCENDER</Text>
+          </Pressable>
+        </View>
+      )}
 
       <QRScannerModal
         visible={modalType === "qrScanner"}

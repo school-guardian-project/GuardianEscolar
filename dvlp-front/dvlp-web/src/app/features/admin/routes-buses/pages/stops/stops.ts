@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,7 +11,7 @@ import { NavbarAdmin } from '@shared/components/navbar/navbar-admin/navbar-admin
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
-
+import { StopsService } from '@core/services/stops.service';
 
 @Component({
   selector: 'app-stops',
@@ -33,6 +33,8 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
   styleUrl: './stops.scss',
 })
 export class Stops {
+  private stopsService = inject(StopsService);
+
   showModal = false;
   showUpdateModal = false;
   stopSelected: RecordData = {};
@@ -42,8 +44,8 @@ export class Stops {
     this.showModal = true;
   }
 
-  showUpdateDetails(bus: RecordData): void {
-    this.stopSelected = bus;
+  showUpdateDetails(stop: RecordData): void {
+    this.stopSelected = stop;
     this.showUpdateModal = true;
   }
 
@@ -56,12 +58,13 @@ export class Stops {
     this.showUpdateModal = false;
     this.stopSelected = {};
   }
+
   onSaved(updatedRecord: RecordData): void {
-    console.log('[Paradas] Datos actualizados:', updatedRecord);
-    // this.paradasService.update(updatedRecord).subscribe(() => { ... });
-    this.closeUpdateModal();
+    this.stopsService.update(updatedRecord.id, updatedRecord).subscribe(() => {
+      this.closeUpdateModal();
+    });
   }
-    // ── Eliminar registro ───────────────────────────────────────────────────
+
   showDeleteModal = false;
 
   showDelete(stop: RecordData): void {
@@ -74,13 +77,9 @@ export class Stops {
     this.stopSelected = {};
   }
 
-  /**
-   * Confirma la eliminación del registro.
-   * Aquí puedes llamar a tu servicio para eliminar.
-   */
   onConfirmDelete(record: RecordData): void {
-    console.log('[Paradas] Eliminando:', record);
-    // this.paradasService.delete(record.id).subscribe(() => { ... });
-    this.closeDeleteModal();
+    this.stopsService.remove(record.id).subscribe(() => {
+      this.closeDeleteModal();
+    });
   }
 }

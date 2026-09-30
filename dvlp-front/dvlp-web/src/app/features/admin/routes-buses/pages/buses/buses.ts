@@ -11,7 +11,7 @@ import { NavbarAdmin } from '@shared/components/navbar/navbar-admin/navbar-admin
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
-import { BusesService } from '../../services/buses.service';
+import { BusesService } from '@core/services/buses.service';
 
 @Component({
   selector: 'app-buses',

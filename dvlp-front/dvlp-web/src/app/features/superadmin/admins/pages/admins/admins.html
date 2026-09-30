@@ -1,19 +1,18 @@
 <app-navbar-manage></app-navbar-manage>
-<!-- CONTENIDO PRINCIPAL -->
 <div class="page-wrapper">
   <app-sidebar-superadmin></app-sidebar-superadmin>
   <div class="container">
-    <app-card-register type="admins"></app-card-register>
-    <app-card-list type="admins" 
-    (viewItem)="showDetails($event)"
-    (editItem)="showUpdate($event)"
-    (deleteItem)="showDelete($event)">
-  </app-card-list>
+    <app-card-register type="admins" (formSubmit)="onCreated($event)"></app-card-register>
+    <app-card-list type="admins"
+      [data]="admins()"
+      (viewItem)="showDetails($event)"
+      (editItem)="showUpdate($event)"
+      (deleteItem)="showDelete($event)">
+    </app-card-list>
   </div>
 </div>
 
-<!-- Modal de detalles a nivel de página -->
-<app-record-information 
+<app-record-information
   *ngIf="showModal"
   type="admins"
   [record]="adminSelected"
@@ -28,12 +27,10 @@
   (closed)="closeUpdateModal()">
 </app-update-record>
 
-<!-- Modal: eliminar registro -->
 <app-delete-record
   *ngIf="showDeleteModal"
   type="admins"
   [record]="adminSelected"
   (confirm)="onConfirmDelete($event)"
-  (cancel)="closeDeleteModal()">  
-  
+  (cancel)="closeDeleteModal()">
 </app-delete-record>

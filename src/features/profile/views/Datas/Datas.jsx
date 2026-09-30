@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { View, ScrollView } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
@@ -10,12 +10,45 @@ import InfoRow from "@components/cards/InfoRow";
 
 import { useNavigation } from "@react-navigation/native";
 
+import { getSession } from "@core/services/authService";
+import { getUserApi } from "@core/services/userApi";
+
 import styles from "@core/styles/profileScreen.style";
+
+const ROLE_PATHS = { 1: "admins", 2: "students", 3: "drivers", 4: "parents", 5: "admins" };
 
 export default function Datas() {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const navigation = useNavigation();
+  const [person, setPerson] = useState(null);
+
+  useEffect(() => {
+    let alive = true;
+    (async () => {
+      try {
+        const session = await getSession();
+        if (!session?.personId) {
+          return;
+        }
+        const path = ROLE_PATHS[session.roleId] ?? "students";
+        const data = await getUserApi(`/${path}/${session.personId}`);
+        if (alive) {
+          setPerson(data);
+        }
+      } catch {
+        // Backend no disponible: la pantalla queda con los valores vacíos.
+      }
+    })();
+    return () => {
+      alive = false;
+    };
+  }, []);
+
+  const fullName = person
+    ? `${person.name ?? ""} ${person.lastName ?? ""}`.trim()
+    : "";
+
   return (
     <View
       style={[
@@ -35,9 +68,15 @@ export default function Datas() {
       >
         <InfoCard>
           <InfoRow
+            icon="person-outline"
+            title={t("inputs.name")}
+            value={fullName}
+          />
+
+          <InfoRow
             icon="call-outline"
             title={t("inputs.phone")}
-            value=""
+            value={person?.phone != null ? String(person.phone) : ""}
             editable
             editOnPress={() => navigation.navigate("UpdatePhone")}
           />
@@ -45,7 +84,7 @@ export default function Datas() {
           <InfoRow
             icon="mail-outline"
             title={t("inputs.email")}
-            value=""
+            value={person?.email ?? ""}
             editable
             editOnPress={() => navigation.navigate("UpdateEmail")}
           />
@@ -63,7 +102,7 @@ export default function Datas() {
           <InfoRow
             icon="location-outline"
             title={t("inputs.address")}
-            value=""
+            value={person?.residenceAddress ?? ""}
             arrow
           />
 

@@ -8,8 +8,10 @@ if (!API_URL) {
 }
 
 const REFRESH_KEY = "refresh_token";
+const SESSION_KEY = "user_session";
 
 let accessToken = null;
+let session = null;
 
 async function request(path, options = {}) {
   const response = await fetch(`${API_URL}/api/v1/auth${path}`, options);
@@ -43,6 +45,36 @@ async function loadRefresh() {
   return SecureStore.getItemAsync(REFRESH_KEY);
 }
 
+async function saveSession(data) {
+  session = {
+    profileId: data.profileId ?? null,
+    personId: data.personId ?? null,
+    email: data.email ?? null,
+    roleId: data.roleId ?? null,
+  };
+  if (await SecureStore.isAvailableAsync()) {
+    await SecureStore.setItemAsync(SESSION_KEY, JSON.stringify(session));
+  }
+}
+
+/** Sesión del usuario logueado (profileId, personId, email, roleId). */
+export async function getSession() {
+  if (session) {
+    return session;
+  }
+  if (await SecureStore.isAvailableAsync()) {
+    const raw = await SecureStore.getItemAsync(SESSION_KEY);
+    if (raw) {
+      try {
+        session = JSON.parse(raw);
+      } catch {
+        session = null;
+      }
+    }
+  }
+  return session;
+}
+
 export async function login(email, password) {
   const data = await request("/login", {
     method: "POST",
@@ -51,6 +83,7 @@ export async function login(email, password) {
   });
 
   accessToken = data.accessToken;
+  await saveSession(data);
   if (data.refreshToken) {
     await saveRefresh(data.refreshToken);
   }
@@ -93,8 +126,10 @@ export async function logout() {
 
 export async function clearSession() {
   accessToken = null;
+  session = null;
   if (await SecureStore.isAvailableAsync()) {
     await SecureStore.deleteItemAsync(REFRESH_KEY);
+    await SecureStore.deleteItemAsync(SESSION_KEY);
   }
 }
 

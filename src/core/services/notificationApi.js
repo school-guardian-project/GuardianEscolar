@@ -33,3 +33,136 @@ export async function postNotificationApi(path, body) {
 
   return response.status === 204 ? null : response.json();
 }
+
+export async function getNotificationApi(path) {
+  const url = `${API_URL}/notification/api${path}`;
+
+  let response = await fetch(url, { headers: authHeaders() });
+
+  if (response.status === 401) {
+    await refresh();
+    response = await fetch(url, { headers: authHeaders() });
+  }
+
+  if (!response.ok) {
+    const error = new Error(`notification api request failed: ${response.status}`);
+    error.status = response.status;
+    throw error;
+  }
+
+  return response.status === 204 ? null : response.json();
+}
+
+export async function getNotificationApi(path) {
+  const url = `${API_URL}/notification/api${path}`;
+
+  let response = await fetch(url, { headers: authHeaders() });
+
+  if (response.status === 401) {
+    await refresh();
+    response = await fetch(url, { headers: authHeaders() });
+  }
+
+  if (!response.ok) {
+    const error = new Error(`notification api request failed: ${response.status}`);
+    error.status = response.status;
+    throw error;
+  }
+
+  return response.status === 204 ? null : response.json();
+}
+
+export async function getNotificationApi(path) {
+  const url = `${API_URL}/notification/api${path}`;
+
+  let response = await fetch(url, { headers: authHeaders() });
+
+  if (response.status === 401) {
+    await refresh();
+    response = await fetch(url, { headers: authHeaders() });
+  }
+
+  if (!response.ok) {
+    const error = new Error(`notification api request failed: ${response.status}`);
+    error.status = response.status;
+    throw error;
+  }
+
+  return response.status === 204 ? null : response.json();
+}
+
+export async function getNotificationApi(path) {
+  const url = `${API_URL}/notification/api${path}`;
+
+  let response = await fetch(url, { headers: authHeaders() });
+
+  if (response.status === 401) {
+    await refresh();
+    response = await fetch(url, { headers: authHeaders() });
+  }
+
+  if (!response.ok) {
+    const error = new Error(`notification api request failed: ${response.status}`);
+    error.status = response.status;
+    throw error;
+  }
+
+  return response.status === 204 ? null : response.json();
+}
+
+export async function getNotificationApi(path) {
+  const url = `${API_URL}/notification/api${path}`;
+
+  let response = await fetch(url, { headers: authHeaders() });
+
+  if (response.status === 401) {
+    await refresh();
+    response = await fetch(url, { headers: authHeaders() });
+  }
+
+  if (!response.ok) {
+    const error = new Error(`notification api request failed: ${response.status}`);
+    error.status = response.status;
+    throw error;
+  }
+
+  return response.status === 204 ? null : response.json();
+}
+
+export async function getNotificationApi(path) {
+  const url = `${API_URL}/notification/api${path}`;
+
+  let response = await fetch(url, { headers: authHeaders() });
+
+  if (response.status === 401) {
+    await refresh();
+    response = await fetch(url, { headers: authHeaders() });
+  }
+
+  if (!response.ok) {
+    const error = new Error(`notification api request failed: ${response.status}`);
+    error.status = response.status;
+    throw error;
+  }
+
+  return response.status === 204 ? null : response.json();
+}
+
+export async function getNotificationApi(path) {
+  const url = `${API_URL}/notification/api${path}`;
+
+  let response = await fetch(url, { headers: authHeaders() });
+
+  if (response.status === 401) {
+    await refresh();
+    response = await fetch(url, { headers: authHeaders() });
+  }
+
+  if (!response.ok) {
+    const error = new Error(`notification api request failed: ${response.status}`);
+    error.status = response.status;
+    throw error;
+  }
+
+  return response.status === 204 ? null : response.json();
+}

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
@@ -60,7 +60,7 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { name: 'name', type: 'text' },
     { name: 'guardian', type: 'select', options: [] },
     { name: 'student', type: 'select', options: [] },
-    { name: 'observaciones', type: 'text' },
+    { name: 'observations', type: 'text' },
   ],
 
   bus: [
@@ -120,8 +120,10 @@ const FIELDS: Record<RegisterType, Field[]> = {
   templateUrl: './card-register.html',
   styleUrl: './card-register.css',
 })
-export class CardRegister implements OnInit {
+export class CardRegister implements OnInit, OnChanges {
   @Input() type: RegisterType = 'student';
+  /** Opciones dinámicas por campo (perfiles registrados de acudientes/estudiantes). */
+  @Input() fieldOptions: Record<string, string[]> = {};
   /** Emite el formulario al padre; si nadie escucha se hace fallback a console.log. */
   @Output() formSubmit = new EventEmitter<Record<string, any>>();
 
@@ -147,6 +149,11 @@ export class CardRegister implements OnInit {
         this.formData[field.name] = '';
       }
     }
+  }
+
+  /** Las opciones de los select llegan por HTTP después del primer render. */
+  ngOnChanges(): void {
+    this.groupedFields = this.buildGroupedFields();
   }
 
   isFamilyStudentField(fieldName: string): boolean {
@@ -179,7 +186,9 @@ export class CardRegister implements OnInit {
 
   private buildGroupedFields() {
     const result: any[] = [];
-    const list = FIELDS[this.type];
+    const list = FIELDS[this.type].map((field) =>
+      this.fieldOptions[field.name] ? { ...field, options: this.fieldOptions[field.name] } : field,
+    );
     let i = 0;
     while (i < list.length) {
       if (list[i].halfWidth && list[i + 1]?.halfWidth) {

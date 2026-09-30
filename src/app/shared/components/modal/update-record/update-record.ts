@@ -148,6 +148,8 @@ const MODAL_CONFIGS: Record<RegisterType, ModalConfig> = {
 export class UpdateRecord implements OnInit {
   @Input() type: RegisterType = 'student';
   @Input() record: RecordData = {};
+  /** Opciones dinámicas por campo (perfiles registrados de acudientes/estudiantes). */
+  @Input() fieldOptions: Record<string, string[]> = {};
 
   @Output() saved = new EventEmitter<RecordData>();
   @Output() closed = new EventEmitter<void>();
@@ -169,7 +171,9 @@ export class UpdateRecord implements OnInit {
   }
 
   ngOnInit(): void {
-    this.fields = UPDATE_FIELDS[this.type];
+    this.fields = UPDATE_FIELDS[this.type].map((field) =>
+      this.fieldOptions[field.name] ? { ...field, options: this.fieldOptions[field.name] } : field,
+    );
 
     this.fields.forEach(f => {
       this.formData[f.name] = (this.record[f.name] as string) || '';

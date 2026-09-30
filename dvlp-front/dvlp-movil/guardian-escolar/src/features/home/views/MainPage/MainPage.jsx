@@ -71,7 +71,7 @@ export default function MainPage() {
           <RouteInfoCard />
           <BottomTabBar
             onRoutePress={() => navigation.navigate("MainPage")}
-            onLocationPress={() => navigation.navigate("Location")}
+            onLocationPress={() => navigation.navigate("LiveTracking")}
             onProfilePress={() => navigation.navigate("Profile")}
           />
         </View>

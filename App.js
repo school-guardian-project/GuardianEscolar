@@ -64,6 +64,10 @@ import Language from "@features/profile/views/language/language";
 // Cerrar sesión
 import Logout from "@features/profile/views/Logout/Logout";
 
+// Seguimiento GPS
+import LiveTracking from "@features/gps/views/LiveTracking/LiveTracking";
+import MapViewTest from "@features/gps/views/MapViewTest/MapViewTest";
+
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
@@ -127,12 +131,14 @@ export default function App() {
       <ThemeProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Login"
+            initialRouteName="MapViewTest"
             screenOptions={{
               headerShown: false,
             }}
           >
             <Stack.Screen name="Login" component={Login} />
+
+            <Stack.Screen name="MapViewTest" component={MapViewTest} />
 
             <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
 
@@ -143,6 +149,8 @@ export default function App() {
             <Stack.Screen name="MainPage" component={MainPage} />
 
             <Stack.Screen name="Notifications" component={Notifications} />
+
+            <Stack.Screen name="LiveTracking" component={LiveTracking} />
 
             <Stack.Screen name="Profile" component={Profile} />
 

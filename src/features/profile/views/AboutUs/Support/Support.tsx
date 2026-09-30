@@ -60,7 +60,11 @@ export default function Support() {
                     onPress={() => { }}
                 />
             </ScrollView>
-            <BottomTabBar />
+            <BottomTabBar
+                onRoutePress={() => {}}
+                onLocationPress={() => {}}
+                onProfilePress={() => {}}
+            />
         </View>
     );
 }

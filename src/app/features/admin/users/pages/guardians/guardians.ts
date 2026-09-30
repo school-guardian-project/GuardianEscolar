@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,7 +10,7 @@ import { CardList } from '@shared/components/cards/card-list/card-list';
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
-
+import { ParentsService } from '@core/services/parents.service';
 
 @Component({
   selector: 'app-guardians',
@@ -31,7 +31,11 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
   styleUrl: './guardians.scss',
 })
 export class Guardians {
+  private parentsService = inject(ParentsService);
+
   showModal = false;
+  showUpdateModal = false;
+  showDeleteModal = false;
   attendantSelected: RecordData = {};
 
   showDetails(attendant: RecordData): void {
@@ -44,8 +48,6 @@ export class Guardians {
     this.attendantSelected = {};
   }
 
-  showUpdateModal = false;
-
   showUpdate(attendant: RecordData): void {
     this.attendantSelected = attendant;
     this.showUpdateModal = true;
@@ -56,16 +58,11 @@ export class Guardians {
     this.attendantSelected = {};
   }
 
-  /**
-   * Recibe los datos ya actualizados del formulario.
-   * Aquí puedes llamar a tu servicio para persistirlos.
-   */
   onSaved(updatedRecord: RecordData): void {
-    console.log('[Acudientes] Datos actualizados:', updatedRecord);
-    // this.acudientesService.update(updatedRecord).subscribe(() => { ... });
-    this.closeUpdateModal();
+    this.parentsService.update(updatedRecord.id, updatedRecord).subscribe(() => {
+      this.closeUpdateModal();
+    });
   }
-    showDeleteModal = false;
 
   showDelete(attendant: RecordData): void {
     this.attendantSelected = attendant;
@@ -77,13 +74,9 @@ export class Guardians {
     this.attendantSelected = {};
   }
 
-  /**
-   * Confirma la eliminación del registro.
-   * Aquí puedes llamar a tu servicio para eliminar.
-   */
   onConfirmDelete(record: RecordData): void {
-    console.log('[Acudientes] Eliminando:', record);
-    // this.acudientesService.delete(record.id).subscribe(() => { ... });
-    this.closeDeleteModal();
+    this.parentsService.remove(record.id).subscribe(() => {
+      this.closeDeleteModal();
+    });
   }
 }

@@ -197,5 +197,18 @@
     "route": "Itinéraire",
     "location": "Localisation",
     "profile": "Profil"
+  },
+
+  "gps": {
+    "vehicleLocation": "Localisation du véhicule",
+    "speed": "Vitesse",
+    "status": "État",
+    "lastUpdated": "Dernière mise à jour",
+    "active": "GPS actif",
+    "inactive": "GPS déconnecté",
+    "loadingLocation": "Chargement de la localisation...",
+    "errorLoadingLocation": "Erreur lors de l'obtention de la localisation",
+    "noLocationAvailable": "Aucune localisation disponible",
+    "lastKnownLocation": "Dernière localisation disponible"
   }
 }

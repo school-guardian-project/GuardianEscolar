@@ -197,5 +197,18 @@
     "route": "Rota",
     "location": "Localização",
     "profile": "Perfil"
+  },
+
+  "gps": {
+    "vehicleLocation": "Localização do veículo",
+    "speed": "Velocidade",
+    "status": "Estado",
+    "lastUpdated": "Última atualização",
+    "active": "GPS ativo",
+    "inactive": "GPS sem conexão",
+    "loadingLocation": "Carregando localização...",
+    "errorLoadingLocation": "Erro ao obter localização",
+    "noLocationAvailable": "Sem localização disponível",
+    "lastKnownLocation": "Última localização disponível"
   }
 }

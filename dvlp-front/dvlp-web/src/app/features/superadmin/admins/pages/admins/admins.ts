@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { CommonModule } from '@angular/common';
+
 import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-manage';
 import { CardRegister } from '@shared/components/cards/card-register/card-register';
 import { CardList } from '@shared/components/cards/card-list/card-list';
@@ -10,7 +11,53 @@ import { SidebarSuperadmin } from '@shared/components/navbar/sidebar-superadmin/
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
+import { AdminsService } from '../../services/admins.service';
+import { AdminListDto, AdminRequestDto, AdminResponseDto } from '../../models/admin.model';
 
+interface AdminView extends RecordData {
+  id?: string;
+  name: string;
+  lastName: string;
+  identification: string;
+  phone: string;
+  email?: string;
+  address?: string;
+  birthDate?: string;
+}
+
+function fromApi(api: AdminListDto): AdminView {
+  return {
+    id: api.id,
+    name: api.name ?? '',
+    lastName: api.lastName ?? '',
+    identification: api.identificationNumber ?? '',
+    phone: api.phone != null ? String(api.phone) : '',
+    email: '',
+  };
+}
+
+function fromDetail(api: AdminResponseDto): AdminView {
+  return {
+    ...fromApi(api),
+    email: api.email ?? '',
+    address: api.residenceAddress ?? '',
+    birthDate: api.dateBirth ?? '',
+  };
+}
+
+function toPayload(form: RecordData): AdminRequestDto {
+  const digits = String(form['phone'] ?? '').replace(/\D/g, '');
+  return {
+    name: String(form['name'] ?? '').trim(),
+    lastName: String(form['lastNames'] ?? '').trim(),
+    identificationType: 'CC',
+    identificationNumber: String(form['identification'] ?? '').trim(),
+    email: String(form['email'] ?? '').trim(),
+    phone: Number(digits),
+    residenceAddress: String(form['address'] ?? '').trim(),
+    dateBirth: String(form['birthDate'] ?? '').trim(),
+  };
+}
 
 @Component({
   selector: 'app-admins',
@@ -30,25 +77,68 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
   templateUrl: './admins.html',
   styleUrl: './admins.scss',
 })
-export class Admins {
+export class Admins implements OnInit {
+  private adminsService = inject(AdminsService);
+
+  @ViewChild(CardRegister) register?: CardRegister;
+
+  admins = signal<AdminView[]>([]);
+
+  ngOnInit(): void {
+    this.load();
+  }
+
+  private load(): void {
+    this.adminsService.list().subscribe({
+      next: (list) => this.admins.set(list.map(fromApi)),
+    });
+  }
+
+  onCreated(form: RecordData): void {
+    this.adminsService.create(toPayload(form)).subscribe({
+      next: () => {
+        this.register?.setValidationMessage('');
+        this.register?.resetForm();
+        this.load();
+      },
+      error: () => {
+        this.register?.setValidationMessage(
+          'No se pudo registrar el administrador. Verifica que el backend esté disponible.'
+        );
+      },
+    });
+  }
+
   showModal = false;
-  showUpdateModal = false;
   adminSelected: RecordData = {};
 
   showDetails(admin: RecordData): void {
-    this.adminSelected = admin;
-    this.showModal = true;
-  }
-
-  showUpdate(admin: RecordData): void {
-    this.adminSelected = admin;
-    this.showUpdateModal = true;
+    const id = admin['id'];
+    if (!id) return;
+    this.adminsService.get(String(id)).subscribe({
+      next: (detail) => {
+        this.adminSelected = fromDetail(detail);
+        this.showModal = true;
+      },
+    });
   }
 
   closeModal(): void {
     this.showModal = false;
-    this.showUpdateModal = false;
     this.adminSelected = {};
+  }
+
+  showUpdateModal = false;
+
+  showUpdate(admin: RecordData): void {
+    const id = admin['id'];
+    if (!id) return;
+    this.adminsService.get(String(id)).subscribe({
+      next: (detail) => {
+        this.adminSelected = fromDetail(detail);
+        this.showUpdateModal = true;
+      },
+    });
   }
 
   closeUpdateModal(): void {
@@ -57,13 +147,24 @@ export class Admins {
   }
 
   onSaved(updatedRecord: RecordData): void {
-    console.log('[Admins] Datos actualizados:', updatedRecord);
-    // this.adminsService.update(updatedRecord).subscribe(() => { ... });
-    this.closeUpdateModal();
+    const id = updatedRecord['id'];
+    if (!id) {
+      this.closeUpdateModal();
+      return;
+    }
+
+    this.adminsService.update(String(id), toPayload(updatedRecord)).subscribe({
+      next: () => {
+        this.closeUpdateModal();
+        this.load();
+      },
+    });
   }
-   showDeleteModal = false;
+
+  showDeleteModal = false;
 
   showDelete(admin: RecordData): void {
+    if (!admin['id']) return;
     this.adminSelected = admin;
     this.showDeleteModal = true;
   }
@@ -73,13 +174,18 @@ export class Admins {
     this.adminSelected = {};
   }
 
-  /**
-   * Confirma la eliminación del registro.
-   * Aquí puedes llamar a tu servicio para eliminar.
-   */
   onConfirmDelete(record: RecordData): void {
-    console.log('[Admins] Eliminando:', record);
-    // this.adminsService.delete(record.id).subscribe(() => { ... });
-    this.closeDeleteModal();
+    const id = record['id'];
+    if (!id) {
+      this.closeDeleteModal();
+      return;
+    }
+
+    this.adminsService.remove(String(id)).subscribe({
+      next: () => {
+        this.closeDeleteModal();
+        this.load();
+      },
+    });
   }
 }

@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FlatList, Modal, Pressable, Text, View } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
 import BackButton from "@components/buttons/BackButton";
+import { getSession } from "@core/services/authService";
+import { getNotificationApi } from "@core/services/notificationApi";
 import styles from "./Notifications.style";
 
 const filterOptions = [
@@ -21,6 +23,29 @@ export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [filtersVisible, setFiltersVisible] = useState(false);
+
+  useEffect(() => {
+    async function loadNotifications() {
+      try {
+        const session = await getSession();
+        if (!session?.profileId) return;
+
+        const data = await getNotificationApi(`/v1/notifications/guardian/${session.profileId}`);
+        setNotifications(data.map((item) => ({
+          id: item.id,
+          type: item.Alert?.Description?.includes("abordó") ? "boarding" : "alighting",
+          icon: item.Alert?.Description?.includes("abordó") ? "bus" : "home",
+          titleKey: item.Alert?.Description || "Notificación",
+          messageKey: item.Alert?.Description || "",
+          dateTime: item.DateTimeRead,
+        })));
+      } catch (error) {
+        console.error("Error loading notifications:", error);
+      }
+    }
+
+    loadNotifications();
+  }, []);
 
   const toggleSaved = (notificationId) => {
     setNotifications((currentNotifications) =>
@@ -54,14 +79,14 @@ export default function Notifications() {
       <View style={styles.notificationContent}>
         <View style={styles.notificationHeader}>
           <Text style={[styles.notificationTitle, { color: theme.textColor }]}>
-            {t(item.titleKey)}
+            {item.titleKey}
           </Text>
           <Text style={[styles.time, { color: theme.textSecondary }]}>
-            {t("notifications.justNow")}
+            {new Date(item.dateTime).toLocaleTimeString()}
           </Text>
         </View>
         <Text style={[styles.message, { color: theme.textSecondary }]}>
-          {t(item.messageKey)}
+          {item.messageKey}
         </Text>
       </View>
 

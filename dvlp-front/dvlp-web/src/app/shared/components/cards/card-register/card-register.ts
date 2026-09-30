@@ -1,7 +1,8 @@
-import { Component, Input, OnChanges, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { validateField, validateBirthDate, validateFutureDate, ValidationSchema } from '@core/validators/form-validators';
 
 export type RegisterType =
   | 'student'
@@ -113,6 +114,90 @@ const FIELDS: Record<RegisterType, Field[]> = {
   ],
 };
 
+const VALIDATION_SCHEMAS: Record<RegisterType, ValidationSchema> = {
+  student: {
+    names: { required: true, pattern: 'text', minLength: 2 },
+    lastNames: { required: true, pattern: 'text', minLength: 2 },
+    documentType: { required: true },
+    identification: { required: true, pattern: 'number', minLength: 5 },
+    birthDate: { required: true, custom: validateBirthDate },
+    phone: { required: true, pattern: 'phone' },
+    address: { required: true, minLength: 5 },
+    email: { required: true, pattern: 'email' },
+  },
+  guardian: {
+    names: { required: true, pattern: 'text', minLength: 2 },
+    lastNames: { required: true, pattern: 'text', minLength: 2 },
+    email: { required: true, pattern: 'email' },
+    documentType: { required: true },
+    identification: { required: true, pattern: 'number', minLength: 5 },
+    birthDate: { required: true, custom: validateBirthDate },
+    phone: { required: true, pattern: 'phone' },
+    address: { required: true, minLength: 5 },
+  },
+  driver: {
+    names: { required: true, pattern: 'text', minLength: 2 },
+    lastNames: { required: true, pattern: 'text', minLength: 2 },
+    documentType: { required: true },
+    identification: { required: true, pattern: 'number', minLength: 5 },
+    birthDate: { required: true, custom: validateBirthDate },
+    licenseExpiration: { required: true, custom: validateFutureDate },
+    licenseNumber: { required: true, minLength: 5 },
+    address: { required: true, minLength: 5 },
+    email: { required: true, pattern: 'email' },
+  },
+  family: {
+    name: { required: true, minLength: 2 },
+    guardian: { required: true },
+    student: { required: true },
+    observations: { required: false },
+  },
+  bus: {
+    matricula: { required: true, minLength: 3 },
+    driver: { required: true },
+    model: { required: true },
+    brand: { required: true },
+    capacity: { required: true, pattern: 'number', min: 1, max: 100 },
+    soat: { required: true, custom: validateFutureDate },
+    gps: { required: true },
+  },
+  stop: {
+    name: { required: true, minLength: 2 },
+    student: { required: true },
+    city: { required: true },
+    address: { required: true, minLength: 5 },
+    route: { required: true },
+  },
+  route: {
+    name: { required: true, minLength: 2 },
+    sector: { required: true },
+    startTime: { required: true },
+    endTime: { required: true },
+    destination: { required: true },
+    routeSector: { required: true },
+    bus: { required: true },
+  },
+  admins: {
+    name: { required: true, pattern: 'text', minLength: 2 },
+    lastNames: { required: true, pattern: 'text', minLength: 2 },
+    email: { required: true, pattern: 'email' },
+    identification: { required: true, pattern: 'number', minLength: 5 },
+    birthDate: { required: true, custom: validateBirthDate },
+    phone: { required: true, pattern: 'phone' },
+    address: { required: true, minLength: 5 },
+  },
+  schools: {
+    name: { required: true, minLength: 2 },
+    logo: { required: false },
+    city: { required: true },
+    address: { required: true, minLength: 5 },
+    phone: { required: true, pattern: 'phone' },
+    schooling: { required: true },
+    email: { required: true, pattern: 'email' },
+    website: { required: false },
+  },
+};
+
 @Component({
   selector: 'app-card-register',
   standalone: true,
@@ -122,16 +207,17 @@ const FIELDS: Record<RegisterType, Field[]> = {
 })
 export class CardRegister implements OnInit, OnChanges {
   @Input() type: RegisterType = 'student';
-  /** Opciones dinámicas por campo (perfiles registrados de acudientes/estudiantes). */
   @Input() fieldOptions: Record<string, string[]> = {};
-  /** Emite el formulario al padre; si nadie escucha se hace fallback a console.log. */
   @Output() formSubmit = new EventEmitter<Record<string, any>>();
+
+  private translate = inject(TranslateService);
 
   formData: Record<string, any> = {};
   groupedFields: any[] = [];
   selectedStudents: string[] = [];
   selectedStudent = '';
   validationMessage = '';
+  fieldErrors: Record<string, string> = {};
 
   get titleKey(): string {
     return `register.${this.type}.title`;
@@ -143,7 +229,6 @@ export class CardRegister implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.groupedFields = this.buildGroupedFields();
-
     for (const field of FIELDS[this.type]) {
       if (this.formData[field.name] === undefined) {
         this.formData[field.name] = '';
@@ -151,7 +236,6 @@ export class CardRegister implements OnInit, OnChanges {
     }
   }
 
-  /** Las opciones de los select llegan por HTTP después del primer render. */
   ngOnChanges(): void {
     this.groupedFields = this.buildGroupedFields();
   }
@@ -166,8 +250,8 @@ export class CardRegister implements OnInit, OnChanges {
       this.onStudentSelected();
       return;
     }
-
     this.formData[fieldName] = value;
+    this.validateField(fieldName);
   }
 
   onStudentSelected(): void {
@@ -175,7 +259,6 @@ export class CardRegister implements OnInit, OnChanges {
       this.selectedStudents = [...this.selectedStudents, this.selectedStudent];
       this.formData['student'] = [...this.selectedStudents];
     }
-
     this.selectedStudent = '';
   }
 
@@ -206,14 +289,55 @@ export class CardRegister implements OnInit, OnChanges {
     return Array.isArray(val);
   }
 
-  onSubmit(): void {
-    const hasEmptyField = FIELDS[this.type].some((field) => {
-      const value = this.formData[field.name];
-      return Array.isArray(value) ? value.length === 0 : !String(value ?? '').trim();
-    });
+  validateField(fieldName: string): void {
+    const schema = VALIDATION_SCHEMAS[this.type];
+    const rule = schema[fieldName];
+    if (!rule) return;
 
-    if (hasEmptyField) {
-      this.validationMessage = 'Completa todos los campos antes de registrar.';
+    const value = this.formData[fieldName];
+    const error = validateField(value, rule);
+
+    if (error) {
+      this.fieldErrors[fieldName] = this.translate.instant(`validation.${this.getErrorKey(error)}`, { min: rule.minLength ?? rule.min, max: rule.maxLength ?? rule.max });
+    } else {
+      delete this.fieldErrors[fieldName];
+    }
+  }
+
+  private getErrorKey(error: string): string {
+    if (error.includes('requerido') || error.includes('required')) return 'required';
+    if (error.includes('Correo') || error.includes('email')) return 'email';
+    if (error.includes('Teléfono') || error.includes('phone')) return 'phone';
+    if (error.includes('Mínimo') || error.includes('Minimum')) return 'minLength';
+    if (error.includes('Máximo') || error.includes('Maximum')) return 'maxLength';
+    if (error.includes('número') || error.includes('number')) return 'number';
+    if (error.includes('letras') || error.includes('letters')) return 'text';
+    if (error.includes('futura') || error.includes('future')) return 'birthDate';
+    return 'required';
+  }
+
+  getFieldError(fieldName: string): string {
+    return this.fieldErrors[fieldName] || '';
+  }
+
+  onSubmit(): void {
+    const schema = VALIDATION_SCHEMAS[this.type];
+    this.fieldErrors = {};
+
+    for (const field of FIELDS[this.type]) {
+      const rule = schema[field.name];
+      if (!rule) continue;
+
+      const value = this.formData[field.name];
+      const error = validateField(value, rule);
+
+      if (error) {
+        this.fieldErrors[field.name] = this.translate.instant(`validation.${this.getErrorKey(error)}`, { min: rule.minLength ?? rule.min, max: rule.maxLength ?? rule.max });
+      }
+    }
+
+    if (Object.keys(this.fieldErrors).length > 0) {
+      this.validationMessage = '';
       return;
     }
 
@@ -234,6 +358,7 @@ export class CardRegister implements OnInit, OnChanges {
     this.selectedStudents = [];
     this.selectedStudent = '';
     this.validationMessage = '';
+    this.fieldErrors = {};
     for (const field of FIELDS[this.type]) {
       this.formData[field.name] = '';
     }

@@ -9,12 +9,18 @@ import PrimaryButton from "@components/buttons/PrimaryButton";
 import BottomTabBar from "@components/layout/BottomTabBar";
 
 import styles from "@core/styles/profileScreen.style";
+import { logout } from "@core/services/authService";
 
 
 export default function Logout() {
   const { theme } = useTheme();
   const { t } = useTranslation();
   const navigation = useNavigation();
+
+  const handleLogout = async () => {
+    await logout();
+    navigation.reset({ index: 0, routes: [{ name: "Login" }] });
+  };
   return (
     <View
       style={[
@@ -67,7 +73,7 @@ export default function Logout() {
         {/* Botón cerrar sesión */}
         <PrimaryButton
           text={t("inputs.logout")}
-          onPress={() => navigation.navigate("Login")}
+          onPress={handleLogout}
         />
 
         {/* Botón cancelar */}

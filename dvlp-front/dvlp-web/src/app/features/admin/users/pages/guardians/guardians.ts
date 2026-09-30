@@ -1,24 +1,81 @@
-import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
+import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { CommonModule } from '@angular/common';
+
 import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-manage';
 import { CardRegister } from '@shared/components/cards/card-register/card-register';
-import { NavbarAdmin } from '@shared/components/navbar/navbar-admin/navbar-admin';
 import { CardList } from '@shared/components/cards/card-list/card-list';
+import { NavbarAdmin } from '@shared/components/navbar/navbar-admin/navbar-admin';
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
+import { ParentsService } from '@core/services/parents.service';
+import { PersonListDto, PersonRequestDto, PersonResponseDto } from '@core/models/student.model';
 
+interface GuardianView extends RecordData {
+  id?: string;
+  names: string;
+  lastNames: string;
+  name: string;
+  identification: string;
+  phone: string;
+  documentType?: string;
+  birthDate?: string;
+  address?: string;
+  email?: string;
+}
+
+function fromApi(api: PersonListDto): GuardianView {
+  const names = api.name ?? '';
+  const lastNames = api.lastName ?? '';
+  return {
+    id: api.id,
+    names,
+    lastNames,
+    name: `${names} ${lastNames}`.trim(),
+    identification: api.identificationNumber ?? '',
+    phone: api.phone != null ? String(api.phone) : '',
+  };
+}
+
+const IDENTIFICATION_LABELS = ['TI', 'CC'];
+
+function fromDetail(api: PersonResponseDto): GuardianView {
+  return {
+    ...fromApi(api),
+    documentType: IDENTIFICATION_LABELS[api.identificationType] ?? '',
+    birthDate: api.dateBirth ?? '',
+    address: api.residenceAddress ?? '',
+    email: api.email ?? '',
+  };
+}
+
+function toPayload(form: RecordData): PersonRequestDto {
+  const digits = String(form['phone'] ?? '').replace(/\D/g, '');
+  return {
+    name: String(form['names'] ?? '').trim(),
+    lastName: String(form['lastNames'] ?? '').trim(),
+    identificationType: String(form['documentType'] ?? '').trim(),
+    identificationNumber: String(form['identification'] ?? '').trim(),
+    email: String(form['email'] ?? '').trim(),
+    phone: Number(digits),
+    residenceAddress: String(form['address'] ?? '').trim(),
+    dateBirth: String(form['birthDate'] ?? '').trim(),
+  };
+}
 
 @Component({
   selector: 'app-guardians',
+  standalone: true,
   imports: [
-    CommonModule,
+    RouterModule,
     MatIconModule,
     MatButtonModule,
     MatToolbarModule,
+    CommonModule,
     NavbarManage,
     CardRegister,
     CardList,
@@ -30,13 +87,50 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
   templateUrl: './guardians.html',
   styleUrl: './guardians.scss',
 })
-export class Guardians {
+export class Guardians implements OnInit {
+  private parentsService = inject(ParentsService);
+
+  @ViewChild(CardRegister) register?: CardRegister;
+
+  guardians = signal<GuardianView[]>([]);
+
+  ngOnInit(): void {
+    this.load();
+  }
+
+  private load(): void {
+    this.parentsService.list().subscribe({
+      next: (list) => this.guardians.set(list.map(fromApi)),
+    });
+  }
+
+  onCreated(form: RecordData): void {
+    this.parentsService.create(toPayload(form)).subscribe({
+      next: () => {
+        this.register?.setValidationMessage('');
+        this.register?.resetForm();
+        this.load();
+      },
+      error: () => {
+        this.register?.setValidationMessage(
+          'No se pudo registrar el acudiente. Verifica que el backend esté disponible.'
+        );
+      },
+    });
+  }
+
   showModal = false;
   attendantSelected: RecordData = {};
 
   showDetails(attendant: RecordData): void {
-    this.attendantSelected = attendant;
-    this.showModal = true;
+    const id = attendant['id'];
+    if (!id) return;
+    this.parentsService.get(String(id)).subscribe({
+      next: (detail) => {
+        this.attendantSelected = fromDetail(detail);
+        this.showModal = true;
+      },
+    });
   }
 
   closeModal(): void {
@@ -47,8 +141,14 @@ export class Guardians {
   showUpdateModal = false;
 
   showUpdate(attendant: RecordData): void {
-    this.attendantSelected = attendant;
-    this.showUpdateModal = true;
+    const id = attendant['id'];
+    if (!id) return;
+    this.parentsService.get(String(id)).subscribe({
+      next: (detail) => {
+        this.attendantSelected = fromDetail(detail);
+        this.showUpdateModal = true;
+      },
+    });
   }
 
   closeUpdateModal(): void {
@@ -56,18 +156,25 @@ export class Guardians {
     this.attendantSelected = {};
   }
 
-  /**
-   * Recibe los datos ya actualizados del formulario.
-   * Aquí puedes llamar a tu servicio para persistirlos.
-   */
   onSaved(updatedRecord: RecordData): void {
-    console.log('[Acudientes] Datos actualizados:', updatedRecord);
-    // this.acudientesService.update(updatedRecord).subscribe(() => { ... });
-    this.closeUpdateModal();
+    const id = updatedRecord['id'];
+    if (!id) {
+      this.closeUpdateModal();
+      return;
+    }
+
+    this.parentsService.update(String(id), toPayload(updatedRecord)).subscribe({
+      next: () => {
+        this.closeUpdateModal();
+        this.load();
+      },
+    });
   }
-    showDeleteModal = false;
+
+  showDeleteModal = false;
 
   showDelete(attendant: RecordData): void {
+    if (!attendant['id']) return;
     this.attendantSelected = attendant;
     this.showDeleteModal = true;
   }
@@ -77,13 +184,18 @@ export class Guardians {
     this.attendantSelected = {};
   }
 
-  /**
-   * Confirma la eliminación del registro.
-   * Aquí puedes llamar a tu servicio para eliminar.
-   */
   onConfirmDelete(record: RecordData): void {
-    console.log('[Acudientes] Eliminando:', record);
-    // this.acudientesService.delete(record.id).subscribe(() => { ... });
-    this.closeDeleteModal();
+    const id = record['id'];
+    if (!id) {
+      this.closeDeleteModal();
+      return;
+    }
+
+    this.parentsService.remove(String(id)).subscribe({
+      next: () => {
+        this.closeDeleteModal();
+        this.load();
+      },
+    });
   }
 }

@@ -894,5 +894,18 @@
     "busSpeed": "45 km/h",
     "nextStop": "Next stop",
     "nextStopValue": "Springfield School"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Invalid email address",
+    "phone": "Invalid phone (numbers only, 7-15 digits)",
+    "minLength": "Minimum {{min}} characters",
+    "maxLength": "Maximum {{max}} characters",
+    "number": "Must be a number",
+    "min": "Minimum {{min}}",
+    "max": "Maximum {{max}}",
+    "text": "Letters and spaces only",
+    "birthDate": "Date cannot be in the future or more than 100 years ago",
+    "futureDate": "Date must be in the future"
   }
 }

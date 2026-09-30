@@ -894,5 +894,18 @@
     "busSpeed": "45 km/h",
     "nextStop": "Prochaine étape",
     "nextStopValue": "École Springfield"
+  },
+  "validation": {
+    "required": "Ce champ est requis",
+    "email": "Adresse e-mail invalide",
+    "phone": "Téléphone invalide (chiffres uniquement, 7-15 chiffres)",
+    "minLength": "Minimum {{min}} caractères",
+    "maxLength": "Maximum {{max}} caractères",
+    "number": "Doit être un nombre",
+    "min": "Minimum {{min}}",
+    "max": "Maximum {{max}}",
+    "text": "Lettres et espaces uniquement",
+    "birthDate": "La date ne peut pas être dans le futur ou il y a plus de 100 ans",
+    "futureDate": "La date doit être dans le futur"
   }
 }

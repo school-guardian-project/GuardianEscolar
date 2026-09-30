@@ -131,6 +131,7 @@
     "right": {
       "title": "Se connecter",
       "description": "Entrez vos identifiants pour accéder au tableau de bord",
+      "credentials_error": "E-mail ou mot de passe incorrect.",
       "email": {
         "label": "Email",
         "placeholder": "votre-email@email.com",

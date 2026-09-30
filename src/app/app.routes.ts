@@ -22,6 +22,19 @@ import { routes as changePasswordRoutes } from './features/profile/pages/change-
 import {routes as changeContactRoutes } from './features/profile/pages/change-contact/change-contact.routes'
 import { ChangeContact } from './features/profile/pages/change-contact/change-contact';
 import { Contact } from './features/public/contact/contact';
+import { roleGuard } from '@core/guards/role.guard';
+import { ROLES } from '@core/services/auth.service';
+
+/** ADMIN y SUPER_ADMIN comparten perfil y flujos de cambio de datos (12-ux-ui/navigation-map.md). */
+const adminAccess = {
+  canMatch: [roleGuard],
+  data: { roles: [ROLES.ADMIN, ROLES.SUPER_ADMIN] },
+};
+
+const superAdminAccess = {
+  canMatch: [roleGuard],
+  data: { roles: [ROLES.SUPER_ADMIN] },
+};
 
 export const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -36,28 +49,28 @@ export const routes: Routes = [
     ]
   },
 
-  { path: 'dashboard-admin', component: DashboardAdmin },
-  { path: 'dashboard-superadmin', component: DashboardSuperadmin },
+  { path: 'dashboard-admin', component: DashboardAdmin, ...adminAccess },
+  { path: 'dashboard-superadmin', component: DashboardSuperadmin, ...superAdminAccess },
 
   /* ADMIN */
-  { path: 'admin/users', component: Students },
-  { path: 'admin/guardians', component: Guardians },
-  { path: 'admin/drivers', component: Drivers },
-  { path: 'admin/families', component: Families },
-  { path: 'admin/buses', component: Buses },
-  { path: 'admin/stops', component: Stops },
-  { path: 'admin/routes', component: RoutesPage },
+  { path: 'admin/users', component: Students, ...adminAccess },
+  { path: 'admin/guardians', component: Guardians, ...adminAccess },
+  { path: 'admin/drivers', component: Drivers, ...adminAccess },
+  { path: 'admin/families', component: Families, ...adminAccess },
+  { path: 'admin/buses', component: Buses, ...adminAccess },
+  { path: 'admin/stops', component: Stops, ...adminAccess },
+  { path: 'admin/routes', component: RoutesPage, ...adminAccess },
 
   /* INFORMATION */
-  { path: 'admin/profile', component: InformationAdmin },
+  { path: 'admin/profile', component: InformationAdmin, ...adminAccess },
 
   /* PROFILE CHANGES */
-  { path: 'admin/change-email', component: ChangeEmail, children: changeEmailRoutes },
-  { path: 'admin/change-password', component: ChangePassword, children: changePasswordRoutes },
-  { path: 'admin/change-contact', component: ChangeContact, children: changeContactRoutes },
+  { path: 'admin/change-email', component: ChangeEmail, children: changeEmailRoutes, ...adminAccess },
+  { path: 'admin/change-password', component: ChangePassword, children: changePasswordRoutes, ...adminAccess },
+  { path: 'admin/change-contact', component: ChangeContact, children: changeContactRoutes, ...adminAccess },
   /* SUPERADMIN */
-  { path: 'superadmin/admins', component: Admins },
-  { path: 'superadmin/schools', component: Schools },
+  { path: 'superadmin/admins', component: Admins, ...superAdminAccess },
+  { path: 'superadmin/schools', component: Schools, ...superAdminAccess },
 
   { path: 'contact', component: Contact},
 

@@ -1,22 +1,24 @@
 <app-navbar-manage backRoute="/dashboard-admin"></app-navbar-manage>
-<!-- CONTENIDO PRINCIPAL -->
+
 <div class="page-wrapper">
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
-    <app-card-register type="guardian"></app-card-register>
-    <app-card-list type="guardian" 
-    (viewItem)="showDetails($event)" 
-    (editItem)="showUpdate($event)"
-    (deleteItem)="showDelete($event)">
-  </app-card-list>
+    <app-card-register type="guardian" (formSubmit)="onCreated($event)"></app-card-register>
+
+    <app-card-list
+      type="guardian"
+      [data]="guardians()"
+      (viewItem)="showDetails($event)"
+      (editItem)="showUpdate($event)"
+      (deleteItem)="showDelete($event)"
+    >
+    </app-card-list>
   </div>
 </div>
 
-<!-- Modal de detalles a nivel de página -->
 <app-record-information *ngIf="showModal" type="guardian" [record]="attendantSelected" (closed)="closeModal()">
 </app-record-information>
 
-<!-- Modal: actualizar registro -->
 <app-update-record
   *ngIf="showUpdateModal"
   type="guardian"
@@ -25,12 +27,10 @@
   (closed)="closeUpdateModal()">
 </app-update-record>
 
-<!-- Modal: eliminar registro -->
 <app-delete-record
   *ngIf="showDeleteModal"
   type="guardian"
   [record]="attendantSelected"
   (confirm)="onConfirmDelete($event)"
-  (cancel)="closeDeleteModal()">  
-  
+  (cancel)="closeDeleteModal()">
 </app-delete-record>

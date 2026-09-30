@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View } from "react-native";
 import MapView from "react-native-maps";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -12,6 +12,9 @@ import useSession from "@core/hooks/useSession";
 import QRButtom from "@components/buttons/QRButtom";
 import QRDisplayModal from "@components/modals/QRDisplayModal";
 import QRScannerModal from "@components/modals/QRScannerModal";
+import { getSession } from "@core/services/authService";
+import { getRouteApi } from "@core/services/routeApi";
+import { getFleetApi } from "@core/services/fleetApi";
 
 import styles from "./MainPage.style";
 
@@ -24,18 +27,68 @@ export default function MainPage() {
   const config = roleConfig[role];
 
   const [modalType, setModalType] = useState(null);
+  const [routeInfo, setRouteInfo] = useState(null);
+  const [loading, setLoading] = useState(true);
+
   const handleOpenModal = (type) => setModalType(type);
   const handleCloseModal = () => setModalType(null);
+
+  useEffect(() => {
+    async function loadRouteInfo() {
+      try {
+        const session = await getSession();
+        if (!session) {
+          setLoading(false);
+          return;
+        }
+
+        const routes = await getRouteApi("/routes");
+        const route = routes[0];
+
+        if (!route) {
+          setLoading(false);
+          return;
+        }
+
+        let driverName = "";
+        let plate = "";
+
+        if (role === "driver") {
+          const buses = await getFleetApi("/buses");
+          const bus = buses.find((b) => b.campuseId === route.campuseId);
+          if (bus) {
+            plate = bus.plate;
+            driverName = "Conductor";
+          }
+        }
+
+        setRouteInfo({
+          routeName: route.name,
+          driverName,
+          plate,
+          schedule: route.targetSector,
+          stopsCount: "—",
+          finalDestination: route.targetSector,
+        });
+      } catch (error) {
+        console.error("Error loading route info:", error);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadRouteInfo();
+  }, [role]);
 
   return (
     <View style={styles.container}>
       <MapView
         style={styles.map}
         initialRegion={{
-            latitude: 2.9273,
-            longitude: -75.2819,
-            latitudeDelta: 0.08,
-            longitudeDelta: 0.08,
+          latitude: 2.9273,
+          longitude: -75.2819,
+          latitudeDelta: 0.08,
+          longitudeDelta: 0.08,
         }}
       />
 
@@ -67,8 +120,15 @@ export default function MainPage() {
       >
         <View style={styles.spacer} />
 
-        <View style={[styles.bottomSection, { marginHorizontal: -horizontalPadding}]}>
-          <RouteInfoCard />
+        <View style={[styles.bottomSection, { marginHorizontal: -horizontalPadding }]}>
+          <RouteInfoCard
+            routeName={routeInfo?.routeName ?? ""}
+            driverName={routeInfo?.driverName ?? ""}
+            plate={routeInfo?.plate ?? ""}
+            schedule={routeInfo?.schedule ?? ""}
+            stopsCount={routeInfo?.stopsCount ?? ""}
+            finalDestination={routeInfo?.finalDestination ?? ""}
+          />
           <BottomTabBar
             onRoutePress={() => navigation.navigate("MainPage")}
             onLocationPress={() => navigation.navigate("LiveTracking")}

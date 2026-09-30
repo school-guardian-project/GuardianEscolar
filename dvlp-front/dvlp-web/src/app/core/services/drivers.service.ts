@@ -7,8 +7,8 @@ import { PersonListDto, PersonRequestDto, PersonResponseDto } from '../models/st
 @Injectable({
   providedIn: 'root',
 })
-export class ParentsService {
-  private readonly base = `${environment.apiUrl}/user/api/parents`;
+export class DriversService {
+  private readonly base = `${environment.apiUrl}/user/api/drivers`;
 
   constructor(private http: HttpClient) {}
 

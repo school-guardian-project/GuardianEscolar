@@ -15,6 +15,7 @@ import QRScannerModal from "@components/modals/QRScannerModal";
 import { getSession } from "@core/services/authService";
 import { getRouteApi } from "@core/services/routeApi";
 import { getFleetApi } from "@core/services/fleetApi";
+import { postNotificationApi } from "@core/services/notificationApi";
 
 import styles from "./MainPage.style";
 
@@ -32,6 +33,26 @@ export default function MainPage() {
 
   const handleOpenModal = (type) => setModalType(type);
   const handleCloseModal = () => setModalType(null);
+
+  const handleQrScan = async (data) => {
+    try {
+      const qrData = JSON.parse(data);
+      const session = await getSession();
+      const routes = await getRouteApi("/routes");
+      const route = routes[0];
+
+      if (!route) return;
+
+      await postNotificationApi("/v1/notifications/scan", {
+        routeExecutionId: route.id,
+        studentProfileId: qrData.id,
+        routeStopId: qrData.routeStopId || route.id,
+        boardingType: "ON_BOARD",
+      });
+    } catch (error) {
+      console.error("Error processing QR scan:", error);
+    }
+  };
 
   useEffect(() => {
     async function loadRouteInfo() {
@@ -150,7 +171,7 @@ export default function MainPage() {
       <QRScannerModal
         visible={modalType === "qrScanner"}
         onClose={handleCloseModal}
-        onScan={(data) => console.log("QR escaneado:", data)}
+        onScan={handleQrScan}
       />
     </View>
   );

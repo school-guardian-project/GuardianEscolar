@@ -131,6 +131,7 @@
     "right": {
       "title": "Entrar",
       "description": "Digite suas credenciais para acessar o painel",
+      "credentials_error": "E-mail ou senha incorretos.",
       "email": {
         "label": "E-mail",
         "placeholder": "seu-email@email.com",

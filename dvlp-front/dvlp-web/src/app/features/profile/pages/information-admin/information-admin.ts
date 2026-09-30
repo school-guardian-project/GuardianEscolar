@@ -9,6 +9,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-manage';
+import { AuthService } from '@core/services/auth.service';
 
 @Component({
   selector: 'app-information-admin',
@@ -34,10 +35,11 @@ export class InformationAdmin {
 
   imageUrl: string | ArrayBuffer | null = null;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private authService: AuthService) { }
 
   logout() {
-    this.router.navigate(['/dashboard-admin']);
+    const goLogin = () => this.router.navigateByUrl('/auth/login');
+    this.authService.logout().subscribe({ next: goLogin, error: goLogin });
   }
 
   onFileSelected(event: any) {

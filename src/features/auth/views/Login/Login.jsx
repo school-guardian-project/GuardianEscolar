@@ -11,6 +11,8 @@ import { useTheme } from "@core/services/ThemeService";
 import InputField from "@components/inputs/InputField";
 import PrimaryButton from "@components/buttons/PrimaryButton";
 import { validateEmail, validateRequired } from "@core/validation/validators";
+import { login } from "@core/services/authService";
+import useSession from "@core/hooks/useSession";
 
 export default function Login({ navigation }) {
   const { t } = useTranslation();
@@ -20,6 +22,9 @@ export default function Login({ navigation }) {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [formError, setFormError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const { applyAuthRole } = useSession();
 
   const handleEmailChange = (value) => {
     setEmail(value);
@@ -37,6 +42,25 @@ export default function Login({ navigation }) {
     }
   };
 
+  const signIn = async () => {
+    if (submitting) {
+      return;
+    }
+
+    setSubmitting(true);
+    setFormError("");
+
+    try {
+      await login(email, password);
+      applyAuthRole();
+      navigation.navigate("MainPage");
+    } catch {
+      setFormError(t("login.error"));
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   const handleSubmit = () => {
     const nextEmailError = validateEmail(email);
     const nextPasswordError = validateRequired(
@@ -46,12 +70,13 @@ export default function Login({ navigation }) {
 
     setEmailError(nextEmailError);
     setPasswordError(nextPasswordError);
+    setFormError("");
 
     if (nextEmailError || nextPasswordError) {
       return;
     }
 
-    navigation.navigate("MainPage");
+    signIn();
   };
 
   return (
@@ -105,11 +130,14 @@ export default function Login({ navigation }) {
           {t("login.ForgotPassword")}
         </Text>
 
+        {formError ? <Text style={styles.error}>{formError}</Text> : null}
+
         {/* Botón */}
         <View style={styles.buttonWrap}>
           <PrimaryButton
             text={t("button.enter")}
             onPress={handleSubmit}
+            disabled={submitting}
           />
         </View>
       </View>

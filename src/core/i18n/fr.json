@@ -57,7 +57,8 @@
 
   "login": {
     "title": "Connexion",
-    "ForgotPassword": "Mot de passe oublié ?"
+    "ForgotPassword": "Mot de passe oublié ?",
+    "error": "E-mail ou mot de passe incorrect."
   },
 
   "forgotPassword": {

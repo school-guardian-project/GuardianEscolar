@@ -7,6 +7,7 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { ThemeProvider } from "@core/services/ThemeService";
 import { loadLanguage } from "@core/i18n/i18n";
+import { clearSession, hasSession, refresh } from "@core/services/authService";
 
 // Iniciar Sesión
 import Login from "@features/auth/views/Login/Login";
@@ -96,19 +97,31 @@ function HomeTabs() {
 }
 
 export default function App() {
-  const [languageLoaded, setLanguageLoaded] = useState(false);
+  const [ready, setReady] = useState(false);
+  const [initialRoute, setInitialRoute] = useState("Login");
 
   useEffect(() => {
-    const initializeLanguage = async () => {
+    const initialize = async () => {
       await loadLanguage();
-      setLanguageLoaded(true);
+
+      // Recupera la sesión desde SecureStore y rota el access token antes de navegar.
+      try {
+        if (await hasSession()) {
+          await refresh();
+          setInitialRoute("MainPage");
+        }
+      } catch {
+        await clearSession();
+      }
+
+      setReady(true);
     };
 
-    initializeLanguage();
+    initialize();
   }, []);
 
-  // Esperar a que se cargue el idioma guardado
-  if (!languageLoaded) {
+  // Esperar a que se cargue el idioma y la sesión guardada
+  if (!ready) {
     return (
       <View
         style={{
@@ -127,7 +140,7 @@ export default function App() {
       <ThemeProvider>
         <NavigationContainer>
           <Stack.Navigator
-            initialRouteName="Login"
+            initialRouteName={initialRoute}
             screenOptions={{
               headerShown: false,
             }}

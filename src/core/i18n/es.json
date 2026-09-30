@@ -57,7 +57,8 @@
 
   "login": {
     "title": "Iniciar sesión",
-    "ForgotPassword": "¿Olvidaste tu contraseña?"
+    "ForgotPassword": "¿Olvidaste tu contraseña?",
+    "error": "Correo o contraseña incorrectos."
   },
 
   "forgotPassword": {

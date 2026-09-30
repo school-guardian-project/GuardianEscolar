@@ -6,7 +6,6 @@ import RouteInfoCard from "@components/cards/RouteInfoCard";
 import BottomTabBar from "@components/layout/BottomTabBar";
 import useWindow from "@core/hooks/useWindow";
 import TopBar from "@components/TopBar";
-import RoleSwitcherOverlay from "@core/dev/RoleSwitcherOverlay";
 import { roleConfig } from "@core/config/roles/roleConfig";
 import { useNavigation } from "@react-navigation/native";
 import useSession from "@core/hooks/useSession";
@@ -93,8 +92,6 @@ export default function MainPage() {
         onClose={handleCloseModal}
         onScan={(data) => console.log("QR escaneado:", data)}
       />
-
-      <RoleSwitcherOverlay />
     </View>
   );
 }

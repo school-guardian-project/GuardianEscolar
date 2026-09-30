@@ -57,7 +57,8 @@
 
   "login": {
     "title": "Entrar",
-    "ForgotPassword": "Esqueceu sua senha?"
+    "ForgotPassword": "Esqueceu sua senha?",
+    "error": "E-mail ou senha incorretos."
   },
 
   "forgotPassword": {

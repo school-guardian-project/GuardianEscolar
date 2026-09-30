@@ -1,14 +1,18 @@
 // src/components/buttons/PrimaryButton.js
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 import { useTheme } from '@core/services/ThemeService';
-export default function PrimaryButton({ text, onPress }) {
+export default function PrimaryButton({ text, onPress, disabled = false }) {
   const { theme } = useTheme();
   
 
   return (
     <TouchableOpacity
-      style={[styles.button, { backgroundColor: theme.buttonApply }]}
-      onPress={onPress}>
+      style={[
+        styles.button,
+        { backgroundColor: theme.buttonApply, opacity: disabled ? 0.6 : 1 },
+      ]}
+      onPress={onPress}
+      disabled={disabled}>
       <Text style={styles.text}>{text}</Text>
     </TouchableOpacity>
   );

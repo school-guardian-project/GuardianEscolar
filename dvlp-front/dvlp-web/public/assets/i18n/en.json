@@ -131,6 +131,7 @@
     "right": {
       "title": "Sign in",
       "description": "Enter your credentials to access the dashboard",
+      "credentials_error": "Incorrect email or password.",
       "email": {
         "label": "Email",
         "placeholder": "your-email@email.com",

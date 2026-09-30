@@ -157,6 +157,7 @@
     "right": {
       "title": "Iniciar sesión",
       "description": "Ingresa tus credenciales para acceder al panel",
+      "credentials_error": "Correo o contraseña incorrectos.",
       "email": {
         "label": "Correo electrónico",
         "placeholder": "tu-usuario@email.com",

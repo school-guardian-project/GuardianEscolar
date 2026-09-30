@@ -57,7 +57,8 @@
 
   "login": {
     "title": "Log in",
-    "ForgotPassword": "Forgot your password?"
+    "ForgotPassword": "Forgot your password?",
+    "error": "Incorrect email or password."
   },
 
   "forgotPassword": {

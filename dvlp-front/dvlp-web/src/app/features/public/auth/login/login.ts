@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@core/services/auth.service';
 
@@ -18,7 +18,12 @@ import { AuthService } from '@core/services/auth.service';
 export class Login {
   form: FormGroup;
 
-  constructor(private router: Router, private fb: FormBuilder, private authService: AuthService) {
+  constructor(
+    private router: Router,
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private translate: TranslateService,
+  ) {
     const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
     this.form = this.fb.group({
@@ -35,16 +40,9 @@ export class Login {
 
     const { email, password } = this.form.value;
     this.authService.login(email, password).subscribe({
-      next: (res) => {
-        const roles = res.roles;
-        if (roles.includes('admin')){
-          this.router.navigate(['/dashboard-admin'])
-        } else {
-          this.router.navigate(['/home'])
-        }
-      },
-      error: () => alert('Credencilaes invalidas')
-    })
+      next: () => this.router.navigateByUrl(this.authService.homeRoute()),
+      error: () => alert(this.translate.instant('login.right.credentials_error')),
+    });
   }
 
   forgot() {

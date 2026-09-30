@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -11,7 +11,7 @@ import { NavbarAdmin } from '@shared/components/navbar/navbar-admin/navbar-admin
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
-
+import { RoutesService } from '../../services/routes.service';
 
 @Component({
   selector: 'app-routes',
@@ -33,6 +33,8 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
   styleUrl: './routes.scss',
 })
 export class RoutesPage {
+  private routesService = inject(RoutesService);
+
   showModal = false;
   showUpdateModal = false;
   routeSelected: RecordData = {};
@@ -42,10 +44,11 @@ export class RoutesPage {
     this.showModal = true;
   }
 
-  showUpdateDetails(bus: RecordData): void {
-    this.routeSelected = bus;
+  showUpdateDetails(route: RecordData): void {
+    this.routeSelected = route;
     this.showUpdateModal = true;
   }
+
   closeModal(): void {
     this.showModal = false;
     this.routeSelected = {};
@@ -55,12 +58,13 @@ export class RoutesPage {
     this.showUpdateModal = false;
     this.routeSelected = {};
   }
+
   onSaved(updatedRecord: RecordData): void {
-    console.log('[Rutas] Datos actualizados:', updatedRecord);
-    // this.rutasService.update(updatedRecord).subscribe(() => { ... });
-    this.closeUpdateModal();
+    this.routesService.update(updatedRecord.id, updatedRecord).subscribe(() => {
+      this.closeUpdateModal();
+    });
   }
-    // ── Eliminar registro ───────────────────────────────────────────────────
+
   showDeleteModal = false;
 
   showDelete(route: RecordData): void {
@@ -73,13 +77,9 @@ export class RoutesPage {
     this.routeSelected = {};
   }
 
-  /**
-   * Confirma la eliminación del registro.
-   * Aquí puedes llamar a tu servicio para eliminar.
-   */
   onConfirmDelete(record: RecordData): void {
-    console.log('[Rutas] Eliminando:', record);
-    // this.rutasService.delete(record.id).subscribe(() => { ... });
-    this.closeDeleteModal();
+    this.routesService.remove(record.id).subscribe(() => {
+      this.closeDeleteModal();
+    });
   }
 }

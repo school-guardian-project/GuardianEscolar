@@ -1,0 +1,26 @@
+services:
+  expo:
+    image: node:20
+    working_dir: /app
+    volumes:
+      - .:/app
+      - expo_node_modules:/app/node_modules
+    ports:
+      - "9081:9081"
+      - "19000-19002:19000-19002"
+    env_file:
+      - .env
+    environment:
+      REACT_NATIVE_PACKAGER_HOSTNAME: ${EXPO_LAN_IP:-}
+      EXPO_UNSTABLE_HEADLESS: "1"
+    tty: true
+    networks:
+      - sg-services-network
+    command: sh -c "[ -d node_modules/expo ] || npm install; exec npx expo start --lan --port 9081"
+
+volumes:
+  expo_node_modules:
+
+networks:
+  sg-services-network:
+    external: true

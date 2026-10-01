@@ -2,12 +2,12 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { ChangeInformation } from "../../../../../../shared/components/change/change-information/change-information";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { NgFor, NgIf } from '@angular/common';
+import { NgFor } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-code-second',
-  imports: [ChangeInformation, ReactiveFormsModule, NgFor, NgIf, TranslateModule],
+  imports: [ChangeInformation, ReactiveFormsModule, NgFor, TranslateModule],
   templateUrl: './code-second.html',
   styleUrl: './code-second.scss',
 })

@@ -31,12 +31,7 @@ Este proyecto utiliza **Jenkins** como herramienta de integración continua (CI/
 school-guardian-project/
 ├── Dockerfile.jenkins           # Imagen personalizada de Jenkins
 ├── Jenkinsfile                  # Definición del pipeline CI/CD
-├── docker-compose.yml           # Configuración producción
-├── docker-compose.dev.yml       # Configuración desarrollo
-├── dvlp-back/
-│   └── src/backend/
-│       ├── Dockerfile           # Imagen producción backend
-│       ├── dev.Dockerfile       # Imagen desarrollo backend
+├── docker-compose.yml           # Orquestación del frontend (dev)
 ├── dvlp-front/
     ├── dvlp-web/
     │   ├── Dockerfile           # Imagen producción frontend
@@ -80,14 +75,7 @@ school-guardian-project/
 - **Contenedor**: `jenkins-nginx`
 - **Función**: Enrutador de requests hacia Jenkins y otros servicios
 
-### 4. Backend (.NET)
-- **Puerto**: 8080
-- **Contenedor desarrollo**: `backend-container-dev`
-- **Contenedor producción**: `guardian-backend`
-- **Framework**: .NET 10
-- **Watch mode**: Recarga automática en desarrollo
-
-### 5. Frontend (Angular)
+### 4. Frontend (Angular)
 - **Puerto desarrollo**: 4200
 - **Puerto producción**: 80 (Nginx)
 - **Contenedor desarrollo**: `frontend-container-dev`
@@ -98,55 +86,18 @@ school-guardian-project/
 
 ## Configuración de Contenedores
 
-### Docker Compose Development (`docker-compose.dev.yml`)
+### Docker Compose (`docker-compose.yml`)
 
-La configuración de desarrollo incluye:
+Un único archivo de compose para desarrollo del frontend:
 
 ```yaml
-# Backend
-backend:
-  - Monta volumen local para hot reload
-  - Ejecuta con 'dotnet watch run'
-  - Variables de entorno para CORS
-  - Puerto 8080 accesible
-
-# Frontend
-frontend-web:
-  - Monta volumen local para hot reload
-  - Ejecuta 'ng serve'
-  - Puerto 4200 accesible
-  - Cachea node_modules
-
-# Jenkins
-jenkins:
-  - Construye desde Dockerfile.jenkins
-  - Expone puertos 9090 y 50000
-  - Volumen persistente jenkins_home
-  - Conexión a docker.sock para Docker in Docker
-
-# SonarQube
-sonarqube:
-  - Imagen oficial sonarqube:lts
-  - Volúmenes para data, logs y extensiones
-  - Puerto 9000 para acceso web
-
-# Nginx
-nginx:
-  - Proxies requests a Jenkins
-  - Puertos 80 y 443
-
-# Redes
-networks:
-  - jenkins_net: Comunicación Jenkins/Nginx/SonarQube
-  - sonar-net: Red de análisis de código
+services:
+  frontend-web:            # Contenedor frontend-container-dev
+    - Build desde dvlp-front/dvlp-web/dev.Dockerfile
+    - Monta ./dvlp-front/dvlp-web/src para hot reload
+    - Puerto 4200 accesible
+    - Red externa sg-services-network (compartida con el stack de servicios)
 ```
-
-### Docker Compose Production (`docker-compose.yml`)
-
-Configuración simplificada para producción:
-- Solo backend y frontend compilados
-- Contenedores más pequeños
-- Sin volúmenes de desarrollo
 
 ---
 
@@ -161,7 +112,7 @@ Configuración simplificada para producción:
 
 ```bash
 # Desde la raíz del proyecto
-docker-compose -f docker-compose.dev.yml up -d jenkins sonarqube nginx
+docker compose up -d jenkins sonarqube nginx
 
 # Verificar que está corriendo
 docker ps | grep jenkins
@@ -233,8 +184,6 @@ En la vista del Multibranch Pipeline verás:
 
 Por cada rama, el pipeline ejecutará:
 - ✅ Detección de cambios (qué archivos cambiaron)
-- ✅ Compilación backend (.NET)
-- ✅ Análisis SonarQube backend
 - ✅ Build frontend (Angular)
 - ✅ Análisis SonarQube frontend
 - ✅ Creación imágenes Docker (si es rama `develop`)
@@ -327,12 +276,9 @@ En el dashboard de cada proyecto verás:
       │                        │                        │
       ▼                        ▼                        ▼
 1. Detect Changes        1. Detect Changes       1. Detect Changes
-2. Backend Build         2. Backend Build        2. Backend Build
-3. Sonar Backend         3. Sonar Backend        3. Sonar Backend
-4. Frontend Build        4. Frontend Build       4. Frontend Build
-5. Sonar Frontend        5. Sonar Frontend       5. Sonar Frontend
-                         6. Docker Build Back    
-                         7. Docker Build Front   
+2. Frontend Build        2. Frontend Build       2. Frontend Build
+3. Sonar Frontend        3. Sonar Frontend       3. Sonar Frontend
+                         4. Docker Build Front   
                          (solo en develop)       
 ```
 
@@ -340,39 +286,10 @@ En el dashboard de cada proyecto verás:
 
 #### 1. **Detect Changes**
 - Compara HEAD con HEAD~1
-- Detecta si cambiaron archivos en `dvlp-back/` o `dvlp-front/`
-- Define variables de entorno `BUILD_BACK` y `BUILD_FRONT`
+- Detecta si cambiaron archivos en `dvlp-front/`
+- Define variable de entorno `BUILD_FRONT`
 
-#### 2. **Backend**
-```bash
-# Condición: env.BUILD_BACK == 'true'
-# Agente: Docker con imagen mcr.microsoft.com/dotnet/sdk:10.0
-
-dotnet restore     # Descargar dependencias
-dotnet build -c Release  # Compilar en Release
-```
-
-#### 3. **Sonar Backend**
-```bash
-# Condición: env.BUILD_BACK == 'true'
-
-# Instalar herramienta de análisis
-dotnet tool install --global dotnet-sonarscanner
-
-# Iniciar análisis
-dotnet sonarscanner begin \
-  /k:"guardian-backend" \
-  /d:sonar.host.url=http://sonarqube:9000 \
-  /d:sonar.login=$SONAR_TOKEN
-
-# Compilar
-dotnet build -c Release
-
-# Finalizar análisis (enviar resultados)
-dotnet sonarscanner end /d:sonar.login=$SONAR_TOKEN
-```
-
-#### 4. **Frontend**
+#### 2. **Frontend**
 ```bash
 # Condición: env.BUILD_FRONT == 'true'
 # Agente: Docker con imagen node:20
@@ -381,7 +298,7 @@ npm ci              # Instalar dependencias (CI mode)
 npm run build       # Compilar Angular (AOT)
 ```
 
-#### 5. **Sonar Frontend**
+#### 3. **Sonar Frontend**
 ```bash
 # Condición: env.BUILD_FRONT == 'true'
 
@@ -396,18 +313,7 @@ sonar-scanner \
   -Dsonar.login=$SONAR_TOKEN
 ```
 
-#### 6. **Docker Build Backend**
-```bash
-# Condiciones: rama 'develop' AND BUILD_BACK == 'true'
-# En Multibranch: branch 'develop' se detecta automáticamente
-
-docker build -f Dockerfile \
-  -t guardian-backend:${BUILD_NUMBER} \
-  -t guardian-backend:latest \
-  .
-```
-
-#### 7. **Docker Build Frontend**
+#### 4. **Docker Build Frontend**
 ```bash
 # Condiciones: rama 'develop' AND BUILD_FRONT == 'true'
 # En Multibranch: branch 'develop' se detecta automáticamente
@@ -440,7 +346,7 @@ En un **Multibranch Pipeline**, Jenkins:
 when {
   allOf {
     branch 'develop'        // Solo en rama develop
-    expression { env.BUILD_BACK == 'true' }
+    expression { env.BUILD_FRONT == 'true' }
   }
 }
 ```
@@ -451,7 +357,6 @@ Esto garantiza que Docker builds solo ocurran en la rama `develop`.
 
 | Variable | Valor | Descripción |
 |----------|-------|-------------|
-| `BUILD_BACK` | `true`/`false` | Se compiló backend |
 | `BUILD_FRONT` | `true`/`false` | Se compiló frontend |
 | `SONAR_TOKEN` | Credencial | Token de SonarQube |
 | `BUILD_NUMBER` | Auto | Número secuencial del build |
@@ -459,77 +364,6 @@ Esto garantiza que Docker builds solo ocurran en la rama `develop`.
 ---
 
 ## Dockerfiles
-
-### Backend Dockerfile (Producción)
-
-**Ruta**: `dvlp-back/src/backend/Dockerfile`
-
-```dockerfile
-# Etapa 1: Base runtime
-FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
-USER $APP_UID
-WORKDIR /app
-EXPOSE 8080
-
-# Etapa 2: Build
-FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
-ARG BUILD_CONFIGURATION=Release
-WORKDIR /src
-COPY ["backend.csproj", "."]
-RUN dotnet restore "./backend.csproj" --no-cache
-COPY . .
-RUN dotnet publish "./backend.csproj" \
-  -c $BUILD_CONFIGURATION \
-  -o /app/publish \
-  /p:UseAppHost=false
-
-# Etapa 3: Final (muy pequeña)
-FROM base AS final
-WORKDIR /app
-COPY --from=build /app/publish .
-
-ENV ASPNETCORE_ENVIRONMENT=Production
-ENV ASPNETCORE_URLS=http://+:8080
-
-ENTRYPOINT ["dotnet", "backend.dll"]
-```
-
-**Características**:
-- Multi-stage para imagen pequeña
-- Port 8080 expuesto
-- Configuración optimizada para producción
-
-### Backend Dockerfile (Desarrollo)
-
-**Ruta**: `dvlp-back/src/backend/dev.Dockerfile`
-
-```dockerfile
-FROM mcr.microsoft.com/dotnet/sdk:10.0
-WORKDIR /src
-
-# Copiar csproj (cachea dependencias)
-COPY *.csproj ./
-RUN dotnet restore
-
-# Copiar todo y compilar
-COPY . ./
-RUN dotnet publish -c Release -o /app/publish
-
-# Runtime
-FROM mcr.microsoft.com/dotnet/aspnet:10.0
-WORKDIR /app
-COPY --from=build /app/publish .
-
-EXPOSE 80
-ENTRYPOINT ["dotnet", "backend.dll"]
-```
-
-**Para desarrollo real con hot-reload**, se usa volumen montado:
-```yaml
-volumes:
-  - ./dvlp-back/src/backend:/app
-command: dotnet watch run
-```
 
 ### Frontend Dockerfile (Producción)
 
@@ -619,16 +453,13 @@ USER jenkins
 
 ```bash
 # Desarrollo (con hot reload)
-docker-compose -f docker-compose.dev.yml up -d
+docker compose up -d
 
 # Solo Jenkins y SonarQube
-docker-compose -f docker-compose.dev.yml up -d jenkins sonarqube nginx
-
-# Producción
-docker-compose -f docker-compose.yml up -d
+docker compose up -d jenkins sonarqube nginx
 
 # Reconstruir contenedores
-docker-compose -f docker-compose.dev.yml up -d --build
+docker compose up -d --build
 ```
 
 ### Ver Logs
@@ -639,9 +470,6 @@ docker logs -f jenkins_container
 
 # SonarQube
 docker logs -f sonarqube
-
-# Backend
-docker logs -f backend-container-dev
 
 # Frontend
 docker logs -f frontend-container-dev
@@ -658,9 +486,6 @@ docker exec -it jenkins_container bash
 
 # Bash en SonarQube
 docker exec -it sonarqube bash
-
-# Ver versión de .NET en backend
-docker exec backend-container-dev dotnet --version
 
 # Ver procesos en contenedor
 docker exec jenkins_container ps aux
@@ -698,12 +523,6 @@ git diff --name-only --cached
 ### Análisis de Calidad
 
 ```bash
-# Forzar análisis manual en backend
-docker exec backend-container-dev dotnet sonarscanner begin \
-  /k:"guardian-backend" \
-  /d:sonar.host.url=http://sonarqube:9000 \
-  /d:sonar.login=<token>
-
 # Forzar análisis manual en frontend
 docker exec frontend-container-dev sonar-scanner \
   -Dsonar.projectKey=guardian-frontend \
@@ -716,19 +535,19 @@ docker exec frontend-container-dev sonar-scanner \
 
 ```bash
 # Detener todos los servicios
-docker-compose -f docker-compose.dev.yml down
+docker compose down
 
 # Detener y remover volúmenes
-docker-compose -f docker-compose.dev.yml down -v
+docker compose down -v
 
 # Ver estado de servicios
-docker-compose -f docker-compose.dev.yml ps
+docker compose ps
 
 # Validar configuración
-docker-compose -f docker-compose.dev.yml config
+docker compose config
 
 # Reconstruir solo Jenkins
-docker-compose -f docker-compose.dev.yml up -d --build jenkins
+docker compose up -d --build jenkins
 ```
 
 ### Troubleshooting
@@ -773,11 +592,11 @@ docker run --volumes-from sonarqube \
 ```bash
 # Actualizar Jenkins
 docker pull jenkins/jenkins:2.555.1-lts-jdk25
-docker-compose -f docker-compose.dev.yml up -d --build jenkins
+docker compose up -d --build jenkins
 
 # Actualizar SonarQube
 docker pull sonarqube:lts
-docker-compose -f docker-compose.dev.yml up -d --build sonarqube
+docker compose up -d --build sonarqube
 ```
 
 ### Limpiar Espacios
@@ -801,7 +620,6 @@ docker system prune -a
 - [Jenkins Pipeline Documentation](https://www.jenkins.io/doc/book/pipeline/)
 - [SonarQube Documentation](https://docs.sonarqube.org/)
 - [Docker Compose Reference](https://docs.docker.com/compose/compose-file/)
-- [.NET Docker Images](https://hub.docker.com/_/microsoft-dotnet)
 - [Node.js Docker Images](https://hub.docker.com/_/node)
 - [Nginx Docker Image](https://hub.docker.com/_/nginx)
 

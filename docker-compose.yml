@@ -1,29 +1,16 @@
 services:
-  # api-backend:
-  #   container_name: backend_container
-  #   image: schoolguardian123/backend-app:1.0.0
-  #   ports:
-  #     - 8080:8080
-
-  backend:
+  frontend-web:
+    container_name: frontend-container-dev
     build:
-      context: ./dvlp-back/src/backend
-      dockerfile: Dockerfile
-    container_name: guardian-backend
-    networks:
-      - guardian-net
-
-  frontend:
-    build:
-      context: ./dvlp-front/dvlp-web
-      dockerfile: Dockerfile
-    container_name: guardian-frontend
+      context: ./dvlp-front/dvlp-web/
+      dockerfile: dev.Dockerfile
     ports:
-      - "3000:80"
-    depends_on:
-      - backend
+      - "4200:4200"
+    volumes:
+      - ./dvlp-front/dvlp-web/src:/app/src
     networks:
-      - guardian-net
+      - sg-services-network
 
 networks:
-  guardian-net:
+  sg-services-network:
+    external: true

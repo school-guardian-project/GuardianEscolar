@@ -5,13 +5,6 @@
 obj/
 bin/
 
-# Backend
-dvlp-back/src/backend/.vs/
-dvlp-back/src/backend/bin/
-/dvlp-back/liquibase/liquibase.properties
-dvlp-back/src/backend/obj/
-dvlp-back/src/backend/obj/Debug
-
 # Mobile app
 dvlp-front/dvlp-movil/app-movil/bin/
 dvlp-front/dvlp-movil/app-movil/obj/
@@ -21,5 +14,3 @@ dvlp-front/dvlp-movil/app-movil/.vs/
 *.csproj.user
 *.user
 *.suo
-
-dvlp-back/src/backend/appsettings.Development.json

@@ -74,67 +74,10 @@ pipeline {
             returnStdout: true
           ).trim()
 
-          env.BUILD_BACK = changes.contains('dvlp-back') ? 'true' : 'false'
           env.BUILD_FRONT = changes.contains('dvlp-front') ? 'true' : 'false'
 
           echo "Cambios detectados:\n${changes}"
-          echo "Backend: ${env.BUILD_BACK}, Frontend: ${env.BUILD_FRONT}"
-        }
-      }
-    }
-
-    stage('Backend') {
-      when {
-        expression { env.BUILD_BACK == 'true' }
-      }
-      agent {
-        docker { 
-          image 'mcr.microsoft.com/dotnet/sdk:10.0'
-          args '--network school-guardian-project_sonar-net'
-        }
-      }
-      steps {
-        script {
-          env.FAILED_STAGE = 'Backend'
-        }
-        dir('dvlp-back/src/backend') {
-          sh 'dotnet restore'
-          sh 'dotnet build -c Release'
-        }
-      }
-    }
-    stage('Sonar Backend') {
-      when {
-        expression { env.BUILD_BACK == 'true' }
-      }
-      agent {
-        docker { 
-          image 'mcr.microsoft.com/dotnet/sdk:10.0'
-          args '--network school-guardian-project_sonar-net'
-        }
-      }
-      environment {
-        SONAR_TOKEN = credentials('sonar-token')
-      }
-      steps {
-        script {
-          env.FAILED_STAGE = 'Sonar Backend'
-        }
-        dir('dvlp-back/src/backend') {
-          sh '''
-            dotnet tool install --global dotnet-sonarscanner --version 6.0.0
-            export PATH="$PATH:/root/.dotnet/tools"
-
-            dotnet sonarscanner begin \\
-              /k:"guardian-backend" \\
-              /d:sonar.host.url=http://sonarqube:9000 \\
-              /d:sonar.login=$SONAR_TOKEN
-
-            dotnet build -c Release
-
-            dotnet sonarscanner end \\
-              /d:sonar.login=$SONAR_TOKEN
-          '''
+          echo "Frontend: ${env.BUILD_FRONT}"
         }
       }
     }
@@ -192,23 +135,6 @@ pipeline {
       }
     }
     
-    stage('Docker Build Backend') {
-      when {
-        allOf {
-          branch 'develop'
-          expression { env.BUILD_BACK == 'true' }
-        }
-      }
-      agent any
-      steps {
-        script {
-          env.FAILED_STAGE = 'Build Backend'
-        }
-        dir('dvlp-back/src/backend') {
-          sh "docker build -f Dockerfile -t guardian-backend:${BUILD_NUMBER} -t guardian-backend:latest ."
-        }
-      }
-    }
     stage('Docker Build Frontend') {
       when {
         allOf {

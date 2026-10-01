@@ -12,6 +12,7 @@ import { RecordInformation, RecordData } from '@shared/components/modal/record-i
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
 import { BusesService } from '@core/services/buses.service';
+import { BusRequestDto } from '@core/models/bus.model';
 
 @Component({
   selector: 'app-buses',
@@ -60,7 +61,13 @@ export class Buses {
   }
 
   onSaved(updatedRecord: RecordData): void {
-    this.busesService.update(updatedRecord.id, updatedRecord).subscribe(() => {
+    const id = updatedRecord['id'];
+    if (!id) {
+      this.closeUpdateModal();
+      return;
+    }
+    // ponytail: modal fields don't cover BusRequestDto (campuseId/modelId/status); real toPayload when list data is wired
+    this.busesService.update(String(id), updatedRecord as BusRequestDto).subscribe(() => {
       this.closeUpdateModal();
     });
   }
@@ -78,7 +85,12 @@ export class Buses {
   }
 
   onConfirmDelete(record: RecordData): void {
-    this.busesService.remove(record.id).subscribe(() => {
+    const id = record['id'];
+    if (!id) {
+      this.closeDeleteModal();
+      return;
+    }
+    this.busesService.remove(String(id)).subscribe(() => {
       this.closeDeleteModal();
     });
   }

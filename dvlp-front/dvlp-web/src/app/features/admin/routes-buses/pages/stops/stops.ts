@@ -12,6 +12,7 @@ import { RecordInformation, RecordData } from '@shared/components/modal/record-i
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
 import { StopsService } from '@core/services/stops.service';
+import { StopRequestDto } from '@core/models/stop.model';
 
 @Component({
   selector: 'app-stops',
@@ -60,7 +61,13 @@ export class Stops {
   }
 
   onSaved(updatedRecord: RecordData): void {
-    this.stopsService.update(updatedRecord.id, updatedRecord).subscribe(() => {
+    const id = updatedRecord['id'];
+    if (!id) {
+      this.closeUpdateModal();
+      return;
+    }
+    // ponytail: modal fields don't cover StopRequestDto (cityId/schoolId); real toPayload when list data is wired
+    this.stopsService.update(String(id), updatedRecord as StopRequestDto).subscribe(() => {
       this.closeUpdateModal();
     });
   }
@@ -78,7 +85,12 @@ export class Stops {
   }
 
   onConfirmDelete(record: RecordData): void {
-    this.stopsService.remove(record.id).subscribe(() => {
+    const id = record['id'];
+    if (!id) {
+      this.closeDeleteModal();
+      return;
+    }
+    this.stopsService.remove(String(id)).subscribe(() => {
       this.closeDeleteModal();
     });
   }

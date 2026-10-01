@@ -12,6 +12,7 @@ import { RecordInformation, RecordData } from '@shared/components/modal/record-i
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
 import { RoutesService } from '@core/services/routes.service';
+import { RouteRequestDto } from '@core/models/route.model';
 
 @Component({
   selector: 'app-routes',
@@ -60,7 +61,13 @@ export class RoutesPage {
   }
 
   onSaved(updatedRecord: RecordData): void {
-    this.routesService.update(updatedRecord.id, updatedRecord).subscribe(() => {
+    const id = updatedRecord['id'];
+    if (!id) {
+      this.closeUpdateModal();
+      return;
+    }
+    // ponytail: modal fields don't cover RouteRequestDto (campuseId/targetSector); real toPayload when list data is wired
+    this.routesService.update(String(id), updatedRecord as RouteRequestDto).subscribe(() => {
       this.closeUpdateModal();
     });
   }
@@ -78,7 +85,12 @@ export class RoutesPage {
   }
 
   onConfirmDelete(record: RecordData): void {
-    this.routesService.remove(record.id).subscribe(() => {
+    const id = record['id'];
+    if (!id) {
+      this.closeDeleteModal();
+      return;
+    }
+    this.routesService.remove(String(id)).subscribe(() => {
       this.closeDeleteModal();
     });
   }

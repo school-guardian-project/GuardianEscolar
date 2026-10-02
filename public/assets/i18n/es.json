@@ -864,7 +864,8 @@
     "title": "Información del administrador",
     "user": {
       "name": "Nombre del administrador",
-      "role": "Administrador"
+      "role": "Administrador",
+      "role_superadmin": "Superadministrador"
     },
     "labels": {
       "email": "Correo electrónico",

@@ -22,6 +22,15 @@ interface LoginResponse {
 
 interface RefreshResponse {
   accessToken: string;
+  profileId?: string;
+  personId?: string;
+  email?: string;
+}
+
+export interface Session {
+  profileId: string | null;
+  personId: string | null;
+  email: string | null;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -30,6 +39,7 @@ export class AuthService {
 
   private accessToken: string | null = null;
   private refreshInFlight: Observable<string> | null = null;
+  private userSession: Session = { profileId: null, personId: null, email: null };
 
   constructor(
     private http: HttpClient,
@@ -39,7 +49,7 @@ export class AuthService {
   login(email: string, password: string): Observable<void> {
     return this.http
       .post<LoginResponse>(`${this.base}/login`, { email, password }, { withCredentials: true })
-      .pipe(map((res) => { this.accessToken = res.accessToken; }));
+      .pipe(map((res) => { this.accessToken = res.accessToken; this.applySession(res); }));
   }
 
   /** Single-flight: varias llamadas concurrentes comparten una sola rotación. */
@@ -53,10 +63,12 @@ export class AuthService {
         .pipe(
           map((res) => {
             this.accessToken = res.accessToken;
+            this.applySession(res);
             return res.accessToken;
           }),
           catchError((err) => {
             this.accessToken = null;
+            this.userSession = { profileId: null, personId: null, email: null };
             return throwError(() => err);
           }),
           finalize(() => { this.refreshInFlight = null; }),
@@ -72,7 +84,15 @@ export class AuthService {
       : {};
     return this.http
       .post<void>(`${this.base}/logout`, null, { withCredentials: true, headers })
-      .pipe(finalize(() => { this.accessToken = null; }));
+      .pipe(finalize(() => {
+        this.accessToken = null;
+        this.userSession = { profileId: null, personId: null, email: null };
+      }));
+  }
+
+  /** Datos de la sesión del usuario logueado (profileId, personId, email). */
+  get session(): Session {
+    return this.userSession;
   }
 
   getToken(): string | null {
@@ -85,16 +105,32 @@ export class AuthService {
 
   /** Claim `roleId` del JWT. Se decodifica sin verificar: la firma la valida el gateway. */
   get roleId(): number | null {
-    if (!this.accessToken) {
-      return null;
-    }
+    const roleId = this.claims()['roleId'];
+    return typeof roleId === 'number' ? roleId : null;
+  }
+
+  /**
+   * Rellena la sesión desde la respuesta del backend y, en refresh, desde los
+   * claims del JWT cuando el endpoint no repite los datos.
+   */
+  private applySession(res: Partial<LoginResponse>): void {
+    const claims = this.claims();
+    const pick = (key: keyof Session): string | null => {
+      const fromRes = res[key];
+      if (typeof fromRes === 'string' && fromRes) return fromRes;
+      const fromClaims = claims[key];
+      return typeof fromClaims === 'string' && fromClaims ? fromClaims : this.userSession[key];
+    };
+    this.userSession = { profileId: pick('profileId'), personId: pick('personId'), email: pick('email') };
+  }
+
+  private claims(): Record<string, unknown> {
+    if (!this.accessToken) return {};
     try {
       const payload = this.accessToken.split('.')[1];
-      const decoded: unknown = JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
-      const roleId = (decoded as { roleId?: unknown }).roleId;
-      return typeof roleId === 'number' ? roleId : null;
+      return JSON.parse(atob(payload.replace(/-/g, '+').replace(/_/g, '/')));
     } catch {
-      return null;
+      return {};
     }
   }
 

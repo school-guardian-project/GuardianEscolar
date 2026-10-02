@@ -53,20 +53,21 @@
             </div>
 
             <p class="user-name">
-              {{ 'admin_profile.user.name' | translate }}
+              {{ name || ('admin_profile.user.name' | translate) }}
             </p>
 
             <span class="user-role-badge">
-              {{ 'admin_profile.user.role' | translate }}
+              {{ roleKey | translate }}
             </span>
 
             <div class="user-meta">
               <p class="user-meta-item">
                 <mat-icon>badge</mat-icon> 
-                {{ 'admin_profile.labels.id' | translate }}
+                {{ 'admin_profile.labels.id' | translate }} {{ id }}
               </p>
               <p class="user-meta-item">
                 <mat-icon>cake</mat-icon>
+                {{ dateBirth }}
               </p>
             </div>
           </div>
@@ -86,7 +87,7 @@
                   <mat-icon>edit</mat-icon>
                 </button>
               </div>
-              <p class="info-value"></p>
+              <p class="info-value">{{ email }}</p>
             </div>
 
             <div class="info-item">
@@ -99,7 +100,7 @@
                   <mat-icon>edit</mat-icon>
                 </button>
               </div>
-              <p class="info-value"></p>
+              <p class="info-value">{{ phone }}</p>
             </div>
 
             <div class="info-item">
@@ -109,7 +110,7 @@
                   {{ 'admin_profile.labels.address' | translate }}
                 </p>
               </div>
-              <p class="info-value"></p>
+              <p class="info-value">{{ address }}</p>
             </div>
 
             <div class="info-item">

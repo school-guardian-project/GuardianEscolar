@@ -823,7 +823,8 @@
     "title": "Administrator information",
     "user": {
       "name": "Administrator name",
-      "role": "Administrator"
+      "role": "Administrator",
+      "role_superadmin": "Super administrator"
     },
     "labels": {
       "email": "Email",

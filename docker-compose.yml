@@ -8,6 +8,7 @@ services:
       - "4200:4200"
     volumes:
       - ./dvlp-front/dvlp-web/src:/app/src
+      - ./dvlp-front/dvlp-web/.env:/app/.env
     networks:
       - sg-services-network
 

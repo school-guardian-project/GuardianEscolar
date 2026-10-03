@@ -5,6 +5,7 @@
   <div class="container">
     <app-card-register type="route"></app-card-register>
     <app-card-list type="route"
+    [data]="routes"
     (viewItem)="showDetails($event)" 
     (editItem)="showUpdateDetails($event)"
     (deleteItem)="showDelete($event)">

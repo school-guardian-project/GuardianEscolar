@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,7 +12,25 @@ import { RecordInformation, RecordData } from '@shared/components/modal/record-i
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
 import { RoutesService } from '@core/services/routes.service';
-import { RouteRequestDto } from '@core/models/route.model';
+import { RouteListDto, RouteRequestDto } from '@core/models/route.model';
+
+interface RouteView extends RecordData {
+  id?: string;
+  name: string;
+  destination: string;
+  startTime: string;
+  endTime: string;
+}
+
+function fromApi(api: RouteListDto): RouteView {
+  return {
+    id: api.id,
+    name: api.name ?? '',
+    destination: api.targetSector ?? '',
+    startTime: api.startTime ?? '',
+    endTime: api.endTime ?? '',
+  };
+}
 
 @Component({
   selector: 'app-routes',
@@ -33,12 +51,24 @@ import { RouteRequestDto } from '@core/models/route.model';
   templateUrl: './routes.html',
   styleUrl: './routes.scss',
 })
-export class RoutesPage {
+export class RoutesPage implements OnInit {
   private routesService = inject(RoutesService);
+
+  routes: RouteView[] = [];
 
   showModal = false;
   showUpdateModal = false;
   routeSelected: RecordData = {};
+
+  ngOnInit(): void {
+    this.load();
+  }
+
+  private load(): void {
+    this.routesService.list().subscribe({
+      next: (list) => (this.routes = list.map(fromApi)),
+    });
+  }
 
   showDetails(route: RecordData): void {
     this.routeSelected = route;

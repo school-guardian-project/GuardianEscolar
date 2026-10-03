@@ -40,6 +40,8 @@ function fromApi(api: PersonListDto): DriverView {
     name: `${names} ${lastNames}`.trim(),
     identification: api.identificationNumber ?? '',
     phone: api.phone != null ? String(api.phone) : '',
+    licenseNumber: api.licenseNumber ?? '',
+    licenseExpiration: api.licenseExpirationDate ?? '',
   };
 }
 

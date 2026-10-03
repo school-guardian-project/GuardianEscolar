@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useCallback } from "react";
 import { FlatList, Modal, Pressable, Text, View } from "react-native";
+import { useFocusEffect } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
@@ -24,28 +25,38 @@ export default function Notifications() {
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [filtersVisible, setFiltersVisible] = useState(false);
 
-  useEffect(() => {
-    async function loadNotifications() {
-      try {
-        const session = await getSession();
-        if (!session?.profileId) return;
+  useFocusEffect(
+    useCallback(() => {
+      let active = true;
 
-        const data = await getNotificationApi(`/v1/notifications/guardian/${session.profileId}`);
-        setNotifications(data.map((item) => ({
-          id: item.id,
-          type: item.Alert?.Description?.includes("abordó") ? "boarding" : "alighting",
-          icon: item.Alert?.Description?.includes("abordó") ? "bus" : "home",
-          titleKey: item.Alert?.Description || "Notificación",
-          messageKey: item.Alert?.Description || "",
-          dateTime: item.DateTimeRead,
-        })));
-      } catch (error) {
-        console.error("Error loading notifications:", error);
+      async function loadNotifications() {
+        try {
+          const session = await getSession();
+          if (!session?.profileId) return;
+
+          const data = await getNotificationApi(`/v1/notifications/guardian/${session.profileId}`);
+          if (!active) return;
+
+          setNotifications(data.map((item) => ({
+            id: item.id,
+            type: item.BoardingType === "OFF_BOARD" ? "alighting" : "boarding",
+            icon: item.BoardingType === "OFF_BOARD" ? "home" : "bus",
+            titleKey: item.Alert?.Description || "Notificación",
+            messageKey: item.Alert?.Description || "",
+            dateTime: item.Alert?.DateTime || item.DateTimeRead,
+          })));
+        } catch (error) {
+          console.error("Error loading notifications:", error);
+        }
       }
-    }
 
-    loadNotifications();
-  }, []);
+      loadNotifications();
+
+      return () => {
+        active = false;
+      };
+    }, []),
+  );
 
   const toggleSaved = (notificationId) => {
     setNotifications((currentNotifications) =>

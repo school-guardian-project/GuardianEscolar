@@ -3,7 +3,11 @@
 <div class="page-wrapper">
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
-    <app-card-register type="stop"></app-card-register>
+    <app-card-register
+      type="stop"
+      [fieldOptions]="fieldOptions"
+      (formSubmit)="onCreated($event)">
+    </app-card-register>
     <app-card-list type="stop"
     [data]="stops"
     [remoteSearch]="true"
@@ -28,6 +32,7 @@
   *ngIf="showUpdateModal"
   type="stop"
   [record]="stopSelected"
+  [fieldOptions]="fieldOptions"
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()">
 </app-update-record>

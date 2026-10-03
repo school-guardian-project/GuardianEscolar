@@ -50,6 +50,13 @@
 
     </div>
 
+    <app-location-map *ngIf="type === 'stop'"
+      [address]="formData['address']"
+      [latitude]="formData['latitude']"
+      [longitude]="formData['longitude']"
+      (coordinatesChange)="onLocationChange($event)">
+    </app-location-map>
+
     <!-- FOOTER -->
     <div class="modal__footer">
 

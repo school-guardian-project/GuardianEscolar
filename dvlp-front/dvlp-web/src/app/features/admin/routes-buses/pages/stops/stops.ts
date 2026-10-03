@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,7 +12,25 @@ import { RecordInformation, RecordData } from '@shared/components/modal/record-i
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
 import { StopsService } from '@core/services/stops.service';
-import { StopRequestDto } from '@core/models/stop.model';
+import { StopListDto, StopRequestDto } from '@core/models/stop.model';
+
+interface StopView extends RecordData {
+  id?: string;
+  name: string;
+  address: string;
+  latitud: string;
+  longitud: string;
+}
+
+function fromApi(api: StopListDto): StopView {
+  return {
+    id: api.id,
+    name: api.name ?? '',
+    address: api.address ?? '',
+    latitud: api.latitude != null ? String(api.latitude) : '',
+    longitud: api.longitude != null ? String(api.longitude) : '',
+  };
+}
 
 @Component({
   selector: 'app-stops',
@@ -33,12 +51,24 @@ import { StopRequestDto } from '@core/models/stop.model';
   templateUrl: './stops.html',
   styleUrl: './stops.scss',
 })
-export class Stops {
+export class Stops implements OnInit {
   private stopsService = inject(StopsService);
+
+  stops: StopView[] = [];
 
   showModal = false;
   showUpdateModal = false;
   stopSelected: RecordData = {};
+
+  ngOnInit(): void {
+    this.load();
+  }
+
+  private load(): void {
+    this.stopsService.list().subscribe({
+      next: (list) => (this.stops = list.map(fromApi)),
+    });
+  }
 
   showDetails(stop: RecordData): void {
     this.stopSelected = stop;

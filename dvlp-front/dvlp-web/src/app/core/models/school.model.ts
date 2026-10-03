@@ -17,6 +17,7 @@ export interface SchoolListDto {
 
 export interface SchoolResponseDto extends SchoolListDto {
   cityId: string;
+  cityName: string;
   logo: string;
   phone: number;
   email: string;

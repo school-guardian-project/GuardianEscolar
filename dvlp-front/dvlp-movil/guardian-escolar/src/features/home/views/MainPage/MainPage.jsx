@@ -79,18 +79,28 @@ export default function MainPage() {
           const buses = await getFleetApi("/buses");
           const bus = buses.find((b) => b.campuseId === route.campuseId);
           if (bus) {
-            plate = bus.plate;
-            driverName = "Conductor";
+            plate = bus.plate ?? "";
+            driverName = bus.driverName ?? "";
           }
         }
+
+        // RouteListDto: horario real = startTime/endTime; targetSector es el destino.
+        const schedule =
+          route.startTime && route.endTime
+            ? `${route.startTime} - ${route.endTime}`
+            : "";
+        const stopsCount =
+          route.stopsCount != null && route.stopsCount !== ""
+            ? String(route.stopsCount)
+            : "—";
 
         setRouteInfo({
           routeName: route.name,
           driverName,
           plate,
-          schedule: route.targetSector,
-          stopsCount: "—",
-          finalDestination: route.targetSector,
+          schedule,
+          stopsCount,
+          finalDestination: route.targetSector ?? "",
         });
       } catch (error) {
         console.error("Error loading route info:", error);

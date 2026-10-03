@@ -6,6 +6,8 @@
     <app-card-register type="stop"></app-card-register>
     <app-card-list type="stop"
     [data]="stops"
+    [remoteSearch]="true"
+    (search)="onSearch($event)"
     (viewItem)="showDetails($event)"
     (editItem)="showUpdateDetails($event)"
     (deleteItem)="showDelete($event)">

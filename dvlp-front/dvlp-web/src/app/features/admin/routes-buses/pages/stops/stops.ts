@@ -70,6 +70,17 @@ export class Stops implements OnInit {
     });
   }
 
+  onSearch(term: string): void {
+    const query = term.trim();
+    if (!query) {
+      this.load();
+      return;
+    }
+    this.stopsService.search(query).subscribe({
+      next: (list) => (this.stops = list.map(fromApi)),
+    });
+  }
+
   showDetails(stop: RecordData): void {
     this.stopSelected = stop;
     this.showModal = true;

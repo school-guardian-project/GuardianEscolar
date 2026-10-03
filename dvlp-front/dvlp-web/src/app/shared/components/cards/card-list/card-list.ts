@@ -1,9 +1,10 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RecordData } from '@shared/components/modal/record-information/record-information.types';
 import { TranslateModule } from '@ngx-translate/core';
+import { Subject, Subscription, debounceTime, distinctUntilChanged } from 'rxjs';
 
 export type CardType =
   | 'student' | 'guardian' | 'driver' | 'family'
@@ -102,16 +103,31 @@ const ITEM_FIELDS: Record<CardType, ItemField[]> = {
   templateUrl: './card-list.html',
   styleUrl: './card-list.css',
 })
-export class CardList {
+export class CardList implements OnInit, OnDestroy {
   @Input() type: CardType = 'student';
   /** Datos externos; si es null la lista queda vacía. */
   @Input() data: any[] | null = null;
+  @Input() remoteSearch = false;
 
   @Output() viewItem = new EventEmitter<RecordData>();
   @Output() editItem = new EventEmitter<RecordData>();
   @Output() deleteItem = new EventEmitter<RecordData>();
+  @Output() search = new EventEmitter<string>();
 
   searchText = '';
+  searchSubject = new Subject<string>();
+
+  private searchSubscription?: Subscription;
+
+  ngOnInit(): void {
+    this.searchSubscription = this.searchSubject
+      .pipe(debounceTime(300), distinctUntilChanged())
+      .subscribe((term) => this.search.emit(term));
+  }
+
+  ngOnDestroy(): void {
+    this.searchSubscription?.unsubscribe();
+  }
 
   get titleKey(): string {
     return TITLE_KEYS[this.type];
@@ -130,6 +146,7 @@ export class CardList {
   }
 
   get filteredItems(): any[] {
+    if (this.remoteSearch) return this.items;
     if (!this.searchText?.trim()) return this.items;
     const term = this.searchText.toLowerCase().trim();
     return this.items.filter(item =>

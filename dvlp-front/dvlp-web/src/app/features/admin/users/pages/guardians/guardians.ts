@@ -104,6 +104,17 @@ export class Guardians implements OnInit {
     });
   }
 
+  onSearch(term: string): void {
+    const query = term.trim();
+    if (!query) {
+      this.load();
+      return;
+    }
+    this.parentsService.search(query).subscribe({
+      next: (list) => this.guardians.set(list.map(fromApi)),
+    });
+  }
+
   onCreated(form: RecordData): void {
     this.parentsService.create(toPayload(form)).subscribe({
       next: () => {

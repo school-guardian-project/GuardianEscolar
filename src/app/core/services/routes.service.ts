@@ -16,6 +16,10 @@ export class RoutesService {
     return this.http.get<RouteListDto[]>(this.base);
   }
 
+  search(term: string): Observable<RouteListDto[]> {
+    return this.http.get<RouteListDto[]>(`${this.base}/search?search=${encodeURIComponent(term)}`);
+  }
+
   get(id: string): Observable<RouteResponseDto> {
     return this.http.get<RouteResponseDto>(`${this.base}/${id}`);
   }

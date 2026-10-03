@@ -104,6 +104,17 @@ export class Families implements OnInit {
     });
   }
 
+  onSearch(term: string): void {
+    const query = term.trim();
+    if (!query) {
+      this.load();
+      return;
+    }
+    this.familiesService.search(query).subscribe({
+      next: (list) => this.families.set(list.map((api) => this.fromApi(api))),
+    });
+  }
+
   private fromApi(api: FamilyListDto): FamilyView {
     const parentId = api.parentProfileId ?? '';
     return {

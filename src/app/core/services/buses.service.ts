@@ -16,6 +16,10 @@ export class BusesService {
     return this.http.get<BusListDto[]>(this.base);
   }
 
+  search(term: string): Observable<BusListDto[]> {
+    return this.http.get<BusListDto[]>(`${this.base}/search?search=${encodeURIComponent(term)}`);
+  }
+
   get(id: string): Observable<BusResponseDto> {
     return this.http.get<BusResponseDto>(`${this.base}/${id}`);
   }

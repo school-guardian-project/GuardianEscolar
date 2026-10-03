@@ -16,6 +16,10 @@ export class SchoolsService {
     return this.http.get<SchoolListDto[]>(this.base);
   }
 
+  search(term: string): Observable<SchoolListDto[]> {
+    return this.http.get<SchoolListDto[]>(`${this.base}/search?search=${encodeURIComponent(term)}`);
+  }
+
   get(id: string): Observable<SchoolResponseDto> {
     return this.http.get<SchoolResponseDto>(`${this.base}/${id}`);
   }

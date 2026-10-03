@@ -94,6 +94,17 @@ export class Admins implements OnInit {
     });
   }
 
+  onSearch(term: string): void {
+    const query = term.trim();
+    if (!query) {
+      this.load();
+      return;
+    }
+    this.adminsService.search(query).subscribe({
+      next: (list) => this.admins.set(list.map(fromApi)),
+    });
+  }
+
   onCreated(form: RecordData): void {
     this.adminsService.create(toPayload(form)).subscribe({
       next: () => {

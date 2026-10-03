@@ -16,6 +16,10 @@ export class StudentsService {
     return this.http.get<PersonListDto[]>(this.base);
   }
 
+  search(term: string): Observable<PersonListDto[]> {
+    return this.http.get<PersonListDto[]>(`${this.base}/search?search=${encodeURIComponent(term)}`);
+  }
+
   get(id: string): Observable<PersonResponseDto> {
     return this.http.get<PersonResponseDto>(`${this.base}/${id}`);
   }

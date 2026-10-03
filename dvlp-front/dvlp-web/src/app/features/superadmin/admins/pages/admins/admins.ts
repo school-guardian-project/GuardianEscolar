@@ -32,7 +32,7 @@ function fromApi(api: AdminListDto): AdminView {
     lastName: api.lastName ?? '',
     identification: api.identificationNumber ?? '',
     phone: api.phone != null ? String(api.phone) : '',
-    email: '',
+    email: api.email ?? '',
   };
 }
 
@@ -90,6 +90,17 @@ export class Admins implements OnInit {
 
   private load(): void {
     this.adminsService.list().subscribe({
+      next: (list) => this.admins.set(list.map(fromApi)),
+    });
+  }
+
+  onSearch(term: string): void {
+    const query = term.trim();
+    if (!query) {
+      this.load();
+      return;
+    }
+    this.adminsService.search(query).subscribe({
       next: (list) => this.admins.set(list.map(fromApi)),
     });
   }

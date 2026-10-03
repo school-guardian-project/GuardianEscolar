@@ -22,6 +22,7 @@ interface SchoolView extends RecordData {
   email?: string;
   website?: string;
   city?: string;
+  schooling?: string;
   status?: string;
 }
 
@@ -39,7 +40,8 @@ function fromDetail(api: SchoolResponseDto): SchoolView {
     phone: api.phone != null ? String(api.phone) : '',
     email: api.email ?? '',
     website: api.website ?? '',
-    city: api.cityId ?? '',
+    city: api.cityName ?? '',
+    schooling: api.theme ?? '',
     status: api.status ?? '',
   };
 }
@@ -89,6 +91,17 @@ export class Schools implements OnInit {
 
   private load(): void {
     this.schoolsService.list().subscribe({
+      next: (list) => this.schools.set(list.map(fromApi)),
+    });
+  }
+
+  onSearch(term: string): void {
+    const query = term.trim();
+    if (!query) {
+      this.load();
+      return;
+    }
+    this.schoolsService.search(query).subscribe({
       next: (list) => this.schools.set(list.map(fromApi)),
     });
   }

@@ -40,6 +40,8 @@ function fromApi(api: PersonListDto): DriverView {
     name: `${names} ${lastNames}`.trim(),
     identification: api.identificationNumber ?? '',
     phone: api.phone != null ? String(api.phone) : '',
+    licenseNumber: api.licenseNumber ?? '',
+    licenseExpiration: api.licenseExpirationDate ?? '',
   };
 }
 
@@ -102,6 +104,17 @@ export class Drivers implements OnInit {
 
   private load(): void {
     this.driversService.list().subscribe({
+      next: (list) => this.drivers.set(list.map(fromApi)),
+    });
+  }
+
+  onSearch(term: string): void {
+    const query = term.trim();
+    if (!query) {
+      this.load();
+      return;
+    }
+    this.driversService.search(query).subscribe({
       next: (list) => this.drivers.set(list.map(fromApi)),
     });
   }

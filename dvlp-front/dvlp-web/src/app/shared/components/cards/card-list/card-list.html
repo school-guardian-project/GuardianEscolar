@@ -8,7 +8,7 @@
   <!-- Buscador -->
   <div class="card-list__search">
     <input class="card-list__search-input" type="text" [placeholder]="'search.search' | translate"
-      [(ngModel)]="searchText" />
+      [(ngModel)]="searchText" (ngModelChange)="searchSubject.next($event)" />
 
     <span class="card-list__search-icon">
       <mat-icon>search</mat-icon>

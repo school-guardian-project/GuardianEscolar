@@ -16,6 +16,10 @@ export class FamiliesService {
     return this.http.get<FamilyListDto[]>(this.base);
   }
 
+  search(term: string): Observable<FamilyListDto[]> {
+    return this.http.get<FamilyListDto[]>(`${this.base}/search?search=${encodeURIComponent(term)}`);
+  }
+
   get(id: string): Observable<FamilyResponseDto> {
     return this.http.get<FamilyResponseDto>(`${this.base}/${id}`);
   }

@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,7 +12,39 @@ import { RecordInformation, RecordData } from '@shared/components/modal/record-i
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
 import { BusesService } from '@core/services/buses.service';
-import { BusRequestDto } from '@core/models/bus.model';
+import { BusListDto, BusRequestDto, BusResponseDto } from '@core/models/bus.model';
+
+interface BusView extends RecordData {
+  id?: string;
+  plate: string;
+  driver: string;
+  brand: string;
+  model: string;
+  capacity?: string;
+  gps?: string;
+  soat?: string;
+  status?: string;
+}
+
+function fromApi(api: BusListDto): BusView {
+  return {
+    id: api.id,
+    plate: api.plate ?? '',
+    driver: api.driverName ?? '',
+    brand: api.brand ?? '',
+    model: api.model ?? '',
+  };
+}
+
+function fromDetail(api: BusResponseDto): BusView {
+  return {
+    ...fromApi(api),
+    capacity: api.capacity != null ? String(api.capacity) : '',
+    gps: api.gpsDeviceId ?? '',
+    soat: api.soatValidity ?? '',
+    status: api.status ?? '',
+  };
+}
 
 @Component({
   selector: 'app-buses',
@@ -33,16 +65,49 @@ import { BusRequestDto } from '@core/models/bus.model';
   templateUrl: './buses.html',
   styleUrl: './buses.scss',
 })
-export class Buses {
+export class Buses implements OnInit {
   private busesService = inject(BusesService);
+
+  buses: BusView[] = [];
 
   showModal = false;
   showUpdateModal = false;
   busSelected: RecordData = {};
 
+  ngOnInit(): void {
+    this.load();
+  }
+
+  private load(): void {
+    this.busesService.list().subscribe({
+      next: (list) => (this.buses = list.map(fromApi)),
+    });
+  }
+
+  onSearch(term: string): void {
+    const query = term.trim();
+    if (!query) {
+      this.load();
+      return;
+    }
+    this.busesService.search(query).subscribe({
+      next: (list) => (this.buses = list.map(fromApi)),
+    });
+  }
+
   showDetails(bus: RecordData): void {
-    this.busSelected = bus;
-    this.showModal = true;
+    const id = bus['id'];
+    if (!id) {
+      this.busSelected = bus;
+      this.showModal = true;
+      return;
+    }
+    this.busesService.get(String(id)).subscribe({
+      next: (detail) => {
+        this.busSelected = fromDetail(detail);
+        this.showModal = true;
+      },
+    });
   }
 
   showUpdateDetails(bus: RecordData): void {

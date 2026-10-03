@@ -12,8 +12,10 @@ export interface RouteListDto {
   id: string;
   name: string;
   campuseId: string;
+  targetSector: string;
   startTime: string;
   endTime: string;
+  stopsCount: number;
 }
 
 export interface RouteResponseDto {

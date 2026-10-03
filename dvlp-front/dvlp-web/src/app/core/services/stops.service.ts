@@ -16,6 +16,10 @@ export class StopsService {
     return this.http.get<StopListDto[]>(this.base);
   }
 
+  search(term: string): Observable<StopListDto[]> {
+    return this.http.get<StopListDto[]>(`${this.base}/search?search=${encodeURIComponent(term)}`);
+  }
+
   get(id: string): Observable<StopResponseDto> {
     return this.http.get<StopResponseDto>(`${this.base}/${id}`);
   }

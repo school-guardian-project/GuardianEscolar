@@ -19,6 +19,18 @@ import { postNotificationApi } from "@core/services/notificationApi";
 
 import styles from "./MainPage.style";
 
+const EMPTY_GUID = "00000000-0000-0000-0000-000000000000";
+
+async function getCurrentTrip(driverId) {
+  if (!driverId) return null;
+
+  try {
+    return await getRouteApi(`/trips/current?driverId=${driverId}`);
+  } catch {
+    return null;
+  }
+}
+
 export default function MainPage() {
   const { width } = useWindow();
   const insets = useSafeAreaInsets();
@@ -44,10 +56,13 @@ export default function MainPage() {
 
       if (!route) return;
 
+      const trip = await getCurrentTrip(session?.profileId);
+
       await postNotificationApi("/v1/notifications/scan", {
-        routeExecutionId: route.id,
+        routeId: route.id,
+        routeExecutionId: trip?.id ?? EMPTY_GUID,
         studentProfileId: qrData.id,
-        routeStopId: qrData.routeStopId || route.id,
+        routeStopId: qrData.routeStopId || EMPTY_GUID,
         boardingType: scanMode,
       });
     } catch (error) {

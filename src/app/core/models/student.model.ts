@@ -19,12 +19,15 @@ export interface PersonListDto {
   name: string;
   lastName: string;
   identificationNumber: string;
+  email: string;
   phone: number;
+  /** Solo conductores: UserManagement.DriverLicense */
+  licenseNumber?: string | null;
+  licenseExpirationDate?: string | null;
 }
 
 export interface PersonResponseDto extends PersonListDto {
   identificationType: IdentificationType;
-  email: string;
   residenceAddress: string;
   dateBirth: string;
 }

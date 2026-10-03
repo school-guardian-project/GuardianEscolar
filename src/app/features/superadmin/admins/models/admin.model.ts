@@ -14,12 +14,12 @@ export interface AdminListDto {
   name: string;
   lastName: string;
   identificationNumber: string;
+  email: string;
   phone: number;
 }
 
 export interface AdminResponseDto extends AdminListDto {
   identificationType: string;
-  email: string;
   residenceAddress: string;
   dateBirth: string;
 }

@@ -13,13 +13,16 @@ export interface BusRequestDto {
 export interface BusListDto {
   id: string;
   plate: string;
-  capacity: number;
-  status: BusStatus;
+  campuseId: string;
+  driverName: string;
+  brand: string;
+  model: string;
 }
 
 export interface BusResponseDto extends BusListDto {
-  campuseId: string;
   soatValidity: string;
   gpsDeviceId: string;
+  capacity: number;
   modelId: number;
+  status: BusStatus;
 }

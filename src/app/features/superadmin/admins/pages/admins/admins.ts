@@ -32,7 +32,7 @@ function fromApi(api: AdminListDto): AdminView {
     lastName: api.lastName ?? '',
     identification: api.identificationNumber ?? '',
     phone: api.phone != null ? String(api.phone) : '',
-    email: '',
+    email: api.email ?? '',
   };
 }
 

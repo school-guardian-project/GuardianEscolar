@@ -17,6 +17,8 @@ export interface SchoolListDto {
 
 export interface SchoolResponseDto extends SchoolListDto {
   cityId: string;
+  /** Nombre legible de la ciudad (Geographic.City); lo resuelve ms-school-management. */
+  cityName: string;
   logo: string;
   phone: number;
   email: string;

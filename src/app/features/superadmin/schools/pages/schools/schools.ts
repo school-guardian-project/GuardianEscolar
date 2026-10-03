@@ -22,6 +22,7 @@ interface SchoolView extends RecordData {
   email?: string;
   website?: string;
   city?: string;
+  schooling?: string;
   status?: string;
 }
 
@@ -39,7 +40,8 @@ function fromDetail(api: SchoolResponseDto): SchoolView {
     phone: api.phone != null ? String(api.phone) : '',
     email: api.email ?? '',
     website: api.website ?? '',
-    city: api.cityId ?? '',
+    city: api.cityName ?? '',
+    schooling: api.theme ?? '',
     status: api.status ?? '',
   };
 }

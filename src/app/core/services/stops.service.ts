@@ -24,8 +24,8 @@ export class StopsService {
     return this.http.get<StopResponseDto>(`${this.base}/${id}`);
   }
 
-  create(payload: StopRequestDto): Observable<void> {
-    return this.http.post<void>(this.base, payload);
+  create(payload: StopRequestDto): Observable<StopResponseDto> {
+    return this.http.post<StopResponseDto>(this.base, payload);
   }
 
   update(id: string, payload: StopRequestDto): Observable<void> {

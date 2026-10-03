@@ -26,6 +26,4 @@ export interface RouteResponseDto {
   startTime: string;
   endTime: string;
   status: RouteStatus;
-  createdAt: string;
-  updatedAt: string;
 }

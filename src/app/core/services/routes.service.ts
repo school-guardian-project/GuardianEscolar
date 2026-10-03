@@ -35,4 +35,8 @@ export class RoutesService {
   remove(id: string): Observable<void> {
     return this.http.delete<void>(`${this.base}/${id}`);
   }
+
+  addStop(routeId: string, stopId: string): Observable<void> {
+    return this.http.post<void>(`${this.base}/${routeId}/stops`, { stopId });
+  }
 }

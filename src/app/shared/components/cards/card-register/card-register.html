@@ -76,16 +76,12 @@
       </div>
     </ng-container>
 
-    <div class="card-register__map" *ngIf="type === 'stop'" aria-label="Mapa de Google Maps">
-      <iframe
-        class="card-register__map-frame"
-        src="https://www.google.com/maps?q=Colombia&output=embed"
-        title="Mapa de Google Maps"
-        loading="lazy"
-        referrerpolicy="no-referrer-when-downgrade"
-        allowfullscreen>
-      </iframe>
-    </div>
+    <app-location-map *ngIf="type === 'stop'"
+      [address]="formData['address']"
+      [latitude]="formData['latitude']"
+      [longitude]="formData['longitude']"
+      (coordinatesChange)="onLocationChange($event)">
+    </app-location-map>
 
     <button class="card-register__btn" type="submit">
       {{ 'register.button' | translate }}

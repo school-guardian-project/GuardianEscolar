@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { validateField, validateBirthDate, validateFutureDate, ValidationSchema } from '@core/validators/form-validators';
+import { LocationMap } from '@shared/components/location-map/location-map';
 
 export type RegisterType =
   | 'student'
@@ -78,6 +79,7 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { name: 'name', type: 'text' },
     { name: 'student', type: 'select', options: [] },
     { name: 'city', type: 'select', options: [] },
+    { name: 'school', type: 'select', options: [] },
     { name: 'address', type: 'text' },
     { name: 'route', type: 'select', options: [] },
   ],
@@ -162,10 +164,11 @@ const VALIDATION_SCHEMAS: Record<RegisterType, ValidationSchema> = {
     gps: { required: true },
   },
   stop: {
-    name: { required: true, minLength: 2 },
-    student: { required: true },
+    name: { required: true, minLength: 2, maxLength: 30 },
+    student: { required: false },
     city: { required: true },
-    address: { required: true, minLength: 5 },
+    school: { required: true },
+    address: { required: true, minLength: 5, maxLength: 100 },
     route: { required: true },
   },
   route: {
@@ -201,7 +204,7 @@ const VALIDATION_SCHEMAS: Record<RegisterType, ValidationSchema> = {
 @Component({
   selector: 'app-card-register',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule],
+  imports: [CommonModule, FormsModule, TranslateModule, LocationMap],
   templateUrl: './card-register.html',
   styleUrl: './card-register.css',
 })
@@ -252,6 +255,11 @@ export class CardRegister implements OnInit, OnChanges {
     }
     this.formData[fieldName] = value;
     this.validateField(fieldName);
+  }
+
+  onLocationChange(coordinates: { latitude: number; longitude: number }): void {
+    this.formData['latitude'] = coordinates.latitude;
+    this.formData['longitude'] = coordinates.longitude;
   }
 
   onStudentSelected(): void {

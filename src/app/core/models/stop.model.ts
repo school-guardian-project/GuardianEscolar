@@ -15,6 +15,8 @@ export interface StopListDto {
   address: string;
   latitude: number;
   longitude: number;
+  cityId: string;
+  schoolId: string;
 }
 
 export interface StopResponseDto {
@@ -26,6 +28,4 @@ export interface StopResponseDto {
   cityId: string;
   schoolId: string;
   status: StopStatus;
-  createdAt: string;
-  updatedAt: string;
 }

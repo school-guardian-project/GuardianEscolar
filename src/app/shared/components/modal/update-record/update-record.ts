@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { LocationMap } from '@shared/components/location-map/location-map';
 
 export type RegisterType =
   | 'student'
@@ -91,6 +92,7 @@ const UPDATE_FIELDS: Record<RegisterType, Field[]> = {
     { name: 'name', type: 'text' },
     { name: 'student', type: 'select', options: [] },
     { name: 'city', type: 'select', options: [] },
+    { name: 'school', type: 'select', options: [] },
     { name: 'address', type: 'text' },
     { name: 'latitude', type: 'text' },
     { name: 'longitude', type: 'text' },
@@ -141,7 +143,7 @@ const MODAL_CONFIGS: Record<RegisterType, ModalConfig> = {
 @Component({
   selector: 'app-update-record',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule, TranslateModule],
+  imports: [CommonModule, FormsModule, MatIconModule, TranslateModule, LocationMap],
   templateUrl: './update-record.html',
   styleUrl: './update-record.css',
 })
@@ -186,6 +188,11 @@ export class UpdateRecord implements OnInit {
 
   close(): void {
     this.closed.emit();
+  }
+
+  onLocationChange(coordinates: { latitude: number; longitude: number }): void {
+    this.formData['latitude'] = String(coordinates.latitude);
+    this.formData['longitude'] = String(coordinates.longitude);
   }
 
   onSubmit(): void {

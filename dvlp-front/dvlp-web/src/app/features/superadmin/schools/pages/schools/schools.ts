@@ -95,6 +95,17 @@ export class Schools implements OnInit {
     });
   }
 
+  onSearch(term: string): void {
+    const query = term.trim();
+    if (!query) {
+      this.load();
+      return;
+    }
+    this.schoolsService.search(query).subscribe({
+      next: (list) => this.schools.set(list.map(fromApi)),
+    });
+  }
+
   onCreated(form: RecordData): void {
     this.schoolsService.create(toPayload(form)).subscribe({
       next: () => {

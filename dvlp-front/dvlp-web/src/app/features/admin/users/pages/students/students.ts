@@ -161,6 +161,17 @@ export class Students implements OnInit {
     });
   }
 
+  onSearch(term: string): void {
+    const query = term.trim();
+    if (!query) {
+      this.load();
+      return;
+    }
+    this.studentsService.search(query).subscribe({
+      next: (list) => this.students.set(list.map(fromApi)),
+    });
+  }
+
   onCreated(form: RecordData): void {
     if (!isValidStudentForm(form)) {
       this.register?.setValidationMessage(

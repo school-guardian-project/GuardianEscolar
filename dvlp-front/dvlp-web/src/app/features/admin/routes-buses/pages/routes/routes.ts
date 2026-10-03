@@ -70,6 +70,17 @@ export class RoutesPage implements OnInit {
     });
   }
 
+  onSearch(term: string): void {
+    const query = term.trim();
+    if (!query) {
+      this.load();
+      return;
+    }
+    this.routesService.search(query).subscribe({
+      next: (list) => (this.routes = list.map(fromApi)),
+    });
+  }
+
   showDetails(route: RecordData): void {
     this.routeSelected = route;
     this.showModal = true;

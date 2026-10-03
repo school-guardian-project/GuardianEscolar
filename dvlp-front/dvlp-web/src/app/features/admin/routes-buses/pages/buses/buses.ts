@@ -84,6 +84,17 @@ export class Buses implements OnInit {
     });
   }
 
+  onSearch(term: string): void {
+    const query = term.trim();
+    if (!query) {
+      this.load();
+      return;
+    }
+    this.busesService.search(query).subscribe({
+      next: (list) => (this.buses = list.map(fromApi)),
+    });
+  }
+
   showDetails(bus: RecordData): void {
     const id = bus['id'];
     if (!id) {

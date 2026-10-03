@@ -16,6 +16,10 @@ export class AdminsService {
     return this.http.get<AdminListDto[]>(this.base);
   }
 
+  search(term: string): Observable<AdminListDto[]> {
+    return this.http.get<AdminListDto[]>(`${this.base}/search?search=${encodeURIComponent(term)}`);
+  }
+
   get(id: string): Observable<AdminResponseDto> {
     return this.http.get<AdminResponseDto>(`${this.base}/${id}`);
   }

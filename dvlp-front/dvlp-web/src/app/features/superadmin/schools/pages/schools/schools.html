@@ -5,6 +5,8 @@
     <app-card-register type="schools" (formSubmit)="onCreated($event)"></app-card-register>
     <app-card-list type="schools"
       [data]="schools()"
+      [remoteSearch]="true"
+      (search)="onSearch($event)"
       (viewItem)="showDetails($event)"
       (editItem)="showUpdate($event)"
       (deleteItem)="showDelete($event)">

@@ -8,6 +8,8 @@
     <app-card-list
       type="driver"
       [data]="drivers()"
+      [remoteSearch]="true"
+      (search)="onSearch($event)"
       (viewItem)="showDetails($event)"
       (editItem)="showUpdate($event)"
       (deleteItem)="showDelete($event)"

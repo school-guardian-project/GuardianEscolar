@@ -35,4 +35,12 @@ export class BusesService {
   remove(id: string): Observable<void> {
     return this.http.delete<void>(`${this.base}/${id}`);
   }
+
+  assignDriver(busId: string, profileId: string): Observable<void> {
+    return this.http.put<void>(`${this.base}/${busId}/driver`, { profileId });
+  }
+
+  unassignDriver(busId: string): Observable<void> {
+    return this.http.delete<void>(`${this.base}/${busId}/driver`);
+  }
 }

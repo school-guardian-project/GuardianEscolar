@@ -800,6 +800,31 @@
   "search": {
     "search": "Search..."
   },
+  "assign_record": {
+    "route": {
+      "title": "Assign bus to route",
+      "bus": "Bus",
+      "selectBus": "Select a bus"
+    },
+    "student": {
+      "title": "Assign student to route",
+      "route": "Route",
+      "stop": "Boarding stop",
+      "selectRoute": "Select a route",
+      "selectStop": "Select a stop"
+    },
+    "bus": {
+      "title": "Assign driver to bus",
+      "driver": "Driver",
+      "currentDriver": "Current driver",
+      "selectDriver": "Select a driver"
+    },
+    "buttons": {
+      "assign": "Assign",
+      "unassign": "Unassign"
+    },
+    "genericError": "The action could not be completed. Check that the backend is available."
+  },
   "card_list": {
     "student": "Registered students",
     "guardian": "Registered guardians",

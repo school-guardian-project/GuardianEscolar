@@ -51,7 +51,9 @@ export class InformationAdmin implements OnInit {
       this.user = { email } as AdminResponseDto;
     }
     if (personId) {
-      this.adminsService.get(personId).subscribe({ next: (user) => (this.user = user) });
+      this.adminsService.get(personId).subscribe({
+        next: (user) => (this.user = user ?? this.user),
+      });
     }
   }
 
@@ -66,7 +68,7 @@ export class InformationAdmin implements OnInit {
   }
 
   get id(): string {
-    return this.user?.identificationNumber ?? this.authService.session.personId ?? '';
+    return this.user?.identificationNumber ?? '';
   }
 
   get email(): string {

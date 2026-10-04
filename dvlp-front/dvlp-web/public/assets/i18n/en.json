@@ -488,6 +488,7 @@
         "name": "Name",
         "student": "Student",
         "city": "City",
+        "school": "School",
         "address": "Address",
         "latitude": "Latitude",
         "longitude": "Longitude"
@@ -636,6 +637,7 @@
         "name": "Name",
         "student": "Student",
         "city": "City",
+        "school": "School",
         "address": "Address",
         "latitude": "Latitude",
         "longitude": "Longitude"
@@ -752,6 +754,7 @@
         "name": "Stop name",
         "student": "Student",
         "city": "City",
+        "school": "School",
         "address": "Address",
         "route": "Route"
       }

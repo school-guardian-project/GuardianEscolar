@@ -567,6 +567,7 @@
         "name": "Nombre",
         "student": "Estudiante",
         "city": "Ciudad",
+        "school": "Escuela",
         "address": "Dirección",
         "latitude": "Latitud",
         "longitude": "Longitud"
@@ -677,6 +678,7 @@
         "name": "Nombre",
         "student": "Estudiante",
         "city": "Ciudad",
+        "school": "Escuela",
         "address": "Dirección",
         "latitude": "Latitud",
         "longitude": "Longitud"
@@ -793,6 +795,7 @@
         "name": "Nombre de la parada",
         "student": "Estudiante",
         "city": "Ciudad",
+        "school": "Escuela",
         "address": "Dirección",
         "route": "Ruta"
       }

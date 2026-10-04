@@ -11,6 +11,7 @@ import { NavbarAdmin } from '@shared/components/navbar/navbar-admin/navbar-admin
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
+import { AssignRecord } from '@shared/components/modal/assign-record/assign-record';
 import { BusesService } from '@core/services/buses.service';
 import { BusListDto, BusRequestDto, BusResponseDto } from '@core/models/bus.model';
 
@@ -61,6 +62,7 @@ function fromDetail(api: BusResponseDto): BusView {
     RecordInformation,
     UpdateRecord,
     DeleteRecord,
+    AssignRecord,
   ],
   templateUrl: './buses.html',
   styleUrl: './buses.scss',
@@ -158,5 +160,21 @@ export class Buses implements OnInit {
     this.busesService.remove(String(id)).subscribe(() => {
       this.closeDeleteModal();
     });
+  }
+
+  showAssignModal = false;
+
+  showAssignDetails(bus: RecordData): void {
+    this.busSelected = bus;
+    this.showAssignModal = true;
+  }
+
+  closeAssignModal(): void {
+    this.showAssignModal = false;
+    this.busSelected = {};
+  }
+
+  onAssigned(): void {
+    this.load();
   }
 }

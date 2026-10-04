@@ -11,6 +11,7 @@ import { NavbarAdmin } from '@shared/components/navbar/navbar-admin/navbar-admin
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
+import { AssignRecord } from '@shared/components/modal/assign-record/assign-record';
 import { RoutesService } from '@core/services/routes.service';
 import { RouteListDto, RouteRequestDto } from '@core/models/route.model';
 
@@ -47,6 +48,7 @@ function fromApi(api: RouteListDto): RouteView {
     RecordInformation,
     UpdateRecord,
     DeleteRecord,
+    AssignRecord,
   ],
   templateUrl: './routes.html',
   styleUrl: './routes.scss',
@@ -134,5 +136,21 @@ export class RoutesPage implements OnInit {
     this.routesService.remove(String(id)).subscribe(() => {
       this.closeDeleteModal();
     });
+  }
+
+  showAssignModal = false;
+
+  showAssignDetails(route: RecordData): void {
+    this.routeSelected = route;
+    this.showAssignModal = true;
+  }
+
+  closeAssignModal(): void {
+    this.showAssignModal = false;
+    this.routeSelected = {};
+  }
+
+  onAssigned(): void {
+    this.load();
   }
 }

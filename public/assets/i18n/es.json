@@ -841,6 +841,31 @@
   "search": {
     "search": "Buscar..."
   },
+  "assign_record": {
+    "route": {
+      "title": "Asignar bus a la ruta",
+      "bus": "Bus",
+      "selectBus": "Selecciona un bus"
+    },
+    "student": {
+      "title": "Asignar estudiante a la ruta",
+      "route": "Ruta",
+      "stop": "Parada de embarque",
+      "selectRoute": "Selecciona una ruta",
+      "selectStop": "Selecciona una parada"
+    },
+    "bus": {
+      "title": "Asignar conductor al bus",
+      "driver": "Conductor",
+      "currentDriver": "Conductor actual",
+      "selectDriver": "Selecciona un conductor"
+    },
+    "buttons": {
+      "assign": "Asignar",
+      "unassign": "Desasignar"
+    },
+    "genericError": "No se pudo completar la asignación. Verifica que el backend esté disponible."
+  },
   "card_list": {
     "student": "Estudiantes registrados",
     "guardian": "Acudientes registrados",

@@ -21,6 +21,7 @@ export interface PersonListDto {
   identificationNumber: string;
   email: string;
   phone: number;
+  profileId?: string | null;
   /** Solo conductores: UserManagement.DriverLicense */
   licenseNumber?: string | null;
   licenseExpirationDate?: string | null;

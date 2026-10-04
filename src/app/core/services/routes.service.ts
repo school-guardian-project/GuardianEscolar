@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { RouteListDto, RouteRequestDto, RouteResponseDto } from '../models/route.model';
+import { RouteListDto, RouteRequestDto, RouteResponseDto, StudentRouteStopDto } from '../models/route.model';
 
 @Injectable({
   providedIn: 'root',
@@ -38,5 +38,21 @@ export class RoutesService {
 
   addStop(routeId: string, stopId: string): Observable<void> {
     return this.http.post<void>(`${this.base}/${routeId}/stops`, { stopId });
+  }
+
+  assignBus(routeId: string, busId: string): Observable<void> {
+    return this.http.put<void>(`${this.base}/${routeId}/bus`, { busId });
+  }
+
+  assignStudent(routeId: string, payload: { studentId: string; stopId: string }): Observable<void> {
+    return this.http.post<void>(`${this.base}/${routeId}/students`, payload);
+  }
+
+  getStudentRoute(studentProfileId: string): Observable<RouteResponseDto> {
+    return this.http.get<RouteResponseDto>(`${this.base}/student/${studentProfileId}`);
+  }
+
+  getStudentStop(routeId: string, studentProfileId: string): Observable<StudentRouteStopDto> {
+    return this.http.get<StudentRouteStopDto>(`${this.base}/${routeId}/students/${studentProfileId}`);
   }
 }

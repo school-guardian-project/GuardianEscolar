@@ -10,10 +10,12 @@
       type="student"
       [data]="students()"
       [remoteSearch]="true"
+      [showAssign]="true"
       (search)="onSearch($event)"
       (viewItem)="showDetails($event)"
       (editItem)="showUpdate($event)"
       (deleteItem)="showDelete($event)"
+      (assignItem)="showAssign($event)"
     >
     </app-card-list>
   </div>
@@ -47,3 +49,13 @@
   (cancel)="closeDeleteModal()"
 >
 </app-delete-record>
+
+<!-- Modal: asignar estudiante a ruta y parada -->
+<app-assign-record
+  *ngIf="showAssignModal"
+  type="student"
+  [record]="studentSelected"
+  (assigned)="onAssigned()"
+  (closed)="closeAssignModal()"
+>
+</app-assign-record>

@@ -800,6 +800,31 @@
   "search": {
     "search": "Rechercher..."
   },
+  "assign_record": {
+    "route": {
+      "title": "Assigner un bus à la route",
+      "bus": "Bus",
+      "selectBus": "Sélectionnez un bus"
+    },
+    "student": {
+      "title": "Assigner un étudiant à la route",
+      "route": "Route",
+      "stop": "Arrêt de montée",
+      "selectRoute": "Sélectionnez une route",
+      "selectStop": "Sélectionnez un arrêt"
+    },
+    "bus": {
+      "title": "Assigner un conducteur au bus",
+      "driver": "Conducteur",
+      "currentDriver": "Conducteur actuel",
+      "selectDriver": "Sélectionnez un conducteur"
+    },
+    "buttons": {
+      "assign": "Assigner",
+      "unassign": "Désassigner"
+    },
+    "genericError": "L'action n'a pas pu être complétée. Vérifiez que le backend est disponible."
+  },
   "card_list": {
     "student": "Étudiants enregistrés",
     "guardian": "Tuteurs enregistrés",

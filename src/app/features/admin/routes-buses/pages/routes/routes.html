@@ -7,10 +7,12 @@
     <app-card-list type="route"
     [data]="routes"
     [remoteSearch]="true"
+    [showAssign]="true"
     (search)="onSearch($event)"
     (viewItem)="showDetails($event)" 
     (editItem)="showUpdateDetails($event)"
-    (deleteItem)="showDelete($event)">
+    (deleteItem)="showDelete($event)"
+    (assignItem)="showAssignDetails($event)">
   </app-card-list>
   </div>
 </div>
@@ -39,3 +41,12 @@
   (confirm)="onConfirmDelete($event)"
   (cancel)="closeDeleteModal()">  
 </app-delete-record>
+
+<!-- Modal: asignar bus a la ruta -->
+<app-assign-record
+  *ngIf="showAssignModal"
+  type="route"
+  [record]="routeSelected"
+  (assigned)="onAssigned()"
+  (closed)="closeAssignModal()">
+</app-assign-record>

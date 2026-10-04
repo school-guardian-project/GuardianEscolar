@@ -800,6 +800,31 @@
   "search": {
     "search": "Buscar..."
   },
+  "assign_record": {
+    "route": {
+      "title": "Atribuir ônibus à rota",
+      "bus": "Ônibus",
+      "selectBus": "Selecione um ônibus"
+    },
+    "student": {
+      "title": "Atribuir estudante à rota",
+      "route": "Rota",
+      "stop": "Ponto de embarque",
+      "selectRoute": "Selecione uma rota",
+      "selectStop": "Selecione um ponto"
+    },
+    "bus": {
+      "title": "Atribuir motorista ao ônibus",
+      "driver": "Motorista",
+      "currentDriver": "Motorista atual",
+      "selectDriver": "Selecione um motorista"
+    },
+    "buttons": {
+      "assign": "Atribuir",
+      "unassign": "Remover"
+    },
+    "genericError": "Não foi possível concluir a ação. Verifique se o backend está disponível."
+  },
   "card_list": {
     "student": "Estudantes registrados",
     "guardian": "Responsáveis registrados",

@@ -12,11 +12,13 @@ import { NavbarAdmin } from '@shared/components/navbar/navbar-admin/navbar-admin
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
+import { AssignRecord } from '@shared/components/modal/assign-record/assign-record';
 import { StudentsService } from '@core/services/students.service';
 import { PersonListDto, PersonRequestDto, PersonResponseDto } from '@core/models/student.model';
 
 interface StudentView extends RecordData {
   id?: string;
+  profileId?: string | null;
   names: string;
   lastNames: string;
   name: string;
@@ -33,6 +35,7 @@ function fromApi(api: PersonListDto): StudentView {
   const lastNames = api.lastName ?? '';
   return {
     id: api.id,
+    profileId: api.profileId ?? null,
     names,
     lastNames,
     name: `${names} ${lastNames}`.trim(),
@@ -140,6 +143,7 @@ function isValidStudentForm(form: RecordData): boolean {
     RecordInformation,
     UpdateRecord,
     DeleteRecord,
+    AssignRecord,
   ],
   templateUrl: './students.html',
   styleUrl: './students.scss',
@@ -282,5 +286,21 @@ export class Students implements OnInit {
         this.load();
       },
     });
+  }
+
+  showAssignModal = false;
+
+  showAssign(student: RecordData): void {
+    this.studentSelected = student;
+    this.showAssignModal = true;
+  }
+
+  closeAssignModal(): void {
+    this.showAssignModal = false;
+    this.studentSelected = {};
+  }
+
+  onAssigned(): void {
+    this.load();
   }
 }

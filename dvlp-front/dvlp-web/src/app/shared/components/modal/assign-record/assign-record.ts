@@ -102,7 +102,7 @@ export class AssignRecord implements OnInit {
     this.routesService.getStudentRoute(profileId).subscribe({
       next: (route) => {
         this.selectedRouteId = String(route.id);
-        this.stops = (route.stops ?? []).map((s) => ({ id: String(s.id), label: s.name ?? '' }));
+        this.stops = (route.stops ?? []).map((s) => ({ id: String(s.id), label: s.name || s.address }));
         this.stopsRouteId = this.selectedRouteId;
 
         this.routesService.getStudentStop(this.selectedRouteId, profileId).subscribe({
@@ -134,7 +134,7 @@ export class AssignRecord implements OnInit {
 
     this.routesService.get(routeId).subscribe({
       next: (detail) => {
-        this.stops = (detail.stops ?? []).map((s) => ({ id: String(s.id), label: s.name ?? '' }));
+        this.stops = (detail.stops ?? []).map((s) => ({ id: String(s.id), label: s.name || s.address }));
         this.stopsRouteId = routeId;
       },
       error: () => (this.message = 'assign_record.genericError'),

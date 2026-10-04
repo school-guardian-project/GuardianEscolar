@@ -60,9 +60,8 @@ export class Families implements OnInit {
   families = signal<FamilyView[]>([]);
   fieldOptions: Record<string, string[]> = {};
 
-  /** ponytail: el backend guarda ProfileId y aún no hay API que lo resuelva a persona,
-   *  así que los miembros viajan con el id de la persona registrada. Cambiar a profileId
-   *  cuando IAM exponga la relación profile↔person. */
+  /** Claves de resolución: profileId (lo que guardan las familias) y person.id (datos
+   *  heredados). El envío usa profileId, que es lo que espera el DTO de miembros. */
   private parentLabelById = new Map<string, string>();
   private parentIdByLabel = new Map<string, string>();
   private parentPhoneById = new Map<string, string>();
@@ -80,14 +79,19 @@ export class Families implements OnInit {
       next: ({ parents, students }) => {
         for (const parent of parents) {
           const label = labelOf(parent);
-          this.parentLabelById.set(parent.id, label);
-          this.parentIdByLabel.set(label, parent.id);
-          this.parentPhoneById.set(parent.id, parent.phone != null ? String(parent.phone) : '');
+          const phone = parent.phone != null ? String(parent.phone) : '';
+          for (const key of [parent.id, parent.profileId ?? '']) {
+            if (!key) continue;
+            this.parentLabelById.set(key, label);
+            this.parentPhoneById.set(key, phone);
+          }
+          this.parentIdByLabel.set(label, parent.profileId ?? parent.id);
         }
         for (const student of students) {
           const label = labelOf(student);
           this.studentLabelById.set(student.id, label);
-          this.studentIdByLabel.set(label, student.id);
+          if (student.profileId) this.studentLabelById.set(student.profileId, label);
+          this.studentIdByLabel.set(label, student.profileId ?? student.id);
         }
         this.fieldOptions = {
           guardian: [...this.parentIdByLabel.keys()],
@@ -120,7 +124,7 @@ export class Families implements OnInit {
     return {
       id: api.id,
       name: api.name ?? '',
-      guardian: this.parentLabelById.get(parentId) ?? parentId,
+      guardian: this.parentLabelById.get(parentId) ?? '',
       student: '',
       observations: '',
       phone: this.parentPhoneById.get(parentId) ?? '',
@@ -131,7 +135,8 @@ export class Families implements OnInit {
     return {
       ...this.fromApi(api),
       student: (api.children ?? [])
-        .map((id) => this.studentLabelById.get(id) ?? id)
+        .map((id) => this.studentLabelById.get(id) ?? '')
+        .filter(Boolean)
         .join(', '),
       observations: api.description ?? '',
     };

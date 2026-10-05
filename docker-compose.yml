@@ -26,9 +26,14 @@ services:
     environment:
       EXPO_UNSTABLE_HEADLESS: "1"
     tty: true
+    # tini as PID 1 so SIGTERM reaches expo on docker stop; without it expo
+    # ignores the signal (no handler) and gets SIGKILLed after the grace period.
+    init: true
     networks:
       - sg-services-network
-    command: sh -c "[ -d node_modules/expo ] || npm install; export REACT_NATIVE_PACKAGER_HOSTNAME=\"$${EXPO_LAN_IP:-}\"; exec npx expo start --lan --port 9081"
+    # exec the local binary instead of `npx expo`: npm wraps the process as
+    # PID 1 and reports `npm error ... signal SIGTERM` on every shutdown.
+    command: sh -c "[ -d node_modules/expo ] || npm install; export REACT_NATIVE_PACKAGER_HOSTNAME=\"$${EXPO_LAN_IP:-}\"; exec ./node_modules/.bin/expo start --lan --port 9081"
 
 volumes:
   expo_node_modules:

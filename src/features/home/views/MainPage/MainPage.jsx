@@ -79,8 +79,28 @@ export default function MainPage() {
           return;
         }
 
-        const routes = await getRouteApi("/routes");
-        const route = routes[0];
+        let route = null;
+
+        // Cargar ruta según el rol del usuario
+        if (role === "student") {
+          // Estudiante: obtener su ruta asignada
+          try {
+            route = await getRouteApi(`/routes/student/${session.profileId}`);
+          } catch {
+            route = null;
+          }
+        } else if (role === "driver") {
+          // Conductor: obtener su ruta actual
+          try {
+            route = await getRouteApi(`/routes/current?driverId=${session.profileId}`);
+          } catch {
+            route = null;
+          }
+        } else {
+          // Otros roles: obtener primera ruta (fallback)
+          const routes = await getRouteApi("/routes");
+          route = routes[0];
+        }
 
         if (!route) {
           setLoading(false);

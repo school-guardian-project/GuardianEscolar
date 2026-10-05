@@ -2,7 +2,9 @@
   "navbar": {
     "features": "Features",
     "how_it_works": "How it works",
-    "contact": "Contact"
+    "contact": "Contact",
+    "dashboard": "Dashboard",
+    "logout": "Sign out"
   },
   "hero": {
     "line1": "School",

@@ -2,7 +2,9 @@
   "navbar": {
     "features": "Fonctionnalités",
     "how_it_works": "Comment ça marche",
-    "contact": "Contact"
+    "contact": "Contact",
+    "dashboard": "Tableau de bord",
+    "logout": "Se déconnecter"
   },
   "hero": {
     "line1": "La",

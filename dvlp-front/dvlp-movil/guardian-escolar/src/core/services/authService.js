@@ -51,6 +51,7 @@ async function saveSession(data) {
     personId: data.personId ?? null,
     email: data.email ?? null,
     roleId: data.roleId ?? null,
+    campusId: data.campusId ?? null,
   };
   if (await SecureStore.isAvailableAsync()) {
     await SecureStore.setItemAsync(SESSION_KEY, JSON.stringify(session));
@@ -150,6 +151,20 @@ export function getRoleId() {
     const payload = accessToken.split(".")[1];
     const decoded = JSON.parse(atob(payload.replace(/-/g, "+").replace(/_/g, "/")));
     return typeof decoded.roleId === "number" ? decoded.roleId : null;
+  } catch {
+    return null;
+  }
+}
+
+/** Claim `campusId` del JWT. */
+export function getCampusId() {
+  if (!accessToken) {
+    return null;
+  }
+  try {
+    const payload = accessToken.split(".")[1];
+    const decoded = JSON.parse(atob(payload.replace(/-/g, "+").replace(/_/g, "/")));
+    return typeof decoded.campusId === "string" ? decoded.campusId : null;
   } catch {
     return null;
   }

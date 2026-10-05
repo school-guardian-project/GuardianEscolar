@@ -10,9 +10,10 @@ function withBearer(req: HttpRequest<unknown>, token: string): HttpRequest<unkno
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);
 
-  if (req.url.includes('/api/v1/auth/')) {
-    const token = auth.getToken();
-    return next(token ? withBearer(req, token) : req);
+  // Endpoints públicos que NO requieren token
+  const publicEndpoints = ['/api/v1/auth/login', '/api/v1/auth/refresh'];
+  if (publicEndpoints.some(ep => req.url.includes(ep))) {
+    return next(req);
   }
 
   let retried = false;

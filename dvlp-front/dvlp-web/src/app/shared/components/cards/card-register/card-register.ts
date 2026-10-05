@@ -4,6 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { validateField, validateBirthDate, validateFutureDate, ValidationSchema } from '@core/validators/form-validators';
 import { LocationMap } from '@shared/components/location-map/location-map';
+import { CampusesService } from '@core/services/campuses.service';
+import { VehicleTypesService } from '@core/services/vehicle-types.service';
+import { AuthService } from '@core/services/auth.service';
 
 export type RegisterType =
   | 'student'
@@ -68,8 +71,9 @@ const FIELDS: Record<RegisterType, Field[]> = {
   bus: [
     { name: 'matricula', type: 'text' },
     { name: 'driver', type: 'select', options: [] },
-    { name: 'model', type: 'text' },
-    { name: 'brand', type: 'text' },
+    { name: 'campus', type: 'select', options: [] },
+    { name: 'brand', type: 'select', options: [] },
+    { name: 'model', type: 'select', options: [] },
     { name: 'capacity', type: 'text' },
     { name: 'soat', type: 'date', halfWidth: true },
     { name: 'gps', type: 'select', options: ['Activo','Inactivo'], halfWidth: true },
@@ -157,8 +161,9 @@ const VALIDATION_SCHEMAS: Record<RegisterType, ValidationSchema> = {
   bus: {
     matricula: { required: true, minLength: 3 },
     driver: { required: true },
-    model: { required: true },
+    campus: { required: true },
     brand: { required: true },
+    model: { required: true },
     capacity: { required: true, pattern: 'number', min: 1, max: 100 },
     soat: { required: true, custom: validateFutureDate },
     gps: { required: true },
@@ -214,6 +219,9 @@ export class CardRegister implements OnInit, OnChanges {
   @Output() formSubmit = new EventEmitter<Record<string, any>>();
 
   private translate = inject(TranslateService);
+  private campusesService = inject(CampusesService);
+  private vehicleTypesService = inject(VehicleTypesService);
+  private authService = inject(AuthService);
 
   formData: Record<string, any> = {};
   groupedFields: any[] = [];
@@ -221,6 +229,12 @@ export class CardRegister implements OnInit, OnChanges {
   selectedStudent = '';
   validationMessage = '';
   fieldErrors: Record<string, string> = {};
+  
+  // Dropdown data
+  campuses: { id: string; name: string }[] = [];
+  brands: { id: number; name: string }[] = [];
+  models: { id: number; name: string; brandId: number }[] = [];
+  selectedBrandId: number | null = null;
 
   get titleKey(): string {
     return `register.${this.type}.title`;
@@ -237,10 +251,58 @@ export class CardRegister implements OnInit, OnChanges {
         this.formData[field.name] = '';
       }
     }
+    
+    // Load dropdown data for bus form
+    if (this.type === 'bus') {
+      this.loadCampuses();
+      this.loadBrands();
+    }
   }
 
   ngOnChanges(): void {
     this.groupedFields = this.buildGroupedFields();
+  }
+
+  loadCampuses(): void {
+    const schoolId = this.authService.session.campusId; // Using campusId as schoolId for now
+    if (schoolId) {
+      this.campusesService.listBySchool(schoolId).subscribe({
+        next: (campuses) => {
+          this.campuses = campuses;
+        },
+        error: (err) => {
+          console.error('Error loading campuses:', err);
+        }
+      });
+    }
+  }
+
+  loadBrands(): void {
+    this.vehicleTypesService.listBrands().subscribe({
+      next: (brands) => {
+        this.brands = brands;
+      },
+      error: (err) => {
+        console.error('Error loading brands:', err);
+      }
+    });
+  }
+
+  onBrandChange(brandId: number): void {
+    this.selectedBrandId = brandId;
+    this.formData['model'] = ''; // Reset model when brand changes
+    this.models = [];
+    
+    if (brandId) {
+      this.vehicleTypesService.listModels(brandId).subscribe({
+        next: (models) => {
+          this.models = models;
+        },
+        error: (err) => {
+          console.error('Error loading models:', err);
+        }
+      });
+    }
   }
 
   isFamilyStudentField(fieldName: string): boolean {
@@ -255,6 +317,11 @@ export class CardRegister implements OnInit, OnChanges {
     }
     this.formData[fieldName] = value;
     this.validateField(fieldName);
+    
+    // Handle brand change for bus form
+    if (this.type === 'bus' && fieldName === 'brand') {
+      this.onBrandChange(Number(value));
+    }
   }
 
   onLocationChange(coordinates: { latitude: number; longitude: number }): void {
@@ -326,6 +393,21 @@ export class CardRegister implements OnInit, OnChanges {
 
   getFieldError(fieldName: string): string {
     return this.fieldErrors[fieldName] || '';
+  }
+
+  getCampusName(campusId: string): string {
+    const campus = this.campuses.find(c => c.id === campusId);
+    return campus ? campus.name : '';
+  }
+
+  getBrandName(brandId: number): string {
+    const brand = this.brands.find(b => b.id === brandId);
+    return brand ? brand.name : '';
+  }
+
+  getModelName(modelId: number): string {
+    const model = this.models.find(m => m.id === modelId);
+    return model ? model.name : '';
   }
 
   onSubmit(): void {

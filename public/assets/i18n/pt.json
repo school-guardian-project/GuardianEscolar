@@ -2,7 +2,9 @@
   "navbar": {
     "features": "Funcionalidades",
     "how_it_works": "Como funciona",
-    "contact": "Contato"
+    "contact": "Contato",
+    "dashboard": "Painel",
+    "logout": "Sair"
   },
   "hero": {
     "line1": "A",

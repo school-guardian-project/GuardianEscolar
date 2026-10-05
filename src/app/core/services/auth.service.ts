@@ -18,6 +18,7 @@ interface LoginResponse {
   personId: string;
   email: string;
   roleId: number | null;
+  campusId: string | null;
 }
 
 interface RefreshResponse {
@@ -25,12 +26,14 @@ interface RefreshResponse {
   profileId?: string;
   personId?: string;
   email?: string;
+  campusId?: string;
 }
 
 export interface Session {
   profileId: string | null;
   personId: string | null;
   email: string | null;
+  campusId: string | null;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -39,7 +42,7 @@ export class AuthService {
 
   private accessToken: string | null = null;
   private refreshInFlight: Observable<string> | null = null;
-  private userSession: Session = { profileId: null, personId: null, email: null };
+  private userSession: Session = { profileId: null, personId: null, email: null, campusId: null };
 
   constructor(
     private http: HttpClient,
@@ -68,7 +71,7 @@ export class AuthService {
           }),
           catchError((err) => {
             this.accessToken = null;
-            this.userSession = { profileId: null, personId: null, email: null };
+            this.userSession = { profileId: null, personId: null, email: null, campusId: null };
             return throwError(() => err);
           }),
           finalize(() => { this.refreshInFlight = null; }),
@@ -86,7 +89,7 @@ export class AuthService {
       .post<void>(`${this.base}/logout`, null, { withCredentials: true, headers })
       .pipe(finalize(() => {
         this.accessToken = null;
-        this.userSession = { profileId: null, personId: null, email: null };
+        this.userSession = { profileId: null, personId: null, email: null, campusId: null };
       }));
   }
 
@@ -110,6 +113,16 @@ export class AuthService {
   }
 
   /**
+   * true si la sesión actual tiene alguno de los roles indicados. Es el filtro
+   * que usan los menús: un elemento de navegación solo se muestra cuando el rol
+   * de la sesión podría abrir la ruta a la que apunta.
+   */
+  hasRole(...roles: number[]): boolean {
+    const roleId = this.roleId;
+    return roleId !== null && roles.includes(roleId);
+  }
+
+  /**
    * Rellena la sesión desde la respuesta del backend y, en refresh, desde los
    * claims del JWT cuando el endpoint no repite los datos.
    */
@@ -121,7 +134,12 @@ export class AuthService {
       const fromClaims = claims[key];
       return typeof fromClaims === 'string' && fromClaims ? fromClaims : this.userSession[key];
     };
-    this.userSession = { profileId: pick('profileId'), personId: pick('personId'), email: pick('email') };
+    this.userSession = {
+      profileId: pick('profileId'),
+      personId: pick('personId'),
+      email: pick('email'),
+      campusId: pick('campusId')
+    };
   }
 
   private claims(): Record<string, unknown> {

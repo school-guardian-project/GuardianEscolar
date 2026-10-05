@@ -215,6 +215,7 @@
     "speed": "Velocidad",
     "status": "Estado",
     "lastUpdated": "Última actualización",
+    "centerOnLocation": "Centrar en ubicación GPS",
     "active": "GPS activo",
     "inactive": "GPS sin conexión",
     "loadingLocation": "Cargando ubicación...",

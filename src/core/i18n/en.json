@@ -205,6 +205,7 @@
     "speed": "Speed",
     "status": "Status",
     "lastUpdated": "Last updated",
+    "centerOnLocation": "Center on GPS location",
     "active": "GPS active",
     "inactive": "GPS disconnected",
     "loadingLocation": "Loading location...",

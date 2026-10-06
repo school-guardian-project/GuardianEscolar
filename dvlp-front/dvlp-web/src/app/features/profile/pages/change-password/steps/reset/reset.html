@@ -8,12 +8,11 @@
   [returnStep]="'change_password.reset.returnStep' | translate"
   (return)="return()"
   [showProgress]="true"
-  [currentStep]="3"
+  [currentStep]="2"
   [stepText]="'change_password.reset.stepText' | translate"
   (submit)="onSubmit()"
 >
   <form action="" [formGroup]="form">
-    <!-- Este contenido se debe cambiar -->
     <div class="input-password">
       <div class="password">
         <label for="password">{{ 'forgot_password.reset.fields.password' | translate }}</label>
@@ -29,6 +28,9 @@
           }
           @if (form.get('password')?.dirty && form.get('password')?.errors?.['pattern']) {
             <small class="error">{{ 'forgot_password.reset.errors.pattern' | translate }}</small>
+          }
+          @if (serverError) {
+            <small class="error">{{ 'change_password.reset.error_invalid' | translate }}</small>
           }
       </div>
     </div>

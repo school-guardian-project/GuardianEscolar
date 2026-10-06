@@ -1,12 +1,12 @@
 import { Routes } from "@angular/router";
-import { Email } from "./steps/email/email";
+import { CurrentPassword } from "./steps/current-password/current-password";
 import { Reset } from "./steps/reset/reset";
-import { Code } from "./steps/code/code";
 import { ChangePassword } from "./change-password";
 
 export const routes: Routes = [
-    { path: "email", component: Email },
-    { path: "code", component: Code },
+    // El contrato real (POST /api/v1/auth/change-password) solo pide la
+    // contraseña actual + la nueva: no hay paso de código de verificación.
+    { path: "current-password", component: CurrentPassword },
     { path: "reset", component: Reset },
-    { path: "", redirectTo: "email", pathMatch: "full" }
+    { path: "", redirectTo: "current-password", pathMatch: "full" }
 ]

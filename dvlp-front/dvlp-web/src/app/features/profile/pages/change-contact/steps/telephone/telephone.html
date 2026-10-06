@@ -23,6 +23,9 @@
         <small class="error">{{ 'change_contact.telephone.error_required' | translate }}</small>
       }
       <p>{{ 'change_contact.telephone.help_text' | translate }}</p>
+      @if (unavailable) {
+        <small class="error unavailable">{{ 'change_contact.telephone.unavailable' | translate }}</small>
+      }
     </div>
   </form>
 </app-change-information>

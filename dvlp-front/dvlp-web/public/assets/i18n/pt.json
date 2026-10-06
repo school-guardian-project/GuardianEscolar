@@ -168,7 +168,8 @@
       "label": "Telefone",
       "error_pattern": "*Deve ser um número válido.",
       "error_required": "*O telefone é obrigatório.",
-      "help_text": "Digite seu número para receber um código de verificação."
+      "help_text": "Digite seu número para receber um código de verificação.",
+      "unavailable": "Esta opção não está disponível no momento. Seu número permanece inalterado."
     },
     "code_first": {
       "title": "Verificar código",
@@ -217,7 +218,8 @@
       "email_label": "Email",
       "error_pattern": "*Deve ser um email válido.",
       "error_required": "*O email é obrigatório.",
-      "help_text": "Você receberá um código de verificação neste email."
+      "help_text": "Você receberá um código de verificação neste email.",
+      "unavailable": "Esta opção não está disponível no momento. Seu e-mail permanece inalterado."
     },
     "code_first": {
       "title": "Verificar código",
@@ -255,18 +257,18 @@
       "case": "Combinação de minúsculas e maiúsculas",
       "special": "Caracteres especiais (. - _ @ *)"
     },
-    "email": {
+    "current": {
       "title": "Alterar senha",
-      "sessionDescription": "Digite seu email para receber um código de recuperação.",
-      "titleStep": "Passo 1",
-      "loginDescription": "Você deve fornecer seu email cadastrado.",
-      "buttonText": "Enviar código",
+      "sessionDescription": "Digite sua senha atual para continuar.",
+      "titleStep": "Etapa 1",
+      "loginDescription": "Você deve fornecer sua senha atual.",
+      "buttonText": "Continuar",
       "returnStep": "Voltar",
-      "stepText": "1 de 3",
-      "email_label": "Email",
-      "error_pattern": "*Deve ser um email válido.",
-      "error_required": "*O email é obrigatório.",
-      "help_text": "Você receberá um código para redefinir sua senha."
+      "stepText": "1 de 2",
+      "password_label": "Senha atual",
+      "error_required": "*A senha é obrigatória.",
+      "error_minlength": "*A senha deve ter pelo menos 8 caracteres.",
+      "help_text": "Verificaremos sua identidade antes de alterá-la."
     },
     "code": {
       "title": "Verificar código",
@@ -279,15 +281,16 @@
       "pin_error": "*O código inserido não é válido."
     },
     "reset": {
-      "title": "Redefinir senha",
+      "title": "Nova senha",
       "sessionDescription": "Crie uma nova senha segura.",
-      "titleStep": "Passo 3",
+      "titleStep": "Etapa 2",
       "loginDescription": "Sua senha deve atender aos requisitos mínimos.",
       "buttonText": "Salvar senha",
       "returnStep": "Voltar",
-      "stepText": "3 de 3",
+      "stepText": "2 de 2",
       "confirmationTitle": "Senha atualizada",
-      "confirmationDescription": "Sua senha foi atualizada com sucesso."
+      "confirmationDescription": "Sua senha foi atualizada com sucesso.",
+      "error_invalid": "A senha atual está incorreta ou a senha não pôde ser atualizada. Tente novamente."
     }
   },
   "dashboard": {

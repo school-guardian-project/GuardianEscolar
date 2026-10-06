@@ -113,25 +113,12 @@
               <p class="info-value">{{ address }}</p>
             </div>
 
-            <div class="info-item">
-              <div class="info-item-header">
-                <p class="info-label">
-                  <mat-icon>location_city</mat-icon> 
-                  {{ 'admin_profile.labels.city' | translate }}
-                </p>
-              </div>
-              <p class="info-value"></p>
-            </div>
-
-            <div class="info-item">
-              <div class="info-item-header">
-                <p class="info-label">
-                  <mat-icon>school</mat-icon> 
-                  {{ 'admin_profile.labels.school' | translate }}
-                </p>
-              </div>
-              <p class="info-value"></p>
-            </div>
+            <!--
+              ciudad y colegio no se muestran: el backend (ms-user-management
+              GET /api/admins/{id}) devuelve los datos de la persona sin ciudad
+              ni nombre de colegio. Mostrar la etiqueta con el valor vacío
+              confunde; se vuelven a añadir cuando el endpoint los provea.
+            -->
 
             <div class="info-item">
               <div class="info-item-header">

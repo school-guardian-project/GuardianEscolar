@@ -12,6 +12,9 @@ import { TranslateModule } from '@ngx-translate/core';
 })
 export class Telephone {
   form: FormGroup;
+  // No existe backend de cambio de teléfono (ms-iam solo expone change-password):
+  // el flujo se detiene aquí con un aviso en lugar de fingir pasos de verificación.
+  unavailable = false;
 
   constructor(private router: Router, private fb: FormBuilder) {
     const patternNumber = /^\+?[1-9]\d{1,14}$/;
@@ -22,7 +25,7 @@ export class Telephone {
 
   onSubmit() {
     if (this.form.valid) {
-      this.router.navigate(['/admin/change-contact/code-first']);
+      this.unavailable = true;
     } else {
       this.form.markAllAsTouched();
     }

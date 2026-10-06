@@ -95,13 +95,17 @@ const FIELDS: Record<RegisterType, Field[]> = {
 
   bus: [
     { name: 'matricula', type: 'text' },
+    // El conductor se llena con datos reales (GET /drivers via fieldOptions) pero
+    // no va en el create: se asigna tras el alta con PUT /buses/{id}/driver.
     { name: 'driver', type: 'select', options: [] },
     { name: 'campus', type: 'select', optionsSource: 'campus' },
     { name: 'brand', type: 'select', optionsSource: 'brand' },
     { name: 'model', type: 'select', optionsSource: 'model' },
     { name: 'capacity', type: 'text' },
     { name: 'soat', type: 'date', halfWidth: true },
-    { name: 'gps', type: 'select', options: ['Activo','Inactivo'], halfWidth: true },
+    // No hay select de GPS a propósito: no existe listado de dispositivos GPS en
+    // el backend (el proveedor api/gps-devices no está implementado), asi que
+    // "Activo/Inactivo" era un dato falso que no llegaba a ningún lado.
   ],
 
   stop: [
@@ -195,13 +199,13 @@ const VALIDATION_SCHEMAS: Record<RegisterType, ValidationSchema> = {
   },
   bus: {
     matricula: { required: true, minLength: 3 },
-    driver: { required: true },
+    // El conductor es opcional en el alta: un bus puede crearse sin conductor y
+    // asignarse después (modal de asignación / PUT /buses/{id}/driver).
     campus: { required: true },
     brand: { required: true },
     model: { required: true },
     capacity: { required: true, pattern: 'number', min: 1, max: 100 },
     soat: { required: true, custom: validateFutureDate },
-    gps: { required: true },
   },
   stop: {
     name: { required: true, minLength: 2, maxLength: 30 },

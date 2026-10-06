@@ -18,6 +18,8 @@ interface LoginResponse {
   personId: string;
   email: string;
   roleId: number | null;
+  campusId: string | null;
+  schoolId: string | null;
 }
 
 interface RefreshResponse {
@@ -25,13 +27,35 @@ interface RefreshResponse {
   profileId?: string;
   personId?: string;
   email?: string;
+  campusId?: string;
+  schoolId?: string;
 }
 
+/**
+ * Datos del usuario en sesion.
+ *
+ * `campusId` y `schoolId` no son intercambiables aunque ambos apunten a un id de
+ * `School`: el primero es la sede a la que pertenece una persona (student,
+ * driver, parent) y el segundo es el colegio que administra un admin. La sede se
+ * usa para comparar rutas; el colegio, para acotar que estudiantes y que sedes
+ * puede ver quien administra. Mandar uno donde se espera el otro produce un id
+ * valido en forma que no existe en la tabla buscada, y el backend responde 400.
+ */
 export interface Session {
   profileId: string | null;
   personId: string | null;
   email: string | null;
+  campusId: string | null;
+  schoolId: string | null;
 }
+
+const EMPTY_SESSION: Session = {
+  profileId: null,
+  personId: null,
+  email: null,
+  campusId: null,
+  schoolId: null,
+};
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -39,7 +63,7 @@ export class AuthService {
 
   private accessToken: string | null = null;
   private refreshInFlight: Observable<string> | null = null;
-  private userSession: Session = { profileId: null, personId: null, email: null };
+  private userSession: Session = { ...EMPTY_SESSION };
 
   constructor(
     private http: HttpClient,
@@ -68,7 +92,7 @@ export class AuthService {
           }),
           catchError((err) => {
             this.accessToken = null;
-            this.userSession = { profileId: null, personId: null, email: null };
+            this.userSession = { ...EMPTY_SESSION };
             return throwError(() => err);
           }),
           finalize(() => { this.refreshInFlight = null; }),
@@ -86,13 +110,18 @@ export class AuthService {
       .post<void>(`${this.base}/logout`, null, { withCredentials: true, headers })
       .pipe(finalize(() => {
         this.accessToken = null;
-        this.userSession = { profileId: null, personId: null, email: null };
+        this.userSession = { ...EMPTY_SESSION };
       }));
   }
 
   /** Datos de la sesión del usuario logueado (profileId, personId, email). */
   get session(): Session {
     return this.userSession;
+  }
+
+  /** Refleja en la sesión un correo ya cambiado en el backend (el claim del JWT queda viejo hasta el próximo refresh). */
+  updateSessionEmail(email: string): void {
+    this.userSession = { ...this.userSession, email };
   }
 
   getToken(): string | null {
@@ -110,6 +139,16 @@ export class AuthService {
   }
 
   /**
+   * true si la sesión actual tiene alguno de los roles indicados. Es el filtro
+   * que usan los menús: un elemento de navegación solo se muestra cuando el rol
+   * de la sesión podría abrir la ruta a la que apunta.
+   */
+  hasRole(...roles: number[]): boolean {
+    const roleId = this.roleId;
+    return roleId !== null && roles.includes(roleId);
+  }
+
+  /**
    * Rellena la sesión desde la respuesta del backend y, en refresh, desde los
    * claims del JWT cuando el endpoint no repite los datos.
    */
@@ -121,7 +160,16 @@ export class AuthService {
       const fromClaims = claims[key];
       return typeof fromClaims === 'string' && fromClaims ? fromClaims : this.userSession[key];
     };
-    this.userSession = { profileId: pick('profileId'), personId: pick('personId'), email: pick('email') };
+    this.userSession = {
+      profileId: pick('profileId'),
+      personId: pick('personId'),
+      email: pick('email'),
+      campusId: pick('campusId'),
+      // El login y el refresh no lo repiten en el body (solo en el JWT), asi que
+      // casi siempre llega de los claims. Mirar el claim de todas formas deja
+      // que un backend futuro lo exponga sin tocar este servicio.
+      schoolId: pick('schoolId'),
+    };
   }
 
   private claims(): Record<string, unknown> {

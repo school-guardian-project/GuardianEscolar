@@ -158,24 +158,24 @@
   "change_contact": {
     "telephone": {
       "title": "Change phone",
-      "sessionDescription": "For security, verify your contact number.",
+      "sessionDescription": "For security, we will send an SMS to your current phone.",
       "titleStep": "Step 1",
       "buttonText": "Send code",
       "returnStep": "Back",
       "stepText": "1 of 4",
-      "label": "Phone",
+      "label": "Current phone",
       "error_pattern": "*Must be a valid phone number.",
       "error_required": "*Phone is required.",
-      "help_text": "Enter your number to receive a verification code."
+      "help_text": "Enter the current phone of your account with country code, e.g. +573001234567."
     },
     "code_first": {
       "title": "Verify code",
-      "sessionDescription": "Enter the code sent to your phone.",
+      "sessionDescription": "Check the SMS sent to your current phone and type the code.",
       "titleStep": "Step 2",
       "buttonText": "Verify",
       "returnStep": "Back",
       "stepText": "2 of 4",
-      "description": "Check your message and enter the 6-digit code.",
+      "description": "Check the SMS sent to your current phone and type the code.",
       "pin_error": "*The entered code is invalid."
     },
     "reset": {
@@ -186,21 +186,25 @@
       "returnStep": "Back",
       "stepText": "3 of 4",
       "label": "New phone",
-      "error_pattern": "*Must be a valid phone number.",
+      "error_pattern": "*Use international format, e.g. +573001234567.",
       "error_required": "*Phone is required.",
-      "help_text": "Type the new contact number."
+      "help_text": "You will receive an SMS with a code at this number (+country code and number)."
     },
     "code_second": {
       "title": "Confirm code",
-      "sessionDescription": "Enter the code sent to the new number.",
+      "sessionDescription": "Enter the SMS code sent to the new number.",
       "titleStep": "Step 4",
       "buttonText": "Confirm",
       "returnStep": "Back",
       "stepText": "4 of 4",
-      "description": "Enter the code to complete the phone change.",
+      "description": "Enter the SMS code to finish the phone change.",
       "pin_error": "*The entered code is invalid.",
       "confirmationTitle": "Phone updated",
       "confirmationDescription": "Your phone number has been updated successfully."
+    },
+    "errors": {
+      "invalid_phone": "The number is invalid or the request expired. Use the format +573001234567 or restart the process.",
+      "sms_unavailable": "We could not send the SMS right now. Please try again later."
     }
   },
   "change_email": {
@@ -488,6 +492,7 @@
         "name": "Name",
         "student": "Student",
         "city": "City",
+        "school": "School",
         "address": "Address",
         "latitude": "Latitude",
         "longitude": "Longitude"
@@ -636,6 +641,7 @@
         "name": "Name",
         "student": "Student",
         "city": "City",
+        "school": "School",
         "address": "Address",
         "latitude": "Latitude",
         "longitude": "Longitude"
@@ -695,7 +701,8 @@
         "grade": "Grade",
         "phone": "Phone",
         "address": "Address",
-        "email": "Email"
+        "email": "Email",
+        "campus": "Campus"
       }
     },
     "guardian": {
@@ -708,7 +715,8 @@
         "identification": "Identification number",
         "birthDate": "Date of birth",
         "phone": "Phone",
-        "address": "Address"
+        "address": "Address",
+        "campus": "Campus"
       }
     },
     "driver": {
@@ -722,7 +730,8 @@
         "licenseExpiration": "License expiration",
         "licenseNumber": "License number",
         "address": "Address",
-        "email": "Email"
+        "email": "Email",
+        "campus": "Campus"
       }
     },
     "family": {
@@ -752,6 +761,7 @@
         "name": "Stop name",
         "student": "Student",
         "city": "City",
+        "school": "School",
         "address": "Address",
         "route": "Route"
       }
@@ -777,7 +787,8 @@
         "identification": "Identification",
         "birthDate": "Date of birth",
         "phone": "Phone",
-        "address": "Address"
+        "address": "Address",
+        "school": "School"
       }
     },
     "schools": {
@@ -790,12 +801,48 @@
         "phone": "Phone",
         "schooling": "Education level",
         "email": "Email",
-        "website": "Website"
-      }
+        "website": "Website",
+        "campusNames": "Campuses"
+      },
+      "campusNamePlaceholder": "Campus name",
+      "addCampus": "Add campus",
+      "removeCampus": "Remove campus",
+      "campusNamesRequired": "Add at least one campus for the school",
+      "campusNamesDuplicated": "The campus “{{name}}” is duplicated"
+    },
+    "options": {
+      "noSchool": "There is no school assigned to this session to list its campuses.",
+      "loadError": "Could not load options. Try again in a moment.",
+      "empty": "No options available."
     }
   },
   "search": {
     "search": "Search..."
+  },
+  "assign_record": {
+    "route": {
+      "title": "Assign bus to route",
+      "bus": "Bus",
+      "selectBus": "Select a bus"
+    },
+    "student": {
+      "title": "Assign student to route",
+      "route": "Route",
+      "stop": "Boarding stop",
+      "selectRoute": "Select a route",
+      "selectStop": "Select a stop"
+    },
+    "bus": {
+      "title": "Assign driver to bus",
+      "driver": "Driver",
+      "currentDriver": "Current driver",
+      "selectDriver": "Select a driver"
+    },
+    "buttons": {
+      "assign": "Assign",
+      "unassign": "Unassign"
+    },
+    "genericError": "The action could not be completed. Check that the backend is available."
   },
   "card_list": {
     "student": "Registered students",

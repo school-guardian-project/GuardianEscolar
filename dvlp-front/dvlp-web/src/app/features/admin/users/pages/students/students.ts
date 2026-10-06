@@ -12,11 +12,14 @@ import { NavbarAdmin } from '@shared/components/navbar/navbar-admin/navbar-admin
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
+import { AssignRecord } from '@shared/components/modal/assign-record/assign-record';
 import { StudentsService } from '@core/services/students.service';
-import { PersonListDto, PersonRequestDto, PersonResponseDto } from '@core/models/student.model';
+import { PersonListDto, PersonRequestDto, CreatePersonRequestDto, PersonResponseDto } from '@core/models/student.model';
+import { describeProblem } from '@core/http/problem-detail';
 
 interface StudentView extends RecordData {
   id?: string;
+  profileId?: string | null;
   names: string;
   lastNames: string;
   name: string;
@@ -33,6 +36,7 @@ function fromApi(api: PersonListDto): StudentView {
   const lastNames = api.lastName ?? '';
   return {
     id: api.id,
+    profileId: api.profileId ?? null,
     names,
     lastNames,
     name: `${names} ${lastNames}`.trim(),
@@ -67,12 +71,25 @@ function toPayload(form: RecordData): PersonRequestDto {
   };
 }
 
+/**
+ * El payload del POST lleva la sede (campusId). Se separa de {@link toPayload}
+ * porque el PUT no la acepta: mandarla en el update no tendría efecto y, peor,
+ * sugeriría que ahí se cambia la sede cuando es un traslado.
+ */
+function toCreatePayload(form: RecordData): CreatePersonRequestDto {
+  return {
+    ...toPayload(form),
+    campusId: String(form['campus'] ?? '').trim(),
+  };
+}
+
 const REQUIRED_FIELDS = [
   'names',
   'lastNames',
   'documentType',
   'identification',
   'birthDate',
+  'campus',
   'phone',
   'address',
   'email',
@@ -88,7 +105,7 @@ const MAX_LENGTHS: Record<string, number> = {
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
-const INT_MAX = 2147483647;
+const PHONE_MAX = 999999999999999; // BIGINT column, up to 15 digits (E.164)
 
 function isValidStudentForm(form: RecordData): boolean {
   for (const field of REQUIRED_FIELDS) {
@@ -117,7 +134,7 @@ function isValidStudentForm(form: RecordData): boolean {
 
   const digits = String(form['phone'] ?? '').replace(/\D/g, '');
   const phone = Number(digits);
-  if (!digits || phone < 1 || phone > INT_MAX) {
+  if (!digits || phone < 1 || phone > PHONE_MAX) {
     return false;
   }
 
@@ -140,6 +157,7 @@ function isValidStudentForm(form: RecordData): boolean {
     RecordInformation,
     UpdateRecord,
     DeleteRecord,
+    AssignRecord,
   ],
   templateUrl: './students.html',
   styleUrl: './students.scss',
@@ -180,15 +198,15 @@ export class Students implements OnInit {
       return;
     }
 
-    this.studentsService.create(toPayload(form)).subscribe({
+    this.studentsService.create(toCreatePayload(form)).subscribe({
       next: () => {
         this.register?.setValidationMessage('');
         this.register?.resetForm();
         this.load();
       },
-      error: () => {
+      error: (err) => {
         this.register?.setValidationMessage(
-          'No se pudo registrar el estudiante. Verifica que el backend esté disponible.'
+          describeProblem(err, 'No se pudo registrar el estudiante. Verifica que el backend esté disponible.')
         );
       },
     });
@@ -282,5 +300,21 @@ export class Students implements OnInit {
         this.load();
       },
     });
+  }
+
+  showAssignModal = false;
+
+  showAssign(student: RecordData): void {
+    this.studentSelected = student;
+    this.showAssignModal = true;
+  }
+
+  closeAssignModal(): void {
+    this.showAssignModal = false;
+    this.studentSelected = {};
+  }
+
+  onAssigned(): void {
+    this.load();
   }
 }

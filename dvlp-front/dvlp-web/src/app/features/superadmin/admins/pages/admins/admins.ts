@@ -12,7 +12,8 @@ import { RecordInformation, RecordData } from '@shared/components/modal/record-i
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
 import { AdminsService } from '../../services/admins.service';
-import { AdminListDto, AdminRequestDto, AdminResponseDto } from '../../models/admin.model';
+import { AdminListDto, AdminRequestDto, CreateAdminRequestDto, AdminResponseDto } from '../../models/admin.model';
+import { describeProblem } from '@core/http/problem-detail';
 
 interface AdminView extends RecordData {
   id?: string;
@@ -56,6 +57,18 @@ function toPayload(form: RecordData): AdminRequestDto {
     phone: Number(digits),
     residenceAddress: String(form['address'] ?? '').trim(),
     dateBirth: String(form['birthDate'] ?? '').trim(),
+  };
+}
+
+/**
+ * El alta lleva el colegio que el admin va a administrar (schoolId), y no una
+ * sede: su relación vive en School.SchoolAdmin. Solo va en el POST; el PUT usa
+ * {@link toPayload}.
+ */
+function toCreatePayload(form: RecordData): CreateAdminRequestDto {
+  return {
+    ...toPayload(form),
+    schoolId: String(form['school'] ?? '').trim(),
   };
 }
 
@@ -106,15 +119,15 @@ export class Admins implements OnInit {
   }
 
   onCreated(form: RecordData): void {
-    this.adminsService.create(toPayload(form)).subscribe({
+    this.adminsService.create(toCreatePayload(form)).subscribe({
       next: () => {
         this.register?.setValidationMessage('');
         this.register?.resetForm();
         this.load();
       },
-      error: () => {
+      error: (err) => {
         this.register?.setValidationMessage(
-          'No se pudo registrar el administrador. Verifica que el backend esté disponible.'
+          describeProblem(err, 'No se pudo registrar el administrador. Verifica que el backend esté disponible.')
         );
       },
     });

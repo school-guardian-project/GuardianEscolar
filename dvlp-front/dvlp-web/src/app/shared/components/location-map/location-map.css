@@ -1,0 +1,19 @@
+.location-map {
+  width: 100%;
+  margin: 4px 0 10px;
+  flex-shrink: 0;
+}
+
+.location-map__canvas {
+  width: 100%;
+  height: 220px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.location-map__coords {
+  margin: 6px 0 0;
+  font-size: 12px;
+  font-family: monospace;
+  color: var(--text-muted, #6b7280);
+}

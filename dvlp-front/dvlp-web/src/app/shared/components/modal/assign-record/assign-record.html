@@ -1,0 +1,82 @@
+<div class="modal-overlay" (click)="close()">
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <!-- HEADER -->
+    <div class="modal__header">
+      <h2 class="modal__title">{{ titleKey | translate }}</h2>
+    </div>
+
+    <!-- HEADER INFO -->
+    <div class="modal__header-info">
+      <div class="modal__logo">
+        <mat-icon>{{ icon }}</mat-icon>
+      </div>
+      <p class="modal__name">{{ displayName }}</p>
+    </div>
+
+    <p class="assign-record__message" *ngIf="message">{{ message | translate }}</p>
+
+    <!-- ROUTE: asignar bus -->
+    <div class="modal__info-grid" *ngIf="type === 'route' && !routeHasBus">
+      <div class="modal__info-item">
+        <label class="modal__info-label">{{ 'assign_record.route.bus' | translate }}</label>
+        <select class="modal__info-value" [(ngModel)]="selectedBusId" name="busId">
+          <option value="" disabled>{{ 'assign_record.route.selectBus' | translate }}</option>
+          <option *ngFor="let bus of buses" [value]="bus.id">{{ bus.label }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- STUDENT: asignar ruta y parada -->
+    <div class="modal__info-grid" *ngIf="type === 'student'">
+      <div class="modal__info-item">
+        <label class="modal__info-label">{{ 'assign_record.student.route' | translate }}</label>
+        <select class="modal__info-value" [(ngModel)]="selectedRouteId" (ngModelChange)="onRouteChange($event)"
+          name="routeId">
+          <option value="" disabled>{{ 'assign_record.student.selectRoute' | translate }}</option>
+          <option *ngFor="let route of routes" [value]="route.id">{{ route.label }}</option>
+        </select>
+      </div>
+      <div class="modal__info-item">
+        <label class="modal__info-label">{{ 'assign_record.student.stop' | translate }}</label>
+        <select class="modal__info-value" [(ngModel)]="selectedStopId" name="stopId"
+          [disabled]="!selectedRouteId || !stops.length">
+          <option value="" disabled>{{ 'assign_record.student.selectStop' | translate }}</option>
+          <option *ngFor="let stop of stops" [value]="stop.id">{{ stop.label }}</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- BUS: asignar/desasignar conductor -->
+    <div class="modal__info-grid" *ngIf="type === 'bus'">
+      <div class="modal__info-item" *ngIf="!currentDriver">
+        <label class="modal__info-label">{{ 'assign_record.bus.driver' | translate }}</label>
+        <select class="modal__info-value" [(ngModel)]="selectedDriverProfileId" name="driverProfileId">
+          <option value="" disabled>{{ 'assign_record.bus.selectDriver' | translate }}</option>
+          <option *ngFor="let driver of drivers" [value]="driver.id">{{ driver.label }}</option>
+        </select>
+      </div>
+      <div class="modal__info-item" *ngIf="currentDriver">
+        <label class="modal__info-label">{{ 'assign_record.bus.currentDriver' | translate }}</label>
+        <p class="modal__info-value assign-record__driver">{{ currentDriver }}</p>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="modal__footer">
+      <button class="modal__btn" (click)="close()">
+        {{ 'common.cancel' | translate }}
+      </button>
+
+      <button *ngIf="type !== 'bus' || !currentDriver" class="modal__btn modal__btn--submit"
+        [disabled]="!canSubmit" (click)="submit()">
+        {{ 'assign_record.buttons.assign' | translate }}
+      </button>
+
+      <button *ngIf="type === 'bus' && currentDriver" class="modal__btn modal__btn--submit" (click)="unassign()">
+        {{ 'assign_record.buttons.unassign' | translate }}
+      </button>
+    </div>
+
+  </div>
+</div>

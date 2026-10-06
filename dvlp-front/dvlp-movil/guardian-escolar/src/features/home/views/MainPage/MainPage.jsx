@@ -19,6 +19,18 @@ import { postNotificationApi } from "@core/services/notificationApi";
 
 import styles from "./MainPage.style";
 
+const EMPTY_GUID = "00000000-0000-0000-0000-000000000000";
+
+async function getCurrentTrip(driverId) {
+  if (!driverId) return null;
+
+  try {
+    return await getRouteApi(`/trips/current?driverId=${driverId}`);
+  } catch {
+    return null;
+  }
+}
+
 export default function MainPage() {
   const { width } = useWindow();
   const insets = useSafeAreaInsets();
@@ -44,10 +56,13 @@ export default function MainPage() {
 
       if (!route) return;
 
+      const trip = await getCurrentTrip(session?.profileId);
+
       await postNotificationApi("/v1/notifications/scan", {
-        routeExecutionId: route.id,
+        routeId: route.id,
+        routeExecutionId: trip?.id ?? EMPTY_GUID,
         studentProfileId: qrData.id,
-        routeStopId: qrData.routeStopId || route.id,
+        routeStopId: qrData.routeStopId || EMPTY_GUID,
         boardingType: scanMode,
       });
     } catch (error) {
@@ -64,8 +79,28 @@ export default function MainPage() {
           return;
         }
 
-        const routes = await getRouteApi("/routes");
-        const route = routes[0];
+        let route = null;
+
+        // Cargar ruta según el rol del usuario
+        if (role === "student") {
+          // Estudiante: obtener su ruta asignada
+          try {
+            route = await getRouteApi(`/routes/student/${session.profileId}`);
+          } catch {
+            route = null;
+          }
+        } else if (role === "driver") {
+          // Conductor: obtener su ruta actual
+          try {
+            route = await getRouteApi(`/routes/current?driverId=${session.profileId}`);
+          } catch {
+            route = null;
+          }
+        } else {
+          // Otros roles: obtener primera ruta (fallback)
+          const routes = await getRouteApi("/routes");
+          route = routes[0];
+        }
 
         if (!route) {
           setLoading(false);

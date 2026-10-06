@@ -23,6 +23,7 @@ export class ChangeInformation {
   @Input() showProgress = false;
   @Input() currentStep = 1;
   @Input() stepText = '';
+  @Input() disabled = false;
 
   getProgressBars(): number[] {
     return [1, 2, 3, 4];

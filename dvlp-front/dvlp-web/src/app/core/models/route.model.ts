@@ -26,6 +26,23 @@ export interface RouteResponseDto {
   startTime: string;
   endTime: string;
   status: RouteStatus;
-  createdAt: string;
-  updatedAt: string;
+  busId?: string | null;
+  stops?: RouteStopDetailDto[];
+}
+
+export interface RouteStopDetailDto {
+  id: string;
+  name: string;
+  address: string;
+  latitude: number;
+  longitude: number;
+  orderSequence: number;
+}
+
+export interface StudentRouteStopDto {
+  routeId: string;
+  studentProfileId: string;
+  routeStopId: string;
+  stopId: string;
+  stopName: string;
 }

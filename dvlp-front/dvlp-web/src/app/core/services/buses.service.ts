@@ -24,8 +24,10 @@ export class BusesService {
     return this.http.get<BusResponseDto>(`${this.base}/${id}`);
   }
 
-  create(payload: BusRequestDto): Observable<void> {
-    return this.http.post<void>(this.base, payload);
+  create(payload: BusRequestDto): Observable<string> {
+    // El backend responde Ok(busId): el id en crudo, necesario para asignar el
+    // conductor justo después del alta.
+    return this.http.post<string>(this.base, payload);
   }
 
   update(id: string, payload: BusRequestDto): Observable<void> {
@@ -34,5 +36,13 @@ export class BusesService {
 
   remove(id: string): Observable<void> {
     return this.http.delete<void>(`${this.base}/${id}`);
+  }
+
+  assignDriver(busId: string, profileId: string): Observable<void> {
+    return this.http.put<void>(`${this.base}/${busId}/driver`, { profileId });
+  }
+
+  unassignDriver(busId: string): Observable<void> {
+    return this.http.delete<void>(`${this.base}/${busId}/driver`);
   }
 }

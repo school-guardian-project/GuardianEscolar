@@ -75,8 +75,8 @@ const ITEM_FIELDS: Record<CardType, ItemField[]> = {
   stop: [
     { key: 'name' },
     { key: 'address', labelKey: 'card_list.labels.address' },
-    { key: 'latitud', halfWidth: true },
-    { key: 'longitud', halfWidth: true },
+    { key: 'latitude', halfWidth: true },
+    { key: 'longitude', halfWidth: true },
   ],
   route: [
     { key: 'name' },
@@ -108,10 +108,12 @@ export class CardList implements OnInit, OnDestroy {
   /** Datos externos; si es null la lista queda vacía. */
   @Input() data: any[] | null = null;
   @Input() remoteSearch = false;
+  @Input() showAssign = false;
 
   @Output() viewItem = new EventEmitter<RecordData>();
   @Output() editItem = new EventEmitter<RecordData>();
   @Output() deleteItem = new EventEmitter<RecordData>();
+  @Output() assignItem = new EventEmitter<RecordData>();
   @Output() search = new EventEmitter<string>();
 
   searchText = '';
@@ -168,4 +170,5 @@ export class CardList implements OnInit, OnDestroy {
   showDetails(item: RecordData): void { this.viewItem.emit(item); }
   editDetails(item: RecordData): void { this.editItem.emit(item); }
   deleteDetails(item: RecordData): void { this.deleteItem.emit(item); }
+  assignDetails(item: RecordData): void { this.assignItem.emit(item); }
 }

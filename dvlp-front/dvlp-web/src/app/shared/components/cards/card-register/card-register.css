@@ -151,23 +151,6 @@
   cursor: pointer;
 }
 
-.card-register__map {
-  width: 100%;
-  margin: 4px 0 10px;
-  overflow: hidden;
-  border: 1px solid var(--border-color);
-  border-radius: 8px;
-  flex-shrink: 0;
-}
-
-.card-register__map-frame {
-  display: block;
-  width: 100%;
-  height: 180px;
-  border: 0;
-}
-
-
 /* ── SELECT ─────────────────────────────────────────────── */
 .card-register__input--select {
   appearance: none;
@@ -238,4 +221,41 @@
   font-size: 0.75rem;
   line-height: 1.2;
   margin-top: 2px;
+}
+
+/* ── SEDES POR AGREGAR (alta de colegio) ────────────────── */
+.card-register__campus-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-register__campus-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-register__campus-row .card-register__input {
+  flex: 1;
+}
+
+.card-register__campus-row--actions {
+  justify-content: flex-start;
+}
+
+.card-register__campus-hint {
+  color: var(--contrast-color);
+  font-size: 0.8rem;
+}
+
+/* ── SELECT SIN OPCIONES ───────────────────────────────── */
+.card-register__options-empty {
+  margin: 0;
+  padding: 9px 10px;
+  border: 1px dashed var(--contrast-color);
+  border-radius: 8px;
+  color: var(--contrast-color);
+  font-size: 0.8rem;
+  line-height: 1.35;
 }

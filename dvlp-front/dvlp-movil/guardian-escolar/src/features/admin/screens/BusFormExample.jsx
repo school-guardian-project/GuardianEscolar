@@ -5,11 +5,12 @@ import InputField from "@components/inputs/InputField";
 import PrimaryButton from "@components/buttons/PrimaryButton";
 import * as campusesService from "@core/services/campusesService";
 import * as vehicleTypesService from "@core/services/vehicleTypesService";
+import * as busesService from "@core/services/busesService";
 import * as authService from "@core/services/authService";
 
 /**
- * Ejemplo de formulario con dropdowns en cascada
- * Este componente demuestra el uso de los dropdowns con datos del backend
+ * Formulario de registro de bus conectado al backend (POST /fleet/api/buses).
+ * Usa los dropdowns en cascada con datos reales de ms-school-management y ms-fleet.
  */
 export default function BusFormExample() {
   const [campusId, setCampusId] = useState(null);
@@ -17,6 +18,7 @@ export default function BusFormExample() {
   const [modelId, setModelId] = useState(null);
   const [plate, setPlate] = useState("");
   const [capacity, setCapacity] = useState("");
+  const [soatValidity, setSoatValidity] = useState("");
   const [loading, setLoading] = useState(false);
 
   // Cargar campuses desde el backend
@@ -81,7 +83,7 @@ export default function BusFormExample() {
   // Validar y enviar formulario
   async function handleSubmit() {
     // Validación
-    if (!campusId || !brandId || !modelId || !plate || !capacity) {
+    if (!campusId || !brandId || !modelId || !plate || !capacity || !soatValidity) {
       Alert.alert("Error", "Por favor completa todos los campos");
       return;
     }
@@ -97,34 +99,41 @@ export default function BusFormExample() {
       return;
     }
 
+    // El backend espera una fecha ISO (aaaa-mm-dd)
+    const soat = new Date(soatValidity);
+    if (isNaN(soat.getTime())) {
+      Alert.alert("Error", "La fecha de vencimiento del SOAT no es válida (usa aaaa-mm-dd)");
+      return;
+    }
+    const soatISO = soat.toISOString().slice(0, 10);
+
     setLoading(true);
 
     try {
+      // Contrato real de ms-fleet: gpsDeviceId y status no viajan en el POST
+      // (el backend los fija/valida; ver busesService.createBus).
       const busData = {
         campuseId: campusId,
         modelId: modelId,
         plate: plate.toUpperCase(),
         capacity: capacityNum,
-        soatValidity: new Date().toISOString(), // Placeholder
-        gpsDeviceId: "00000000-0000-0000-0000-000000000000", // Placeholder
-        status: "Active",
+        soatValidity: soatISO,
       };
 
-      // TODO: Integrar con busesService cuando esté implementado en mobile
-      // await busesService.create(busData);
-      
-      console.log("Bus data to create:", busData);
-      
-      Alert.alert("Éxito", "Bus registrado correctamente (simulado)");
-      
+      const busId = await busesService.createBus(busData);
+
+      Alert.alert("Éxito", `Bus registrado correctamente (id: ${busId})`);
+
       // Reset form
       setCampusId(null);
       setBrandId(null);
       setModelId(null);
       setPlate("");
       setCapacity("");
+      setSoatValidity("");
     } catch (error) {
-      Alert.alert("Error", error.message || "Error al registrar el bus");
+      const detail = error.data?.message ? `\n${error.data.message}` : "";
+      Alert.alert("Error", `${error.message || "Error al registrar el bus"}${detail}`);
     } finally {
       setLoading(false);
     }
@@ -182,6 +191,14 @@ export default function BusFormExample() {
         keyboardType="number-pad"
       />
 
+      <InputField
+        label="Vencimiento SOAT"
+        value={soatValidity}
+        onChangeText={setSoatValidity}
+        placeholder="2027-01-01"
+        autoCapitalize="none"
+      />
+
       <PrimaryButton
         title={loading ? "Guardando..." : "Guardar Bus"}
         onPress={handleSubmit}
@@ -194,7 +211,7 @@ export default function BusFormExample() {
           • Los dropdowns cargan datos del backend{"\n"}
           • Marca y Modelo son dropdowns en cascada{"\n"}
           • Los datos se validan antes de enviar{"\n"}
-          • El token JWT se envía automáticamente
+          • El token JWT se envía automáticamente (con refresh)
         </Text>
       </View>
     </ScrollView>

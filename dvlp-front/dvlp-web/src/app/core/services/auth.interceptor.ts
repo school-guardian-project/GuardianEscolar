@@ -11,9 +11,10 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);
   const isPublicPasswordRecovery = /\/api\/v1\/password\/(?:forgot(?:\/verify)?|reset)(?:[?#]|$)/.test(req.url);
 
-  if (req.url.includes('/api/v1/auth/') || isPublicPasswordRecovery) {
-    const token = auth.getToken();
-    return next(req.url.includes('/api/v1/auth/') && token ? withBearer(req, token) : req);
+  // Endpoints públicos que NO requieren token
+  const publicEndpoints = ['/api/v1/auth/login', '/api/v1/auth/refresh'];
+  if (publicEndpoints.some(ep => req.url.includes(ep))) {
+    return next(req);
   }
 
   let retried = false;

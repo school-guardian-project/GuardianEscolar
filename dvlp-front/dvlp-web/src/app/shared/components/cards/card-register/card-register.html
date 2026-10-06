@@ -48,7 +48,41 @@
           {{ getLabelKey(group.name) | translate }}
         </label>
         <div class="card-register__input-wrap" [class.card-register__input-wrap--multiple]="isFamilyStudentField(group.name)">
-          <select *ngIf="group.type === 'select'"
+          <!-- Campus dropdown for bus -->
+          <select *ngIf="group.type === 'select' && group.name === 'campus' && type === 'bus'"
+                  class="card-register__input"
+                  [ngModel]="formData[group.name]"
+                  [name]="group.name"
+                  (ngModelChange)="onSelectChange(group.name, $event)"
+                  (blur)="validateField(group.name)">
+            <option value="" disabled>{{ 'register.select' | translate }}</option>
+            <option *ngFor="let campus of campuses" [value]="campus.id">{{ campus.name }}</option>
+          </select>
+          
+          <!-- Brand dropdown for bus -->
+          <select *ngIf="group.type === 'select' && group.name === 'brand' && type === 'bus'"
+                  class="card-register__input"
+                  [ngModel]="formData[group.name]"
+                  [name]="group.name"
+                  (ngModelChange)="onSelectChange(group.name, $event)"
+                  (blur)="validateField(group.name)">
+            <option value="" disabled>{{ 'register.select' | translate }}</option>
+            <option *ngFor="let brand of brands" [value]="brand.id">{{ brand.name }}</option>
+          </select>
+          
+          <!-- Model dropdown for bus -->
+          <select *ngIf="group.type === 'select' && group.name === 'model' && type === 'bus'"
+                  class="card-register__input"
+                  [ngModel]="formData[group.name]"
+                  [name]="group.name"
+                  (ngModelChange)="onSelectChange(group.name, $event)"
+                  (blur)="validateField(group.name)">
+            <option value="" disabled>{{ 'register.select' | translate }}</option>
+            <option *ngFor="let model of models" [value]="model.id">{{ model.name }}</option>
+          </select>
+          
+          <!-- Regular select for other cases -->
+          <select *ngIf="group.type === 'select' && group.name !== 'campus' && group.name !== 'brand' && group.name !== 'model'"
                   class="card-register__input"
                   [ngModel]="isFamilyStudentField(group.name) ? selectedStudent : formData[group.name]"
                   [name]="group.name"
@@ -57,6 +91,7 @@
             <option value="" disabled>{{ 'register.select' | translate }}</option>
             <option *ngFor="let opt of group.options" [value]="opt">{{ opt }}</option>
           </select>
+          
           <div *ngIf="isFamilyStudentField(group.name)" class="card-register__selected-items">
             <span *ngFor="let student of selectedStudents" class="card-register__selected-item">
               {{ student }}

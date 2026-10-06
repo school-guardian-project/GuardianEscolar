@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { ChangePassword } from  '@shared/components/change/change-password/change-password';
@@ -11,8 +11,6 @@ import {
 } from '@angular/forms';
 import { passwordMatch } from '@shared/validator/password-match.validator';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Confirmations } from '@shared/components/modal/confirmations/confirmations';
 import { ForgotInformationService } from '@core/services/forgot-information.service';
 import { finalize } from 'rxjs';
 
@@ -30,7 +28,7 @@ import { finalize } from 'rxjs';
 })
 export class Reset {
   form: FormGroup;
-  readonly dialog = inject(MatDialog);
+  showConfirmation = false;
   isSubmitting = false;
   errorMessage = '';
 
@@ -87,7 +85,7 @@ export class Reset {
     this.forgotInformation.resetPassword(password, confirmPassword).pipe(
       finalize(() => { this.isSubmitting = false; }),
     ).subscribe({
-      next: () => this.openDialog(),
+      next: () => { this.showConfirmation = true; },
       error: (error: unknown) => {
         const key = error instanceof HttpErrorResponse && error.status === 429
           ? 'forgot_password.reset.errors.rate_limited'
@@ -99,22 +97,8 @@ export class Reset {
     });
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(Confirmations, {
-      data: {
-        titleDialog: this.translate.instant('forgot_password.reset.confirmationTitle'),
-        descriptionDialog: this.translate.instant('forgot_password.reset.confirmationDescription'),
-      },
-    });
-
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result === 'accept') {
-        this.accept();
-      }
-    });
-  }
-
   accept() {
+    this.showConfirmation = false;
     this.router.navigate(['/auth/login']);
   }
 

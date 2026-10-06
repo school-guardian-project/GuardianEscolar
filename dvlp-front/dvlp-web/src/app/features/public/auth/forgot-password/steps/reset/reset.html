@@ -61,3 +61,14 @@
   </form>
 
 </app-change-password>
+
+@if (showConfirmation) {
+  <div class="modal-overlay">
+    <div class="modal-confirmation">
+      <i class="ph-fill ph-check-circle icon"></i>
+      <h2 class="title-dialog">{{ 'forgot_password.reset.confirmationTitle' | translate }}</h2>
+      <p class="description-dialog">{{ 'forgot_password.reset.confirmationDescription' | translate }}</p>
+      <button (click)="accept()">{{ 'common.accept' | translate }}</button>
+    </div>
+  </div>
+}

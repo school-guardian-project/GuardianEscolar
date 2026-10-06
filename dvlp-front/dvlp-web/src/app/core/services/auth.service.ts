@@ -114,18 +114,6 @@ export class AuthService {
       }));
   }
 
-  /**
-   * Cambia la contraseña del usuario autenticado.
-   *
-   * Contrato real de ms-iam: `POST /api/v1/auth/change-password` con
-   * `{ currentPassword, newPassword }` -> 204. No es un flujo de recuperación
-   * (no hay correo ni código): el backend exige conocer la contraseña actual.
-   * El header Authorization lo inyecta el interceptor global.
-   */
-  changePassword(currentPassword: string, newPassword: string): Observable<void> {
-    return this.http.post<void>(`${this.base}/change-password`, { currentPassword, newPassword });
-  }
-
   /** Datos de la sesión del usuario logueado (profileId, personId, email). */
   get session(): Session {
     return this.userSession;

@@ -168,8 +168,7 @@
       "label": "Téléphone",
       "error_pattern": "*Doit être un numéro valide.",
       "error_required": "*Le téléphone est requis.",
-      "help_text": "Saisissez votre numéro pour recevoir un code de vérification.",
-      "unavailable": "Cette option n'est pas disponible pour le moment. Votre numéro reste inchangé."
+      "help_text": "Saisissez votre numéro pour recevoir un code de vérification."
     },
     "code_first": {
       "title": "Vérifier le code",
@@ -218,8 +217,7 @@
       "email_label": "Email",
       "error_pattern": "*Doit être un email valide.",
       "error_required": "*L'email est requis.",
-      "help_text": "Vous recevrez un code de vérification sur cet email.",
-      "unavailable": "Cette option n'est pas disponible pour le moment. Votre e-mail reste inchangé."
+      "help_text": "Vous recevrez un code de vérification sur cet email."
     },
     "code_first": {
       "title": "Vérifier le code",
@@ -257,18 +255,18 @@
       "case": "Combinaison de minuscules et de majuscules",
       "special": "Caractères spéciaux (. - _ @ *)"
     },
-    "current": {
+    "email": {
       "title": "Changer le mot de passe",
-      "sessionDescription": "Saisissez votre mot de passe actuel pour continuer.",
+      "sessionDescription": "Entrez votre email pour recevoir un code de récupération.",
       "titleStep": "Étape 1",
-      "loginDescription": "Vous devez fournir votre mot de passe actuel.",
-      "buttonText": "Continuer",
+      "loginDescription": "Vous devez fournir votre email enregistré.",
+      "buttonText": "Envoyer le code",
       "returnStep": "Retour",
-      "stepText": "1 sur 2",
-      "password_label": "Mot de passe actuel",
-      "error_required": "*Le mot de passe est requis.",
-      "error_minlength": "*Le mot de passe doit comporter au moins 8 caractères.",
-      "help_text": "Nous vérifierons votre identité avant de le changer."
+      "stepText": "1 sur 3",
+      "email_label": "Email",
+      "error_pattern": "*Doit être un email valide.",
+      "error_required": "*L'email est requis.",
+      "help_text": "Vous recevrez un code pour réinitialiser votre mot de passe."
     },
     "code": {
       "title": "Vérifier le code",
@@ -281,16 +279,15 @@
       "pin_error": "*Le code saisi n'est pas valide."
     },
     "reset": {
-      "title": "Nouveau mot de passe",
+      "title": "Réinitialiser le mot de passe",
       "sessionDescription": "Créez un nouveau mot de passe sécurisé.",
-      "titleStep": "Étape 2",
+      "titleStep": "Étape 3",
       "loginDescription": "Votre mot de passe doit respecter les exigences minimales.",
       "buttonText": "Enregistrer le mot de passe",
       "returnStep": "Retour",
-      "stepText": "2 sur 2",
+      "stepText": "3 sur 3",
       "confirmationTitle": "Mot de passe mis à jour",
-      "confirmationDescription": "Votre mot de passe a été mis à jour avec succès.",
-      "error_invalid": "Le mot de passe actuel est incorrect ou le mot de passe n'a pas pu être mis à jour. Réessayez."
+      "confirmationDescription": "Votre mot de passe a été mis à jour avec succès."
     }
   },
   "dashboard": {

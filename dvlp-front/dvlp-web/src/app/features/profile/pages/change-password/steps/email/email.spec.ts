@@ -1,17 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { Reset } from './reset';
+import { Email } from './email';
 
-describe('Reset', () => {
-  let component: Reset;
-  let fixture: ComponentFixture<Reset>;
+describe('Email', () => {
+  let component: Email;
+  let fixture: ComponentFixture<Email>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [Reset],
+      imports: [Email],
     }).compileComponents();
 
-    fixture = TestBed.createComponent(Reset);
+    fixture = TestBed.createComponent(Email);
     component = fixture.componentInstance;
     await fixture.whenStable();
   });

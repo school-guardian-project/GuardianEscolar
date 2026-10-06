@@ -168,8 +168,7 @@
       "label": "Phone",
       "error_pattern": "*Must be a valid phone number.",
       "error_required": "*Phone is required.",
-      "help_text": "Enter your number to receive a verification code.",
-      "unavailable": "This option is not available at the moment. Your phone number remains unchanged."
+      "help_text": "Enter your number to receive a verification code."
     },
     "code_first": {
       "title": "Verify code",
@@ -218,8 +217,7 @@
       "email_label": "Email",
       "error_pattern": "*Must be a valid email.",
       "error_required": "*Email is required.",
-      "help_text": "You will receive a verification code at this email.",
-      "unavailable": "This option is not available at the moment. Your email remains unchanged."
+      "help_text": "You will receive a verification code at this email."
     },
     "code_first": {
       "title": "Verify code",
@@ -257,18 +255,18 @@
       "case": "Combination of lowercase and uppercase",
       "special": "Special characters (. - _ @ *)"
     },
-    "current": {
+    "email": {
       "title": "Change password",
-      "sessionDescription": "Enter your current password to continue.",
+      "sessionDescription": "Enter your email to receive a recovery code.",
       "titleStep": "Step 1",
-      "loginDescription": "You must provide your current password.",
-      "buttonText": "Continue",
+      "loginDescription": "You must provide your registered email.",
+      "buttonText": "Send code",
       "returnStep": "Back",
-      "stepText": "1 of 2",
-      "password_label": "Current password",
-      "error_required": "*Password is required.",
-      "error_minlength": "*Password must be at least 8 characters.",
-      "help_text": "We will verify your identity before changing it."
+      "stepText": "1 of 3",
+      "email_label": "Email",
+      "error_pattern": "*Must be a valid email.",
+      "error_required": "*Email is required.",
+      "help_text": "You will receive a code to reset your password."
     },
     "code": {
       "title": "Verify code",
@@ -281,16 +279,15 @@
       "pin_error": "*The entered code is invalid."
     },
     "reset": {
-      "title": "New password",
-      "sessionDescription": "Create a secure new password.",
-      "titleStep": "Step 2",
+      "title": "Reset password",
+      "sessionDescription": "Create a new secure password.",
+      "titleStep": "Step 3",
       "loginDescription": "Your password must meet the minimum requirements.",
       "buttonText": "Save password",
       "returnStep": "Back",
-      "stepText": "2 of 2",
+      "stepText": "3 of 3",
       "confirmationTitle": "Password updated",
-      "confirmationDescription": "Your password has been updated successfully.",
-      "error_invalid": "The current password is incorrect or the password could not be updated. Try again."
+      "confirmationDescription": "Your password has been updated successfully."
     }
   },
   "dashboard": {

@@ -111,7 +111,7 @@ export class InformationAdmin implements OnInit {
   }
 
   changePassword() {
-    this.router.navigate(['admin/change-password/current-password']);
+    this.router.navigate(['admin/change-password/email']);
   }
 
   changeContact() {

@@ -1,28 +1,29 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { ChangeInformation } from "../../../../../../shared/components/change/change-information/change-information";
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { ChangePassword } from '../../../../../../shared/components/change/change-password/change-password';
 import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
-  selector: 'app-telephone',
-  imports: [ChangeInformation, ReactiveFormsModule, TranslateModule],
-  templateUrl: './telephone.html',
-  styleUrl: './telephone.scss',
+  selector: 'app-email',
+  imports: [ReactiveFormsModule, ChangePassword, TranslateModule],
+  templateUrl: './email.html',
+  styleUrl: './email.scss',
 })
-export class Telephone {
+export class Email {
   form: FormGroup;
-
+   
   constructor(private router: Router, private fb: FormBuilder) {
-    const patternNumber = /^\+?[1-9]\d{1,14}$/;
+    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
+
     this.form = this.fb.group({
-      telephone: ['', [Validators.required, Validators.pattern(patternNumber)]]
+      email: ['', [Validators.required, Validators.pattern(emailPattern)]]
     });
   }
 
   onSubmit() {
     if (this.form.valid) {
-      this.router.navigate(['/admin/change-contact/code-first']);
+      this.router.navigate(['/admin/change-password/code']);
     } else {
       this.form.markAllAsTouched();
     }

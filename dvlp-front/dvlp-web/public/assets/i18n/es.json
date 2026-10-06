@@ -194,8 +194,7 @@
       "label": "Teléfono",
       "error_pattern": "*Debe ser un número válido.",
       "error_required": "*El teléfono es requerido.",
-      "help_text": "Ingresa tu número para recibir un código de verificación.",
-      "unavailable": "Esta opción no está disponible por el momento. Tu número se mantiene sin cambios."
+      "help_text": "Ingresa tu número para recibir un código de verificación."
     },
     "code_first": {
       "title": "Verificar código",
@@ -244,8 +243,7 @@
       "email_label": "Correo electrónico",
       "error_pattern": "*Debe ser un correo válido.",
       "error_required": "*El correo es requerido.",
-      "help_text": "Recibirás un código de verificación en este correo.",
-      "unavailable": "Esta opción no está disponible por el momento. Tu correo se mantiene sin cambios."
+      "help_text": "Recibirás un código de verificación en este correo."
     },
     "code_first": {
       "title": "Verificar código",
@@ -291,18 +289,18 @@
       "case": "Combinación de minúsculas y mayúsculas",
       "special": "Caracteres especiales (. - _ @ *)"
     },
-    "current": {
+    "email": {
       "title": "Cambiar contraseña",
-      "sessionDescription": "Ingresa tu contraseña actual para continuar.",
+      "sessionDescription": "Ingresa tu correo para recibir un código de recuperación.",
       "titleStep": "Paso 1",
-      "loginDescription": "Debes proporcionar tu contraseña actual.",
-      "buttonText": "Continuar",
+      "loginDescription": "Debes proporcionar tu correo registrado.",
+      "buttonText": "Enviar código",
       "returnStep": "Volver",
-      "stepText": "1 de 2",
-      "password_label": "Contraseña actual",
-      "error_required": "*La contraseña es requerida.",
-      "error_minlength": "*La contraseña debe tener al menos 8 caracteres.",
-      "help_text": "Verificaremos tu identidad antes de cambiarla."
+      "stepText": "1 de 3",
+      "email_label": "Correo electrónico",
+      "error_pattern": "*Debe ser un correo válido.",
+      "error_required": "*El correo es requerido.",
+      "help_text": "Recibirás un código para restablecer tu contraseña."
     },
     "code": {
       "title": "Verificar código",
@@ -315,16 +313,15 @@
       "pin_error": "*El código ingresado no es válido."
     },
     "reset": {
-      "title": "Nueva contraseña",
-      "sessionDescription": "Crea tu nueva contraseña segura.",
-      "titleStep": "Paso 2",
+      "title": "Restablecer contraseña",
+      "sessionDescription": "Crea una nueva contraseña segura.",
+      "titleStep": "Paso 3",
       "loginDescription": "Tu contraseña debe cumplir con los requisitos mínimos.",
       "buttonText": "Guardar contraseña",
       "returnStep": "Volver",
-      "stepText": "2 de 2",
+      "stepText": "3 de 3",
       "confirmationTitle": "Contraseña actualizada",
-      "confirmationDescription": "Su contraseña ha sido actualizada correctamente.",
-      "error_invalid": "La contraseña actual no es correcta o no se pudo actualizar la contraseña. Inténtalo de nuevo."
+      "confirmationDescription": "Su contraseña ha sido actualizada correctamente."
     }
   },
   "dashboard": {

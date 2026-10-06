@@ -13,9 +13,6 @@ import { TranslateModule } from '@ngx-translate/core';
 export class Email {
   // Represena un grupo de contenido dentro de un formulario, un objeto que representa todo el formulario
   form: FormGroup;
-  // No existe backend de cambio de correo (ms-iam solo expone change-password):
-  // el flujo se detiene aquí con un aviso en lugar de fingir pasos de verificación.
-  unavailable = false;
 
   constructor(private router: Router, private fb: FormBuilder) {
     const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
@@ -27,7 +24,7 @@ export class Email {
 
   onSubmit() {
     if (this.form.valid) {
-      this.unavailable = true;
+      this.router.navigate(['/admin/change-email/code-first']);
     } else {
       this.form.markAllAsTouched();
     }

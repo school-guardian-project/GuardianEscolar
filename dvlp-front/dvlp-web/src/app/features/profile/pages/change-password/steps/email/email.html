@@ -1,0 +1,28 @@
+<app-change-password
+  iconHead="mail"
+  [title]="'change_password.email.title' | translate"
+  [sessionDescription]="'change_password.email.sessionDescription' | translate"
+  [titleStep]="'change_password.email.titleStep' | translate"
+  [loginDescription]="'change_password.email.loginDescription' | translate"
+  [buttonText]="'change_password.email.buttonText' | translate"
+  [returnStep]="'change_password.email.returnStep' | translate"
+  (return)="return()"
+  [showProgress]="true"
+  [currentStep]="1"
+  [stepText]="'change_password.email.stepText' | translate"
+  (submit)="onSubmit()"
+>
+  <form action="" [formGroup]="form">
+    <div class="input-email">
+      <label for="email">{{ 'change_password.email.email_label' | translate }}</label>
+      <input type="email" id="email" formControlName="email">
+      @if (form.get('email')?.touched && form.get('email')?.errors?.['pattern']) {
+      <small class="error">{{ 'change_password.email.error_pattern' | translate }}</small>
+      }
+      @if (form.get('email')?.touched && form.get('email')?.errors?.['required']) {
+      <small class="error">{{ 'change_password.email.error_required' | translate }}</small>
+      }
+      <p>{{ 'change_password.email.help_text' | translate }}</p>
+    </div>
+  </form>
+</app-change-password>

@@ -11,6 +11,7 @@
   [currentStep]="3"
   (submit)="onSubmit()"
   [stepText]="'change_email.reset.stepText' | translate"
+  [disabled]="isSubmitting"
 >
   <form action="" [formGroup]="form">
     <div class="input-email">
@@ -23,6 +24,9 @@
         <small class="error">{{ 'change_email.reset.error_required' | translate }}</small>
       }
       <p>{{ 'change_email.reset.help_text' | translate }}</p>
+      @if (errorMessage) {
+        <small class="error" role="alert" aria-live="polite">{{ errorMessage }}</small>
+      }
     </div>
   </form>
 </app-change-information>

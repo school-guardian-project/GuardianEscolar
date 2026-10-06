@@ -160,24 +160,24 @@
   "change_contact": {
     "telephone": {
       "title": "Changer de téléphone",
-      "sessionDescription": "Pour des raisons de sécurité, vérifiez votre numéro de contact.",
+      "sessionDescription": "Par s?curit?, nous enverrons un SMS ? votre t?l?phone actuel.",
       "titleStep": "Étape 1",
       "buttonText": "Envoyer le code",
       "returnStep": "Retour",
       "stepText": "1 sur 4",
-      "label": "Téléphone",
+      "label": "T?l?phone actuel",
       "error_pattern": "*Doit être un numéro valide.",
       "error_required": "*Le téléphone est requis.",
-      "help_text": "Saisissez votre numéro pour recevoir un code de vérification."
+      "help_text": "Saisissez le t?l?phone actuel de votre compte avec l'indicatif, p. ex. +573001234567."
     },
     "code_first": {
       "title": "Vérifier le code",
-      "sessionDescription": "Entrez le code envoyé à votre téléphone.",
+      "sessionDescription": "Consultez le SMS envoy? ? votre t?l?phone actuel et saisissez le code.",
       "titleStep": "Étape 2",
       "buttonText": "Vérifier",
       "returnStep": "Retour",
       "stepText": "2 sur 4",
-      "description": "Vérifiez votre message et saisissez le code à 6 chiffres.",
+      "description": "Consultez le SMS envoy? ? votre t?l?phone actuel et saisissez le code.",
       "pin_error": "*Le code saisi n'est pas valide."
     },
     "reset": {
@@ -187,22 +187,26 @@
       "buttonText": "Continuer",
       "returnStep": "Retour",
       "stepText": "3 sur 4",
-      "label": "Nouveau téléphone",
-      "error_pattern": "*Doit être un numéro valide.",
+      "label": "Nouveau t?l?phone",
+      "error_pattern": "*Utilisez le format international, p. ex. +573001234567.",
       "error_required": "*Le téléphone est requis.",
-      "help_text": "Tapez le nouveau numéro de contact."
+      "help_text": "Vous recevrez un SMS avec un code ? ce num?ro (+indicatif et num?ro)."
     },
     "code_second": {
       "title": "Confirmer le code",
-      "sessionDescription": "Entrez le code envoyé au nouveau numéro.",
+      "sessionDescription": "Saisissez le code SMS envoy? au nouveau num?ro.",
       "titleStep": "Étape 4",
       "buttonText": "Confirmer",
       "returnStep": "Retour",
       "stepText": "4 sur 4",
-      "description": "Saisissez le code pour finaliser le changement de téléphone.",
+      "description": "Saisissez le code SMS pour terminer le changement de t?l?phone.",
       "pin_error": "*Le code saisi n'est pas valide.",
       "confirmationTitle": "Téléphone mis à jour",
       "confirmationDescription": "Votre numéro de téléphone a été mis à jour avec succès."
+    },
+    "errors": {
+      "invalid_phone": "Le num?ro est invalide ou la demande a expir?. Utilisez le format +573001234567 ou recommencez.",
+      "sms_unavailable": "Impossible d'envoyer le SMS pour le moment. R?essayez plus tard."
     }
   },
   "change_email": {
@@ -245,6 +249,10 @@
       "error_pattern": "*Doit être un email valide.",
       "error_required": "*L'email est requis",
       "help_text": "Vous recevrez un code à 6 chiffres"
+    },
+    "errors": {
+      "email_in_use": "Cet e-mail n'est pas disponible. Essayez-en un autre.",
+      "invalid_request": "La demande est invalide ou expirée. Vérifiez que le nouvel e-mail diffère de l'actuel ou recommencez."
     }
   },
   "change_password": {
@@ -889,6 +897,28 @@
     "return": "Retour à la connexion",
     "step_text": "1 sur 3",
     "hint": "Vous recevrez un code à 6 chiffres",
+    "errors": {
+      "email_too_long": "*L'adresse e-mail ne peut pas dépasser 100 caractères.",
+      "request_failed": "Impossible de démarrer la récupération du mot de passe. Réessayez.",
+      "rate_limited": "Trop de demandes. Attendez quelques minutes avant de réessayer."
+    },
+    "code": {
+      "title": "Vérifiez votre e-mail",
+      "session_description": "Saisissez le code à 6 chiffres envoyé par e-mail.",
+      "title_step": "Code de vérification",
+      "button": "Vérifier",
+      "return": "Retour",
+      "step_text": "2 sur 3",
+      "sent_to": "Code envoyé à",
+      "valid": "Valide pendant 10 minutes.",
+      "error": "*Saisissez les 6 chiffres",
+      "digit_label": "Chiffre {{number}} du code",
+      "errors": {
+        "invalid": "Le code est invalide ou expiré. Vérifiez-le et réessayez.",
+        "rate_limited": "La limite de tentatives est atteinte. Demandez un nouveau code plus tard.",
+        "failed": "Impossible de vérifier le code. Réessayez."
+      }
+    },
     "reset": {
       "title": "Créez un mot de passe sécurisé",
       "session_description": "Tenez compte des recommandations de sécurité.",
@@ -904,9 +934,15 @@
       "errors": {
         "required": "*Ce champ est requis",
         "minlength": "*Minimum 8 caractères",
+        "maxlength": "*Maximum 128 caractères",
         "pattern": "*Doit contenir des majuscules, minuscules, chiffres et caractères spéciaux (. - _ @ *)",
-        "no_match": "*Les mots de passe ne correspondent pas"
-      }
+        "no_match": "*Les mots de passe ne correspondent pas",
+        "expired": "Le jeton de récupération a expiré ou a déjà été utilisé. Demandez un nouveau code.",
+        "rate_limited": "La limite de tentatives est atteinte. Demandez un nouveau code plus tard.",
+        "failed": "Impossible de mettre à jour le mot de passe. Réessayez."
+      },
+      "confirmationTitle": "Mot de passe mis à jour",
+      "confirmationDescription": "Votre mot de passe a été mis à jour."
     }
   },
   "right_index": {

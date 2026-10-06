@@ -11,18 +11,16 @@
   [currentStep]="1"
   [stepText]="'change_password.email.stepText' | translate"
   (submit)="onSubmit()"
+  [disabled]="isSubmitting"
 >
   <form action="" [formGroup]="form">
     <div class="input-email">
       <label for="email">{{ 'change_password.email.email_label' | translate }}</label>
-      <input type="email" id="email" formControlName="email">
-      @if (form.get('email')?.touched && form.get('email')?.errors?.['pattern']) {
-      <small class="error">{{ 'change_password.email.error_pattern' | translate }}</small>
-      }
-      @if (form.get('email')?.touched && form.get('email')?.errors?.['required']) {
-      <small class="error">{{ 'change_password.email.error_required' | translate }}</small>
-      }
+      <input type="email" id="email" formControlName="email" readonly>
       <p>{{ 'change_password.email.help_text' | translate }}</p>
+      @if (errorMessage) {
+      <small class="error" role="alert" aria-live="polite">{{ errorMessage }}</small>
+      }
     </div>
   </form>
 </app-change-password>

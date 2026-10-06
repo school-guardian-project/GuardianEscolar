@@ -10,6 +10,7 @@
   [currentStep]="2"
   (submit)="onSubmit()"
   [stepText]="'change_email.code_first.stepText' | translate"
+  [disabled]="isSubmitting"
 >
   <div class="login-description">
     <span>{{ 'change_email.code_first.description' | translate }}</span>
@@ -23,10 +24,16 @@
           [formControl]="ctrl"
           maxlength="1"
           (input)="onInput($event, i)"
+          (paste)="onPaste($event, i)"
+          inputmode="numeric"
+          autocomplete="one-time-code"
         />
       </div>
-      @if (form.invalid && form.touched) {
+      @if (form.invalid && form.touched && !errorMessage) {
         <small class="error">{{ 'change_email.code_first.pin_error' | translate }}</small>
+      }
+      @if (errorMessage) {
+        <small class="error" role="alert" aria-live="polite">{{ errorMessage }}</small>
       }
     </div>
   </form>

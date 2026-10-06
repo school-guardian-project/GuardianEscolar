@@ -9,6 +9,7 @@ function withBearer(req: HttpRequest<unknown>, token: string): HttpRequest<unkno
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
   const auth = inject(AuthService);
+  const isPublicPasswordRecovery = /\/api\/v1\/password\/(?:forgot(?:\/verify)?|reset)(?:[?#]|$)/.test(req.url);
 
   // Endpoints públicos que NO requieren token
   const publicEndpoints = ['/api/v1/auth/login', '/api/v1/auth/refresh'];

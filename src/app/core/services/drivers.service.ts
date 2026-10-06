@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { PersonListDto, PersonRequestDto, PersonResponseDto } from '../models/student.model';
+import { PersonListDto, PersonRequestDto, CreatePersonRequestDto, PersonResponseDto } from '../models/student.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,7 @@ export class DriversService {
     return this.http.get<PersonResponseDto>(`${this.base}/${id}`);
   }
 
-  create(payload: PersonRequestDto): Observable<void> {
+  create(payload: CreatePersonRequestDto): Observable<void> {
     return this.http.post<void>(this.base, payload);
   }
 

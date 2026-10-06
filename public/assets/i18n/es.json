@@ -740,7 +740,8 @@
         "grade": "Curso",
         "phone": "Teléfono",
         "address": "Dirección",
-        "email": "Correo Electrónico"
+        "email": "Correo Electrónico",
+        "campus": "Sede"
       }
     },
     "guardian": {
@@ -753,7 +754,8 @@
         "identification": "Número de identificación",
         "birthDate": "Fecha de nacimiento",
         "phone": "Teléfono",
-        "address": "Dirección"
+        "address": "Dirección",
+        "campus": "Sede"
       }
     },
     "driver": {
@@ -767,7 +769,8 @@
         "licenseExpiration": "Vencimiento de licencia",
         "licenseNumber": "Número de licencia",
         "address": "Dirección",
-        "email": "Correo Electrónico"
+        "email": "Correo Electrónico",
+        "campus": "Sede"
       }
     },
     "family": {
@@ -823,7 +826,8 @@
         "identification": "Identificación",
         "birthDate": "Fecha de Nacimiento",
         "phone": "Teléfono",
-        "address": "Dirección"
+        "address": "Dirección",
+        "school": "Colegio"
       }
     },
     "schools": {
@@ -836,8 +840,19 @@
         "phone": "Teléfono",
         "schooling": "Nivel educativo",
         "email": "Correo Electrónico",
-        "website": "Página web"
-      }
+        "website": "Página web",
+        "campusNames": "Sedes"
+      },
+      "campusNamePlaceholder": "Nombre de la sede",
+      "addCampus": "Agregar sede",
+      "removeCampus": "Quitar sede",
+      "campusNamesRequired": "Agrega al menos una sede para el colegio",
+      "campusNamesDuplicated": "La sede «{{name}}» está repetida"
+    },
+    "options": {
+      "noSchool": "No hay un colegio asignado a esta sesión para listar sus sedes.",
+      "loadError": "No se pudieron cargar las opciones. Reintenta en un momento.",
+      "empty": "Sin opciones disponibles."
     }
   },
   "search": {

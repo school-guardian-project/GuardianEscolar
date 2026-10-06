@@ -13,7 +13,8 @@ import { RecordInformation, RecordData } from '@shared/components/modal/record-i
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
 import { DriversService } from '@core/services/drivers.service';
-import { PersonListDto, PersonRequestDto, PersonResponseDto } from '@core/models/student.model';
+import { PersonListDto, PersonRequestDto, CreatePersonRequestDto, PersonResponseDto } from '@core/models/student.model';
+import { describeProblem } from '@core/http/problem-detail';
 
 interface DriverView extends RecordData {
   id?: string;
@@ -71,6 +72,18 @@ function toPayload(form: RecordData): PersonRequestDto {
   };
 }
 
+/**
+ * El payload del POST lleva la sede (campusId). Se separa de {@link toPayload}
+ * porque el PUT no la acepta: mandarla en el update no tendría efecto y, peor,
+ * sugeriría que ahí se cambia la sede cuando es un traslado.
+ */
+function toCreatePayload(form: RecordData): CreatePersonRequestDto {
+  return {
+    ...toPayload(form),
+    campusId: String(form['campus'] ?? '').trim(),
+  };
+}
+
 @Component({
   selector: 'app-drivers',
   standalone: true,
@@ -120,15 +133,15 @@ export class Drivers implements OnInit {
   }
 
   onCreated(form: RecordData): void {
-    this.driversService.create(toPayload(form)).subscribe({
+    this.driversService.create(toCreatePayload(form)).subscribe({
       next: () => {
         this.register?.setValidationMessage('');
         this.register?.resetForm();
         this.load();
       },
-      error: () => {
+      error: (err) => {
         this.register?.setValidationMessage(
-          'No se pudo registrar el conductor. Verifica que el backend esté disponible.'
+          describeProblem(err, 'No se pudo registrar el conductor. Verifica que el backend esté disponible.')
         );
       },
     });

@@ -699,7 +699,8 @@
         "grade": "Grade",
         "phone": "Phone",
         "address": "Address",
-        "email": "Email"
+        "email": "Email",
+        "campus": "Campus"
       }
     },
     "guardian": {
@@ -712,7 +713,8 @@
         "identification": "Identification number",
         "birthDate": "Date of birth",
         "phone": "Phone",
-        "address": "Address"
+        "address": "Address",
+        "campus": "Campus"
       }
     },
     "driver": {
@@ -726,7 +728,8 @@
         "licenseExpiration": "License expiration",
         "licenseNumber": "License number",
         "address": "Address",
-        "email": "Email"
+        "email": "Email",
+        "campus": "Campus"
       }
     },
     "family": {
@@ -782,7 +785,8 @@
         "identification": "Identification",
         "birthDate": "Date of birth",
         "phone": "Phone",
-        "address": "Address"
+        "address": "Address",
+        "school": "School"
       }
     },
     "schools": {
@@ -795,8 +799,19 @@
         "phone": "Phone",
         "schooling": "Education level",
         "email": "Email",
-        "website": "Website"
-      }
+        "website": "Website",
+        "campusNames": "Campuses"
+      },
+      "campusNamePlaceholder": "Campus name",
+      "addCampus": "Add campus",
+      "removeCampus": "Remove campus",
+      "campusNamesRequired": "Add at least one campus for the school",
+      "campusNamesDuplicated": "The campus “{{name}}” is duplicated"
+    },
+    "options": {
+      "noSchool": "There is no school assigned to this session to list its campuses.",
+      "loadError": "Could not load options. Try again in a moment.",
+      "empty": "No options available."
     }
   },
   "search": {

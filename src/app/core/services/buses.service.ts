@@ -24,8 +24,10 @@ export class BusesService {
     return this.http.get<BusResponseDto>(`${this.base}/${id}`);
   }
 
-  create(payload: BusRequestDto): Observable<void> {
-    return this.http.post<void>(this.base, payload);
+  create(payload: BusRequestDto): Observable<string> {
+    // El backend responde Ok(busId): el id en crudo, necesario para asignar el
+    // conductor justo después del alta.
+    return this.http.post<string>(this.base, payload);
   }
 
   update(id: string, payload: BusRequestDto): Observable<void> {

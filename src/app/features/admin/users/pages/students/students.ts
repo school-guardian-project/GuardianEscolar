@@ -14,7 +14,8 @@ import { UpdateRecord } from '@shared/components/modal/update-record/update-reco
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
 import { AssignRecord } from '@shared/components/modal/assign-record/assign-record';
 import { StudentsService } from '@core/services/students.service';
-import { PersonListDto, PersonRequestDto, PersonResponseDto } from '@core/models/student.model';
+import { PersonListDto, PersonRequestDto, CreatePersonRequestDto, PersonResponseDto } from '@core/models/student.model';
+import { describeProblem } from '@core/http/problem-detail';
 
 interface StudentView extends RecordData {
   id?: string;
@@ -70,12 +71,25 @@ function toPayload(form: RecordData): PersonRequestDto {
   };
 }
 
+/**
+ * El payload del POST lleva la sede (campusId). Se separa de {@link toPayload}
+ * porque el PUT no la acepta: mandarla en el update no tendría efecto y, peor,
+ * sugeriría que ahí se cambia la sede cuando es un traslado.
+ */
+function toCreatePayload(form: RecordData): CreatePersonRequestDto {
+  return {
+    ...toPayload(form),
+    campusId: String(form['campus'] ?? '').trim(),
+  };
+}
+
 const REQUIRED_FIELDS = [
   'names',
   'lastNames',
   'documentType',
   'identification',
   'birthDate',
+  'campus',
   'phone',
   'address',
   'email',
@@ -184,15 +198,15 @@ export class Students implements OnInit {
       return;
     }
 
-    this.studentsService.create(toPayload(form)).subscribe({
+    this.studentsService.create(toCreatePayload(form)).subscribe({
       next: () => {
         this.register?.setValidationMessage('');
         this.register?.resetForm();
         this.load();
       },
-      error: () => {
+      error: (err) => {
         this.register?.setValidationMessage(
-          'No se pudo registrar el estudiante. Verifica que el backend esté disponible.'
+          describeProblem(err, 'No se pudo registrar el estudiante. Verifica que el backend esté disponible.')
         );
       },
     });

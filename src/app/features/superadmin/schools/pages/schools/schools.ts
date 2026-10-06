@@ -11,8 +11,9 @@ import { SidebarSuperadmin } from '@shared/components/navbar/sidebar-superadmin/
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
-import { SchoolsService } from '../../services/schools.service';
-import { SchoolListDto, SchoolRequestDto, SchoolResponseDto } from '../../models/school.model';
+import { SchoolsService } from '@core/services/schools.service';
+import { SchoolListDto, SchoolRequestDto, SchoolResponseDto, SchoolWithCampusesRequestDto, SchoolWithCampusesResponseDto } from '@core/models/school.model';
+import { describeProblem } from '@core/http/problem-detail';
 
 interface SchoolView extends RecordData {
   id?: string;
@@ -49,7 +50,7 @@ function fromDetail(api: SchoolResponseDto): SchoolView {
 function toPayload(form: RecordData): SchoolRequestDto {
   const digits = String(form['phone'] ?? '').replace(/\D/g, '');
   return {
-    cityId: String(form['city'] ?? '00000000-0000-0000-0000-000000000000'),
+    cityId: String(form['city'] ?? ''),
     logo: '',
     name: String(form['name'] ?? '').trim(),
     address: String(form['address'] ?? '').trim(),
@@ -57,6 +58,18 @@ function toPayload(form: RecordData): SchoolRequestDto {
     email: String(form['email'] ?? '').trim(),
     website: String(form['website'] ?? '').trim(),
     theme: String(form['schooling'] ?? '').trim(),
+  };
+}
+
+/**
+ * Alta con sedes en una sola llamada atómica. `campusNames` viene del bloque
+ * dinámico del formulario (ya validado ahí: al menos una, sin repetidas) y la
+ * ciudad es el id real del select, no el nombre.
+ */
+function toCreatePayload(form: RecordData): SchoolWithCampusesRequestDto {
+  return {
+    ...toPayload(form),
+    campusNames: Array.isArray(form['campusNames']) ? form['campusNames'] : [],
   };
 }
 
@@ -107,15 +120,19 @@ export class Schools implements OnInit {
   }
 
   onCreated(form: RecordData): void {
-    this.schoolsService.create(toPayload(form)).subscribe({
-      next: () => {
+    this.schoolsService.createWithCampuses(toCreatePayload(form)).subscribe({
+      next: (created) => {
         this.register?.setValidationMessage('');
         this.register?.resetForm();
         this.load();
+        // El colegio se crea junto con sus sedes; la lista las muestra solas,
+        // asi que recargar ya basta para ver "Colegio (N sedes)" si la vista lo
+        // llegara a mostrar. `created` queda disponible si hace falta navegar.
+        void created;
       },
-      error: () => {
+      error: (err) => {
         this.register?.setValidationMessage(
-          'No se pudo registrar la escuela. Verifica que el backend esté disponible.'
+          describeProblem(err, 'No se pudo registrar la escuela. Verifica que el backend esté disponible.')
         );
       },
     });

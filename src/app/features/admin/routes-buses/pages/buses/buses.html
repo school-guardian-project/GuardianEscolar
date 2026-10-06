@@ -3,7 +3,11 @@
 <div class="page-wrapper">
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
-    <app-card-register type="bus"></app-card-register>
+    <app-card-register
+      type="bus"
+      [fieldOptions]="fieldOptions"
+      (formSubmit)="onCreated($event)"
+    ></app-card-register>
     <app-card-list type="bus" 
     [data]="buses"
     [remoteSearch]="true"

@@ -20,7 +20,7 @@
                       (ngModelChange)="onSelectChange(field.name, $event)"
                       (blur)="validateField(field.name)">
                 <option value="" disabled>{{ 'register.select' | translate }}</option>
-                <option *ngFor="let opt of field.options" [value]="opt">{{ opt }}</option>
+                <option *ngFor="let opt of getOptions(field)" [value]="opt.value">{{ opt.label }}</option>
               </select>
               <div *ngIf="isFamilyStudentField(field.name)" class="card-register__selected-items">
                 <span *ngFor="let student of selectedStudents" class="card-register__selected-item">
@@ -48,50 +48,32 @@
           {{ getLabelKey(group.name) | translate }}
         </label>
         <div class="card-register__input-wrap" [class.card-register__input-wrap--multiple]="isFamilyStudentField(group.name)">
-          <!-- Campus dropdown for bus -->
-          <select *ngIf="group.type === 'select' && group.name === 'campus' && type === 'bus'"
-                  class="card-register__input"
-                  [ngModel]="formData[group.name]"
-                  [name]="group.name"
-                  (ngModelChange)="onSelectChange(group.name, $event)"
-                  (blur)="validateField(group.name)">
-            <option value="" disabled>{{ 'register.select' | translate }}</option>
-            <option *ngFor="let campus of campuses" [value]="campus.id">{{ campus.name }}</option>
-          </select>
-          
-          <!-- Brand dropdown for bus -->
-          <select *ngIf="group.type === 'select' && group.name === 'brand' && type === 'bus'"
-                  class="card-register__input"
-                  [ngModel]="formData[group.name]"
-                  [name]="group.name"
-                  (ngModelChange)="onSelectChange(group.name, $event)"
-                  (blur)="validateField(group.name)">
-            <option value="" disabled>{{ 'register.select' | translate }}</option>
-            <option *ngFor="let brand of brands" [value]="brand.id">{{ brand.name }}</option>
-          </select>
-          
-          <!-- Model dropdown for bus -->
-          <select *ngIf="group.type === 'select' && group.name === 'model' && type === 'bus'"
-                  class="card-register__input"
-                  [ngModel]="formData[group.name]"
-                  [name]="group.name"
-                  (ngModelChange)="onSelectChange(group.name, $event)"
-                  (blur)="validateField(group.name)">
-            <option value="" disabled>{{ 'register.select' | translate }}</option>
-            <option *ngFor="let model of models" [value]="model.id">{{ model.name }}</option>
-          </select>
-          
-          <!-- Regular select for other cases -->
-          <select *ngIf="group.type === 'select' && group.name !== 'campus' && group.name !== 'brand' && group.name !== 'model'"
+          <!--
+            Un solo select para todos los campos. `getOptions` decide de donde
+            salen las opciones y si el valor es el id o el texto, asi que no hace
+            falta condicionar por nombre de campo.
+          -->
+          <select *ngIf="group.type === 'select'"
                   class="card-register__input"
                   [ngModel]="isFamilyStudentField(group.name) ? selectedStudent : formData[group.name]"
                   [name]="group.name"
                   (ngModelChange)="onSelectChange(group.name, $event)"
                   (blur)="validateField(group.name)">
             <option value="" disabled>{{ 'register.select' | translate }}</option>
-            <option *ngFor="let opt of group.options" [value]="opt">{{ opt }}</option>
+            <option *ngFor="let opt of getOptions(group)" [value]="opt.value">{{ opt.label }}</option>
           </select>
-          
+
+          <!--
+            Mejor un aviso que un dropdown vacio: un select obligatorio sin
+            opciones se lee como bug y el usuario no sabe si debe esperar o
+            denunciarlo.
+          -->
+          <p *ngIf="group.type === 'select' && showOptionsUnavailable(group)"
+             class="card-register__options-empty"
+             role="status">
+            {{ optionsUnavailableKey(group) | translate }}
+          </p>
+
           <div *ngIf="isFamilyStudentField(group.name)" class="card-register__selected-items">
             <span *ngFor="let student of selectedStudents" class="card-register__selected-item">
               {{ student }}
@@ -110,6 +92,50 @@
         </small>
       </div>
     </ng-container>
+
+    <!--
+      Sedes del colegio por registrar: se declaran con nombre porque no existen
+      todavia, asi que no hay id que elegir. La dirección la heredan del colegio.
+    -->
+    <div class="card-register__field" *ngIf="type === 'schools'">
+      <label class="card-register__label">
+        {{ 'register.schools.fields.campusNames' | translate }}
+      </label>
+
+      <div class="card-register__campus-rows">
+        <div class="card-register__campus-row" *ngFor="let name of campusNames; let i = index">
+          <input class="card-register__input"
+                 type="text"
+                 [ngModel]="name"
+                 [name]="'campusName' + i"
+                 (ngModelChange)="campusNames[i] = $event"
+                 [placeholder]="'register.schools.campusNamePlaceholder' | translate" />
+          <button *ngIf="campusNames.length > 1"
+                  type="button"
+                  class="card-register__remove-btn"
+                  (click)="removeCampusName(i)"
+                  [attr.aria-label]="'register.schools.removeCampus' | translate">
+            x
+          </button>
+        </div>
+
+        <div class="card-register__campus-row card-register__campus-row--actions">
+          <button type="button"
+                  class="card-register__add-btn"
+                  (click)="addCampusName()"
+                  [attr.aria-label]="'register.schools.addCampus' | translate">
+            +
+          </button>
+          <span class="card-register__campus-hint">
+            {{ 'register.schools.addCampus' | translate }}
+          </span>
+        </div>
+      </div>
+
+      <small class="card-register__error" *ngIf="campusNamesError">
+        {{ campusNamesError }}
+      </small>
+    </div>
 
     <app-location-map *ngIf="type === 'stop'"
       [address]="formData['address']"

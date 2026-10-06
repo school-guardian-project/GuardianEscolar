@@ -17,6 +17,7 @@ import { ParentsService } from '@core/services/parents.service';
 import { StudentsService } from '@core/services/students.service';
 import { FamilyListDto, FamilyMemberDto, FamilyRequestDto, FamilyResponseDto } from '@core/models/family.model';
 import { PersonListDto } from '@core/models/student.model';
+import { describeProblem } from '@core/http/problem-detail';
 
 interface FamilyView extends RecordData {
   id?: string;
@@ -198,9 +199,9 @@ export class Families implements OnInit {
         this.register?.resetForm();
         this.load();
       },
-      error: () => {
+      error: (err) => {
         this.register?.setValidationMessage(
-          'No se pudo registrar la familia. Verifica que el backend esté disponible.'
+          describeProblem(err, 'No se pudo registrar la familia. Verifica que el backend esté disponible.')
         );
       },
     });

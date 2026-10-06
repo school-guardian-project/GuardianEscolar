@@ -1,8 +1,12 @@
 <mat-sidenav-container>
     <mat-sidenav #sidenav mode="over">
-        <button mat-icon-button>
+        <button mat-icon-button *ngIf="!isLogged">
             <mat-icon class="person" (click)="login()">person</mat-icon>
         </button>
+        <div class="spaces" *ngIf="isLogged && canOpenDashboard" (click)="sidenav.close(); goToDashboard()">
+            {{ 'navbar.dashboard' | translate }}</div>
+        <div class="spaces" *ngIf="isLogged" (click)="sidenav.close(); logout()">
+            {{ 'navbar.logout' | translate }}</div>
         <div class="spaces" (click)="sidenav.close()" (click)="scrollToSection('funcionalidades')">{{ 'navbar.features' | translate }}</div>
         <div class="spaces" (click)="sidenav.close()" (click)="scrollToSection('como-funciona')">{{ 'navbar.how_it_works' | translate }}</div>
         <!--<div class="spaces" (click)="sidenav.close()">{{ 'navbar.pricing' | translate }}</div>-->
@@ -26,7 +30,11 @@
                 <!-- <div class="spaces" (click)="sidenav.close()">{{ 'navbar.pricing' | translate }}</div> -->
                 <div class="spaces" (click)="sidenav.close()" (click)="contact()">{{ 'navbar.contact' | translate }}
                 </div>
-                <button mat-icon-button>
+                <div class="spaces" *ngIf="isLogged && canOpenDashboard" (click)="goToDashboard()">{{
+                    'navbar.dashboard' | translate }}</div>
+                <div class="spaces" *ngIf="isLogged" (click)="logout()">{{ 'navbar.logout' | translate }}
+                </div>
+                <button mat-icon-button *ngIf="!isLogged">
                     <mat-icon class="person" (click)="login()">person</mat-icon>
                 </button>
             </div>

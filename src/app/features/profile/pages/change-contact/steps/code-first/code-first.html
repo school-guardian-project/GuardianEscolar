@@ -3,14 +3,14 @@
   [title]="'change_contact.code_first.title' | translate"
   [sessionDescription]="'change_contact.code_first.sessionDescription' | translate"
   [titleStep]="'change_contact.code_first.titleStep' | translate"
-  loginDescription=""
   [buttonText]="'change_contact.code_first.buttonText' | translate"
   [returnStep]="'change_contact.code_first.returnStep' | translate"
   (return)="return()"
   [showProgress]="true"
   [currentStep]="2"
-  [stepText]="'change_contact.code_first.stepText' | translate"
   (submit)="onSubmit()"
+  [stepText]="'change_contact.code_first.stepText' | translate"
+  [disabled]="isSubmitting"
 >
   <div class="login-description">
     <span>{{ 'change_contact.code_first.description' | translate }}</span>
@@ -26,8 +26,11 @@
           (input)="onInput($event, i)"
         />
       </div>
-      @if (form.invalid && form.touched) {
+      @if (form.invalid && form.touched && !errorMessage) {
         <small class="error">{{ 'change_contact.code_first.pin_error' | translate }}</small>
+      }
+      @if (errorMessage) {
+        <small class="error" role="alert" aria-live="polite">{{ errorMessage }}</small>
       }
     </div>
   </form>

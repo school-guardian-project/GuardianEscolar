@@ -91,7 +91,7 @@ const MAX_LENGTHS: Record<string, number> = {
 
 const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
-const INT_MAX = 2147483647;
+const PHONE_MAX = 999999999999999; // BIGINT column, up to 15 digits (E.164)
 
 function isValidStudentForm(form: RecordData): boolean {
   for (const field of REQUIRED_FIELDS) {
@@ -120,7 +120,7 @@ function isValidStudentForm(form: RecordData): boolean {
 
   const digits = String(form['phone'] ?? '').replace(/\D/g, '');
   const phone = Number(digits);
-  if (!digits || phone < 1 || phone > INT_MAX) {
+  if (!digits || phone < 1 || phone > PHONE_MAX) {
     return false;
   }
 

@@ -1,0 +1,47 @@
+<app-navbar-manage backRoute="/dashboard-admin"></app-navbar-manage>
+<!-- CONTENIDO PRINCIPAL -->
+<div class="page-wrapper">
+  <app-navbar-admin></app-navbar-admin>
+  <div class="container">
+    <app-card-register
+      type="stop"
+      [fieldOptions]="fieldOptions"
+      (formSubmit)="onCreated($event)">
+    </app-card-register>
+    <app-card-list type="stop"
+    [data]="stops"
+    [remoteSearch]="true"
+    (search)="onSearch($event)"
+    (viewItem)="showDetails($event)"
+    (editItem)="showUpdateDetails($event)"
+    (deleteItem)="showDelete($event)">
+
+    </app-card-list>
+  </div>
+</div>
+
+<!-- Modal de detalles a nivel de página -->
+<app-record-information 
+  *ngIf="showModal"
+  type="stop"
+  [record]="stopSelected"
+  (closed)="closeModal()">
+</app-record-information>
+
+<app-update-record
+  *ngIf="showUpdateModal"
+  type="stop"
+  [record]="stopSelected"
+  [fieldOptions]="fieldOptions"
+  (saved)="onSaved($event)"
+  (closed)="closeUpdateModal()">
+</app-update-record>
+
+<!-- Modal: eliminar registro -->
+<app-delete-record
+  *ngIf="showDeleteModal"
+  type="stop"
+  [record]="stopSelected"
+  (confirm)="onConfirmDelete($event)"
+  (cancel)="closeDeleteModal()">
+</app-delete-record>

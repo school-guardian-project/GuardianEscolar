@@ -1,0 +1,68 @@
+<div class="modal-overlay" (click)="close()">
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <div *ngIf="!enviado">
+      <div class="modal__header">
+        <h2 class="modal__title">
+          {{ 'comments_modal.title' | translate }}
+        </h2>
+        <p class="modal__subtitle">
+          {{ 'comments_modal.subtitle' | translate }}
+        </p>
+      </div>
+
+      <div class="modal__body">
+        <label class="modal__label">
+          {{ 'comments_modal.label' | translate }}
+        </label>
+
+        <textarea 
+          class="modal__textarea" 
+          [placeholder]="'comments_modal.placeholder' | translate"
+          [(ngModel)]="comentario" 
+          rows="5">
+        </textarea>
+      </div>
+
+      <!-- ERROR -->
+      <div *ngIf="mostrandoError" class="error-message">
+        <mat-icon>error_outline</mat-icon>
+        {{ 'comments_modal.error' | translate }}
+      </div>
+
+      <div class="modal__footer">
+        <button class="modal__btn modal__btn--cancel" (click)="close()">
+          {{ 'comments_modal.buttons.cancel' | translate }}
+        </button>
+
+        <button class="modal__btn modal__btn--submit" type="button" (click)="enviar()">
+          {{ 'comments_modal.buttons.submit' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <!-- SUCCESS -->
+    <div *ngIf="enviado" class="modal-overlay">
+      <div class="modal">
+
+        <div class="modal__header">
+          <h2 class="modal__title">
+            {{ 'comments_modal.success.title' | translate }}
+          </h2>
+
+          <p class="modal__subtitle">
+            {{ 'comments_modal.success.description' | translate }}
+          </p>
+        </div>
+
+        <div class="modal__footer modal__footer--center">
+          <button class="modal__btn modal__btn--submit" type="button" (click)="close()">
+            {{ 'comments_modal.buttons.exit' | translate }}
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>

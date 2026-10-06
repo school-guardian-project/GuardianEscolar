@@ -1,0 +1,55 @@
+<app-change-information
+  iconHead="lock"
+  [title]="'change_contact.code_second.title' | translate"
+  [sessionDescription]="'change_contact.code_second.sessionDescription' | translate"
+  [titleStep]="'change_contact.code_second.titleStep' | translate"
+  loginDescription=""
+  [buttonText]="'change_contact.code_second.buttonText' | translate"
+  [returnStep]="'change_contact.code_second.returnStep' | translate"
+  (return)="return()"
+  [showProgress]="true"
+  [currentStep]="4"
+  [stepText]="'change_contact.code_second.stepText' | translate"
+  (submit)="onSubmit()"
+  [disabled]="isSubmitting"
+>
+  <div class="login-description">
+    <span>{{ 'change_contact.code_second.description' | translate }}</span>
+  </div>
+
+  <form action="" [formGroup]="form">
+    <div class="input-pin">
+      <div class="pin-inputs">
+        <input
+          class="pin-input"
+          *ngFor="let ctrl of pinControls.controls; let i = index"
+          [formControl]="ctrl"
+          maxlength="1"
+          (input)="onInput($event, i)"
+          (paste)="onPaste($event, i)"
+          inputmode="numeric"
+          autocomplete="one-time-code"
+        />
+      </div>
+      @if (form.invalid && form.touched && !errorMessage) {
+        <small class="error">{{ 'change_contact.code_second.pin_error' | translate }}</small>
+      }
+      @if (errorMessage) {
+        <small class="error" role="alert" aria-live="polite">{{ errorMessage }}</small>
+      }
+    </div>
+  </form>
+</app-change-information>
+
+@if (showConfirmation) {
+  <div class="modal-overlay">
+    <div class="modal-confirmation">
+      <i class="ph-fill ph-check-circle icon"></i>
+      <h2 class="title-dialog">{{ 'change_contact.code_second.confirmationTitle' | translate }}</h2>
+      <p class="description-dialog">{{ 'change_contact.code_second.confirmationDescription' | translate }}</p>
+      <button (click)="accept()">
+        {{ 'common.accept' | translate }}
+      </button>
+    </div>
+  </div>
+}

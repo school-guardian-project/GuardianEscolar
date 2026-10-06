@@ -1,0 +1,261 @@
+:host {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── CARD CONTAINER ─────────────────────────────────────── */
+.card-register {
+  display: flex;
+  flex-direction: column;
+  margin-top: 0;
+  background-color: var(--card-bg);
+  border-radius: 16px;
+  padding: 24px 20px;
+  flex: 1;
+  min-width: 300px;
+  max-width: 600px;
+  box-sizing: border-box;
+  border: 0.5px solid var(--border-color);
+  box-shadow: var(--card-shadow);
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.card-register:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--card-shadow);
+}
+
+/* ── FORM ───────────────────────────────────────────────── */
+.card-register form {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 0;
+  min-height: 0;
+}
+
+/* ── TITLE ──────────────────────────────────────────────── */
+.card-register__title {
+  flex-shrink: 0;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  color: var(--title-color);
+  margin: 0 0 20px;
+  padding-bottom: 16px;
+  border-bottom: 0.5px solid var(--border-color);
+}
+
+/* ── LAYOUT ─────────────────────────────────────────────── */
+.card-register__row {
+  display: flex;
+  gap: 10px;
+}
+
+.card-register__field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.card-register__field:last-of-type {
+  margin-bottom: auto;
+}
+
+.card-register__field--half {
+  flex: 1;
+}
+
+/* ── LABEL ──────────────────────────────────────────────── */
+.card-register__label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+}
+
+/* ── INPUT WRAP ─────────────────────────────────────────── */
+.card-register__input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.card-register__input-wrap--multiple {
+  flex-direction: column;
+  align-items: stretch;
+}
+
+/* ── INPUT ──────────────────────────────────────────────── */
+.card-register__input {
+  flex: 1;
+  height: 36px;
+  padding: 8px 12px;
+  border: 0.5px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  background-color: var(--card-secondary-bg);
+  color: var(--text-color);
+  outline: none;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.card-register__input:focus {
+  border-color: var(--accent-color);
+  background-color: var(--input-bg);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 15%, transparent);
+}
+
+.card-register__input::placeholder {
+  color: var(--card-color-input);
+}
+
+.card-register__selected-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 100%;
+}
+
+.card-register__selected-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 100%;
+  padding: 6px 8px 6px 10px;
+  border: 1px solid var(--accent-color);
+  border-radius: 6px;
+  background-color: color-mix(in srgb, var(--accent-color) 15%, var(--card-bg));
+  color: var(--text-color);
+  font-size: 0.8rem;
+}
+
+.card-register__remove-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  border: 1px solid var(--contrast-color);
+  border-radius: 50%;
+  background: transparent;
+  color: var(--contrast-color);
+  font-size: 0.85rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+/* ── SELECT ─────────────────────────────────────────────── */
+.card-register__input--select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-color: var(--card-secondary-bg);
+  padding-right: 30px;
+  cursor: pointer;
+}
+
+/* ── BOTÓN "+" ──────────────────────────────────────────── */
+.card-register__add-btn {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  background-color: var(--accent-color);
+  color: var(--card-bg);
+  font-size: 1.1rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.card-register__add-btn:hover {
+  background-color: var(--contrast-color);
+}
+
+/* ── BOTÓN SUBMIT ───────────────────────────────────────── */
+.card-register__btn {
+  margin-top: 10px;
+  width: 100%;
+  padding: 11px;
+  background-color: var(--button-apply);
+  color: #ffffff;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.2s, transform 0.1s;
+  letter-spacing: 0.02em;
+}
+
+.card-register__btn:hover {
+  background-color: var(--accent-color);
+}
+
+.card-register__btn:active {
+  transform: scale(0.98);
+}
+
+.card-register__message {
+  margin: 10px 0 0;
+  color: var(--alert-icon);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  text-align: center;
+}
+
+.card-register__error {
+  color: var(--alert-icon);
+  font-size: 0.75rem;
+  line-height: 1.2;
+  margin-top: 2px;
+}
+
+/* ── SEDES POR AGREGAR (alta de colegio) ────────────────── */
+.card-register__campus-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.card-register__campus-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-register__campus-row .card-register__input {
+  flex: 1;
+}
+
+.card-register__campus-row--actions {
+  justify-content: flex-start;
+}
+
+.card-register__campus-hint {
+  color: var(--contrast-color);
+  font-size: 0.8rem;
+}
+
+/* ── SELECT SIN OPCIONES ───────────────────────────────── */
+.card-register__options-empty {
+  margin: 0;
+  padding: 9px 10px;
+  border: 1px dashed var(--contrast-color);
+  border-radius: 8px;
+  color: var(--contrast-color);
+  font-size: 0.8rem;
+  line-height: 1.35;
+}

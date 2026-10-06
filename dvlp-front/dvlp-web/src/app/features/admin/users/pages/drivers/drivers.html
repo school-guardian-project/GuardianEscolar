@@ -1,0 +1,42 @@
+<app-navbar-manage backRoute="/dashboard-admin"></app-navbar-manage>
+
+<div class="page-wrapper">
+  <app-navbar-admin></app-navbar-admin>
+  <div class="container">
+    <app-card-register type="driver" (formSubmit)="onCreated($event)"></app-card-register>
+
+    <app-card-list
+      type="driver"
+      [data]="drivers()"
+      [remoteSearch]="true"
+      (search)="onSearch($event)"
+      (viewItem)="showDetails($event)"
+      (editItem)="showUpdate($event)"
+      (deleteItem)="showDelete($event)"
+    >
+    </app-card-list>
+  </div>
+</div>
+
+<app-record-information
+  *ngIf="showModal"
+  type="driver"
+  [record]="driverSelected"
+  (closed)="closeModal()">
+</app-record-information>
+
+<app-update-record
+  *ngIf="showUpdateModal"
+  type="driver"
+  [record]="driverSelected"
+  (saved)="onSaved($event)"
+  (closed)="closeUpdateModal()">
+</app-update-record>
+
+<app-delete-record
+  *ngIf="showDeleteModal"
+  type="driver"
+  [record]="driverSelected"
+  (confirm)="onConfirmDelete($event)"
+  (cancel)="closeDeleteModal()">
+</app-delete-record>

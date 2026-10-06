@@ -1,0 +1,83 @@
+<app-nav-component></app-nav-component>
+
+<main>
+    <section class="section-first">
+        <div class="section-left">
+            <div class="support"><span class="object"></span>{{ 'contact.support' | translate }}</div>
+            <div class="section-title">{{ 'contact.title' | translate }} <span class="color">{{ 'contact.title_color' |
+                    translate }}</span></div>
+
+            <div class="paragraph">{{ 'contact.paragraph' | translate }}</div>
+            <div class="container-social">
+                <a class="social-card" href="https://www.facebook.com/GuardianEscolar" target="_blank"
+                    rel="noopener noreferrer">
+                    <div class="icon-social"><i class="ph-fill ph-facebook-logo"></i></div>
+                    <div class="description-social">
+                        <div class="title-social">{{ 'contact.social.facebook' | translate }}</div>
+                        <div class="link-social">{{ 'contact.social.facebook_handle' | translate }}</div>
+                    </div>
+                </a>
+
+                <a class="social-card" href="https://www.instagram.com/GuardianEscolar" target="_blank"
+                    rel="noopener noreferrer">
+                    <div class="icon-social"><i class="ph-fill ph-instagram-logo"></i></div>
+                    <div class="description-social">
+                        <div class="title-social">{{ 'contact.social.instagram' | translate }}</div>
+                        <div class="link-social">{{ 'contact.social.instagram_handle' | translate }}</div>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="section-right">
+            <div class="contact container">
+                <div class="contact-card">
+                    <div class="icon-contact"><i class="ph-fill ph-megaphone"></i></div>
+                    <div class="description-contact">
+                        <div class="main-title">{{ 'contact.info_title' | translate }}</div>
+                        <div class="description-text">{{ 'contact.info_subtitle' | translate }}</div>
+                    </div>
+                </div>
+                <div class="contact-card">
+                    <div class="icon-contact"><mat-icon>email</mat-icon></div>
+                    <div class="description-contact">
+                        <div class="title-contact-card">{{ 'contact.email.title' | translate }}</div>
+                        <div class="main-title">{{ 'contact.email.value' | translate }}</div>
+                        <div class="description-text">{{ 'contact.email.subtitle' | translate }}</div>
+                    </div>
+                    <button class="contact-button" aria-label="{{ 'contact.email.button' | translate }}">
+                        <a href="mailto:guardianescolar0@gmail.com" target="_blank" style="color: inherit; text-decoration: none;"> <mat-icon>mail</mat-icon></a>
+                    </button>
+                </div>
+                <hr>
+                <div class="contact-card">
+                    <div class="icon-contact"><mat-icon>phone</mat-icon></div>
+                    <div class="description-contact">
+                        <div class="title-contact-card">{{ 'contact.phone.title' | translate }}</div>
+                        <div class="main-title">{{ 'contact.phone.value' | translate }}</div>
+                        <div class="description-text">{{ 'contact.phone.subtitle' | translate }}</div>
+                    </div>
+                    <button class="contact-button" type="button" aria-label="{{ 'contact.phone.button' | translate }}"
+                        (click)="copyPhone()">
+                        <mat-icon>phone</mat-icon>
+                    </button>
+                </div>
+                <hr>
+                <div class="contact-card">
+                    <div class="icon-contact"><i class="ph-fill ph-whatsapp-logo"></i></div>
+                    <div class="description-contact">
+                        <div class="title-contact-card">{{ 'contact.whatsapp.title' | translate }}</div>
+                        <div class="main-title">{{ 'contact.whatsapp.value' | translate }}</div>
+                        <div class="description-text">{{ 'contact.whatsapp.subtitle' | translate }}</div>
+                    </div>
+                    <button class="contact-button" type="button" aria-label="{{ 'contact.whatsapp.button' | translate }}">
+                        <a href="https://web.whatsapp.com/send?phone=573144308274" target="_blank"
+                            style="color: inherit; text-decoration: none;"><i class="ph-fill ph-whatsapp-logo"></i></a>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main>
+<app-footer></app-footer>

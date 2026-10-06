@@ -1,0 +1,959 @@
+{
+  "navbar": {
+    "features": "Features",
+    "how_it_works": "How it works",
+    "contact": "Contact"
+  },
+  "hero": {
+    "line1": "School",
+    "line2": "safety",
+    "line3": "in",
+    "line4": "real",
+    "line5": "time",
+    "line6": ""
+  },
+  "features": {
+    "label": "Features",
+    "title": "Everything you need for school safety",
+    "description": "A complete platform for administrators, drivers and families.",
+    "cards": [
+      {
+        "icon": "satellite_alt",
+        "title": "Real-time GPS",
+        "description": "Precise location of each bus on the map with updates every 10 seconds."
+      },
+      {
+        "icon": "notifications",
+        "title": "Instant alerts",
+        "description": "Push notifications when the bus arrives, deviates or any incident occurs."
+      },
+      {
+        "icon": "assignment",
+        "title": "Attendance control",
+        "description": "Automatic check-in and check-out record of each student on the bus."
+      },
+      {
+        "icon": "insert_chart",
+        "title": "Admin dashboard",
+        "description": "Complete dashboard with metrics, reports and route and driver management."
+      },
+      {
+        "icon": "family_restroom",
+        "title": "Family app",
+        "description": "Parents follow the bus route and receive notifications on their phone."
+      },
+      {
+        "icon": "lock",
+        "title": "Secure data",
+        "description": "End-to-end encryption and compliance with data protection regulations."
+      }
+    ]
+  },
+  "how_it_works": {
+    "label": "How it works",
+    "title": "Simple for everyone",
+    "steps": [
+      {
+        "title": "Register your institution",
+        "description": "Create your account, add your routes and drivers in minutes."
+      },
+      {
+        "title": "Install on the buses",
+        "description": "Install the GPS device on each bus in less than 5 minutes."
+      },
+      {
+        "title": "Invite families",
+        "description": "Parents download Guardian Escolar and follow the route in real time."
+      },
+      {
+        "title": "Active monitoring",
+        "description": "Real-time monitoring from the administration panel."
+      }
+    ]
+  },
+  "cta": {
+    "title": "Ready to protect your students?",
+    "description": "Join more than 500 institutions that already trust Guardian Escolar.",
+    "btn_download": "Download",
+    "btn_contact": "Contact us"
+  },
+  "contact": {
+    "support": "Support available now",
+    "title": "We're here to",
+    "title_color": "help you",
+    "paragraph": "Do you have questions about the system, need an explanatory video, or want to integrate Guardian Escolar into your institution? Write to us.",
+    "social": {
+      "facebook": "Facebook",
+      "facebook_handle": "@GuardianEscolar",
+      "instagram": "Instagram",
+      "instagram_handle": "@GuardianEscolar"
+    },
+    "info_title": "Contact information",
+    "info_subtitle": "Multiple channels available.",
+    "email": {
+      "title": "Email",
+      "value": "guardianescolar0@gmail.com",
+      "subtitle": "Response within 2 hours",
+      "button": "Send email"
+    },
+    "phone": {
+      "title": "Phone",
+      "value": "+57 314 430 82 74",
+      "subtitle": "Monday to Friday · 7am – 6pm",
+      "button": "Call"
+    },
+    "whatsapp": {
+      "title": "WhatsApp",
+      "value": "+57 314 430 82 74",
+      "subtitle": "Available 24/7 for emergencies",
+      "button": "Open WhatsApp"
+    }
+  },
+  "footer": {
+    "col_product": "Product",
+    "col_legal": "Legal",
+    "links_product": [
+      "Features",
+      "How it works",
+      "Contact"
+    ],
+    "links_legal": [
+      "Privacy and terms"
+    ],
+    "rights": "© 2026 Guardian Escolar · All rights reserved"
+  },
+  "login": {
+    "left": {
+      "title": "Welcome back",
+      "description": "Access the complete school route monitoring system.",
+      "footer": "guardian.edu · 24/7 Support"
+    },
+    "right": {
+      "title": "Sign in",
+      "description": "Enter your credentials to access the dashboard",
+      "credentials_error": "Incorrect email or password.",
+      "email": {
+        "label": "Email",
+        "placeholder": "your-email@email.com",
+        "errors": {
+          "invalid": "*Must be a valid email.",
+          "required": "*Email is required."
+        }
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password",
+        "errors": {
+          "required": "*Password is required"
+        }
+      },
+      "forgot": "Forgot your password?",
+      "button": "Sign in",
+      "terms": "By signing in you accept our",
+      "and": "and",
+      "terms_link": "Terms of use",
+      "privacy_link": "Privacy policy"
+    }
+  },
+  "change_contact": {
+    "telephone": {
+      "title": "Change phone",
+      "sessionDescription": "For security, we will send an SMS to your current phone.",
+      "titleStep": "Step 1",
+      "buttonText": "Send code",
+      "returnStep": "Back",
+      "stepText": "1 of 4",
+      "label": "Current phone",
+      "error_pattern": "*Must be a valid phone number.",
+      "error_required": "*Phone is required.",
+      "help_text": "Enter the current phone of your account with country code, e.g. +573001234567."
+    },
+    "code_first": {
+      "title": "Verify code",
+      "sessionDescription": "Check the SMS sent to your current phone and type the code.",
+      "titleStep": "Step 2",
+      "buttonText": "Verify",
+      "returnStep": "Back",
+      "stepText": "2 of 4",
+      "description": "Check the SMS sent to your current phone and type the code.",
+      "pin_error": "*The entered code is invalid."
+    },
+    "reset": {
+      "title": "Update phone",
+      "sessionDescription": "Enter your new number to replace the previous one.",
+      "titleStep": "Step 3",
+      "buttonText": "Continue",
+      "returnStep": "Back",
+      "stepText": "3 of 4",
+      "label": "New phone",
+      "error_pattern": "*Use international format, e.g. +573001234567.",
+      "error_required": "*Phone is required.",
+      "help_text": "You will receive an SMS with a code at this number (+country code and number)."
+    },
+    "code_second": {
+      "title": "Confirm code",
+      "sessionDescription": "Enter the SMS code sent to the new number.",
+      "titleStep": "Step 4",
+      "buttonText": "Confirm",
+      "returnStep": "Back",
+      "stepText": "4 of 4",
+      "description": "Enter the SMS code to finish the phone change.",
+      "pin_error": "*The entered code is invalid.",
+      "confirmationTitle": "Phone updated",
+      "confirmationDescription": "Your phone number has been updated successfully."
+    },
+    "errors": {
+      "invalid_phone": "The number is invalid or the request expired. Use the format +573001234567 or restart the process.",
+      "sms_unavailable": "We could not send the SMS right now. Please try again later."
+    }
+  },
+  "change_email": {
+    "email": {
+      "title": "Change email",
+      "sessionDescription": "Enter the email you want to update.",
+      "titleStep": "Step 1",
+      "loginDescription": "You must provide a valid email.",
+      "buttonText": "Send code",
+      "returnStep": "Back",
+      "stepText": "1 of 4",
+      "email_label": "Email",
+      "error_pattern": "*Must be a valid email.",
+      "error_required": "*Email is required.",
+      "help_text": "You will receive a verification code at this email."
+    },
+    "code_first": {
+      "title": "Verify code",
+      "sessionDescription": "Enter the code sent to your current email.",
+      "titleStep": "Step 2",
+      "buttonText": "Verify",
+      "returnStep": "Back",
+      "stepText": "2 of 4",
+      "description": "Check your inbox and type the 6-digit code.",
+      "pin_error": "*The entered code is invalid."
+    },
+    "code_second": {
+      "confirmationTitle": "Email updated",
+      "confirmationDescription": "Your email has been updated successfully."
+    },
+    "reset": {
+      "title": "Almost done",
+      "sessionDescription": "Enter your new email address.",
+      "titleStep": "Step 3",
+      "loginDescription": "You must enter your new email",
+      "buttonText": "Send code",
+      "returnStep": "Back",
+      "stepText": "3 of 4",
+      "email_label": "Email",
+      "error_pattern": "*Must be a valid email.",
+      "error_required": "*Email is required",
+      "help_text": "You will receive a 6-digit code"
+    }
+  },
+  "change_password": {
+    "rules_title": "The password must contain:",
+    "rules": {
+      "min_length": "Minimum 8 characters",
+      "alphanumeric": "Numbers and letters",
+      "case": "Combination of lowercase and uppercase",
+      "special": "Special characters (. - _ @ *)"
+    },
+    "email": {
+      "title": "Change password",
+      "sessionDescription": "Enter your email to receive a recovery code.",
+      "titleStep": "Step 1",
+      "loginDescription": "You must provide your registered email.",
+      "buttonText": "Send code",
+      "returnStep": "Back",
+      "stepText": "1 of 3",
+      "email_label": "Email",
+      "error_pattern": "*Must be a valid email.",
+      "error_required": "*Email is required.",
+      "help_text": "You will receive a code to reset your password."
+    },
+    "code": {
+      "title": "Verify code",
+      "sessionDescription": "Enter the code sent to your email.",
+      "titleStep": "Step 2",
+      "buttonText": "Verify",
+      "returnStep": "Back",
+      "stepText": "2 of 3",
+      "description": "Check your inbox and enter the 6-digit code.",
+      "pin_error": "*The entered code is invalid."
+    },
+    "reset": {
+      "title": "Reset password",
+      "sessionDescription": "Create a new secure password.",
+      "titleStep": "Step 3",
+      "loginDescription": "Your password must meet the minimum requirements.",
+      "buttonText": "Save password",
+      "returnStep": "Back",
+      "stepText": "3 of 3",
+      "confirmationTitle": "Password updated",
+      "confirmationDescription": "Your password has been updated successfully."
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome",
+    "role": "Admin dashboard · Guardian Escolar",
+    "metrics": {
+      "students": "Students",
+      "routes": "Active routes",
+      "alerts": "Alerts today",
+      "month": "+12 this month",
+      "operating": "All operating",
+      "attention": "Require attention"
+    },
+    "alerts": {
+      "title": "Latest alerts",
+      "out_of_route": "Bus off route",
+      "sudden_brake": "Sudden braking",
+      "driver": "Driver",
+      "route": "Route"
+    }
+  },
+  "superadmin_dashboard": {
+    "welcome": "Welcome",
+    "role": "Administration panel · Guardian Escolar",
+    "metrics": {
+      "admins": "Admins",
+      "schools": "Registered schools",
+      "comments": "Comments today",
+      "month": "+12 this month",
+      "active": "All operating",
+      "attention": "Require attention"
+    },
+    "alerts": {
+      "title": "Latest alerts",
+      "out_route": "Bus off route",
+      "sudden_stop": "Sudden brake",
+      "driver": "Driver",
+      "route": "Route"
+    }
+  },
+  "sidebar": {
+    "admin": "Manage",
+    "users": "Users",
+    "buses": "Buses",
+    "profile": "Profile"
+  },
+  "sidebarSuperadmin": {
+    "title": "Manage",
+    "schools": "Schools",
+    "admins": "Administrators",
+    "profile": "Profile"
+  },
+  "navbar-admin": {
+    "title-users": "Users",
+    "students": "Students",
+    "guardian": "Guardians",
+    "drivers": "Drivers",
+    "Family": "Family",
+    "title-routes": "Transport",
+    "bus": "Buses",
+    "route": "Routes",
+    "bus-stops": "Stops"
+  },
+  "comments_modal": {
+    "title": "Do you have any issue?",
+    "subtitle": "Let us know",
+    "label": "Tell us your problem",
+    "placeholder": "Enter text",
+    "error": "Please describe your issue before submitting",
+    "buttons": {
+      "cancel": "Cancel",
+      "submit": "Send",
+      "exit": "Close"
+    },
+    "success": {
+      "title": "Message sent!",
+      "description": "Thank you for sharing your issue. We will do our best to resolve it as soon as possible"
+    }
+  },
+  "update_school": {
+    "title": "Update school information",
+    "fields": {
+      "name": "Full name",
+      "name_placeholder": "Enter the school name",
+      "city": "City",
+      "city_placeholder": "Select a city",
+      "address": "Address",
+      "address_placeholder": "Enter the address",
+      "phone": "Phone",
+      "phone_placeholder": "Enter the phone number",
+      "logo": "Logo",
+      "upload": "Upload new logo",
+      "email": "Email",
+      "email_placeholder": "Enter the email",
+      "website": "Website",
+      "web_placeholder": "Enter the website"
+    },
+    "error": "Please complete at least one field before updating",
+    "buttons": {
+      "cancel": "Cancel",
+      "update": "Update",
+      "exit": "Close"
+    },
+    "success": {
+      "title": "Information updated!",
+      "description": "Changes have been saved successfully"
+    }
+  },
+  "theme": {
+    "title": "Change theme",
+    "subtitle": "Select the panel color",
+    "light": "Light",
+    "dark": "Dark",
+    "select": "active",
+    "blue": "Blue",
+    "green": "Green",
+    "yellow": "Yellow",
+    "red": "Red"
+  },
+  "language": {
+    "title": "Select language",
+    "subtitle": "Please choose your preferred language to continue",
+    "buttons": {
+      "cancel": "Cancel",
+      "confirm": "Confirm"
+    }
+  },
+  "common": {
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "close": "Close",
+    "accept": "Accept"
+  },
+  "record_information": {
+    "student": {
+      "title": "Student information",
+      "fields": {
+        "names": "Names",
+        "lastNames": "Last names",
+        "documentType": "ID type",
+        "identification": "Identification",
+        "birthDate": "Date of birth",
+        "grade": "Grade",
+        "phone": "Phone",
+        "address": "Address",
+        "email": "Email"
+      }
+    },
+    "guardian": {
+      "title": "Guardian information",
+      "fields": {
+        "name": "Name",
+        "lastNames": "Last names",
+        "email": "Email",
+        "documentType": "ID type",
+        "identification": "Identification",
+        "birthDate": "Date of birth",
+        "phone": "Phone",
+        "address": "Address"
+      }
+    },
+    "driver": {
+      "title": "Driver information",
+      "fields": {
+        "names": "Names",
+        "lastNames": "Last names",
+        "documentType": "ID type",
+        "identification": "Identification",
+        "birthDate": "Date of birth",
+        "licenseExpiration": "License expiration",
+        "licenseNumber": "License",
+        "address": "Address",
+        "email": "Email"
+      }
+    },
+    "family": {
+      "title": "Family information",
+      "fields": {
+        "name": "Name",
+        "guardian": "Guardian",
+        "student": "Student",
+        "observations": "Observations"
+      }
+    },
+    "bus": {
+      "title": "Bus information",
+      "fields": {
+        "plate": "License plate",
+        "driver": "Driver",
+        "model": "Model",
+        "brand": "Brand",
+        "capacity": "Capacity",
+        "gps": "GPS",
+        "soat": "SOAT"
+      }
+    },
+    "stop": {
+      "title": "Stop information",
+      "fields": {
+        "name": "Name",
+        "student": "Student",
+        "city": "City",
+        "school": "School",
+        "address": "Address",
+        "latitude": "Latitude",
+        "longitude": "Longitude"
+      }
+    },
+    "route": {
+      "title": "Route information",
+      "fields": {
+        "name": "Name",
+        "sector": "Sector",
+        "startTime": "Start time",
+        "endTime": "End time",
+        "destination": "Destination",
+        "routeSector": "Route sector"
+      }
+    },
+    "admins": {
+      "title": "Administrator information",
+      "fields": {
+        "name": "Name",
+        "lastNames": "Last names",
+        "email": "Email",
+        "identification": "Identification",
+        "birthDate": "Date of birth",
+        "phone": "Phone",
+        "address": "Address"
+      }
+    },
+    "schools": {
+      "title": "School information",
+      "fields": {
+        "name": "Name",
+        "city": "City",
+        "schooling": "School level",
+        "address": "Address",
+        "phone": "Phone",
+        "email": "Email",
+        "website": "Website"
+      }
+    }
+  },
+  "delete_record": {
+    "student": {
+      "title": "Delete student",
+      "text": "This will permanently delete the selected student record."
+    },
+    "guardian": {
+      "title": "Delete guardian",
+      "text": "This will permanently delete the selected guardian record."
+    },
+    "driver": {
+      "title": "Delete driver",
+      "text": "This will permanently delete the selected driver record."
+    },
+    "family": {
+      "title": "Delete family",
+      "text": "This will permanently delete the selected family record."
+    },
+    "bus": {
+      "title": "Delete bus",
+      "text": "This will permanently delete the selected bus record."
+    },
+    "stop": {
+      "title": "Delete stop",
+      "text": "This will permanently delete the selected stop record."
+    },
+    "route": {
+      "title": "Delete route",
+      "text": "This will permanently delete the selected route record."
+    },
+    "admins": {
+      "title": "Delete administrator",
+      "text": "This will permanently delete the selected administrator record."
+    },
+    "schools": {
+      "title": "Delete school",
+      "text": "This will permanently delete the selected school record."
+    }
+  },
+  "update_record": {
+    "student": {
+      "title": "Update student",
+      "fields": {
+        "names": "Names",
+        "lastNames": "Last names",
+        "documentType": "ID type",
+        "identification": "Identification",
+        "birthDate": "Date of birth",
+        "grade": "Grade",
+        "phone": "Phone",
+        "address": "Address",
+        "email": "Email"
+      }
+    },
+    "guardian": {
+      "title": "Update guardian",
+      "fields": {
+        "name": "Name",
+        "lastNames": "Last names",
+        "email": "Email",
+        "documentType": "ID type",
+        "identification": "Identification",
+        "birthDate": "Date of birth",
+        "phone": "Phone",
+        "address": "Address"
+      }
+    },
+    "driver": {
+      "title": "Update driver",
+      "fields": {
+        "names": "Names",
+        "lastNames": "Last names",
+        "documentType": "ID type",
+        "identification": "Identification",
+        "birthDate": "Date of birth",
+        "licenseExpiration": "License expiration",
+        "licenseNumber": "License",
+        "address": "Address",
+        "email": "Email"
+      }
+    },
+    "family": {
+      "title": "Update family",
+      "fields": {
+        "name": "Name",
+        "guardian": "Guardian",
+        "student": "Student",
+        "observations": "Observations"
+      }
+    },
+    "bus": {
+      "title": "Update bus",
+      "fields": {
+        "plate": "License plate",
+        "driver": "Driver",
+        "model": "Model",
+        "brand": "Brand",
+        "capacity": "Capacity",
+        "gps": "GPS",
+        "soat": "SOAT"
+      }
+    },
+    "stop": {
+      "title": "Update stop",
+      "fields": {
+        "name": "Name",
+        "student": "Student",
+        "city": "City",
+        "school": "School",
+        "address": "Address",
+        "latitude": "Latitude",
+        "longitude": "Longitude"
+      }
+    },
+    "route": {
+      "title": "Update route",
+      "fields": {
+        "name": "Name",
+        "sector": "Sector",
+        "startTime": "Start time",
+        "endTime": "End time",
+        "destination": "Destination",
+        "routeSector": "Route sector"
+      }
+    },
+    "admins": {
+      "title": "Update administrator",
+      "fields": {
+        "name": "Name",
+        "lastNames": "Last names",
+        "email": "Email",
+        "identification": "Identification",
+        "birthDate": "Date of birth",
+        "phone": "Phone",
+        "address": "Address"
+      }
+    },
+    "schools": {
+      "title": "Update school",
+      "fields": {
+        "name": "Name",
+        "city": "City",
+        "schooling": "School level",
+        "address": "Address",
+        "phone": "Phone",
+        "email": "Email",
+        "website": "Website"
+      }
+    },
+    "buttons": {
+      "save": "Save changes",
+      "select": "Select…"
+    }
+  },
+  "register": {
+    "select": "Select…",
+    "button": "Register",
+    "student": {
+      "title": "Register student",
+      "fields": {
+        "names": "Names",
+        "lastNames": "Last names",
+        "documentType": "ID type",
+        "identification": "Identification number",
+        "birthDate": "Date of birth",
+        "grade": "Grade",
+        "phone": "Phone",
+        "address": "Address",
+        "email": "Email",
+        "campus": "Campus"
+      }
+    },
+    "guardian": {
+      "title": "Register guardian",
+      "fields": {
+        "names": "Names",
+        "lastNames": "Last names",
+        "email": "Email",
+        "documentType": "ID type",
+        "identification": "Identification number",
+        "birthDate": "Date of birth",
+        "phone": "Phone",
+        "address": "Address",
+        "campus": "Campus"
+      }
+    },
+    "driver": {
+      "title": "Register driver",
+      "fields": {
+        "names": "Names",
+        "lastNames": "Last names",
+        "documentType": "ID type",
+        "identification": "Identification number",
+        "birthDate": "Date of birth",
+        "licenseExpiration": "License expiration",
+        "licenseNumber": "License number",
+        "address": "Address",
+        "email": "Email",
+        "campus": "Campus"
+      }
+    },
+    "family": {
+      "title": "Register family",
+      "fields": {
+        "name": "Family name",
+        "guardian": "Guardian",
+        "student": "Student",
+        "observations": "Observations"
+      }
+    },
+    "bus": {
+      "title": "Register bus",
+      "fields": {
+        "plate": "License plate",
+        "driver": "Driver",
+        "model": "Model",
+        "brand": "Brand",
+        "capacity": "Capacity",
+        "soat": "SOAT validity",
+        "gps": "GPS status"
+      }
+    },
+    "stop": {
+      "title": "Register stop",
+      "fields": {
+        "name": "Stop name",
+        "student": "Student",
+        "city": "City",
+        "school": "School",
+        "address": "Address",
+        "route": "Route"
+      }
+    },
+    "route": {
+      "title": "Register route",
+      "fields": {
+        "name": "Route name",
+        "sector": "Sector / neighborhood",
+        "startTime": "Start time",
+        "endTime": "End time",
+        "destination": "Destination",
+        "routeSector": "Sector",
+        "bus": "Bus"
+      }
+    },
+    "admins": {
+      "title": "Register administrator",
+      "fields": {
+        "name": "Name",
+        "lastNames": "Last names",
+        "email": "Email",
+        "identification": "Identification",
+        "birthDate": "Date of birth",
+        "phone": "Phone",
+        "address": "Address",
+        "school": "School"
+      }
+    },
+    "schools": {
+      "title": "Register school",
+      "fields": {
+        "name": "School name",
+        "logo": "Logo",
+        "city": "City",
+        "address": "Address",
+        "phone": "Phone",
+        "schooling": "Education level",
+        "email": "Email",
+        "website": "Website",
+        "campusNames": "Campuses"
+      },
+      "campusNamePlaceholder": "Campus name",
+      "addCampus": "Add campus",
+      "removeCampus": "Remove campus",
+      "campusNamesRequired": "Add at least one campus for the school",
+      "campusNamesDuplicated": "The campus “{{name}}” is duplicated"
+    },
+    "options": {
+      "noSchool": "There is no school assigned to this session to list its campuses.",
+      "loadError": "Could not load options. Try again in a moment.",
+      "empty": "No options available."
+    }
+  },
+  "search": {
+    "search": "Search..."
+  },
+  "assign_record": {
+    "route": {
+      "title": "Assign bus to route",
+      "bus": "Bus",
+      "selectBus": "Select a bus"
+    },
+    "student": {
+      "title": "Assign student to route",
+      "route": "Route",
+      "stop": "Boarding stop",
+      "selectRoute": "Select a route",
+      "selectStop": "Select a stop"
+    },
+    "bus": {
+      "title": "Assign driver to bus",
+      "driver": "Driver",
+      "currentDriver": "Current driver",
+      "selectDriver": "Select a driver"
+    },
+    "buttons": {
+      "assign": "Assign",
+      "unassign": "Unassign"
+    },
+    "genericError": "The action could not be completed. Check that the backend is available."
+  },
+  "card_list": {
+    "student": "Registered students",
+    "guardian": "Registered guardians",
+    "driver": "Registered drivers",
+    "family": "Registered families",
+    "bus": "Registered buses",
+    "stop": "Registered stops",
+    "route": "Registered routes",
+    "admins": "Registered administrators",
+    "schools": "Registered schools",
+    "labels": {
+      "validLicense": "Valid license",
+      "plate": "License plate",
+      "driverName": "Driver name",
+      "guardian": "Guardian",
+      "address": "Address",
+      "finalDestination": "Final destination",
+      "startTime": "Start time",
+      "endTime": "End time",
+      "email": "Email"
+    }
+  },
+  "admin_profile": {
+    "title": "Administrator information",
+    "user": {
+      "name": "Administrator name",
+      "role": "Administrator",
+      "role_superadmin": "Super administrator"
+    },
+    "labels": {
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "city": "City",
+      "school": "School",
+      "password": "Password",
+      "id": "ID"
+    }
+  },
+  "forgot_password": {
+    "title": "Recover your access",
+    "session_description": "We will send a verification code to your registered email.",
+    "title_step": "Reset password",
+    "login_description": "Enter the email you registered with",
+    "button": "Send code",
+    "return": "Back to sign in",
+    "step_text": "1 of 3",
+    "hint": "You will receive a 6-digit code",
+    "reset": {
+      "title": "Create a secure password",
+      "session_description": "Keep the security recommendations in mind.",
+      "title_step": "New password",
+      "login_description": "Choose a password you haven't used before",
+      "button": "Save new password",
+      "return": "Go back",
+      "step_text": "3 of 3",
+      "fields": {
+        "password": "New password",
+        "confirm_password": "Confirm password"
+      },
+      "errors": {
+        "required": "*This field is required",
+        "minlength": "*Minimum 8 characters",
+        "pattern": "*Must contain uppercase, lowercase, numbers and special characters (. - _ @ *)",
+        "no_match": "*Passwords do not match"
+      }
+    }
+  },
+  "right_index": {
+    "brand": "Guardian Escolar",
+    "dashboardTitle": "Live tracking",
+    "allVehicles": "All vehicles",
+    "filters": "Filters",
+    "live": "Live",
+    "totalVehicles": "Total vehicles",
+    "onRoute": "On route",
+    "alerts": "Alerts",
+    "active": "Active",
+    "students": "Students",
+    "pickupPoint": "Pickup point",
+    "greenStreet": "Green Street",
+    "school": "School",
+    "springfieldSchool": "Springfield School",
+    "bus": "Bus 02",
+    "bus05": "Bus 05",
+    "bus08": "Bus 08",
+    "liveActivity": "Live activity",
+    "delayed": "Delayed",
+    "mapleAvenue": "Maple Avenue",
+    "oakBoulevard": "Oak Boulevard",
+    "geofenceAlert": "Geofence alert",
+    "geofenceMessage": "Bus 02 has arrived at Springfield School",
+    "eta": "ETA",
+    "etaValue": "7:45 AM",
+    "speedLabel": "Speed",
+    "busSpeed": "45 km/h",
+    "nextStop": "Next stop",
+    "nextStopValue": "Springfield School"
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Invalid email address",
+    "phone": "Invalid phone (numbers only, 7-15 digits)",
+    "minLength": "Minimum {{min}} characters",
+    "maxLength": "Maximum {{max}} characters",
+    "number": "Must be a number",
+    "min": "Minimum {{min}}",
+    "max": "Maximum {{max}}",
+    "text": "Letters and spaces only",
+    "birthDate": "Date cannot be in the future or more than 100 years ago",
+    "futureDate": "Date must be in the future"
+  }
+}

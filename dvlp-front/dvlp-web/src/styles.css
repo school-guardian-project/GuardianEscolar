@@ -1,0 +1,577 @@
+@import "@phosphor-icons/web/regular";
+@import "@phosphor-icons/web/fill";
+@import "@phosphor-icons/web/bold";
+@import "@phosphor-icons/web/light";
+@import "@phosphor-icons/web/thin";
+@import "@phosphor-icons/web/duotone";
+
+.ph-fill, .ph, .ph-bold, .ph-light, .ph-thin, .ph-duotone {
+  font-size: 1.5rem;
+}
+
+/* RESET */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+    scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* BODY */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  font-family: "Segoe UI", Arial, sans-serif;
+  --overlay-bg: rgba(15, 23, 42, 0.62);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+body.dark-theme-blue,
+body.dark-theme-green,
+body.dark-theme-yellow,
+body.dark-theme-red {
+  --overlay-bg: rgba(0, 0, 0, 0.74);
+}
+
+/* Shared typography for authenticated and utility views. The landing and contact
+   pages stay outside this scope because they use their own display typography. */
+body.internal-page {
+  --internal-title-size: 1.25rem;
+  --internal-subtitle-size: 0.95rem;
+  --internal-body-size: 0.9rem;
+  --internal-label-size: 0.8rem;
+}
+
+body.internal-page h1,
+body.internal-page h2,
+body.internal-page .welcome,
+body.internal-page .card-list__title,
+body.internal-page .card-register__title,
+body.internal-page .modal__title,
+body.internal-page .title-dialog,
+body.internal-page .lang-title,
+body.internal-page .subtitle {
+  font-size: var(--internal-title-size) !important;
+  line-height: 1.3;
+}
+
+body.internal-page .sidebar h3 {
+  font-size: 10px !important;
+  font-weight: bold;
+  line-height: normal;
+}
+
+body.internal-page .welcome-role,
+body.internal-page .login-description,
+body.internal-page .session-description,
+body.internal-page .modal__subtitle,
+body.internal-page .lang-sub,
+body.internal-page .modal__type,
+body.internal-page .metric-sub,
+body.internal-page .description-dialog {
+  font-size: var(--internal-subtitle-size) !important;
+  line-height: 1.45;
+}
+
+body.internal-page,
+body.internal-page input,
+body.internal-page select,
+body.internal-page textarea,
+body.internal-page button,
+body.internal-page .card-list__detail,
+body.internal-page .card-list__name,
+body.internal-page .modal__info-value,
+body.internal-page .modal__name,
+body.internal-page .modal__textarea,
+body.internal-page .error-message {
+  font-size: var(--internal-body-size);
+  line-height: 1.45;
+}
+
+body.internal-page label,
+body.internal-page .card-register__label,
+body.internal-page .modal_form-label,
+body.internal-page .modal__info-label,
+body.internal-page .metric-label {
+  font-size: var(--internal-label-size) !important;
+  line-height: 1.35;
+}
+
+body.internal-page .modal-overlay,
+body.internal-page .lang-backdrop,
+body.internal-page .modal-backdrop,
+body.internal-page .cdk-overlay-backdrop {
+  background: var(--overlay-bg) !important;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+/* Shared modal surface and controls. */
+body.internal-page .modal,
+body.internal-page .lang-modal,
+body.internal-page .modal-backdrop .modal,
+body.internal-page .mat-mdc-dialog-surface,
+body.internal-page mat-dialog-container {
+  background: var(--bg-color) !important;
+  color: var(--text-color);
+  border-radius: 16px;
+  font-family: inherit;
+}
+
+body.internal-page .modal__title,
+body.internal-page .title-dialog,
+body.internal-page .lang-title {
+  color: var(--modal-title) !important;
+  font-weight: 600;
+  text-align: center;
+}
+
+body.internal-page .modal__subtitle,
+body.internal-page .description-dialog,
+body.internal-page .lang-sub {
+  color: var(--modal-text) !important;
+  text-align: center;
+}
+
+body.internal-page .modal__footer,
+body.internal-page .modal_footer,
+body.internal-page .lang-btns,
+body.internal-page .btn-themes,
+body.internal-page mat-dialog-actions {
+  align-items: center;
+  justify-content: center;
+}
+
+body.internal-page .modal__btn,
+body.internal-page .modal_btn,
+body.internal-page .btn-cancel,
+body.internal-page .btn-confirm,
+body.internal-page .close-btn,
+body.internal-page mat-dialog-actions button {
+  min-height: 40px;
+  padding: 10px 24px;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: var(--internal-body-size) !important;
+  font-weight: 500;
+  line-height: 1.2;
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease,
+    color 0.2s ease, filter 0.2s ease, transform 0.2s ease;
+}
+
+body.internal-page .modal__btn--submit,
+body.internal-page .modal_btn--cancel,
+body.internal-page .btn-confirm,
+body.internal-page mat-dialog-actions .btn {
+  background: var(--button-apply) !important;
+  color: #ffffff !important;
+  border: 1px solid var(--button-apply);
+}
+
+body.internal-page .modal__btn--submit:hover,
+body.internal-page .modal_btn--cancel:hover,
+body.internal-page .btn-confirm:hover,
+body.internal-page mat-dialog-actions .btn:hover {
+  background: var(--hover-color) !important;
+  border-color: var(--hover-color);
+  filter: none;
+  transform: translateY(-1px);
+}
+
+body.internal-page .modal__btn--cancel,
+body.internal-page .modal_btn--submit,
+body.internal-page .btn-cancel,
+body.internal-page .close-btn {
+  background: var(--button-cancel) !important;
+  color: var(--text-secondary) !important;
+  border: 1px solid var(--border-color);
+}
+
+body.internal-page .modal__btn--cancel:hover,
+body.internal-page .modal_btn--submit:hover,
+body.internal-page .btn-cancel:hover,
+body.internal-page .close-btn:hover {
+  background: var(--card-secondary-bg) !important;
+  color: var(--title-color) !important;
+  border-color: var(--text-secondary);
+  filter: none;
+  transform: translateY(-1px);
+}
+
+/* ── LIGHT BLUE ─────────────────────────────────────────── */
+.light-theme-blue {
+  --white: #FFFFFF;
+  --black: #000000;
+  --bg-color: #EDF5FF;
+  --text-color: #111827;
+
+  --color-navbar: #1A56DB;
+  --navbar-gradient: linear-gradient(135deg, #102d7d, #366fea);
+
+  --card-bg: #FFFFFF;
+  --card-secondary-bg: #F8FAFC;
+  --card-color-input: #858e9b;
+  --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+  --border-color: #E2E8F0;
+
+  --text-secondary: #64748B;
+  --title-color: #1A2E4A;
+  --navbar-item: #e8f0ff;
+  --navbar-item-hover: #FFFFFF;
+
+  --hover-color: #2061ec;
+  --hover-card: #93b4f7;
+  --accent-color: #003ab8;
+  --light-contrast-color: #0a0f2e;
+  --dark-contrast-color: #e8f0ff;
+
+  --alert-bg: #FEF2F2;
+  --alert-title: #7F1D1D;
+  --alert-text: #374151;
+  --alert-icon: #DC2626;
+
+  --modal-bg: #FFFFFF;
+  --color-icon: #164bb4;
+  --border-icon: #001c41;
+
+  --button-cancel: #FFFFFF;
+  --button-apply: #1A56DB;
+
+  --mat-sys-surface: #FFFFFF;
+
+  --input-bg: #FFFFFF;
+  --input-border: #CBD5E1;
+}
+
+/* ── LIGHT GREEN ────────────────────────────────────────── */
+.light-theme-green {
+  --white: #FFFFFF;
+  --black: #000000;
+  --bg-color: #F0FBF4;
+  --text-color: #123A2C;
+
+  --color-navbar: #16A34A;
+  --navbar-gradient: linear-gradient(135deg, #0a4d22, #2dbe65);
+
+  --card-bg: #FFFFFF;
+  --card-secondary-bg: #F8FAFC;
+  --card-color-input: #858e9b;
+  --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+  --border-color: #E2E8F0;
+
+  --text-secondary: #496d59;
+  --title-color: #123a2c;
+  --navbar-item: #edfdf0;
+  --navbar-item-hover: #FFFFFF;
+
+  --hover-color: #16A34A;
+  --hover-card: #86efac;
+  --accent-color: #107936;
+  --light-contrast-color: #e6f9ee;
+  --dark-contrast-color: #071a0e;
+
+  --alert-bg: #FEF2F2;
+  --alert-title: #7F1D1D;
+  --alert-text: #374151;
+  --alert-icon: #DC2626;
+
+  --modal-bg: #FFFFFF;
+  --color-icon: #12813b;
+  --border-icon: #0b3d1e;
+
+  --button-cancel: #FFFFFF;
+  --button-apply: #16A34A;
+
+  --mat-sys-surface: #FFFFFF;
+
+  --input-bg: #FFFFFF;
+  --input-border: #CBD5E1;
+}
+
+/* ── LIGHT YELLOW ───────────────────────────────────────── */
+.light-theme-yellow {
+  --white: #FFFFFF;
+  --black: #000000;
+  --bg-color: #FFF9EA;
+  --text-color: #4B3A12;
+
+  --color-navbar: #D4A017;
+  --navbar-gradient: linear-gradient(135deg, #7a5800, #f0bc30);
+
+  --card-bg: #FFFFFF;
+  --card-secondary-bg: #F8F3E6;
+  --card-color-input: #737B88;
+  --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+  --border-color: #E7D7A5;
+
+  --text-secondary: #6b5f39;
+  --title-color: #4B3A12;
+  --navbar-item: #fefce8;
+  --navbar-item-hover: #ffffff;
+
+  --hover-color: #B7791F;
+  --hover-card: #fde68a;
+  --accent-color: #A16207;
+  --dark-contrast-color: #fdf6dc;
+  --light-contrast-color: #1a1000;
+
+  --alert-bg: #FEF2F2;
+  --alert-title: #7F1D1D;
+  --alert-text: #374151;
+  --alert-icon: #DC2626;
+
+  --modal-bg: #FFFFFF;
+  --color-icon: #B7791F;
+  --border-icon: #8B5E00;
+
+  --button-cancel: #FFFFFF;
+  --button-apply: #D4A017;
+
+  --mat-sys-surface: #FFFFFF;
+
+  --input-bg: #FFFFFF;
+  --input-border: #D1C07A;
+}
+
+/* ── LIGHT RED ──────────────────────────────────────────── */
+.light-theme-red {
+  --white: #FFFFFF;
+  --black: #000000;
+  --bg-color: #FFF5F5;
+  --text-color: #4A1D1F;
+
+  --color-navbar: #B42318;
+  --navbar-gradient: linear-gradient(135deg, #6b0d09, #d94035);
+
+  --card-bg: #FFFFFF;
+  --card-secondary-bg: #FAFAFA;
+  --card-color-input: #7C8593;
+  --card-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+  --border-color: #E5E7EB;
+
+  --text-secondary: #7a5353;
+  --title-color: #4A1D1F;
+  --navbar-item: #fff1f1;
+  --navbar-item-hover: #FFFFFF;
+
+  --hover-color: #C53030;
+  --hover-card: #ec7d7d;
+  --accent-color: #991B1B;
+  --light-contrast-color: #fde8e8;
+  --dark-contrast-color: #1a0303;
+
+  --alert-bg: #FEF2F2;
+  --alert-title: #7F1D1D;
+  --alert-text: #374151;
+  --alert-icon: #DC2626;
+
+  --modal-bg: #FFFFFF;
+  --color-icon: #B91C1C;
+  --border-icon: #7F1D1D;
+
+  --button-cancel: #FFFFFF;
+  --button-apply: #B42318;
+
+  --mat-sys-surface: #FFFFFF;
+
+  --input-bg: #FFFFFF;
+  --input-border: #E5C5C5;
+}
+
+/* ── DARK BLUE ──────────────────────────────────────────── */
+.dark-theme-blue {
+  --white: #FFFFFF;
+  --black: #000000;
+  --bg-color: #0D1524;
+  --text-color: #EAF3FF;
+
+  --color-navbar: #0F2E6B;
+  --navbar-gradient: linear-gradient(135deg, #071840, #1a4baa);
+
+  --card-bg: #161A22;
+  --card-secondary-bg: #1C1F26;
+  --card-color-input: #bcbcbcd3;
+  --card-shadow: 0 8px 20px rgba(0,0,0,0.4);
+
+  --border-color: #252A34;
+
+  --text-secondary: #f1f3f7;
+  --title-color: #F9FAFB;
+  --navbar-item: #e8f0ff;
+  --navbar-item-hover: #FFFFFF;
+
+  --hover-color: #3B82F6;
+  --hover-card: #1d3d6e;
+  --accent-color: #3B82F6;
+  --light-contrast-color: #dbeafe;
+  --dark-contrast-color: #0a0f1e;
+
+  --alert-bg: #161A22;
+  --alert-title: #FCA5A5;
+  --alert-text: #D1D5DB;
+  --alert-icon: #F87171;
+
+  --modal-bg: #161A22;
+  --modal-title: #FFFFFF;
+  --color-icon: #164bb4;
+  --border-icon: #0025cc;
+
+  --button-cancel: #FFFFFF;
+  --button-apply: #3B82F6;
+
+  --mat-sys-surface: #161A22;
+
+  --input-bg: #0D1117;
+  --input-border: #252A34;
+}
+
+/* ── DARK GREEN ─────────────────────────────────────────── */
+.dark-theme-green {
+  --white: #FFFFFF;
+  --black: #000000;
+  --bg-color: #0E1712;
+  --text-color: #EAFBF0;
+
+  --color-navbar: #0B4A24;
+  --navbar-gradient: linear-gradient(135deg, #052912, #12853f);
+
+  --card-bg: #161A22;
+  --card-secondary-bg: #1C1F26;
+  --card-color-input: #bcbcbcd3;
+  --card-shadow: 0 8px 20px rgba(0,0,0,0.4);
+
+  --border-color: #252A34;
+
+  --text-secondary: #d3efd8;
+  --title-color: #F5FFF7;
+  --navbar-item: #ebfff1;
+  --navbar-item-hover: #FFFFFF;
+
+  --hover-color: #1eda63;
+  --hover-card: #14532d;
+  --accent-color: #22C55E;
+  --light-contrast-color: #dcfce7;
+  --dark-contrast-color: #071a0e;
+
+  --alert-bg: #161A22;
+  --alert-title: #FCA5A5;
+  --alert-text: #D1D5DB;
+  --alert-icon: #F87171;
+
+  --modal-bg: #161A22;
+  --modal-title: #FFFFFF;
+  --color-icon: #128b3b;
+  --border-icon: #00a33f;
+
+  --button-cancel: #FFFFFF;
+  --button-apply: #22C55E;
+
+  --mat-sys-surface: #161A22;
+
+  --input-bg: #0D1117;
+  --input-border: #1a2e1f;
+}
+
+/* ── DARK YELLOW ────────────────────────────────────────── */
+.dark-theme-yellow {
+  --white: #FFFFFF;
+  --black: #000000;
+  --bg-color: #17150F;
+  --text-color: #FFF9DA;
+
+  --color-navbar: #B8860B;
+  --navbar-gradient: linear-gradient(135deg, #5c4000, #d4a020);
+
+  --card-bg: #1A1D21;
+  --card-secondary-bg: #22262B;
+  --card-color-input: #D1D5DB;
+  --card-shadow: 0 8px 20px rgba(0,0,0,0.45);
+
+  --border-color: #3A320F;
+
+  --text-secondary: #f0e1a6;
+  --title-color: #FFF4C2;
+  --navbar-item: #fffbea;
+  --navbar-item-hover: #FFFFFF;
+
+  --hover-color: #FACC15;
+  --hover-card: #3d2e00;
+  --accent-color: #FDE047;
+  --light-contrast-color: #fefce8;
+  --dark-contrast-color: #0f0c00;
+
+  --alert-bg: #1A1D21;
+  --alert-title: #FCA5A5;
+  --alert-text: #D1D5DB;
+  --alert-icon: #F87171;
+
+  --modal-bg: #1A1D21;
+  --modal-title: #FFFFFF;
+  --color-icon: #FACC15;
+  --border-icon: #EAB308;
+
+  --button-cancel: #FFFFFF;
+  --button-apply: #FACC15;
+
+  --mat-sys-surface: #1A1D21;
+
+  --input-bg: #0D1009;
+  --input-border: #3A320F;
+}
+
+/* ── DARK RED ───────────────────────────────────────────── */
+.dark-theme-red {
+  --white: #FFFFFF;
+  --black: #000000;
+  --bg-color: #181112;
+  --text-color: #FFF1F1;
+
+  --color-navbar: #5B1215;
+  --navbar-gradient: linear-gradient(135deg, #300508, #8c1f24);
+
+  --card-bg: #181B20;
+  --card-secondary-bg: #20242A;
+  --card-color-input: #C7C9CC;
+  --card-shadow: 0 8px 20px rgba(0,0,0,0.45);
+
+  --border-color: #2B3138;
+
+  --text-secondary: #f4d0d0;
+  --title-color: #FFE4E6;
+  --navbar-item: #fff4f4;
+  --navbar-item-hover: #FFFFFF;
+
+  --hover-color: #EF4444;
+  --hover-card: #3d0a0a;
+  --accent-color: #DC2626;
+  --light-contrast-color: #fee2e2;
+  --dark-contrast-color: #0f0202;
+
+  --alert-bg: #181B20;
+  --alert-title: #FCA5A5;
+  --alert-text: #D1D5DB;
+  --alert-icon: #F87171;
+
+  --modal-bg: #181B20;
+  --modal-title: #FFFFFF;
+  --color-icon: #DC2626;
+  --border-icon: #EF4444;
+
+  --button-cancel: #FFFFFF;
+  --button-apply: #DC2626;
+
+  --mat-sys-surface: #181B20;
+
+  --input-bg: #0D0F12;
+  --input-border: #2B1F1F;
+}

@@ -1,0 +1,46 @@
+<mat-sidenav-container>
+    <mat-sidenav #sidenav mode="over">
+        <button mat-icon-button *ngIf="!isLogged">
+            <mat-icon class="person" (click)="login()">person</mat-icon>
+        </button>
+        <div class="spaces" *ngIf="isLogged && canOpenDashboard" (click)="sidenav.close(); goToDashboard()">
+            {{ 'navbar.dashboard' | translate }}</div>
+        <div class="spaces" *ngIf="isLogged" (click)="sidenav.close(); logout()">
+            {{ 'navbar.logout' | translate }}</div>
+        <div class="spaces" (click)="sidenav.close()" (click)="scrollToSection('funcionalidades')">{{ 'navbar.features' | translate }}</div>
+        <div class="spaces" (click)="sidenav.close()" (click)="scrollToSection('como-funciona')">{{ 'navbar.how_it_works' | translate }}</div>
+        <!--<div class="spaces" (click)="sidenav.close()">{{ 'navbar.pricing' | translate }}</div>-->
+        <div class="spaces" (click)="sidenav.close()">{{ 'navbar.contact' | translate }}</div>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <mat-toolbar>
+            <div class="navbar-start">
+                <img src="assets/logo-blue.svg" alt="Guardian Escolar" class="logo">
+                <div class="title space">Guardian Escolar</div>
+            </div>
+            <!-- <div class="navbar-center">
+                
+            </div> -->
+            <div class="navbar-end">
+                <div class="spaces" (click)="sidenav.close()" (click)="scrollToSection('funcionalidades')">{{
+                    'navbar.features' | translate }}</div>
+                <div class="spaces" (click)="sidenav.close()" (click)="scrollToSection('como-funciona')">{{
+                    'navbar.how_it_works' | translate }}</div>
+                <!-- <div class="spaces" (click)="sidenav.close()">{{ 'navbar.pricing' | translate }}</div> -->
+                <div class="spaces" (click)="sidenav.close()" (click)="contact()">{{ 'navbar.contact' | translate }}
+                </div>
+                <div class="spaces" *ngIf="isLogged && canOpenDashboard" (click)="goToDashboard()">{{
+                    'navbar.dashboard' | translate }}</div>
+                <div class="spaces" *ngIf="isLogged" (click)="logout()">{{ 'navbar.logout' | translate }}
+                </div>
+                <button mat-icon-button *ngIf="!isLogged">
+                    <mat-icon class="person" (click)="login()">person</mat-icon>
+                </button>
+            </div>
+            <button class="btn-menu" mat-icon-button (click)="sidenav.toggle()">
+                <mat-icon>menu</mat-icon>
+            </button>
+        </mat-toolbar>
+    </mat-sidenav-content>
+</mat-sidenav-container>

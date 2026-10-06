@@ -1,0 +1,216 @@
+{
+  "button": {
+    "enter": "Se connecter",
+    "sendCode": "Envoyer le code",
+    "verifyCode": "Vérifier le code",
+    "restore": "Réinitialiser",
+    "suport": "Assistance",
+    "rateUs": "Évaluez-nous",
+    "cancel": "Annuler",
+    "send": "Envoyer",
+    "update": "Mettre à jour"
+  },
+  "inputs": {
+    "title.email": "Adresse e-mail",
+    "title.numero": "Numéro de téléphone",
+    "title.password": "Mot de passe",
+    "numeroPlaceholder": "Entrez le nouveau numéro de téléphone",
+    "emailPlaceholder": "Entrez votre adresse e-mail",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "verifyCodePlaceholder": "Entrez le code de vérification",
+    "newPasswordPlaceholder": "Entrez votre nouveau mot de passe",
+    "confirmPassword": "Nouveau mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez votre nouveau mot de passe",
+    "searchRoute": "Rechercher un itinéraire",
+    "appearance": "Apparence",
+    "language": "Langue",
+    "data": "Mes données",
+    "family": "Ma famille",
+    "security": "Sécurité",
+    "privacity": "Politique de confidentialité",
+    "aboutus": "À propos de nous",
+    "logout": "Se déconnecter",
+    "phone": "Téléphone",
+    "email": "Adresse e-mail",
+    "password": "Mot de passe",
+    "address": "Adresse",
+    "city": "Ville",
+    "school": "École",
+    "name": "Nom",
+    "rol": "Rôle",
+    "notifications": "Notifications",
+    "titlePermission": "Autorisations de l'application",
+    "titleDatas": "Données que nous collectons",
+    "titleProtection": "Chiffrement et protection des données",
+    "titleAutentication": "Authentification sécurisée",
+    "titleAccess": "Accès selon votre rôle",
+    "titleRegister": "Enregistrement par code QR",
+    "titleElimination": "Conservation et suppression des données",
+    "titleConnection": "Fonctionnement hors ligne",
+    "titleLaws": "Vos droits en tant qu'utilisateur",
+    "titleAbout": "Qui sommes-nous ?",
+    "titleMission": "Mission",
+    "titleVision": "Vision",
+    "titleTeam": "Notre équipe",
+    "titleValues": "Nos valeurs"
+  },
+
+  "login": {
+    "title": "Connexion",
+    "ForgotPassword": "Mot de passe oublié ?",
+    "error": "E-mail ou mot de passe incorrect."
+  },
+
+  "forgotPassword": {
+    "title": "Réinitialiser le mot de passe",
+    "description": "Entrez votre adresse e-mail pour recevoir un code de vérification.",
+    "emailPlaceholder": "Adresse e-mail"
+  },
+
+  "verifyCode": {
+    "title": "Code de vérification",
+    "description": "Entrez le code envoyé à votre adresse e-mail.",
+    "transferCode": "Vous n'avez pas reçu le code ? Renvoyer"
+  },
+
+  "newPassword": {
+    "title": "Réinitialiser le mot de passe",
+    "description": "Entrez votre nouveau mot de passe.",
+    "newPasswordPlaceholder": "Entrez votre nouveau mot de passe",
+    "confirmPasswordPlaceholder": "Confirmez votre nouveau mot de passe"
+  },
+
+  "account": {
+    "updatePhone": {
+      "title": "Mettre à jour le numéro de téléphone",
+      "description": "Entrez votre adresse e-mail pour vérifier votre identité"
+    },
+    "verifyPhone": {
+      "descriptionVerify": "Nous avons envoyé un code à votre numéro. Veuillez le saisir."
+    },
+    "newPhone": {
+      "description": "Entrez le nouveau numéro de téléphone."
+    },
+    "updateEmail": {
+      "title": "Mettre à jour l'adresse e-mail",
+      "description": "Entrez votre e-mail pour vérifier votre identité."
+    },
+    "verifyEmail": {
+      "description": "Nous avons envoyé un code à votre e-mail. Veuillez le saisir."
+    },
+    "newEmail": {
+      "description": "Entrez la nouvelle adresse e-mail."
+    },
+    "updatePassword": {
+      "title": "Mettre à jour le mot de passe"
+    }
+  },
+
+  "profile": {
+    "title": "Mon profil",
+    "subtitle": "Gérez votre compte et vos préférences"
+  },
+
+  "notifications": {
+    "title": "Notifications",
+    "markAllRead": "Tout marquer comme lu",
+    "empty": "Vous n'avez aucune nouvelle notification",
+    "routeStartedTitle": "Itinéraire démarré",
+    "routeStartedMessage": "Le bus de l'itinéraire Centro a commencé son trajet.",
+    "studentBoardedTitle": "Montée enregistrée",
+    "studentBoardedMessage": "La montée de l'élève dans le bus a été enregistrée.",
+    "routeArrivingTitle": "Bus proche",
+    "routeArrivingMessage": "Le bus arrivera à votre arrêt dans environ 10 minutes.",
+    "studentLeftTitle": "Descente enregistrée",
+    "studentLeftMessage": "La descente de l'élève du bus a été enregistrée.",
+    "routeDetourTitle": "Déviation de l'itinéraire",
+    "routeDetourMessage": "L'itinéraire présente une déviation temporaire.",
+    "justNow": "Maintenant",
+    "emptySaved": "Vous n'avez aucune notification enregistrée",
+    "saveNotification": "Enregistrer la notification",
+    "removeSaved": "Retirer des notifications enregistrées",
+    "filters": {
+      "button": "Filtrer",
+      "title": "Filtrer les notifications",
+      "all": "Toutes",
+      "boarding": "Montée dans le bus",
+      "alighting": "Descente du bus",
+      "delays": "Retards",
+      "detours": "Déviations de l'itinéraire",
+      "saved": "Notifications enregistrées"
+    }
+  },
+
+  "Family": {
+    "holder": "Titulaire",
+    "members": "Autres membres"
+  },
+
+  "security": {
+    "notificationsOff": "Activer les notifications",
+    "notificationsOn": "Désactiver les notifications",
+    "changePassword": "Changer le mot de passe"
+  },
+
+  "privacy": {
+    "descriPermission": "Guardián Escolar demande l'accès à certaines fonctionnalités de votre appareil uniquement pour assurer le service de suivi scolaire. L'autorisation de localisation permet d'afficher en temps réel la position du bus sur la carte interactive et de calculer les heures d'arrivée estimées. L'autorisation d'accès à la caméra est utilisée exclusivement pour scanner les codes QR qui enregistrent l'entrée et la sortie de l'élève du véhicule. L'autorisation de notifications sert à vous informer immédiatement des événements pertinents du trajet de votre enfant. Aucune autorisation n'est utilisée à des fins autres que celles décrites ici, et vous pouvez les révoquer à tout moment depuis les paramètres de votre appareil, en sachant que cela pourrait limiter certaines fonctionnalités de l'application.",
+    "descripDatas": "Conformément au principe de finalité établi par la loi colombienne 1581 de 2012, Guardián Escolar collecte uniquement les données personnelles strictement nécessaires à la prestation du service de transport scolaire surveillé. Ces données comprennent : les informations d'identification de l'élève (nom, itinéraire attribué, établissement scolaire), les coordonnées du tuteur (nom, e-mail, téléphone) et les données opérationnelles du service (localisation GPS du bus, heures d'entrée et de sortie enregistrées par code QR). Aucune donnée sensible supplémentaire n'est collectée, et ces informations ne sont pas partagées avec des tiers extérieurs à l'exploitation du service de transport scolaire.",
+    "descripProtection": "Toute communication entre l'application et nos serveurs s'effectue via des protocoles de chiffrement (HTTPS/TLS), garantissant que les informations de localisation, d'identité et de contact des élèves circulent protégées de bout en bout. Cette mesure répond à l'obligation établie à l'article 4 de la loi 1581 de 2012, qui exige des responsables du traitement des données personnelles qu'ils adoptent les mesures techniques nécessaires pour sécuriser les enregistrements, en évitant leur altération, leur perte, ou leur consultation, utilisation ou accès non autorisés.",
+    "descripAutentication": "L'accès à la plateforme est protégé par des mécanismes d'authentification sécurisée. Les mots de passe des utilisateurs sont stockés de manière chiffrée et ne sont en aucun cas enregistrés ni transmis en texte clair. En guise de mesure de protection supplémentaire contre les tentatives d'accès non autorisées, le système bloque temporairement un compte après plusieurs tentatives de connexion échouées consécutives, en notifiant cet événement pour un suivi approprié.",
+    "descripAccess": "Conformément au principe de circulation restreinte consacré par la loi 1581 de 2012, l'accès à l'information au sein de Guardián Escolar est segmenté selon le rôle de chaque utilisateur. Un tuteur ne peut consulter que les informations et la localisation correspondant à son enfant ; un conducteur accède uniquement aux données de l'itinéraire qui lui est assigné ; et un administrateur gère les itinéraires et les utilisateurs sous un registre d'audit qui trace chaque action effectuée, garantissant la traçabilité et le contrôle de l'utilisation de l'information.",
+    "descripRegister": "Chaque événement d'entrée ou de sortie de l'élève est enregistré au moyen d'un code QR unique, stocké avec la date, l'heure et la localisation exacte, ce qui permet d'éviter les enregistrements dupliqués, frauduleux ou incohérents. Une fois l'événement confirmé, le système notifie automatiquement et immédiatement le tuteur, garantissant transparence et rapidité de l'information sur l'état de l'élève pendant son trajet scolaire.",
+    "descripElimination": "Les données de localisation et l'historique des trajets sont conservés pendant une période maximale de trente (30) jours, le temps nécessaire à des fins de traçabilité, d'audit et de gestion d'éventuels incidents. Passé ce délai, l'information est supprimée en toute sécurité. Conformément au droit de suppression prévu par la loi 1581 de 2012, le tuteur peut demander à tout moment la suppression des données personnelles de son enfant, sauf obligation légale ou réglementaire de les conserver.",
+    "descripConnection": "Guardián Escolar est conçu pour fonctionner de manière fiable même dans les zones à couverture réseau intermittente. Lorsque l'appareil du bus perd temporairement le signal, les données de localisation sont stockées en toute sécurité sur l'appareil et se synchronisent automatiquement avec le serveur dès que la connexion est rétablie, garantissant qu'aucun enregistrement du trajet n'est perdu ou altéré pendant ce processus.",
+    "descripLaws": "Conformément à la Constitution politique de la Colombie et à la loi 1581 de 2012 (loi de protection des données personnelles), en tant que titulaire des données — ou représentant légal de l'élève — vous avez le droit de : connaître, mettre à jour et rectifier vos informations personnelles ; demander une preuve de l'autorisation accordée pour le traitement de vos données ; être informé de l'utilisation faite de vos informations ; déposer des plaintes auprès de la Surintendance de l'industrie et du commerce pour infraction à la loi ; révoquer l'autorisation et/ou demander la suppression de vos données lorsque les principes, droits et garanties constitutionnels et légaux ne sont pas respectés ; et accéder gratuitement à vos données personnelles ayant fait l'objet d'un traitement. Pour exercer l'un de ces droits, vous pouvez contacter l'administrateur de l'école ou notre canal d'assistance désigné."
+  },
+
+  "aboutus": {
+    "descripAbout": "Nous sommes une équipe de trois étudiants du SENA développant des solutions technologiques axées sur l'amélioration de processus réels. Cette application fait partie de notre projet de formation, dans lequel nous appliquons les connaissances acquises en analyse et développement de logiciels pour créer un système fonctionnel, sécurisé et facile à utiliser.\n\n Notre travail vise à renforcer la gestion du transport scolaire, en apportant des outils qui améliorent la communication, l'organisation et la tranquillité d'esprit des élèves, des parents et des tuteurs.",
+    "descripMission": "Développer une application fiable pour la gestion et le suivi des itinéraires scolaires, permettant de surveiller en temps réel le transport des élèves et d'améliorer la sécurité et la communication entre les familles et les établissements scolaires.",
+    "descripVision": "Être un projet technologique de référence dans les solutions de transport scolaire, se distinguant par l'innovation, la facilité d'utilisation et l'engagement envers la sécurité, avec pour ambition de croître et de s'adapter à de nouveaux besoins à l'avenir.",
+    "descripTeam": "Guardián Escolar est né du travail conjoint de Johan Smith Santamaria Fernández, Sharik Dayanna Rojas Ibarra et Juan Pablo Chala Ramírez, apprentis du programme Analyse et développement de logiciels du SENA, sous la supervision des instructeurs désignés par le SENA. Chaque membre de l'équipe a contribué à l'analyse, la conception, le développement et la gestion de la base de données du projet.",
+    "descripValues": "Sécurité, transparence et engagement sont les principes qui guident chaque décision derrière Guardián Escolar. Nous croyons que la technologie doit être au service du bien-être des élèves, offrant aux familles la tranquillité d'esprit de savoir que leurs enfants sont en sécurité à chaque trajet scolaire."
+  },
+
+  "logout": {
+    "title": "Déconnexion",
+    "description": "Vous êtes sur le point de vous déconnecter de votre compte sur cet appareil. Vous pourrez vous reconnecter quand vous le souhaitez."
+  },
+
+  "support": {
+    "title": "Parlez-nous de votre problème",
+    "description": "Parlez-nous de votre problème",
+    "placeholder": "Écrivez votre message ici..."
+  },
+
+  "rateUs": {
+    "title": "Donnez-nous votre avis",
+    "placeholder": "Écrivez votre avis ici..."
+  },
+
+  "cards": {
+    "finalDestination": "Destination finale",
+    "stops": "Arrêts",
+    "school": "École"
+  },
+
+  "bottom": {
+    "route": "Itinéraire",
+    "location": "Localisation",
+    "profile": "Profil"
+  },
+
+  "gps": {
+    "vehicleLocation": "Localisation du véhicule",
+    "speed": "Vitesse",
+    "status": "État",
+    "lastUpdated": "Dernière mise à jour",
+    "centerOnLocation": "Centrer sur la position GPS",
+    "active": "GPS actif",
+    "inactive": "GPS déconnecté",
+    "loadingLocation": "Chargement de la localisation...",
+    "errorLoadingLocation": "Erreur lors de l'obtention de la localisation",
+    "noLocationAvailable": "Aucune localisation disponible",
+    "lastKnownLocation": "Dernière localisation disponible"
+  }
+}

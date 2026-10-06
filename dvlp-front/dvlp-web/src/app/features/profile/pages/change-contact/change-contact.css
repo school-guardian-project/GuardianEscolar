@@ -1,0 +1,52 @@
+input {
+    padding: 10px;
+    border-radius: 5px;
+    border: var(--text-secondary) 1px solid;
+    transition: border 0.2s ease;
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    width: 100%;
+    box-sizing: border-box;
+}
+
+input:focus {
+    border: var(--accent-color) 1px solid;
+    outline: none;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid var(--alert-icon);
+}
+
+label {
+    margin-bottom: 7px;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+p {
+    color: var(--text-secondary);
+    margin-bottom: 50px;
+    margin-top: 18px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.error {
+    position: static;
+    margin-top: 5px;
+    color: var(--alert-icon);
+    font-size: 0.75rem;
+    line-height: 1;
+    z-index: 10;
+}
+
+.input-telephone .input-email {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    width: 100%;
+}

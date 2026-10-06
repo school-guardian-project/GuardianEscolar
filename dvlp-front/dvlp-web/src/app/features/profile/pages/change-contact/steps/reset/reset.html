@@ -1,0 +1,32 @@
+<app-change-information
+  iconHead="phone"
+  [title]="'change_contact.reset.title' | translate"
+  [sessionDescription]="'change_contact.reset.sessionDescription' | translate"
+  [titleStep]="'change_contact.reset.titleStep' | translate"
+  loginDescription=""
+  [buttonText]="'change_contact.reset.buttonText' | translate"
+  [returnStep]="'change_contact.reset.returnStep' | translate"
+  (return)="return()"
+  [showProgress]="true"
+  [currentStep]="3"
+  (submit)="onSubmit()"
+  [stepText]="'change_contact.reset.stepText' | translate"
+  [disabled]="isSubmitting"
+>
+  <form action="" [formGroup]="form">
+    <div class="input-telephone">
+      <label for="telephone">{{ 'change_contact.reset.label' | translate }}</label>
+      <input type="tel" id="telephone" formControlName="telephone" />
+      @if (form.get('telephone')?.touched && form.get('telephone')?.errors?.['pattern']) {
+        <small class="error">{{ 'change_contact.reset.error_pattern' | translate }}</small>
+      }
+      @if (form.get('telephone')?.touched && form.get('telephone')?.errors?.['required']) {
+        <small class="error">{{ 'change_contact.reset.error_required' | translate }}</small>
+      }
+      <p>{{ 'change_contact.reset.help_text' | translate }}</p>
+      @if (errorMessage) {
+        <small class="error" role="alert" aria-live="polite">{{ errorMessage }}</small>
+      }
+    </div>
+  </form>
+</app-change-information>

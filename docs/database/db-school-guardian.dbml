@@ -1,0 +1,403 @@
+// ==========================================
+// Esquema School Guardian (sincronizado con la BD real - SQL Server)
+// Actualizado: 2026-10-06
+// Nota: los Id de negocio son uniqueidentifier (NEWID()); los maestros
+// (Role, AlertType, Brand, Model, Permissions, etc.) usan tinyint.
+// ==========================================
+
+// -----------------------------
+// Maestros y seguridad
+// -----------------------------
+
+Table Role {
+    Id tinyint [primary key]
+    Name varchar(20) [not null]
+    Description varchar(100) [not null]
+    Status varchar(20) [not null]
+}
+
+Table Permissions {
+    Id tinyint [primary key]
+    TypePermissions varchar(100) [not null]
+    Description varchar(150) [not null]
+}
+
+Table PermissionsRole {
+    Id tinyint [primary key]
+    PermissionsId tinyint [not null]
+    RoleId tinyint [not null]
+}
+
+Table PasswordPolicies {
+    Id tinyint [primary key]
+    MinLongitude tinyint [not null]
+    MaxLongitude tinyint [not null]
+    RequiresCapitalLetters tinyint [not null]
+    RequiresNumbers tinyint [not null]
+    RequiresSymbols tinyint [not null]
+    ExpirationDays tinyint [not null]
+}
+
+Table SecuritySettings {
+    Id tinyint [primary key]
+    NameSettings varchar(100) [not null]
+    ValueSettings varchar(100) [not null]
+    Description varchar(150) [not null]
+}
+
+Table AlertType {
+    Id tinyint [primary key]
+    Name varchar(30) [not null]
+    Description varchar(100) [not null]
+    UrgencyLevel tinyint [not null]
+}
+
+Table Brand {
+    Id tinyint [primary key]
+    Name varchar(30)
+    Status varchar(20) [not null]
+}
+
+Table Model {
+    Id tinyint [primary key]
+    BrandId tinyint [not null]
+    Name varchar(30)
+    Status varchar(20) [not null]
+}
+
+Table City {
+    Id uniqueidentifier [primary key]
+    Name varchar(40) [not null]
+    Country varchar(30) [not null]
+    Status varchar(20) [not null]
+}
+
+// -----------------------------
+// Personas y sesiones
+// -----------------------------
+
+Table Person {
+    Id uniqueidentifier [primary key]
+    Name varchar(50) [not null]
+    LastName varchar(50) [not null]
+    IdentificationType varchar(20) [not null]
+    IdentificationNumber varchar(20) [not null]
+    Email varchar(50) [not null]
+    Phone int [not null]
+    ResidenceAddress varchar(50) [not null]
+    DateBirth date [not null]
+    Status varchar(20) [not null]
+}
+
+Table Profile {
+    Id uniqueidentifier [primary key]
+    PersonId uniqueidentifier [not null]
+    CampuseId uniqueidentifier
+    PasswordHash varchar(100) [not null]
+    RoleId tinyint [not null]
+    Status varchar(20) [not null]
+}
+
+Table SessionProfile {
+    Id int [primary key]
+    ProfileId uniqueidentifier [not null]
+    DateStart datetime2 [not null]
+    DateEnd datetime2 [not null]
+    IPAddress varchar(50) [not null]
+    StatusSession varchar(50) [not null]
+}
+
+Table Audit {
+    Id bigint [primary key]
+    ProfileId uniqueidentifier [not null]
+    Action varchar(255) [not null]
+    DateTime datetime2 [not null]
+    Description varchar(500) [not null]
+    IPAddress varchar(50) [not null]
+    Application varchar(255) [not null]
+}
+
+Table DeviceToken {
+    Id uniqueidentifier [primary key]
+    ProfileId uniqueidentifier [not null] // relación lógica sin FK declarada en BD
+    ExpoToken varchar(300) [not null]
+    UpdatedAt datetime2 [not null]
+}
+
+Table LogErrors {
+    Id bigint [primary key]
+    TypeError varchar(100) [not null]
+    Description varchar(150) [not null]
+    IPAddress varchar(50) [not null]
+    OccurredAt datetime2 [not null]
+}
+
+// -----------------------------
+// Escuela, sedes y académico
+// -----------------------------
+
+Table School {
+    Id uniqueidentifier [primary key]
+    CityId uniqueidentifier [not null]
+    Logo varbinary(max) [not null]
+    Name varchar(30) [not null]
+    Address varchar(30) [not null]
+    Phone int [not null]
+    Email varchar(50) [not null]
+    Website varchar(100)
+    Theme varchar(20)
+    Status varchar(20) [not null]
+}
+
+Table SchoolCampus {
+    Id uniqueidentifier [primary key]
+    SchoolId uniqueidentifier [not null]
+    Name varchar(30) [not null]
+    Address varchar(30) [not null]
+    Status varchar(20) [not null]
+}
+
+Table SchoolAdmin {
+    Id uniqueidentifier [primary key]
+    SchoolId uniqueidentifier [not null]
+    ProfileId uniqueidentifier [not null]
+    Status varchar(20) [not null]
+}
+
+Table Course {
+    Id uniqueidentifier [primary key]
+    CampusId uniqueidentifier [not null]
+    Name varchar(10) [not null]
+    Status varchar(20) [not null]
+}
+
+Table Stop {
+    Id uniqueidentifier [primary key]
+    CityId uniqueidentifier [not null]
+    SchoolId uniqueidentifier [not null]
+    Address varchar(100) [not null]
+    Longitude decimal(10,7) [not null]
+    Latitude decimal(10,7) [not null]
+    Status varchar(20) [not null]
+    Name varchar(30) [not null]
+}
+
+Table Family {
+    Id uniqueidentifier [primary key]
+    Name varchar(50) [not null]
+    Observations varchar(100) [not null]
+    Status varchar(20) [not null]
+}
+
+Table FamilyMember {
+    Id uniqueidentifier [primary key]
+    FamilyId uniqueidentifier [not null]
+    ProfileId uniqueidentifier [not null]
+    RelationshipType varchar(20) [not null]
+    Status varchar(20) [not null]
+}
+
+// -----------------------------
+// Transporte: buses, GPS, rutas
+// -----------------------------
+
+Table Bus {
+    Id uniqueidentifier [primary key]
+    CampuseId uniqueidentifier [not null]
+    SoatValidity date [not null]
+    GpsDeviceId uniqueidentifier [not null]
+    Capacity tinyint [not null]
+    Plate varchar(15) [not null]
+    ModelId tinyint [not null]
+    Status varchar(20) [not null]
+}
+
+Table GpsDevice {
+    Id uniqueidentifier [primary key]
+    Imei varchar(20) [not null]
+    LastConnection datetime2 [not null]
+    GpsStatus bit [not null]
+}
+
+Table GpsLocation {
+    Id uniqueidentifier [primary key]
+    GpsDeviceId uniqueidentifier [not null]
+    Latitude decimal(10,7) [not null]
+    Longitude decimal(10,7) [not null]
+    Speed decimal(8,2) [not null]
+    Course decimal(8,2) [not null]
+    DateTime datetime2 [not null]
+}
+
+Table DriverLicense {
+    Id uniqueidentifier [primary key]
+    ProfileId uniqueidentifier [not null]
+    LicenseNumber varchar(20) [not null]
+    LicenseExpirationDate date [not null]
+    Status varchar(20) [not null]
+}
+
+Table DriverAssignemts {
+    Id uniqueidentifier [primary key]
+    ProfileId uniqueidentifier [not null]
+    BusId uniqueidentifier [not null]
+    AssignedFrom date [not null]
+    AssignedTo date
+}
+
+Table Route {
+    Id uniqueidentifier [primary key]
+    CampuseId uniqueidentifier [not null]
+    Name varchar(30) [not null]
+    TargetSector varchar(30) [not null]
+    Status varchar(20) [not null]
+    StartTime time [not null]
+    EndTime time [not null]
+}
+
+Table RouteBusAssignments {
+    Id uniqueidentifier [primary key]
+    BusId uniqueidentifier [not null]
+    RouteId uniqueidentifier [not null]
+    Status varchar(20) [not null]
+}
+
+Table RouteSchedule {
+    Id uniqueidentifier [primary key]
+    RouteBusAssignmentsId uniqueidentifier [not null]
+    DayOfWeek varchar(10) [not null]
+    Direction varchar(10) [not null]
+    StartTime time [not null]
+    Status varchar(20) [not null]
+}
+
+Table RouteStop {
+    Id uniqueidentifier [primary key]
+    RouteId uniqueidentifier [not null]
+    StopId uniqueidentifier [not null]
+    OrderSequence int [not null]
+    Status varchar(20) [not null]
+}
+
+Table RouteStudentAssignments {
+    Id uniqueidentifier [primary key]
+    ProfileId uniqueidentifier [not null]
+    RouteStopId uniqueidentifier [not null]
+    Status varchar(20) [not null]
+}
+
+Table RouteExecution {
+    Id uniqueidentifier [primary key]
+    BusId uniqueidentifier [not null]
+    DriverId uniqueidentifier [not null]
+    StartDateTime datetime2 [not null]
+    EndDateTime datetime2
+    Status varchar(20) [not null]
+    RouteId uniqueidentifier [not null]
+}
+
+Table Boarding {
+    Id uniqueidentifier [primary key]
+    RouteExecutionId uniqueidentifier [not null]
+    ProfileId uniqueidentifier [not null]
+    RouteStopId uniqueidentifier [not null]
+    DateTime datetime2 [not null]
+    BoardingType varchar(20) [not null]
+}
+
+Table Alert {
+    Id uniqueidentifier [primary key]
+    RouteExecutionId uniqueidentifier [not null]
+    AlertTypeId tinyint [not null]
+    ProfileId uniqueidentifier [not null]
+    DateTime datetime2 [not null]
+    Description varchar(100)
+    AcknowledgedAt datetime2
+}
+
+Table AlertRecipient {
+    Id uniqueidentifier [primary key]
+    AlertId uniqueidentifier [not null]
+    ProfileId uniqueidentifier [not null]
+    DateTimeRead datetime2 [not null]
+}
+
+Table ExceptionalDriverUsage {
+    Id uniqueidentifier [primary key]
+    BusId uniqueidentifier [not null]
+    ProfileId uniqueidentifier [not null]
+    DateTime datetime2 [not null]
+    Reason varchar(200) [not null]
+}
+
+Table ExceptionalRouteUsage {
+    Id uniqueidentifier [primary key]
+    ProfileId uniqueidentifier [not null]
+    RouteId uniqueidentifier [not null]
+    StartDateTime datetime [not null]
+    EndDateTime datetime [not null]
+    Reason varchar(200) [not null]
+}
+
+// ==========================================
+// Relationships
+// ==========================================
+
+// Seguridad
+Ref role_permissions_role: PermissionsRole.RoleId > Role.Id
+Ref permissions_permissions_role: PermissionsRole.PermissionsId > Permissions.Id
+Ref profile_role: Profile.RoleId > Role.Id
+Ref person_profile: Profile.PersonId > Person.Id
+
+// Personas
+Ref session_profile: SessionProfile.ProfileId > Profile.Id
+Ref audit_profile: Audit.ProfileId > Profile.Id
+
+// Escuela
+Ref school_city: School.CityId > City.Id
+Ref campus_school: SchoolCampus.SchoolId > School.Id
+Ref school_admin_school: SchoolAdmin.SchoolId > School.Id
+Ref school_admin_profile: SchoolAdmin.ProfileId > Profile.Id
+Ref course_campus: Course.CampusId > SchoolCampus.Id
+Ref profile_campus: Profile.CampuseId > SchoolCampus.Id
+Ref stop_city: Stop.CityId > City.Id
+Ref stop_school: Stop.SchoolId > School.Id
+Ref family_member_family: FamilyMember.FamilyId > Family.Id
+Ref family_member_profile: FamilyMember.ProfileId > Profile.Id
+
+// Buses y GPS
+Ref bus_campus: Bus.CampuseId > SchoolCampus.Id
+Ref bus_gps_device: Bus.GpsDeviceId > GpsDevice.Id
+Ref bus_model: Bus.ModelId > Model.Id
+Ref model_brand: Model.BrandId > Brand.Id
+Ref gps_location_device: GpsLocation.GpsDeviceId > GpsDevice.Id
+Ref driver_license_profile: DriverLicense.ProfileId > Profile.Id
+Ref driver_assignments_profile: DriverAssignemts.ProfileId > Profile.Id
+Ref driver_assignments_bus: DriverAssignemts.BusId > Bus.Id
+
+// Rutas
+Ref route_campus: Route.CampuseId > SchoolCampus.Id
+Ref route_bus_assignments_bus: RouteBusAssignments.BusId > Bus.Id
+Ref route_bus_assignments_route: RouteBusAssignments.RouteId > Route.Id
+Ref route_schedule_assignment: RouteSchedule.RouteBusAssignmentsId > RouteBusAssignments.Id
+Ref route_stop_route: RouteStop.RouteId > Route.Id
+Ref route_stop_stop: RouteStop.StopId > Stop.Id
+Ref route_student_assignments_profile: RouteStudentAssignments.ProfileId > Profile.Id
+Ref route_student_assignments_stop: RouteStudentAssignments.RouteStopId > RouteStop.Id
+Ref route_execution_bus: RouteExecution.BusId > Bus.Id
+Ref route_execution_driver: RouteExecution.DriverId > Profile.Id
+Ref route_execution_route: RouteExecution.RouteId > Route.Id
+
+// Ejecución
+Ref boarding_execution: Boarding.RouteExecutionId > RouteExecution.Id
+Ref boarding_profile: Boarding.ProfileId > Profile.Id
+Ref boarding_route_stop: Boarding.RouteStopId > RouteStop.Id
+Ref alert_type: Alert.AlertTypeId > AlertType.Id
+Ref alert_execution: Alert.RouteExecutionId > RouteExecution.Id
+Ref alert_profile: Alert.ProfileId > Profile.Id
+Ref alert_recipient_alert: AlertRecipient.AlertId > Alert.Id
+Ref alert_recipient_profile: AlertRecipient.ProfileId > Profile.Id
+Ref exception_driver_usage_bus: ExceptionalDriverUsage.BusId > Bus.Id
+Ref exception_driver_usage_profile: ExceptionalDriverUsage.ProfileId > Profile.Id
+Ref exceptional_route_usage_profile: ExceptionalRouteUsage.ProfileId > Profile.Id
+Ref exceptional_route_usage_route: ExceptionalRouteUsage.RouteId > Route.Id

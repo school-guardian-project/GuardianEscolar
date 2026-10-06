@@ -1,0 +1,74 @@
+<div class="modal-overlay" (click)="close()">
+  <div class="modal" (click)="$event.stopPropagation()">
+
+    <!-- HEADER -->
+    <div class="modal__header">
+      <h2 class="modal__title">
+        {{ titleKey | translate }}
+      </h2>
+    </div>
+
+    <!-- HEADER INFO -->
+    <div class="modal__header-info">
+      <div class="modal__logo">
+        <mat-icon>{{ config.icon }}</mat-icon>
+      </div>
+
+      <p class="modal__name">{{ displayName }}</p>
+    </div>
+
+    <!-- FORM -->
+    <div class="modal__info-grid">
+
+      <div *ngFor="let field of fields" class="modal__info-item">
+
+        <label class="modal__info-label">
+          {{ getLabelKey(field) | translate }}
+        </label>
+
+        <ng-container [ngSwitch]="field.type">
+
+          <!-- SELECT -->
+          <select *ngSwitchCase="'select'" class="modal__info-value" [(ngModel)]="formData[field.name]"
+            [name]="field.name">
+
+            <option value="" disabled>
+              {{ 'update_record.buttons.select' | translate }}
+            </option>
+
+            <option *ngFor="let opt of field.options" [value]="opt">
+              {{ opt }}
+            </option>
+          </select>
+
+          <!-- INPUT -->
+          <input *ngSwitchDefault class="modal__info-value" [type]="field.type" [name]="field.name"
+            [(ngModel)]="formData[field.name]" />
+
+        </ng-container>
+      </div>
+
+    </div>
+
+    <app-location-map *ngIf="type === 'stop'"
+      [address]="formData['address']"
+      [latitude]="formData['latitude']"
+      [longitude]="formData['longitude']"
+      (coordinatesChange)="onLocationChange($event)">
+    </app-location-map>
+
+    <!-- FOOTER -->
+    <div class="modal__footer">
+
+      <button class="modal__btn" (click)="close()">
+        {{ 'common.cancel' | translate }}
+      </button>
+
+      <button class="modal__btn modal__btn--submit" (click)="onSubmit()">
+        {{ 'update_record.buttons.save' | translate }}
+      </button>
+
+    </div>
+
+  </div>
+</div>

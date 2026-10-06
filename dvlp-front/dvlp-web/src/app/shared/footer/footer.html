@@ -1,0 +1,28 @@
+<footer>
+    <div class="footer-header">
+        <div class="col1">
+            <span class="icon">
+                <img src="assets/logo-blue.svg" alt="Guardian Escolar"> 
+                <div class="guardian">Guardian Escolar</div>
+            </span>
+        </div>
+        <div class="cols">
+            <div class="col">
+                <div class="title">{{ 'footer.col_product' | translate }}</div>
+                <p class="link" *ngFor="let link of linksProduct; let i = index" (click)="navigateProduct(i)">{{ link }}</p>
+            </div>
+            <div class="col">
+                <div class="title">{{ 'footer.col_legal' | translate }}</div>
+                <p class="link" *ngFor="let link of linksLegal">{{ link }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="line"></div>
+    <div class="footer-down">
+        <div class="down-left">{{ 'footer.rights' | translate }}</div>
+        <div class="down-right">
+            <a class="social" href="mailto:guardianescolar0@gmail.com" target="_blank"
+                rel="noopener noreferrer">guardianescolar0@gmail.com</a>
+        </div>
+    </div>
+</footer>

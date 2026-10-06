@@ -1,0 +1,90 @@
+<div class="container">
+  <!-- MODALES -->
+  <app-comments *ngIf="showComments" (closed)="showComments = false"></app-comments>
+  <app-update-information *ngIf="showUpdateInformation" (closed)="showUpdateInformation = false"></app-update-information>
+  <app-record-information *ngIf="showInformation" type="schools" [record]="schoolSelected" (closed)="showInformation = false">
+  </app-record-information>
+
+  <!-- NAVBAR -->
+  <app-navbar-manage></app-navbar-manage>
+
+  <div class="content-wrapper">
+    <!-- SIDEBAR IZQUIERDO -->
+    <app-sidebar-admin></app-sidebar-admin>
+
+    <!-- MAIN CONTENT -->
+    <div class="main">
+      <div class="main-content">
+        <ng-container *ngIf="!isChildRouteActive()">
+
+          <h1 class="welcome">
+            {{ 'dashboard.welcome' | translate }}
+          </h1>
+
+          <p class="welcome-role">
+            {{ 'dashboard.role' | translate }}
+          </p>
+
+          <div class="metrics">
+            <div class="metric-card">
+              <p class="metric-label">
+                {{ 'dashboard.metrics.students' | translate }}
+              </p>
+              <p class="metric-value"></p>
+              <p class="metric-sub">
+                {{ 'dashboard.metrics.month' | translate }}
+              </p>
+            </div>
+
+            <div class="metric-card">
+              <p class="metric-label">
+                {{ 'dashboard.metrics.routes' | translate }}
+              </p>
+              <p class="metric-value"></p>
+              <p class="metric-sub">
+                {{ 'dashboard.metrics.operating' | translate }}
+              </p>
+            </div>
+
+            <div class="metric-card">
+              <p class="metric-label">
+                {{ 'dashboard.metrics.alerts' | translate }}
+              </p>
+              <p class="metric-value danger"></p>
+              <p class="metric-sub danger">
+                {{ 'dashboard.metrics.attention' | translate }}
+              </p>
+            </div>
+          </div>
+
+          <div class="alerts-section">
+            <div class="alerts-container">
+              <h2>
+                {{ 'dashboard.alerts.title' | translate }}
+              </h2>
+
+            </div>
+          </div>
+
+        </ng-container>
+
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+
+    <!-- SIDEBAR DERECHA -->
+    <div class="right-sidebar">
+      <div class="icon-circle" (click)="showComments = true">
+        <mat-icon>chat</mat-icon>
+      </div>
+
+      <div class="icon-circle" (click)="showDetails(schoolSelected)">
+        <mat-icon>info</mat-icon>
+      </div>
+
+      <div class="icon-circle" (click)="showUpdateInformation = true">
+        <mat-icon>edit</mat-icon>
+      </div>
+    </div>
+  </div>
+</div>

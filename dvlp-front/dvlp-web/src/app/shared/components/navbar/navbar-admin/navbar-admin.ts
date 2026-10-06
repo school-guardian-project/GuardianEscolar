@@ -1,0 +1,45 @@
+import { Component } from '@angular/core';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { Router, NavigationEnd } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { filter } from 'rxjs/operators';
+import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
+
+@Component({
+  selector: 'app-navbar-admin',
+  standalone: true,
+  imports: [MatToolbarModule, MatButtonModule, MatIconModule, CommonModule, RouterModule, TranslateModule],
+  templateUrl: './navbar-admin.html',
+  styleUrl: './navbar-admin.scss',
+})
+export class NavbarAdmin {
+  
+navItems = [
+  { icon: 'person_raised_hand', route: '/admin/users' },
+  { icon: 'escalator_warning',  route: '/admin/guardians' },
+  { icon: 'engineering',        route: '/admin/drivers' },
+  { icon: 'family_restroom',    route: '/admin/families' },
+];
+
+  activeRoute = '';
+
+  constructor(private router: Router) {
+    // Escucha cambios de ruta para actualizar el botón activo
+    this.router.events
+      .pipe(filter(e => e instanceof NavigationEnd))
+      .subscribe((e: any) => {
+        this.activeRoute = e.urlAfterRedirects;
+      });
+  }
+
+  isActive(route: string): boolean {
+    return this.activeRoute.includes(route);
+  }
+
+  navigate(route: string): void {
+    this.router.navigate([route]);
+  }
+}

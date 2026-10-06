@@ -1,0 +1,46 @@
+<div class="container">
+    <!-- NAVBAR -->
+    <app-navbar-manage></app-navbar-manage>
+
+    <div class="content-wrapper">
+        <!-- SIDEBAR IZQUIERDO -->
+        <app-sidebar-superadmin></app-sidebar-superadmin>
+
+
+        <div class="main">
+            <div class="main-content">
+                <ng-container *ngIf="!isChildRouteActive()">
+                <h1 class="welcome">{{ 'superadmin_dashboard.welcome' | translate }}</h1>
+                <p class="welcome-role">{{ 'superadmin_dashboard.role' | translate }}</p>
+
+                <div class="metrics">
+                    <div class="metric-card">
+                        <p class="metric-label">{{ 'superadmin_dashboard.metrics.admins' | translate }}</p>
+                        <p class="metric-value"></p>
+                        <p class="metric-sub">{{ 'superadmin_dashboard.metrics.month' | translate }}</p>
+                    </div>
+                    <div class="metric-card">
+                        <p class="metric-label">{{ 'superadmin_dashboard.metrics.schools' | translate }}</p>
+                        <p class="metric-value"></p>
+                        <p class="metric-sub">{{ 'superadmin_dashboard.metrics.active' | translate }}</p>
+                    </div>
+                    <div class="metric-card">
+                        <p class="metric-label">{{ 'superadmin_dashboard.metrics.comments' | translate }}</p>
+                        <p class="metric-value danger"></p>
+                        <p class="metric-sub danger">{{ 'superadmin_dashboard.metrics.attention' | translate }}</p>
+                    </div>
+                </div>
+
+                <div class="alerts-section">
+                    <div class="alerts-container">
+                        <h2>{{ 'superadmin_dashboard.alerts.title' | translate }}</h2>
+                    </div>
+                </div>
+                </ng-container>
+
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+
+
+    </div>

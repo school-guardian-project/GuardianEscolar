@@ -1,0 +1,25 @@
+import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClientTesting } from '@angular/common/http/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+
+import { Families } from './families';
+
+describe('Families', () => {
+  let component: Families;
+  let fixture: ComponentFixture<Families>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      imports: [Families],
+      providers: [provideHttpClient(), provideHttpClientTesting()],
+    }).compileComponents();
+
+    fixture = TestBed.createComponent(Families);
+    component = fixture.componentInstance;
+    await fixture.whenStable();
+  });
+
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
+});

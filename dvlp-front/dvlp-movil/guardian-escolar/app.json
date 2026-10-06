@@ -10,10 +10,15 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.guardianescolar.app",
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -28,6 +33,12 @@
       ],
       "expo-secure-store",
       "expo-status-bar"
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "7aabee78-c36a-4cc8-9d9f-be9f6ed5f5bc"
+      }
+    },
+    "owner": "school-guardian"
   }
 }

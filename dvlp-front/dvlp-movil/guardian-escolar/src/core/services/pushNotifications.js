@@ -34,7 +34,7 @@ export async function registerForPushNotificationsAsync() {
     if (session?.profileId) {
       await postNotificationApi("/v1/notifications/devices", {
         profileId: session.profileId,
-        expoPushToken: token,
+        expoToken: token,
       });
     }
 

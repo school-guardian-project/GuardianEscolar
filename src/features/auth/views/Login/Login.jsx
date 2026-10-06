@@ -12,6 +12,7 @@ import InputField from "@components/inputs/InputField";
 import PrimaryButton from "@components/buttons/PrimaryButton";
 import { validateEmail, validateRequired } from "@core/validation/validators";
 import { login } from "@core/services/authService";
+import { registerForPushNotificationsAsync } from "@core/services/pushNotifications";
 import useSession from "@core/hooks/useSession";
 
 export default function Login({ navigation }) {
@@ -54,6 +55,7 @@ export default function Login({ navigation }) {
       await login(email, password);
       applyAuthRole();
       navigation.navigate("MainPage");
+      registerForPushNotificationsAsync();
     } catch {
       setFormError(t("login.error"));
     } finally {

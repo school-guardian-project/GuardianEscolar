@@ -12,6 +12,7 @@ import { useNavigation } from "@react-navigation/native";
 
 import { getSession } from "@core/services/authService";
 import { getUserApi } from "@core/services/userApi";
+import { getProfile } from "@core/services/profileService";
 
 import styles from "@core/styles/profileScreen.style";
 
@@ -22,6 +23,7 @@ export default function Datas() {
   const { t } = useTranslation();
   const navigation = useNavigation();
   const [person, setPerson] = useState(null);
+  const [profile, setProfile] = useState(null);
 
   useEffect(() => {
     let alive = true;
@@ -31,10 +33,17 @@ export default function Datas() {
         if (!session?.personId) {
           return;
         }
+        
+        // Cargar datos del perfil desde ms-iam
+        const profileData = await getProfile();
+        
+        // Cargar datos de la persona desde ms-user-management
         const path = ROLE_PATHS[session.roleId] ?? "students";
         const data = await getUserApi(`/${path}/${session.personId}`);
+        
         if (alive) {
           setPerson(data);
+          setProfile(profileData);
         }
       } catch {
         // Backend no disponible: la pantalla queda con los valores vacíos.
@@ -84,7 +93,7 @@ export default function Datas() {
           <InfoRow
             icon="mail-outline"
             title={t("inputs.email")}
-            value={person?.email ?? ""}
+            value={person?.email ?? profile?.email ?? ""}
             editable
             editOnPress={() => navigation.navigate("UpdateEmail")}
           />
@@ -109,7 +118,7 @@ export default function Datas() {
           <InfoRow
             icon="business-outline"
             title={t("inputs.city")}
-            value=""
+            value={profile?.roleName ?? ""}
             arrow
             last
           />
@@ -119,7 +128,7 @@ export default function Datas() {
           <InfoRow
             icon="school-outline"
             title={t("inputs.school")}
-            value=""
+            value={profile?.campusId ?? ""}
             subtitle=""
             arrow
             last

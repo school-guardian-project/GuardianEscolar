@@ -186,24 +186,24 @@
   "change_contact": {
     "telephone": {
       "title": "Cambiar teléfono",
-      "sessionDescription": "Por seguridad, verifica tu número de contacto.",
+      "sessionDescription": "Por seguridad, enviaremos un SMS a tu tel?fono actual.",
       "titleStep": "Paso 1",
       "buttonText": "Enviar código",
       "returnStep": "Volver",
       "stepText": "1 de 4",
-      "label": "Teléfono",
+      "label": "Tel?fono actual",
       "error_pattern": "*Debe ser un número válido.",
       "error_required": "*El teléfono es requerido.",
-      "help_text": "Ingresa tu número para recibir un código de verificación."
+      "help_text": "Ingresa el tel?fono actual de tu cuenta con c?digo de pa?s, p. ej. +573001234567."
     },
     "code_first": {
       "title": "Verificar código",
-      "sessionDescription": "Ingresa el código enviado a tu teléfono.",
+      "sessionDescription": "Revisa el SMS enviado a tu tel?fono actual y escribe el c?digo.",
       "titleStep": "Paso 2",
       "buttonText": "Verificar",
       "returnStep": "Volver",
       "stepText": "2 de 4",
-      "description": "Revisa tu mensaje y escribe el código de 6 dígitos.",
+      "description": "Revisa el SMS enviado a tu tel?fono actual y escribe el c?digo.",
       "pin_error": "*El código ingresado no es válido."
     },
     "reset": {
@@ -213,22 +213,26 @@
       "buttonText": "Continuar",
       "returnStep": "Volver",
       "stepText": "3 de 4",
-      "label": "Nuevo teléfono",
-      "error_pattern": "*Debe ser un número válido.",
+      "label": "Nuevo tel?fono",
+      "error_pattern": "*Usa formato internacional, p. ej. +573001234567.",
       "error_required": "*El teléfono es requerido.",
-      "help_text": "Escribe el nuevo número de contacto."
+      "help_text": "Recibir?s un SMS con un c?digo en este n?mero (formato +pa?s y n?mero)."
     },
     "code_second": {
       "title": "Confirmar código",
-      "sessionDescription": "Ingresa el código enviado al nuevo número.",
+      "sessionDescription": "Ingresa el c?digo SMS enviado al nuevo n?mero.",
       "titleStep": "Paso 4",
       "buttonText": "Confirmar",
       "returnStep": "Volver",
       "stepText": "4 de 4",
-      "description": "Introduce el código para finalizar el cambio de teléfono.",
+      "description": "Introduce el c?digo SMS para finalizar el cambio de tel?fono.",
       "pin_error": "*El código ingresado no es válido.",
       "confirmationTitle": "Teléfono actualizado",
       "confirmationDescription": "Su teléfono ha sido actualizado correctamente."
+    },
+    "errors": {
+      "invalid_phone": "El n?mero no es v?lido o la solicitud venci?. Usa el formato +573001234567 o reinicia el proceso.",
+      "sms_unavailable": "No pudimos enviar el SMS ahora. Int?ntalo de nuevo m?s tarde."
     }
   },
   "change_email": {
@@ -279,6 +283,10 @@
       "error_pattern": "*Debe ser un correo válido.",
       "error_required": "*El correo es requerido",
       "help_text": "Recibirás un código de 6 dígitos"
+    },
+    "errors": {
+      "email_in_use": "Ese correo no está disponible. Prueba con otro.",
+      "invalid_request": "La solicitud no es válida o venció. Verifica que el nuevo correo sea distinto al actual o reinicia el proceso."
     }
   },
   "change_password": {
@@ -321,7 +329,17 @@
       "returnStep": "Volver",
       "stepText": "3 de 3",
       "confirmationTitle": "Contraseña actualizada",
-      "confirmationDescription": "Su contraseña ha sido actualizada correctamente."
+      "confirmationDescription": "Su contraseña ha sido actualizada correctamente.",
+      "errors": {
+        "required": "*Este campo es requerido",
+        "minlength": "*Mínimo 8 caracteres",
+        "maxlength": "*Máximo 128 caracteres",
+        "pattern": "*Debe tener mayúsculas, minúsculas, números y caracteres especiales (. - _ @ *)",
+        "no_match": "*Las contraseñas no son iguales",
+        "expired": "El enlace de recuperación expiró o ya fue usado. Solicita un nuevo código.",
+        "rate_limited": "Se alcanzó el límite de intentos. Solicita un nuevo código más tarde.",
+        "failed": "No se pudo actualizar la contraseña. Inténtalo de nuevo."
+      }
     }
   },
   "dashboard": {
@@ -931,6 +949,11 @@
     "return": "Volver al inicio de sesión",
     "step_text": "1 de 3",
     "hint": "Recibirás un código de 6 dígitos",
+    "errors": {
+      "email_too_long": "*El correo no puede superar 100 caracteres.",
+      "request_failed": "No fue posible iniciar la recuperación. Inténtalo de nuevo.",
+      "rate_limited": "Has realizado demasiadas solicitudes. Espera unos minutos e inténtalo de nuevo."
+    },
     "code": {
       "title": "Verifica tu correo",
       "session_description": "Enviamos un código de 6 dígitos a tu correo.",
@@ -940,7 +963,13 @@
       "step_text": "2 de 3",
       "sent_to": "Código enviado a",
       "valid": "Válido por 10 minutos.",
-      "error": "*Ingresa los 6 dígitos del código"
+      "error": "*Ingresa los 6 dígitos del código",
+      "digit_label": "Dígito {{number}} del código",
+      "errors": {
+        "invalid": "El código no es válido o ya expiró. Verifica el código e inténtalo de nuevo.",
+        "rate_limited": "Se alcanzó el límite de intentos. Solicita un nuevo código más tarde.",
+        "failed": "No se pudo verificar el código. Inténtalo de nuevo."
+      }
     },
     "reset": {
       "title": "Crea una contraseña segura",

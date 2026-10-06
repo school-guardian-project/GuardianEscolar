@@ -119,6 +119,11 @@ export class AuthService {
     return this.userSession;
   }
 
+  /** Refleja en la sesión un correo ya cambiado en el backend (el claim del JWT queda viejo hasta el próximo refresh). */
+  updateSessionEmail(email: string): void {
+    this.userSession = { ...this.userSession, email };
+  }
+
   getToken(): string | null {
     return this.accessToken;
   }

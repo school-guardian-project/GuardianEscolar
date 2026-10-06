@@ -26,6 +26,9 @@
           [formControl]="ctrl"
           maxlength="1"
           (input)="onInput($event, i)"
+          (paste)="onPaste($event, i)"
+          inputmode="numeric"
+          autocomplete="one-time-code"
         />
       </div>
       @if (form.invalid && form.touched && !errorMessage) {

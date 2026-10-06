@@ -36,6 +36,24 @@ export class CodeSecond {
     }
   }
 
+  onPaste(event: ClipboardEvent, index: number) {
+    const digits = event.clipboardData?.getData('text').replace(/\D/g, '') ?? '';
+    if (!digits) {
+      return;
+    }
+
+    event.preventDefault();
+    const values = digits.slice(0, this.pinControls.length - index).split('');
+    values.forEach((digit, offset) => this.pinControls.at(index + offset).setValue(digit));
+    const inputs = (event.target as HTMLInputElement).parentElement?.querySelectorAll('input');
+    inputs?.forEach((el, position) => {
+      if (position >= index && position < index + values.length) {
+        el.value = values[position - index];
+      }
+    });
+    inputs?.[Math.min(index + values.length, this.pinControls.length - 1)]?.focus();
+  }
+
   private codeFailure(error: unknown): void {
     const key = error instanceof HttpErrorResponse && error.status === 429
       ? 'forgot_password.code.errors.rate_limited'

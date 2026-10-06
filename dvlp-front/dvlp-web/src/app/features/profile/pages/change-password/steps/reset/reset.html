@@ -11,9 +11,9 @@
   [currentStep]="3"
   [stepText]="'change_password.reset.stepText' | translate"
   (submit)="onSubmit()"
+  [disabled]="isSubmitting"
 >
   <form action="" [formGroup]="form">
-    <!-- Este contenido se debe cambiar -->
     <div class="input-password">
       <div class="password">
         <label for="password">{{ 'forgot_password.reset.fields.password' | translate }}</label>
@@ -46,6 +46,9 @@
         }
       </div>
     </div>
+    @if (errorMessage) {
+      <small class="error" role="alert" aria-live="polite">{{ errorMessage }}</small>
+    }
   </form>
 </app-change-password>
 

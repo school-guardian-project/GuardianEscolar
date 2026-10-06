@@ -1,20 +1,21 @@
 <app-change-password
   iconHead="lock"
   [isThemed]="false"
-  [title]="'change_password.code.title' | translate"
-  [sessionDescription]="'change_password.code.sessionDescription' | translate"
-  [titleStep]="'change_password.code.titleStep' | translate"
+  [title]="'forgot_password.code.title' | translate"
+  [sessionDescription]="'forgot_password.code.session_description' | translate"
+  [titleStep]="'forgot_password.code.title_step' | translate"
   loginDescription=""
-  [buttonText]="'change_password.code.buttonText' | translate"
-  [returnStep]="'change_password.code.returnStep' | translate"
+  [buttonText]="'forgot_password.code.button' | translate"
+  [returnStep]="'forgot_password.code.return' | translate"
   (return)="return()"
   [showProgress]="true"
   [currentStep]="2"
-  [stepText]="'change_password.code.stepText' | translate"
+  [stepText]="'forgot_password.code.step_text' | translate"
   (submit)="onSubmit()"
+  [disabled]="isSubmitting"
 >
   <div class="login-description">
-    <span>{{ 'change_password.code.description' | translate }}</span>
+    <span>{{ 'forgot_password.code.session_description' | translate }}</span>
   </div>
   <form action="" [formGroup]="form">
     <div class="input-pin">
@@ -22,13 +23,21 @@
         <input
           class="pin-input"
           *ngFor="let ctrl of pinControls.controls; let i = index"
+          #pinInput
           [formControl]="ctrl"
           maxlength="1"
+          inputmode="numeric"
+          autocomplete="one-time-code"
+          [attr.aria-label]="'forgot_password.code.digit_label' | translate: { number: i + 1 }"
           (input)="onInput($event, i)"
+          (paste)="onPaste($event, i)"
         />
       </div>
-      @if (form.invalid && form.touched) {
-        <small class="error">{{ 'change_password.code.pin_error' | translate }}</small>
+      @if (form.invalid && form.touched && !errorMessage) {
+        <small class="error">{{ 'forgot_password.code.error' | translate }}</small>
+      }
+      @if (errorMessage) {
+        <small class="error" role="alert" aria-live="polite">{{ errorMessage }}</small>
       }
     </div>
   </form>

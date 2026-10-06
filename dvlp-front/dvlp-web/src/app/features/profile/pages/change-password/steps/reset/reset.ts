@@ -1,9 +1,12 @@
 import { Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { passwordMatch } from '@shared/validator/password-match.validator';
 import { ChangePassword } from '@shared/components/change/change-password/change-password';
-import { TranslateModule } from '@ngx-translate/core';
+import { ForgotInformationService } from '@core/services/forgot-information.service';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-reset',
@@ -14,10 +17,14 @@ import { TranslateModule } from '@ngx-translate/core';
 export class Reset {
   form: FormGroup;
   showConfirmation = false;
+  isSubmitting = false;
+  errorMessage = '';
 
   constructor(
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private forgotInformation: ForgotInformationService,
+    private translate: TranslateService,
   ) {
     this.form = this.fb.group(
       {
@@ -26,8 +33,9 @@ export class Reset {
           [
             Validators.required,
             Validators.minLength(8),
+            Validators.maxLength(128),
             Validators.pattern(
-              '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$'
+              '^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&.\\-_])[A-Za-z\\d@$!%*?&.\\-_]{8,}$'
             ),
           ],
         ],
@@ -37,6 +45,10 @@ export class Reset {
         validators: [passwordMatch('password', 'confirmPassword')],
       }
     );
+
+    if (!this.forgotInformation.hasVerifiedResetCode) {
+      void this.router.navigate(['/admin/change-password/email']);
+    }
   }
 
   get f() {
@@ -49,11 +61,28 @@ export class Reset {
   }
 
   onSubmit() {
-    if (this.form.valid) {
-      this.showConfirmation = true;
-    } else {
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
+      return;
     }
+
+    this.errorMessage = '';
+    this.isSubmitting = true;
+    const { password, confirmPassword } = this.form.getRawValue();
+
+    this.forgotInformation.resetPassword(password, confirmPassword).pipe(
+      finalize(() => { this.isSubmitting = false; }),
+    ).subscribe({
+      next: () => { this.showConfirmation = true; },
+      error: (error: unknown) => {
+        const key = error instanceof HttpErrorResponse && error.status === 429
+          ? 'forgot_password.reset.errors.rate_limited'
+          : error instanceof HttpErrorResponse && error.status === 400
+            ? 'forgot_password.reset.errors.expired'
+            : 'forgot_password.reset.errors.failed';
+        this.errorMessage = this.translate.instant(key);
+      },
+    });
   }
 
   accept() {

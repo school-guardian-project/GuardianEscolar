@@ -33,7 +33,7 @@
                 <ng-content></ng-content>
 
                 <div class="btn">
-                    <button (click)="submit.emit()">{{ buttonText }}</button>
+                    <button [disabled]="disabled" (click)="submit.emit()">{{ buttonText }}</button>
                 </div>
 
                 <div class="return" (click)="return.emit()">← {{ returnStep }}</div>

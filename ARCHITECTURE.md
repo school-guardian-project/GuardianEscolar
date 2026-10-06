@@ -170,6 +170,31 @@ Los flujos complejos (como forgot-password o change-email) usan rutas hijas para
 { path: 'admin/change-email', component: ChangeEmail, children: changeEmailRoutes }
 ```
 
+### Integración de recuperación de contraseña
+
+El flujo público de recuperación usa componentes standalone y formularios reactivos dentro
+del feature `features/public/auth/forgot-password`. Cada paso delega las peticiones a
+`core/services/forgot-information.service.ts`; el servicio conserva el correo y el token
+de un solo uso únicamente en memoria durante el flujo:
+
+```
+Email → POST /api/v1/password/forgot
+Código → POST /api/v1/password/forgot/verify
+Nueva contraseña → POST /api/v1/password/reset
+```
+
+El destino se configura con `API_FORGOT_INFORMATION_URL`; si no se define, se utiliza
+`API_URL`. El valor debe apuntar al microservicio de recuperación o a un gateway que
+redirija esas rutas. Las solicitudes públicas de recuperación no llevan JWT ni provocan
+un intento de renovación de sesión. Los formularios validan el formato y longitud del
+correo, los seis dígitos del código, la política de contraseña y la coincidencia de
+confirmación antes de enviar los datos.
+
+Para desarrollo local, si el microservicio expone el puerto 8091, configura
+`API_FORGOT_INFORMATION_URL=http://localhost:8091` en el `.env` de la web. El servicio
+permite ese origen en Development; en otros entornos hay que configurar su lista explícita
+`Cors__AllowedOrigins__*` con el origen HTTPS de la web.
+
 ## Flujo de Datos
 
 ```

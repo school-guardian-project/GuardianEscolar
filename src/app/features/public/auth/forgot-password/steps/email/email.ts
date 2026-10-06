@@ -3,8 +3,10 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
-import { ChangePassword } from '@shared/components/change/change-password/change-password'; 
-
+import { HttpErrorResponse } from '@angular/common/http';
+import { ChangePassword } from '@shared/components/change/change-password/change-password';
+import { ForgotInformationService } from '@core/services/forgot-information.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-email',
@@ -20,16 +22,17 @@ import { ChangePassword } from '@shared/components/change/change-password/change
 })
 export class Email {
   form: FormGroup;
+  isSubmitting = false;
+  errorMessage = '';
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
-    private translate: TranslateService   
+    private translate: TranslateService,
+    private forgotInformation: ForgotInformationService,
   ) {
-    const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
-
     this.form = this.fb.group({
-      email: ['', [Validators.required, Validators.pattern(emailPattern)]]
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(100)]],
     });
   }
 
@@ -39,14 +42,30 @@ export class Email {
   }
 
   onSubmit() {
-    if (this.form.valid) {
-      this.router.navigate(['/auth/forgot-password/code']);
-    } else {
+    if (this.form.invalid) {
       this.form.markAllAsTouched();
+      return;
     }
+
+    this.errorMessage = '';
+    this.isSubmitting = true;
+
+    this.forgotInformation.requestPasswordReset(String(this.form.get('email')?.value ?? '').trim()).pipe(
+      finalize(() => { this.isSubmitting = false; }),
+    ).subscribe({
+      next: () => this.router.navigate(['/auth/forgot-password/code']),
+      error: (error: unknown) => {
+        this.errorMessage = this.translate.instant(
+          error instanceof HttpErrorResponse && error.status === 429
+            ? 'forgot_password.errors.rate_limited'
+            : 'forgot_password.errors.request_failed',
+        );
+      },
+    });
   }
 
   return() {
+    this.forgotInformation.clear();
     this.router.navigate(['/auth/login']);
   }
 }

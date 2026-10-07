@@ -194,6 +194,14 @@
     "school": "School"
   },
 
+  "reminder": {
+    "title": "Route reminder",
+    "message": "Your route {{name}} starts at {{time}}",
+    "messageNoName": "Your route starts at {{time}}",
+    "am": "AM",
+    "pm": "PM"
+  },
+
   "bottom": {
     "route": "Route",
     "location": "Location",

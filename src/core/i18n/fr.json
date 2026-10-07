@@ -194,6 +194,14 @@
     "school": "École"
   },
 
+  "reminder": {
+    "title": "Rappel de trajet",
+    "message": "Votre trajet {{name}} commence à {{time}}",
+    "messageNoName": "Votre trajet commence à {{time}}",
+    "am": "AM",
+    "pm": "PM"
+  },
+
   "bottom": {
     "route": "Itinéraire",
     "location": "Localisation",

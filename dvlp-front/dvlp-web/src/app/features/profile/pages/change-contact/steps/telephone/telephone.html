@@ -16,7 +16,7 @@
   <form action="" [formGroup]="form">
     <div class="input-telephone">
       <label for="telephone">{{ 'change_contact.telephone.label' | translate }}</label>
-      <input type="tel" id="telephone" formControlName="telephone" placeholder="+573001234567" />
+      <input type="tel" id="telephone" formControlName="telephone" placeholder="3001234567" />
       @if (form.get('telephone')?.touched && form.get('telephone')?.errors?.['pattern']) {
         <small class="error">{{ 'change_contact.reset.error_pattern' | translate }}</small>
       }

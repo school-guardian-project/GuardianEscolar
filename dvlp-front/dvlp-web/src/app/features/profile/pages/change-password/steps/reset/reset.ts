@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
+import { PasswordToggleDirective } from '@shared/directives/password-toggle.directive';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
@@ -10,7 +11,7 @@ import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-reset',
-  imports: [ReactiveFormsModule, ChangePassword, TranslateModule],
+  imports: [PasswordToggleDirective, ReactiveFormsModule, ChangePassword, TranslateModule],
   templateUrl: './reset.html',
   styleUrl: './reset.scss',
 })

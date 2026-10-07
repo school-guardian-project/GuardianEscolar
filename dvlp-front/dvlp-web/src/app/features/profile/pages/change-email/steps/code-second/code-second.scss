@@ -1,12 +1,13 @@
 @use "../../../pages-style" as *;
 
 .error {
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-  margin-top: 5px;
+  display: block;
+  position: static;
+  width: 100%;
+  margin-top: 8px;
   color: var(--alert-icon);
   font-size: 0.75rem;
+  line-height: 1.3;
   text-align: center;
+  overflow-wrap: anywhere;
 }

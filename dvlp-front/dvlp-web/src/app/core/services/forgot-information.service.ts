@@ -15,18 +15,27 @@ export class ForgotInformationService {
 
   private email: string | null = null;
   private resetToken: string | null = null;
+  private isPasswordChange = false;
 
   constructor(private readonly http: HttpClient) {}
 
-  requestPasswordReset(email: string): Observable<void> {
+  requestPasswordReset(email: string, isPasswordChange = false): Observable<void> {
     this.clear();
     const normalized = email.trim().toLowerCase();
-    return this.http.post<void>(`${this.base}/forgot`, { email: normalized }).pipe(
+    return this.http.post<void>(`${this.base}/forgot`, { email: normalized, isPasswordChange }).pipe(
       tap(() => {
+        this.isPasswordChange = isPasswordChange;
         this.email = normalized;
         this.resetToken = null;
       }),
     );
+  }
+
+  resendCode(): Observable<void> {
+    if (!this.email) {
+      throw new Error('A password reset must be requested before resending a code.');
+    }
+    return this.http.post<void>(`${this.base}/forgot`, { email: this.email, isPasswordChange: this.isPasswordChange });
   }
 
   verifyPasswordResetCode(code: string): Observable<void> {

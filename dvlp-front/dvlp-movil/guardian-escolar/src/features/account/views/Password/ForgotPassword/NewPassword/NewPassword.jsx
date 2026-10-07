@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import PasswordScreen from "@components/account/screens/PasswordScreen";
+import { resetPassword } from "@core/services/forgotInformationService";
 
 export default function NewPassword() {
 
@@ -15,6 +16,7 @@ export default function NewPassword() {
             description={t("newPassword.description")}
             buttonText={t("button.restore")}
             nextScreen="Login"
+            onSubmit={resetPassword}
         />
 
     );

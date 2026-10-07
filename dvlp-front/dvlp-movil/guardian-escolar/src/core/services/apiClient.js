@@ -11,7 +11,15 @@ const API_URL = process.env.EXPO_PUBLIC_API_URL;
  * @returns {Promise<any>} Respuesta JSON o null para 204
  */
 export async function apiRequest(path, options = {}, retry = true) {
-  const token = authService.getAccessToken();
+  return apiRequestAt(API_URL, path, options, retry, true);
+}
+
+export async function apiRequestAt(baseUrl, path, options = {}, retry = false, authenticated = false) {
+  if (!baseUrl) {
+    throw new Error("API base URL is not configured.");
+  }
+
+  const token = authenticated ? authService.getAccessToken() : null;
   
   const headers = {
     "Content-Type": "application/json",
@@ -19,7 +27,7 @@ export async function apiRequest(path, options = {}, retry = true) {
     ...options.headers,
   };
 
-  const response = await fetch(`${API_URL}${path}`, {
+  const response = await fetch(`${baseUrl.replace(/\/+$/, "")}${path}`, {
     ...options,
     headers,
   });
@@ -29,7 +37,7 @@ export async function apiRequest(path, options = {}, retry = true) {
     try {
       await authService.refresh();
       // Reintentar la request con el nuevo token
-      return apiRequest(path, options, false);
+      return apiRequestAt(baseUrl, path, options, false, authenticated);
     } catch (refreshError) {
       // Si el refresh falla, limpiar sesión y lanzar error
       await authService.clearSession();

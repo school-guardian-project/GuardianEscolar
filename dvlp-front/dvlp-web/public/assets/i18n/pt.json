@@ -22,22 +22,22 @@
       {
         "icon": "satellite_alt",
         "title": "GPS em tempo real",
-        "description": "Localização precisa de cada ônibus no mapa com atualizações a cada 10 segundos."
+        "description": "Localização precisa de cada ônibus no mapa, com atualizações a cada 10 segundos."
       },
       {
         "icon": "notifications",
         "title": "Alertas instantâneos",
-        "description": "Notificações push quando o ônibus chega, desvia ou há qualquer incidente."
+        "description": "Notificações push quando o ônibus chega, desvia da rota ou há qualquer incidente."
       },
       {
         "icon": "assignment",
         "title": "Controle de presença",
-        "description": "Registro automático de subida e descida de cada estudante no ônibus."
+        "description": "Registro automático de embarque e desembarque de cada estudante no ônibus."
       },
       {
         "icon": "insert_chart",
         "title": "Painel de administração",
-        "description": "Dashboard completo com métricas, relatórios e gestão de rotas e motoristas."
+        "description": "Painel completo com métricas, relatórios e gestão de rotas e motoristas."
       },
       {
         "icon": "family_restroom",
@@ -47,7 +47,7 @@
       {
         "icon": "lock",
         "title": "Dados seguros",
-        "description": "Criptografia de ponta a ponta e conformidade com normas de proteção de dados."
+        "description": "Criptografia de ponta a ponta e conformidade com as normas de proteção de dados."
       }
     ]
   },
@@ -56,8 +56,8 @@
     "title": "Simples para todos",
     "steps": [
       {
-        "title": "Registro da instituição",
-        "description": "Crie sua conta, adicione suas rotas e motoristas em minutos."
+        "title": "Cadastro da instituição",
+        "description": "Crie sua conta e adicione suas rotas e motoristas em minutos."
       },
       {
         "title": "Instale nos ônibus",
@@ -69,7 +69,7 @@
       },
       {
         "title": "Monitoramento ativo",
-        "description": "Monitoramento em tempo real a partir do painel de administração."
+        "description": "Acompanhe tudo em tempo real a partir do painel de administração."
       }
     ]
   },
@@ -77,13 +77,13 @@
     "title": "Pronto para proteger seus estudantes?",
     "description": "Junte-se a mais de 500 instituições que já confiam no Guardian Escolar.",
     "btn_download": "Baixar",
-    "btn_contact": "Contate-nos"
+    "btn_contact": "Fale conosco"
   },
   "contact": {
     "support": "Suporte disponível agora",
     "title": "Estamos aqui para",
-    "title_color": "ajudá-lo",
-    "paragraph": "Você tem perguntas sobre o sistema, precisa de um vídeo explicativo ou quer integrar o Guardian Escolar à sua instituição? Escreva-nos.",
+    "title_color": "ajudar você",
+    "paragraph": "Você tem dúvidas sobre o sistema, precisa de um vídeo explicativo ou quer integrar o Guardian Escolar à sua instituição? Escreva para nós.",
     "social": {
       "facebook": "Facebook",
       "facebook_handle": "@GuardianEscolar",
@@ -107,7 +107,7 @@
     "whatsapp": {
       "title": "WhatsApp",
       "value": "+57 314 430 82 74",
-      "subtitle": "Disponível 24/7 para emergências",
+      "subtitle": "Disponível 24 horas, 7 dias por semana, para emergências",
       "button": "Abrir WhatsApp"
     }
   },
@@ -146,7 +146,7 @@
         "label": "Senha",
         "placeholder": "Digite sua senha",
         "errors": {
-          "required": "*A senha é obrigatória"
+          "required": "*A senha é obrigatória."
         }
       },
       "forgot": "Esqueceu sua senha?",
@@ -160,7 +160,7 @@
   "change_contact": {
     "telephone": {
       "title": "Alterar telefone",
-      "sessionDescription": "Por seguran?a, enviaremos um SMS para o seu telefone atual.",
+      "sessionDescription": "Por segurança, enviaremos um SMS para o seu telefone atual.",
       "titleStep": "Passo 1",
       "buttonText": "Enviar código",
       "returnStep": "Voltar",
@@ -168,16 +168,16 @@
       "label": "Telefone atual",
       "error_pattern": "*Deve ser um número válido.",
       "error_required": "*O telefone é obrigatório.",
-      "help_text": "Digite o telefone atual da sua conta com c?digo do pa?s, ex.: +573001234567."
+      "help_text": "Informe o telefone atual da sua conta, por ex. 3001234567. O prefixo +57 é adicionado automaticamente."
     },
     "code_first": {
       "title": "Verificar código",
-      "sessionDescription": "Verifique o SMS enviado ao seu telefone atual e digite o c?digo.",
+      "sessionDescription": "Verifique o SMS enviado ao seu telefone atual e digite o código.",
       "titleStep": "Passo 2",
       "buttonText": "Verificar",
       "returnStep": "Voltar",
       "stepText": "2 de 4",
-      "description": "Verifique o SMS enviado ao seu telefone atual e digite o c?digo.",
+      "description": "Verifique o SMS enviado ao seu telefone atual e digite o código.",
       "pin_error": "*O código inserido não é válido."
     },
     "reset": {
@@ -188,44 +188,44 @@
       "returnStep": "Voltar",
       "stepText": "3 de 4",
       "label": "Novo telefone",
-      "error_pattern": "*Use o formato internacional, ex.: +573001234567.",
+      "error_pattern": "*Informe um número válido, por ex. 3001234567.",
       "error_required": "*O telefone é obrigatório.",
-      "help_text": "Voc? receber? um SMS com um c?digo neste n?mero (+pa?s e n?mero)."
+      "help_text": "Você receberá um SMS com um código neste número (o prefixo +57 é adicionado automaticamente)."
     },
     "code_second": {
       "title": "Confirmar código",
-      "sessionDescription": "Digite o c?digo SMS enviado ao novo n?mero.",
+      "sessionDescription": "Digite o código SMS enviado ao novo número.",
       "titleStep": "Passo 4",
       "buttonText": "Confirmar",
       "returnStep": "Voltar",
       "stepText": "4 de 4",
-      "description": "Digite o c?digo SMS para concluir a altera??o do telefone.",
+      "description": "Digite o código SMS para concluir a alteração do telefone.",
       "pin_error": "*O código inserido não é válido.",
       "confirmationTitle": "Telefone atualizado",
       "confirmationDescription": "Seu telefone foi atualizado com sucesso."
     },
     "errors": {
-      "invalid_phone": "O n?mero ? inv?lido ou a solicita??o expirou. Use o formato +573001234567 ou reinicie o processo.",
-      "sms_unavailable": "N?o foi poss?vel enviar o SMS agora. Tente novamente mais tarde."
+      "invalid_phone": "O telefone não é válido. Informe o número, por exemplo 3001234567.",
+      "sms_unavailable": "Não foi possível enviar o SMS. Verifique o número ou tente novamente mais tarde."
     }
   },
   "change_email": {
     "email": {
-      "title": "Alterar email",
-      "sessionDescription": "Digite o email que deseja atualizar.",
+      "title": "Alterar e-mail",
+      "sessionDescription": "Digite o e-mail que deseja atualizar.",
       "titleStep": "Passo 1",
-      "loginDescription": "Você deve fornecer um email válido.",
+      "loginDescription": "Você deve informar um e-mail válido.",
       "buttonText": "Enviar código",
       "returnStep": "Voltar",
       "stepText": "1 de 4",
-      "email_label": "Email",
-      "error_pattern": "*Deve ser um email válido.",
-      "error_required": "*O email é obrigatório.",
-      "help_text": "Você receberá um código de verificação neste email."
+      "email_label": "E-mail",
+      "error_pattern": "*Deve ser um e-mail válido.",
+      "error_required": "*O e-mail é obrigatório.",
+      "help_text": "Você receberá um código de verificação neste e-mail."
     },
     "code_first": {
       "title": "Verificar código",
-      "sessionDescription": "Digite o código enviado para seu email atual.",
+      "sessionDescription": "Digite o código enviado para o seu e-mail atual.",
       "titleStep": "Passo 2",
       "buttonText": "Verificar",
       "returnStep": "Voltar",
@@ -234,21 +234,21 @@
       "pin_error": "*O código inserido não é válido."
     },
     "code_second": {
-      "confirmationTitle": "Email atualizado",
-      "confirmationDescription": "Seu email foi atualizado com sucesso."
+      "confirmationTitle": "E-mail atualizado",
+      "confirmationDescription": "Seu e-mail foi atualizado com sucesso."
     },
     "reset": {
       "title": "Quase lá",
-      "sessionDescription": "Digite seu novo email.",
+      "sessionDescription": "Digite seu novo e-mail.",
       "titleStep": "Passo 3",
-      "loginDescription": "Você deve inserir seu novo email",
+      "loginDescription": "Você deve inserir seu novo e-mail.",
       "buttonText": "Enviar código",
       "returnStep": "Voltar",
       "stepText": "3 de 4",
-      "email_label": "Email",
-      "error_pattern": "*Deve ser um email válido.",
-      "error_required": "*O email é obrigatório",
-      "help_text": "Você receberá um código de 6 dígitos"
+      "email_label": "E-mail",
+      "error_pattern": "*Deve ser um e-mail válido.",
+      "error_required": "*O e-mail é obrigatório.",
+      "help_text": "Você receberá um código de 6 dígitos."
     },
     "errors": {
       "email_in_use": "Esse e-mail não está disponível. Tente outro.",
@@ -258,27 +258,27 @@
   "change_password": {
     "rules_title": "A senha deve conter:",
     "rules": {
-      "min_length": "Mínimo 8 dígitos",
+      "min_length": "Mínimo de 8 caracteres",
       "alphanumeric": "Números e letras",
-      "case": "Combinação de minúsculas e maiúsculas",
+      "case": "Letras minúsculas e maiúsculas",
       "special": "Caracteres especiais (. - _ @ *)"
     },
     "email": {
       "title": "Alterar senha",
-      "sessionDescription": "Digite seu email para receber um código de recuperação.",
+      "sessionDescription": "Digite seu e-mail para receber um código de recuperação.",
       "titleStep": "Passo 1",
-      "loginDescription": "Você deve fornecer seu email cadastrado.",
+      "loginDescription": "Você deve informar seu e-mail cadastrado.",
       "buttonText": "Enviar código",
       "returnStep": "Voltar",
       "stepText": "1 de 3",
-      "email_label": "Email",
-      "error_pattern": "*Deve ser um email válido.",
-      "error_required": "*O email é obrigatório.",
+      "email_label": "E-mail",
+      "error_pattern": "*Deve ser um e-mail válido.",
+      "error_required": "*O e-mail é obrigatório.",
       "help_text": "Você receberá um código para redefinir sua senha."
     },
     "code": {
       "title": "Verificar código",
-      "sessionDescription": "Digite o código enviado para seu email.",
+      "sessionDescription": "Digite o código enviado para o seu e-mail.",
       "titleStep": "Passo 2",
       "buttonText": "Verificar",
       "returnStep": "Voltar",
@@ -353,7 +353,7 @@
     "students": "Estudantes",
     "guardian": "Responsáveis",
     "drivers": "Motoristas",
-    "Family": "Família",
+    "Family": "Famílias",
     "title-routes": "Transporte",
     "bus": "Ônibus",
     "route": "Rotas",
@@ -362,9 +362,9 @@
   "comments_modal": {
     "title": "Tem algum problema?",
     "subtitle": "Conte para nós",
-    "label": "Diga-nos seu problema",
+    "label": "Descreva o seu problema",
     "placeholder": "Insira o texto",
-    "error": "Por favor descreva seu problema antes de enviar",
+    "error": "Por favor, descreva seu problema antes de enviar.",
     "buttons": {
       "cancel": "Cancelar",
       "submit": "Enviar",
@@ -372,7 +372,7 @@
     },
     "success": {
       "title": "Mensagem enviada!",
-      "description": "Obrigado por nos contar seu problema. Faremos o possível para resolvê-lo o quanto antes"
+      "description": "Obrigado por nos contar o seu problema. Faremos o possível para resolvê-lo o quanto antes."
     }
   },
   "update_school": {
@@ -386,14 +386,14 @@
       "address_placeholder": "Insira o endereço",
       "phone": "Telefone",
       "phone_placeholder": "Insira o telefone",
-      "logo": "Logo",
-      "upload": "Enviar novo logo",
+      "logo": "Logotipo",
+      "upload": "Enviar novo logotipo",
       "email": "E-mail",
       "email_placeholder": "Insira o e-mail",
       "website": "Site",
       "web_placeholder": "Insira o site"
     },
-    "error": "Por favor preencha ao menos um campo antes de atualizar",
+    "error": "Por favor, preencha ao menos um campo antes de atualizar.",
     "buttons": {
       "cancel": "Cancelar",
       "update": "Atualizar",
@@ -401,7 +401,7 @@
     },
     "success": {
       "title": "Informações atualizadas!",
-      "description": "As alterações foram salvas com sucesso"
+      "description": "As alterações foram salvas com sucesso."
     }
   },
   "theme": {
@@ -438,7 +438,7 @@
         "documentType": "Tipo de documento",
         "identification": "Identificação",
         "birthDate": "Data de nascimento",
-        "grade": "Curso",
+        "grade": "Série",
         "phone": "Telefone",
         "address": "Endereço",
         "email": "E-mail"
@@ -465,8 +465,8 @@
         "documentType": "Tipo de documento",
         "identification": "Identificação",
         "birthDate": "Data de nascimento",
-        "licenseExpiration": "Validade da carteira",
-        "licenseNumber": "Carteira",
+        "licenseExpiration": "Validade da habilitação",
+        "licenseNumber": "Habilitação",
         "address": "Endereço",
         "email": "E-mail"
       }
@@ -510,7 +510,7 @@
         "name": "Nome",
         "sector": "Setor",
         "startTime": "Hora de início",
-        "endTime": "Hora final",
+        "endTime": "Hora de término",
         "destination": "Destino",
         "routeSector": "Setor da rota"
       }
@@ -587,7 +587,7 @@
         "documentType": "Tipo de documento",
         "identification": "Identificação",
         "birthDate": "Data de nascimento",
-        "grade": "Curso",
+        "grade": "Série",
         "phone": "Telefone",
         "address": "Endereço",
         "email": "E-mail"
@@ -614,8 +614,8 @@
         "documentType": "Tipo de documento",
         "identification": "Identificação",
         "birthDate": "Data de nascimento",
-        "licenseExpiration": "Validade da carteira",
-        "licenseNumber": "Carteira",
+        "licenseExpiration": "Validade da habilitação",
+        "licenseNumber": "Habilitação",
         "address": "Endereço",
         "email": "E-mail"
       }
@@ -659,7 +659,7 @@
         "name": "Nome",
         "sector": "Setor",
         "startTime": "Hora de início",
-        "endTime": "Hora final",
+        "endTime": "Hora de término",
         "destination": "Destino",
         "routeSector": "Setor da rota"
       }
@@ -704,7 +704,7 @@
         "documentType": "Tipo de documento",
         "identification": "Número de identificação",
         "birthDate": "Data de nascimento",
-        "grade": "Curso",
+        "grade": "Série",
         "phone": "Telefone",
         "address": "Endereço",
         "email": "E-mail"
@@ -731,8 +731,8 @@
         "documentType": "Tipo de documento",
         "identification": "Número de identificação",
         "birthDate": "Data de nascimento",
-        "licenseExpiration": "Validade da carteira",
-        "licenseNumber": "Número da carteira",
+        "licenseExpiration": "Validade da habilitação",
+        "licenseNumber": "Número da habilitação",
         "address": "Endereço",
         "email": "E-mail"
       }
@@ -775,7 +775,7 @@
         "name": "Nome da rota",
         "sector": "Setor / bairro",
         "startTime": "Hora de início",
-        "endTime": "Hora final",
+        "endTime": "Hora de término",
         "destination": "Destino",
         "routeSector": "Setor",
         "bus": "Ônibus"
@@ -797,7 +797,7 @@
       "title": "Registrar escola",
       "fields": {
         "name": "Nome da escola",
-        "logo": "Logo",
+        "logo": "Logotipo",
         "city": "Cidade",
         "address": "Endereço",
         "phone": "Telefone",
@@ -833,7 +833,7 @@
       "assign": "Atribuir",
       "unassign": "Remover"
     },
-    "genericError": "Não foi possível concluir a ação. Verifique se o backend está disponível."
+    "genericError": "Não foi possível concluir a ação. Verifique se o servidor está disponível."
   },
   "card_list": {
     "student": "Estudantes registrados",
@@ -846,14 +846,14 @@
     "admins": "Administradores registrados",
     "schools": "Escolas registradas",
     "labels": {
-      "validLicense": "Licença vigente",
+      "validLicense": "Habilitação vigente",
       "plate": "Placa",
       "driverName": "Nome do motorista",
       "guardian": "Responsável",
       "address": "Endereço",
       "finalDestination": "Destino final",
       "startTime": "Hora de início",
-      "endTime": "Hora final",
+      "endTime": "Hora de término",
       "email": "E-mail"
     }
   },
@@ -875,21 +875,25 @@
   },
   "forgot_password": {
     "title": "Recupere seu acesso",
-    "session_description": "Enviaremos um código de verificação para seu e-mail cadastrado.",
+    "session_description": "Enviaremos um código de verificação para o seu e-mail cadastrado.",
     "title_step": "Redefinir senha",
-    "login_description": "Digite o e-mail com o qual você se registrou",
+    "login_description": "Digite o e-mail com o qual você se cadastrou",
     "button": "Enviar código",
     "return": "Voltar ao login",
     "step_text": "1 de 3",
     "hint": "Você receberá um código de 6 dígitos",
     "errors": {
       "email_too_long": "*O e-mail não pode exceder 100 caracteres.",
-      "request_failed": "Não foi possível iniciar a recuperação de senha. Tente novamente.",
-      "rate_limited": "Muitas solicitações. Aguarde alguns minutos e tente novamente."
+      "invalid_email": "O endereço de e-mail é inválido. Confira se foi digitado corretamente.",
+      "request_failed": "Não foi possível concluir a solicitação. Verifique sua conexão e tente novamente mais tarde.",
+      "rate_limited": "Você atingiu o limite de solicitações. Aguarde alguns minutos antes de tentar novamente.",
+      "accountNotFound": "Não encontramos uma conta com esse e-mail, por isso o código não foi enviado.",
+      "phoneMismatch": "O telefone não corresponde ao registrado na sua conta, por isso o SMS não foi enviado.",
+      "deliveryFailed": "Não foi possível enviar o código (o serviço de e-mail ou SMS falhou). Tente novamente mais tarde."
     },
     "code": {
       "title": "Verifique seu e-mail",
-      "session_description": "Digite o código de 6 dígitos enviado para seu e-mail.",
+      "session_description": "Digite o código de 6 dígitos enviado para o seu e-mail.",
       "title_step": "Código de verificação",
       "button": "Verificar",
       "return": "Voltar",
@@ -918,9 +922,9 @@
       },
       "errors": {
         "required": "*Este campo é obrigatório",
-        "minlength": "*Mínimo 8 caracteres",
+        "minlength": "*Mínimo de 8 caracteres",
         "maxlength": "*Máximo de 128 caracteres",
-        "pattern": "*Deve conter maiúsculas, minúsculas, números e caracteres especiais (. - _ @ *)",
+        "pattern": "*Deve conter letras maiúsculas e minúsculas, números e caracteres especiais (. - _ @ *)",
         "no_match": "*As senhas não coincidem",
         "expired": "O token de recuperação expirou ou já foi usado. Solicite um novo código.",
         "rate_limited": "O limite de tentativas foi atingido. Solicite um novo código mais tarde.",
@@ -931,7 +935,7 @@
     }
   },
   "right_index": {
-    "brand": "Guardião Escolar",
+    "brand": "Guardian Escolar",
     "dashboardTitle": "Rastreamento ao vivo",
     "allVehicles": "Todos os veículos",
     "filters": "Filtros",
@@ -939,23 +943,23 @@
     "totalVehicles": "Veículos totais",
     "onRoute": "Em rota",
     "alerts": "Alertas",
-    "active": "Ativas",
+    "active": "Ativos",
     "students": "Estudantes",
-    "pickupPoint": "Ponto de coleta",
+    "pickupPoint": "Ponto de embarque",
     "greenStreet": "Rua Verde",
     "school": "Escola",
     "springfieldSchool": "Escola Springfield",
-    "bus": "Bus 02",
-    "bus05": "Bus 05",
-    "bus08": "Bus 08",
+    "bus": "Ônibus 02",
+    "bus05": "Ônibus 05",
+    "bus08": "Ônibus 08",
     "liveActivity": "Atividade ao vivo",
     "delayed": "Atrasado",
     "mapleAvenue": "Avenida Maple",
     "oakBoulevard": "Bulevar Oak",
-    "geofenceAlert": "Alerta de geofence",
+    "geofenceAlert": "Alerta de cerca virtual",
     "geofenceMessage": "O ônibus 02 chegou à Escola Springfield",
-    "eta": "ETA",
-    "etaValue": "7:45 AM",
+    "eta": "Chegada prevista",
+    "etaValue": "7:45",
     "speedLabel": "Velocidade",
     "busSpeed": "45 km/h",
     "nextStop": "Próxima parada",
@@ -964,14 +968,18 @@
   "validation": {
     "required": "Este campo é obrigatório",
     "email": "Endereço de e-mail inválido",
-    "phone": "Telefone inválido (apenas números, 7-15 dígitos)",
-    "minLength": "Mínimo {{min}} caracteres",
-    "maxLength": "Máximo {{max}} caracteres",
+    "phone": "Telefone inválido (apenas números, de 7 a 15 dígitos)",
+    "minLength": "Mínimo de {{min}} caracteres",
+    "maxLength": "Máximo de {{max}} caracteres",
     "number": "Deve ser um número",
-    "min": "Mínimo {{min}}",
-    "max": "Máximo {{max}}",
+    "min": "Mínimo: {{min}}",
+    "max": "Máximo: {{max}}",
     "text": "Apenas letras e espaços",
-    "birthDate": "A data não pode ser no futuro ou mais de 100 anos atrás",
-    "futureDate": "A data deve ser no futuro"
+    "birthDate": "A data não pode ser futura nem anterior a 100 anos atrás",
+    "futureDate": "A data deve ser futura"
+  },
+  "resend_code": {
+    "button": "Solicitar novo código",
+    "wait": "Solicitar novo código em {{seconds}} s"
   }
 }

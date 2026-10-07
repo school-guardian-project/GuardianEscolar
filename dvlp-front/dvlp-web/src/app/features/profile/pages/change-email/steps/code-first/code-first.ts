@@ -1,3 +1,5 @@
+import { PinGroupDirective } from '@shared/directives/pin-group.directive';
+import { ResendCode } from '@shared/components/resend-code/resend-code';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NgFor } from '@angular/common';
 import { Component } from '@angular/core';
@@ -10,7 +12,7 @@ import { ChangeEmailService } from '@core/services/change-email.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-code-first',
-  imports: [ChangeInformation, ReactiveFormsModule, NgFor, TranslateModule],
+  imports: [ChangeInformation, ReactiveFormsModule, NgFor, TranslateModule, PinGroupDirective, ResendCode],
   templateUrl: './code-first.html',
   styleUrl: './code-first.scss',
 })
@@ -22,6 +24,7 @@ export class CodeFirst {
     ),
   );
   readonly form = new FormGroup({ pin: this.pinControls });
+  readonly resendAction = () => this.changeEmail.resendCurrent();
   isSubmitting = false;
   errorMessage = '';
 
@@ -33,24 +36,6 @@ export class CodeFirst {
     if (value && index < this.pinControls.length - 1) {
       (input.parentElement?.querySelectorAll('input')[index + 1] as HTMLElement | undefined)?.focus();
     }
-  }
-
-  onPaste(event: ClipboardEvent, index: number) {
-    const digits = event.clipboardData?.getData('text').replace(/\D/g, '') ?? '';
-    if (!digits) {
-      return;
-    }
-
-    event.preventDefault();
-    const values = digits.slice(0, this.pinControls.length - index).split('');
-    values.forEach((digit, offset) => this.pinControls.at(index + offset).setValue(digit));
-    const inputs = (event.target as HTMLInputElement).parentElement?.querySelectorAll('input');
-    inputs?.forEach((el, position) => {
-      if (position >= index && position < index + values.length) {
-        el.value = values[position - index];
-      }
-    });
-    inputs?.[Math.min(index + values.length, this.pinControls.length - 1)]?.focus();
   }
 
   private codeFailure(error: unknown): void {

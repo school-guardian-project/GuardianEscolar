@@ -36,7 +36,7 @@ services:
     # sirve desde cualquier red. --port y REACT_NATIVE_PACKAGER_HOSTNAME solo
     # aplican en --lan (docs Expo: "--port does not apply to web or tunnel");
     # se conservan para poder volver a --lan cambiando una palabra.
-    command: sh -c "[ -d node_modules/expo ] || npm install; export REACT_NATIVE_PACKAGER_HOSTNAME=\"$${EXPO_LAN_IP:-}\"; exec ./node_modules/.bin/expo start --tunnel --port 9081"
+    command: sh -c "[ -d node_modules/expo ] || npm install; export REACT_NATIVE_PACKAGER_HOSTNAME=\"$${EXPO_LAN_IP:-}\"; exec ./node_modules/.bin/expo start --tunnel --clear --port 9081"
 
   # Túnel público de la API: Kong solo escuchaba en la LAN
   # (http://192.168.100.73:8000), por lo que desde otra red la app abría pero
@@ -49,6 +49,15 @@ services:
     container_name: sg-cloudflared
     image: cloudflare/cloudflared:2026.9.3
     command: tunnel --url http://kong:8000 --no-autoupdate
+    networks:
+      - sg-services-network
+    restart: unless-stopped
+
+  # Túnel público del microservicio de recuperación (no pasa por Kong).
+  cloudflared-forgot:
+    container_name: sg-cloudflared-forgot
+    image: cloudflare/cloudflared:2026.9.3
+    command: tunnel --url http://ms-forgot-information:8080 --no-autoupdate
     networks:
       - sg-services-network
     restart: unless-stopped

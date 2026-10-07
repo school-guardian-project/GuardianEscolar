@@ -186,24 +186,24 @@
   "change_contact": {
     "telephone": {
       "title": "Cambiar teléfono",
-      "sessionDescription": "Por seguridad, enviaremos un SMS a tu tel?fono actual.",
+      "sessionDescription": "Por seguridad, enviaremos un SMS a tu teléfono actual.",
       "titleStep": "Paso 1",
       "buttonText": "Enviar código",
       "returnStep": "Volver",
       "stepText": "1 de 4",
-      "label": "Tel?fono actual",
+      "label": "Teléfono actual",
       "error_pattern": "*Debe ser un número válido.",
       "error_required": "*El teléfono es requerido.",
-      "help_text": "Ingresa el tel?fono actual de tu cuenta con c?digo de pa?s, p. ej. +573001234567."
+      "help_text": "Ingresa el teléfono actual de tu cuenta, p. ej. 3001234567. El prefijo +57 se agrega solo."
     },
     "code_first": {
       "title": "Verificar código",
-      "sessionDescription": "Revisa el SMS enviado a tu tel?fono actual y escribe el c?digo.",
+      "sessionDescription": "Revisa el SMS enviado a tu teléfono actual y escribe el código.",
       "titleStep": "Paso 2",
       "buttonText": "Verificar",
       "returnStep": "Volver",
       "stepText": "2 de 4",
-      "description": "Revisa el SMS enviado a tu tel?fono actual y escribe el c?digo.",
+      "description": "Revisa el SMS enviado a tu teléfono actual y escribe el código.",
       "pin_error": "*El código ingresado no es válido."
     },
     "reset": {
@@ -213,26 +213,26 @@
       "buttonText": "Continuar",
       "returnStep": "Volver",
       "stepText": "3 de 4",
-      "label": "Nuevo tel?fono",
-      "error_pattern": "*Usa formato internacional, p. ej. +573001234567.",
+      "label": "Nuevo teléfono",
+      "error_pattern": "*Ingresa un número válido, p. ej. 3001234567.",
       "error_required": "*El teléfono es requerido.",
-      "help_text": "Recibir?s un SMS con un c?digo en este n?mero (formato +pa?s y n?mero)."
+      "help_text": "Recibirás un SMS con un código en este número (el prefijo +57 se agrega solo)."
     },
     "code_second": {
       "title": "Confirmar código",
-      "sessionDescription": "Ingresa el c?digo SMS enviado al nuevo n?mero.",
+      "sessionDescription": "Ingresa el código SMS enviado al nuevo número.",
       "titleStep": "Paso 4",
       "buttonText": "Confirmar",
       "returnStep": "Volver",
       "stepText": "4 de 4",
-      "description": "Introduce el c?digo SMS para finalizar el cambio de tel?fono.",
+      "description": "Introduce el código SMS para finalizar el cambio de teléfono.",
       "pin_error": "*El código ingresado no es válido.",
       "confirmationTitle": "Teléfono actualizado",
       "confirmationDescription": "Su teléfono ha sido actualizado correctamente."
     },
     "errors": {
-      "invalid_phone": "El n?mero no es v?lido o la solicitud venci?. Usa el formato +573001234567 o reinicia el proceso.",
-      "sms_unavailable": "No pudimos enviar el SMS ahora. Int?ntalo de nuevo m?s tarde."
+      "invalid_phone": "El teléfono no es válido. Ingresa el número, por ejemplo 3001234567.",
+      "sms_unavailable": "No pudimos enviar el SMS. Verifica el número o inténtalo de nuevo más tarde."
     }
   },
   "change_email": {
@@ -936,8 +936,12 @@
     "hint": "Recibirás un código de 6 dígitos",
     "errors": {
       "email_too_long": "*El correo no puede superar 100 caracteres.",
-      "request_failed": "No fue posible iniciar la recuperación. Inténtalo de nuevo.",
-      "rate_limited": "Has realizado demasiadas solicitudes. Espera unos minutos e inténtalo de nuevo."
+      "invalid_email": "El correo electrónico no es válido. Revisa que esté escrito correctamente.",
+      "request_failed": "No pudimos completar la solicitud. Revisa tu conexión e inténtalo de nuevo más tarde.",
+      "rate_limited": "Alcanzaste el límite de solicitudes. Espera unos minutos antes de intentarlo de nuevo.",
+      "account_not_found": "No encontramos una cuenta con ese correo, por eso no enviamos el código.",
+      "phone_mismatch": "El teléfono no coincide con el registrado en tu cuenta, por eso no enviamos el SMS.",
+      "delivery_failed": "No pudimos enviar el código (falló el servicio de correo o SMS). Inténtalo de nuevo más tarde."
     },
     "code": {
       "title": "Verifica tu correo",
@@ -1034,5 +1038,9 @@
     "text": "Solo letras y espacios",
     "birthDate": "La fecha no puede ser futura ni anterior a hace 100 años",
     "futureDate": "La fecha debe ser futura"
+  },
+  "resend_code": {
+    "button": "Solicitar nuevo código",
+    "wait": "Solicitar nuevo código en {{seconds}} s"
   }
 }

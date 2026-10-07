@@ -45,14 +45,43 @@ async function loadRefresh() {
   return SecureStore.getItemAsync(REFRESH_KEY);
 }
 
+function tokenClaims(token) {
+  if (!token) {
+    return {};
+  }
+  try {
+    const payload = token.split(".")[1];
+    return JSON.parse(atob(payload.replace(/-/g, "+").replace(/_/g, "/")));
+  } catch {
+    return {};
+  }
+}
+
+function claimOf(data, claims, key, fallback = null) {
+  const value = data?.[key] ?? claims[key] ?? fallback;
+  return value === undefined || value === "" ? null : value;
+}
+
+/** Combina la respuesta del login con los claims del JWT (la respuesta puede no traer todos los campos). */
 async function saveSession(data) {
+  const claims = tokenClaims(data?.accessToken ?? accessToken);
   session = {
-    profileId: data.profileId ?? null,
-    personId: data.personId ?? null,
-    email: data.email ?? null,
-    roleId: data.roleId ?? null,
-    campusId: data.campusId ?? null,
+    profileId: claimOf(data, claims, "profileId", session?.profileId),
+    personId: claimOf(data, claims, "personId", session?.personId),
+    email: claimOf(data, claims, "email", session?.email),
+    roleId: claimOf(data, claims, "roleId", session?.roleId),
+    campusId: claimOf(data, claims, "campusId", session?.campusId),
   };
+  if (await SecureStore.isAvailableAsync()) {
+    await SecureStore.setItemAsync(SESSION_KEY, JSON.stringify(session));
+  }
+}
+
+export async function updateSessionEmail(email) {
+  if (!session) {
+    await getSession();
+  }
+  session = { ...(session ?? {}), email };
   if (await SecureStore.isAvailableAsync()) {
     await SecureStore.setItemAsync(SESSION_KEY, JSON.stringify(session));
   }
@@ -106,6 +135,8 @@ export async function refresh() {
   });
 
   accessToken = data.accessToken;
+  await getSession();
+  await saveSession({});
   await saveRefresh(data.refreshToken);
   return data.accessToken;
 }

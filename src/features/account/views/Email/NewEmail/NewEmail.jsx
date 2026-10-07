@@ -2,6 +2,7 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import FormScreen from "@components/account/screens/FormScreen";
+import { submitNewEmail } from "@core/services/forgotInformationService";
 
 export default function NewEmail() {
 
@@ -17,6 +18,9 @@ export default function NewEmail() {
             placeholder={t("inputs.emailPlaceholder")}
             buttonText={t("button.update")}
             nextScreen="VerifyNewEmail"
+            inputType="email"
+            errorContext="emailFlow"
+            onSubmit={submitNewEmail}
         />
 
     );

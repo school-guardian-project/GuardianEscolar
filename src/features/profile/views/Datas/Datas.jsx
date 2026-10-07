@@ -30,23 +30,24 @@ export default function Datas() {
     (async () => {
       try {
         const session = await getSession();
-        if (!session?.personId) {
+
+        // Perfil desde ms-iam (trae personId y roleId aunque la sesión local esté incompleta)
+        const profileData = await getProfile();
+        const personId = profileData?.personId ?? session?.personId;
+        const roleId = profileData?.roleId ?? session?.roleId;
+        if (!personId) {
           return;
         }
-        
-        // Cargar datos del perfil desde ms-iam
-        const profileData = await getProfile();
-        
-        // Cargar datos de la persona desde ms-user-management
-        const path = ROLE_PATHS[session.roleId] ?? "students";
-        const data = await getUserApi(`/${path}/${session.personId}`);
-        
+
+        // Datos de la persona desde ms-user-management
+        const path = ROLE_PATHS[roleId] ?? "students";
+        const data = await getUserApi(`/${path}/${personId}`);
         if (alive) {
           setPerson(data);
           setProfile(profileData);
         }
-      } catch {
-        // Backend no disponible: la pantalla queda con los valores vacíos.
+      } catch (error) {
+        console.warn("No se pudieron cargar los datos del usuario:", error?.message);
       }
     })();
     return () => {

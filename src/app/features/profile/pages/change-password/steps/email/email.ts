@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
+import { requestErrorKey } from '@core/services/request-error';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ChangePassword } from '@shared/components/change/change-password/change-password';
 import { AuthService } from '@core/services/auth.service';
@@ -42,16 +42,12 @@ export class Email {
     this.errorMessage = '';
     this.isSubmitting = true;
 
-    this.forgotInformation.requestPasswordReset(email).pipe(
+    this.forgotInformation.requestPasswordReset(email, true).pipe(
       finalize(() => { this.isSubmitting = false; }),
     ).subscribe({
       next: () => this.router.navigate(['/admin/change-password/code']),
       error: (error: unknown) => {
-        this.errorMessage = this.translate.instant(
-          error instanceof HttpErrorResponse && error.status === 429
-            ? 'forgot_password.errors.rate_limited'
-            : 'forgot_password.errors.request_failed',
-        );
+        this.errorMessage = this.translate.instant(requestErrorKey(error, 'forgot_password.errors.invalid_email'));
       },
     });
   }

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
-import { HttpErrorResponse } from '@angular/common/http';
+import { requestErrorKey } from '@core/services/request-error';
 import { ChangePassword } from '@shared/components/change/change-password/change-password';
 import { ForgotInformationService } from '@core/services/forgot-information.service';
 import { finalize } from 'rxjs';
@@ -55,11 +55,7 @@ export class Email {
     ).subscribe({
       next: () => this.router.navigate(['/auth/forgot-password/code']),
       error: (error: unknown) => {
-        this.errorMessage = this.translate.instant(
-          error instanceof HttpErrorResponse && error.status === 429
-            ? 'forgot_password.errors.rate_limited'
-            : 'forgot_password.errors.request_failed',
-        );
+        this.errorMessage = this.translate.instant(requestErrorKey(error, 'forgot_password.errors.invalid_email'));
       },
     });
   }

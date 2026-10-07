@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { HttpErrorResponse } from '@angular/common/http';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChangeInformation } from "../../../../../../shared/components/change/change-information/change-information";
-import { ChangePhoneService } from '@core/services/change-phone.service';
+import { ChangePhoneService, phoneValidator } from '@core/services/change-phone.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
 
@@ -27,7 +27,7 @@ export class Reset {
     // E.164: +<codigo de pais><numero>, p. ej. +573001234567
 
     this.form = this.fb.group({
-      telephone: ['', [Validators.required, Validators.pattern(/^\+[1-9]\d{7,14}$/)]]
+      telephone: ['', [Validators.required, phoneValidator]]
     });
 
     if (!this.changePhone.hasVerifiedIdentity) {

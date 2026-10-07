@@ -31,6 +31,14 @@ export class ChangeEmailService {
     );
   }
 
+  resendCurrent(): Observable<void> {
+    return this.http.post<void>(`${this.base}/request`, { email: this.requireEmail() });
+  }
+
+  resendNew(): Observable<void> {
+    return this.http.post<void>(`${this.base}/resend-new`, { email: this.requireEmail() });
+  }
+
   verifyCurrent(code: string): Observable<void> {
     return this.http.post<TokenResponse>(`${this.base}/verify`, { email: this.requireEmail(), code }).pipe(
       tap((r) => { this.currentToken = r.resetToken; }),

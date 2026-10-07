@@ -707,7 +707,8 @@
         "grade": "Classe",
         "phone": "Téléphone",
         "address": "Adresse",
-        "email": "E-mail"
+        "email": "Email",
+        "campus": "Site"
       }
     },
     "guardian": {
@@ -720,7 +721,8 @@
         "identification": "Numéro d'identification",
         "birthDate": "Date de naissance",
         "phone": "Téléphone",
-        "address": "Adresse"
+        "address": "Adresse",
+        "campus": "Site"
       }
     },
     "driver": {
@@ -734,7 +736,8 @@
         "licenseExpiration": "Date d'expiration du permis",
         "licenseNumber": "Numéro de permis",
         "address": "Adresse",
-        "email": "E-mail"
+        "email": "Email",
+        "campus": "Site"
       }
     },
     "family": {
@@ -790,7 +793,8 @@
         "identification": "Identification",
         "birthDate": "Date de naissance",
         "phone": "Téléphone",
-        "address": "Adresse"
+        "address": "Adresse",
+        "school": "École"
       }
     },
     "schools": {
@@ -802,9 +806,20 @@
         "address": "Adresse",
         "phone": "Téléphone",
         "schooling": "Niveau scolaire",
-        "email": "E-mail",
-        "website": "Site web"
-      }
+        "email": "Email",
+        "website": "Site web",
+        "campusNames": "Sites"
+      },
+      "campusNamePlaceholder": "Nom du site",
+      "addCampus": "Ajouter un site",
+      "removeCampus": "Retirer le site",
+      "campusNamesRequired": "Ajoutez au moins un site pour l'école",
+      "campusNamesDuplicated": "Le site « {{name}} » est en double"
+    },
+    "options": {
+      "noSchool": "Aucune école n'est associée à cette session pour lister ses sites.",
+      "loadError": "Impossible de charger les options. Réessayez dans un instant.",
+      "empty": "Aucune option disponible."
     }
   },
   "search": {

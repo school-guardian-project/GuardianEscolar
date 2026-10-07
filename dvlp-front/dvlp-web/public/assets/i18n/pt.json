@@ -707,7 +707,8 @@
         "grade": "Série",
         "phone": "Telefone",
         "address": "Endereço",
-        "email": "E-mail"
+        "email": "E-mail",
+        "campus": "Unidade"
       }
     },
     "guardian": {
@@ -720,7 +721,8 @@
         "identification": "Número de identificação",
         "birthDate": "Data de nascimento",
         "phone": "Telefone",
-        "address": "Endereço"
+        "address": "Endereço",
+        "campus": "Unidade"
       }
     },
     "driver": {
@@ -734,7 +736,8 @@
         "licenseExpiration": "Validade da habilitação",
         "licenseNumber": "Número da habilitação",
         "address": "Endereço",
-        "email": "E-mail"
+        "email": "E-mail",
+        "campus": "Unidade"
       }
     },
     "family": {
@@ -790,7 +793,8 @@
         "identification": "Identificação",
         "birthDate": "Data de nascimento",
         "phone": "Telefone",
-        "address": "Endereço"
+        "address": "Endereço",
+        "school": "Escola"
       }
     },
     "schools": {
@@ -803,8 +807,19 @@
         "phone": "Telefone",
         "schooling": "Nível escolar",
         "email": "E-mail",
-        "website": "Site"
-      }
+        "website": "Site",
+        "campusNames": "Unidades"
+      },
+      "campusNamePlaceholder": "Nome da unidade",
+      "addCampus": "Adicionar unidade",
+      "removeCampus": "Remover unidade",
+      "campusNamesRequired": "Adicione pelo menos uma unidade para a escola",
+      "campusNamesDuplicated": "A unidade «{{name}}» está repetida"
+    },
+    "options": {
+      "noSchool": "Não há uma escola atribuída a esta sessão para listar suas unidades.",
+      "loadError": "Não foi possível carregar as opções. Tente novamente em instantes.",
+      "empty": "Sem opções disponíveis."
     }
   },
   "search": {

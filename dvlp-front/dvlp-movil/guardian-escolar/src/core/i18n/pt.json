@@ -199,6 +199,15 @@
     "stops": "Paradas",
     "school": "Escola"
   },
+
+  "reminder": {
+    "title": "Lembrete da rota",
+    "message": "Sua rota {{name}} começa às {{time}}",
+    "messageNoName": "Sua rota começa às {{time}}",
+    "am": "AM",
+    "pm": "PM"
+  },
+
   "bottom": {
     "route": "Rota",
     "location": "Localização",
@@ -209,6 +218,7 @@
     "speed": "Velocidade",
     "status": "Estado",
     "lastUpdated": "Última atualização",
+    "centerOnLocation": "Centralizar na localização GPS",
     "active": "GPS ativo",
     "inactive": "GPS sem conexão",
     "loadingLocation": "Carregando localização...",

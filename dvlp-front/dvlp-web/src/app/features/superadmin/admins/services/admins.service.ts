@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
-import { AdminListDto, AdminRequestDto, AdminResponseDto } from '../models/admin.model';
+import { AdminListDto, AdminRequestDto, CreateAdminRequestDto, AdminResponseDto } from '../models/admin.model';
 
 @Injectable({
   providedIn: 'root',
@@ -24,7 +24,7 @@ export class AdminsService {
     return this.http.get<AdminResponseDto>(`${this.base}/${id}`);
   }
 
-  create(payload: AdminRequestDto): Observable<void> {
+  create(payload: CreateAdminRequestDto): Observable<void> {
     return this.http.post<void>(this.base, payload);
   }
 

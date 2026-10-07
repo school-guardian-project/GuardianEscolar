@@ -199,6 +199,15 @@
     "stops": "Stops",
     "school": "School"
   },
+
+  "reminder": {
+    "title": "Route reminder",
+    "message": "Your route {{name}} starts at {{time}}",
+    "messageNoName": "Your route starts at {{time}}",
+    "am": "AM",
+    "pm": "PM"
+  },
+
   "bottom": {
     "route": "Route",
     "location": "Location",
@@ -209,6 +218,7 @@
     "speed": "Speed",
     "status": "Status",
     "lastUpdated": "Last updated",
+    "centerOnLocation": "Center on GPS location",
     "active": "GPS active",
     "inactive": "GPS disconnected",
     "loadingLocation": "Loading location...",

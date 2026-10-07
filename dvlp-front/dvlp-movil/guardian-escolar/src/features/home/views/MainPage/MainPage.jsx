@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, Text, Pressable } from "react-native";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 import RouteInfoCard from "@components/cards/RouteInfoCard";
 import BottomTabBar from "@components/layout/BottomTabBar";
 import useWindow from "@core/hooks/useWindow";
@@ -16,10 +17,42 @@ import { getSession } from "@core/services/authService";
 import { getRouteApi } from "@core/services/routeApi";
 import { getFleetApi } from "@core/services/fleetApi";
 import { postNotificationApi } from "@core/services/notificationApi";
+import {
+  scheduleRouteStartReminder,
+  cancelRouteStartReminder,
+} from "@core/services/routeReminder";
 
 import styles from "./MainPage.style";
 
 const EMPTY_GUID = "00000000-0000-0000-0000-000000000000";
+
+// RouteDetailDto.stops -> coordenadas validas ordenadas por orderSequence.
+// Lat/lng llegan como decimales serializados, por eso se normalizan a Number.
+function normalizeStops(route) {
+  const stops = Array.isArray(route?.stops) ? route.stops : [];
+
+  return stops
+    .map((stop, index) => {
+      const latitude = Number(stop?.latitude);
+      const longitude = Number(stop?.longitude);
+
+      return {
+        id: stop?.id ?? index,
+        name: stop?.name ?? "",
+        address: stop?.address ?? "",
+        orderSequence: stop?.orderSequence ?? index,
+        latitude,
+        longitude,
+      };
+    })
+    .filter(
+      (stop) =>
+        Number.isFinite(stop.latitude) &&
+        Number.isFinite(stop.longitude) &&
+        !(stop.latitude === 0 && stop.longitude === 0)
+    )
+    .sort((a, b) => a.orderSequence - b.orderSequence);
+}
 
 async function getCurrentTrip(driverId) {
   if (!driverId) return null;
@@ -37,12 +70,32 @@ export default function MainPage() {
   const horizontalPadding = width < 360 ? 12 : 16;
   const navigation = useNavigation();
   const { role } = useSession();
+  const { t } = useTranslation();
   const config = roleConfig[role];
 
   const [modalType, setModalType] = useState(null);
   const [routeInfo, setRouteInfo] = useState(null);
+  const [routeStops, setRouteStops] = useState([]);
   const [loading, setLoading] = useState(true);
   const [scanMode, setScanMode] = useState("ON_BOARD");
+
+  const mapRef = useRef(null);
+  const mapReadyRef = useRef(false);
+  const stopsRef = useRef([]);
+
+  // Encuadra el mapa sobre las paradas de la ruta (si las hay).
+  const fitStopsOnMap = () => {
+    const stops = stopsRef.current;
+    if (!mapReadyRef.current || stops.length === 0) return;
+
+    mapRef.current?.fitToCoordinates(
+      stops.map((stop) => ({ latitude: stop.latitude, longitude: stop.longitude })),
+      {
+        edgePadding: { top: 90, right: 40, bottom: 280, left: 40 },
+        animated: true,
+      }
+    );
+  };
 
   const handleOpenModal = (type) => setModalType(type);
   const handleCloseModal = () => setModalType(null);
@@ -90,9 +143,24 @@ export default function MainPage() {
             route = null;
           }
         } else if (role === "driver") {
-          // Conductor: obtener su ruta actual
+          // Conductor: el backend valida el horario. Solo si la ruta esta
+          // ACTIVA se muestran paradas; si no, se programa el recordatorio
+          // push para la proxima salida y la pantalla queda sin ruta.
           try {
-            route = await getRouteApi(`/routes/current?driverId=${session.profileId}`);
+            const today = await getRouteApi(
+              `/routes/today?driverId=${session.profileId}`
+            );
+
+            if (today?.status === "ACTIVE" && today.route) {
+              cancelRouteStartReminder();
+              route = today.route;
+            } else {
+              await scheduleRouteStartReminder(
+                today?.nextOccurrence,
+                today?.route?.name
+              );
+              route = null;
+            }
           } catch {
             route = null;
           }
@@ -103,6 +171,8 @@ export default function MainPage() {
         }
 
         if (!route) {
+          stopsRef.current = [];
+          setRouteStops([]);
           setLoading(false);
           return;
         }
@@ -119,6 +189,12 @@ export default function MainPage() {
           }
         }
 
+        // RouteDetailDto (conductor/estudiante) incluye stops[];
+        // RouteListDto solo trae stopsCount.
+        const stops = normalizeStops(route);
+        stopsRef.current = stops;
+        setRouteStops(stops);
+
         // RouteListDto: horario real = startTime/endTime; targetSector es el destino.
         const schedule =
           route.startTime && route.endTime
@@ -127,7 +203,9 @@ export default function MainPage() {
         const stopsCount =
           route.stopsCount != null && route.stopsCount !== ""
             ? String(route.stopsCount)
-            : "—";
+            : stops.length > 0
+              ? String(stops.length)
+              : "—";
 
         setRouteInfo({
           routeName: route.name,
@@ -147,9 +225,14 @@ export default function MainPage() {
     loadRouteInfo();
   }, [role]);
 
+  useEffect(() => {
+    fitStopsOnMap();
+  }, [routeStops]);
+
   return (
     <View style={styles.container}>
       <MapView
+        ref={mapRef}
         style={styles.map}
         initialRegion={{
           latitude: 2.9273,
@@ -157,7 +240,24 @@ export default function MainPage() {
           latitudeDelta: 0.08,
           longitudeDelta: 0.08,
         }}
-      />
+        onMapReady={() => {
+          mapReadyRef.current = true;
+          fitStopsOnMap();
+        }}
+      >
+        {routeStops.map((stop, index) => (
+          <Marker
+            key={stop.id}
+            coordinate={{
+              latitude: stop.latitude,
+              longitude: stop.longitude,
+            }}
+            title={stop.name || `${t("cards.stops")} ${index + 1}`}
+            description={stop.address || undefined}
+            tracksViewChanges={false}
+          />
+        ))}
+      </MapView>
 
       <View
         style={[

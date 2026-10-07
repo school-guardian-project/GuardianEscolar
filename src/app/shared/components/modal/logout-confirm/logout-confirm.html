@@ -1,0 +1,26 @@
+<div class="modal-overlay" (click)="cancel.emit()">
+  <div class="modal modal--small" (click)="$event.stopPropagation()">
+
+    <div class="modal_header">
+      <h2 class="modal__title">{{ 'admin_profile.logout_title' | translate }}</h2>
+      <p class="modal__subtitle">{{ 'admin_profile.logout_text' | translate }}</p>
+    </div>
+
+    <div class="modal_form-upload">
+      <div class="modal_form-logo modal_form-logo--logout">
+        <mat-icon>logout</mat-icon>
+      </div>
+    </div>
+
+    <div class="modal_footer modal__footer--center">
+      <button class="modal_btn modal_btn--submit" type="button" (click)="cancel.emit()">
+        {{ 'common.cancel' | translate }}
+      </button>
+
+      <button class="modal_btn modal_btn--logout" type="button" (click)="confirm.emit()">
+        {{ 'common.confirm' | translate }}
+      </button>
+    </div>
+
+  </div>
+</div>

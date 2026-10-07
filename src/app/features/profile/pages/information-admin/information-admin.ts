@@ -87,10 +87,6 @@ export class InformationAdmin implements OnInit {
     return this.user?.dateBirth?.split('T')[0] ?? '';
   }
 
-  logout() {
-    const goLogin = () => this.router.navigateByUrl('/auth/login');
-    this.authService.logout().subscribe({ next: goLogin, error: goLogin });
-  }
 
   onFileSelected(event: any) {
     const file = event.target.files[0];

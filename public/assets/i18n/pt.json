@@ -166,7 +166,6 @@
       "returnStep": "Voltar",
       "stepText": "1 de 4",
       "label": "Telefone atual",
-      "error_pattern": "*Deve ser um número válido.",
       "error_required": "*O telefone é obrigatório.",
       "help_text": "Informe o telefone atual da sua conta, por ex. 3001234567. O prefixo +57 é adicionado automaticamente."
     },
@@ -219,8 +218,6 @@
       "returnStep": "Voltar",
       "stepText": "1 de 4",
       "email_label": "E-mail",
-      "error_pattern": "*Deve ser um e-mail válido.",
-      "error_required": "*O e-mail é obrigatório.",
       "help_text": "Você receberá um código de verificação neste e-mail."
     },
     "code_first": {
@@ -272,8 +269,6 @@
       "returnStep": "Voltar",
       "stepText": "1 de 3",
       "email_label": "E-mail",
-      "error_pattern": "*Deve ser um e-mail válido.",
-      "error_required": "*O e-mail é obrigatório.",
       "help_text": "Você receberá um código para redefinir sua senha."
     },
     "code": {
@@ -310,11 +305,7 @@
       "attention": "Requerem atenção"
     },
     "alerts": {
-      "title": "Últimos alertas",
-      "out_of_route": "Ônibus fora da rota",
-      "sudden_brake": "Frenagem brusca",
-      "driver": "Motorista",
-      "route": "Rota"
+      "title": "Últimos alertas"
     }
   },
   "superadmin_dashboard": {
@@ -329,11 +320,7 @@
       "attention": "Requerem atenção"
     },
     "alerts": {
-      "title": "Últimos alertas",
-      "out_route": "Ônibus fora da rota",
-      "sudden_stop": "Parada brusca",
-      "driver": "Motorista",
-      "route": "Rota"
+      "title": "Últimos alertas"
     }
   },
   "sidebar": {
@@ -390,7 +377,6 @@
       "upload": "Enviar novo logotipo",
       "email": "E-mail",
       "email_placeholder": "Insira o e-mail",
-      "website": "Site",
       "web_placeholder": "Insira o site"
     },
     "error": "Por favor, preencha ao menos um campo antes de atualizar.",
@@ -412,8 +398,8 @@
     "select": "ativo",
     "blue": "Azul",
     "green": "Verde",
-    "yellow": "Amarelo",
-    "red": "Vermelho"
+    "red": "Vermelho",
+    "yellow": "Amarelo"
   },
   "language": {
     "title": "Selecionar idioma",
@@ -423,9 +409,48 @@
       "confirm": "Confirmar"
     }
   },
+  "delete_record": {
+    "student": {
+      "title": "Excluir estudante",
+      "text": "Isso excluirá permanentemente o registro do estudante selecionado."
+    },
+    "guardian": {
+      "title": "Excluir responsável",
+      "text": "Isso excluirá permanentemente o registro do responsável selecionado."
+    },
+    "driver": {
+      "title": "Excluir motorista",
+      "text": "Isso excluirá permanentemente o registro do motorista selecionado."
+    },
+    "family": {
+      "title": "Excluir família",
+      "text": "Isso excluirá permanentemente o registro da família selecionada."
+    },
+    "bus": {
+      "title": "Excluir ônibus",
+      "text": "Isso excluirá permanentemente o registro do ônibus selecionado."
+    },
+    "stop": {
+      "title": "Excluir parada",
+      "text": "Isso excluirá permanentemente o registro da parada selecionada."
+    },
+    "route": {
+      "title": "Excluir rota",
+      "text": "Isso excluirá permanentemente o registro da rota selecionada."
+    },
+    "admins": {
+      "title": "Excluir administrador",
+      "text": "Isso excluirá permanentemente o registro do administrador selecionado."
+    },
+    "schools": {
+      "title": "Excluir escola",
+      "text": "Isso excluirá permanentemente o registro da escola selecionada."
+    }
+  },
   "common": {
     "cancel": "Cancelar",
     "delete": "Excluir",
+    "confirm": "Confirmar",
     "close": "Fechar",
     "accept": "Aceitar"
   },
@@ -522,8 +547,8 @@
         "lastNames": "Sobrenomes",
         "email": "E-mail",
         "identification": "Identificação",
-        "birthDate": "Data de nascimento",
         "phone": "Telefone",
+        "birthDate": "Data de nascimento",
         "address": "Endereço"
       }
     },
@@ -538,44 +563,6 @@
         "email": "E-mail",
         "website": "Site"
       }
-    }
-  },
-  "delete_record": {
-    "student": {
-      "title": "Excluir estudante",
-      "text": "Isso excluirá permanentemente o registro do estudante selecionado."
-    },
-    "guardian": {
-      "title": "Excluir responsável",
-      "text": "Isso excluirá permanentemente o registro do responsável selecionado."
-    },
-    "driver": {
-      "title": "Excluir motorista",
-      "text": "Isso excluirá permanentemente o registro do motorista selecionado."
-    },
-    "family": {
-      "title": "Excluir família",
-      "text": "Isso excluirá permanentemente o registro da família selecionada."
-    },
-    "bus": {
-      "title": "Excluir ônibus",
-      "text": "Isso excluirá permanentemente o registro do ônibus selecionado."
-    },
-    "stop": {
-      "title": "Excluir parada",
-      "text": "Isso excluirá permanentemente o registro da parada selecionada."
-    },
-    "route": {
-      "title": "Excluir rota",
-      "text": "Isso excluirá permanentemente o registro da rota selecionada."
-    },
-    "admins": {
-      "title": "Excluir administrador",
-      "text": "Isso excluirá permanentemente o registro do administrador selecionado."
-    },
-    "schools": {
-      "title": "Excluir escola",
-      "text": "Isso excluirá permanentemente o registro da escola selecionada."
     }
   },
   "update_record": {
@@ -637,8 +624,8 @@
         "model": "Modelo",
         "brand": "Marca",
         "capacity": "Capacidade",
-        "gps": "GPS",
-        "soat": "SOAT"
+        "soat": "SOAT",
+        "gps": "GPS"
       }
     },
     "stop": {
@@ -681,9 +668,9 @@
       "fields": {
         "name": "Nome",
         "city": "Cidade",
-        "schooling": "Nível escolar",
         "address": "Endereço",
         "phone": "Telefone",
+        "schooling": "Nível escolar",
         "email": "E-mail",
         "website": "Site"
       }
@@ -827,19 +814,16 @@
   },
   "assign_record": {
     "route": {
-      "title": "Atribuir ônibus à rota",
       "bus": "Ônibus",
       "selectBus": "Selecione um ônibus"
     },
     "student": {
-      "title": "Atribuir estudante à rota",
       "route": "Rota",
       "stop": "Ponto de embarque",
       "selectRoute": "Selecione uma rota",
       "selectStop": "Selecione um ponto"
     },
     "bus": {
-      "title": "Atribuir motorista ao ônibus",
       "driver": "Motorista",
       "currentDriver": "Motorista atual",
       "selectDriver": "Selecione um motorista"
@@ -876,7 +860,8 @@
     "title": "Informações do administrador",
     "user": {
       "name": "Nome do administrador",
-      "role": "Administrador"
+      "role": "Administrador",
+      "role_superadmin": "Superadministrador"
     },
     "labels": {
       "email": "E-mail",
@@ -886,7 +871,10 @@
       "school": "Escola",
       "password": "Senha",
       "id": "ID"
-    }
+    },
+    "logout": "Sair",
+    "logout_title": "Sair da conta?",
+    "logout_text": "Você precisará entrar novamente para voltar."
   },
   "forgot_password": {
     "title": "Recupere seu acesso",
@@ -902,9 +890,9 @@
       "invalid_email": "O endereço de e-mail é inválido. Confira se foi digitado corretamente.",
       "request_failed": "Não foi possível concluir a solicitação. Verifique sua conexão e tente novamente mais tarde.",
       "rate_limited": "Você atingiu o limite de solicitações. Aguarde alguns minutos antes de tentar novamente.",
-      "accountNotFound": "Não encontramos uma conta com esse e-mail, por isso o código não foi enviado.",
-      "phoneMismatch": "O telefone não corresponde ao registrado na sua conta, por isso o SMS não foi enviado.",
-      "deliveryFailed": "Não foi possível enviar o código (o serviço de e-mail ou SMS falhou). Tente novamente mais tarde."
+      "account_not_found": "Não encontramos uma conta com esse e-mail, por isso o código não foi enviado.",
+      "phone_mismatch": "O telefone não corresponde ao registrado na sua conta, por isso o SMS não foi enviado.",
+      "delivery_failed": "Não foi possível enviar o código (o serviço de e-mail ou SMS falhou). Tente novamente mais tarde."
     },
     "code": {
       "title": "Verifique seu e-mail",
@@ -913,8 +901,6 @@
       "button": "Verificar",
       "return": "Voltar",
       "step_text": "2 de 3",
-      "sent_to": "Código enviado para",
-      "valid": "Válido por 10 minutos.",
       "error": "*Digite os 6 dígitos",
       "digit_label": "Dígito {{number}} do código",
       "errors": {
@@ -938,15 +924,12 @@
       "errors": {
         "required": "*Este campo é obrigatório",
         "minlength": "*Mínimo de 8 caracteres",
-        "maxlength": "*Máximo de 128 caracteres",
         "pattern": "*Deve conter letras maiúsculas e minúsculas, números e caracteres especiais (. - _ @ *)",
         "no_match": "*As senhas não coincidem",
-        "expired": "O token de recuperação expirou ou já foi usado. Solicite um novo código.",
-        "rate_limited": "O limite de tentativas foi atingido. Solicite um novo código mais tarde.",
+        "expired": "O link de recuperação expirou ou já foi usado. Solicite um novo código.",
+        "rate_limited": "Limite de tentativas atingido. Solicite um novo código mais tarde.",
         "failed": "Não foi possível atualizar a senha. Tente novamente."
-      },
-      "confirmationTitle": "Senha atualizada",
-      "confirmationDescription": "Sua senha foi atualizada com sucesso."
+      }
     }
   },
   "right_index": {

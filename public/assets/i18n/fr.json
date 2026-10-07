@@ -166,7 +166,6 @@
       "returnStep": "Retour",
       "stepText": "1 sur 4",
       "label": "Téléphone actuel",
-      "error_pattern": "*Doit être un numéro valide.",
       "error_required": "*Le téléphone est requis.",
       "help_text": "Saisissez le téléphone actuel de votre compte, p. ex. 3001234567. Le préfixe +57 est ajouté automatiquement."
     },
@@ -219,8 +218,6 @@
       "returnStep": "Retour",
       "stepText": "1 sur 4",
       "email_label": "E-mail",
-      "error_pattern": "*Doit être une adresse e-mail valide.",
-      "error_required": "*L'e-mail est requis.",
       "help_text": "Vous recevrez un code de vérification à cette adresse e-mail."
     },
     "code_first": {
@@ -272,8 +269,6 @@
       "returnStep": "Retour",
       "stepText": "1 sur 3",
       "email_label": "E-mail",
-      "error_pattern": "*Doit être une adresse e-mail valide.",
-      "error_required": "*L'e-mail est requis.",
       "help_text": "Vous recevrez un code pour réinitialiser votre mot de passe."
     },
     "code": {
@@ -310,11 +305,7 @@
       "attention": "Nécessitent de l'attention"
     },
     "alerts": {
-      "title": "Dernières alertes",
-      "out_of_route": "Bus hors itinéraire",
-      "sudden_brake": "Freinage brusque",
-      "driver": "Conducteur",
-      "route": "Itinéraire"
+      "title": "Dernières alertes"
     }
   },
   "superadmin_dashboard": {
@@ -329,11 +320,7 @@
       "attention": "Nécessitent de l'attention"
     },
     "alerts": {
-      "title": "Dernières alertes",
-      "out_route": "Bus hors itinéraire",
-      "sudden_stop": "Arrêt brusque",
-      "driver": "Conducteur",
-      "route": "Itinéraire"
+      "title": "Dernières alertes"
     }
   },
   "sidebar": {
@@ -390,7 +377,6 @@
       "upload": "Importer un nouveau logo",
       "email": "E-mail",
       "email_placeholder": "Saisissez l'e-mail",
-      "website": "Site web",
       "web_placeholder": "Saisissez le site web"
     },
     "error": "Veuillez remplir au moins un champ avant de mettre à jour.",
@@ -827,19 +813,16 @@
   },
   "assign_record": {
     "route": {
-      "title": "Assigner un bus à l'itinéraire",
       "bus": "Bus",
       "selectBus": "Sélectionnez un bus"
     },
     "student": {
-      "title": "Assigner un élève à l'itinéraire",
       "route": "Itinéraire",
       "stop": "Arrêt de montée",
       "selectRoute": "Sélectionnez un itinéraire",
       "selectStop": "Sélectionnez un arrêt"
     },
     "bus": {
-      "title": "Assigner un conducteur au bus",
       "driver": "Conducteur",
       "currentDriver": "Conducteur actuel",
       "selectDriver": "Sélectionnez un conducteur"
@@ -886,7 +869,10 @@
       "school": "École",
       "password": "Mot de passe",
       "id": "ID"
-    }
+    },
+    "logout": "Se déconnecter",
+    "logout_title": "Se déconnecter ?",
+    "logout_text": "Vous devrez vous reconnecter pour revenir."
   },
   "forgot_password": {
     "title": "Récupérez votre accès",
@@ -902,9 +888,9 @@
       "invalid_email": "L'adresse e-mail est invalide. Vérifiez qu'elle est correctement saisie.",
       "request_failed": "Impossible de traiter la demande. Vérifiez votre connexion et réessayez plus tard.",
       "rate_limited": "Vous avez atteint la limite de demandes. Attendez quelques minutes avant de réessayer.",
-      "accountNotFound": "Aucun compte ne correspond à cet e-mail, donc aucun code n'a été envoyé.",
-      "phoneMismatch": "Le téléphone ne correspond pas à celui enregistré sur votre compte, donc aucun SMS n'a été envoyé.",
-      "deliveryFailed": "Impossible d'envoyer le code (le service d'e-mail ou de SMS a échoué). Réessayez plus tard."
+      "account_not_found": "Aucun compte ne correspond à cet e-mail, donc aucun code n'a été envoyé.",
+      "phone_mismatch": "Le téléphone ne correspond pas à celui enregistré sur votre compte, donc aucun SMS n'a été envoyé.",
+      "delivery_failed": "Impossible d'envoyer le code (le service d'e-mail ou de SMS a échoué). Réessayez plus tard."
     },
     "code": {
       "title": "Vérifiez votre e-mail",
@@ -913,8 +899,6 @@
       "button": "Vérifier",
       "return": "Retour",
       "step_text": "2 sur 3",
-      "sent_to": "Code envoyé à",
-      "valid": "Valable 10 minutes.",
       "error": "*Saisissez les 6 chiffres",
       "digit_label": "Chiffre {{number}} du code",
       "errors": {

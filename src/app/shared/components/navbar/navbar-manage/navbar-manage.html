@@ -10,4 +10,13 @@
   <span class="title">Guardian Escolar</span>
   <span class="spacer"></span>
 
+  <!-- DERECHA -->
+  <div class="toolbar-end">
+    <button class="logout-icon" mat-icon-button type="button" (click)="confirmLogout = true"
+      [attr.aria-label]="'admin_profile.logout' | translate" [title]="'admin_profile.logout' | translate">
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
+
+<app-logout-confirm *ngIf="confirmLogout" (cancel)="confirmLogout = false" (confirm)="logout()"></app-logout-confirm>

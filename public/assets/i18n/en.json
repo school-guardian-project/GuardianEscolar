@@ -164,7 +164,6 @@
       "returnStep": "Back",
       "stepText": "1 of 4",
       "label": "Current phone",
-      "error_pattern": "*Must be a valid phone number.",
       "error_required": "*Phone is required.",
       "help_text": "Enter the current phone of your account, e.g. 3001234567. The +57 prefix is added automatically."
     },
@@ -217,8 +216,6 @@
       "returnStep": "Back",
       "stepText": "1 of 4",
       "email_label": "Email",
-      "error_pattern": "*Must be a valid email.",
-      "error_required": "*Email is required.",
       "help_text": "You will receive a verification code at this email."
     },
     "code_first": {
@@ -266,8 +263,6 @@
       "returnStep": "Back",
       "stepText": "1 of 3",
       "email_label": "Email",
-      "error_pattern": "*Must be a valid email.",
-      "error_required": "*Email is required.",
       "help_text": "You will receive a code to reset your password."
     },
     "code": {
@@ -304,11 +299,7 @@
       "attention": "Require attention"
     },
     "alerts": {
-      "title": "Latest alerts",
-      "out_of_route": "Bus off route",
-      "sudden_brake": "Sudden braking",
-      "driver": "Driver",
-      "route": "Route"
+      "title": "Latest alerts"
     }
   },
   "superadmin_dashboard": {
@@ -323,11 +314,7 @@
       "attention": "Require attention"
     },
     "alerts": {
-      "title": "Latest alerts",
-      "out_route": "Bus off route",
-      "sudden_stop": "Sudden brake",
-      "driver": "Driver",
-      "route": "Route"
+      "title": "Latest alerts"
     }
   },
   "sidebar": {
@@ -384,7 +371,6 @@
       "upload": "Upload new logo",
       "email": "Email",
       "email_placeholder": "Enter the email",
-      "website": "Website",
       "web_placeholder": "Enter the website"
     },
     "error": "Please complete at least one field before updating",
@@ -821,19 +807,16 @@
   },
   "assign_record": {
     "route": {
-      "title": "Assign bus to route",
       "bus": "Bus",
       "selectBus": "Select a bus"
     },
     "student": {
-      "title": "Assign student to route",
       "route": "Route",
       "stop": "Boarding stop",
       "selectRoute": "Select a route",
       "selectStop": "Select a stop"
     },
     "bus": {
-      "title": "Assign driver to bus",
       "driver": "Driver",
       "currentDriver": "Current driver",
       "selectDriver": "Select a driver"
@@ -881,7 +864,10 @@
       "school": "School",
       "password": "Password",
       "id": "ID"
-    }
+    },
+    "logout": "Log out",
+    "logout_title": "Log out?",
+    "logout_text": "You will need to sign in again to get back in."
   },
   "forgot_password": {
     "title": "Recover your access",
@@ -917,7 +903,10 @@
         "required": "*This field is required",
         "minlength": "*Minimum 8 characters",
         "pattern": "*Must contain uppercase, lowercase, numbers and special characters (. - _ @ *)",
-        "no_match": "*Passwords do not match"
+        "no_match": "*Passwords do not match",
+        "expired": "The recovery link has expired or was already used. Request a new code.",
+        "rate_limited": "Attempt limit reached. Request a new code later.",
+        "failed": "The password could not be updated. Please try again."
       }
     }
   },

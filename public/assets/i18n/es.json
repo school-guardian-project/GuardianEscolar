@@ -12,22 +12,7 @@
     "line3": "escolar",
     "line4": "en",
     "line5": "tiempo",
-    "line6": "real",
-    "paragraph": "Monitoreo GPS de rutas, alertas instantáneas y control de asistencia. Tranquilidad para las familias, eficiencia para las escuelas.",
-    "btn_download": "Descargar",
-    "btn_video": "Ver video"
-  },
-  "card_panel": {
-    "badge": "+ 12 este mes",
-    "title": "Panel Guardian Escolar",
-    "live": "● En vivo",
-    "students": "Estudiantes",
-    "routes": "Rutas",
-    "alerts": "Alertas",
-    "alert_msg": "Bus fuera de ruta",
-    "alert_sub": "Ruta LOL85 · 6:45 am",
-    "success_msg": "18 rutas operando",
-    "success_sub": "Todas en tiempo normal"
+    "line6": "real"
   },
   "features": {
     "label": "Funcionalidades",
@@ -127,19 +112,12 @@
     }
   },
   "footer": {
-    "description": "Sistema de monitoreo escolar para rutas más seguras y familias más tranquilas.",
     "col_product": "Producto",
-    "col_company": "Empresa",
     "col_legal": "Legal",
     "links_product": [
       "Funcionalidades",
       "Cómo funciona",
       "Contáctanos"
-    ],
-    "links_company": [
-      "Nosotros",
-      "Blog",
-      "Contacto"
     ],
     "links_legal": [
       "Privacidad",
@@ -151,9 +129,6 @@
     "left": {
       "title": "Bienvenido de nuevo",
       "description": "Accede al sistema completo de monitoreo de rutas escolares.",
-      "gps": "GPS en tiempo real",
-      "alerts": "Alertas instantáneas",
-      "reports": "Reportes y métricas",
       "footer": "guardian.edu · Soporte 24/7"
     },
     "right": {
@@ -192,7 +167,6 @@
       "returnStep": "Volver",
       "stepText": "1 de 4",
       "label": "Teléfono actual",
-      "error_pattern": "*Debe ser un número válido.",
       "error_required": "*El teléfono es requerido.",
       "help_text": "Ingresa el teléfono actual de tu cuenta, p. ej. 3001234567. El prefijo +57 se agrega solo."
     },
@@ -245,8 +219,6 @@
       "returnStep": "Volver",
       "stepText": "1 de 4",
       "email_label": "Correo electrónico",
-      "error_pattern": "*Debe ser un correo válido.",
-      "error_required": "*El correo es requerido.",
       "help_text": "Recibirás un código de verificación en este correo."
     },
     "code_first": {
@@ -260,14 +232,6 @@
       "pin_error": "*El código ingresado no es válido."
     },
     "code_second": {
-      "title": "Confirmar código",
-      "sessionDescription": "Ingresa el código enviado al nuevo correo.",
-      "titleStep": "Paso 4",
-      "buttonText": "Confirmar",
-      "returnStep": "Volver",
-      "stepText": "4 de 4",
-      "description": "Introduce el código final para actualizar tu correo.",
-      "pin_error": "*El código ingresado no es válido.",
       "confirmationTitle": "Correo actualizado",
       "confirmationDescription": "Su correo ha sido actualizado correctamente."
     },
@@ -306,8 +270,6 @@
       "returnStep": "Volver",
       "stepText": "1 de 3",
       "email_label": "Correo electrónico",
-      "error_pattern": "*Debe ser un correo válido.",
-      "error_required": "*El correo es requerido.",
       "help_text": "Recibirás un código para restablecer tu contraseña."
     },
     "code": {
@@ -329,17 +291,7 @@
       "returnStep": "Volver",
       "stepText": "3 de 3",
       "confirmationTitle": "Contraseña actualizada",
-      "confirmationDescription": "Su contraseña ha sido actualizada correctamente.",
-      "errors": {
-        "required": "*Este campo es requerido",
-        "minlength": "*Mínimo 8 caracteres",
-        "maxlength": "*Máximo 128 caracteres",
-        "pattern": "*Debe tener mayúsculas, minúsculas, números y caracteres especiales (. - _ @ *)",
-        "no_match": "*Las contraseñas no son iguales",
-        "expired": "El enlace de recuperación expiró o ya fue usado. Solicita un nuevo código.",
-        "rate_limited": "Se alcanzó el límite de intentos. Solicita un nuevo código más tarde.",
-        "failed": "No se pudo actualizar la contraseña. Inténtalo de nuevo."
-      }
+      "confirmationDescription": "Su contraseña ha sido actualizada correctamente."
     }
   },
   "dashboard": {
@@ -354,11 +306,7 @@
       "attention": "Requieren atención"
     },
     "alerts": {
-      "title": "Últimas alertas",
-      "out_of_route": "Bus fuera de ruta",
-      "sudden_brake": "Frenó brusco",
-      "driver": "Conductor",
-      "route": "Ruta"
+      "title": "Últimas alertas"
     }
   },
   "superadmin_dashboard": {
@@ -373,11 +321,7 @@
       "attention": "Requieren atención"
     },
     "alerts": {
-      "title": "Últimas alertas",
-      "out_route": "Bus fuera de ruta",
-      "sudden_stop": "Frenó brusco",
-      "driver": "Conductor",
-      "route": "Ruta"
+      "title": "Últimas alertas"
     }
   },
   "sidebar": {
@@ -401,8 +345,7 @@
     "title-routes": "Transporte",
     "bus": "Buses",
     "route": "Rutas",
-    "bus-stops": "Paradas",
-    "title-profile": "Perfil"
+    "bus-stops": "Paradas"
   },
   "comments_modal": {
     "title": "¿Tienes algún inconveniente?",
@@ -435,7 +378,6 @@
       "upload": "Subir nuevo logo",
       "email": "Correo electrónico",
       "email_placeholder": "Ingrese el correo",
-      "website": "Página web",
       "web_placeholder": "Ingrese la página web"
     },
     "error": "Por favor completa al menos un campo antes de actualizar",
@@ -458,11 +400,7 @@
     "blue": "Azul",
     "green": "Verde",
     "red": "Rojo",
-    "yellow": "Amarillo",
-    "buttons": {
-      "cancel": "Cancelar",
-      "apply": "Aplicar"
-    }
+    "yellow": "Amarillo"
   },
   "language": {
     "title": "Seleccionar idioma",
@@ -513,7 +451,6 @@
   "common": {
     "cancel": "Cancelar",
     "delete": "Eliminar",
-    "save": "Guardar",
     "confirm": "Confirmar",
     "close": "Cerrar",
     "accept": "Aceptar"
@@ -878,19 +815,16 @@
   },
   "assign_record": {
     "route": {
-      "title": "Asignar bus a la ruta",
       "bus": "Bus",
       "selectBus": "Selecciona un bus"
     },
     "student": {
-      "title": "Asignar estudiante a la ruta",
       "route": "Ruta",
       "stop": "Parada de embarque",
       "selectRoute": "Selecciona una ruta",
       "selectStop": "Selecciona una parada"
     },
     "bus": {
-      "title": "Asignar conductor al bus",
       "driver": "Conductor",
       "currentDriver": "Conductor actual",
       "selectDriver": "Selecciona un conductor"
@@ -938,7 +872,10 @@
       "school": "Escuela",
       "password": "Contraseña",
       "id": "C.C"
-    }
+    },
+    "logout": "Cerrar sesión",
+    "logout_title": "¿Cerrar sesión?",
+    "logout_text": "Tendrás que iniciar sesión de nuevo para volver a entrar."
   },
   "forgot_password": {
     "title": "Recupera tu acceso",
@@ -965,8 +902,6 @@
       "button": "Validar",
       "return": "Volver",
       "step_text": "2 de 3",
-      "sent_to": "Código enviado a",
-      "valid": "Válido por 10 minutos.",
       "error": "*Ingresa los 6 dígitos del código",
       "digit_label": "Dígito {{number}} del código",
       "errors": {
@@ -991,24 +926,12 @@
         "required": "*Este campo es requerido",
         "minlength": "*Mínimo 8 caracteres",
         "pattern": "*Debe tener mayúsculas, minúsculas, números y caracteres especiales (. - _ @ *)",
-        "no_match": "*Las contraseñas no son iguales"
+        "no_match": "*Las contraseñas no son iguales",
+        "expired": "El enlace de recuperación expiró o ya fue usado. Solicita un nuevo código.",
+        "rate_limited": "Se alcanzó el límite de intentos. Solicita un nuevo código más tarde.",
+        "failed": "No se pudo actualizar la contraseña. Inténtalo de nuevo."
       }
-    },
-    "links_product": [
-      "Funcionalidades",
-      "Cómo funciona",
-      "Contáctanos"
-    ],
-    "links_company": [
-      "Nosotros",
-      "Blog",
-      "Contacto"
-    ],
-    "links_legal": [
-      "Privacidad",
-      "Términos"
-    ],
-    "rights": "© 2026 Guardian Escolar · Todos los derechos reservados"
+    }
   },
   "right_index": {
     "brand": "Guardian Escolar",

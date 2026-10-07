@@ -204,6 +204,14 @@
     "school": "Escuela"
   },
 
+  "reminder": {
+    "title": "Recordatorio de ruta",
+    "message": "Tu ruta {{name}} inicia a las {{time}}",
+    "messageNoName": "Tu ruta inicia a las {{time}}",
+    "am": "a. m.",
+    "pm": "p. m."
+  },
+
   "bottom": {
     "route": "Ruta",
     "location": "Ubicación",

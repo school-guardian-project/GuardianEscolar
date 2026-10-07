@@ -28,6 +28,11 @@ export async function registerForPushNotificationsAsync() {
     const projectId =
       Constants?.expoConfig?.extra?.eas?.projectId ?? Constants?.easConfig?.projectId;
 
+    if (!projectId) {
+      // Sin proyecto EAS no se puede obtener el token push; se omite el registro.
+      return null;
+    }
+
     const token = (await Notifications.getExpoPushTokenAsync({ projectId })).data;
 
     const session = await getSession();

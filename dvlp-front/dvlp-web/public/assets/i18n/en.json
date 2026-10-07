@@ -92,7 +92,7 @@
     "info_subtitle": "Multiple channels available.",
     "email": {
       "title": "Email",
-      "value": "guardianescolar0@gmail.com",
+      "value": "sch00l.guard4n@gmail.com",
       "subtitle": "Response within 2 hours",
       "button": "Send email"
     },
@@ -166,7 +166,7 @@
       "label": "Current phone",
       "error_pattern": "*Must be a valid phone number.",
       "error_required": "*Phone is required.",
-      "help_text": "Enter the current phone of your account with country code, e.g. +573001234567."
+      "help_text": "Enter the current phone of your account, e.g. 3001234567. The +57 prefix is added automatically."
     },
     "code_first": {
       "title": "Verify code",
@@ -186,9 +186,9 @@
       "returnStep": "Back",
       "stepText": "3 of 4",
       "label": "New phone",
-      "error_pattern": "*Use international format, e.g. +573001234567.",
+      "error_pattern": "*Enter a valid number, e.g. 3001234567.",
       "error_required": "*Phone is required.",
-      "help_text": "You will receive an SMS with a code at this number (+country code and number)."
+      "help_text": "You will receive an SMS with a code at this number (the +57 prefix is added automatically)."
     },
     "code_second": {
       "title": "Confirm code",
@@ -203,8 +203,8 @@
       "confirmationDescription": "Your phone number has been updated successfully."
     },
     "errors": {
-      "invalid_phone": "The number is invalid or the request expired. Use the format +573001234567 or restart the process.",
-      "sms_unavailable": "We could not send the SMS right now. Please try again later."
+      "invalid_phone": "The phone number is invalid. Enter it, for example 3001234567.",
+      "sms_unavailable": "We couldn't send the SMS. Check the number or try again later."
     }
   },
   "change_email": {
@@ -892,6 +892,15 @@
     "return": "Back to sign in",
     "step_text": "1 of 3",
     "hint": "You will receive a 6-digit code",
+    "errors": {
+      "email_too_long": "*Email cannot exceed 100 characters.",
+      "invalid_email": "The email address is invalid. Check that it is entered correctly.",
+      "request_failed": "We couldn't complete the request. Check your connection and try again later.",
+      "rate_limited": "You've reached the request limit. Wait a few minutes before trying again.",
+      "account_not_found": "We couldn't find an account with that email, so no code was sent.",
+      "phone_mismatch": "The phone doesn't match the one registered on your account, so no SMS was sent.",
+      "delivery_failed": "We couldn't send the code (the email or SMS service failed). Please try again later."
+    },
     "reset": {
       "title": "Create a secure password",
       "session_description": "Keep the security recommendations in mind.",
@@ -955,5 +964,9 @@
     "text": "Letters and spaces only",
     "birthDate": "Date cannot be in the future or more than 100 years ago",
     "futureDate": "Date must be in the future"
+  },
+  "resend_code": {
+    "button": "Request a new code",
+    "wait": "Request a new code in {{seconds}} s"
   }
 }

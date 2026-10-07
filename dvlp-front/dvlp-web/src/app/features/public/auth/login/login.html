@@ -1,4 +1,4 @@
-<div class="layout">
+﻿<div class="layout">
   <app-nav-component></app-nav-component>
 
   <main>
@@ -47,7 +47,7 @@
 
           <!-- Password -->
           <label for="password">{{ 'login.right.password.label' | translate }}</label>
-          <input
+          <input appPasswordToggle
             type="password"
             id="password"
             [placeholder]="'login.right.password.placeholder' | translate"

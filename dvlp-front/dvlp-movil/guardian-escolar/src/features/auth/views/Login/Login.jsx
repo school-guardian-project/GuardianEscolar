@@ -56,8 +56,12 @@ export default function Login({ navigation }) {
       applyAuthRole();
       navigation.navigate("MainPage");
       registerForPushNotificationsAsync();
-    } catch {
-      setFormError(t("login.error"));
+    } catch (error) {
+      setFormError(
+        error?.status === 401 || error?.status === 400 || error?.status === 403
+          ? t("login.error")
+          : t("login.networkError")
+      );
     } finally {
       setSubmitting(false);
     }

@@ -19,14 +19,13 @@
 
   <form action="" [formGroup]="form">
     <div class="input-pin">
-      <div class="pin-inputs">
+      <div class="pin-inputs" [appPinGroup]="pinControls">
         <input
           class="pin-input"
           *ngFor="let ctrl of pinControls.controls; let i = index"
           [formControl]="ctrl"
           maxlength="1"
           (input)="onInput($event, i)"
-          (paste)="onPaste($event, i)"
           inputmode="numeric"
           autocomplete="one-time-code"
         />
@@ -39,6 +38,7 @@
       }
     </div>
   </form>
+  <app-resend-code [action]="resendAction" />
 </app-change-information>
 
 @if (showConfirmation) {

@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next";
 import PasswordScreen from "@components/account/screens/PasswordScreen";
 import { useNavigation } from "@react-navigation/native";
 import { resetToSection } from "@core/navigation/navigationHelper";
+import { resetPassword } from "@core/services/forgotInformationService";
 
 export default function ChangePasswordForm() {
     const navigation = useNavigation();
@@ -17,6 +18,7 @@ export default function ChangePasswordForm() {
             description={t("newPassword.description")}
             buttonText={t("button.restore")}
             nextScreen="Security"
+             onSubmit={resetPassword}
              onSuccess={() => resetToSection(navigation, "Security")}
         />
 

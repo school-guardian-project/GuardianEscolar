@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
+import { PasswordToggleDirective } from '@shared/directives/password-toggle.directive';
 import { NavComponent } from '@shared/components/navbar/nav-component/nav-component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
@@ -11,7 +12,7 @@ import { AuthService } from '@core/services/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [NavComponent, MatIconModule, MatButtonModule, MatToolbarModule, FormsModule, ReactiveFormsModule, TranslateModule],
+  imports: [PasswordToggleDirective, NavComponent, MatIconModule, MatButtonModule, MatToolbarModule, FormsModule, ReactiveFormsModule, TranslateModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

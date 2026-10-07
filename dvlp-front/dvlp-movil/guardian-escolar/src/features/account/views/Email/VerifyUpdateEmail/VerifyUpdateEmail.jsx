@@ -2,6 +2,10 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import VerifyScreen from "@components/account/screens/VerifyScreen";
+import {
+    resendCurrentEmailCode,
+    verifyCurrentEmailCode,
+} from "@core/services/forgotInformationService";
 
 export default function VerifyUpdateEmail() {
 
@@ -10,12 +14,14 @@ export default function VerifyUpdateEmail() {
     return (
 
         <VerifyScreen
-            backLabel={t("updateEmail.title")}
+            backLabel={t("account.updateEmail.title")}
             title={t("account.updateEmail.title")}
             description={t("account.verifyEmail.description")}
             buttonText={t("button.verifyCode")}
             resendText={t("verifyCode.transferCode")}
             nextScreen="NewEmail"
+            onSubmit={verifyCurrentEmailCode}
+            onResend={resendCurrentEmailCode}
         />
 
     );

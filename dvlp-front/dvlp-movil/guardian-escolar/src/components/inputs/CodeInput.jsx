@@ -1,78 +1,85 @@
 import React, { useRef, useState } from "react";
-import { View, TextInput, StyleSheet } from "react-native";
+import { View, Text, TextInput, Pressable, StyleSheet } from "react-native";
 import { useTheme } from "@core/services/ThemeService";
 
-export default function CodeInput() {
+export default function CodeInput({ value = "", onChangeText = () => {}, length = 6 }) {
   const { theme } = useTheme();
+  const inputRef = useRef(null);
+  const [focused, setFocused] = useState(false);
 
-  const [code, setCode] = useState(["", "", "", "", "", ""]);
-  const inputs = useRef([]);
-
-  const handleChange = (text, index) => {
-    if (!/^\d?$/.test(text)) return;
-
-    const newCode = [...code];
-    newCode[index] = text;
-    setCode(newCode);
-
-    // Pasar al siguiente input
-    if (text && index < 5) {
-      inputs.current[index + 1]?.focus();
-    }
+  const handleChange = (text) => {
+    onChangeText(text.replace(/\D/g, "").slice(0, length));
   };
 
-  const handleKeyPress = ({ nativeEvent }, index) => {
-    // Si está vacío y presiona borrar, vuelve atrás
-    if (
-      nativeEvent.key === "Backspace" &&
-      code[index] === "" &&
-      index > 0
-    ) {
-      inputs.current[index - 1]?.focus();
-    }
-  };
+  const activeIndex = Math.min(value.length, length - 1);
 
   return (
-    <View style={styles.container}>
-      {code.map((digit, index) => (
-        <TextInput
+    <Pressable style={styles.container} onPress={() => inputRef.current?.focus()}>
+      <View style={styles.row} pointerEvents="none">
+      {Array.from({ length }, (_, index) => (
+        <View
           key={index}
-          ref={(ref) => (inputs.current[index] = ref)}
-          value={digit}
-          maxLength={1}
-          keyboardType="number-pad"
-          onChangeText={(text) => handleChange(text, index)}
-          onKeyPress={(e) => handleKeyPress(e, index)}
           style={[
-            styles.input,
+            styles.box,
             {
               backgroundColor: theme.cardSecondaryBg,
-              borderColor: theme.borderColor,
-              color: theme.textColor,
+              borderColor: focused && index === activeIndex ? theme.buttonApply : theme.borderColor,
             },
           ]}
-        />
+        >
+          <Text style={[styles.digit, { color: theme.textColor }]}>{value[index] ?? ""}</Text>
+        </View>
       ))}
-    </View>
+      </View>
+      <TextInput
+        ref={inputRef}
+        value={value}
+        onChangeText={handleChange}
+        onFocus={() => setFocused(true)}
+        onBlur={() => setFocused(false)}
+        maxLength={length}
+        keyboardType="number-pad"
+        textContentType="oneTimeCode"
+        autoComplete="sms-otp"
+        caretHidden
+        contextMenuHidden={false}
+        style={styles.hiddenInput}
+      />
+    </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
+    width: "100%",
+    marginBottom: 20,
+  },
+  row: {
     flexDirection: "row",
     justifyContent: "center",
     gap: 6,
-    width: "100%",
   },
-
-  input: {
+  box: {
     flex: 1,
+    flexBasis: 0,
+    minWidth: 0,
     maxWidth: 45,
     height: 50,
+    overflow: "hidden",
     borderWidth: 1,
     borderRadius: 10,
-    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  digit: {
     fontSize: 20,
-    marginBottom: 20,
+    textAlign: "center",
+    includeFontPadding: false,
+  },
+  hiddenInput: {
+    ...StyleSheet.absoluteFillObject,
+    opacity: 0.02,
+    color: "transparent",
+    textAlign: "center",
   },
 });

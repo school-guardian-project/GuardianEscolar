@@ -140,7 +140,7 @@ export default function MainPage() {
           }
         } else if (role === "driver") {
           // Conductor: el backend valida el horario. Solo si la ruta esta
-          // Solo se muestran paradas cuando la ruta esta ACTIVA.
+
           try {
             const today = await getRouteApi(
               `/routes/today?driverId=${session.profileId}`

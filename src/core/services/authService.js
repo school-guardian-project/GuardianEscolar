@@ -14,7 +14,17 @@ let accessToken = null;
 let session = null;
 
 async function request(path, options = {}) {
-  const response = await fetch(`${API_URL}/api/v1/auth${path}`, options);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 15000);
+  let response;
+  try {
+    response = await fetch(`${API_URL}/api/v1/auth${path}`, {
+      ...options,
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timer);
+  }
 
   if (!response.ok) {
     const error = new Error(`auth request failed: ${response.status}`);

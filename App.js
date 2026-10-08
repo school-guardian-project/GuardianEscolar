@@ -8,7 +8,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ThemeProvider } from "@core/services/ThemeService";
 import { loadLanguage } from "@core/i18n/i18n";
 import { clearSession, hasSession, refresh } from "@core/services/authService";
-import { registerForPushNotificationsAsync } from "@core/services/pushNotifications";
 
 // Iniciar Sesión
 import Login from "@features/auth/views/Login/Login";
@@ -114,7 +113,6 @@ export default function App() {
         if (await hasSession()) {
           await refresh();
           setInitialRoute("MainPage");
-          registerForPushNotificationsAsync();
         }
       } catch {
         await clearSession();

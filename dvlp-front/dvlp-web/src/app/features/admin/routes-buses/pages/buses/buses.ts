@@ -259,6 +259,7 @@ export class Buses implements OnInit {
   showAssignModal = false;
 
   showAssignDetails(bus: RecordData): void {
+    this.showModal = false;
     this.busSelected = bus;
     this.showAssignModal = true;
   }

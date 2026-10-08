@@ -11,12 +11,10 @@
     <app-card-list type="bus" 
     [data]="buses"
     [remoteSearch]="true"
-    [showAssign]="true"
     (search)="onSearch($event)"
     (viewItem)="showDetails($event)" 
     (editItem)="showUpdateDetails($event)"
-    (deleteItem)="showDelete($event)"
-    (assignItem)="showAssignDetails($event)">
+    (deleteItem)="showDelete($event)">
     </app-card-list>
   </div>
 </div>
@@ -26,6 +24,8 @@
   *ngIf="showModal"
   type="bus"
   [record]="busSelected"
+  [canAssign]="true"
+  (assign)="showAssignDetails($event)"
   (closed)="closeModal()">
 </app-record-information>
 

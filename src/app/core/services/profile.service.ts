@@ -14,6 +14,8 @@ export interface UserProfileDto {
   schoolId?: string | null;
   schoolName?: string | null;
   cityName?: string | null;
+  name?: string | null;
+  lastName?: string | null;
 }
 
 @Injectable({ providedIn: 'root' })

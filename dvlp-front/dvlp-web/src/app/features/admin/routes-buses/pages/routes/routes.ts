@@ -13,6 +13,7 @@ import { UpdateRecord } from '@shared/components/modal/update-record/update-reco
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
 import { AssignRecord } from '@shared/components/modal/assign-record/assign-record';
 import { RoutesService } from '@core/services/routes.service';
+import { BusesService } from '@core/services/buses.service';
 import { RouteListDto, RouteRequestDto } from '@core/models/route.model';
 
 interface RouteView extends RecordData {
@@ -55,8 +56,16 @@ function fromApi(api: RouteListDto): RouteView {
 })
 export class RoutesPage implements OnInit {
   private routesService = inject(RoutesService);
+  private busesService = inject(BusesService);
 
   routes: RouteView[] = [];
+
+  /**
+   * Opciones de los selects de `card-register`/`update-record` (`bus` y
+   * `routeSector`). No existe catalogo de sectores en el backend: se derivan de
+   * los `targetSector` distintos de las rutas ya registradas.
+   */
+  fieldOptions: Record<string, string[]> = {};
 
   showModal = false;
   showUpdateModal = false;
@@ -64,11 +73,29 @@ export class RoutesPage implements OnInit {
 
   ngOnInit(): void {
     this.load();
+    this.loadBusOptions();
   }
 
   private load(): void {
     this.routesService.list().subscribe({
-      next: (list) => (this.routes = list.map(fromApi)),
+      next: (list) => {
+        this.routes = list.map(fromApi);
+        this.fieldOptions = {
+          ...this.fieldOptions,
+          routeSector: [...new Set(list.map((r) => r.targetSector ?? '').filter(Boolean))],
+        };
+      },
+    });
+  }
+
+  private loadBusOptions(): void {
+    this.busesService.list().subscribe({
+      next: (buses) => {
+        this.fieldOptions = {
+          ...this.fieldOptions,
+          bus: buses.map((b) => b.plate ?? '').filter(Boolean),
+        };
+      },
     });
   }
 

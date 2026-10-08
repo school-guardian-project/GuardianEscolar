@@ -3,7 +3,7 @@
 <div class="page-wrapper">
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
-    <app-card-register type="route"></app-card-register>
+    <app-card-register type="route" [fieldOptions]="fieldOptions"></app-card-register>
     <app-card-list type="route"
     [data]="routes"
     [remoteSearch]="true"
@@ -29,6 +29,7 @@
   *ngIf="showUpdateModal"
   type="route"
   [record]="routeSelected"
+  [fieldOptions]="fieldOptions"
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()">
 </app-update-record>

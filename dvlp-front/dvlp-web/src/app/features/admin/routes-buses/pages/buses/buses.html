@@ -33,6 +33,7 @@
   *ngIf="showUpdateModal"
   type="bus"
   [record]="busSelected"
+  [fieldOptions]="fieldOptions"
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()">
 </app-update-record>

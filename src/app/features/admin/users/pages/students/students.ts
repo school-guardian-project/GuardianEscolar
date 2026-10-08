@@ -305,6 +305,7 @@ export class Students implements OnInit {
   showAssignModal = false;
 
   showAssign(student: RecordData): void {
+    this.showModal = false;
     this.studentSelected = student;
     this.showAssignModal = true;
   }

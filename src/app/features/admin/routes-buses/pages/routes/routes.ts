@@ -141,6 +141,7 @@ export class RoutesPage implements OnInit {
   showAssignModal = false;
 
   showAssignDetails(route: RecordData): void {
+    this.showModal = false;
     this.routeSelected = route;
     this.showAssignModal = true;
   }

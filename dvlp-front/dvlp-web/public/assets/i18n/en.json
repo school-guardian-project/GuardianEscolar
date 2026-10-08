@@ -851,6 +851,9 @@
   },
   "admin_profile": {
     "title": "Administrator information",
+    "loading": "Loading your information...",
+    "load_failed": "We could not load all your information. Please try again.",
+    "retry": "Retry",
     "user": {
       "name": "Administrator name",
       "role": "Administrator",

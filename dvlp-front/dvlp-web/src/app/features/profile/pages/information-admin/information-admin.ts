@@ -13,6 +13,8 @@ import { AuthService, ROLES } from '@core/services/auth.service';
 import { ProfileService, UserProfileDto } from '@core/services/profile.service';
 import { AdminsService } from '@features/superadmin/admins/services/admins.service';
 import { AdminResponseDto } from '@features/superadmin/admins/models/admin.model';
+import { ProfileService, UserProfileDto } from '@core/services/profile.service';
+import { finalize, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-information-admin',
@@ -64,7 +66,7 @@ export class InformationAdmin implements OnInit {
   }
 
   get name(): string {
-    return `${this.user?.name ?? ''} ${this.user?.lastName ?? ''}`.trim();
+    return `${this.user?.name ?? this.profile?.name ?? ''} ${this.user?.lastName ?? this.profile?.lastName ?? ''}`.trim();
   }
 
   get roleKey(): string {
@@ -78,7 +80,7 @@ export class InformationAdmin implements OnInit {
   }
 
   get email(): string {
-    return this.user?.email ?? this.authService.session.email ?? '';
+    return this.user?.email ?? this.profile?.email ?? this.authService.session.email ?? '';
   }
 
   get phone(): string {

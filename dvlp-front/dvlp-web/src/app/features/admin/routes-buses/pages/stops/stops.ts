@@ -16,6 +16,7 @@ import { StopsService } from '@core/services/stops.service';
 import { CitiesService } from '@core/services/cities.service';
 import { SchoolsService } from '@core/services/schools.service';
 import { RoutesService } from '@core/services/routes.service';
+import { StudentsService } from '@core/services/students.service';
 import { StopListDto, StopRequestDto } from '@core/models/stop.model';
 
 interface StopView extends RecordData {
@@ -54,6 +55,7 @@ export class Stops implements OnInit {
   private citiesService = inject(CitiesService);
   private schoolsService = inject(SchoolsService);
   private routesService = inject(RoutesService);
+  private studentsService = inject(StudentsService);
 
   @ViewChild(CardRegister) register?: CardRegister;
 
@@ -76,8 +78,9 @@ export class Stops implements OnInit {
       cities: this.citiesService.list(),
       schools: this.schoolsService.list(),
       routes: this.routesService.list(),
+      students: this.studentsService.list(),
     }).subscribe({
-      next: ({ cities, schools, routes }) => {
+      next: ({ cities, schools, routes, students }) => {
         this.cityIdByLabel = Object.fromEntries(cities.map((city) => [city.name, city.id]));
         this.schoolIdByLabel = Object.fromEntries(schools.map((school) => [school.name, school.id]));
         this.routeIdByLabel = Object.fromEntries(routes.map((route) => [route.name, route.id]));
@@ -88,6 +91,9 @@ export class Stops implements OnInit {
           city: Object.keys(this.cityIdByLabel),
           school: Object.keys(this.schoolIdByLabel),
           route: Object.keys(this.routeIdByLabel),
+          student: students
+            .map((s) => `${s.name ?? ''} ${s.lastName ?? ''}`.trim())
+            .filter(Boolean),
         };
 
         this.load();

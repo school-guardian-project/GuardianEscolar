@@ -4,6 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "expo start",
+    "start:lan": "REACT_NATIVE_PACKAGER_HOSTNAME=10.3.234.227 expo start --lan --go --scheme exp --port 8082",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"
@@ -18,9 +19,9 @@
     "expo": "~57.0.27",
     "expo-camera": "~57.0.6",
     "expo-constants": "~57.0.20",
+    "expo-dev-client": "~57.0.19",
     "expo-font": "~57.0.4",
     "expo-location": "~57.0.20",
-    "expo-notifications": "~57.0.22",
     "expo-secure-store": "~57.0.4",
     "expo-status-bar": "~57.0.1",
     "i18next": "^26.3.6",

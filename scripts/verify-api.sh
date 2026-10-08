@@ -32,7 +32,7 @@ echo " Verificacion de rutas frontend -> Kong -> microservicios"
 echo " API: $API"
 echo "=============================================================="
 
-ADMIN=$(login admin@school-guardian.com 'Demo2026!')
+ADMIN=$(login admin@school-guardian.com 99000000001)
 STUDENT=$(login student@school-guardian.com 99000000004)
 DRIVER=$(login driver@school-guardian.com 99000000002)
 PARENT=$(login parent@school-guardian.com 99000000003)
@@ -40,7 +40,7 @@ PARENT=$(login parent@school-guardian.com 99000000003)
 echo
 echo "-- ms-iam (sin token / con token) --"
 code "login sin credenciales validas"   POST "/api/v1/auth/login" "" 401 '{"email":"nadie@school-guardian.com","password":"incorrecta"}'
-code "login admin"                      POST "/api/v1/auth/login" "" 200 '{"email":"admin@school-guardian.com","password":"Demo2026!"}'
+code "login admin"                      POST "/api/v1/auth/login" "" 200 '{"email":"admin@school-guardian.com","password":"99000000001"}'
 code "perfil sin token (debe ser 401)"  GET  "/api/v1/auth/profile" "" 401
 code "perfil con token admin"           GET  "/api/v1/auth/profile" "$ADMIN" 200
 code "perfil con token student"         GET  "/api/v1/auth/profile" "$STUDENT" 200

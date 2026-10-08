@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-manage';
 import { AuthService, ROLES } from '@core/services/auth.service';
+import { ProfileService, UserProfileDto } from '@core/services/profile.service';
 import { AdminsService } from '@features/superadmin/admins/services/admins.service';
 import { AdminResponseDto } from '@features/superadmin/admins/models/admin.model';
 import { ProfileService, UserProfileDto } from '@core/services/profile.service';
@@ -41,8 +42,6 @@ export class InformationAdmin implements OnInit {
 
   user: AdminResponseDto | null = null;
   profile: UserProfileDto | null = null;
-  loading = false;
-  loadFailed = false;
 
   constructor(
     private router: Router,
@@ -52,26 +51,17 @@ export class InformationAdmin implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.loadProfile();
-  }
-
-  loadProfile() {
-    this.loading = true;
-    this.loadFailed = false;
-    this.user = null;
-    this.profile = null;
-    this.profileService.getProfile().pipe(
-      switchMap((profile) => {
-        this.profile = profile;
-        return this.adminsService.get(profile.personId);
-      }),
-      finalize(() => { this.loading = false; }),
-    ).subscribe({
-      next: (user) => {
-        this.user = user;
-        this.loadFailed = !user;
-      },
-      error: () => { this.loadFailed = true; },
+    const { personId, email } = this.authService.session;
+    if (email) {
+      this.user = { email } as AdminResponseDto;
+    }
+    if (personId) {
+      this.adminsService.get(personId).subscribe({
+        next: (user) => (this.user = user ?? this.user),
+      });
+    }
+    this.profileService.getProfile().subscribe({
+      next: (profile) => (this.profile = profile),
     });
   }
 
@@ -111,6 +101,14 @@ export class InformationAdmin implements OnInit {
 
   get school(): string {
     return this.profile?.schoolName ?? '';
+  }
+
+  /**
+   * La contraseña nunca sale del backend (solo su hash bcrypt): aquí se
+   * muestra una máscara fija de puntos, igual que cualquier perfil.
+   */
+  get passwordMask(): string {
+    return '··········';
   }
 
 

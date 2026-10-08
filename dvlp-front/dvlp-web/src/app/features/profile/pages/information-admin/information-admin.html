@@ -5,7 +5,10 @@
 
   <div class="main-container">
 
-    <app-sidebar-admin></app-sidebar-admin>
+    <app-sidebar-superadmin *ngIf="isSuperAdmin; else adminSidebar"></app-sidebar-superadmin>
+    <ng-template #adminSidebar>
+      <app-sidebar-admin></app-sidebar-admin>
+    </ng-template>
 
     <div class="information-container">
       <div class="card">

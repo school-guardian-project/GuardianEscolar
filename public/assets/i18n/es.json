@@ -859,6 +859,9 @@
   },
   "admin_profile": {
     "title": "Información del administrador",
+    "loading": "Cargando tu información...",
+    "load_failed": "No pudimos cargar toda tu información. Inténtalo de nuevo.",
+    "retry": "Reintentar",
     "user": {
       "name": "Nombre del administrador",
       "role": "Administrador",

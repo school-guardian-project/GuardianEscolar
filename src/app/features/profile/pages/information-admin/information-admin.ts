@@ -12,6 +12,8 @@ import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-man
 import { AuthService, ROLES } from '@core/services/auth.service';
 import { AdminsService } from '@features/superadmin/admins/services/admins.service';
 import { AdminResponseDto } from '@features/superadmin/admins/models/admin.model';
+import { ProfileService, UserProfileDto } from '@core/services/profile.service';
+import { finalize, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-information-admin',
@@ -38,27 +40,43 @@ export class InformationAdmin implements OnInit {
   imageUrl: string | ArrayBuffer | null = null;
 
   user: AdminResponseDto | null = null;
+  profile: UserProfileDto | null = null;
+  loading = false;
+  loadFailed = false;
 
   constructor(
     private router: Router,
     private authService: AuthService,
     private adminsService: AdminsService,
+    private profileService: ProfileService,
   ) { }
 
   ngOnInit() {
-    const { personId, email } = this.authService.session;
-    if (email) {
-      this.user = { email } as AdminResponseDto;
-    }
-    if (personId) {
-      this.adminsService.get(personId).subscribe({
-        next: (user) => (this.user = user ?? this.user),
-      });
-    }
+    this.loadProfile();
+  }
+
+  loadProfile() {
+    this.loading = true;
+    this.loadFailed = false;
+    this.user = null;
+    this.profile = null;
+    this.profileService.getProfile().pipe(
+      switchMap((profile) => {
+        this.profile = profile;
+        return this.adminsService.get(profile.personId);
+      }),
+      finalize(() => { this.loading = false; }),
+    ).subscribe({
+      next: (user) => {
+        this.user = user;
+        this.loadFailed = !user;
+      },
+      error: () => { this.loadFailed = true; },
+    });
   }
 
   get name(): string {
-    return `${this.user?.name ?? ''} ${this.user?.lastName ?? ''}`.trim();
+    return `${this.user?.name ?? this.profile?.name ?? ''} ${this.user?.lastName ?? this.profile?.lastName ?? ''}`.trim();
   }
 
   get roleKey(): string {
@@ -72,7 +90,7 @@ export class InformationAdmin implements OnInit {
   }
 
   get email(): string {
-    return this.user?.email ?? this.authService.session.email ?? '';
+    return this.user?.email ?? this.profile?.email ?? this.authService.session.email ?? '';
   }
 
   get phone(): string {
@@ -85,6 +103,14 @@ export class InformationAdmin implements OnInit {
 
   get dateBirth(): string {
     return this.user?.dateBirth?.split('T')[0] ?? '';
+  }
+
+  get city(): string {
+    return this.profile?.cityName ?? '';
+  }
+
+  get school(): string {
+    return this.profile?.schoolName ?? '';
   }
 
 

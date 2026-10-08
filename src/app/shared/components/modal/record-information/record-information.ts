@@ -27,10 +27,21 @@ const RECORD_CONFIG: Record<RegisterType, { icon: string; fields: string[] }> = 
 export class RecordInformation {
   @Input() type: RegisterType = 'student';
   @Input() record: RecordData = {};
+  /**
+   * Muestra el botón «Asignar» en el modal. Solo lo activa la vista que tiene
+   * flujo de asignación (estudiante→ruta/parada, bus→conductor, ruta→bus): el
+   * listado ya no ofrece ese acceso, la acción vive en la vista.
+   */
+  @Input() canAssign = false;
   @Output() closed = new EventEmitter<void>();
+  @Output() assign = new EventEmitter<RecordData>();
 
   close(): void {
     this.closed.emit();
+  }
+
+  assignRecord(): void {
+    this.assign.emit(this.record);
   }
 
   get config() {

@@ -17,10 +17,6 @@ import { getSession } from "@core/services/authService";
 import { getRouteApi } from "@core/services/routeApi";
 import { getFleetApi } from "@core/services/fleetApi";
 import { postNotificationApi } from "@core/services/notificationApi";
-import {
-  scheduleRouteStartReminder,
-  cancelRouteStartReminder,
-} from "@core/services/routeReminder";
 
 import styles from "./MainPage.style";
 
@@ -144,21 +140,15 @@ export default function MainPage() {
           }
         } else if (role === "driver") {
           // Conductor: el backend valida el horario. Solo si la ruta esta
-          // ACTIVA se muestran paradas; si no, se programa el recordatorio
-          // push para la proxima salida y la pantalla queda sin ruta.
+          // Solo se muestran paradas cuando la ruta esta ACTIVA.
           try {
             const today = await getRouteApi(
               `/routes/today?driverId=${session.profileId}`
             );
 
             if (today?.status === "ACTIVE" && today.route) {
-              cancelRouteStartReminder();
               route = today.route;
             } else {
-              await scheduleRouteStartReminder(
-                today?.nextOccurrence,
-                today?.route?.name
-              );
               route = null;
             }
           } catch {

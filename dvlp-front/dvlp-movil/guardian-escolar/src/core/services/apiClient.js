@@ -27,10 +27,18 @@ export async function apiRequestAt(baseUrl, path, options = {}, retry = false, a
     ...options.headers,
   };
 
-  const response = await fetch(`${baseUrl.replace(/\/+$/, "")}${path}`, {
-    ...options,
-    headers,
-  });
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 15000);
+  let response;
+  try {
+    response = await fetch(`${baseUrl.replace(/\/+$/, "")}${path}`, {
+      ...options,
+      headers,
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timer);
+  }
 
   // Si es 401 y tenemos retry, intentar refresh
   if (response.status === 401 && retry) {

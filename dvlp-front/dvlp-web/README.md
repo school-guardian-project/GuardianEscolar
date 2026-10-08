@@ -4,6 +4,12 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 ## Development server
 
+The signed-in profile page first fetches `/api/v1/auth/profile`, then uses its
+`personId` to load personal details from `/user/api/admins/{personId}`.
+City and school come from IAM; contact details come from user management.
+Loading failures are visible and can be retried. User management must run an
+image that maps SQL `BIGINT` phone numbers to .NET `long`.
+
 To start a local development server, run:
 
 ```bash

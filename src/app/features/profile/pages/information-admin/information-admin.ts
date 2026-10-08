@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 import { NgIf } from '@angular/common';
 import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-manage';
 import { AuthService, ROLES } from '@core/services/auth.service';
+import { ProfileService, UserProfileDto } from '@core/services/profile.service';
 import { AdminsService } from '@features/superadmin/admins/services/admins.service';
 import { AdminResponseDto } from '@features/superadmin/admins/models/admin.model';
 
@@ -38,11 +39,13 @@ export class InformationAdmin implements OnInit {
   imageUrl: string | ArrayBuffer | null = null;
 
   user: AdminResponseDto | null = null;
+  profile: UserProfileDto | null = null;
 
   constructor(
     private router: Router,
     private authService: AuthService,
     private adminsService: AdminsService,
+    private profileService: ProfileService,
   ) { }
 
   ngOnInit() {
@@ -55,6 +58,9 @@ export class InformationAdmin implements OnInit {
         next: (user) => (this.user = user ?? this.user),
       });
     }
+    this.profileService.getProfile().subscribe({
+      next: (profile) => (this.profile = profile),
+    });
   }
 
   get name(): string {
@@ -85,6 +91,22 @@ export class InformationAdmin implements OnInit {
 
   get dateBirth(): string {
     return this.user?.dateBirth?.split('T')[0] ?? '';
+  }
+
+  get city(): string {
+    return this.profile?.cityName ?? '';
+  }
+
+  get school(): string {
+    return this.profile?.schoolName ?? '';
+  }
+
+  /**
+   * La contraseña nunca sale del backend (solo su hash bcrypt): aquí se
+   * muestra una máscara fija de puntos, igual que cualquier perfil.
+   */
+  get passwordMask(): string {
+    return '··········';
   }
 
 

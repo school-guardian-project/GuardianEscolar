@@ -324,6 +324,12 @@ export class CardRegister implements OnInit, OnChanges {
     return this.authService.session.schoolId;
   }
 
+  private get automaticCampusId(): string | null {
+    const userForm = this.type === 'student' || this.type === 'guardian' || this.type === 'driver';
+    return userForm && this.sourceLoaded.has('campus') && !this.optionsLoadError['campus']
+      && this.campusOptions.length === 1 ? this.campusOptions[0].id : null;
+  }
+
   ngOnInit(): void {
     this.groupedFields = this.buildGroupedFields();
     for (const field of FIELDS[this.type]) {
@@ -370,6 +376,7 @@ export class CardRegister implements OnInit, OnChanges {
       this.campusOptions = [];
       this.optionsLoadError['campus'] = false;
       this.sourceLoaded.add('campus');
+      this.groupedFields = this.buildGroupedFields();
       return;
     }
     this.campusesService.listBySchool(schoolId).subscribe({
@@ -377,11 +384,19 @@ export class CardRegister implements OnInit, OnChanges {
         this.campusOptions = campuses;
         this.optionsLoadError['campus'] = false;
         this.sourceLoaded.add('campus');
+        if (this.automaticCampusId) {
+          this.formData['campus'] = this.automaticCampusId;
+          delete this.fieldErrors['campus'];
+        } else if (!campuses.some(campus => campus.id === this.formData['campus'])) {
+          this.formData['campus'] = '';
+        }
+        this.groupedFields = this.buildGroupedFields();
       },
       error: (err) => {
         console.error('Error loading campuses:', err);
         this.optionsLoadError['campus'] = true;
         this.sourceLoaded.add('campus');
+        this.groupedFields = this.buildGroupedFields();
       }
     });
   }
@@ -628,7 +643,7 @@ export class CardRegister implements OnInit, OnChanges {
     // `fieldOptions` se resuelve dentro de `getOptions`, asi que aqui no se
     // copia a `field.options`: un copiado se quedaría congelado al primer render
     // y la página que lo llena después quedaría sin efecto.
-    const list = FIELDS[this.type];
+    const list = FIELDS[this.type].filter(field => field.name !== 'campus' || !this.automaticCampusId);
     let i = 0;
     const result: any[] = [];
     while (i < list.length) {
@@ -702,7 +717,6 @@ export class CardRegister implements OnInit, OnChanges {
   }
 
   removeCampusName(index: number): void {
-    if (this.campuses.length === 1) return;
     this.campuses = this.campuses.filter((_, i) => i !== index);
     if (this.campusMapOpenIndex === index) this.campusMapOpenIndex = null;
     else if (this.campusMapOpenIndex !== null && this.campusMapOpenIndex > index) this.campusMapOpenIndex--;
@@ -795,5 +809,6 @@ export class CardRegister implements OnInit, OnChanges {
     for (const field of FIELDS[this.type]) {
       this.formData[field.name] = '';
     }
+    if (this.automaticCampusId) this.formData['campus'] = this.automaticCampusId;
   }
 }

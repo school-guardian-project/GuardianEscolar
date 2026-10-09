@@ -759,7 +759,9 @@
     "bus": {
       "title": "Enregistrer le bus",
       "fields": {
+        "campus": "Site",
         "plate": "Plaque d'immatriculation",
+        "matricula": "Plaque d'immatriculation",
         "driver": "Conducteur",
         "model": "Modèle",
         "brand": "Marque",

@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnInit, OnDestroy, OnChanges, SimpleChanges } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -103,7 +103,7 @@ const ITEM_FIELDS: Record<CardType, ItemField[]> = {
   templateUrl: './card-list.html',
   styleUrl: './card-list.css',
 })
-export class CardList implements OnInit, OnDestroy {
+export class CardList implements OnInit, OnDestroy, OnChanges {
   @Input() type: CardType = 'student';
   /** Datos externos; si es null la lista queda vacía. */
   @Input() data: any[] | null = null;
@@ -115,9 +115,55 @@ export class CardList implements OnInit, OnDestroy {
   @Output() search = new EventEmitter<string>();
 
   searchText = '';
+  readonly pageSize = 10;
+  currentPage = 1;
+  totalRecords = 0;
   searchSubject = new Subject<string>();
 
   private searchSubscription?: Subscription;
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['data']) {
+      if (!this.searchText.trim()) this.totalRecords = this.items.length;
+      this.currentPage = Math.min(this.currentPage, this.totalPages);
+    }
+    if (changes['type']) this.currentPage = 1;
+  }
+
+  onSearchChange(term: string): void {
+    this.searchText = term;
+    this.currentPage = 1;
+    this.searchSubject.next(term);
+  }
+
+  get totalPages(): number {
+    return Math.max(1, Math.ceil(this.filteredItems.length / this.pageSize));
+  }
+
+  get pagedItems(): any[] {
+    const start = (this.currentPage - 1) * this.pageSize;
+    return this.filteredItems.slice(start, start + this.pageSize);
+  }
+
+  get firstRecord(): number {
+    return this.filteredItems.length ? (this.currentPage - 1) * this.pageSize + 1 : 0;
+  }
+
+  get lastRecord(): number {
+    return Math.min(this.currentPage * this.pageSize, this.filteredItems.length);
+  }
+
+  get pageNumbers(): number[] {
+    const pages = new Set([1, this.totalPages]);
+    for (let page = Math.max(1, this.currentPage - 1); page <= Math.min(this.totalPages, this.currentPage + 1); page++) {
+      pages.add(page);
+    }
+    return [...pages].sort((a, b) => a - b);
+  }
+
+  goToPage(page: number): void {
+    if (Number.isInteger(page) && page >= 1 && page <= this.totalPages) this.currentPage = page;
+  }
 
   ngOnInit(): void {
     this.searchSubscription = this.searchSubject

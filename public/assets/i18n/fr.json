@@ -864,6 +864,15 @@
     "genericError": "L'action n'a pas pu être effectuée. Vérifiez que le serveur est disponible."
   },
   "card_list": {
+    "pagination": {
+      "navigation": "Pagination des enregistrements",
+      "top": "haut",
+      "bottom": "bas",
+      "previous": "Page précédente",
+      "next": "Page suivante",
+      "goTo": "Aller à la page {{page}}",
+      "summary": "{{first}}–{{last}} sur {{total}} · Page {{page}} sur {{pages}}"
+    },
     "student": "Élèves enregistrés",
     "guardian": "Responsables enregistrés",
     "driver": "Conducteurs enregistrés",

@@ -73,6 +73,76 @@
   align-items: start;
 }
 
+.modal_form-label-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal_map-btn {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 32px;
+  padding: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-color);
+  color: var(--color-navbar);
+  cursor: pointer;
+}
+
+.modal_map-btn mat-icon {
+  width: 20px;
+  height: 20px;
+  font-size: 20px;
+}
+
+.modal__campuses {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal__campuses h3 {
+  margin: 0;
+  color: var(--modal-title);
+  font-size: 0.95rem;
+}
+
+.modal__campus {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+
+.modal__add-campus {
+  align-self: flex-start;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-color);
+  color: var(--title-color);
+  cursor: pointer;
+}
+
+.modal__loading {
+  padding: 24px 0;
+  color: var(--modal-text);
+  text-align: center;
+}
+
+.modal_btn:disabled {
+  opacity: 0.65;
+  cursor: wait;
+}
+
 .modal_form-label {
   font-size: 0.82rem;
   font-weight: 600;

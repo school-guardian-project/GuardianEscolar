@@ -9,6 +9,7 @@ import { CitiesService } from '@core/services/cities.service';
 import { SchoolsService } from '@core/services/schools.service';
 import { VehicleTypesService } from '@core/services/vehicle-types.service';
 import { AuthService } from '@core/services/auth.service';
+import { MatIconModule } from '@angular/material/icon';
 
 /** Opción de select: el id va al backend, el texto se muestra. */
 export interface SelectOption {
@@ -44,6 +45,12 @@ export interface Field {
   options?: string[];
   optionsSource?: OptionsSource;
   halfWidth?: boolean;
+}
+
+interface SchoolOption {
+  id: string;
+  name: string;
+  cityId?: string;
 }
 
 const FIELDS: Record<RegisterType, Field[]> = {
@@ -135,6 +142,7 @@ const FIELDS: Record<RegisterType, Field[]> = {
     // El colegio y no la sede: un admin opera un colegio completo y su relación
     // vive en School.SchoolAdmin. Ponerle sede aca haría que su token llegara
     // con campusId en vez de schoolId y no pudiera ver nada de su colegio.
+    { name: 'city', type: 'select', optionsSource: 'city' },
     { name: 'school', type: 'select', optionsSource: 'school' },
     { name: 'email', type: 'email' },
     { name: 'identification', type: 'text' },
@@ -212,7 +220,7 @@ const VALIDATION_SCHEMAS: Record<RegisterType, ValidationSchema> = {
     student: { required: false },
     city: { required: true },
     school: { required: true },
-    address: { required: true, minLength: 5, maxLength: 100 },
+    address: { required: true, minLength: 5, maxLength: 255 },
     route: { required: true },
   },
   route: {
@@ -227,6 +235,7 @@ const VALIDATION_SCHEMAS: Record<RegisterType, ValidationSchema> = {
   admins: {
     name: { required: true, pattern: 'text', minLength: 2 },
     lastNames: { required: true, pattern: 'text', minLength: 2 },
+    city: { required: true },
     school: { required: true },
     email: { required: true, pattern: 'email' },
     identification: { required: true, pattern: 'number', minLength: 5 },
@@ -235,21 +244,21 @@ const VALIDATION_SCHEMAS: Record<RegisterType, ValidationSchema> = {
     address: { required: true, minLength: 5 },
   },
   schools: {
-    name: { required: true, minLength: 2 },
+    name: { required: true, minLength: 2, maxLength: 30 },
     logo: { required: false },
     city: { required: true },
-    address: { required: true, minLength: 5 },
+    address: { required: true, minLength: 5, maxLength: 255 },
     phone: { required: true, pattern: 'phone' },
     schooling: { required: true },
-    email: { required: true, pattern: 'email' },
-    website: { required: false },
+    email: { required: true, pattern: 'email', maxLength: 50 },
+    website: { required: false, pattern: 'url', maxLength: 100 },
   },
 };
 
 @Component({
   selector: 'app-card-register',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule, LocationMap],
+  imports: [CommonModule, FormsModule, TranslateModule, LocationMap, MatIconModule],
   templateUrl: './card-register.html',
   styleUrl: './card-register.css',
 })
@@ -273,9 +282,9 @@ export class CardRegister implements OnInit, OnChanges {
   fieldErrors: Record<string, string> = {};
 
   // Dropdown data
-  campuses: { id: string; name: string }[] = [];
+  campusOptions: { id: string; name: string }[] = [];
   cities: { id: string; name: string }[] = [];
-  schools: { id: string; name: string }[] = [];
+  schools: SchoolOption[] = [];
   brands: { id: number; name: string }[] = [];
   models: { id: number; name: string; brandId: number }[] = [];
   selectedBrandId: number | null = null;
@@ -284,8 +293,11 @@ export class CardRegister implements OnInit, OnChanges {
    * Nombres de las sedes del colegio por registrar. Van como texto plano: no
    * existen todavia, asi que no hay id que elegir. Se envian en `campusNames`.
    */
-  campusNames: string[] = [''];
+  campuses: { name: string; address: string; latitude: number | null; longitude: number | null }[] = [];
   campusNamesError = '';
+  campusValidationVisible = false;
+  schoolMapOpen = false;
+  campusMapOpenIndex: number | null = null;
 
   /** true cuando no se pudieron cargar las opciones de un select. */
   optionsLoadError: Partial<Record<OptionsSource, boolean>> = {};
@@ -355,14 +367,14 @@ export class CardRegister implements OnInit, OnChanges {
       // Sin colegio no hay sedes que mostrar. Es el caso de un superadmin en la
       // pantalla: el campo sigue visible y bloqueado por validacion, que es
       // mejor que un dropdown vacio que parece funcionar mal.
-      this.campuses = [];
+      this.campusOptions = [];
       this.optionsLoadError['campus'] = false;
       this.sourceLoaded.add('campus');
       return;
     }
     this.campusesService.listBySchool(schoolId).subscribe({
       next: (campuses) => {
-        this.campuses = campuses;
+        this.campusOptions = campuses;
         this.optionsLoadError['campus'] = false;
         this.sourceLoaded.add('campus');
       },
@@ -436,11 +448,13 @@ export class CardRegister implements OnInit, OnChanges {
   private getSourceOptions(source: OptionsSource): SelectOption[] {
     switch (source) {
       case 'campus':
-        return this.campuses.map((c) => ({ value: c.id, label: c.name }));
+        return this.campusOptions.map((c) => ({ value: c.id, label: c.name }));
       case 'city':
         return this.cities.map((c) => ({ value: c.id, label: c.name }));
       case 'school':
-        return this.schools.map((s) => ({ value: s.id, label: s.name }));
+        return this.schools
+          .filter((school) => this.type !== 'admins' || !this.formData['city'] || school.cityId === this.formData['city'])
+          .map((school) => ({ value: school.id, label: school.name }));
       case 'brand':
         return this.brands.map((b) => ({ value: String(b.id), label: b.name }));
       case 'model':
@@ -509,16 +523,92 @@ export class CardRegister implements OnInit, OnChanges {
     }
     this.formData[fieldName] = value;
     this.validateField(fieldName);
-    
+    if (this.type === 'schools') this.validationMessage = '';
+
+    if (this.type === 'admins' && fieldName === 'city') {
+      const selectedSchool = this.schools.find((school) => school.id === this.formData['school']);
+      if (selectedSchool && selectedSchool.cityId !== value) this.formData['school'] = '';
+    }
+
     // Handle brand change for bus form
     if (this.type === 'bus' && fieldName === 'brand') {
       this.onBrandChange(Number(value));
     }
   }
 
-  onLocationChange(coordinates: { latitude: number; longitude: number }): void {
+  onInputChange(fieldName: string, value: string): void {
+    this.formData[fieldName] = value;
+    if (this.type === 'schools') {
+      this.validateField(fieldName);
+      this.validationMessage = '';
+    }
+  }
+
+  onLogoSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result !== 'string') {
+        this.validationMessage = this.translate.instant('register.schools.logoReadError');
+        return;
+      }
+
+      const separator = reader.result.indexOf(',');
+      if (separator < 0) {
+        this.validationMessage = this.translate.instant('register.schools.logoReadError');
+        return;
+      }
+
+      this.formData['logo'] = reader.result.slice(separator + 1);
+      this.validationMessage = '';
+    };
+    reader.onerror = () => {
+      this.validationMessage = this.translate.instant('register.schools.logoReadError');
+    };
+    reader.readAsDataURL(file);
+  }
+
+  isRequiredField(fieldName: string): boolean {
+    return !!VALIDATION_SCHEMAS[this.type][fieldName]?.required;
+  }
+
+  onSchoolLocationChange(coordinates: { latitude: number; longitude: number }): void {
     this.formData['latitude'] = coordinates.latitude;
     this.formData['longitude'] = coordinates.longitude;
+  }
+
+  onAddressChange(address: string): void {
+    this.formData['address'] = address;
+    this.validateField('address');
+    if (this.type === 'schools') this.validationMessage = '';
+  }
+
+  onCampusAddressChange(index: number, address: string): void {
+    this.campuses[index].address = address;
+    this.validateCampusesLive();
+  }
+
+  onCampusNameChange(index: number, name: string): void {
+    this.campuses[index].name = name;
+    this.validateCampusesLive();
+  }
+
+  validateCampusesLive(): void {
+    this.campusValidationVisible = true;
+    this.campusNamesError = this.cleanCampuses().error;
+    this.validationMessage = '';
+  }
+
+  onLocationChange(coordinates: { latitude: number; longitude: number }): void {
+    this.onSchoolLocationChange(coordinates);
+  }
+
+  onCampusLocationChange(index: number, coordinates: { latitude: number; longitude: number }): void {
+    this.campuses[index].latitude = coordinates.latitude;
+    this.campuses[index].longitude = coordinates.longitude;
   }
 
   onStudentSelected(): void {
@@ -575,6 +665,7 @@ export class CardRegister implements OnInit, OnChanges {
   private getErrorKey(error: string): string {
     if (error.includes('requerido') || error.includes('required')) return 'required';
     if (error.includes('Correo') || error.includes('email')) return 'email';
+    if (error.includes('URL') || error.includes('url')) return 'url';
     if (error.includes('Teléfono') || error.includes('phone')) return 'phone';
     if (error.includes('Mínimo') || error.includes('Minimum')) return 'minLength';
     if (error.includes('Máximo') || error.includes('Maximum')) return 'maxLength';
@@ -589,7 +680,7 @@ export class CardRegister implements OnInit, OnChanges {
   }
 
   getCampusName(campusId: string): string {
-    const campus = this.campuses.find(c => c.id === campusId);
+    const campus = this.campusOptions.find(c => c.id === campusId);
     return campus ? campus.name : '';
   }
 
@@ -606,14 +697,16 @@ export class CardRegister implements OnInit, OnChanges {
   // --- Sedes del colegio que se esta creando -------------------------------
 
   addCampusName(): void {
-    this.campusNames = [...this.campusNames, ''];
-    this.campusNamesError = '';
+    this.campuses = [...this.campuses, { name: '', address: '', latitude: null, longitude: null }];
+    if (this.campusValidationVisible) this.campusNamesError = this.cleanCampuses().error;
   }
 
   removeCampusName(index: number): void {
-    if (this.campusNames.length === 1) return;
-    this.campusNames = this.campusNames.filter((_, i) => i !== index);
-    this.campusNamesError = '';
+    if (this.campuses.length === 1) return;
+    this.campuses = this.campuses.filter((_, i) => i !== index);
+    if (this.campusMapOpenIndex === index) this.campusMapOpenIndex = null;
+    else if (this.campusMapOpenIndex !== null && this.campusMapOpenIndex > index) this.campusMapOpenIndex--;
+    if (this.campusValidationVisible) this.campusNamesError = this.cleanCampuses().error;
   }
 
   /**
@@ -623,23 +716,27 @@ export class CardRegister implements OnInit, OnChanges {
    * junto al campo y no en un banner generico. El chequeo del backend sigue
    * mandando: el cliente puede ser cualquier cosa.
    */
-  private cleanCampusNames(): { names: string[]; error: string } {
-    const names = this.campusNames.map((n) => n.trim()).filter((n) => n.length > 0);
-
-    if (names.length === 0) {
-      return { names, error: this.translate.instant('register.schools.campusNamesRequired') };
-    }
+  private cleanCampuses(): {
+    campuses: { name: string; address: string; latitude: number | null; longitude: number | null }[];
+    error: string;
+  } {
+    const campuses = this.campuses
+      .map((campus) => ({ ...campus, name: campus.name.trim(), address: campus.address.trim() }))
+      .filter((campus) => campus.name.length > 0 || campus.address.length > 0);
 
     const seen = new Set<string>();
-    for (const name of names) {
-      const key = name.toLowerCase();
+    for (const campus of campuses) {
+      if (!campus.name || campus.name.length > 30 || campus.address.length < 5 || campus.address.length > 255) {
+        return { campuses, error: this.translate.instant('register.schools.campusAddressRequired') };
+      }
+      const key = campus.name.toLowerCase();
       if (seen.has(key)) {
-        return { names, error: this.translate.instant('register.schools.campusNamesDuplicated', { name }) };
+        return { campuses, error: this.translate.instant('register.schools.campusNamesDuplicated', { name: campus.name }) };
       }
       seen.add(key);
     }
 
-    return { names, error: '' };
+    return { campuses, error: '' };
   }
 
   onSubmit(): void {
@@ -658,21 +755,18 @@ export class CardRegister implements OnInit, OnChanges {
       }
     }
 
-    if (Object.keys(this.fieldErrors).length > 0) {
-      this.validationMessage = '';
-      return;
-    }
-
     // Las sedes no son un campo del FIELDS sino un bloque repetible, asi que su
     // validacion vive fuera del bucle de arriba.
     if (this.type === 'schools') {
-      const { names, error } = this.cleanCampusNames();
+      this.campusValidationVisible = true;
+      const { campuses, error } = this.cleanCampuses();
       this.campusNamesError = error;
-      if (error) {
-        this.validationMessage = '';
-        return;
-      }
-      this.formData['campusNames'] = names;
+      if (!error) this.formData['campuses'] = campuses;
+    }
+
+    if (Object.keys(this.fieldErrors).length > 0 || (this.type === 'schools' && this.campusNamesError)) {
+      this.validationMessage = '';
+      return;
     }
 
     this.validationMessage = '';
@@ -693,8 +787,11 @@ export class CardRegister implements OnInit, OnChanges {
     this.selectedStudent = '';
     this.validationMessage = '';
     this.fieldErrors = {};
-    this.campusNames = [''];
+    this.campuses = [];
     this.campusNamesError = '';
+    this.campusValidationVisible = false;
+    this.schoolMapOpen = false;
+    this.campusMapOpenIndex = null;
     for (const field of FIELDS[this.type]) {
       this.formData[field.name] = '';
     }

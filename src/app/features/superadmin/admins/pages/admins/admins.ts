@@ -14,6 +14,11 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
 import { AdminsService } from '../../services/admins.service';
 import { AdminListDto, AdminRequestDto, CreateAdminRequestDto, AdminResponseDto } from '../../models/admin.model';
 import { describeProblem } from '@core/http/problem-detail';
+import { CitiesService } from '@core/services/cities.service';
+import { SchoolsService } from '@core/services/schools.service';
+import { CityListDto } from '@core/models/city.model';
+import { SchoolListDto } from '@core/models/school.model';
+import { forkJoin } from 'rxjs';
 
 interface AdminView extends RecordData {
   id?: string;
@@ -24,6 +29,12 @@ interface AdminView extends RecordData {
   email?: string;
   address?: string;
   birthDate?: string;
+  city?: string;
+  school?: string;
+  cityName?: string;
+  schoolName?: string;
+  cityId?: string | null;
+  schoolId?: string | null;
 }
 
 function fromApi(api: AdminListDto): AdminView {
@@ -34,6 +45,8 @@ function fromApi(api: AdminListDto): AdminView {
     identification: api.identificationNumber ?? '',
     phone: api.phone != null ? String(api.phone) : '',
     email: api.email ?? '',
+    cityId: api.cityId,
+    schoolId: api.schoolId,
   };
 }
 
@@ -43,6 +56,10 @@ function fromDetail(api: AdminResponseDto): AdminView {
     email: api.email ?? '',
     address: api.residenceAddress ?? '',
     birthDate: api.dateBirth ?? '',
+    city: api.cityId ?? '',
+    school: api.schoolId ?? '',
+    cityId: api.cityId,
+    schoolId: api.schoolId,
   };
 }
 
@@ -57,19 +74,16 @@ function toPayload(form: RecordData): AdminRequestDto {
     phone: Number(digits),
     residenceAddress: String(form['address'] ?? '').trim(),
     dateBirth: String(form['birthDate'] ?? '').trim(),
+    cityId: String(form['city'] ?? form['cityId'] ?? '').trim(),
+    schoolId: String(form['school'] ?? form['schoolId'] ?? '').trim(),
   };
 }
 
 /**
- * El alta lleva el colegio que el admin va a administrar (schoolId), y no una
- * sede: su relación vive en School.SchoolAdmin. Solo va en el POST; el PUT usa
- * {@link toPayload}.
+ * La ciudad y el colegio se guardan junto con los datos del administrador.
  */
 function toCreatePayload(form: RecordData): CreateAdminRequestDto {
-  return {
-    ...toPayload(form),
-    schoolId: String(form['school'] ?? '').trim(),
-  };
+  return toPayload(form);
 }
 
 @Component({
@@ -92,13 +106,29 @@ function toCreatePayload(form: RecordData): CreateAdminRequestDto {
 })
 export class Admins implements OnInit {
   private adminsService = inject(AdminsService);
+  private citiesService = inject(CitiesService);
+  private schoolsService = inject(SchoolsService);
 
   @ViewChild(CardRegister) register?: CardRegister;
 
   admins = signal<AdminView[]>([]);
+  cityOptions: CityListDto[] = [];
+  schoolOptions: SchoolListDto[] = [];
 
   ngOnInit(): void {
     this.load();
+    forkJoin({
+      cities: this.citiesService.list(),
+      schools: this.schoolsService.list(),
+    }).subscribe({
+      next: ({ cities, schools }) => {
+        this.cityOptions = cities;
+        this.schoolOptions = schools;
+      },
+      error: (error: unknown) => {
+        console.error('No se pudieron cargar las ciudades y colegios de administradores.', error);
+      },
+    });
   }
 
   private load(): void {
@@ -141,7 +171,7 @@ export class Admins implements OnInit {
     if (!id) return;
     this.adminsService.get(String(id)).subscribe({
       next: (detail) => {
-        this.adminSelected = fromDetail(detail);
+        this.adminSelected = this.withNames(fromDetail(detail));
         this.showModal = true;
       },
     });
@@ -211,5 +241,13 @@ export class Admins implements OnInit {
         this.load();
       },
     });
+  }
+
+  private withNames(admin: AdminView): AdminView {
+    return {
+      ...admin,
+      cityName: this.cityOptions.find((city) => city.id === admin.cityId)?.name ?? '',
+      schoolName: this.schoolOptions.find((school) => school.id === admin.schoolId)?.name ?? '',
+    };
   }
 }

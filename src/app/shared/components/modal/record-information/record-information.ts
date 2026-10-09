@@ -13,7 +13,7 @@ const RECORD_CONFIG: Record<RegisterType, { icon: string; fields: string[] }> = 
   bus: { icon: 'directions_bus', fields: ['plate', 'driver', 'model', 'brand', 'capacity', 'gps', 'soat'] },
   stop: { icon: 'location_on', fields: ['name', 'student', 'city', 'school', 'address', 'latitude', 'longitude'] },
   route: { icon: 'route', fields: ['name', 'sector', 'startTime', 'endTime', 'destination', 'routeSector'] },
-  admins: { icon: 'admin_panel_settings', fields: ['name', 'lastNames', 'email', 'identification', 'phone', 'birthDate', 'address'] },
+  admins: { icon: 'admin_panel_settings', fields: ['name', 'lastNames', 'email', 'identification', 'phone', 'birthDate', 'address', 'cityName', 'schoolName'] },
   schools: { icon: 'school', fields: ['name', 'city', 'schooling', 'address', 'phone', 'email', 'website'] },
 };
 
@@ -54,6 +54,7 @@ export class RecordInformation {
 
   get displayName(): string {
     return (
+      (this.type === 'schools' ? this.record?.['name'] : '') ||
       this.record?.['nombres'] ||
       this.record?.['nombre'] ||
       this.record?.['correo'] ||

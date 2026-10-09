@@ -6,6 +6,18 @@
     "dashboard": "Tableau de bord",
     "logout": "Se déconnecter"
   },
+  "locationMap": {
+    "useDeviceLocation": "Utiliser ma position",
+    "locating": "Obtention de la position…",
+    "resolvingAddress": "Recherche de l’adresse…",
+    "addressNotFound": "Aucune adresse trouvée pour ce point.",
+    "geocodeFailed": "Impossible de rechercher l’adresse.",
+    "geolocationUnavailable": "Cet appareil ne peut pas fournir sa position.",
+    "permissionDenied": "Autorisez l’accès à la position pour utiliser cette fonction.",
+    "locationTimeout": "Délai dépassé lors de l’obtention de la position.",
+    "positionUnavailable": "Impossible d’obtenir la position de l’appareil.",
+    "reverseGeocodeFailed": "Impossible d’obtenir l’adresse du point sélectionné."
+  },
   "hero": {
     "line1": "La",
     "line2": "sécurité",
@@ -294,6 +306,10 @@
     }
   },
   "dashboard": {
+    "schoolInformation": {
+      "noSchool": "Aucune école n'est associée à votre session.",
+      "loadError": "Impossible de charger les informations de votre école. Réessayez."
+    },
     "welcome": "Bienvenue",
     "role": "Tableau de bord d'administration · Guardian Escolar",
     "metrics": {
@@ -363,6 +379,7 @@
     }
   },
   "update_school": {
+    "loading": "Chargement des informations de l’école...",
     "title": "Mettre à jour les informations de l'école",
     "fields": {
       "name": "Nom complet",
@@ -379,7 +396,7 @@
       "email_placeholder": "Saisissez l'e-mail",
       "web_placeholder": "Saisissez le site web"
     },
-    "error": "Veuillez remplir au moins un champ avant de mettre à jour.",
+    "error": "La mise à jour a échoué. Vérifiez les informations de l’école et de ses sites, puis réessayez.",
     "buttons": {
       "cancel": "Annuler",
       "update": "Mettre à jour",
@@ -510,7 +527,9 @@
         "identification": "Identification",
         "birthDate": "Date de naissance",
         "phone": "Téléphone",
-        "address": "Adresse"
+        "address": "Adresse",
+        "cityName": "Ville",
+        "schoolName": "École"
       }
     },
     "schools": {
@@ -655,6 +674,8 @@
       "fields": {
         "name": "Nom",
         "lastNames": "Noms de famille",
+        "city": "Ville",
+        "school": "École",
         "email": "E-mail",
         "identification": "Identification",
         "birthDate": "Date de naissance",
@@ -775,6 +796,7 @@
       "fields": {
         "name": "Nom",
         "lastNames": "Noms de famille",
+        "city": "Ville",
         "email": "E-mail",
         "identification": "Identification",
         "birthDate": "Date de naissance",
@@ -794,12 +816,16 @@
         "schooling": "Niveau scolaire",
         "email": "Email",
         "website": "Site web",
-        "campusNames": "Sites"
+        "campusNames": "Sites supplémentaires"
       },
       "campusNamePlaceholder": "Nom du site",
+      "chooseLocation": "Choisir l’emplacement de l’école sur la carte",
+      "chooseCampusLocation": "Choisir l’emplacement du site {{name}} sur la carte",
       "addCampus": "Ajouter un site",
       "removeCampus": "Retirer le site",
-      "campusNamesRequired": "Ajoutez au moins un site pour l'école",
+      "campusNamesHint": "Facultatif : l'école peut fonctionner uniquement depuis son site principal.",
+      "logoReadError": "Le logo n'a pas pu être lu. Essayez une autre image.",
+      "campusAddressRequired": "Chaque site doit avoir un nom (30 caractères maximum) et une adresse (255 caractères maximum)",
       "campusNamesDuplicated": "Le site « {{name}} » est en double"
     },
     "options": {
@@ -970,6 +996,7 @@
   "validation": {
     "required": "Ce champ est requis",
     "email": "Adresse e-mail invalide",
+    "url": "Saisissez une adresse web valide",
     "phone": "Téléphone invalide (chiffres uniquement, de 7 à 15 chiffres)",
     "minLength": "{{min}} caractères minimum",
     "maxLength": "{{max}} caractères maximum",

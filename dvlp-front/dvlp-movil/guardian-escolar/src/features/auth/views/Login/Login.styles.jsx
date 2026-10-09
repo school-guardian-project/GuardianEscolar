@@ -50,15 +50,4 @@ export const styles = StyleSheet.create({
     fontSize: 13,
     color: "#888",
   },
-  acceptRow: {
-    flexDirection: "row",
-    alignItems: "center",
-    marginTop: 12,
-    gap: 8,
-  },
-  acceptText: {
-    flex: 1,
-    fontSize: 13,
-    color: "#444",
-  },
 });

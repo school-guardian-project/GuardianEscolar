@@ -44,9 +44,6 @@ import VerifyUpdatePhone from "@features/account/views/Phone/VerifyUpdatePhone/V
 import NewPhone from "@features/account/views/Phone/NewPhone/NewPhone";
 import VerifyNewPhone from "@features/account/views/Phone/VerifyNewPhone/VerifyNewPhone";
 
-// Aceptación de términos (gate post-login)
-import TermsAcceptance from "@features/auth/views/TermsAcceptance/TermsAcceptance";
-
 // Mi familia
 import Family from "@features/profile/views/Family/Family";
 
@@ -107,28 +104,32 @@ function HomeTabs() {
 export default function App() {
   const [ready, setReady] = useState(false);
   const [initialRoute, setInitialRoute] = useState("Login");
-  const [pendingParams, setPendingParams] = useState(undefined);
 
   useEffect(() => {
     const initialize = async () => {
       await loadLanguage();
 
       // Recupera la sesión desde SecureStore y rota el access token antes de navegar.
+      // Loguearse es aceptar: también en sesión restaurada se registra la evidencia.
       try {
         if (await hasSession()) {
           await refresh();
-          const { getPendingAcceptance } = await import(
+          const { getPendingAcceptance, acceptTerms } = await import(
             "@core/services/termsService"
           );
           const pending = await getPendingAcceptance();
-          setInitialRoute(
-            pending.ownMissing || pending.minors.length > 0
-              ? "TermsAcceptance"
-              : "MainPage"
-          );
           if (pending.ownMissing || pending.minors.length > 0) {
-            setPendingParams(pending);
+            if (pending.minors.length > 0) {
+              await acceptTerms(
+                pending.termsVersion,
+                pending.minors.map((m) => m.profileId)
+              );
+            }
+            if (pending.ownMissing) {
+              await acceptTerms(pending.termsVersion, []);
+            }
           }
+          setInitialRoute("MainPage");
         }
       } catch {
         await clearSession();
@@ -166,12 +167,6 @@ export default function App() {
             }}
           >
             <Stack.Screen name="Login" component={Login} />
-
-            <Stack.Screen
-              name="TermsAcceptance"
-              component={TermsAcceptance}
-              initialParams={pendingParams}
-            />
 
             <Stack.Screen name="MapViewTest" component={MapViewTest} />
 

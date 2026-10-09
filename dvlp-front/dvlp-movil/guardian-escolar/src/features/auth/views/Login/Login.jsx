@@ -3,9 +3,7 @@ import {
   ScrollView,
   View,
   Text,
-  TouchableOpacity,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
 import { styles } from './Login.styles';
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
@@ -29,7 +27,6 @@ export default function Login({ navigation }) {
   const [formError, setFormError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [legalDoc, setLegalDoc] = useState(null);
-  const [accepted, setAccepted] = useState(false);
   const { applyAuthRole } = useSession();
 
   const handleEmailChange = (value) => {
@@ -59,9 +56,10 @@ export default function Login({ navigation }) {
     try {
       await login(email, password);
       applyAuthRole();
-      const pending = await getPendingAcceptance();
-      if (pending.ownMissing || pending.minors.length > 0) {
-        try {
+      // Loguearse es aceptar: se registra la evidencia en backend sin fricción.
+      try {
+        const pending = await getPendingAcceptance();
+        if (pending.ownMissing || pending.minors.length > 0) {
           if (pending.minors.length > 0) {
             await acceptTerms(
               pending.termsVersion,
@@ -71,13 +69,12 @@ export default function Login({ navigation }) {
           if (pending.ownMissing) {
             await acceptTerms(pending.termsVersion, []);
           }
-          navigation.navigate("MainPage");
-        } catch {
-          navigation.navigate("TermsAcceptance", pending);
         }
-      } else {
-        navigation.navigate("MainPage");
+      } catch {
+        setFormError(t("accept.error"));
+        return;
       }
+      navigation.navigate("MainPage");
     } catch (error) {
       setFormError(
         error?.status === 401 || error?.status === 400 || error?.status === 403
@@ -101,11 +98,6 @@ export default function Login({ navigation }) {
     setFormError("");
 
     if (nextEmailError || nextPasswordError) {
-      return;
-    }
-
-    if (!accepted) {
-      setFormError(t("accept.required"));
       return;
     }
 
@@ -164,20 +156,6 @@ export default function Login({ navigation }) {
         </Text>
 
         {formError ? <Text style={styles.error}>{formError}</Text> : null}
-
-        {/* Aceptación previa al ingreso */}
-        <TouchableOpacity
-          style={styles.acceptRow}
-          activeOpacity={0.8}
-          onPress={() => setAccepted((prev) => !prev)}
-        >
-          <Ionicons
-            name={accepted ? "checkbox" : "square-outline"}
-            size={22}
-            color={theme.navbarColor}
-          />
-          <Text style={styles.acceptText}>{t("accept.checkbox")}</Text>
-        </TouchableOpacity>
 
         {/* Botón */}
         <View style={styles.buttonWrap}>

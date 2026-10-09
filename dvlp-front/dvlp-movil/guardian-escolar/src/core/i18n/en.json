@@ -11,11 +11,6 @@
     "update": "Update"
   },
   "accept": {
-    "description": "To continue, accept the Terms and Conditions and authorize the processing of your data and your children's data.",
-    "checkbox": "I have read and accept the Terms and authorize data processing.",
-    "required": "You must accept the Terms and authorize data processing to sign in.",
-    "minors": "Children covered by this authorization",
-    "button": "I accept and authorize",
     "error": "Could not record the acceptance. Try again."
   },
   "serviceErrors": {

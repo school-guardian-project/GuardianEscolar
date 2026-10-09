@@ -50,6 +50,7 @@ import Family from "@features/profile/views/Family/Family";
 // Seguridad y políticas
 import Security from "@features/profile/views/Security/Security";
 import PrivacyPolicies from "@features/profile/views/Privacy/PrivacyPolicies";
+import TermsConditions from "@features/profile/views/Terms/TermsConditions";
 
 // Sobre nosotros
 import AboutUs from "@features/profile/views/AboutUs/AboutUs";
@@ -208,6 +209,8 @@ export default function App() {
             <Stack.Screen name="Security" component={Security} />
 
             <Stack.Screen name="PrivacyPolicies" component={PrivacyPolicies} />
+
+            <Stack.Screen name="TermsConditions" component={TermsConditions} />
 
             <Stack.Screen name="AboutUs" component={AboutUs} />
 

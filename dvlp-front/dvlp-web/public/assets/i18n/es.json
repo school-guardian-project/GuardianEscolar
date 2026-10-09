@@ -125,6 +125,17 @@
     ],
     "rights": "© 2026 Guardian Escolar · Todos los derechos reservados"
   },
+  "legal": {
+    "kicker": "Documento legal",
+    "terms_title": "Términos y Condiciones de Uso",
+    "privacy_title": "Política de Tratamiento de Datos",
+    "updated": "Última actualización: agosto de 2026",
+    "data_title": "Datos que tratamos",
+    "purpose_title": "Finalidades",
+    "minors_title": "Datos de menores de edad",
+    "rights_title": "Tus derechos",
+    "channel_title": "Canal de contacto"
+  },
   "login": {
     "left": {
       "title": "Bienvenido de nuevo",

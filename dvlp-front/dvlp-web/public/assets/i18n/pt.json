@@ -865,6 +865,15 @@
     "genericError": "Não foi possível concluir a ação. Verifique se o servidor está disponível."
   },
   "card_list": {
+    "pagination": {
+      "navigation": "Paginação de registros",
+      "top": "acima",
+      "bottom": "abaixo",
+      "previous": "Página anterior",
+      "next": "Próxima página",
+      "goTo": "Ir para a página {{page}}",
+      "summary": "{{first}}–{{last}} de {{total}} · Página {{page}} de {{pages}}"
+    },
     "student": "Estudantes registrados",
     "guardian": "Responsáveis registrados",
     "driver": "Motoristas registrados",

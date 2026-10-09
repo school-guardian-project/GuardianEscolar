@@ -866,6 +866,15 @@
     "genericError": "No se pudo completar la asignación. Verifica que el backend esté disponible."
   },
   "card_list": {
+    "pagination": {
+      "navigation": "Paginación de registros",
+      "top": "arriba",
+      "bottom": "abajo",
+      "previous": "Página anterior",
+      "next": "Página siguiente",
+      "goTo": "Ir a la página {{page}}",
+      "summary": "{{first}}–{{last}} de {{total}} · Página {{page}} de {{pages}}"
+    },
     "student": "Estudiantes registrados",
     "guardian": "Acudientes registrados",
     "driver": "Conductores registrados",

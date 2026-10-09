@@ -25,6 +25,15 @@ Family editing keeps all existing children and allows selecting additional
 children without duplicates or removing individual children. Saving requires a
 guardian and at least one child; API errors appear inside the editing modal.
 
+All management record lists show 10 records per page, with synchronized page
+numbers and navigation above and below the records. The header retains the
+unfiltered total from the latest full load; search results are paginated and
+searching resets to page one. Deleting records clamps the current page.
+Registration cards keep their natural height independently of the list so the
+submit button stays next to the form fields instead of stretching to the footer.
+Registration and list cards share the same responsive width (up to 640px)
+and align at the top while their heights follow their respective contents.
+
 To start a local development server, run:
 
 ```bash

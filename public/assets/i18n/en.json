@@ -130,9 +130,21 @@
       "Contact"
     ],
     "links_legal": [
-      "Privacy and terms"
+      "Privacy",
+      "Terms"
     ],
     "rights": "© 2026 Guardian Escolar · All rights reserved"
+  },
+  "legal": {
+    "kicker": "Legal document",
+    "terms_title": "Terms and Conditions of Use",
+    "privacy_title": "Personal Data Processing Policy",
+    "updated": "Last updated: August 2026",
+    "data_title": "Data we process",
+    "purpose_title": "Purposes",
+    "minors_title": "Minors' data",
+    "rights_title": "Your rights",
+    "channel_title": "Contact channel"
   },
   "login": {
     "left": {

@@ -46,6 +46,14 @@ export class Footer {
     }
   }
 
+  navigateLegal(index: number) {
+    if (index === 0) {
+      this.router.navigate(['/privacy']);
+    } else {
+      this.router.navigate(['/terms']);
+    }
+  }
+
   private scrollToSection(sectionId: string) {
     const element = document.getElementById(sectionId);
     if (element) {

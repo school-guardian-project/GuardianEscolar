@@ -13,7 +13,7 @@
             </div>
             <div class="col">
                 <div class="title">{{ 'footer.col_legal' | translate }}</div>
-                <p class="link" *ngFor="let link of linksLegal">{{ link }}</p>
+                <p class="link" *ngFor="let link of linksLegal; let i = index" (click)="navigateLegal(i)">{{ link }}</p>
             </div>
         </div>
     </div>

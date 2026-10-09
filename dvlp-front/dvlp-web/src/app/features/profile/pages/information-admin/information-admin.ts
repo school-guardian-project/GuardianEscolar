@@ -3,6 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SidebarAdmin } from '@shared/components/navbar/sidebar-admin/sidebar-admin';
+import { SidebarSuperadmin } from '@shared/components/navbar/sidebar-superadmin/sidebar-superadmin';
 import { Themes } from '@shared/components/modal/themes/themes';
 import { Language } from '@shared/components/modal/language/language'
 import { TranslateModule } from '@ngx-translate/core';
@@ -13,6 +14,7 @@ import { AuthService, ROLES } from '@core/services/auth.service';
 import { ProfileService, UserProfileDto } from '@core/services/profile.service';
 import { AdminsService } from '@features/superadmin/admins/services/admins.service';
 import { AdminResponseDto } from '@features/superadmin/admins/models/admin.model';
+import { finalize, map, switchMap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-information-admin',
@@ -22,6 +24,7 @@ import { AdminResponseDto } from '@features/superadmin/admins/models/admin.model
     MatButtonModule,
     MatIconModule,
     SidebarAdmin,
+    SidebarSuperadmin,
     NavbarManage,
     Themes,
     Language,
@@ -35,6 +38,8 @@ export class InformationAdmin implements OnInit {
 
   changeTheme = false;
   changeLanguage = false;
+  loading = false;
+  loadFailed = false;
 
   imageUrl: string | ArrayBuffer | null = null;
 
@@ -42,6 +47,10 @@ export class InformationAdmin implements OnInit {
   profile: UserProfileDto | null = null;
   loading = false;
   loadFailed = false;
+
+  get isSuperAdmin(): boolean {
+    return this.authService.roleId === ROLES.SUPER_ADMIN;
+  }
 
   constructor(
     private router: Router,
@@ -57,34 +66,31 @@ export class InformationAdmin implements OnInit {
   loadProfile(): void {
     this.loading = true;
     this.loadFailed = false;
-    this.user = null;
-    this.profile = null;
 
-    this.profileService.getProfile().subscribe({
-      next: (profile) => {
+    this.profileService.getProfile().pipe(
+      switchMap((profile) => {
         this.profile = profile;
-        if (!profile.personId) {
-          this.loading = false;
-          this.loadFailed = true;
-          return;
+        if (!profile?.personId) {
+          return throwError(() => new Error('The authenticated profile has no person ID.'));
         }
-
-        this.adminsService.get(profile.personId).subscribe({
-          next: (user) => {
-            this.user = user;
-            this.loading = false;
-            this.loadFailed = !user;
-          },
-          error: (error: unknown) => {
-            console.error('No se pudieron cargar los datos personales del administrador.', error);
-            this.loading = false;
-            this.loadFailed = true;
-          },
-        });
+        return this.adminsService.get(profile.personId).pipe(
+          map((user) => {
+            if (!user) {
+              throw new Error('The profile person details were not found.');
+            }
+            return user;
+          }),
+        );
+      }),
+      finalize(() => {
+        this.loading = false;
+      }),
+    ).subscribe({
+      next: (user) => {
+        this.user = user;
       },
       error: (error: unknown) => {
-        console.error('No se pudo cargar el perfil autenticado.', error);
-        this.loading = false;
+        console.error('Could not load the authenticated admin profile:', error);
         this.loadFailed = true;
       },
     });

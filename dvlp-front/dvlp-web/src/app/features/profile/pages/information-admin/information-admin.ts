@@ -45,6 +45,8 @@ export class InformationAdmin implements OnInit {
 
   user: AdminResponseDto | null = null;
   profile: UserProfileDto | null = null;
+  loading = false;
+  loadFailed = false;
 
   get isSuperAdmin(): boolean {
     return this.authService.roleId === ROLES.SUPER_ADMIN;

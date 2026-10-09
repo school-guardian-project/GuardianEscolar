@@ -6,6 +6,18 @@
     "dashboard": "Dashboard",
     "logout": "Cerrar sesión"
   },
+  "locationMap": {
+    "useDeviceLocation": "Usar mi ubicación",
+    "locating": "Obteniendo ubicación…",
+    "resolvingAddress": "Buscando dirección…",
+    "addressNotFound": "No se encontró una dirección para este punto.",
+    "geocodeFailed": "No se pudo buscar la dirección.",
+    "geolocationUnavailable": "Este dispositivo no permite obtener la ubicación.",
+    "permissionDenied": "Permite el acceso a la ubicación para usar esta función.",
+    "locationTimeout": "Se agotó el tiempo para obtener la ubicación.",
+    "positionUnavailable": "No se pudo obtener la ubicación del dispositivo.",
+    "reverseGeocodeFailed": "No se pudo obtener la dirección del punto seleccionado."
+  },
   "hero": {
     "line1": "La",
     "line2": "seguridad",
@@ -295,6 +307,10 @@
     }
   },
   "dashboard": {
+    "schoolInformation": {
+      "noSchool": "No hay una escuela asociada a tu sesión.",
+      "loadError": "No se pudo cargar la información de tu escuela. Intenta de nuevo."
+    },
     "welcome": "Bienvenido",
     "role": "Panel de administración · Guardian Escolar",
     "metrics": {
@@ -364,6 +380,7 @@
     }
   },
   "update_school": {
+    "loading": "Cargando la información del colegio...",
     "title": "Actualizar información de la escuela",
     "fields": {
       "name": "Nombre completo",
@@ -380,7 +397,7 @@
       "email_placeholder": "Ingrese el correo",
       "web_placeholder": "Ingrese la página web"
     },
-    "error": "Por favor completa al menos un campo antes de actualizar",
+    "error": "No se pudo actualizar. Revisa los datos de la escuela y sus sedes e inténtalo de nuevo.",
     "buttons": {
       "cancel": "Cancelar",
       "update": "Actualizar",
@@ -550,7 +567,9 @@
         "identification": "Identificación",
         "phone": "Teléfono",
         "birthDate": "Fecha nacimiento",
-        "address": "Dirección"
+        "address": "Dirección",
+        "cityName": "Ciudad",
+        "schoolName": "Colegio"
       }
     },
     "schools": {
@@ -657,6 +676,8 @@
       "fields": {
         "name": "Nombre",
         "lastNames": "Apellidos",
+        "city": "Ciudad",
+        "school": "Colegio",
         "email": "Correo electrónico",
         "identification": "Identificación",
         "birthDate": "Fecha nacimiento",
@@ -740,7 +761,9 @@
     "bus": {
       "title": "Registrar bus",
       "fields": {
+        "campus": "Sede",
         "plate": "Matrícula",
+        "matricula": "Matrícula",
         "driver": "Conductor",
         "model": "Modelo",
         "brand": "Marca",
@@ -777,6 +800,7 @@
       "fields": {
         "name": "Nombre",
         "lastNames": "Apellidos",
+        "city": "Ciudad",
         "email": "Correo Electrónico",
         "identification": "Identificación",
         "birthDate": "Fecha de Nacimiento",
@@ -796,12 +820,16 @@
         "schooling": "Nivel educativo",
         "email": "Correo Electrónico",
         "website": "Página web",
-        "campusNames": "Sedes"
+        "campusNames": "Sedes adicionales"
       },
       "campusNamePlaceholder": "Nombre de la sede",
+      "chooseLocation": "Elegir ubicación del colegio en el mapa",
+      "chooseCampusLocation": "Elegir ubicación de la sede {{name}} en el mapa",
       "addCampus": "Agregar sede",
       "removeCampus": "Quitar sede",
-      "campusNamesRequired": "Agrega al menos una sede para el colegio",
+      "campusNamesHint": "Opcional: el colegio puede operar únicamente desde su sede central.",
+      "logoReadError": "No se pudo leer el logo. Prueba con otra imagen.",
+      "campusAddressRequired": "Cada sede debe tener nombre (máximo 30 caracteres) y dirección (máximo 255 caracteres)",
       "campusNamesDuplicated": "La sede «{{name}}» está repetida"
     },
     "options": {
@@ -970,6 +998,7 @@
   "validation": {
     "required": "Este campo es requerido",
     "email": "Correo electrónico inválido",
+    "url": "Ingresa una dirección web válida",
     "phone": "Teléfono inválido (solo números, 7-15 dígitos)",
     "minLength": "Mínimo {{min}} caracteres",
     "maxLength": "Máximo {{max}} caracteres",

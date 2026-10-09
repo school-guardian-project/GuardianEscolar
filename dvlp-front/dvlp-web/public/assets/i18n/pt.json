@@ -6,6 +6,18 @@
     "dashboard": "Painel",
     "logout": "Sair"
   },
+  "locationMap": {
+    "useDeviceLocation": "Usar minha localização",
+    "locating": "Obtendo localização…",
+    "resolvingAddress": "Buscando endereço…",
+    "addressNotFound": "Nenhum endereço foi encontrado para este ponto.",
+    "geocodeFailed": "Não foi possível pesquisar o endereço.",
+    "geolocationUnavailable": "Este dispositivo não pode fornecer a localização.",
+    "permissionDenied": "Permita o acesso à localização para usar este recurso.",
+    "locationTimeout": "Tempo esgotado ao obter a localização.",
+    "positionUnavailable": "Não foi possível obter a localização do dispositivo.",
+    "reverseGeocodeFailed": "Não foi possível obter o endereço do ponto selecionado."
+  },
   "hero": {
     "line1": "A",
     "line2": "segurança",
@@ -294,6 +306,10 @@
     }
   },
   "dashboard": {
+    "schoolInformation": {
+      "noSchool": "Nenhuma escola está associada à sua sessão.",
+      "loadError": "Não foi possível carregar as informações da sua escola. Tente novamente."
+    },
     "welcome": "Bem-vindo",
     "role": "Painel de administração · Guardian Escolar",
     "metrics": {
@@ -363,6 +379,7 @@
     }
   },
   "update_school": {
+    "loading": "Carregando as informações da escola...",
     "title": "Atualizar informações da escola",
     "fields": {
       "name": "Nome completo",
@@ -379,7 +396,7 @@
       "email_placeholder": "Insira o e-mail",
       "web_placeholder": "Insira o site"
     },
-    "error": "Por favor, preencha ao menos um campo antes de atualizar.",
+    "error": "Não foi possível atualizar. Verifique os dados da escola e das unidades e tente novamente.",
     "buttons": {
       "cancel": "Cancelar",
       "update": "Atualizar",
@@ -549,7 +566,9 @@
         "identification": "Identificação",
         "phone": "Telefone",
         "birthDate": "Data de nascimento",
-        "address": "Endereço"
+        "address": "Endereço",
+        "cityName": "Cidade",
+        "schoolName": "Escola"
       }
     },
     "schools": {
@@ -656,6 +675,8 @@
       "fields": {
         "name": "Nome",
         "lastNames": "Sobrenomes",
+        "city": "Cidade",
+        "school": "Escola",
         "email": "E-mail",
         "identification": "Identificação",
         "birthDate": "Data de nascimento",
@@ -739,7 +760,9 @@
     "bus": {
       "title": "Registrar ônibus",
       "fields": {
+        "campus": "Unidade",
         "plate": "Placa",
+        "matricula": "Placa",
         "driver": "Motorista",
         "model": "Modelo",
         "brand": "Marca",
@@ -776,6 +799,7 @@
       "fields": {
         "name": "Nome",
         "lastNames": "Sobrenomes",
+        "city": "Cidade",
         "email": "E-mail",
         "identification": "Identificação",
         "birthDate": "Data de nascimento",
@@ -795,12 +819,16 @@
         "schooling": "Nível escolar",
         "email": "E-mail",
         "website": "Site",
-        "campusNames": "Unidades"
+        "campusNames": "Unidades adicionais"
       },
       "campusNamePlaceholder": "Nome da unidade",
+      "chooseLocation": "Escolher a localização da escola no mapa",
+      "chooseCampusLocation": "Escolher a localização da unidade {{name}} no mapa",
       "addCampus": "Adicionar unidade",
       "removeCampus": "Remover unidade",
-      "campusNamesRequired": "Adicione pelo menos uma unidade para a escola",
+      "campusNamesHint": "Opcional: a escola pode funcionar apenas na unidade central.",
+      "logoReadError": "Não foi possível ler o logotipo. Tente outra imagem.",
+      "campusAddressRequired": "Cada unidade precisa de nome (máximo de 30 caracteres) e endereço (máximo de 255 caracteres)",
       "campusNamesDuplicated": "A unidade «{{name}}» está repetida"
     },
     "options": {
@@ -969,6 +997,7 @@
   "validation": {
     "required": "Este campo é obrigatório",
     "email": "Endereço de e-mail inválido",
+    "url": "Insira um endereço de site válido",
     "phone": "Telefone inválido (apenas números, de 7 a 15 dígitos)",
     "minLength": "Mínimo de {{min}} caracteres",
     "maxLength": "Máximo de {{max}} caracteres",

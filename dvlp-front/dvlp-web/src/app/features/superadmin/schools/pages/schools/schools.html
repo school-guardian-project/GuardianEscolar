@@ -25,6 +25,7 @@
   *ngIf="showUpdateModal"
   type="schools"
   [record]="schoolSelected"
+  [cityOptions]="cityOptions"
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()">
 </app-update-record>

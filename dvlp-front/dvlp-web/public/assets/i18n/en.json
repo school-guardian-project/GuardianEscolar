@@ -4,6 +4,18 @@
     "how_it_works": "How it works",
     "contact": "Contact"
   },
+  "locationMap": {
+    "useDeviceLocation": "Use my location",
+    "locating": "Getting location…",
+    "resolvingAddress": "Finding address…",
+    "addressNotFound": "No address was found for this point.",
+    "geocodeFailed": "The address could not be searched.",
+    "geolocationUnavailable": "This device cannot provide its location.",
+    "permissionDenied": "Allow location access to use this feature.",
+    "locationTimeout": "Timed out while getting your location.",
+    "positionUnavailable": "The device location could not be obtained.",
+    "reverseGeocodeFailed": "The address for the selected point could not be obtained."
+  },
   "hero": {
     "line1": "School",
     "line2": "safety",
@@ -288,6 +300,10 @@
     }
   },
   "dashboard": {
+    "schoolInformation": {
+      "noSchool": "No school is associated with your session.",
+      "loadError": "Could not load your school information. Try again."
+    },
     "welcome": "Welcome",
     "role": "Admin dashboard · Guardian Escolar",
     "metrics": {
@@ -357,6 +373,7 @@
     }
   },
   "update_school": {
+    "loading": "Loading school information...",
     "title": "Update school information",
     "fields": {
       "name": "Full name",
@@ -373,7 +390,7 @@
       "email_placeholder": "Enter the email",
       "web_placeholder": "Enter the website"
     },
-    "error": "Please complete at least one field before updating",
+    "error": "Could not update the school. Check the school and campus details and try again.",
     "buttons": {
       "cancel": "Cancel",
       "update": "Update",
@@ -504,7 +521,9 @@
         "identification": "Identification",
         "birthDate": "Date of birth",
         "phone": "Phone",
-        "address": "Address"
+        "address": "Address",
+        "cityName": "City",
+        "schoolName": "School"
       }
     },
     "schools": {
@@ -649,6 +668,8 @@
       "fields": {
         "name": "Name",
         "lastNames": "Last names",
+        "city": "City",
+        "school": "School",
         "email": "Email",
         "identification": "Identification",
         "birthDate": "Date of birth",
@@ -732,7 +753,9 @@
     "bus": {
       "title": "Register bus",
       "fields": {
+        "campus": "Campus",
         "plate": "License plate",
+        "matricula": "License plate",
         "driver": "Driver",
         "model": "Model",
         "brand": "Brand",
@@ -769,6 +792,7 @@
       "fields": {
         "name": "Name",
         "lastNames": "Last names",
+        "city": "City",
         "email": "Email",
         "identification": "Identification",
         "birthDate": "Date of birth",
@@ -788,12 +812,16 @@
         "schooling": "Education level",
         "email": "Email",
         "website": "Website",
-        "campusNames": "Campuses"
+        "campusNames": "Additional campuses"
       },
       "campusNamePlaceholder": "Campus name",
+      "chooseLocation": "Choose the school location on the map",
+      "chooseCampusLocation": "Choose the location of campus {{name}} on the map",
       "addCampus": "Add campus",
       "removeCampus": "Remove campus",
-      "campusNamesRequired": "Add at least one campus for the school",
+      "campusNamesHint": "Optional: the school can operate from its main campus only.",
+      "logoReadError": "The logo could not be read. Try another image.",
+      "campusAddressRequired": "Each campus must have a name (maximum 30 characters) and address (maximum 255 characters)",
       "campusNamesDuplicated": "The campus “{{name}}” is duplicated"
     },
     "options": {
@@ -947,6 +975,7 @@
   "validation": {
     "required": "This field is required",
     "email": "Invalid email address",
+    "url": "Enter a valid website address",
     "phone": "Invalid phone (numbers only, 7-15 digits)",
     "minLength": "Minimum {{min}} characters",
     "maxLength": "Maximum {{max}} characters",

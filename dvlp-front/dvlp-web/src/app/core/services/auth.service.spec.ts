@@ -37,7 +37,7 @@ describe('AuthService session', () => {
       });
 
     expect(done).toBe(true);
-    expect(service.session).toEqual({ profileId: '10', personId: '20', email: 'admin@school.com' });
+    expect(service.session).toEqual({ profileId: '10', personId: '20', email: 'admin@school.com', campusId: null, schoolId: null });
     expect(service.roleId).toBe(1);
   });
 
@@ -50,7 +50,7 @@ describe('AuthService session', () => {
         accessToken: jwt({ roleId: 5, profileId: '30', personId: '40', email: 'sa@school.com' }),
       });
 
-    expect(service.session).toEqual({ profileId: '30', personId: '40', email: 'sa@school.com' });
+    expect(service.session).toEqual({ profileId: '30', personId: '40', email: 'sa@school.com', campusId: null, schoolId: null });
     expect(service.roleId).toBe(5);
   });
 
@@ -66,6 +66,32 @@ describe('AuthService session', () => {
     service.logout().subscribe();
     httpMock.expectOne((req) => req.url.endsWith('/logout')).flush(null);
 
-    expect(service.session).toEqual({ profileId: null, personId: null, email: null });
+    expect(service.session).toEqual({ profileId: null, personId: null, email: null, campusId: null, schoolId: null });
+  });
+
+  it('uses the existing school claim and clears it when a later session has no school', () => {
+    service.login('admin@school.com', 'secret').subscribe();
+    httpMock.expectOne((req) => req.url.endsWith('/login')).flush({
+      accessToken: jwt({ roleId: 1, schoolId: 'school-id', campusId: 'campus-id' }),
+    });
+    expect(service.session.schoolId).toBe('school-id');
+    expect(service.session.campusId).toBe('campus-id');
+
+    service.login('superadmin@school.com', 'secret').subscribe();
+    httpMock.expectOne((req) => req.url.endsWith('/login')).flush({
+      accessToken: jwt({ roleId: 5 }),
+    });
+    expect(service.session.schoolId).toBeNull();
+    expect(service.session.campusId).toBeNull();
+  });
+
+  it('recovers profileId from the actual JWT subject during refresh', () => {
+    service.refresh().subscribe();
+    httpMock.expectOne((req) => req.url.endsWith('/refresh')).flush({
+      accessToken: jwt({ sub: 'profile-id', personId: 'person-id', email: 'admin@school.com', roleId: 1, schoolId: 'school-id' }),
+    });
+    expect(service.session.profileId).toBe('profile-id');
+    expect(service.session.schoolId).toBe('school-id');
+    expect(service.session.campusId).toBeNull();
   });
 });

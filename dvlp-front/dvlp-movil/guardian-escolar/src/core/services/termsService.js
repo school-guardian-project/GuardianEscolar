@@ -13,6 +13,11 @@ export async function getAcceptances() {
   return apiGet("/api/v1/auth/terms/acceptances");
 }
 
+/** Estado de cobertura de la versión vigente: aceptación propia o autorización del acudiente. */
+export async function getTermsStatus() {
+  return apiGet("/api/v1/auth/terms/status");
+}
+
 /**
  * Registra la aceptación de una versión de los Términos.
  * @param {string} termsVersion - Versión aceptada.

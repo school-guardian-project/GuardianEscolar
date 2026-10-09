@@ -11,6 +11,7 @@
     "update": "Update"
   },
   "accept": {
+    "blocked": "Your account is not yet authorized by your guardian. Ask them to accept the Terms in their session.",
     "error": "Could not record the acceptance. Try again."
   },
   "serviceErrors": {

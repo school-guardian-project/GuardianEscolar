@@ -11,6 +11,7 @@
     "update": "Mettre à jour"
   },
   "accept": {
+    "blocked": "Ton compte n'est pas encore autorisé par ton responsable. Demande-lui d'accepter les Termes dans sa session.",
     "error": "Impossible d'enregistrer l'acceptation. Réessayez."
   },
   "serviceErrors": {

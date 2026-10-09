@@ -16,7 +16,9 @@ import InputField from "@components/inputs/InputField";
 import PrimaryButton from "@components/buttons/PrimaryButton";
 import { validateEmail, validateRequired } from "@core/validation/validators";
 import { login } from "@core/services/authService";
-import { registerForPushNotificationsAsync } from "@core/services/pushNotifications";
+import { getSession, clearSession } from "@core/services/authService";
+import { acceptTerms, getPendingAcceptance, getTermsStatus } from "@core/services/termsService";
+import LegalInfoModal from "./LegalInfoModal";
 import useSession from "@core/hooks/useSession";
 
 const logoUri = Asset.fromModule(
@@ -33,6 +35,7 @@ export default function Login({ navigation }) {
   const [passwordError, setPasswordError] = useState("");
   const [formError, setFormError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [legalDoc, setLegalDoc] = useState(null);
   const { applyAuthRole } = useSession();
 
   const handleEmailChange = (value) => {
@@ -62,10 +65,45 @@ export default function Login({ navigation }) {
     try {
       await login(email, password);
       applyAuthRole();
+      // Loguearse es aceptar: se registra la evidencia en backend sin fricción.
+      // El estudiante no se acepta a sí mismo: entra solo si su acudiente ya lo autorizó.
+      try {
+        const session = await getSession();
+        if (session?.roleId === 2) {
+          const status = await getTermsStatus();
+          if (!status?.accepted) {
+            await clearSession();
+            setFormError(t("accept.blocked"));
+            return;
+          }
+        } else {
+          const pending = await getPendingAcceptance();
+          if (pending.ownMissing || pending.minors.length > 0) {
+            if (pending.minors.length > 0) {
+              await acceptTerms(
+                pending.termsVersion,
+                pending.minors.map((m) => m.profileId)
+              );
+            }
+            if (pending.ownMissing) {
+              await acceptTerms(pending.termsVersion, []);
+            }
+          }
+        }
+      } catch (e) {
+        if (!e?.status) {
+          throw e;
+        }
+        setFormError(t("accept.error"));
+        return;
+      }
       navigation.navigate("MainPage");
-      registerForPushNotificationsAsync();
-    } catch {
-      setFormError(t("login.error"));
+    } catch (error) {
+      setFormError(
+        error?.status === 401 || error?.status === 400 || error?.status === 403
+          ? t("login.error")
+          : t("login.networkError")
+      );
     } finally {
       setSubmitting(false);
     }
@@ -160,7 +198,30 @@ export default function Login({ navigation }) {
             disabled={submitting}
           />
         </View>
+
+        {/* Documentos legales pre-login (solo lectura) */}
+        <View style={styles.legalRow}>
+          <Text
+            style={[styles.legalLink, { color: theme.navbarColor }]}
+            onPress={() => setLegalDoc("terms")}
+          >
+            {t("inputs.terms")}
+          </Text>
+          <Text style={styles.legalSeparator}> · </Text>
+          <Text
+            style={[styles.legalLink, { color: theme.navbarColor }]}
+            onPress={() => setLegalDoc("privacy")}
+          >
+            {t("inputs.privacity")}
+          </Text>
+        </View>
       </View>
+
+      <LegalInfoModal
+        visible={legalDoc !== null}
+        doc={legalDoc ?? "terms"}
+        onClose={() => setLegalDoc(null)}
+      />
     </ScrollView>
   );
 }

@@ -14,7 +14,17 @@ let accessToken = null;
 let session = null;
 
 async function request(path, options = {}) {
-  const response = await fetch(`${API_URL}/api/v1/auth${path}`, options);
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 15000);
+  let response;
+  try {
+    response = await fetch(`${API_URL}/api/v1/auth${path}`, {
+      ...options,
+      signal: controller.signal,
+    });
+  } finally {
+    clearTimeout(timer);
+  }
 
   if (!response.ok) {
     const error = new Error(`auth request failed: ${response.status}`);
@@ -45,20 +55,52 @@ async function loadRefresh() {
   return SecureStore.getItemAsync(REFRESH_KEY);
 }
 
+function tokenClaims(token) {
+  if (!token) {
+    return {};
+  }
+  try {
+    const payload = token.split(".")[1];
+    return JSON.parse(atob(payload.replace(/-/g, "+").replace(/_/g, "/")));
+  } catch {
+    return {};
+  }
+}
+
+function claimOf(data, claims, key) {
+  if (data?.[key] === null) return null;
+  const claim = key === "profileId" ? claims.profileId ?? claims.sub : claims[key];
+  const value = data?.[key] ?? claim ?? null;
+  return value === undefined || value === "" ? null : value;
+}
+
+/** Combina la respuesta del login con los claims del JWT (la respuesta puede no traer todos los campos). */
 async function saveSession(data) {
+  const claims = tokenClaims(data?.accessToken ?? accessToken);
   session = {
-    profileId: data.profileId ?? null,
-    personId: data.personId ?? null,
-    email: data.email ?? null,
-    roleId: data.roleId ?? null,
-    campusId: data.campusId ?? null,
+    profileId: claimOf(data, claims, "profileId"),
+    personId: claimOf(data, claims, "personId"),
+    email: claimOf(data, claims, "email"),
+    roleId: claimOf(data, claims, "roleId"),
+    campusId: claimOf(data, claims, "campusId"),
+    schoolId: claimOf(data, claims, "schoolId"),
   };
   if (await SecureStore.isAvailableAsync()) {
     await SecureStore.setItemAsync(SESSION_KEY, JSON.stringify(session));
   }
 }
 
-/** Sesión del usuario logueado (profileId, personId, email, roleId). */
+export async function updateSessionEmail(email) {
+  if (!session) {
+    await getSession();
+  }
+  session = { ...(session ?? {}), email };
+  if (await SecureStore.isAvailableAsync()) {
+    await SecureStore.setItemAsync(SESSION_KEY, JSON.stringify(session));
+  }
+}
+
+/** Sesión del usuario logueado, incluyendo escuela y sede. */
 export async function getSession() {
   if (session) {
     return session;
@@ -106,6 +148,8 @@ export async function refresh() {
   });
 
   accessToken = data.accessToken;
+  await getSession();
+  await saveSession({});
   await saveRefresh(data.refreshToken);
   return data.accessToken;
 }

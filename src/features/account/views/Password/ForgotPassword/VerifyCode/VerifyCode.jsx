@@ -2,6 +2,10 @@ import React from "react";
 import { useTranslation } from "react-i18next";
 
 import VerifyScreen from "@components/account/screens/VerifyScreen";
+import {
+    resendPasswordResetCode,
+    verifyPasswordResetCode,
+} from "@core/services/forgotInformationService";
 
 export default function VerifyCode() {
 
@@ -16,6 +20,8 @@ export default function VerifyCode() {
             buttonText={t("button.verifyCode")}
             resendText={t("verifyCode.transferCode")}
             nextScreen="NewPassword"
+            onSubmit={verifyPasswordResetCode}
+            onResend={resendPasswordResetCode}
         />
 
     );

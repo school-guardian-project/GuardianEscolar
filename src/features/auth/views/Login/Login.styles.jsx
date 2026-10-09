@@ -36,4 +36,18 @@ export const styles = StyleSheet.create({
     color: "#D32F2F",
     marginBottom: 10,
   },
+  legalRow: {
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    marginTop: 14,
+  },
+  legalLink: {
+    fontSize: 13,
+    textDecorationLine: "underline",
+  },
+  legalSeparator: {
+    fontSize: 13,
+    color: "#888",
+  },
 });

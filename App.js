@@ -8,7 +8,6 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ThemeProvider } from "@core/services/ThemeService";
 import { loadLanguage } from "@core/i18n/i18n";
 import { clearSession, hasSession, refresh } from "@core/services/authService";
-import { registerForPushNotificationsAsync } from "@core/services/pushNotifications";
 
 // Iniciar Sesión
 import Login from "@features/auth/views/Login/Login";
@@ -51,6 +50,7 @@ import Family from "@features/profile/views/Family/Family";
 // Seguridad y políticas
 import Security from "@features/profile/views/Security/Security";
 import PrivacyPolicies from "@features/profile/views/Privacy/PrivacyPolicies";
+import TermsConditions from "@features/profile/views/Terms/TermsConditions";
 
 // Sobre nosotros
 import AboutUs from "@features/profile/views/AboutUs/AboutUs";
@@ -110,11 +110,36 @@ export default function App() {
       await loadLanguage();
 
       // Recupera la sesión desde SecureStore y rota el access token antes de navegar.
+      // Loguearse es aceptar: también en sesión restaurada se registra la evidencia.
+      // El estudiante entra solo si su acudiente ya lo autorizó.
       try {
         if (await hasSession()) {
           await refresh();
+          const { getSession } = await import("@core/services/authService");
+          const { getPendingAcceptance, acceptTerms, getTermsStatus } = await import(
+            "@core/services/termsService"
+          );
+          const session = await getSession();
+          if (session?.roleId === 2) {
+            const status = await getTermsStatus();
+            if (!status?.accepted) {
+              throw new Error("student not authorized by guardian");
+            }
+          } else {
+            const pending = await getPendingAcceptance();
+            if (pending.ownMissing || pending.minors.length > 0) {
+              if (pending.minors.length > 0) {
+                await acceptTerms(
+                  pending.termsVersion,
+                  pending.minors.map((m) => m.profileId)
+                );
+              }
+              if (pending.ownMissing) {
+                await acceptTerms(pending.termsVersion, []);
+              }
+            }
+          }
           setInitialRoute("MainPage");
-          registerForPushNotificationsAsync();
         }
       } catch {
         await clearSession();
@@ -210,6 +235,8 @@ export default function App() {
             <Stack.Screen name="Security" component={Security} />
 
             <Stack.Screen name="PrivacyPolicies" component={PrivacyPolicies} />
+
+            <Stack.Screen name="TermsConditions" component={TermsConditions} />
 
             <Stack.Screen name="AboutUs" component={AboutUs} />
 

@@ -4,6 +4,34 @@
 
 ## 0. Introducción
 
+### Conexion local con las API
+
+Para abrir Expo Go en la red local, ejecuta `npm run start:lan`. El comando
+funciona en Windows y Linux sin comandos de shell externos. Detecta la IPv4
+de la ruta de red activa; si `EXPO_LAN_IP` en `.env` pertenece al equipo, usa
+esa direccion. Si quedo desactualizada al cambiar de Wi-Fi, avisa y usa la
+IP detectada. El telefono y el equipo deben estar en la misma red.
+Si el puerto 8081 esta ocupado, selecciona el siguiente disponible y lo informa,
+sin detenerse a pedir confirmacion.
+Para elegir otro puerto, usa `npm run start:lan -- --port 9082`.
+La direccion LAN de Metro no sustituye las URLs `EXPO_PUBLIC_*` de las API.
+
+`EXPO_PUBLIC_API_URL` apunta al gateway y
+`EXPO_PUBLIC_FORGOT_INFORMATION_API_URL` al servicio de recuperacion.
+Son destinos diferentes: en LAN usan los puertos 8000 y 8091 respectivamente;
+con Cloudflare usan los tuneles `sg-cloudflared` y `sg-cloudflared-forgot`.
+No reutilices un dominio antiguo de ngrok para ambos servicios.
+Los tuneles temporales de Cloudflare cambian de URL al reiniciar sus contenedores.
+Si el `.env` usa `trycloudflare.com`, `npm start`, `npm run start:lan`, `npm run android`,
+`npm run ios` y `npm run web` sincronizan ambas direcciones desde Docker y
+verifican que las API respondan antes de iniciar Expo. Docker debe estar encendido.
+Las direcciones LAN o de servidores permanentes se conservan sin consultar Docker.
+
+Para sincronizar manualmente los tuneles locales, ejecuta `npm run api:sync`.
+Despues reinicia Metro y recarga Expo Go: las variables `EXPO_PUBLIC_*` se
+incorporan al bundle, no se consultan dinamicamente desde el telefono.
+`npm run start:lan` limpia la cache de Metro. El `.env` local no se incluye en Git.
+
 Guardian Escolar es una aplicación móvil construida con React Native y Expo. Está diseñada para familias o acudientes y permite:
 
 - iniciar sesión,

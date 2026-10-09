@@ -1,4 +1,14 @@
 {
+  "responsive": {
+    "navigation": "Navegación",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "dashboard": "Ir al dashboard",
+    "comments": "Abrir comentarios",
+    "editSchool": "Actualizar colegio",
+    "language": "Cambiar idioma",
+    "theme": "Cambiar tema"
+  },
   "navbar": {
     "features": "Funcionalidades",
     "how_it_works": "Como funciona",

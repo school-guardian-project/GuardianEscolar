@@ -1,8 +1,13 @@
 <mat-toolbar class="custom-toolbar">
   <!-- IZQUIERDA -->
   <div class="toolbar-start">
-    <button (click)="goBack()" mat-icon-button>
+    <button (click)="goBack()" mat-icon-button [attr.aria-label]="'responsive.dashboard' | translate">
       <mat-icon>arrow_back</mat-icon>
+    </button>
+    <button class="mobile-menu-button" type="button" mat-icon-button (click)="openMenu()"
+      [attr.aria-expanded]="menuOpen" aria-haspopup="dialog"
+      [attr.aria-label]="'responsive.openMenu' | translate">
+      <mat-icon>menu</mat-icon>
     </button>
   </div>
 

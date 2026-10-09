@@ -21,13 +21,15 @@
           </h3>
 
           <div class="header-actions">
-            <div class="icon-action" (click)="changeLanguage = true" title="language">
+            <button type="button" class="icon-action" (click)="changeLanguage = true"
+              [attr.aria-label]="'responsive.language' | translate">
               <mat-icon>translate</mat-icon>
-            </div>
+            </button>
 
-            <div class="icon-action" (click)="changeTheme = true" title="Theme">
+            <button type="button" class="icon-action" (click)="changeTheme = true"
+              [attr.aria-label]="'responsive.theme' | translate">
               <mat-icon>palette</mat-icon>
-            </div>
+            </button>
           </div>
         </div>
 

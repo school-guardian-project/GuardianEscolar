@@ -1,0 +1,68 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100dvh;
+  overflow-y: auto;
+  background: var(--color-navbar);
+  color: var(--navbar-item);
+}
+
+.navigation-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-color);
+}
+
+h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.navigation-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+}
+
+app-navbar-admin,
+app-sidebar-superadmin {
+  width: 100%;
+  flex: 1;
+  min-height: 0;
+}
+
+.public-navigation {
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  gap: 8px;
+}
+
+.public-navigation button {
+  text-align: start;
+  padding: 12px;
+  min-height: 44px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+.public-navigation button:hover,
+.public-navigation button:focus-visible {
+  background: rgba(255, 255, 255, 0.12);
+}

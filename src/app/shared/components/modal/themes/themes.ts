@@ -19,7 +19,10 @@ export class Themes {
     this.currentTheme = theme;
 
     //Se aplica el tema
-    document.body.className = theme;
+    const previousThemes = Array.from(document.body.classList)
+      .filter(className => /^(light|dark)-theme-(blue|green|red|yellow)$/.test(className));
+    document.body.classList.remove(...previousThemes);
+    document.body.classList.add(theme);
 
     //Se guarda el tema
     localStorage.setItem('theme', theme)

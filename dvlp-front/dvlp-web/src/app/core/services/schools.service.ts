@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -36,11 +36,19 @@ export class SchoolsService {
    * repetidos) y 400 los devuelve el backend con ProblemDetails.
    */
   createWithCampuses(payload: SchoolWithCampusesRequestDto): Observable<SchoolWithCampusesResponseDto> {
-    return this.http.post<SchoolWithCampusesResponseDto>(`${this.base}/with-campuses`, payload);
+    return this.http.post<SchoolWithCampusesResponseDto>(
+      `${this.base}/with-campuses`,
+      payload,
+      { headers: new HttpHeaders({ 'Content-Type': 'application/json' }) },
+    );
   }
 
   update(id: string, payload: SchoolRequestDto): Observable<void> {
     return this.http.put<void>(`${this.base}/${id}`, payload);
+  }
+
+  updateWithCampuses(id: string, payload: SchoolWithCampusesRequestDto): Observable<void> {
+    return this.http.put<void>(`${this.base}/${id}/with-campuses`, payload);
   }
 
   remove(id: string): Observable<void> {

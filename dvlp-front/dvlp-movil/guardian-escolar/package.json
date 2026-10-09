@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "start": "expo start",
-    "start:lan": "REACT_NATIVE_PACKAGER_HOSTNAME=10.3.234.227 expo start --lan --go --scheme exp --port 8082",
+    "start:lan": "REACT_NATIVE_PACKAGER_HOSTNAME=$(ip route get 1.1.1.1 | grep -o 'src [0-9.]*' | cut -d' ' -f2) expo start --lan --go --scheme exp",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"

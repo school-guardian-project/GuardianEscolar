@@ -3,13 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "api:sync": "node scripts/sync-api-tunnels.mjs",
-    "prestart": "node scripts/sync-api-tunnels.mjs --if-configured",
-    "start": "expo start --clear",
-    "preandroid": "node scripts/sync-api-tunnels.mjs --if-configured",
-    "preios": "node scripts/sync-api-tunnels.mjs --if-configured",
-    "preweb": "node scripts/sync-api-tunnels.mjs --if-configured",
-    "start:lan": "REACT_NATIVE_PACKAGER_HOSTNAME=10.3.234.227 expo start --lan --go --scheme exp --port 8082",
+    "start": "expo start",
+    "start:lan": "REACT_NATIVE_PACKAGER_HOSTNAME=$(ip route get 1.1.1.1 | grep -o 'src [0-9.]*' | cut -d' ' -f2) expo start --lan --go --scheme exp",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web"

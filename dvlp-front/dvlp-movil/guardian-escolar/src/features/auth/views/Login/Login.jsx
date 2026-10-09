@@ -12,6 +12,8 @@ import InputField from "@components/inputs/InputField";
 import PrimaryButton from "@components/buttons/PrimaryButton";
 import { validateEmail, validateRequired } from "@core/validation/validators";
 import { login } from "@core/services/authService";
+import { getPendingAcceptance } from "@core/services/termsService";
+import LegalInfoModal from "./LegalInfoModal";
 import useSession from "@core/hooks/useSession";
 
 export default function Login({ navigation }) {
@@ -24,6 +26,7 @@ export default function Login({ navigation }) {
   const [passwordError, setPasswordError] = useState("");
   const [formError, setFormError] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [legalDoc, setLegalDoc] = useState(null);
   const { applyAuthRole } = useSession();
 
   const handleEmailChange = (value) => {
@@ -53,7 +56,12 @@ export default function Login({ navigation }) {
     try {
       await login(email, password);
       applyAuthRole();
-      navigation.navigate("MainPage");
+      const pending = await getPendingAcceptance();
+      if (pending.ownMissing || pending.minors.length > 0) {
+        navigation.navigate("TermsAcceptance", pending);
+      } else {
+        navigation.navigate("MainPage");
+      }
     } catch (error) {
       setFormError(
         error?.status === 401 || error?.status === 400 || error?.status === 403
@@ -144,7 +152,30 @@ export default function Login({ navigation }) {
             disabled={submitting}
           />
         </View>
+
+        {/* Documentos legales pre-login (solo lectura) */}
+        <View style={styles.legalRow}>
+          <Text
+            style={[styles.legalLink, { color: theme.navbarColor }]}
+            onPress={() => setLegalDoc("terms")}
+          >
+            {t("inputs.terms")}
+          </Text>
+          <Text style={styles.legalSeparator}> · </Text>
+          <Text
+            style={[styles.legalLink, { color: theme.navbarColor }]}
+            onPress={() => setLegalDoc("privacy")}
+          >
+            {t("inputs.privacity")}
+          </Text>
+        </View>
       </View>
+
+      <LegalInfoModal
+        visible={legalDoc !== null}
+        doc={legalDoc ?? "terms"}
+        onClose={() => setLegalDoc(null)}
+      />
     </ScrollView>
   );
 }

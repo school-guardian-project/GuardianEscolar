@@ -10,6 +10,12 @@
     "send": "Send",
     "update": "Update"
   },
+  "accept": {
+    "description": "To continue, accept the Terms and Conditions and authorize the processing of your data and your children's data.",
+    "minors": "Children covered by this authorization",
+    "button": "I accept and authorize",
+    "error": "Could not record the acceptance. Try again."
+  },
   "serviceErrors": {
     "required": "This field is required.",
     "invalidEmail": "Enter a valid email address.",

@@ -10,6 +10,12 @@
     "send": "Envoyer",
     "update": "Mettre à jour"
   },
+  "accept": {
+    "description": "Pour continuer, acceptez les Termes et conditions et autorisez le traitement de vos données et de celles de vos enfants.",
+    "minors": "Enfants couverts par cette autorisation",
+    "button": "J'accepte et j'autorise",
+    "error": "Impossible d'enregistrer l'acceptation. Réessayez."
+  },
   "serviceErrors": {
     "required": "Ce champ est obligatoire.",
     "invalidEmail": "Saisissez une adresse e-mail valide.",

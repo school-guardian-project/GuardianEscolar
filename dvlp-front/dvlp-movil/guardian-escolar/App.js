@@ -44,6 +44,9 @@ import VerifyUpdatePhone from "@features/account/views/Phone/VerifyUpdatePhone/V
 import NewPhone from "@features/account/views/Phone/NewPhone/NewPhone";
 import VerifyNewPhone from "@features/account/views/Phone/VerifyNewPhone/VerifyNewPhone";
 
+// Aceptación de términos (gate post-login)
+import TermsAcceptance from "@features/auth/views/TermsAcceptance/TermsAcceptance";
+
 // Mi familia
 import Family from "@features/profile/views/Family/Family";
 
@@ -104,6 +107,7 @@ function HomeTabs() {
 export default function App() {
   const [ready, setReady] = useState(false);
   const [initialRoute, setInitialRoute] = useState("Login");
+  const [pendingParams, setPendingParams] = useState(undefined);
 
   useEffect(() => {
     const initialize = async () => {
@@ -113,7 +117,18 @@ export default function App() {
       try {
         if (await hasSession()) {
           await refresh();
-          setInitialRoute("MainPage");
+          const { getPendingAcceptance } = await import(
+            "@core/services/termsService"
+          );
+          const pending = await getPendingAcceptance();
+          setInitialRoute(
+            pending.ownMissing || pending.minors.length > 0
+              ? "TermsAcceptance"
+              : "MainPage"
+          );
+          if (pending.ownMissing || pending.minors.length > 0) {
+            setPendingParams(pending);
+          }
         }
       } catch {
         await clearSession();
@@ -151,6 +166,12 @@ export default function App() {
             }}
           >
             <Stack.Screen name="Login" component={Login} />
+
+            <Stack.Screen
+              name="TermsAcceptance"
+              component={TermsAcceptance}
+              initialParams={pendingParams}
+            />
 
             <Stack.Screen name="MapViewTest" component={MapViewTest} />
 

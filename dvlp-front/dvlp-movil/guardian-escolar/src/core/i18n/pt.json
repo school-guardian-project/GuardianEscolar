@@ -10,6 +10,12 @@
     "send": "Enviar",
     "update": "Atualizar"
   },
+  "accept": {
+    "description": "Para continuar, aceite os Termos e Condições e autorize o tratamento dos seus dados e dos dados dos seus filhos.",
+    "minors": "Filhos cobertos por esta autorização",
+    "button": "Aceito e autorizo",
+    "error": "Não foi possível registrar a aceitação. Tente novamente."
+  },
   "serviceErrors": {
     "required": "Este campo é obrigatório.",
     "invalidEmail": "Informe um endereço de e-mail válido.",

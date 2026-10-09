@@ -26,6 +26,7 @@ const DELETE_CONFIG: Record<RegisterType, { icon: string }> = {
 export class DeleteRecord {
   @Input() type: RegisterType = 'student';
   @Input() record: RecordData = {};
+  @Input() error = '';
 
   @Output() confirm = new EventEmitter<RecordData>();
   @Output() cancel = new EventEmitter<void>();
@@ -45,6 +46,10 @@ export class DeleteRecord {
 
   get displayName(): string {
     return (
+      (this.record['name'] as string) ||
+      (this.record['names'] as string) ||
+      (this.record['lastNames'] as string) ||
+      (this.record['plate'] as string) ||
       (this.record['nombres'] as string) ||
       (this.record['nombre'] as string) ||
       (this.record['correo'] as string) ||

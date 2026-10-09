@@ -12,6 +12,8 @@ import { SidebarAdmin } from '@shared/components/navbar/sidebar-admin/sidebar-ad
 import {  RecordInformation,  RecordData} from '@shared/components/modal/record-information/record-information';
 import { AuthService } from '@core/services/auth.service';
 import { SchoolsService } from '@core/services/schools.service';
+import { ProfileService } from '@core/services/profile.service';
+import { map, of, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -38,6 +40,7 @@ export class DashboardAdmin {
   showInformation = false;
 
   schoolSelected: RecordData = {};
+  schoolIdForUpdate: string | null = null;
   loadingSchool = false;
   schoolErrorKey = '';
 
@@ -45,6 +48,7 @@ export class DashboardAdmin {
     private router: Router,
     private readonly authService: AuthService,
     private readonly schoolsService: SchoolsService,
+    private readonly profileService: ProfileService,
   ) { }
 
   get schoolId(): string | null {
@@ -64,15 +68,17 @@ export class DashboardAdmin {
     this.schoolErrorKey = '';
     this.schoolSelected = {};
     this.showInformation = false;
-    const schoolId = this.schoolId;
-    if (!schoolId) {
-      this.schoolErrorKey = 'dashboard.schoolInformation.noSchool';
-      return;
-    }
-
     this.loadingSchool = true;
-    this.schoolsService.get(schoolId).subscribe({
+    this.profileService.getProfile().pipe(
+      map((profile) => this.resolveSchoolId(profile.schoolId)),
+      switchMap((schoolId) => schoolId ? this.schoolsService.get(schoolId) : of(null)),
+    ).subscribe({
       next: (school) => {
+        if (!school) {
+          this.schoolErrorKey = 'dashboard.schoolInformation.noSchool';
+          this.loadingSchool = false;
+          return;
+        }
         this.schoolSelected = {
           ...school,
           city: school.cityName,
@@ -87,6 +93,35 @@ export class DashboardAdmin {
         this.schoolErrorKey = 'dashboard.schoolInformation.loadError';
       },
     });
+  }
+
+  openSchoolUpdate(): void {
+    if (this.loadingSchool) return;
+    this.schoolErrorKey = '';
+    this.loadingSchool = true;
+    this.profileService.getProfile().subscribe({
+      next: (profile) => {
+        this.schoolIdForUpdate = this.resolveSchoolId(profile.schoolId);
+        this.loadingSchool = false;
+        if (!this.schoolIdForUpdate) {
+          this.schoolErrorKey = 'dashboard.schoolInformation.noSchool';
+          return;
+        }
+        this.showUpdateInformation = true;
+      },
+      error: (error: unknown) => {
+        console.error('No se pudo obtener el colegio asociado antes de actualizarlo.', error);
+        this.loadingSchool = false;
+        this.schoolErrorKey = 'dashboard.schoolInformation.loadError';
+      },
+    });
+  }
+
+  private resolveSchoolId(profileSchoolId: string | null | undefined): string | null {
+    const schoolId = profileSchoolId === undefined ? this.authService.session.schoolId : profileSchoolId;
+    this.authService.updateSessionSchoolId(schoolId ?? null);
+    this.schoolIdForUpdate = schoolId ?? null;
+    return this.schoolIdForUpdate;
   }
 
   closeModal(): void {

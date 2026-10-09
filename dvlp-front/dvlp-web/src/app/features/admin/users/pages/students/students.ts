@@ -107,8 +107,11 @@ const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const DATE_PATTERN = /^\d{4}-\d{2}-\d{2}$/;
 const PHONE_MAX = 999999999999999; // BIGINT column, up to 15 digits (E.164)
 
-function isValidStudentForm(form: RecordData): boolean {
-  for (const field of REQUIRED_FIELDS) {
+function isValidStudentForm(form: RecordData, includeCampus = true): boolean {
+  const requiredFields = includeCampus
+    ? REQUIRED_FIELDS
+    : REQUIRED_FIELDS.filter((field) => field !== 'campus');
+  for (const field of requiredFields) {
     if (!String(form[field] ?? '').trim()) {
       return false;
     }
@@ -168,6 +171,7 @@ export class Students implements OnInit {
   @ViewChild(CardRegister) register?: CardRegister;
 
   students = signal<StudentView[]>([]);
+  actionError = '';
 
   ngOnInit(): void {
     this.load();
@@ -176,6 +180,9 @@ export class Students implements OnInit {
   private load(): void {
     this.studentsService.list().subscribe({
       next: (list) => this.students.set(list.map(fromApi)),
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron cargar los estudiantes.');
+      },
     });
   }
 
@@ -187,6 +194,9 @@ export class Students implements OnInit {
     }
     this.studentsService.search(query).subscribe({
       next: (list) => this.students.set(list.map(fromApi)),
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron buscar los estudiantes.');
+      },
     });
   }
 
@@ -225,6 +235,9 @@ export class Students implements OnInit {
         this.studentSelected = fromDetail(detail);
         this.showModal = true;
       },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cargar el estudiante.');
+      },
     });
   }
 
@@ -240,15 +253,20 @@ export class Students implements OnInit {
     if (!id) {
       return;
     }
+    this.actionError = '';
     this.studentsService.get(String(id)).subscribe({
       next: (detail) => {
         this.studentSelected = fromDetail(detail);
         this.showUpdateModal = true;
       },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cargar el estudiante para actualizarlo.');
+      },
     });
   }
 
   closeUpdateModal(): void {
+    this.actionError = '';
     this.showUpdateModal = false;
     this.studentSelected = {};
   }
@@ -260,14 +278,19 @@ export class Students implements OnInit {
       return;
     }
 
-    if (!isValidStudentForm(updatedRecord)) {
+    if (!isValidStudentForm(updatedRecord, false)) {
+      this.actionError = 'Revisa los datos obligatorios del estudiante antes de guardar.';
       return;
     }
 
     this.studentsService.update(String(id), toPayload(updatedRecord)).subscribe({
       next: () => {
+        this.actionError = '';
         this.closeUpdateModal();
         this.load();
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo actualizar el estudiante.');
       },
     });
   }
@@ -278,11 +301,13 @@ export class Students implements OnInit {
     if (!student['id']) {
       return;
     }
+    this.actionError = '';
     this.studentSelected = student;
     this.showDeleteModal = true;
   }
 
   closeDeleteModal(): void {
+    this.actionError = '';
     this.showDeleteModal = false;
     this.studentSelected = {};
   }
@@ -298,6 +323,9 @@ export class Students implements OnInit {
       next: () => {
         this.closeDeleteModal();
         this.load();
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo eliminar el estudiante.');
       },
     });
   }

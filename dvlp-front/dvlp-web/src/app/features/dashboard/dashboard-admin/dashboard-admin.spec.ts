@@ -4,6 +4,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { of, Subject, throwError } from 'rxjs';
 import { AuthService } from '@core/services/auth.service';
 import { SchoolsService } from '@core/services/schools.service';
+import { ProfileService } from '@core/services/profile.service';
 import { SchoolResponseDto } from '@core/models/school.model';
 import { RecordInformation } from '@shared/components/modal/record-information/record-information';
 
@@ -13,7 +14,9 @@ describe('DashboardAdmin', () => {
   let component: DashboardAdmin;
   let fixture: ComponentFixture<DashboardAdmin>;
   let getSchool: ReturnType<typeof vi.fn>;
+  let getProfile: ReturnType<typeof vi.fn>;
   let session: { schoolId: string | null };
+  let updateSessionSchoolId: ReturnType<typeof vi.fn>;
   const school: SchoolResponseDto = {
     id: 'school-1', cityId: 'city-1', cityName: 'Neiva',
     name: 'Colegio Central', address: 'Calle 10 # 5-20', logo: '',
@@ -24,12 +27,18 @@ describe('DashboardAdmin', () => {
   beforeEach(async () => {
     session = { schoolId: 'school-1' };
     getSchool = vi.fn(() => of(school));
+    getProfile = vi.fn(() => of({
+      profileId: 'profile-1', personId: 'person-1', email: 'admin@example.com',
+      roleId: 1, roleName: 'Administrator', campusId: null, schoolId: 'school-1',
+    }));
+    updateSessionSchoolId = vi.fn((schoolId: string | null) => { session.schoolId = schoolId; });
     await TestBed.configureTestingModule({
       imports: [DashboardAdmin, RecordInformation, TranslateModule.forRoot()],
       providers: [
         provideRouter([]),
-        { provide: AuthService, useValue: { session } },
+        { provide: AuthService, useValue: { session, updateSessionSchoolId } },
         { provide: SchoolsService, useValue: { get: getSchool } },
+        { provide: ProfileService, useValue: { getProfile } },
       ],
     }).overrideComponent(DashboardAdmin, { set: { template: '' } }).compileComponents();
 
@@ -62,12 +71,26 @@ describe('DashboardAdmin', () => {
   });
 
   it('does not open an empty modal when no school is associated', () => {
-    session.schoolId = null;
+    getProfile.mockReturnValueOnce(of({
+      profileId: 'profile-1', personId: 'person-1', email: 'admin@example.com',
+      roleId: 1, roleName: 'Administrator', campusId: null, schoolId: null,
+    }));
     component.showDetails();
 
     expect(getSchool).not.toHaveBeenCalled();
     expect(component.showInformation).toBe(false);
     expect(component.schoolErrorKey).toBe('dashboard.schoolInformation.noSchool');
+  });
+
+  it('loads the assigned school from the profile before opening the update modal', () => {
+    session.schoolId = 'stale-school-id';
+    component.openSchoolUpdate();
+
+    expect(getProfile).toHaveBeenCalled();
+    expect(updateSessionSchoolId).toHaveBeenCalledWith('school-1');
+    expect(session.schoolId).toBe('school-1');
+    expect(component.schoolIdForUpdate).toBe('school-1');
+    expect(component.showUpdateInformation).toBe(true);
   });
 
   it('shows a loading failure and allows a retry', () => {

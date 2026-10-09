@@ -1,4 +1,4 @@
-import { Component, Input, OnChanges, OnInit, Output, EventEmitter, inject } from '@angular/core';
+﻿import { Component, Input, OnChanges, OnInit, Output, EventEmitter, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -40,10 +40,12 @@ export type OptionsSource = 'campus' | 'school' | 'city' | 'brand' | 'model';
 
 export interface Field {
   name: string;
-  type: 'text' | 'date' | 'select' | 'tel' | 'email' | 'file';
+  type: 'text' | 'date' | 'select' | 'tel' | 'email' | 'file' | 'time';
   placeholder?: string;
   options?: string[];
   optionsSource?: OptionsSource;
+  /** Prefijo i18n para mostrar opciones estáticas traducidas (valor = sufijo). */
+  optionLabelPrefix?: string;
   halfWidth?: boolean;
 }
 
@@ -109,10 +111,12 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { name: 'brand', type: 'select', optionsSource: 'brand' },
     { name: 'model', type: 'select', optionsSource: 'model' },
     { name: 'capacity', type: 'text' },
-    { name: 'soat', type: 'date', halfWidth: true },
-    // No hay select de GPS a propósito: no existe listado de dispositivos GPS en
-    // el backend (el proveedor api/gps-devices no está implementado), asi que
-    // "Activo/Inactivo" era un dato falso que no llegaba a ningún lado.
+    { name: 'soat', type: 'date' },
+    // GPS libres (GET /fleet/api/gps-devices): el valor es el id y se muestra el IMEI.
+    { name: 'gps', type: 'select', options: [] },
+    // Alternativa al select: IMEI de un GPS nuevo (ms-fleet lo crea al vuelo).
+    { name: 'gpsImei', type: 'text' },
+    { name: 'gpsStatus', type: 'select', options: ['true', 'false'], optionLabelPrefix: 'register.bus.gpsStatusValues.' },
   ],
 
   stop: [
@@ -128,12 +132,10 @@ const FIELDS: Record<RegisterType, Field[]> = {
 
   route: [
     { name: 'name', type: 'text' },
-    { name: 'sector', type: 'text' },
-    { name: 'startTime', type: 'text' },
-    { name: 'endTime', type: 'text' },
+    { name: 'campus', type: 'select', optionsSource: 'campus' },
+    { name: 'startTime', type: 'time' },
+    { name: 'endTime', type: 'time' },
     { name: 'destination', type: 'text' },
-    { name: 'routeSector', type: 'select', options: [] },
-    { name: 'bus', type: 'select', options: [] },
   ],
 
   admins: [
@@ -214,6 +216,7 @@ const VALIDATION_SCHEMAS: Record<RegisterType, ValidationSchema> = {
     model: { required: true },
     capacity: { required: true, pattern: 'number', min: 1, max: 100 },
     soat: { required: true, custom: validateFutureDate },
+    gpsStatus: { required: true },
   },
   stop: {
     name: { required: true, minLength: 2, maxLength: 30 },
@@ -225,12 +228,10 @@ const VALIDATION_SCHEMAS: Record<RegisterType, ValidationSchema> = {
   },
   route: {
     name: { required: true, minLength: 2 },
-    sector: { required: true },
+    campus: { required: true },
     startTime: { required: true },
     endTime: { required: true },
     destination: { required: true },
-    routeSector: { required: true },
-    bus: { required: true },
   },
   admins: {
     name: { required: true, pattern: 'text', minLength: 2 },
@@ -265,6 +266,8 @@ const VALIDATION_SCHEMAS: Record<RegisterType, ValidationSchema> = {
 export class CardRegister implements OnInit, OnChanges {
   @Input() type: RegisterType = 'student';
   @Input() fieldOptions: Record<string, string[]> = {};
+  /** Opciones con id como valor y texto propio (p. ej. GPS: id -> IMEI). */
+  @Input() fieldSelectOptions: Record<string, SelectOption[]> = {};
   @Output() formSubmit = new EventEmitter<Record<string, any>>();
 
   private translate = inject(TranslateService);
@@ -456,6 +459,12 @@ export class CardRegister implements OnInit, OnChanges {
     if (field.optionsSource) {
       return this.getSourceOptions(field.optionsSource);
     }
+    if (this.fieldSelectOptions[field.name]) {
+      return this.fieldSelectOptions[field.name];
+    }
+    if (field.optionLabelPrefix) {
+      return (field.options ?? []).map((value) => ({ value, label: this.translate.instant(field.optionLabelPrefix + value) }));
+    }
     const labels = this.fieldOptions[field.name] ?? field.options;
     return (labels ?? []).map((label) => ({ value: label, label }));
   }
@@ -556,6 +565,8 @@ export class CardRegister implements OnInit, OnChanges {
     if (this.type === 'schools') {
       this.validateField(fieldName);
       this.validationMessage = '';
+    } else {
+      delete this.fieldErrors[fieldName];
     }
   }
 
@@ -769,6 +780,20 @@ export class CardRegister implements OnInit, OnChanges {
       }
     }
 
+    if (this.type === 'route' && !this.fieldErrors['startTime'] && !this.fieldErrors['endTime']
+      && String(this.formData['endTime']) <= String(this.formData['startTime'])) {
+      this.fieldErrors['endTime'] = this.translate.instant('validation.timeOrder');
+    }
+
+    if (this.type === 'bus') {
+      const imei = String(this.formData['gpsImei'] ?? '').trim();
+      if (imei && !/^\d{15}$/.test(imei)) {
+        this.fieldErrors['gpsImei'] = this.translate.instant('validation.imei');
+      } else if (!imei && !this.formData['gps']) {
+        this.fieldErrors['gps'] = this.translate.instant('validation.gpsRequired');
+      }
+    }
+
     // Las sedes no son un campo del FIELDS sino un bloque repetible, asi que su
     // validacion vive fuera del bucle de arriba.
     if (this.type === 'schools') {
@@ -793,6 +818,12 @@ export class CardRegister implements OnInit, OnChanges {
 
   setValidationMessage(message: string): void {
     this.validationMessage = message;
+  }
+
+  /** Error del backend que corresponde a un campo: se muestra bajo ese input. */
+  setFieldError(fieldName: string, message: string): void {
+    this.fieldErrors[fieldName] = message;
+    this.validationMessage = '';
   }
 
   resetForm(): void {

@@ -28,6 +28,8 @@ export class UpdateInformation implements OnInit {
   telefono: string = '';
   email: string = '';
   website: string = '';
+  theme = '';
+  status = '';
   logo = '';
   latitude: number | null = null;
   longitude: number | null = null;
@@ -77,6 +79,8 @@ export class UpdateInformation implements OnInit {
     this.telefono = String(school.phone ?? '');
     this.email = school.email ?? '';
     this.website = school.website ?? '';
+    this.theme = school.theme ?? '';
+    this.status = school.status ?? 'Active';
     this.logo = school.logo ?? '';
     this.latitude = school.latitude ?? null;
     this.longitude = school.longitude ?? null;
@@ -140,6 +144,8 @@ export class UpdateInformation implements OnInit {
       phone: Number(this.telefono.replace(/\D/g, '')),
       email: this.email.trim(),
       website: this.website.trim(),
+      theme: this.theme,
+      status: this.status,
       campuses,
     };
 
@@ -171,6 +177,8 @@ export class UpdateInformation implements OnInit {
     this.telefono = '';
     this.email = '';
     this.website = '';
+    this.theme = '';
+    this.status = '';
     this.campuses = [];
     this.campusMaps = [];
     this.closed.emit();

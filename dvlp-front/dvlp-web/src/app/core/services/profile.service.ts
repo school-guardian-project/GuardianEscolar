@@ -9,8 +9,6 @@ export interface UserProfileDto {
   email: string;
   roleId: number;
   roleName: string;
-  name?: string;
-  lastName?: string;
   campusId: string | null;
   campusName?: string | null;
   schoolId?: string | null;

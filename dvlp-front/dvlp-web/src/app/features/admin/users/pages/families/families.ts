@@ -60,6 +60,8 @@ export class Families implements OnInit {
 
   families = signal<FamilyView[]>([]);
   fieldOptions: Record<string, string[]> = {};
+  updateFieldOptions: Record<string, string[]> = {};
+  updateFieldOptionLabels: Record<string, Record<string, string>> = {};
 
   /** Claves de resolución: profileId (lo que guardan las familias) y person.id (datos
    *  heredados). El envío usa profileId, que es lo que espera el DTO de miembros. */
@@ -97,6 +99,13 @@ export class Families implements OnInit {
         this.fieldOptions = {
           guardian: [...this.parentIdByLabel.keys()],
           student: [...this.studentIdByLabel.keys()],
+        };
+        this.updateFieldOptions = {
+          guardian: this.fieldOptions['guardian'],
+          student: students.map(student => student.profileId ?? student.id),
+        };
+        this.updateFieldOptionLabels = {
+          student: Object.fromEntries(this.studentLabelById),
         };
         this.load();
       },
@@ -143,7 +152,7 @@ export class Families implements OnInit {
     };
   }
 
-  private toPayload(form: RecordData, keepChildren: string[] = []): FamilyRequestDto | null {
+  private toPayload(form: RecordData): FamilyRequestDto | null {
     const parentLabel = String(form['guardian'] ?? '').trim();
     const parentId = this.parentIdByLabel.get(parentLabel) ?? parentLabel;
 
@@ -156,7 +165,6 @@ export class Families implements OnInit {
 
     const children = [
       ...new Set([
-        ...keepChildren,
         ...studentLabels
           .map((label) => this.studentIdByLabel.get(label) ?? label)
           .filter((id) => id && id !== parentId),
@@ -173,7 +181,7 @@ export class Families implements OnInit {
       ),
     );
 
-    if (!String(form['name'] ?? '').trim() || members.length === 0) {
+    if (!String(form['name'] ?? '').trim() || !parentId || children.length === 0) {
       return null;
     }
 
@@ -231,9 +239,11 @@ export class Families implements OnInit {
   }
 
   showUpdateModal = false;
+  updateError = '';
   familyToUpdate: RecordData = {};
 
   showUpdate(family: RecordData): void {
+    this.updateError = '';
     const id = family['id'];
     if (!id) {
       return;
@@ -242,11 +252,9 @@ export class Families implements OnInit {
       next: (detail) => {
         this.detail = detail;
         const view = this.fromDetail(detail);
-        // El modal de actualización tiene un solo select de estudiante.
-        const firstChild = (detail.children ?? [])[0];
         this.familyToUpdate = {
           ...view,
-          student: firstChild ? (this.studentLabelById.get(firstChild) ?? firstChild) : '',
+          student: [...(detail.children ?? [])],
         };
         this.showUpdateModal = true;
       },
@@ -257,17 +265,20 @@ export class Families implements OnInit {
     this.showUpdateModal = false;
     this.familyToUpdate = {};
     this.detail = null;
+    this.updateError = '';
   }
 
   onSaved(updatedRecord: RecordData): void {
+    this.updateError = '';
     const id = updatedRecord['id'];
     if (!id) {
       this.closeUpdateModal();
       return;
     }
 
-    const payload = this.toPayload(updatedRecord, this.detail?.children ?? []);
+    const payload = this.toPayload(updatedRecord);
     if (!payload) {
+      this.updateError = 'Selecciona el nombre de la familia, el acudiente y al menos un estudiante.';
       return;
     }
 
@@ -276,6 +287,7 @@ export class Families implements OnInit {
         this.closeUpdateModal();
         this.load();
       },
+      error: (error) => this.updateError = describeProblem(error, 'No se pudo actualizar la familia.'),
     });
   }
 

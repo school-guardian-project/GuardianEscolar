@@ -3,6 +3,7 @@
   <app-sidebar-superadmin></app-sidebar-superadmin>
   <div class="container">
     <app-card-register type="schools" (formSubmit)="onCreated($event)"></app-card-register>
+    <p *ngIf="actionError && !showUpdateModal && !showDeleteModal" class="action-error" role="alert">{{ actionError }}</p>
     <app-card-list type="schools"
       [data]="schools()"
       [remoteSearch]="true"
@@ -26,6 +27,7 @@
   type="schools"
   [record]="schoolSelected"
   [cityOptions]="cityOptions"
+  [saveError]="actionError"
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()">
 </app-update-record>
@@ -34,6 +36,7 @@
   *ngIf="showDeleteModal"
   type="schools"
   [record]="schoolSelected"
+  [error]="actionError"
   (confirm)="onConfirmDelete($event)"
   (cancel)="closeDeleteModal()">
 </app-delete-record>

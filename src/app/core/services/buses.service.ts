@@ -1,8 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+﻿import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { BusListDto, BusRequestDto, BusResponseDto } from '../models/bus.model';
+import { BusListDto, BusRequestDto, BusResponseDto, GpsDeviceDto } from '../models/bus.model';
 
 @Injectable({
   providedIn: 'root',
@@ -40,6 +40,10 @@ export class BusesService {
 
   assignDriver(busId: string, profileId: string): Observable<void> {
     return this.http.put<void>(`${this.base}/${busId}/driver`, { profileId });
+  }
+
+  listGpsDevices(): Observable<GpsDeviceDto[]> {
+    return this.http.get<GpsDeviceDto[]>(`${environment.apiUrl}/fleet/api/gps-devices`);
   }
 
   unassignDriver(busId: string): Observable<void> {

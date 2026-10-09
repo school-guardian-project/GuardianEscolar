@@ -1,11 +1,13 @@
-<app-navbar-manage backRoute="/dashboard-admin"></app-navbar-manage>
+﻿<app-navbar-manage backRoute="/dashboard-admin"></app-navbar-manage>
 <!-- CONTENIDO PRINCIPAL -->
 <div class="page-wrapper">
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
+    <p *ngIf="actionError && !showUpdateModal && !showDeleteModal" class="action-error" role="alert">{{ actionError }}</p>
     <app-card-register
       type="bus"
       [fieldOptions]="fieldOptions"
+      [fieldSelectOptions]="registerSelectOptions"
       (formSubmit)="onCreated($event)"
     ></app-card-register>
     <app-card-list type="bus" 
@@ -33,7 +35,10 @@
   *ngIf="showUpdateModal"
   type="bus"
   [record]="busSelected"
-  [fieldOptions]="fieldOptions"
+  [fieldOptions]="updateFieldOptions"
+  [fieldOptionLabels]="updateFieldOptionLabels"
+  [saveError]="actionError"
+  [saveFieldErrors]="saveFieldErrors"
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()">
 </app-update-record>
@@ -43,6 +48,7 @@
   *ngIf="showDeleteModal"
   type="bus"
   [record]="busSelected"
+  [error]="actionError"
   (confirm)="onConfirmDelete($event)"
   (cancel)="closeDeleteModal()">  
   

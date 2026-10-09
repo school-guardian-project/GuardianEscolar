@@ -73,7 +73,8 @@
         {{ 'assign_record.buttons.assign' | translate }}
       </button>
 
-      <button *ngIf="type === 'bus' && currentDriver" class="modal__btn modal__btn--submit" (click)="unassign()">
+      <button *ngIf="type === 'bus' && currentDriver" class="modal__btn modal__btn--submit"
+        [disabled]="submitting" (click)="unassign()">
         {{ 'assign_record.buttons.unassign' | translate }}
       </button>
     </div>

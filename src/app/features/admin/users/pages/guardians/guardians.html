@@ -3,6 +3,7 @@
 <div class="page-wrapper">
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
+    <p *ngIf="actionError && !showUpdateModal && !showDeleteModal" class="action-error" role="alert">{{ actionError }}</p>
     <app-card-register type="guardian" (formSubmit)="onCreated($event)"></app-card-register>
 
     <app-card-list
@@ -25,6 +26,7 @@
   *ngIf="showUpdateModal"
   type="guardian"
   [record]="attendantSelected"
+  [saveError]="actionError"
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()">
 </app-update-record>
@@ -33,6 +35,7 @@
   *ngIf="showDeleteModal"
   type="guardian"
   [record]="attendantSelected"
+  [error]="actionError"
   (confirm)="onConfirmDelete($event)"
   (cancel)="closeDeleteModal()">
 </app-delete-record>

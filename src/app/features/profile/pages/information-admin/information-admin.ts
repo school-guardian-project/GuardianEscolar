@@ -68,6 +68,9 @@ export class InformationAdmin implements OnInit {
     this.profileService.getProfile().pipe(
       switchMap((profile) => {
         this.profile = profile;
+        if (profile.schoolId !== undefined) {
+          this.authService.updateSessionSchoolId(profile.schoolId ?? null);
+        }
         if (!profile?.personId) {
           return throwError(() => new Error('The authenticated profile has no person ID.'));
         }

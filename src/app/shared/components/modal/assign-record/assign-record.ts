@@ -7,10 +7,11 @@ import { RecordData } from '@shared/components/modal/record-information/record-i
 import { RoutesService } from '@core/services/routes.service';
 import { BusesService } from '@core/services/buses.service';
 import { DriversService } from '@core/services/drivers.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 export type AssignType = 'route' | 'student' | 'bus';
 
-const ROUTE_HAS_BUS = 'The route already has a bus assigned';
+const ROUTE_HAS_BUS = 'assign_record.route.alreadyAssigned';
 
 interface SelectOption {
   id: string;
@@ -48,6 +49,7 @@ export class AssignRecord implements OnInit {
   routeHasBus = false;
   currentDriver = '';
   message = '';
+  submitting = false;
 
   private stopsRouteId = '';
 
@@ -66,6 +68,7 @@ export class AssignRecord implements OnInit {
   }
 
   get canSubmit(): boolean {
+    if (this.submitting) return false;
     if (this.type === 'route') return !this.routeHasBus && !!this.selectedBusId;
     if (this.type === 'student') return !!this.selectedRouteId && !!this.selectedStopId;
     return !this.currentDriver && !!this.selectedDriverProfileId;
@@ -83,17 +86,19 @@ export class AssignRecord implements OnInit {
         this.routeHasBus = !!detail.busId;
         if (this.routeHasBus) this.message = ROUTE_HAS_BUS;
       },
-      error: () => {},
+      error: () => (this.message = 'assign_record.genericError'),
     });
 
     this.busesService.list().subscribe({
       next: (list) => (this.buses = list.map((b) => ({ id: String(b.id), label: b.plate ?? '' }))),
+      error: () => (this.message = 'assign_record.genericError'),
     });
   }
 
   private loadStudent(): void {
     this.routesService.list().subscribe({
       next: (list) => (this.routes = list.map((r) => ({ id: String(r.id), label: r.name ?? '' }))),
+      error: () => (this.message = 'assign_record.genericError'),
     });
 
     const profileId = String(this.record['profileId'] ?? '');
@@ -107,10 +112,18 @@ export class AssignRecord implements OnInit {
 
         this.routesService.getStudentStop(this.selectedRouteId, profileId).subscribe({
           next: (stop) => (this.selectedStopId = String(stop.stopId)),
-          error: () => {},
+          error: (error: unknown) => {
+            if (!(error instanceof HttpErrorResponse) || error.status !== 404) {
+              this.message = 'assign_record.genericError';
+            }
+          },
         });
       },
-      error: () => {},
+      error: (error: unknown) => {
+        if (!(error instanceof HttpErrorResponse) || error.status !== 404) {
+          this.message = 'assign_record.genericError';
+        }
+      },
     });
   }
 
@@ -125,6 +138,7 @@ export class AssignRecord implements OnInit {
             id: String(d.profileId),
             label: `${d.name ?? ''} ${d.lastName ?? ''}`.trim(),
           }))),
+      error: () => (this.message = 'assign_record.genericError'),
     });
   }
 
@@ -153,6 +167,7 @@ export class AssignRecord implements OnInit {
       return;
     }
 
+    this.submitting = true;
     this.routesService.assignBus(String(this.record['id'] ?? ''), this.selectedBusId).subscribe({
       next: () => this.done(),
       error: (err) => this.fail(err),
@@ -160,6 +175,7 @@ export class AssignRecord implements OnInit {
   }
 
   private submitStudent(): void {
+    this.submitting = true;
     this.routesService
       .assignStudent(this.selectedRouteId, {
         studentId: String(this.record['profileId'] ?? ''),
@@ -172,6 +188,7 @@ export class AssignRecord implements OnInit {
   }
 
   private submitBus(): void {
+    this.submitting = true;
     this.busesService.assignDriver(String(this.record['id'] ?? ''), this.selectedDriverProfileId).subscribe({
       next: () => this.done(),
       error: (err) => this.fail(err),
@@ -179,6 +196,7 @@ export class AssignRecord implements OnInit {
   }
 
   unassign(): void {
+    this.submitting = true;
     this.busesService.unassignDriver(String(this.record['id'] ?? '')).subscribe({
       next: () => this.done(),
       error: (err) => this.fail(err),
@@ -193,6 +211,7 @@ export class AssignRecord implements OnInit {
   private fail(err: unknown): void {
     const body = (err as { error?: unknown })?.error;
     this.message = typeof body === 'string' && body ? body : 'assign_record.genericError';
+    this.submitting = false;
   }
 
   close(): void {

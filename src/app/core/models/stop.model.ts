@@ -1,4 +1,4 @@
-export type StopStatus = 'Active' | 'Inactive';
+﻿export type StopStatus = 'Active' | 'Inactive';
 
 export interface StopRequestDto {
   name: string;
@@ -7,6 +7,9 @@ export interface StopRequestDto {
   address: string;
   longitude: number;
   latitude: number;
+  /** Ruta a la que se mueve la parada (PUT): reemplaza el vínculo con previousRouteId. */
+  routeId?: string;
+  previousRouteId?: string;
 }
 
 export interface StopListDto {
@@ -17,6 +20,9 @@ export interface StopListDto {
   longitude: number;
   cityId: string;
   schoolId: string;
+  routeId?: string | null;
+  routeName?: string | null;
+  routeNames?: string[];
 }
 
 export interface StopResponseDto {

@@ -3,6 +3,7 @@ export interface SchoolRequestDto {
   logo: string;
   name: string;
   address: string;
+  status?: string;
   latitude?: number | null;
   longitude?: number | null;
   phone: number;
@@ -45,6 +46,7 @@ export interface SchoolListDto {
   cityId: string;
   name: string;
   address: string;
+  status: string;
   latitude?: number | null;
   longitude?: number | null;
 }

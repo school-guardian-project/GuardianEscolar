@@ -31,7 +31,9 @@
           </p>
 
           <p class="modal__info-value">
-            {{ field.value }}
+            {{ type === 'schools' && field.key === 'status'
+              ? (('update_record.schools.statusValues.' + field.value) | translate)
+              : field.value }}
           </p>
 
         </div>

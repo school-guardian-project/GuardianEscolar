@@ -1,10 +1,11 @@
-import { Component, inject, signal } from '@angular/core';
+﻿import { Component, inject, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { isPlatformBrowser } from '@angular/common';
 import { PLATFORM_ID } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core'; // ← agregar
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { setProblemTranslator } from '@core/http/problem-detail';
 
 @Component({
   selector: 'app-root',
@@ -29,6 +30,7 @@ export class App {
   }
 
   ngOnInit() {
+    setProblemTranslator((key) => this.translate.instant(key));
     if (isPlatformBrowser(this.platformId)) {
       this.router.events
         .pipe(filter((event) => event instanceof NavigationEnd))

@@ -23,7 +23,7 @@ describe('UpdateRecord', () => {
 
   it('keeps all existing children and adds multiple children without duplicates', async () => {
     component.type = 'family';
-    component.record = { id: 'family-id', name: 'Family', student: ['Ana', 'Luis'] };
+    component.record = { id: 'family-id', name: 'Family', guardian: 'guardian-id', student: ['Ana', 'Luis'] };
     component.fieldOptions = { student: ['Ana', 'Luis', 'Sofia', 'Carlos'] };
     fixture.detectChanges();
     await fixture.whenStable();
@@ -47,9 +47,27 @@ describe('UpdateRecord', () => {
     }));
   });
 
+  it('uses the separate first-name field when updating a guardian', () => {
+    component.type = 'guardian';
+    component.record = { names: 'Ana', name: 'Ana Pérez', lastNames: 'Pérez', email: 'ana@test.com', documentType: 'CC',
+      identification: '123456', birthDate: '1990-01-01', phone: '3001234567', address: 'Calle 123' };
+    component.ngOnInit();
+    expect(component.fields[0].name).toBe('names');
+    component.formData['names'] = 'Ana María';
+    const saved = vi.fn();
+    component.saved.subscribe(saved);
+
+    component.onSubmit();
+
+    expect(saved).toHaveBeenCalledWith(expect.objectContaining({
+      names: 'Ana María',
+      lastNames: 'Pérez',
+    }));
+  });
+
   it('removes only the selected child and keeps unknown existing child identifiers', () => {
     component.type = 'family';
-    component.record = { student: ['unknown-profile-id', 'Ana'] };
+    component.record = { name: 'Family', guardian: 'guardian-id', student: ['unknown-profile-id', 'Ana'] };
     component.ngOnInit();
     component.removeStudent('Ana');
     const saved = vi.fn();
@@ -66,7 +84,7 @@ describe('UpdateRecord', () => {
 
   it('keeps children with identical names as separate profiles', () => {
     component.type = 'family';
-    component.record = { student: ['first-profile', 'second-profile'] };
+    component.record = { name: 'Family', guardian: 'guardian-id', student: ['first-profile', 'second-profile'] };
     component.fieldOptions = { student: ['first-profile', 'second-profile', 'third-profile'] };
     component.fieldOptionLabels = { student: {
       'first-profile': 'Ana Test', 'second-profile': 'Ana Test', 'third-profile': 'Ana Test',

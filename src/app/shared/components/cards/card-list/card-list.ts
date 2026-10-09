@@ -75,8 +75,7 @@ const ITEM_FIELDS: Record<CardType, ItemField[]> = {
   stop: [
     { key: 'name' },
     { key: 'address', labelKey: 'card_list.labels.address' },
-    { key: 'latitude', halfWidth: true },
-    { key: 'longitude', halfWidth: true },
+    { key: 'route' },
   ],
   route: [
     { key: 'name' },
@@ -93,6 +92,7 @@ const ITEM_FIELDS: Record<CardType, ItemField[]> = {
   schools: [
     { key: 'name' },
     { key: 'address', labelKey: 'card_list.labels.address' },
+    { key: 'status', labelKey: 'card_list.labels.status' },
   ],
 };
 

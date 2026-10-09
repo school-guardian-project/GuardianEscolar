@@ -1,0 +1,523 @@
+/* :root lets shared viewport rules override Angular's encapsulated selectors. */
+:root {
+  body :is(app-navbar-manage, app-nav-component) .mobile-menu-button {
+    display: none;
+  }
+
+  body :is(app-sidebar-admin, app-navbar-admin, app-sidebar-superadmin) {
+    display: block;
+    flex: 0 0 200px;
+    width: 200px;
+    min-height: 0;
+  }
+
+  body app-mobile-navigation :is(app-navbar-admin, app-sidebar-superadmin) {
+    display: block;
+    width: 100%;
+    flex: 1;
+  }
+
+  body app-mobile-navigation .menu-item {
+    min-height: 44px;
+  }
+
+  body.internal-page
+    :is(
+      .page-wrapper,
+      .content-wrapper,
+      .main-container,
+      .main,
+      .main-content,
+      .information-container
+    ) {
+    min-width: 0;
+    min-height: 0;
+  }
+
+  body.internal-page
+    :is(
+      app-students,
+      app-guardians,
+      app-drivers,
+      app-families,
+      app-buses,
+      app-stops,
+      app-routes,
+      app-admins,
+      app-schools
+    ) {
+    height: 100dvh;
+    min-height: 0;
+  }
+
+  body.internal-page
+    :is(app-dashboard-admin, app-dashboard-superadmin, app-information-admin)
+    > :is(.container, .layout) {
+    height: 100dvh;
+  }
+
+  body.internal-page :is(.page-wrapper, .content-wrapper, .main-container) {
+    flex: 1 1 0;
+  }
+
+  body.internal-page .information-container {
+    overflow-y: auto;
+    align-items: safe center;
+    justify-content: safe center;
+  }
+
+  body.internal-page :is(.section-info, .info-item, .profile-container, .metric-card) {
+    min-width: 0;
+  }
+
+  body.internal-page :is(.info-value, .user-meta-item, .user-name, .metric-label) {
+    overflow-wrap: anywhere;
+  }
+
+  body :is(.modal-overlay, .modal-backdrop, .lang-backdrop, .logout-overlay) {
+    padding: 16px;
+  }
+
+  body :is(.modal, .lang-modal, .modal-confirmation, .logout-modal) {
+    min-width: 0;
+    max-height: calc(100dvh - 32px);
+    overflow-y: auto;
+    overflow-wrap: anywhere;
+  }
+
+  body :is(.modal__footer, .modal-footer, .modal_footer, .logout-actions) {
+    flex-wrap: wrap;
+  }
+
+  body :is(.modal__info-grid, .themes-grid, .lang-grid) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body :is(.modal__info-item, .modal__info-value, .modal__input, .theme-card, .lang-card) {
+    min-width: 0;
+  }
+
+  body .theme-option {
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  body
+    :is(app-card-register, app-card-list)
+    :is(input, select, textarea, .card-register__field, .card-register__input-wrap) {
+    min-width: 0;
+  }
+
+  body :is(app-login, app-change-information, app-change-password) .layout {
+    min-height: 100dvh;
+    height: auto;
+  }
+
+  body :is(app-login, app-change-information, app-change-password) main {
+    padding: 24px;
+    flex: 1;
+  }
+
+  body :is(app-login, app-change-information, app-change-password) .container-session {
+    height: auto;
+    max-height: none;
+    min-height: 500px;
+  }
+
+  body app-login .container-session {
+    min-height: 560px;
+  }
+
+  body app-change-information .container-session {
+    min-height: 600px;
+  }
+
+  body :is(app-login, app-change-information, app-change-password) .sesion-right {
+    height: auto;
+    min-width: 0;
+  }
+
+  body.internal-page :is(.pin-inputs, .progres) {
+    gap: clamp(4px, 2vw, 12px);
+    max-width: 100%;
+  }
+
+  body.internal-page .pin-inputs .pin-input {
+    width: min(40px, calc((100% - 5 * clamp(4px, 2vw, 12px)) / 6));
+    min-width: 0;
+    padding: 4px;
+    flex-shrink: 1;
+  }
+
+  body.internal-page
+    .sesion-right
+    :is(app-email, app-telephone, app-code, app-code-first, app-code-second, app-reset) {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
+
+  body.internal-page .sesion-right input[type='password'] {
+    margin-inline: 0;
+  }
+
+  body.internal-page :is(.sesion-right, .sesion-left) {
+    overflow-wrap: anywhere;
+  }
+
+  body.internal-page .sesion-right .login-description {
+    margin-top: 12px;
+  }
+
+  @media (max-width: 1024px) {
+    body :is(app-navbar-manage, app-nav-component) .mobile-menu-button {
+      display: inline-flex;
+    }
+
+    body
+      :is(.page-wrapper, .content-wrapper, .main-container)
+      > :is(app-sidebar-admin, app-navbar-admin, app-sidebar-superadmin) {
+      display: none;
+    }
+
+    body.internal-page :is(.page-wrapper > .container, .main) {
+      padding: 20px 16px;
+    }
+
+    body.internal-page app-information-admin .card {
+      padding: 24px;
+    }
+
+    body.internal-page app-information-admin .content {
+      gap: 20px;
+    }
+
+    body.internal-page app-information-admin .section-info {
+      column-gap: 20px;
+    }
+
+    body :is(app-login, app-change-information, app-change-password) .container-session {
+      width: 100%;
+      max-width: 600px;
+      min-height: 0;
+    }
+
+    body :is(app-login, app-change-information, app-change-password) .sesion-left {
+      display: none;
+    }
+
+    body :is(app-login, app-change-information, app-change-password) .sesion-right {
+      width: 100%;
+      border-radius: 12px;
+    }
+
+    body app-navbar .navbar-start {
+      padding-left: 0;
+    }
+
+    body app-main :is(.cards-index, .steps-index) {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    body app-main .card-index {
+      width: 100%;
+      max-width: none;
+      min-width: 0;
+      padding: 24px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    body.internal-page :is(app-dashboard-admin, app-dashboard-superadmin) .content-wrapper {
+      flex-direction: column;
+    }
+
+    body.internal-page :is(app-dashboard-admin, app-dashboard-superadmin) .main {
+      flex: 1;
+    }
+
+    body.internal-page .right-sidebar {
+      width: 100%;
+      flex-direction: row;
+      justify-content: center;
+      padding: 8px;
+      border-left: 0;
+      border-top: 1px solid var(--border-color);
+    }
+
+    body.internal-page .right-sidebar .icon-circle {
+      width: 44px;
+      height: 44px;
+    }
+
+    body.internal-page app-information-admin .divider-vertical {
+      display: none;
+    }
+
+    body.internal-page app-information-admin .profile-container {
+      min-width: 0;
+      max-width: 100%;
+    }
+
+    body.internal-page .metrics {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    body app-main .section-start-index {
+      flex-direction: column;
+    }
+
+    body app-main :is(.left-index, .right-index) {
+      width: 100%;
+    }
+
+    body app-contact :is(.section-contact, .section-right) {
+      flex-direction: column;
+    }
+
+    body app-contact :is(.box, .section-contact-left, .means-contact) {
+      width: 100%;
+      min-width: 0;
+    }
+
+    body app-contact :is(.container, .container1) {
+      padding: 24px;
+    }
+
+    body app-contact :is(.contact-card, .social-card, .schedule) {
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    body app-contact :is(.link-social, .description-text) {
+      overflow-wrap: anywhere;
+    }
+
+    body app-contact .contact-button {
+      margin-left: 0;
+    }
+
+    body app-footer footer {
+      padding: 32px 20px 0;
+    }
+
+    body app-footer .guardian {
+      font-size: clamp(1.2rem, 5vw, 2.5rem);
+      overflow-wrap: anywhere;
+    }
+
+    body app-footer img {
+      width: 64px;
+      height: auto;
+    }
+  }
+
+  @media (max-width: 600px) {
+    body.internal-page .metrics {
+      grid-template-columns: 1fr;
+    }
+
+    body.internal-page :is(.page-wrapper > .container, .main, .information-container) {
+      padding: 16px 12px;
+    }
+
+    body app-navbar-manage .custom-toolbar {
+      padding-inline: 4px;
+    }
+
+    body app-navbar-manage .title {
+      font-size: clamp(0.85rem, 3.7vw, 1.2rem);
+    }
+
+    body app-navbar-manage button {
+      margin: 0;
+    }
+
+    body app-nav-component mat-toolbar {
+      padding-inline: 8px;
+    }
+
+    body app-nav-component .title-guardian {
+      font-size: clamp(1rem, 4vw, 1.5rem);
+    }
+
+    body app-information-admin :is(.card-header, .info-item-header) {
+      gap: 8px;
+    }
+
+    body app-information-admin :is(.icon-action, .edit-btn, .avatar-edit-btn) {
+      min-width: 44px;
+      min-height: 44px;
+    }
+
+    body
+      :is(app-card-register .card-register, app-card-list .card-list, app-information-admin .card) {
+      padding: 20px 14px;
+    }
+
+    body.internal-page app-information-admin .card {
+      padding: 20px 14px;
+    }
+
+    body app-card-register .card-register__row {
+      flex-direction: column;
+      gap: 0;
+    }
+
+    body app-card-register :is(.card-register__input, .card-register__add-btn) {
+      height: 44px;
+    }
+
+    body
+      app-card-register
+      :is(.card-register__add-btn, .card-register__map-btn, .card-register__remove-btn) {
+      min-width: 44px;
+      min-height: 44px;
+    }
+
+    body app-card-register .card-register__selected-item {
+      overflow-wrap: anywhere;
+    }
+
+    body app-card-list .card-list__search {
+      height: 44px;
+    }
+
+    body app-card-list .card-list__item {
+      flex-wrap: wrap;
+    }
+
+    body app-card-list .card-list__info {
+      flex-basis: calc(100% - 42px);
+    }
+
+    body app-card-list .card-list__actions {
+      margin-left: auto;
+      flex-wrap: wrap;
+    }
+
+    body app-card-list :is(.card-list__name, .card-list__detail) {
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
+    body app-card-list .card-list__row {
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    body app-card-list :is(.card-list__btn, .card-list__page-btn) {
+      min-width: 44px;
+      min-height: 44px;
+      justify-content: center;
+    }
+
+    body :is(.modal, .lang-modal, .modal-confirmation) {
+      padding: 20px 16px;
+    }
+
+    body :is(.modal__info-grid, .themes-grid, .lang-grid) {
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    body .modal__info-grid .modal__info-item {
+      grid-column: 1;
+    }
+
+    body :is(.modal__footer, .modal_footer, .logout-actions) button {
+      min-height: 44px;
+      padding-inline: 16px;
+    }
+
+    body :is(app-login, app-change-information, app-change-password) main {
+      padding: 16px 12px;
+    }
+
+    body :is(app-login, app-change-information, app-change-password) .sesion-right {
+      padding: 24px 16px;
+    }
+
+    body.internal-page .sesion-right .progres {
+      flex-wrap: wrap;
+    }
+
+    body.internal-page .sesion-right .error {
+      position: static;
+    }
+
+    body app-navbar .title {
+      margin-inline: 6px;
+      font-size: clamp(1rem, 4.5vw, 1.3rem);
+    }
+
+    body :is(app-main, app-contact) section {
+      padding: 32px 20px;
+    }
+
+    body app-main .left-index {
+      padding-top: 24px;
+    }
+
+    body app-main :is(.text-index, .in-index, .time-index, .really-index) {
+      font-size: clamp(2rem, 9vw, 3.5rem);
+      margin-bottom: 24px;
+    }
+
+    body app-main :is(.title-index, .title-question-index) {
+      font-size: clamp(1.6rem, 7vw, 2.5rem);
+      line-height: 1.2;
+    }
+
+    body app-main :is(.cards-index, .steps-index) {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr);
+    }
+
+    body app-main :is(.start-index, .demo-index) {
+      margin: 12px 0;
+      padding: 10px 20px;
+      font-size: 1rem;
+    }
+
+    body app-main .dashboard-shell {
+      padding-right: 0;
+      transform: none;
+    }
+
+    body app-main .phone-preview {
+      display: none;
+    }
+
+    body app-main :is(.dashboard-title-row, .dashboard-tools) {
+      flex-wrap: wrap;
+    }
+
+    body app-main .stats-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    body app-main .table-section {
+      overflow-x: auto;
+    }
+
+    body app-contact .section-title {
+      font-size: clamp(2rem, 9vw, 3rem);
+    }
+
+    body app-contact :is(.form-first, .form-second) {
+      flex-direction: column;
+    }
+
+    body app-contact .container-social {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    body :is(.modal, .lang-modal, .modal-confirmation, .card-list, .card-register, .card-index) {
+      animation: none;
+      transition: none;
+      transform: none;
+    }
+  }
+}

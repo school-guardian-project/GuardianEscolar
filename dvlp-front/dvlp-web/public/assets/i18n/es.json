@@ -1,4 +1,14 @@
 {
+  "responsive": {
+    "navigation": "Navegación",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "dashboard": "Ir al dashboard",
+    "comments": "Abrir comentarios",
+    "editSchool": "Actualizar colegio",
+    "language": "Cambiar idioma",
+    "theme": "Cambiar tema"
+  },
   "navbar": {
     "features": "Funcionalidades",
     "how_it_works": "Como funciona",
@@ -424,6 +434,7 @@
     "subtitle": "Seleccionar el color del panel",
     "light": "Claro",
     "dark": "Oscuro",
+    "color": "Color",
     "select": "activo",
     "blue": "Azul",
     "green": "Verde",
@@ -877,6 +888,15 @@
     "genericError": "No se pudo completar la asignación. Verifica que el backend esté disponible."
   },
   "card_list": {
+    "pagination": {
+      "navigation": "Paginación de registros",
+      "top": "arriba",
+      "bottom": "abajo",
+      "previous": "Página anterior",
+      "next": "Página siguiente",
+      "goTo": "Ir a la página {{page}}",
+      "summary": "{{first}}–{{last}} de {{total}} · Página {{page}} de {{pages}}"
+    },
     "student": "Estudiantes registrados",
     "guardian": "Acudientes registrados",
     "driver": "Conductores registrados",

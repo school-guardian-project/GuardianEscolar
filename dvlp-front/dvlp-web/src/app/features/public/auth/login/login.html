@@ -31,6 +31,7 @@
               type="email"
               id="email"
               [placeholder]="'login.right.email.placeholder' | translate"
+              [class.input-error]="credentialsError"
               formControlName="email">
   
             @if (form.get('email')?.touched && form.get('email')?.errors?.['required']) {
@@ -38,7 +39,7 @@
                 {{ 'login.right.email.errors.required' | translate }}
               </small>
             }
-            @if (form.get('email')?.touched && form.get('email')?.errors?.['email']) {
+            @if (form.get('email')?.touched && form.get('email')?.errors?.['pattern']) {
               <small class="error">
                 {{ 'login.right.email.errors.invalid' | translate }}
               </small>
@@ -51,12 +52,17 @@
             type="password"
             id="password"
             [placeholder]="'login.right.password.placeholder' | translate"
+            [class.input-error]="credentialsError"
             formControlName="password">
 
           <div class="olvid">
             @if (form.get('password')?.touched && form.get('password')?.errors?.['required']) {
               <small class="error1">
                 {{ 'login.right.password.errors.required' | translate }}
+              </small>
+            } @else if (credentialsError) {
+              <small class="error1" role="alert">
+                {{ 'login.right.credentials_error' | translate }}
               </small>
             }
             <div class="password" (click)="forgot()">

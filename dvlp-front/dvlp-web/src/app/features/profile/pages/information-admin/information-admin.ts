@@ -3,6 +3,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { SidebarAdmin } from '@shared/components/navbar/sidebar-admin/sidebar-admin';
+import { SidebarSuperadmin } from '@shared/components/navbar/sidebar-superadmin/sidebar-superadmin';
 import { Themes } from '@shared/components/modal/themes/themes';
 import { Language } from '@shared/components/modal/language/language'
 import { TranslateModule } from '@ngx-translate/core';
@@ -13,8 +14,7 @@ import { AuthService, ROLES } from '@core/services/auth.service';
 import { ProfileService, UserProfileDto } from '@core/services/profile.service';
 import { AdminsService } from '@features/superadmin/admins/services/admins.service';
 import { AdminResponseDto } from '@features/superadmin/admins/models/admin.model';
-import { ProfileService, UserProfileDto } from '@core/services/profile.service';
-import { finalize, switchMap } from 'rxjs';
+import { finalize, map, switchMap, throwError } from 'rxjs';
 
 @Component({
   selector: 'app-information-admin',
@@ -24,6 +24,7 @@ import { finalize, switchMap } from 'rxjs';
     MatButtonModule,
     MatIconModule,
     SidebarAdmin,
+    SidebarSuperadmin,
     NavbarManage,
     Themes,
     Language,
@@ -37,11 +38,17 @@ export class InformationAdmin implements OnInit {
 
   changeTheme = false;
   changeLanguage = false;
+  loading = false;
+  loadFailed = false;
 
   imageUrl: string | ArrayBuffer | null = null;
 
   user: AdminResponseDto | null = null;
   profile: UserProfileDto | null = null;
+
+  get isSuperAdmin(): boolean {
+    return this.authService.roleId === ROLES.SUPER_ADMIN;
+  }
 
   constructor(
     private router: Router,
@@ -50,18 +57,40 @@ export class InformationAdmin implements OnInit {
     private profileService: ProfileService,
   ) { }
 
-  ngOnInit() {
-    const { personId, email } = this.authService.session;
-    if (email) {
-      this.user = { email } as AdminResponseDto;
-    }
-    if (personId) {
-      this.adminsService.get(personId).subscribe({
-        next: (user) => (this.user = user ?? this.user),
-      });
-    }
-    this.profileService.getProfile().subscribe({
-      next: (profile) => (this.profile = profile),
+  ngOnInit(): void {
+    this.loadProfile();
+  }
+
+  loadProfile(): void {
+    this.loading = true;
+    this.loadFailed = false;
+
+    this.profileService.getProfile().pipe(
+      switchMap((profile) => {
+        this.profile = profile;
+        if (!profile?.personId) {
+          return throwError(() => new Error('The authenticated profile has no person ID.'));
+        }
+        return this.adminsService.get(profile.personId).pipe(
+          map((user) => {
+            if (!user) {
+              throw new Error('The profile person details were not found.');
+            }
+            return user;
+          }),
+        );
+      }),
+      finalize(() => {
+        this.loading = false;
+      }),
+    ).subscribe({
+      next: (user) => {
+        this.user = user;
+      },
+      error: (error: unknown) => {
+        console.error('Could not load the authenticated admin profile:', error);
+        this.loadFailed = true;
+      },
     });
   }
 

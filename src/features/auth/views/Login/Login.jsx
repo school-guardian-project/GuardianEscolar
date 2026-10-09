@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+
 import {
   ScrollView,
   View,
   Text,
 } from "react-native";
-import { styles } from './Login.styles';
+
+import { Asset } from "expo-asset";
+import { SvgUri } from "react-native-svg";
+import { styles } from "./Login.styles";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
 
@@ -14,6 +18,10 @@ import { validateEmail, validateRequired } from "@core/validation/validators";
 import { login } from "@core/services/authService";
 import { registerForPushNotificationsAsync } from "@core/services/pushNotifications";
 import useSession from "@core/hooks/useSession";
+
+const logoUri = Asset.fromModule(
+  require("../../../../../assets/logo-blue.svg")
+).uri;
 
 export default function Login({ navigation }) {
   const { t } = useTranslation();
@@ -87,8 +95,13 @@ export default function Login({ navigation }) {
       contentContainerStyle={styles.container}
       keyboardShouldPersistTaps="handled"
     >
-      {/* Icono */}
-      <Text style={styles.icon}>🛡️</Text>
+      {/* Logo oficial de Guardian Escolar */}
+      <SvgUri
+        uri={logoUri}
+        width={92}
+        height={113}
+        style={styles.icon}
+      />
 
       {/* Título */}
       <Text
@@ -132,7 +145,12 @@ export default function Login({ navigation }) {
           {t("login.ForgotPassword")}
         </Text>
 
-        {formError ? <Text style={styles.error}>{formError}</Text> : null}
+        {/* Error del formulario */}
+        {formError ? (
+          <Text style={styles.error}>
+            {formError}
+          </Text>
+        ) : null}
 
         {/* Botón */}
         <View style={styles.buttonWrap}>
@@ -146,6 +164,3 @@ export default function Login({ navigation }) {
     </ScrollView>
   );
 }
-
-
-

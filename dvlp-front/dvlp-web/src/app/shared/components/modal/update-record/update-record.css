@@ -125,6 +125,79 @@
   letter-spacing: 0.04em;
 }
 
+.modal__info-label-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal__campuses {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.modal__campuses h3 {
+  margin: 0;
+  color: var(--modal-title);
+  font-size: 0.95rem;
+}
+
+.modal__campus {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+}
+
+.modal__map-btn {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--bg-color);
+  color: var(--color-navbar);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.modal__map-btn mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.modal__remove-campus,
+.modal__add-campus {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 7px 10px;
+  background: var(--bg-color);
+  color: var(--title-color);
+  cursor: pointer;
+}
+
+.modal__campus-error {
+  margin: 0;
+  color: var(--alert-text);
+  font-size: 0.82rem;
+}
+
+.modal__remove-campus {
+  margin-left: auto;
+}
+
+.modal__add-campus {
+  align-self: flex-start;
+}
+
 /* INPUTS + SELECTS */
 .modal__info-value {
   width: 100%;

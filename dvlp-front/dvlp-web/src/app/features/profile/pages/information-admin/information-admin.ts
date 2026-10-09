@@ -13,8 +13,6 @@ import { AuthService, ROLES } from '@core/services/auth.service';
 import { ProfileService, UserProfileDto } from '@core/services/profile.service';
 import { AdminsService } from '@features/superadmin/admins/services/admins.service';
 import { AdminResponseDto } from '@features/superadmin/admins/models/admin.model';
-import { ProfileService, UserProfileDto } from '@core/services/profile.service';
-import { finalize, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-information-admin',
@@ -42,6 +40,8 @@ export class InformationAdmin implements OnInit {
 
   user: AdminResponseDto | null = null;
   profile: UserProfileDto | null = null;
+  loading = false;
+  loadFailed = false;
 
   constructor(
     private router: Router,
@@ -50,18 +50,43 @@ export class InformationAdmin implements OnInit {
     private profileService: ProfileService,
   ) { }
 
-  ngOnInit() {
-    const { personId, email } = this.authService.session;
-    if (email) {
-      this.user = { email } as AdminResponseDto;
-    }
-    if (personId) {
-      this.adminsService.get(personId).subscribe({
-        next: (user) => (this.user = user ?? this.user),
-      });
-    }
+  ngOnInit(): void {
+    this.loadProfile();
+  }
+
+  loadProfile(): void {
+    this.loading = true;
+    this.loadFailed = false;
+    this.user = null;
+    this.profile = null;
+
     this.profileService.getProfile().subscribe({
-      next: (profile) => (this.profile = profile),
+      next: (profile) => {
+        this.profile = profile;
+        if (!profile.personId) {
+          this.loading = false;
+          this.loadFailed = true;
+          return;
+        }
+
+        this.adminsService.get(profile.personId).subscribe({
+          next: (user) => {
+            this.user = user;
+            this.loading = false;
+            this.loadFailed = !user;
+          },
+          error: (error: unknown) => {
+            console.error('No se pudieron cargar los datos personales del administrador.', error);
+            this.loading = false;
+            this.loadFailed = true;
+          },
+        });
+      },
+      error: (error: unknown) => {
+        console.error('No se pudo cargar el perfil autenticado.', error);
+        this.loading = false;
+        this.loadFailed = true;
+      },
     });
   }
 

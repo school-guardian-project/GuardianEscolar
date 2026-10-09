@@ -38,7 +38,9 @@
   *ngIf="showUpdateModal"
   type="family"
   [record]="familyToUpdate"
-  [fieldOptions]="fieldOptions"
+  [saveError]="updateError"
+  [fieldOptions]="updateFieldOptions"
+  [fieldOptionLabels]="updateFieldOptionLabels"
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()"
 >

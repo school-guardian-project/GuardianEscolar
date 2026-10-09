@@ -621,6 +621,8 @@
     },
     "family": {
       "title": "Update family",
+      "addChildrenHint": "Select students to add children to the family.",
+      "removeChild": "Remove {{name}} from the family",
       "fields": {
         "name": "Name",
         "guardian": "Guardian",

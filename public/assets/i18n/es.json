@@ -629,6 +629,8 @@
     },
     "family": {
       "title": "Actualizar familia",
+      "addChildrenHint": "Selecciona estudiantes para agregar hijos a la familia.",
+      "removeChild": "Quitar a {{name}} de la familia",
       "fields": {
         "name": "Nombre",
         "guardian": "Acudiente",

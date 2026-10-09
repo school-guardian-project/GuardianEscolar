@@ -1,8 +1,20 @@
 {
+  "responsive": {
+    "navigation": "Navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "dashboard": "Go to dashboard",
+    "comments": "Open comments",
+    "editSchool": "Update school",
+    "language": "Change language",
+    "theme": "Change theme"
+  },
   "navbar": {
     "features": "Features",
     "how_it_works": "How it works",
-    "contact": "Contact"
+    "contact": "Contact",
+    "dashboard": "Dashboard",
+    "logout": "Log out"
   },
   "locationMap": {
     "useDeviceLocation": "Use my location",

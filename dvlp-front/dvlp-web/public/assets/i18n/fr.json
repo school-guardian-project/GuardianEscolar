@@ -132,9 +132,21 @@
       "Contact"
     ],
     "links_legal": [
-      "Confidentialité et conditions"
+      "Confidentialité",
+      "Conditions"
     ],
     "rights": "© 2026 Guardian Escolar · Tous droits réservés"
+  },
+  "legal": {
+    "kicker": "Document juridique",
+    "terms_title": "Conditions d'utilisation",
+    "privacy_title": "Politique de traitement des données",
+    "updated": "Dernière mise à jour : août 2026",
+    "data_title": "Données traitées",
+    "purpose_title": "Finalités",
+    "minors_title": "Données des mineurs",
+    "rights_title": "Vos droits",
+    "channel_title": "Canal de contact"
   },
   "login": {
     "left": {

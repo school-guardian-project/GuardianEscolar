@@ -50,6 +50,7 @@ import Family from "@features/profile/views/Family/Family";
 // Seguridad y políticas
 import Security from "@features/profile/views/Security/Security";
 import PrivacyPolicies from "@features/profile/views/Privacy/PrivacyPolicies";
+import TermsConditions from "@features/profile/views/Terms/TermsConditions";
 
 // Sobre nosotros
 import AboutUs from "@features/profile/views/AboutUs/AboutUs";
@@ -109,9 +110,25 @@ export default function App() {
       await loadLanguage();
 
       // Recupera la sesión desde SecureStore y rota el access token antes de navegar.
+      // Loguearse es aceptar: también en sesión restaurada se registra la evidencia.
       try {
         if (await hasSession()) {
           await refresh();
+          const { getPendingAcceptance, acceptTerms } = await import(
+            "@core/services/termsService"
+          );
+          const pending = await getPendingAcceptance();
+          if (pending.ownMissing || pending.minors.length > 0) {
+            if (pending.minors.length > 0) {
+              await acceptTerms(
+                pending.termsVersion,
+                pending.minors.map((m) => m.profileId)
+              );
+            }
+            if (pending.ownMissing) {
+              await acceptTerms(pending.termsVersion, []);
+            }
+          }
           setInitialRoute("MainPage");
         }
       } catch {
@@ -208,6 +225,8 @@ export default function App() {
             <Stack.Screen name="Security" component={Security} />
 
             <Stack.Screen name="PrivacyPolicies" component={PrivacyPolicies} />
+
+            <Stack.Screen name="TermsConditions" component={TermsConditions} />
 
             <Stack.Screen name="AboutUs" component={AboutUs} />
 

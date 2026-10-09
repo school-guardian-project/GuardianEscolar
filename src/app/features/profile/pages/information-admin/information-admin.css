@@ -335,8 +335,8 @@ mat-icon {
   height: 34px;
   padding: 0;
   border-radius: 50%;
-  border: 1px solid #d93025;
-  background: #d93025;
+  border: 1px solid var(--button-apply);
+  background: var(--button-apply);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -353,8 +353,7 @@ mat-icon {
 }
 
 .logout-btn:hover {
-  background: #b3261e;
-  border-color: #b3261e;
+  filter: brightness(0.92);
 }
 .logout-overlay {
   position: fixed;

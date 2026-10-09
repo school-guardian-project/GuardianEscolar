@@ -427,7 +427,7 @@ body.internal-page .close-btn:hover {
   --color-icon: #164bb4;
   --border-icon: #0025cc;
 
-  --button-cancel: #FFFFFF;
+  --button-cancel: #161A22;
   --button-apply: #3B82F6;
 
   --mat-sys-surface: #161A22;
@@ -474,7 +474,7 @@ body.internal-page .close-btn:hover {
   --color-icon: #128b3b;
   --border-icon: #00a33f;
 
-  --button-cancel: #FFFFFF;
+  --button-cancel: #161A22;
   --button-apply: #22C55E;
 
   --mat-sys-surface: #161A22;
@@ -521,7 +521,7 @@ body.internal-page .close-btn:hover {
   --color-icon: #FACC15;
   --border-icon: #EAB308;
 
-  --button-cancel: #FFFFFF;
+  --button-cancel: #1A1D21;
   --button-apply: #FACC15;
 
   --mat-sys-surface: #1A1D21;
@@ -568,11 +568,20 @@ body.internal-page .close-btn:hover {
   --color-icon: #DC2626;
   --border-icon: #EF4444;
 
-  --button-cancel: #FFFFFF;
+  --button-cancel: #181B20;
   --button-apply: #DC2626;
 
   --mat-sys-surface: #181B20;
 
   --input-bg: #0D0F12;
   --input-border: #2B1F1F;
+}
+/* Mensaje de error de página (carga/búsqueda): mismo estilo discreto del login. */
+.action-error {
+  margin: 8px auto;
+  max-width: 900px;
+  color: var(--alert-icon);
+  font-size: 0.82rem;
+  line-height: 1.35;
+  text-align: center;
 }

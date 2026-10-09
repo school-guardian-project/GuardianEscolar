@@ -17,7 +17,7 @@ export type RegisterType =
   | 'schools';
 
 export interface RecordData {
-  [key: string]: string | number | boolean | null | RecordData[];
+  [key: string]: string | number | boolean | null | string[] | RecordData[];
 }
 
 interface CampusFormData extends RecordData {
@@ -163,13 +163,16 @@ export class UpdateRecord implements OnInit {
   @Input() record: RecordData = {};
   /** Opciones dinámicas por campo (perfiles registrados de acudientes/estudiantes). */
   @Input() fieldOptions: Record<string, string[]> = {};
+  @Input() fieldOptionLabels: Record<string, Record<string, string>> = {};
   @Input() cityOptions: { id: string; name: string }[] = [];
   @Input() schoolOptions: { id: string; name: string; cityId?: string }[] = [];
+  @Input() saveError = '';
 
   @Output() saved = new EventEmitter<RecordData>();
   @Output() closed = new EventEmitter<void>();
 
   formData: Record<string, string> = {};
+  selectedStudents: string[] = [];
   campuses: CampusFormData[] = [];
   schoolMapOpen = false;
   campusMapOpenIndex: number | null = null;
@@ -213,12 +216,22 @@ export class UpdateRecord implements OnInit {
           optionLabels: Object.fromEntries(this.cityOptions.map((city) => [city.id, city.name])),
         };
       }
-      return this.fieldOptions[field.name] ? { ...field, options: this.fieldOptions[field.name] } : field;
+      return this.fieldOptions[field.name]
+        ? { ...field, options: this.fieldOptions[field.name], optionLabels: this.fieldOptionLabels[field.name] }
+        : field;
     });
 
     this.fields.forEach(f => {
-      this.formData[f.name] = (this.record[f.name] as string) || '';
+      this.formData[f.name] = this.type === 'family' && f.name === 'student' ? '' : String(this.record[f.name] ?? '');
     });
+    if (this.type === 'family') {
+      const children = this.record['student'];
+      this.selectedStudents = Array.isArray(children)
+        ? children.filter((child): child is string => typeof child === 'string')
+        : String(children ?? '').split(',').map(child => child.trim()).filter(Boolean);
+      this.selectedStudents = [...new Set(this.selectedStudents)];
+      this.formData['student'] = '';
+    }
     this.formData['latitude'] = this.record['latitude'] == null ? '' : String(this.record['latitude']);
     this.formData['longitude'] = this.record['longitude'] == null ? '' : String(this.record['longitude']);
     const campusRecords = this.record['campuses'];
@@ -248,6 +261,11 @@ export class UpdateRecord implements OnInit {
   }
 
   onFieldChange(fieldName: string, value: string): void {
+    if (this.type === 'family' && fieldName === 'student') {
+      if (value && !this.selectedStudents.includes(value)) this.selectedStudents = [...this.selectedStudents, value];
+      this.formData['student'] = '';
+      return;
+    }
     this.formData[fieldName] = value;
     if (this.type === 'admins' && fieldName === 'city') {
       const selectedSchool = this.schoolOptions.find((school) => school.id === this.formData['school']);
@@ -262,6 +280,10 @@ export class UpdateRecord implements OnInit {
 
   close(): void {
     this.closed.emit();
+  }
+
+  removeStudent(student: string): void {
+    this.selectedStudents = this.selectedStudents.filter(value => value !== student);
   }
 
   onLocationChange(coordinates: { latitude: number; longitude: number }): void {
@@ -317,6 +339,7 @@ export class UpdateRecord implements OnInit {
     this.saved.emit({
       ...this.record,
       ...this.formData,
+      ...(this.type === 'family' ? { student: [...this.selectedStudents] } : {}),
       latitude: this.formData['latitude'] ? Number(this.formData['latitude']) : null,
       longitude: this.formData['longitude'] ? Number(this.formData['longitude']) : null,
       campuses: this.campuses.map((campus) => ({ ...campus })),

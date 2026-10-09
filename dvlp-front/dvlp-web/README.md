@@ -16,6 +16,15 @@ with only their central campus). The campus ID is still submitted and restored
 after resetting the form. Schools with multiple campuses require a selection;
 missing campuses or loading errors remain visible. Bus registration is unchanged.
 
+The management navbar arrow opens the signed-in role's dashboard (admin or
+superadmin), regardless of browser history. Stop forms load city options from
+`/route/api/cities`; a failure in another catalog no longer discards the cities
+and is reported on the page.
+
+Family editing keeps all existing children and allows selecting additional
+children without duplicates or removing individual children. Saving requires a
+guardian and at least one child; API errors appear inside the editing modal.
+
 To start a local development server, run:
 
 ```bash

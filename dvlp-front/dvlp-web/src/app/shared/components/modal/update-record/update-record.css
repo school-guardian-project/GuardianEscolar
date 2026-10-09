@@ -103,6 +103,36 @@
 }
 
 /* FIELD ITEM */
+.modal__children {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: var(--modal-title);
+}
+
+.modal__children p {
+  margin: 4px 0;
+  font-size: 0.8rem;
+}
+
+.modal__child {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 6px 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.modal__child button {
+  cursor: pointer;
+  background: transparent;
+  border: 0;
+  color: var(--modal-title);
+  font-size: 1.2rem;
+}
+
 .modal__info-item {
   display: flex;
   flex-direction: column;
@@ -184,7 +214,8 @@
   cursor: pointer;
 }
 
-.modal__campus-error {
+.modal__campus-error,
+.modal__error {
   margin: 0;
   color: var(--alert-text);
   font-size: 0.82rem;

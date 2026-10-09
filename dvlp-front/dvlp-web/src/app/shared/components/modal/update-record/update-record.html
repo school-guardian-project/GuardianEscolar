@@ -46,7 +46,8 @@
               {{ 'update_record.buttons.select' | translate }}
             </option>
 
-            <option *ngFor="let opt of getFieldOptions(field)" [value]="opt">
+            <option *ngFor="let opt of getFieldOptions(field)" [value]="opt"
+              [disabled]="type === 'family' && field.name === 'student' && selectedStudents.includes(opt)">
               {{ field.optionLabels?.[opt] ?? opt }}
             </option>
           </select>
@@ -56,9 +57,18 @@
             [(ngModel)]="formData[field.name]" />
 
         </ng-container>
+        <div *ngIf="type === 'family' && field.name === 'student'" class="modal__children">
+          <p>{{ 'update_record.family.addChildrenHint' | translate }}</p>
+          <div *ngFor="let student of selectedStudents" class="modal__child">
+            <span>{{ field.optionLabels?.[student] ?? student }}</span>
+            <button type="button" (click)="removeStudent(student)" [attr.aria-label]="('update_record.family.removeChild' | translate: { name: field.optionLabels?.[student] ?? student })">×</button>
+          </div>
+        </div>
       </div>
 
     </div>
+
+    <p *ngIf="saveError" class="modal__error" role="alert">{{ saveError }}</p>
 
     <app-location-map *ngIf="type === 'schools' && schoolMapOpen"
       [address]="formData['address']"

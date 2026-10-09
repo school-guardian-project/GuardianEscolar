@@ -4,7 +4,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import { Input } from '@angular/core';
-import { Location, NgIf } from '@angular/common';
+import { NgIf } from '@angular/common';
 import { TranslateModule } from '@ngx-translate/core';
 import { LogoutConfirm } from '@shared/components/modal/logout-confirm/logout-confirm';
 import { AuthService } from '@core/services/auth.service';
@@ -23,10 +23,10 @@ export class NavbarManage {
 
   confirmLogout = false;
 
-  constructor(private router: Router, private location: Location, private auth: AuthService) { }
+  constructor(private router: Router, private auth: AuthService) { }
 
   goBack() {
-    this.location.back();
+    this.router.navigateByUrl(this.auth.homeRoute());
   }
 
   logout() {

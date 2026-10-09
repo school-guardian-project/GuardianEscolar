@@ -4,6 +4,21 @@
 
 ## 0. Introducción
 
+### Conexion local con las API
+
+`EXPO_PUBLIC_API_URL` apunta al gateway y
+`EXPO_PUBLIC_FORGOT_INFORMATION_API_URL` al servicio de recuperacion.
+Los tuneles temporales de Cloudflare cambian de URL al reiniciar sus contenedores.
+Si el `.env` usa `trycloudflare.com`, `npm start`, `npm run android`,
+`npm run ios` y `npm run web` sincronizan ambas direcciones desde Docker y
+verifican que las API respondan antes de iniciar Expo. Docker debe estar encendido.
+Las direcciones LAN o de servidores permanentes se conservan sin consultar Docker.
+
+Para sincronizar manualmente los tuneles locales, ejecuta `npm run api:sync`.
+Despues reinicia Metro y recarga Expo Go: las variables `EXPO_PUBLIC_*` se
+incorporan al bundle, no se consultan dinamicamente desde el telefono.
+`npm start` limpia la cache de Metro. El `.env` local no se incluye en Git.
+
 Guardian Escolar es una aplicación móvil construida con React Native y Expo. Está diseñada para familias o acudientes y permite:
 
 - iniciar sesión,

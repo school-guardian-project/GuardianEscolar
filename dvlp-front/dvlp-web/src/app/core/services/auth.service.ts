@@ -168,19 +168,17 @@ export class AuthService {
   private applySession(res: Partial<LoginResponse>): void {
     const claims = this.claims();
     const pick = (key: keyof Session): string | null => {
+      if (res[key] === null) return null;
       const fromRes = res[key];
       if (typeof fromRes === 'string' && fromRes) return fromRes;
-      const fromClaims = claims[key];
-      return typeof fromClaims === 'string' && fromClaims ? fromClaims : this.userSession[key];
+      const fromClaims = key === 'profileId' ? claims['profileId'] ?? claims['sub'] : claims[key];
+      return typeof fromClaims === 'string' && fromClaims ? fromClaims : null;
     };
     this.userSession = {
       profileId: pick('profileId'),
       personId: pick('personId'),
       email: pick('email'),
       campusId: pick('campusId'),
-      // El login y el refresh no lo repiten en el body (solo en el JWT), asi que
-      // casi siempre llega de los claims. Mirar el claim de todas formas deja
-      // que un backend futuro lo exponga sin tocar este servicio.
       schoolId: pick('schoolId'),
     };
   }

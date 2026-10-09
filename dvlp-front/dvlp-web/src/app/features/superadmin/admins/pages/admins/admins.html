@@ -25,6 +25,8 @@
   *ngIf="showUpdateModal"
   type="admins"
   [record]="adminSelected"
+  [cityOptions]="cityOptions"
+  [schoolOptions]="schoolOptions"
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()">
 </app-update-record>

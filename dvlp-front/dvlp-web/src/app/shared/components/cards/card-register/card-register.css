@@ -77,6 +77,37 @@
   letter-spacing: 0.04em;
 }
 
+.card-register__label-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.card-register__map-btn {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--card-secondary-bg);
+  color: var(--accent-color);
+  cursor: pointer;
+}
+
+.card-register__map-btn:hover {
+  background: color-mix(in srgb, var(--accent-color) 12%, var(--card-bg));
+}
+
+.card-register__map-btn mat-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
 /* ── INPUT WRAP ─────────────────────────────────────────── */
 .card-register__input-wrap {
   display: flex;
@@ -109,6 +140,10 @@
   border-color: var(--accent-color);
   background-color: var(--input-bg);
   box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 15%, transparent);
+}
+
+.card-register__input--invalid {
+  border-color: var(--alert-icon);
 }
 
 .card-register__input::placeholder {
@@ -242,6 +277,15 @@
 
 .card-register__campus-row--actions {
   justify-content: flex-start;
+}
+
+.card-register__campus {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
 }
 
 .card-register__campus-hint {

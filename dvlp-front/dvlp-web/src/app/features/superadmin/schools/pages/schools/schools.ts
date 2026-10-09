@@ -12,8 +12,12 @@ import { RecordInformation, RecordData } from '@shared/components/modal/record-i
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
 import { SchoolsService } from '@core/services/schools.service';
-import { SchoolListDto, SchoolRequestDto, SchoolResponseDto, SchoolWithCampusesRequestDto, SchoolWithCampusesResponseDto } from '@core/models/school.model';
+import { CampusesService } from '@core/services/campuses.service';
+import { CitiesService } from '@core/services/cities.service';
+import { CityListDto } from '@core/models/city.model';
+import { SchoolCampusRequestDto, SchoolListDto, SchoolRequestDto, SchoolResponseDto, SchoolWithCampusesRequestDto, SchoolWithCampusesResponseDto } from '@core/models/school.model';
 import { describeProblem } from '@core/http/problem-detail';
+import { forkJoin } from 'rxjs';
 
 interface SchoolView extends RecordData {
   id?: string;
@@ -25,6 +29,7 @@ interface SchoolView extends RecordData {
   city?: string;
   schooling?: string;
   status?: string;
+  logo?: string;
 }
 
 function fromApi(api: SchoolListDto): SchoolView {
@@ -32,6 +37,8 @@ function fromApi(api: SchoolListDto): SchoolView {
     id: api.id,
     name: api.name ?? '',
     address: api.address ?? '',
+    latitude: api.latitude ?? null,
+    longitude: api.longitude ?? null,
   };
 }
 
@@ -42,18 +49,42 @@ function fromDetail(api: SchoolResponseDto): SchoolView {
     email: api.email ?? '',
     website: api.website ?? '',
     city: api.cityName ?? '',
+    logo: api.logo ?? '',
     schooling: api.theme ?? '',
     status: api.status ?? '',
   };
+}
+
+function toCoordinate(value: unknown): number | null {
+  if (value === null || value === undefined || value === '') return null;
+  const coordinate = Number(value);
+  return Number.isFinite(coordinate) ? coordinate : null;
+}
+
+function toCampuses(value: unknown): SchoolCampusRequestDto[] {
+  if (!Array.isArray(value)) return [];
+  return value.map((entry) => {
+    const campus = entry as RecordData;
+    const id = String(campus['id'] ?? '').trim();
+    return {
+      ...(id ? { id } : {}),
+      name: String(campus['name'] ?? '').trim(),
+      address: String(campus['address'] ?? '').trim(),
+      latitude: toCoordinate(campus['latitude']),
+      longitude: toCoordinate(campus['longitude']),
+    };
+  });
 }
 
 function toPayload(form: RecordData): SchoolRequestDto {
   const digits = String(form['phone'] ?? '').replace(/\D/g, '');
   return {
     cityId: String(form['city'] ?? ''),
-    logo: '',
+    logo: String(form['logo'] ?? ''),
     name: String(form['name'] ?? '').trim(),
     address: String(form['address'] ?? '').trim(),
+    latitude: toCoordinate(form['latitude']),
+    longitude: toCoordinate(form['longitude']),
     phone: Number(digits),
     email: String(form['email'] ?? '').trim(),
     website: String(form['website'] ?? '').trim(),
@@ -62,14 +93,14 @@ function toPayload(form: RecordData): SchoolRequestDto {
 }
 
 /**
- * Alta con sedes en una sola llamada atómica. `campusNames` viene del bloque
+ * Alta con sedes en una sola llamada atómica. `campuses` viene del bloque
  * dinámico del formulario (ya validado ahí: al menos una, sin repetidas) y la
  * ciudad es el id real del select, no el nombre.
  */
 function toCreatePayload(form: RecordData): SchoolWithCampusesRequestDto {
   return {
     ...toPayload(form),
-    campusNames: Array.isArray(form['campusNames']) ? form['campusNames'] : [],
+    campuses: toCampuses(form['campuses']),
   };
 }
 
@@ -93,6 +124,8 @@ function toCreatePayload(form: RecordData): SchoolWithCampusesRequestDto {
 })
 export class Schools implements OnInit {
   private schoolsService = inject(SchoolsService);
+  private campusesService = inject(CampusesService);
+  private citiesService = inject(CitiesService);
 
   @ViewChild(CardRegister) register?: CardRegister;
 
@@ -158,13 +191,23 @@ export class Schools implements OnInit {
   }
 
   showUpdateModal = false;
+  cityOptions: CityListDto[] = [];
 
   showUpdate(school: RecordData): void {
     const id = school['id'];
     if (!id) return;
-    this.schoolsService.get(String(id)).subscribe({
-      next: (detail) => {
-        this.schoolSelected = fromDetail(detail);
+    forkJoin({
+      detail: this.schoolsService.get(String(id)),
+      campuses: this.campusesService.listBySchool(String(id)),
+      cities: this.citiesService.list(),
+    }).subscribe({
+      next: ({ detail, campuses, cities }) => {
+        this.cityOptions = cities;
+        this.schoolSelected = {
+          ...fromDetail(detail),
+          city: detail.cityId,
+          campuses: campuses.map((campus) => ({ ...campus })),
+        };
         this.showUpdateModal = true;
       },
     });
@@ -182,7 +225,11 @@ export class Schools implements OnInit {
       return;
     }
 
-    this.schoolsService.update(String(id), toPayload(updatedRecord)).subscribe({
+    const payload: SchoolWithCampusesRequestDto = {
+      ...toPayload(updatedRecord),
+      campuses: toCampuses(updatedRecord['campuses']),
+    };
+    this.schoolsService.updateWithCampuses(String(id), payload).subscribe({
       next: () => {
         this.closeUpdateModal();
         this.load();

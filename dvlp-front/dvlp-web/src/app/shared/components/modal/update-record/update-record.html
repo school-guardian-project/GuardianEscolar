@@ -22,22 +22,33 @@
 
       <div *ngFor="let field of fields" class="modal__info-item">
 
-        <label class="modal__info-label">
-          {{ getLabelKey(field) | translate }}
-        </label>
+        <div class="modal__info-label-row">
+          <label class="modal__info-label">
+            {{ getLabelKey(field) | translate }}
+          </label>
+          <button *ngIf="type === 'schools' && field.name === 'address'"
+                  type="button"
+                  class="modal__map-btn"
+                  [attr.aria-expanded]="schoolMapOpen"
+                  [attr.aria-label]="'register.schools.chooseLocation' | translate"
+                  (click)="schoolMapOpen = !schoolMapOpen">
+            <mat-icon>place</mat-icon>
+          </button>
+        </div>
 
         <ng-container [ngSwitch]="field.type">
 
           <!-- SELECT -->
           <select *ngSwitchCase="'select'" class="modal__info-value" [(ngModel)]="formData[field.name]"
-            [name]="field.name">
+            [name]="field.name" (ngModelChange)="onFieldChange(field.name, $event)">
 
             <option value="" disabled>
               {{ 'update_record.buttons.select' | translate }}
             </option>
 
-            <option *ngFor="let opt of field.options" [value]="opt">
-              {{ opt }}
+            <option *ngFor="let opt of getFieldOptions(field)" [value]="opt"
+              [disabled]="type === 'family' && field.name === 'student' && selectedStudents.includes(opt)">
+              {{ field.optionLabels?.[opt] ?? opt }}
             </option>
           </select>
 
@@ -46,15 +57,82 @@
             [(ngModel)]="formData[field.name]" />
 
         </ng-container>
+        <div *ngIf="type === 'family' && field.name === 'student'" class="modal__children">
+          <p>{{ 'update_record.family.addChildrenHint' | translate }}</p>
+          <div *ngFor="let student of selectedStudents" class="modal__child">
+            <span>{{ field.optionLabels?.[student] ?? student }}</span>
+            <button type="button" (click)="removeStudent(student)" [attr.aria-label]="('update_record.family.removeChild' | translate: { name: field.optionLabels?.[student] ?? student })">×</button>
+          </div>
+        </div>
       </div>
 
     </div>
+
+    <p *ngIf="saveError" class="modal__error" role="alert">{{ saveError }}</p>
+
+    <app-location-map *ngIf="type === 'schools' && schoolMapOpen"
+      [address]="formData['address']"
+      [latitude]="formData['latitude']"
+      [longitude]="formData['longitude']"
+      (coordinatesChange)="onLocationChange($event)"
+      (addressChange)="onAddressChange($event)">
+    </app-location-map>
+
+    <section *ngIf="type === 'schools'" class="modal__campuses">
+      <h3>{{ 'register.schools.fields.campusNames' | translate }}</h3>
+      <div *ngFor="let campus of campuses; let i = index" class="modal__campus">
+        <div class="modal__info-label-row">
+          <label class="modal__info-label" [for]="'editCampusName' + i">
+            {{ 'register.schools.campusNamePlaceholder' | translate }}
+          </label>
+          <button type="button"
+                  class="modal__map-btn"
+                  [attr.aria-expanded]="campusMapOpenIndex === i"
+                  [attr.aria-label]="'register.schools.chooseCampusLocation' | translate: { name: campus.name }"
+                  (click)="campusMapOpenIndex = campusMapOpenIndex === i ? null : i">
+            <mat-icon>place</mat-icon>
+          </button>
+          <button *ngIf="!campus.id"
+                  type="button"
+                  class="modal__remove-campus"
+                  [attr.aria-label]="'register.schools.removeCampus' | translate"
+                  (click)="removeCampus(i)">×</button>
+        </div>
+        <input class="modal__info-value"
+               [id]="'editCampusName' + i"
+               [(ngModel)]="campus.name"
+               [name]="'editCampusName' + i"
+               maxlength="30" />
+        <label class="modal__info-label" [for]="'editCampusAddress' + i">
+          {{ 'register.schools.fields.address' | translate }}
+        </label>
+        <input class="modal__info-value"
+               [id]="'editCampusAddress' + i"
+               [(ngModel)]="campus.address"
+               [name]="'editCampusAddress' + i"
+               maxlength="255" />
+        <app-location-map *ngIf="campusMapOpenIndex === i"
+          [address]="campus.address"
+          [latitude]="campus.latitude"
+          [longitude]="campus.longitude"
+          (coordinatesChange)="onCampusLocationChange(i, $event)"
+          (addressChange)="onCampusAddressChange(i, $event)">
+        </app-location-map>
+      </div>
+      <button type="button" class="modal__add-campus" (click)="addCampus()">
+        {{ 'register.schools.addCampus' | translate }}
+      </button>
+      <p *ngIf="campusErrorKey" class="modal__campus-error" role="alert">
+        {{ campusErrorKey | translate: {name: campusErrorName} }}
+      </p>
+    </section>
 
     <app-location-map *ngIf="type === 'stop'"
       [address]="formData['address']"
       [latitude]="formData['latitude']"
       [longitude]="formData['longitude']"
-      (coordinatesChange)="onLocationChange($event)">
+      (coordinatesChange)="onLocationChange($event)"
+      (addressChange)="onAddressChange($event)">
     </app-location-map>
 
     <!-- FOOTER -->

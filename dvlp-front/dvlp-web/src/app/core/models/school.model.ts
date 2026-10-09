@@ -3,6 +3,8 @@ export interface SchoolRequestDto {
   logo: string;
   name: string;
   address: string;
+  latitude?: number | null;
+  longitude?: number | null;
   phone: number;
   email: string;
   website?: string;
@@ -17,20 +19,34 @@ export interface SchoolRequestDto {
  * huérfanos si falla la segunda.
  */
 export interface SchoolWithCampusesRequestDto extends SchoolRequestDto {
-  /** Nombres de las sedes. La dirección la heredan del colegio. */
-  campusNames: string[];
+  campuses: SchoolCampusRequestDto[];
+}
+
+export interface SchoolCampusRequestDto {
+  id?: string;
+  name: string;
+  address: string;
+  latitude: number | null;
+  longitude: number | null;
 }
 
 export interface SchoolWithCampusesResponseDto {
   id: string;
   name: string;
-  campuses: { id: string; name: string; address: string }[];
+  campuses: SchoolCampusRequestDto[];
+}
+
+export interface SchoolCampusDto extends SchoolCampusRequestDto {
+  id: string;
 }
 
 export interface SchoolListDto {
   id: string;
+  cityId: string;
   name: string;
   address: string;
+  latitude?: number | null;
+  longitude?: number | null;
 }
 
 export interface SchoolResponseDto extends SchoolListDto {
@@ -42,4 +58,6 @@ export interface SchoolResponseDto extends SchoolListDto {
   website?: string;
   theme?: string;
   status: string;
+  latitude?: number | null;
+  longitude?: number | null;
 }

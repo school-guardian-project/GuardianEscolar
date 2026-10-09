@@ -25,11 +25,11 @@ export default function BusFormExample() {
   const loadCampuses = async () => {
     try {
       const session = await authService.getSession();
-      // Por ahora usamos campusId como schoolId (ajustar según lógica de negocio)
-      const schoolId = session?.campusId;
+      const schoolId = session?.schoolId;
       
       if (!schoolId) {
         console.warn("No schoolId found in session");
+        Alert.alert("Error", "El usuario no tiene una escuela asociada.");
         return [];
       }
       

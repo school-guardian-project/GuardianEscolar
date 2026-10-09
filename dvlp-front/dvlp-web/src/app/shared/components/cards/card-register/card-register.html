@@ -11,10 +11,13 @@
           <div class="card-register__field card-register__field--half">
             <label class="card-register__label">
               {{ getLabelKey(field.name) | translate }}
+              <span *ngIf="type === 'schools' && isRequiredField(field.name)" aria-hidden="true">*</span>
             </label>
             <div class="card-register__input-wrap" [class.card-register__input-wrap--multiple]="isFamilyStudentField(field.name)">
               <select *ngIf="field.type === 'select'"
                       class="card-register__input"
+                      [class.card-register__input--invalid]="type === 'schools' && !!getFieldError(field.name)"
+                      [attr.aria-invalid]="type === 'schools' ? !!getFieldError(field.name) : null"
                       [ngModel]="isFamilyStudentField(field.name) ? selectedStudent : formData[field.name]"
                       [name]="field.name"
                       (ngModelChange)="onSelectChange(field.name, $event)"
@@ -28,12 +31,21 @@
                   <button type="button" class="card-register__remove-btn" (click)="removeStudent(student)" [attr.aria-label]="'Remove ' + student">x</button>
                 </span>
               </div>
-              <input *ngIf="field.type !== 'select'"
+              <input *ngIf="field.type !== 'select' && field.type !== 'file'"
                      class="card-register__input"
+                     [class.card-register__input--invalid]="type === 'schools' && !!getFieldError(field.name)"
+                     [attr.aria-invalid]="type === 'schools' ? !!getFieldError(field.name) : null"
                      [type]="field.type"
-                     [(ngModel)]="formData[field.name]"
+                     [ngModel]="formData[field.name]"
                      [name]="field.name"
+                     (ngModelChange)="onInputChange(field.name, $event)"
                      (blur)="validateField(field.name)" />
+              <input *ngIf="field.type === 'file'"
+                     class="card-register__input"
+                     type="file"
+                     accept="image/*"
+                     [name]="field.name"
+                     (change)="onLogoSelected($event)" />
             </div>
             <small class="card-register__error" *ngIf="getFieldError(field.name)">
               {{ getFieldError(field.name) }}
@@ -44,9 +56,20 @@
 
       <!-- Un campo -->
       <div class="card-register__field" *ngIf="!isArray(group)">
-        <label class="card-register__label">
-          {{ getLabelKey(group.name) | translate }}
-        </label>
+        <div class="card-register__label-row">
+          <label class="card-register__label">
+            {{ getLabelKey(group.name) | translate }}
+            <span *ngIf="type === 'schools' && isRequiredField(group.name)" aria-hidden="true">*</span>
+          </label>
+          <button *ngIf="type === 'schools' && group.name === 'address'"
+                  type="button"
+                  class="card-register__map-btn"
+                  [attr.aria-expanded]="schoolMapOpen"
+                  [attr.aria-label]="'register.schools.chooseLocation' | translate"
+                  (click)="schoolMapOpen = !schoolMapOpen">
+            <mat-icon>place</mat-icon>
+          </button>
+        </div>
         <div class="card-register__input-wrap" [class.card-register__input-wrap--multiple]="isFamilyStudentField(group.name)">
           <!--
             Un solo select para todos los campos. `getOptions` decide de donde
@@ -55,6 +78,8 @@
           -->
           <select *ngIf="group.type === 'select'"
                   class="card-register__input"
+                  [class.card-register__input--invalid]="type === 'schools' && !!getFieldError(group.name)"
+                  [attr.aria-invalid]="type === 'schools' ? !!getFieldError(group.name) : null"
                   [ngModel]="isFamilyStudentField(group.name) ? selectedStudent : formData[group.name]"
                   [name]="group.name"
                   (ngModelChange)="onSelectChange(group.name, $event)"
@@ -80,43 +105,92 @@
               <button type="button" class="card-register__remove-btn" (click)="removeStudent(student)" [attr.aria-label]="'Remove ' + student">x</button>
             </span>
           </div>
-          <input *ngIf="group.type !== 'select'"
+          <input *ngIf="group.type !== 'select' && group.type !== 'file'"
                  class="card-register__input"
+                 [class.card-register__input--invalid]="type === 'schools' && !!getFieldError(group.name)"
+                 [attr.aria-invalid]="type === 'schools' ? !!getFieldError(group.name) : null"
                  [type]="group.type"
-                 [(ngModel)]="formData[group.name]"
+                 [ngModel]="formData[group.name]"
                  [name]="group.name"
+                 (ngModelChange)="onInputChange(group.name, $event)"
                  (blur)="validateField(group.name)" />
+          <input *ngIf="group.type === 'file'"
+                 class="card-register__input"
+                 type="file"
+                 accept="image/*"
+                 [name]="group.name"
+                 (change)="onLogoSelected($event)" />
         </div>
+        <app-location-map *ngIf="type === 'schools' && group.name === 'address' && schoolMapOpen"
+          [address]="formData['address']"
+          [latitude]="formData['latitude']"
+          [longitude]="formData['longitude']"
+          (coordinatesChange)="onSchoolLocationChange($event)"
+          (addressChange)="onAddressChange($event)">
+        </app-location-map>
         <small class="card-register__error" *ngIf="getFieldError(group.name)">
           {{ getFieldError(group.name) }}
         </small>
       </div>
     </ng-container>
 
-    <!--
-      Sedes del colegio por registrar: se declaran con nombre porque no existen
-      todavia, asi que no hay id que elegir. La dirección la heredan del colegio.
-    -->
+    <!-- Sedes nuevas y sus ubicaciones. -->
     <div class="card-register__field" *ngIf="type === 'schools'">
-      <label class="card-register__label">
+      <div class="card-register__label-row">
+        <label class="card-register__label">
         {{ 'register.schools.fields.campusNames' | translate }}
-      </label>
+        </label>
+      </div>
+      <p class="card-register__campus-hint">
+        {{ 'register.schools.campusNamesHint' | translate }}
+      </p>
 
       <div class="card-register__campus-rows">
-        <div class="card-register__campus-row" *ngFor="let name of campusNames; let i = index">
-          <input class="card-register__input"
-                 type="text"
-                 [ngModel]="name"
-                 [name]="'campusName' + i"
-                 (ngModelChange)="campusNames[i] = $event"
-                 [placeholder]="'register.schools.campusNamePlaceholder' | translate" />
-          <button *ngIf="campusNames.length > 1"
+        <div class="card-register__campus" *ngFor="let campus of campuses; let i = index">
+          <div class="card-register__label-row">
+            <label class="card-register__label" [for]="'campusName' + i">
+              {{ 'register.schools.campusNamePlaceholder' | translate }}
+            </label>
+            <button type="button"
+                    class="card-register__map-btn"
+                    [attr.aria-expanded]="campusMapOpenIndex === i"
+                    [attr.aria-label]="'register.schools.chooseCampusLocation' | translate: { name: campus.name }"
+                    (click)="campusMapOpenIndex = campusMapOpenIndex === i ? null : i">
+              <mat-icon>place</mat-icon>
+            </button>
+          </div>
+          <div class="card-register__campus-row">
+            <input class="card-register__input"
+                   type="text"
+                   maxlength="30"
+                   [id]="'campusName' + i"
+                   [ngModel]="campus.name"
+                   [name]="'campusName' + i"
+                   (ngModelChange)="onCampusNameChange(i, $event)"
+                   [placeholder]="'register.schools.campusNamePlaceholder' | translate" />
+            <button
                   type="button"
                   class="card-register__remove-btn"
                   (click)="removeCampusName(i)"
                   [attr.aria-label]="'register.schools.removeCampus' | translate">
-            x
-          </button>
+              x
+            </button>
+          </div>
+          <input class="card-register__input"
+                 type="text"
+                 maxlength="255"
+                 [ngModel]="campus.address"
+                 [name]="'campusAddress' + i"
+                 (ngModelChange)="onCampusAddressChange(i, $event)"
+                 (blur)="validateCampusesLive()"
+                 [placeholder]="'register.schools.fields.address' | translate" />
+          <app-location-map *ngIf="campusMapOpenIndex === i"
+            [address]="campus.address"
+            [latitude]="campus.latitude"
+            [longitude]="campus.longitude"
+            (coordinatesChange)="onCampusLocationChange(i, $event)"
+            (addressChange)="onCampusAddressChange(i, $event)">
+          </app-location-map>
         </div>
 
         <div class="card-register__campus-row card-register__campus-row--actions">
@@ -141,7 +215,8 @@
       [address]="formData['address']"
       [latitude]="formData['latitude']"
       [longitude]="formData['longitude']"
-      (coordinatesChange)="onLocationChange($event)">
+      (coordinatesChange)="onLocationChange($event)"
+      (addressChange)="onAddressChange($event)">
     </app-location-map>
 
     <button class="card-register__btn" type="submit">

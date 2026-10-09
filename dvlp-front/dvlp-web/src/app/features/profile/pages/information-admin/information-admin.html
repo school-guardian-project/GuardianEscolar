@@ -5,7 +5,10 @@
 
   <div class="main-container">
 
-    <app-sidebar-admin></app-sidebar-admin>
+    <app-sidebar-superadmin *ngIf="isSuperAdmin; else adminSidebar"></app-sidebar-superadmin>
+    <ng-template #adminSidebar>
+      <app-sidebar-admin></app-sidebar-admin>
+    </ng-template>
 
     <div class="information-container">
       <div class="card">
@@ -25,6 +28,14 @@
               <mat-icon>palette</mat-icon>
             </div>
           </div>
+        </div>
+
+        <p *ngIf="loading" role="status">{{ 'admin_profile.loading' | translate }}</p>
+        <div *ngIf="loadFailed" role="alert">
+          <p>{{ 'admin_profile.load_failed' | translate }}</p>
+          <button mat-button type="button" (click)="loadProfile()">
+            {{ 'admin_profile.retry' | translate }}
+          </button>
         </div>
 
         <div class="content">

@@ -12,6 +12,8 @@
   },
   "accept": {
     "description": "Para continuar, acepta los Términos y Condiciones y autoriza el tratamiento de tus datos y los de tus hijos.",
+    "checkbox": "He leído y acepto los Términos y autorizo el tratamiento de datos.",
+    "required": "Debes aceptar los Términos y autorizar el tratamiento de datos para ingresar.",
     "minors": "Hijos cubiertos por esta autorización",
     "button": "Acepto y autorizo",
     "error": "No se pudo registrar la aceptación. Intenta de nuevo."

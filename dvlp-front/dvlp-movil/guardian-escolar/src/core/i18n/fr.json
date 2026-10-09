@@ -12,6 +12,8 @@
   },
   "accept": {
     "description": "Pour continuer, acceptez les Termes et conditions et autorisez le traitement de vos données et de celles de vos enfants.",
+    "checkbox": "J'ai lu et j'accepte les Termes et j'autorise le traitement des données.",
+    "required": "Vous devez accepter les Termes et autoriser le traitement des données pour vous connecter.",
     "minors": "Enfants couverts par cette autorisation",
     "button": "J'accepte et j'autorise",
     "error": "Impossible d'enregistrer l'acceptation. Réessayez."

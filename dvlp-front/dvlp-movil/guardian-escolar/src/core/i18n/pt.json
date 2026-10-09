@@ -12,6 +12,8 @@
   },
   "accept": {
     "description": "Para continuar, aceite os Termos e Condições e autorize o tratamento dos seus dados e dos dados dos seus filhos.",
+    "checkbox": "Li e aceito os Termos e autorizo o tratamento de dados.",
+    "required": "Você deve aceitar os Termos e autorizar o tratamento de dados para entrar.",
     "minors": "Filhos cobertos por esta autorização",
     "button": "Aceito e autorizo",
     "error": "Não foi possível registrar a aceitação. Tente novamente."

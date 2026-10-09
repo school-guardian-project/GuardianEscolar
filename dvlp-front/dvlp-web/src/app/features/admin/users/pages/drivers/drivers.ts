@@ -110,6 +110,7 @@ export class Drivers implements OnInit {
   @ViewChild(CardRegister) register?: CardRegister;
 
   drivers = signal<DriverView[]>([]);
+  actionError = '';
 
   ngOnInit(): void {
     this.load();
@@ -118,6 +119,9 @@ export class Drivers implements OnInit {
   private load(): void {
     this.driversService.list().subscribe({
       next: (list) => this.drivers.set(list.map(fromApi)),
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron cargar los conductores.');
+      },
     });
   }
 
@@ -129,6 +133,9 @@ export class Drivers implements OnInit {
     }
     this.driversService.search(query).subscribe({
       next: (list) => this.drivers.set(list.map(fromApi)),
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron buscar los conductores.');
+      },
     });
   }
 
@@ -158,6 +165,9 @@ export class Drivers implements OnInit {
         this.driverSelected = fromDetail(detail);
         this.showModal = true;
       },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cargar el conductor.');
+      },
     });
   }
 
@@ -171,15 +181,20 @@ export class Drivers implements OnInit {
   showUpdate(driver: RecordData): void {
     const id = driver['id'];
     if (!id) return;
+    this.actionError = '';
     this.driversService.get(String(id)).subscribe({
       next: (detail) => {
         this.driverSelected = fromDetail(detail);
         this.showUpdateModal = true;
       },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cargar el conductor para actualizarlo.');
+      },
     });
   }
 
   closeUpdateModal(): void {
+    this.actionError = '';
     this.showUpdateModal = false;
     this.driverSelected = {};
   }
@@ -191,10 +206,14 @@ export class Drivers implements OnInit {
       return;
     }
 
+    this.actionError = '';
     this.driversService.update(String(id), toPayload(updatedRecord)).subscribe({
       next: () => {
         this.closeUpdateModal();
         this.load();
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo actualizar el conductor.');
       },
     });
   }
@@ -203,11 +222,13 @@ export class Drivers implements OnInit {
 
   showDelete(driver: RecordData): void {
     if (!driver['id']) return;
+    this.actionError = '';
     this.driverSelected = driver;
     this.showDeleteModal = true;
   }
 
   closeDeleteModal(): void {
+    this.actionError = '';
     this.showDeleteModal = false;
     this.driverSelected = {};
   }
@@ -223,6 +244,9 @@ export class Drivers implements OnInit {
       next: () => {
         this.closeDeleteModal();
         this.load();
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo eliminar el conductor.');
       },
     });
   }

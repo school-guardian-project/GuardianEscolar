@@ -106,6 +106,7 @@ export class Guardians implements OnInit {
   @ViewChild(CardRegister) register?: CardRegister;
 
   guardians = signal<GuardianView[]>([]);
+  actionError = '';
 
   ngOnInit(): void {
     this.load();
@@ -114,6 +115,9 @@ export class Guardians implements OnInit {
   private load(): void {
     this.parentsService.list().subscribe({
       next: (list) => this.guardians.set(list.map(fromApi)),
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron cargar los acudientes.');
+      },
     });
   }
 
@@ -125,6 +129,9 @@ export class Guardians implements OnInit {
     }
     this.parentsService.search(query).subscribe({
       next: (list) => this.guardians.set(list.map(fromApi)),
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron buscar los acudientes.');
+      },
     });
   }
 
@@ -154,6 +161,9 @@ export class Guardians implements OnInit {
         this.attendantSelected = fromDetail(detail);
         this.showModal = true;
       },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cargar el acudiente.');
+      },
     });
   }
 
@@ -167,15 +177,20 @@ export class Guardians implements OnInit {
   showUpdate(attendant: RecordData): void {
     const id = attendant['id'];
     if (!id) return;
+    this.actionError = '';
     this.parentsService.get(String(id)).subscribe({
       next: (detail) => {
         this.attendantSelected = fromDetail(detail);
         this.showUpdateModal = true;
       },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cargar el acudiente para actualizarlo.');
+      },
     });
   }
 
   closeUpdateModal(): void {
+    this.actionError = '';
     this.showUpdateModal = false;
     this.attendantSelected = {};
   }
@@ -187,10 +202,14 @@ export class Guardians implements OnInit {
       return;
     }
 
+    this.actionError = '';
     this.parentsService.update(String(id), toPayload(updatedRecord)).subscribe({
       next: () => {
         this.closeUpdateModal();
         this.load();
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo actualizar el acudiente.');
       },
     });
   }
@@ -199,11 +218,13 @@ export class Guardians implements OnInit {
 
   showDelete(attendant: RecordData): void {
     if (!attendant['id']) return;
+    this.actionError = '';
     this.attendantSelected = attendant;
     this.showDeleteModal = true;
   }
 
   closeDeleteModal(): void {
+    this.actionError = '';
     this.showDeleteModal = false;
     this.attendantSelected = {};
   }
@@ -219,6 +240,9 @@ export class Guardians implements OnInit {
       next: () => {
         this.closeDeleteModal();
         this.load();
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo eliminar el acudiente.');
       },
     });
   }

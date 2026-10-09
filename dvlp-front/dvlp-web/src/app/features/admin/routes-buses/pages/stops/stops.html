@@ -4,6 +4,7 @@
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
     <p *ngIf="catalogLoadError" role="alert">{{ 'register.options.loadError' | translate }}</p>
+    <p *ngIf="actionError && !showUpdateModal && !showDeleteModal" class="action-error" role="alert">{{ actionError }}</p>
     <app-card-register
       type="stop"
       [fieldOptions]="fieldOptions"
@@ -34,6 +35,8 @@
   type="stop"
   [record]="stopSelected"
   [fieldOptions]="fieldOptions"
+  [saveError]="actionError"
+  [saveFieldErrors]="saveFieldErrors"
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()">
 </app-update-record>
@@ -43,6 +46,7 @@
   *ngIf="showDeleteModal"
   type="stop"
   [record]="stopSelected"
+  [error]="actionError"
   (confirm)="onConfirmDelete($event)"
   (cancel)="closeDeleteModal()">
 </app-delete-record>

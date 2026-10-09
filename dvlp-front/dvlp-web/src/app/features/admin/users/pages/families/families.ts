@@ -59,6 +59,7 @@ export class Families implements OnInit {
   @ViewChild(CardRegister) register?: CardRegister;
 
   families = signal<FamilyView[]>([]);
+  actionError = '';
   fieldOptions: Record<string, string[]> = {};
   updateFieldOptions: Record<string, string[]> = {};
   updateFieldOptionLabels: Record<string, Record<string, string>> = {};
@@ -109,12 +110,19 @@ export class Families implements OnInit {
         };
         this.load();
       },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron cargar los acudientes y estudiantes para el formulario.');
+        this.load();
+      },
     });
   }
 
   private load(): void {
     this.familiesService.list().subscribe({
       next: (list) => this.families.set(list.map((api) => this.fromApi(api))),
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron cargar las familias.');
+      },
     });
   }
 
@@ -126,6 +134,9 @@ export class Families implements OnInit {
     }
     this.familiesService.search(query).subscribe({
       next: (list) => this.families.set(list.map((api) => this.fromApi(api))),
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron buscar las familias.');
+      },
     });
   }
 
@@ -229,6 +240,9 @@ export class Families implements OnInit {
         this.familySelected = this.fromDetail(detail);
         this.showModal = true;
       },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cargar la familia.');
+      },
     });
   }
 
@@ -244,6 +258,7 @@ export class Families implements OnInit {
 
   showUpdate(family: RecordData): void {
     this.updateError = '';
+    this.actionError = '';
     const id = family['id'];
     if (!id) {
       return;
@@ -258,10 +273,14 @@ export class Families implements OnInit {
         };
         this.showUpdateModal = true;
       },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cargar la familia para actualizarla.');
+      },
     });
   }
 
   closeUpdateModal(): void {
+    this.actionError = '';
     this.showUpdateModal = false;
     this.familyToUpdate = {};
     this.detail = null;
@@ -284,10 +303,16 @@ export class Families implements OnInit {
 
     this.familiesService.update(String(id), payload).subscribe({
       next: () => {
+        this.actionError = '';
         this.closeUpdateModal();
         this.load();
       },
-      error: (error) => this.updateError = describeProblem(error, 'No se pudo actualizar la familia.'),
+      error: (error) => {
+        const message = describeProblem(error, 'No se pudo actualizar la familia.');
+        this.updateError = /profiles already associated with another family/i.test(message)
+          ? 'No se pudo cambiar el hijo porque ya está asignado a otra familia. Desvincúlalo de esa familia antes de agregarlo aquí.'
+          : message;
+      },
     });
   }
 
@@ -297,11 +322,13 @@ export class Families implements OnInit {
     if (!family['id']) {
       return;
     }
+    this.actionError = '';
     this.familySelected = family;
     this.showDeleteModal = true;
   }
 
   closeDeleteModal(): void {
+    this.actionError = '';
     this.showDeleteModal = false;
     this.familySelected = {};
   }
@@ -317,6 +344,9 @@ export class Families implements OnInit {
       next: () => {
         this.closeDeleteModal();
         this.load();
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo eliminar la familia.');
       },
     });
   }

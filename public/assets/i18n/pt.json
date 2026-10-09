@@ -1,4 +1,14 @@
 {
+  "responsive": {
+    "navigation": "Navegação",
+    "openMenu": "Abrir menu",
+    "closeMenu": "Fechar menu",
+    "dashboard": "Ir para o painel",
+    "comments": "Abrir comentários",
+    "editSchool": "Atualizar escola",
+    "language": "Alterar idioma",
+    "theme": "Alterar tema"
+  },
   "navbar": {
     "features": "Funcionalidades",
     "how_it_works": "Como funciona",
@@ -424,6 +434,7 @@
     "subtitle": "Selecione a cor do painel",
     "light": "Claro",
     "dark": "Escuro",
+    "color": "Cor",
     "select": "ativo",
     "blue": "Azul",
     "green": "Verde",
@@ -877,6 +888,15 @@
     "genericError": "Não foi possível concluir a ação. Verifique se o servidor está disponível."
   },
   "card_list": {
+    "pagination": {
+      "navigation": "Paginação de registros",
+      "top": "acima",
+      "bottom": "abaixo",
+      "previous": "Página anterior",
+      "next": "Próxima página",
+      "goTo": "Ir para a página {{page}}",
+      "summary": "{{first}}–{{last}} de {{total}} · Página {{page}} de {{pages}}"
+    },
     "student": "Estudantes registrados",
     "guardian": "Responsáveis registrados",
     "driver": "Motoristas registrados",

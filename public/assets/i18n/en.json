@@ -1,8 +1,20 @@
 {
+  "responsive": {
+    "navigation": "Navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "dashboard": "Go to dashboard",
+    "comments": "Open comments",
+    "editSchool": "Update school",
+    "language": "Change language",
+    "theme": "Change theme"
+  },
   "navbar": {
     "features": "Features",
     "how_it_works": "How it works",
-    "contact": "Contact"
+    "contact": "Contact",
+    "dashboard": "Dashboard",
+    "logout": "Log out"
   },
   "locationMap": {
     "useDeviceLocation": "Use my location",
@@ -418,6 +430,7 @@
     "subtitle": "Select the panel color",
     "light": "Light",
     "dark": "Dark",
+    "color": "Color",
     "select": "active",
     "blue": "Blue",
     "green": "Green",
@@ -870,6 +883,15 @@
     "genericError": "The action could not be completed. Check that the backend is available."
   },
   "card_list": {
+    "pagination": {
+      "navigation": "Record pagination",
+      "top": "top",
+      "bottom": "bottom",
+      "previous": "Previous page",
+      "next": "Next page",
+      "goTo": "Go to page {{page}}",
+      "summary": "{{first}}–{{last}} of {{total}} · Page {{page}} of {{pages}}"
+    },
     "student": "Registered students",
     "guardian": "Registered guardians",
     "driver": "Registered drivers",

@@ -24,7 +24,6 @@ mat-toolbar {
 }
 
 .navbar-start,
-.navbar-center,
 .navbar-end {
   display: flex;
   flex-direction: row;
@@ -33,6 +32,8 @@ mat-toolbar {
 }
 .navbar-start {
   padding-left: 20px;
+  text-decoration: none;
+  min-width: 0;
 }
 
 .title {
@@ -51,6 +52,10 @@ mat-toolbar {
   margin: 0 20px;
   color: #7f8590;   
   font-size: 1.2rem;          /* hardcoded */
+  border: 0;
+  background: transparent;
+  padding: 8px 0;
+  font-family: inherit;
 }
 
 .spaces::after {
@@ -87,63 +92,10 @@ mat-toolbar {
     display: block;
   }
 
-  .navbar-center {
-    display: none;
-    padding: 20px;
-    flex-direction: column;
-    align-items: flex-start;
-    background: #ffffff;      /* hardcoded */
-    top: 80px;
-    left: 0;
-  }
-
-  .navbar-end .person {
+  .navbar-end {
     display: none;
   }
 
-  .spaces {
-    margin: 15px 0;
-    width: 100%;
-  }
-
-  mat-sidenav-container {
-    width: 100%;
-    height: 100vh;
-    min-height: 100vh;
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 1200;
-    background: transparent;
-    overflow-x: hidden;
-  }
-
-  mat-sidenav {
-    box-sizing: border-box;
-    background-color: #ffffff; /* hardcoded */
-    border-radius: 0 !important;
-    width: 300px;
-    padding: 20px;
-    transition: transform 0.3s ease;
-    height: 100vh;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-  }
-
-  mat-sidenav .spaces {
-    margin: 20px 0;
-    font-size: 1.2rem;
-  }
-
-  mat-sidenav .person {
-    margin-bottom: 20px;
-  }
-
-  mat-sidenav-content {
-    width: 100%;
-  }
 }
 
 @media (max-width: 480px) {
@@ -154,9 +106,5 @@ mat-toolbar {
 
   .title {
     font-size: 1.3rem;
-  }
-
-  mat-sidenav-content {
-    width: 100%;
   }
 }

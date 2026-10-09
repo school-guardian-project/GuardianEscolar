@@ -76,9 +76,10 @@
 
     <!-- SIDEBAR DERECHA -->
     <div class="right-sidebar">
-      <div class="icon-circle" (click)="showComments = true">
+      <button type="button" class="icon-circle" (click)="showComments = true"
+        [attr.aria-label]="'responsive.comments' | translate">
         <mat-icon>chat</mat-icon>
-      </div>
+      </button>
 
       <button type="button" class="icon-circle" (click)="showDetails()"
         [disabled]="loadingSchool"
@@ -87,9 +88,10 @@
         <mat-icon>info</mat-icon>
       </button>
 
-      <div class="icon-circle" (click)="showUpdateInformation = true">
+      <button type="button" class="icon-circle" (click)="showUpdateInformation = true"
+        [attr.aria-label]="'responsive.editSchool' | translate">
         <mat-icon>edit</mat-icon>
-      </div>
+      </button>
     </div>
   </div>
 </div>

@@ -54,12 +54,14 @@ button:hover mat-icon {
 
 /* ── SIDEBAR BASE ───────────────────────────────────────── */
 .sidebar {
-  width: 200px;
+  width: 100%;
+  min-width: 0;
   background-color: var(--color-navbar);
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
   height: 100%;
+  overflow-y: auto;
 }
 
 .admin-section {
@@ -83,6 +85,7 @@ button:hover mat-icon {
   padding: 9px 10px;
   font-size: 13px;
   font-weight: 400;
+  overflow-wrap: anywhere;
   color: var(--navbar-item) !important;
   text-decoration: none;
   border-radius: 8px;

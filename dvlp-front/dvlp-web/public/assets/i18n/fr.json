@@ -422,6 +422,7 @@
     "subtitle": "Sélectionnez la couleur du tableau de bord",
     "light": "Clair",
     "dark": "Sombre",
+    "color": "Couleur",
     "select": "actif",
     "blue": "Bleu",
     "green": "Vert",

@@ -418,6 +418,7 @@
     "subtitle": "Select the panel color",
     "light": "Light",
     "dark": "Dark",
+    "color": "Color",
     "select": "active",
     "blue": "Blue",
     "green": "Green",

@@ -423,6 +423,7 @@
     "subtitle": "Seleccionar el color del panel",
     "light": "Claro",
     "dark": "Oscuro",
+    "color": "Color",
     "select": "activo",
     "blue": "Azul",
     "green": "Verde",

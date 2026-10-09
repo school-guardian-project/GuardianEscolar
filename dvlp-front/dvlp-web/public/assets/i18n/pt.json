@@ -422,6 +422,7 @@
     "subtitle": "Selecione a cor do painel",
     "light": "Claro",
     "dark": "Escuro",
+    "color": "Cor",
     "select": "ativo",
     "blue": "Azul",
     "green": "Verde",

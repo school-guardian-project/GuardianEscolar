@@ -12,6 +12,7 @@ describe('Themes', () => {
   beforeEach(async () => {
     originalClasses = document.body.className;
     originalTheme = localStorage.getItem('theme');
+    localStorage.setItem('theme', 'light-theme-blue');
     await TestBed.configureTestingModule({
       imports: [Themes, TranslateModule.forRoot()],
     }).compileComponents();
@@ -39,5 +40,27 @@ describe('Themes', () => {
     expect(document.body.classList.contains('light-theme-blue')).toBe(false);
     expect(document.body.classList.contains('dark-theme-green')).toBe(true);
     expect(localStorage.getItem('theme')).toBe('dark-theme-green');
+  });
+
+  it('changes the appearance mode without changing the selected color', () => {
+    component.setMode('dark');
+
+    expect(component.currentTheme).toBe('dark-theme-blue');
+    expect(component.isDark).toBe(true);
+    expect(document.body.classList.contains('dark-theme-blue')).toBe(true);
+
+    component.setMode('light');
+
+    expect(component.currentTheme).toBe('light-theme-blue');
+    expect(component.isDark).toBe(false);
+  });
+
+  it('changes the selected color without changing the appearance mode', () => {
+    component.setMode('dark');
+    component.setColor('red');
+
+    expect(component.currentTheme).toBe('dark-theme-red');
+    expect(component.currentColor).toBe('red');
+    expect(component.previewAccent('dark')).toBe('#5B1215');
   });
 });

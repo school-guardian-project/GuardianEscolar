@@ -67,8 +67,10 @@ function tokenClaims(token) {
   }
 }
 
-function claimOf(data, claims, key, fallback = null) {
-  const value = data?.[key] ?? claims[key] ?? fallback;
+function claimOf(data, claims, key) {
+  if (data?.[key] === null) return null;
+  const claim = key === "profileId" ? claims.profileId ?? claims.sub : claims[key];
+  const value = data?.[key] ?? claim ?? null;
   return value === undefined || value === "" ? null : value;
 }
 
@@ -76,11 +78,12 @@ function claimOf(data, claims, key, fallback = null) {
 async function saveSession(data) {
   const claims = tokenClaims(data?.accessToken ?? accessToken);
   session = {
-    profileId: claimOf(data, claims, "profileId", session?.profileId),
-    personId: claimOf(data, claims, "personId", session?.personId),
-    email: claimOf(data, claims, "email", session?.email),
-    roleId: claimOf(data, claims, "roleId", session?.roleId),
-    campusId: claimOf(data, claims, "campusId", session?.campusId),
+    profileId: claimOf(data, claims, "profileId"),
+    personId: claimOf(data, claims, "personId"),
+    email: claimOf(data, claims, "email"),
+    roleId: claimOf(data, claims, "roleId"),
+    campusId: claimOf(data, claims, "campusId"),
+    schoolId: claimOf(data, claims, "schoolId"),
   };
   if (await SecureStore.isAvailableAsync()) {
     await SecureStore.setItemAsync(SESSION_KEY, JSON.stringify(session));
@@ -97,7 +100,7 @@ export async function updateSessionEmail(email) {
   }
 }
 
-/** Sesión del usuario logueado (profileId, personId, email, roleId). */
+/** Sesión del usuario logueado, incluyendo escuela y sede. */
 export async function getSession() {
   if (session) {
     return session;

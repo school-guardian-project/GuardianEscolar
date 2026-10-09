@@ -2,23 +2,52 @@
   <!-- Título + total -->
   <div class="card-list__header">
     <h2 class="card-list__title">{{ titleKey | translate }}</h2>
-    <span class="card-list__total">{{ filteredItems.length }}</span>
+    <span class="card-list__total">{{ totalRecords }}</span>
   </div>
 
   <!-- Buscador -->
   <div class="card-list__search">
     <input class="card-list__search-input" type="text" [placeholder]="'search.search' | translate"
-      [(ngModel)]="searchText" (ngModelChange)="searchSubject.next($event)" />
+      [ngModel]="searchText" (ngModelChange)="onSearchChange($event)" />
 
     <span class="card-list__search-icon">
       <mat-icon>search</mat-icon>
     </span>
   </div>
 
+  <ng-template #pagination let-position="position">
+    <nav class="card-list__pagination"
+      [attr.aria-label]="('card_list.pagination.navigation' | translate) + ' (' + (position | translate) + ')'">
+      <p class="card-list__page-summary" aria-live="polite">
+        {{ 'card_list.pagination.summary' | translate: {first: firstRecord, last: lastRecord, total: filteredItems.length, page: currentPage, pages: totalPages} }}
+      </p>
+      <div class="card-list__page-controls">
+        <button type="button" class="card-list__page-btn" [disabled]="currentPage === 1"
+          (click)="goToPage(currentPage - 1)" [attr.aria-label]="'card_list.pagination.previous' | translate">
+          <mat-icon>chevron_left</mat-icon>
+        </button>
+        <ng-container *ngFor="let page of pageNumbers; let index = index">
+          <span *ngIf="index > 0 && page - pageNumbers[index - 1] > 1" class="card-list__page-gap" aria-hidden="true">...</span>
+          <button type="button" class="card-list__page-btn"
+            [class.card-list__page-btn--active]="page === currentPage"
+            [attr.aria-current]="page === currentPage ? 'page' : null"
+            [attr.aria-label]="'card_list.pagination.goTo' | translate: {page: page}"
+            (click)="goToPage(page)">{{ page }}</button>
+        </ng-container>
+        <button type="button" class="card-list__page-btn" [disabled]="currentPage === totalPages"
+          (click)="goToPage(currentPage + 1)" [attr.aria-label]="'card_list.pagination.next' | translate">
+          <mat-icon>chevron_right</mat-icon>
+        </button>
+      </div>
+    </nav>
+  </ng-template>
+
+  <ng-container *ngTemplateOutlet="pagination; context: {position: 'card_list.pagination.top'}"></ng-container>
+
   <!-- Lista de items -->
   <div class="card-list__content">
     <div class="card-list__items">
-      <div class="card-list__item" *ngFor="let item of filteredItems">
+      <div class="card-list__item" *ngFor="let item of pagedItems">
         <!-- Avatar -->
         <div class="card-list__avatar">
           <mat-icon>{{ icon }}</mat-icon>
@@ -51,12 +80,9 @@
           <button class="card-list__btn" (click)="editDetails(item)" title="Editar">
             <mat-icon>edit</mat-icon>
           </button>
-          <button *ngIf="showAssign" class="card-list__btn" (click)="assignDetails(item)"
-            title="{{ 'assign_record.buttons.assign' | translate }}">
-            <mat-icon>assignment_turned_in</mat-icon>
-          </button>
         </div>
       </div>
     </div>
   </div>
+  <ng-container *ngTemplateOutlet="pagination; context: {position: 'card_list.pagination.bottom'}"></ng-container>
 </div>

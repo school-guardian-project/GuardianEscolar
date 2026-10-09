@@ -10,6 +10,28 @@
     "send": "Enviar",
     "update": "Atualizar"
   },
+  "accept": {
+    "blocked": "Sua conta ainda não foi autorizada pelo seu responsável. Peça para aceitar os Termos na sessão dele.",
+    "error": "Não foi possível registrar a aceitação. Tente novamente."
+  },
+  "serviceErrors": {
+    "required": "Este campo é obrigatório.",
+    "invalidEmail": "Informe um endereço de e-mail válido.",
+    "invalidPhone": "Informe um telefone válido (o prefixo +57 é adicionado automaticamente).",
+    "invalidCode": "O código é inválido ou expirou. Confira e tente novamente.",
+    "rateLimited": "Você atingiu o limite de solicitações. Aguarde alguns minutos antes de tentar novamente.",
+    "smsUnavailable": "Não foi possível enviar o SMS. Verifique o número ou tente novamente mais tarde.",
+    "emailInUse": "Esse e-mail já está associado a outra conta.",
+    "flowExpired": "Esta solicitação expirou. Reinicie o processo de verificação.",
+    "requestFailed": "Não foi possível concluir a solicitação. Verifique sua conexão e tente novamente.",
+    "passwordMismatch": "As senhas não coincidem.",
+    "weakPassword": "Use pelo menos 8 caracteres com maiúscula, minúscula, número e símbolo.",
+    "sending": "Enviando...",
+    "resendIn": "Solicitar novo código em {{seconds}} s",
+    "accountNotFound": "Não encontramos uma conta com esse e-mail, por isso o código não foi enviado.",
+    "phoneMismatch": "O telefone não corresponde ao registrado na sua conta, por isso o SMS não foi enviado.",
+    "deliveryFailed": "Não foi possível enviar o código (o serviço de e-mail ou SMS falhou). Tente novamente mais tarde."
+  },
   "inputs": {
     "title.email": "E-mail",
     "title.numero": "Número de telefone",
@@ -28,6 +50,7 @@
     "family": "Minha família",
     "security": "Segurança",
     "privacity": "Política de privacidade",
+    "terms": "Termos e condições",
     "aboutus": "Sobre nós",
     "logout": "Sair",
     "phone": "Telefone",
@@ -48,48 +71,55 @@
     "titleElimination": "Retenção e exclusão de dados",
     "titleConnection": "Funcionamento offline",
     "titleLaws": "Seus direitos como usuário",
+    "titleObject": "Objeto da plataforma",
+    "titleAcceptance": "Aceitação dos termos",
+    "titleRoles": "Responsabilidades por função",
+    "titleProperUse": "Uso adequado",
+    "titleLocation": "Localização em tempo real",
+    "titleQr": "QR pessoal",
+    "titleLiability": "Responsabilidade e disponibilidade",
+    "titleAccounts": "Contas e contato",
+    "titleContact": "Contato do administrador",
     "titleAbout": "Quem somos",
     "titleMission": "Missão",
     "titleVision": "Visão",
     "titleTeam": "Nossa equipe",
     "titleValues": "Nossos valores"
   },
-
   "login": {
     "title": "Entrar",
     "ForgotPassword": "Esqueceu sua senha?",
-    "error": "E-mail ou senha incorretos."
+    "error": "E-mail ou senha incorretos.",
+    "networkError": "Não foi possível conectar ao servidor. Verifique sua conexão e tente novamente."
   },
-
   "forgotPassword": {
     "title": "Redefinir senha",
     "description": "Digite seu e-mail para receber um código de verificação.",
     "emailPlaceholder": "E-mail"
   },
-
   "verifyCode": {
     "title": "Código de verificação",
     "description": "Digite o código enviado ao seu e-mail.",
     "transferCode": "Não recebeu o código? Reenviar"
   },
-
   "newPassword": {
     "title": "Redefinir senha",
     "description": "Digite sua nova senha.",
     "newPasswordPlaceholder": "Digite sua nova senha",
     "confirmPasswordPlaceholder": "Confirme sua nova senha"
   },
-
   "account": {
     "updatePhone": {
       "title": "Atualizar número de telefone",
-      "description": "Digite seu e-mail para verificar sua identidade"
+      "description": "Digite seu telefone atual para receber um código por SMS.",
+      "currentPhone": "Telefone atual",
+      "currentPhonePlaceholder": "3001234567"
     },
     "verifyPhone": {
-      "descriptionVerify": "Enviamos um código para o seu número. Por favor, insira-o."
+      "descriptionVerify": "Digite o código enviado ao seu telefone por SMS."
     },
     "newPhone": {
-      "description": "Digite o novo número de telefone."
+      "description": "Digite o novo telefone, por exemplo 3001234567. O prefixo +57 é adicionado automaticamente."
     },
     "updateEmail": {
       "title": "Atualizar e-mail",
@@ -105,12 +135,10 @@
       "title": "Atualizar senha"
     }
   },
-
   "profile": {
     "title": "Meu perfil",
     "subtitle": "Gerencie sua conta e preferências"
   },
-
   "notifications": {
     "title": "Notificações",
     "markAllRead": "Marcar todas como lidas",
@@ -140,18 +168,15 @@
       "saved": "Notificações salvas"
     }
   },
-
   "Family": {
     "holder": "Titular",
     "members": "Outros membros"
   },
-
   "security": {
     "notificationsOff": "Ativar notificações",
     "notificationsOn": "Desativar notificações",
     "changePassword": "Alterar senha"
   },
-
   "privacy": {
     "descriPermission": "O Guardián Escolar solicita acesso a determinados recursos do seu dispositivo exclusivamente para prestar o serviço de monitoramento escolar. A permissão de localização permite exibir em tempo real a posição do ônibus no mapa interativo e calcular os horários estimados de chegada. A permissão de câmera é usada exclusivamente para escanear códigos QR que registram a entrada e saída do estudante do veículo. A permissão de notificações é usada para informá-lo imediatamente sobre eventos relevantes do trajeto do seu filho/a. Nenhuma permissão é usada para fins diferentes dos aqui descritos, e você pode revogá-las a qualquer momento nas configurações do seu dispositivo, entendendo que isso pode limitar algumas funcionalidades do aplicativo.",
     "descripDatas": "Em cumprimento do princípio de finalidade estabelecido na Lei 1581 de 2012 da Colômbia, o Guardián Escolar coleta apenas os dados pessoais estritamente necessários para a prestação do serviço de transporte escolar monitorado. Esses dados incluem: informações de identificação do estudante (nome, rota atribuída, instituição de ensino), dados de contato do responsável (nome, e-mail, telefone) e dados operacionais do serviço (localização GPS do ônibus, horários de entrada e saída registrados por código QR). Nenhum dado sensível adicional é coletado, nem essa informação é compartilhada com terceiros alheios à operação do serviço de transporte escolar.",
@@ -163,7 +188,17 @@
     "descripConnection": "O Guardián Escolar foi projetado para operar de forma confiável mesmo em áreas com cobertura de rede intermitente. Quando o dispositivo do ônibus perde temporariamente o sinal, os dados de localização são armazenados de forma segura no dispositivo e sincronizados automaticamente com o servidor assim que a conexão é restabelecida, garantindo que nenhum registro do trajeto seja perdido ou alterado durante esse processo.",
     "descripLaws": "De acordo com a Constituição Política da Colômbia e a Lei 1581 de 2012 (Lei de Proteção de Dados Pessoais), como titular dos dados — ou como representante legal do estudante — você tem direito a: conhecer, atualizar e retificar suas informações pessoais; solicitar prova da autorização concedida para o tratamento de seus dados; ser informado sobre o uso que foi dado às suas informações; apresentar reclamações à Superintendência de Indústria e Comércio por infrações à lei; revogar a autorização e/ou solicitar a exclusão de seus dados quando não forem respeitados os princípios, direitos e garantias constitucionais e legais; e acessar gratuitamente seus dados pessoais que tenham sido objeto de tratamento. Para exercer qualquer um desses direitos, você pode entrar em contato com o administrador da escola ou com nosso canal de atendimento designado."
   },
-
+  "terms": {
+    "descriObject": "Guardian Escolar es una herramienta de apoyo para el monitoreo del transporte escolar: registro de instituciones, rutas, vehículos, conductores, estudiantes y acudientes; seguimiento del recorrido en tiempo real; confirmación de abordaje y descenso con códigos QR; y notificaciones del servicio. Proyecto formativo del SENA con fines académicos y de demostración; no es un servicio comercial ni garantiza disponibilidad permanente.",
+    "descriAcceptance": "El registro y el uso continuado implican la lectura, comprensión y aceptación integral de estos Términos y de la Política de Tratamiento de Datos. Quien no esté de acuerdo debe abstenerse de usar la plataforma. La aceptación y la autorización de datos de menores corresponden exclusivamente a sus padres o acudientes legales.",
+    "descriRoles": "Superadministrador: administración general y seguridad de la información. Administrador: registra y mantiene institución, rutas, vehículos, conductores, estudiantes y acudientes. Conductor: opera el vehículo según la ruta, usa el módulo QR y mantiene la ubicación activa; conserva su responsabilidad legal del transporte. Acudiente: mantiene actualizados sus datos y los del estudiante, y reporta novedades.",
+    "descriProperUse": "Usar la plataforma solo para sus fines: no suministrar información falsa, no compartir credenciales ni el QR, no vulnerar su seguridad, no usar datos con otros fines. El incumplimiento puede suspender o cancelar la cuenta.",
+    "descriLocation": "La ubicación del vehículo solo está disponible durante recorridos autorizados y activos, y solo para los acudientes de la ruta y administradores autorizados, con fines exclusivos de monitoreo. No se garantiza exactitud absoluta ni disponibilidad ininterrumpida del GPS.",
+    "descriQr": "Cada estudiante tiene un QR personal e intransferible para registrar abordaje y descenso. No puede compartirse ni prestarse; su uso indebido puede suspender la funcionalidad. Pérdida o mal funcionamiento se reporta al administrador.",
+    "descriLiability": "Herramienta de apoyo al monitoreo; no sustituye obligaciones legales de instituciones, transportadoras ni conductores, ni garantiza prevenir accidentes. Proyecto formativo sin garantía de disponibilidad permanente o ininterrumpida.",
+    "descriAccounts": "Ante información falsa, uso indebido, incumplimiento o solicitud del titular o la institución, el acceso puede suspenderse o cancelarse, comunicándolo por los medios registrados.",
+    "descriContact": "Consultas, derechos de datos (conocer, actualizar, rectificar, suprimir, revocar) y reportes por los canales de la plataforma o con el administrador del colegio."
+  },
   "aboutus": {
     "descripAbout": "Somos uma equipe de três estudantes do SENA que desenvolve soluções tecnológicas voltadas para a melhoria de processos reais. Este aplicativo faz parte do nosso projeto de formação, no qual aplicamos os conhecimentos adquiridos em análise e desenvolvimento de software para criar um sistema funcional, seguro e fácil de usar.\n\n Nosso trabalho está voltado para fortalecer a gestão do transporte escolar, oferecendo ferramentas que melhoram a comunicação, a organização e a tranquilidade de estudantes, pais e responsáveis.",
     "descripMission": "Desenvolver um aplicativo confiável para a administração e o acompanhamento de rotas escolares, que permita monitorar em tempo real o transporte estudantil e melhorar a segurança e a comunicação entre as famílias e as instituições de ensino.",
@@ -171,27 +206,31 @@
     "descripTeam": "O Guardián Escolar nasce do trabalho conjunto de Johan Smith Santamaria Fernández, Sharik Dayanna Rojas Ibarra e Juan Pablo Chala Ramírez, aprendizes do curso Tecnólogo em Análise e Desenvolvimento de Software do SENA, sob a orientação dos instrutores designados pelo SENA. Cada integrante contribuiu com seu papel na análise, design, desenvolvimento e gestão do banco de dados do projeto.",
     "descripValues": "Segurança, transparência e compromisso são os princípios que orientam cada decisão por trás do Guardián Escolar. Acreditamos que a tecnologia deve estar a serviço do bem-estar dos estudantes, proporcionando às famílias a tranquilidade de saber que seus filhos estão seguros em cada trajeto escolar."
   },
-
   "logout": {
     "title": "Sair",
     "description": "Você está prestes a sair da sua conta neste dispositivo. Você poderá fazer login novamente quando quiser."
   },
-
   "support": {
     "title": "Conte-nos o seu problema",
     "description": "Conte-nos o seu problema",
     "placeholder": "Escreva sua mensagem aqui..."
   },
-
   "rateUs": {
     "title": "Conte-nos sua opinião",
     "placeholder": "Escreva sua opinião aqui..."
   },
-
   "cards": {
     "finalDestination": "Destino final",
     "stops": "Paradas",
     "school": "Escola"
+  },
+
+  "reminder": {
+    "title": "Lembrete da rota",
+    "message": "Sua rota {{name}} começa às {{time}}",
+    "messageNoName": "Sua rota começa às {{time}}",
+    "am": "AM",
+    "pm": "PM"
   },
 
   "bottom": {
@@ -199,7 +238,6 @@
     "location": "Localização",
     "profile": "Perfil"
   },
-
   "gps": {
     "vehicleLocation": "Localização do veículo",
     "speed": "Velocidade",

@@ -13,7 +13,7 @@ const RECORD_CONFIG: Record<RegisterType, { icon: string; fields: string[] }> = 
   bus: { icon: 'directions_bus', fields: ['plate', 'driver', 'model', 'brand', 'capacity', 'gps', 'soat'] },
   stop: { icon: 'location_on', fields: ['name', 'student', 'city', 'school', 'address', 'latitude', 'longitude'] },
   route: { icon: 'route', fields: ['name', 'sector', 'startTime', 'endTime', 'destination', 'routeSector'] },
-  admins: { icon: 'admin_panel_settings', fields: ['name', 'lastNames', 'email', 'identification', 'phone', 'birthDate', 'address'] },
+  admins: { icon: 'admin_panel_settings', fields: ['name', 'lastNames', 'email', 'identification', 'phone', 'birthDate', 'address', 'cityName', 'schoolName'] },
   schools: { icon: 'school', fields: ['name', 'city', 'schooling', 'address', 'phone', 'email', 'website'] },
 };
 
@@ -27,10 +27,21 @@ const RECORD_CONFIG: Record<RegisterType, { icon: string; fields: string[] }> = 
 export class RecordInformation {
   @Input() type: RegisterType = 'student';
   @Input() record: RecordData = {};
+  /**
+   * Muestra el botón «Asignar» en el modal. Solo lo activa la vista que tiene
+   * flujo de asignación (estudiante→ruta/parada, bus→conductor, ruta→bus): el
+   * listado ya no ofrece ese acceso, la acción vive en la vista.
+   */
+  @Input() canAssign = false;
   @Output() closed = new EventEmitter<void>();
+  @Output() assign = new EventEmitter<RecordData>();
 
   close(): void {
     this.closed.emit();
+  }
+
+  assignRecord(): void {
+    this.assign.emit(this.record);
   }
 
   get config() {
@@ -43,6 +54,7 @@ export class RecordInformation {
 
   get displayName(): string {
     return (
+      (this.type === 'schools' ? this.record?.['name'] : '') ||
       this.record?.['nombres'] ||
       this.record?.['nombre'] ||
       this.record?.['correo'] ||

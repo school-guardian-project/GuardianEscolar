@@ -1,8 +1,9 @@
 <div class="container">
   <!-- MODALES -->
   <app-comments *ngIf="showComments" (closed)="showComments = false"></app-comments>
-  <app-update-information *ngIf="showUpdateInformation" (closed)="showUpdateInformation = false"></app-update-information>
-  <app-record-information *ngIf="showInformation" type="schools" [record]="schoolSelected" (closed)="showInformation = false">
+  <app-update-information *ngIf="showUpdateInformation" [schoolId]="schoolId"
+    (closed)="showUpdateInformation = false"></app-update-information>
+  <app-record-information *ngIf="showInformation" type="schools" [record]="schoolSelected" (closed)="closeModal()">
   </app-record-information>
 
   <!-- NAVBAR -->
@@ -24,6 +25,7 @@
           <p class="welcome-role">
             {{ 'dashboard.role' | translate }}
           </p>
+          <p *ngIf="schoolErrorKey" role="alert">{{ schoolErrorKey | translate }}</p>
 
           <div class="metrics">
             <div class="metric-card">
@@ -74,17 +76,22 @@
 
     <!-- SIDEBAR DERECHA -->
     <div class="right-sidebar">
-      <div class="icon-circle" (click)="showComments = true">
+      <button type="button" class="icon-circle" (click)="showComments = true"
+        [attr.aria-label]="'responsive.comments' | translate">
         <mat-icon>chat</mat-icon>
-      </div>
+      </button>
 
-      <div class="icon-circle" (click)="showDetails(schoolSelected)">
+      <button type="button" class="icon-circle" (click)="showDetails()"
+        [disabled]="loadingSchool"
+        [attr.aria-busy]="loadingSchool"
+        [attr.aria-label]="'record_information.schools.title' | translate">
         <mat-icon>info</mat-icon>
-      </div>
+      </button>
 
-      <div class="icon-circle" (click)="showUpdateInformation = true">
+      <button type="button" class="icon-circle" (click)="showUpdateInformation = true"
+        [attr.aria-label]="'responsive.editSchool' | translate">
         <mat-icon>edit</mat-icon>
-      </div>
+      </button>
     </div>
   </div>
 </div>

@@ -1,4 +1,4 @@
-<div class="layout">
+﻿<div class="layout">
   <app-nav-component></app-nav-component>
 
   <main>
@@ -47,7 +47,7 @@
 
           <!-- Password -->
           <label for="password">{{ 'login.right.password.label' | translate }}</label>
-          <input
+          <input appPasswordToggle
             type="password"
             id="password"
             [placeholder]="'login.right.password.placeholder' | translate"
@@ -77,9 +77,9 @@
         <!-- Términos y condiciones -->
         <div class="condition">
           {{ 'login.right.terms' | translate }}
-          <span class="terms term">{{ 'login.right.terms_link' | translate }}</span>
+          <a class="terms term" routerLink="/terms">{{ 'login.right.terms_link' | translate }}</a>
           {{ 'login.right.and' | translate }}
-          <span class="terms politic">{{ 'login.right.privacy_link' | translate }}</span>
+          <a class="terms politic" routerLink="/privacy">{{ 'login.right.privacy_link' | translate }}</a>
         </div>
       </div>
     </div>

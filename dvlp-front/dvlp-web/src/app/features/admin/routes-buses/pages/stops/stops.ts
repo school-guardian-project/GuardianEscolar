@@ -4,7 +4,8 @@ import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, Observable, of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-manage';
 import { CardRegister } from '@shared/components/cards/card-register/card-register';
 import { CardList } from '@shared/components/cards/card-list/card-list';
@@ -16,6 +17,7 @@ import { StopsService } from '@core/services/stops.service';
 import { CitiesService } from '@core/services/cities.service';
 import { SchoolsService } from '@core/services/schools.service';
 import { RoutesService } from '@core/services/routes.service';
+import { StudentsService } from '@core/services/students.service';
 import { StopListDto, StopRequestDto } from '@core/models/stop.model';
 
 interface StopView extends RecordData {
@@ -45,6 +47,7 @@ interface StopView extends RecordData {
     RecordInformation,
     UpdateRecord,
     DeleteRecord,
+    TranslateModule,
   ],
   templateUrl: './stops.html',
   styleUrl: './stops.scss',
@@ -54,11 +57,21 @@ export class Stops implements OnInit {
   private citiesService = inject(CitiesService);
   private schoolsService = inject(SchoolsService);
   private routesService = inject(RoutesService);
+  private studentsService = inject(StudentsService);
 
   @ViewChild(CardRegister) register?: CardRegister;
 
   stops: StopView[] = [];
   fieldOptions: Record<string, string[]> = {};
+  catalogLoadError = false;
+
+  private loadCatalog<T>(source: Observable<T[]>, name: string): Observable<T[]> {
+    return source.pipe(catchError(error => {
+      console.error(`Error loading stop ${name}:`, error);
+      this.catalogLoadError = true;
+      return of([]);
+    }));
+  }
 
   showModal = false;
   showUpdateModal = false;
@@ -73,11 +86,12 @@ export class Stops implements OnInit {
 
   ngOnInit(): void {
     forkJoin({
-      cities: this.citiesService.list(),
-      schools: this.schoolsService.list(),
-      routes: this.routesService.list(),
+      cities: this.loadCatalog(this.citiesService.list(), 'cities'),
+      schools: this.loadCatalog(this.schoolsService.list(), 'schools'),
+      routes: this.loadCatalog(this.routesService.list(), 'routes'),
+      students: this.loadCatalog(this.studentsService.list(), 'students'),
     }).subscribe({
-      next: ({ cities, schools, routes }) => {
+      next: ({ cities, schools, routes, students }) => {
         this.cityIdByLabel = Object.fromEntries(cities.map((city) => [city.name, city.id]));
         this.schoolIdByLabel = Object.fromEntries(schools.map((school) => [school.name, school.id]));
         this.routeIdByLabel = Object.fromEntries(routes.map((route) => [route.name, route.id]));
@@ -88,11 +102,13 @@ export class Stops implements OnInit {
           city: Object.keys(this.cityIdByLabel),
           school: Object.keys(this.schoolIdByLabel),
           route: Object.keys(this.routeIdByLabel),
+          student: students
+            .map((s) => `${s.name ?? ''} ${s.lastName ?? ''}`.trim())
+            .filter(Boolean),
         };
 
         this.load();
       },
-      error: () => this.load(),
     });
   }
 

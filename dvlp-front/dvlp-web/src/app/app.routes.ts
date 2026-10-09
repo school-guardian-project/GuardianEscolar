@@ -22,6 +22,8 @@ import { routes as changePasswordRoutes } from './features/profile/pages/change-
 import {routes as changeContactRoutes } from './features/profile/pages/change-contact/change-contact.routes'
 import { ChangeContact } from './features/profile/pages/change-contact/change-contact';
 import { Contact } from './features/public/contact/contact';
+import { Terms } from './features/public/legal/terms/terms';
+import { Privacy } from './features/public/legal/privacy/privacy';
 import { roleGuard } from '@core/guards/role.guard';
 import { ROLES } from '@core/services/auth.service';
 
@@ -73,6 +75,9 @@ export const routes: Routes = [
   { path: 'superadmin/schools', component: Schools, ...superAdminAccess },
 
   { path: 'contact', component: Contact},
+
+  { path: 'terms', component: Terms },
+  { path: 'privacy', component: Privacy },
 
   /* fallback */
   { path: '**', redirectTo: 'home' }

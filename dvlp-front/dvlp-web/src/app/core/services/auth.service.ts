@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Observable, catchError, finalize, map, share, throwError } from 'rxjs';
+import { Observable, catchError, finalize, map, of, share, switchMap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 export const ROLES = {
@@ -90,6 +90,8 @@ export class AuthService {
             this.applySession(res);
             return res.accessToken;
           }),
+          // El refresh token no lleva el correo: tras un F5 se recupera desde /profile.
+          switchMap((token) => this.userSession.email ? of(token) : this.loadEmail(token)),
           catchError((err) => {
             this.accessToken = null;
             this.userSession = { ...EMPTY_SESSION };
@@ -102,6 +104,17 @@ export class AuthService {
     return this.refreshInFlight;
   }
 
+  private loadEmail(token: string): Observable<string> {
+    return this.http
+      .get<{ email?: string }>(`${this.base}/profile`, { headers: { Authorization: `Bearer ${token}` } })
+      .pipe(
+        map((profile) => {
+          if (profile.email) this.userSession = { ...this.userSession, email: profile.email };
+          return token;
+        }),
+        catchError(() => of(token)),
+      );
+  }
   logout(): Observable<void> {
     const headers: Record<string, string> = this.accessToken
       ? { Authorization: `Bearer ${this.accessToken}` }
@@ -155,19 +168,17 @@ export class AuthService {
   private applySession(res: Partial<LoginResponse>): void {
     const claims = this.claims();
     const pick = (key: keyof Session): string | null => {
+      if (res[key] === null) return null;
       const fromRes = res[key];
       if (typeof fromRes === 'string' && fromRes) return fromRes;
-      const fromClaims = claims[key];
-      return typeof fromClaims === 'string' && fromClaims ? fromClaims : this.userSession[key];
+      const fromClaims = key === 'profileId' ? claims['profileId'] ?? claims['sub'] : claims[key];
+      return typeof fromClaims === 'string' && fromClaims ? fromClaims : null;
     };
     this.userSession = {
       profileId: pick('profileId'),
       personId: pick('personId'),
       email: pick('email'),
       campusId: pick('campusId'),
-      // El login y el refresh no lo repiten en el body (solo en el JWT), asi que
-      // casi siempre llega de los claims. Mirar el claim de todas formas deja
-      // que un backend futuro lo exponga sin tocar este servicio.
       schoolId: pick('schoolId'),
     };
   }

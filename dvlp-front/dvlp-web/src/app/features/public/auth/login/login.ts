@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+﻿import { Component } from '@angular/core';
+import { PasswordToggleDirective } from '@shared/directives/password-toggle.directive';
 import { NavComponent } from '@shared/components/navbar/nav-component/nav-component';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@core/services/auth.service';
@@ -11,7 +13,7 @@ import { AuthService } from '@core/services/auth.service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [NavComponent, MatIconModule, MatButtonModule, MatToolbarModule, FormsModule, ReactiveFormsModule, TranslateModule],
+  imports: [PasswordToggleDirective, NavComponent, MatIconModule, MatButtonModule, MatToolbarModule, FormsModule, ReactiveFormsModule, TranslateModule, RouterLink],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })

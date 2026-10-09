@@ -41,6 +41,15 @@
     <!-- FOOTER -->
     <div class="modal__footer">
       <button
+        *ngIf="canAssign"
+        class="modal__btn modal__btn--secondary"
+        type="button"
+        (click)="assignRecord()"
+      >
+        {{ 'assign_record.buttons.assign' | translate }}
+      </button>
+
+      <button
         class="modal__btn modal__btn--submit"
         type="button"
         (click)="close()"

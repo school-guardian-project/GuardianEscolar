@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { HttpErrorResponse } from '@angular/common/http';
+import { requestErrorKey } from '@core/services/request-error';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ChangeInformation } from "../../../../../../shared/components/change/change-information/change-information";
 import { AuthService } from '@core/services/auth.service';
-import { ChangePhoneService } from '@core/services/change-phone.service';
+import { ChangePhoneService, phoneValidator } from '@core/services/change-phone.service';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { finalize } from 'rxjs';
 
@@ -27,7 +27,7 @@ export class Telephone {
     private translate: TranslateService,
   ) {
     this.form = this.fb.group({
-      telephone: ['', [Validators.required, Validators.pattern(/^\+[1-9]\d{7,14}$/)]],
+      telephone: ['', [Validators.required, phoneValidator]],
     });
   }
 
@@ -46,12 +46,7 @@ export class Telephone {
     ).subscribe({
       next: () => this.router.navigate(['/admin/change-contact/code-first']),
       error: (error: unknown) => {
-        const status = error instanceof HttpErrorResponse ? error.status : 0;
-        this.errorMessage = this.translate.instant(
-          status === 429 ? 'forgot_password.errors.rate_limited'
-            : status === 400 ? 'change_contact.errors.invalid_phone'
-            : 'forgot_password.errors.request_failed',
-        );
+        this.errorMessage = this.translate.instant(requestErrorKey(error, 'change_contact.errors.invalid_phone'));
       },
     });
   }

@@ -1,4 +1,14 @@
 {
+  "responsive": {
+    "navigation": "Navegación",
+    "openMenu": "Abrir menú",
+    "closeMenu": "Cerrar menú",
+    "dashboard": "Ir al dashboard",
+    "comments": "Abrir comentarios",
+    "editSchool": "Actualizar colegio",
+    "language": "Cambiar idioma",
+    "theme": "Cambiar tema"
+  },
   "navbar": {
     "features": "Funcionalidades",
     "how_it_works": "Como funciona",
@@ -6,28 +16,25 @@
     "dashboard": "Dashboard",
     "logout": "Cerrar sesión"
   },
+  "locationMap": {
+    "useDeviceLocation": "Usar mi ubicación",
+    "locating": "Obteniendo ubicación…",
+    "resolvingAddress": "Buscando dirección…",
+    "addressNotFound": "No se encontró una dirección para este punto.",
+    "geocodeFailed": "No se pudo buscar la dirección.",
+    "geolocationUnavailable": "Este dispositivo no permite obtener la ubicación.",
+    "permissionDenied": "Permite el acceso a la ubicación para usar esta función.",
+    "locationTimeout": "Se agotó el tiempo para obtener la ubicación.",
+    "positionUnavailable": "No se pudo obtener la ubicación del dispositivo.",
+    "reverseGeocodeFailed": "No se pudo obtener la dirección del punto seleccionado."
+  },
   "hero": {
     "line1": "La",
     "line2": "seguridad",
     "line3": "escolar",
     "line4": "en",
     "line5": "tiempo",
-    "line6": "real",
-    "paragraph": "Monitoreo GPS de rutas, alertas instantáneas y control de asistencia. Tranquilidad para las familias, eficiencia para las escuelas.",
-    "btn_download": "Descargar",
-    "btn_video": "Ver video"
-  },
-  "card_panel": {
-    "badge": "+ 12 este mes",
-    "title": "Panel Guardian Escolar",
-    "live": "● En vivo",
-    "students": "Estudiantes",
-    "routes": "Rutas",
-    "alerts": "Alertas",
-    "alert_msg": "Bus fuera de ruta",
-    "alert_sub": "Ruta LOL85 · 6:45 am",
-    "success_msg": "18 rutas operando",
-    "success_sub": "Todas en tiempo normal"
+    "line6": "real"
   },
   "features": {
     "label": "Funcionalidades",
@@ -109,7 +116,7 @@
     "info_subtitle": "Múltiples canales disponibles.",
     "email": {
       "title": "Correo",
-      "value": "guardianescolar0@gmail.com",
+      "value": "sch00l.guard4n@gmail.com",
       "subtitle": "Respuesta en menos de 2 horas",
       "button": "Enviar correo"
     },
@@ -127,19 +134,12 @@
     }
   },
   "footer": {
-    "description": "Sistema de monitoreo escolar para rutas más seguras y familias más tranquilas.",
     "col_product": "Producto",
-    "col_company": "Empresa",
     "col_legal": "Legal",
     "links_product": [
       "Funcionalidades",
       "Cómo funciona",
       "Contáctanos"
-    ],
-    "links_company": [
-      "Nosotros",
-      "Blog",
-      "Contacto"
     ],
     "links_legal": [
       "Privacidad",
@@ -147,13 +147,21 @@
     ],
     "rights": "© 2026 Guardian Escolar · Todos los derechos reservados"
   },
+  "legal": {
+    "kicker": "Documento legal",
+    "terms_title": "Términos y Condiciones de Uso",
+    "privacy_title": "Política de Tratamiento de Datos",
+    "updated": "Última actualización: agosto de 2026",
+    "data_title": "Datos que tratamos",
+    "purpose_title": "Finalidades",
+    "minors_title": "Datos de menores de edad",
+    "rights_title": "Tus derechos",
+    "channel_title": "Canal de contacto"
+  },
   "login": {
     "left": {
       "title": "Bienvenido de nuevo",
       "description": "Accede al sistema completo de monitoreo de rutas escolares.",
-      "gps": "GPS en tiempo real",
-      "alerts": "Alertas instantáneas",
-      "reports": "Reportes y métricas",
       "footer": "guardian.edu · Soporte 24/7"
     },
     "right": {
@@ -186,24 +194,23 @@
   "change_contact": {
     "telephone": {
       "title": "Cambiar teléfono",
-      "sessionDescription": "Por seguridad, enviaremos un SMS a tu tel?fono actual.",
+      "sessionDescription": "Por seguridad, enviaremos un SMS a tu teléfono actual.",
       "titleStep": "Paso 1",
       "buttonText": "Enviar código",
       "returnStep": "Volver",
       "stepText": "1 de 4",
-      "label": "Tel?fono actual",
-      "error_pattern": "*Debe ser un número válido.",
+      "label": "Teléfono actual",
       "error_required": "*El teléfono es requerido.",
-      "help_text": "Ingresa el tel?fono actual de tu cuenta con c?digo de pa?s, p. ej. +573001234567."
+      "help_text": "Ingresa el teléfono actual de tu cuenta, p. ej. 3001234567. El prefijo +57 se agrega solo."
     },
     "code_first": {
       "title": "Verificar código",
-      "sessionDescription": "Revisa el SMS enviado a tu tel?fono actual y escribe el c?digo.",
+      "sessionDescription": "Revisa el SMS enviado a tu teléfono actual y escribe el código.",
       "titleStep": "Paso 2",
       "buttonText": "Verificar",
       "returnStep": "Volver",
       "stepText": "2 de 4",
-      "description": "Revisa el SMS enviado a tu tel?fono actual y escribe el c?digo.",
+      "description": "Revisa el SMS enviado a tu teléfono actual y escribe el código.",
       "pin_error": "*El código ingresado no es válido."
     },
     "reset": {
@@ -213,26 +220,26 @@
       "buttonText": "Continuar",
       "returnStep": "Volver",
       "stepText": "3 de 4",
-      "label": "Nuevo tel?fono",
-      "error_pattern": "*Usa formato internacional, p. ej. +573001234567.",
+      "label": "Nuevo teléfono",
+      "error_pattern": "*Ingresa un número válido, p. ej. 3001234567.",
       "error_required": "*El teléfono es requerido.",
-      "help_text": "Recibir?s un SMS con un c?digo en este n?mero (formato +pa?s y n?mero)."
+      "help_text": "Recibirás un SMS con un código en este número (el prefijo +57 se agrega solo)."
     },
     "code_second": {
       "title": "Confirmar código",
-      "sessionDescription": "Ingresa el c?digo SMS enviado al nuevo n?mero.",
+      "sessionDescription": "Ingresa el código SMS enviado al nuevo número.",
       "titleStep": "Paso 4",
       "buttonText": "Confirmar",
       "returnStep": "Volver",
       "stepText": "4 de 4",
-      "description": "Introduce el c?digo SMS para finalizar el cambio de tel?fono.",
+      "description": "Introduce el código SMS para finalizar el cambio de teléfono.",
       "pin_error": "*El código ingresado no es válido.",
       "confirmationTitle": "Teléfono actualizado",
       "confirmationDescription": "Su teléfono ha sido actualizado correctamente."
     },
     "errors": {
-      "invalid_phone": "El n?mero no es v?lido o la solicitud venci?. Usa el formato +573001234567 o reinicia el proceso.",
-      "sms_unavailable": "No pudimos enviar el SMS ahora. Int?ntalo de nuevo m?s tarde."
+      "invalid_phone": "El teléfono no es válido. Ingresa el número, por ejemplo 3001234567.",
+      "sms_unavailable": "No pudimos enviar el SMS. Verifica el número o inténtalo de nuevo más tarde."
     }
   },
   "change_email": {
@@ -245,8 +252,6 @@
       "returnStep": "Volver",
       "stepText": "1 de 4",
       "email_label": "Correo electrónico",
-      "error_pattern": "*Debe ser un correo válido.",
-      "error_required": "*El correo es requerido.",
       "help_text": "Recibirás un código de verificación en este correo."
     },
     "code_first": {
@@ -260,14 +265,6 @@
       "pin_error": "*El código ingresado no es válido."
     },
     "code_second": {
-      "title": "Confirmar código",
-      "sessionDescription": "Ingresa el código enviado al nuevo correo.",
-      "titleStep": "Paso 4",
-      "buttonText": "Confirmar",
-      "returnStep": "Volver",
-      "stepText": "4 de 4",
-      "description": "Introduce el código final para actualizar tu correo.",
-      "pin_error": "*El código ingresado no es válido.",
       "confirmationTitle": "Correo actualizado",
       "confirmationDescription": "Su correo ha sido actualizado correctamente."
     },
@@ -306,8 +303,6 @@
       "returnStep": "Volver",
       "stepText": "1 de 3",
       "email_label": "Correo electrónico",
-      "error_pattern": "*Debe ser un correo válido.",
-      "error_required": "*El correo es requerido.",
       "help_text": "Recibirás un código para restablecer tu contraseña."
     },
     "code": {
@@ -329,20 +324,14 @@
       "returnStep": "Volver",
       "stepText": "3 de 3",
       "confirmationTitle": "Contraseña actualizada",
-      "confirmationDescription": "Su contraseña ha sido actualizada correctamente.",
-      "errors": {
-        "required": "*Este campo es requerido",
-        "minlength": "*Mínimo 8 caracteres",
-        "maxlength": "*Máximo 128 caracteres",
-        "pattern": "*Debe tener mayúsculas, minúsculas, números y caracteres especiales (. - _ @ *)",
-        "no_match": "*Las contraseñas no son iguales",
-        "expired": "El enlace de recuperación expiró o ya fue usado. Solicita un nuevo código.",
-        "rate_limited": "Se alcanzó el límite de intentos. Solicita un nuevo código más tarde.",
-        "failed": "No se pudo actualizar la contraseña. Inténtalo de nuevo."
-      }
+      "confirmationDescription": "Su contraseña ha sido actualizada correctamente."
     }
   },
   "dashboard": {
+    "schoolInformation": {
+      "noSchool": "No hay una escuela asociada a tu sesión.",
+      "loadError": "No se pudo cargar la información de tu escuela. Intenta de nuevo."
+    },
     "welcome": "Bienvenido",
     "role": "Panel de administración · Guardian Escolar",
     "metrics": {
@@ -354,11 +343,7 @@
       "attention": "Requieren atención"
     },
     "alerts": {
-      "title": "Últimas alertas",
-      "out_of_route": "Bus fuera de ruta",
-      "sudden_brake": "Frenó brusco",
-      "driver": "Conductor",
-      "route": "Ruta"
+      "title": "Últimas alertas"
     }
   },
   "superadmin_dashboard": {
@@ -373,11 +358,7 @@
       "attention": "Requieren atención"
     },
     "alerts": {
-      "title": "Últimas alertas",
-      "out_route": "Bus fuera de ruta",
-      "sudden_stop": "Frenó brusco",
-      "driver": "Conductor",
-      "route": "Ruta"
+      "title": "Últimas alertas"
     }
   },
   "sidebar": {
@@ -401,8 +382,7 @@
     "title-routes": "Transporte",
     "bus": "Buses",
     "route": "Rutas",
-    "bus-stops": "Paradas",
-    "title-profile": "Perfil"
+    "bus-stops": "Paradas"
   },
   "comments_modal": {
     "title": "¿Tienes algún inconveniente?",
@@ -421,6 +401,7 @@
     }
   },
   "update_school": {
+    "loading": "Cargando la información del colegio...",
     "title": "Actualizar información de la escuela",
     "fields": {
       "name": "Nombre completo",
@@ -435,10 +416,9 @@
       "upload": "Subir nuevo logo",
       "email": "Correo electrónico",
       "email_placeholder": "Ingrese el correo",
-      "website": "Página web",
       "web_placeholder": "Ingrese la página web"
     },
-    "error": "Por favor completa al menos un campo antes de actualizar",
+    "error": "No se pudo actualizar. Revisa los datos de la escuela y sus sedes e inténtalo de nuevo.",
     "buttons": {
       "cancel": "Cancelar",
       "update": "Actualizar",
@@ -454,15 +434,12 @@
     "subtitle": "Seleccionar el color del panel",
     "light": "Claro",
     "dark": "Oscuro",
+    "color": "Color",
     "select": "activo",
     "blue": "Azul",
     "green": "Verde",
     "red": "Rojo",
-    "yellow": "Amarillo",
-    "buttons": {
-      "cancel": "Cancelar",
-      "apply": "Aplicar"
-    }
+    "yellow": "Amarillo"
   },
   "language": {
     "title": "Seleccionar idioma",
@@ -513,7 +490,6 @@
   "common": {
     "cancel": "Cancelar",
     "delete": "Eliminar",
-    "save": "Guardar",
     "confirm": "Confirmar",
     "close": "Cerrar",
     "accept": "Aceptar"
@@ -613,7 +589,9 @@
         "identification": "Identificación",
         "phone": "Teléfono",
         "birthDate": "Fecha nacimiento",
-        "address": "Dirección"
+        "address": "Dirección",
+        "cityName": "Ciudad",
+        "schoolName": "Colegio"
       }
     },
     "schools": {
@@ -673,6 +651,8 @@
     },
     "family": {
       "title": "Actualizar familia",
+      "addChildrenHint": "Selecciona estudiantes para agregar hijos a la familia.",
+      "removeChild": "Quitar a {{name}} de la familia",
       "fields": {
         "name": "Nombre",
         "guardian": "Acudiente",
@@ -720,6 +700,8 @@
       "fields": {
         "name": "Nombre",
         "lastNames": "Apellidos",
+        "city": "Ciudad",
+        "school": "Colegio",
         "email": "Correo electrónico",
         "identification": "Identificación",
         "birthDate": "Fecha nacimiento",
@@ -803,7 +785,9 @@
     "bus": {
       "title": "Registrar bus",
       "fields": {
+        "campus": "Sede",
         "plate": "Matrícula",
+        "matricula": "Matrícula",
         "driver": "Conductor",
         "model": "Modelo",
         "brand": "Marca",
@@ -840,6 +824,7 @@
       "fields": {
         "name": "Nombre",
         "lastNames": "Apellidos",
+        "city": "Ciudad",
         "email": "Correo Electrónico",
         "identification": "Identificación",
         "birthDate": "Fecha de Nacimiento",
@@ -859,12 +844,16 @@
         "schooling": "Nivel educativo",
         "email": "Correo Electrónico",
         "website": "Página web",
-        "campusNames": "Sedes"
+        "campusNames": "Sedes adicionales"
       },
       "campusNamePlaceholder": "Nombre de la sede",
+      "chooseLocation": "Elegir ubicación del colegio en el mapa",
+      "chooseCampusLocation": "Elegir ubicación de la sede {{name}} en el mapa",
       "addCampus": "Agregar sede",
       "removeCampus": "Quitar sede",
-      "campusNamesRequired": "Agrega al menos una sede para el colegio",
+      "campusNamesHint": "Opcional: el colegio puede operar únicamente desde su sede central.",
+      "logoReadError": "No se pudo leer el logo. Prueba con otra imagen.",
+      "campusAddressRequired": "Cada sede debe tener nombre (máximo 30 caracteres) y dirección (máximo 255 caracteres)",
       "campusNamesDuplicated": "La sede «{{name}}» está repetida"
     },
     "options": {
@@ -878,19 +867,16 @@
   },
   "assign_record": {
     "route": {
-      "title": "Asignar bus a la ruta",
       "bus": "Bus",
       "selectBus": "Selecciona un bus"
     },
     "student": {
-      "title": "Asignar estudiante a la ruta",
       "route": "Ruta",
       "stop": "Parada de embarque",
       "selectRoute": "Selecciona una ruta",
       "selectStop": "Selecciona una parada"
     },
     "bus": {
-      "title": "Asignar conductor al bus",
       "driver": "Conductor",
       "currentDriver": "Conductor actual",
       "selectDriver": "Selecciona un conductor"
@@ -902,6 +888,15 @@
     "genericError": "No se pudo completar la asignación. Verifica que el backend esté disponible."
   },
   "card_list": {
+    "pagination": {
+      "navigation": "Paginación de registros",
+      "top": "arriba",
+      "bottom": "abajo",
+      "previous": "Página anterior",
+      "next": "Página siguiente",
+      "goTo": "Ir a la página {{page}}",
+      "summary": "{{first}}–{{last}} de {{total}} · Página {{page}} de {{pages}}"
+    },
     "student": "Estudiantes registrados",
     "guardian": "Acudientes registrados",
     "driver": "Conductores registrados",
@@ -925,6 +920,9 @@
   },
   "admin_profile": {
     "title": "Información del administrador",
+    "loading": "Cargando tu información...",
+    "load_failed": "No pudimos cargar toda tu información. Inténtalo de nuevo.",
+    "retry": "Reintentar",
     "user": {
       "name": "Nombre del administrador",
       "role": "Administrador",
@@ -938,7 +936,10 @@
       "school": "Escuela",
       "password": "Contraseña",
       "id": "C.C"
-    }
+    },
+    "logout": "Cerrar sesión",
+    "logout_title": "¿Cerrar sesión?",
+    "logout_text": "Tendrás que iniciar sesión de nuevo para volver a entrar."
   },
   "forgot_password": {
     "title": "Recupera tu acceso",
@@ -951,8 +952,12 @@
     "hint": "Recibirás un código de 6 dígitos",
     "errors": {
       "email_too_long": "*El correo no puede superar 100 caracteres.",
-      "request_failed": "No fue posible iniciar la recuperación. Inténtalo de nuevo.",
-      "rate_limited": "Has realizado demasiadas solicitudes. Espera unos minutos e inténtalo de nuevo."
+      "invalid_email": "El correo electrónico no es válido. Revisa que esté escrito correctamente.",
+      "request_failed": "No pudimos completar la solicitud. Revisa tu conexión e inténtalo de nuevo más tarde.",
+      "rate_limited": "Alcanzaste el límite de solicitudes. Espera unos minutos antes de intentarlo de nuevo.",
+      "account_not_found": "No encontramos una cuenta con ese correo, por eso no enviamos el código.",
+      "phone_mismatch": "El teléfono no coincide con el registrado en tu cuenta, por eso no enviamos el SMS.",
+      "delivery_failed": "No pudimos enviar el código (falló el servicio de correo o SMS). Inténtalo de nuevo más tarde."
     },
     "code": {
       "title": "Verifica tu correo",
@@ -961,8 +966,6 @@
       "button": "Validar",
       "return": "Volver",
       "step_text": "2 de 3",
-      "sent_to": "Código enviado a",
-      "valid": "Válido por 10 minutos.",
       "error": "*Ingresa los 6 dígitos del código",
       "digit_label": "Dígito {{number}} del código",
       "errors": {
@@ -987,24 +990,12 @@
         "required": "*Este campo es requerido",
         "minlength": "*Mínimo 8 caracteres",
         "pattern": "*Debe tener mayúsculas, minúsculas, números y caracteres especiales (. - _ @ *)",
-        "no_match": "*Las contraseñas no son iguales"
+        "no_match": "*Las contraseñas no son iguales",
+        "expired": "El enlace de recuperación expiró o ya fue usado. Solicita un nuevo código.",
+        "rate_limited": "Se alcanzó el límite de intentos. Solicita un nuevo código más tarde.",
+        "failed": "No se pudo actualizar la contraseña. Inténtalo de nuevo."
       }
-    },
-    "links_product": [
-      "Funcionalidades",
-      "Cómo funciona",
-      "Contáctanos"
-    ],
-    "links_company": [
-      "Nosotros",
-      "Blog",
-      "Contacto"
-    ],
-    "links_legal": [
-      "Privacidad",
-      "Términos"
-    ],
-    "rights": "© 2026 Guardian Escolar · Todos los derechos reservados"
+    }
   },
   "right_index": {
     "brand": "Guardian Escolar",
@@ -1040,6 +1031,7 @@
   "validation": {
     "required": "Este campo es requerido",
     "email": "Correo electrónico inválido",
+    "url": "Ingresa una dirección web válida",
     "phone": "Teléfono inválido (solo números, 7-15 dígitos)",
     "minLength": "Mínimo {{min}} caracteres",
     "maxLength": "Máximo {{max}} caracteres",
@@ -1049,5 +1041,9 @@
     "text": "Solo letras y espacios",
     "birthDate": "La fecha no puede ser futura ni anterior a hace 100 años",
     "futureDate": "La fecha debe ser futura"
+  },
+  "resend_code": {
+    "button": "Solicitar nuevo código",
+    "wait": "Solicitar nuevo código en {{seconds}} s"
   }
 }

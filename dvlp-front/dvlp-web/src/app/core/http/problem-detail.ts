@@ -22,19 +22,29 @@ export function describeProblem(err: unknown, fallback: string): string {
   // ApiErrors.ToProblem: use-case errors con `title` y `detail` accionables.
   // La validación de [ApiController] de ASP.NET no manda `detail`, manda
   // `errors: { Campo: ["..."] }`; se recoge la primera de esas frases.
-  const detail = body.detail ?? body.title ?? body.message;
+  const detail = body.detail;
   if (typeof detail === 'string' && detail.trim()) {
     return detail;
   }
 
   const errors = body.errors as Record<string, unknown> | undefined;
   if (errors) {
-    for (const field of Object.values(errors)) {
+    const entries = Object.entries(errors);
+    const prioritizedEntries = [
+      ...entries.filter(([fieldName]) => fieldName.toLowerCase() !== 'request'),
+      ...entries.filter(([fieldName]) => fieldName.toLowerCase() === 'request'),
+    ];
+    for (const [fieldName, field] of prioritizedEntries) {
       if (Array.isArray(field)) {
         const first = field.find((m): m is string => typeof m === 'string' && m.trim().length > 0);
-        if (first) return first;
+        if (first) return `${fieldName}: ${first}`;
       }
     }
+  }
+
+  const title = body.title ?? body.message;
+  if (typeof title === 'string' && title.trim()) {
+    return title;
   }
 
   return fallback;

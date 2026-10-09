@@ -1,10 +1,32 @@
 {
+  "responsive": {
+    "navigation": "Navigation",
+    "openMenu": "Ouvrir le menu",
+    "closeMenu": "Fermer le menu",
+    "dashboard": "Aller au tableau de bord",
+    "comments": "Ouvrir les commentaires",
+    "editSchool": "Modifier l'école",
+    "language": "Changer la langue",
+    "theme": "Changer le thème"
+  },
   "navbar": {
     "features": "Fonctionnalités",
     "how_it_works": "Comment ça marche",
     "contact": "Contact",
     "dashboard": "Tableau de bord",
     "logout": "Se déconnecter"
+  },
+  "locationMap": {
+    "useDeviceLocation": "Utiliser ma position",
+    "locating": "Obtention de la position…",
+    "resolvingAddress": "Recherche de l’adresse…",
+    "addressNotFound": "Aucune adresse trouvée pour ce point.",
+    "geocodeFailed": "Impossible de rechercher l’adresse.",
+    "geolocationUnavailable": "Cet appareil ne peut pas fournir sa position.",
+    "permissionDenied": "Autorisez l’accès à la position pour utiliser cette fonction.",
+    "locationTimeout": "Délai dépassé lors de l’obtention de la position.",
+    "positionUnavailable": "Impossible d’obtenir la position de l’appareil.",
+    "reverseGeocodeFailed": "Impossible d’obtenir l’adresse du point sélectionné."
   },
   "hero": {
     "line1": "La",
@@ -17,17 +39,17 @@
   "features": {
     "label": "Fonctionnalités",
     "title": "Tout ce dont vous avez besoin pour la sécurité scolaire",
-    "description": "Une plateforme complète pour les administrateurs, conducteurs et familles.",
+    "description": "Une plateforme complète pour les administrateurs, les conducteurs et les familles.",
     "cards": [
       {
         "icon": "satellite_alt",
         "title": "GPS en temps réel",
-        "description": "Localisation précise de chaque bus sur la carte avec mises à jour toutes les 10 secondes."
+        "description": "Localisation précise de chaque bus sur la carte, avec une mise à jour toutes les 10 secondes."
       },
       {
         "icon": "notifications",
         "title": "Alertes instantanées",
-        "description": "Notifications push lorsque le bus arrive, dévie ou qu'un incident se produit."
+        "description": "Notifications push lorsque le bus arrive, s'écarte de son itinéraire ou en cas d'incident."
       },
       {
         "icon": "assignment",
@@ -36,8 +58,8 @@
       },
       {
         "icon": "insert_chart",
-        "title": "Tableau de bord admin",
-        "description": "Tableau de bord complet avec métriques, rapports et gestion des itinéraires et des conducteurs."
+        "title": "Tableau de bord administrateur",
+        "description": "Tableau de bord complet avec indicateurs, rapports et gestion des itinéraires et des conducteurs."
       },
       {
         "icon": "family_restroom",
@@ -47,7 +69,7 @@
       {
         "icon": "lock",
         "title": "Données sécurisées",
-        "description": "Chiffrement de bout en bout et respect des réglementations sur la protection des données."
+        "description": "Chiffrement de bout en bout et conformité aux réglementations sur la protection des données."
       }
     ]
   },
@@ -56,20 +78,20 @@
     "title": "Simple pour tous",
     "steps": [
       {
-        "title": "Enregistrement de l'institution",
-        "description": "Créez votre compte, ajoutez vos itinéraires et conducteurs en quelques minutes."
+        "title": "Inscription de l'établissement",
+        "description": "Créez votre compte et ajoutez vos itinéraires et vos conducteurs en quelques minutes."
       },
       {
         "title": "Installez-le dans les bus",
-        "description": "Installez l'appareil GPS dans chaque bus en moins de 5 minutes."
+        "description": "Installez le boîtier GPS dans chaque bus en moins de 5 minutes."
       },
       {
         "title": "Invitez les familles",
         "description": "Les parents téléchargent Guardian Escolar et suivent le trajet en temps réel."
       },
       {
-        "title": "Surveillance active",
-        "description": "Surveillance en temps réel depuis le panneau d'administration."
+        "title": "Suivi actif",
+        "description": "Suivez tout en temps réel depuis le tableau de bord d'administration."
       }
     ]
   },
@@ -83,7 +105,7 @@
     "support": "Assistance disponible maintenant",
     "title": "Nous sommes là pour",
     "title_color": "vous aider",
-    "paragraph": "Avez-vous des questions sur le système, besoin d'une vidéo explicative ou souhaitez intégrer Guardian Escolar à votre établissement ? Écrivez-nous.",
+    "paragraph": "Vous avez des questions sur le système, besoin d'une vidéo explicative ou vous souhaitez intégrer Guardian Escolar à votre établissement ? Écrivez-nous.",
     "social": {
       "facebook": "Facebook",
       "facebook_handle": "@GuardianEscolar",
@@ -93,60 +115,72 @@
     "info_title": "Informations de contact",
     "info_subtitle": "Plusieurs canaux disponibles.",
     "email": {
-      "title": "Email",
-      "value": "guardianescolar0@gmail.com",
+      "title": "E-mail",
+      "value": "sch00l.guard4n@gmail.com",
       "subtitle": "Réponse en moins de 2 heures",
-      "button": "Envoyer un email"
+      "button": "Envoyer un e-mail"
     },
     "phone": {
       "title": "Téléphone",
       "value": "+57 314 430 82 74",
-      "subtitle": "Du lundi au vendredi · 7h – 18h",
+      "subtitle": "Du lundi au vendredi · 7 h – 18 h",
       "button": "Appeler"
     },
     "whatsapp": {
       "title": "WhatsApp",
       "value": "+57 314 430 82 74",
-      "subtitle": "Disponible 24h/24 et 7j/7 pour les urgences",
+      "subtitle": "Disponible 24 h/24 et 7 j/7 pour les urgences",
       "button": "Ouvrir WhatsApp"
     }
   },
   "footer": {
     "col_product": "Produit",
-    "col_legal": "Légal",
+    "col_legal": "Mentions légales",
     "links_product": [
       "Fonctionnalités",
       "Comment ça marche",
       "Contact"
     ],
     "links_legal": [
-      "Confidentialité et conditions"
+      "Confidentialité",
+      "Conditions"
     ],
     "rights": "© 2026 Guardian Escolar · Tous droits réservés"
   },
+  "legal": {
+    "kicker": "Document juridique",
+    "terms_title": "Conditions d'utilisation",
+    "privacy_title": "Politique de traitement des données",
+    "updated": "Dernière mise à jour : août 2026",
+    "data_title": "Données traitées",
+    "purpose_title": "Finalités",
+    "minors_title": "Données des mineurs",
+    "rights_title": "Vos droits",
+    "channel_title": "Canal de contact"
+  },
   "login": {
     "left": {
-      "title": "Bienvenue à nouveau",
-      "description": "Accédez au système complet de surveillance des itinéraires scolaires.",
-      "footer": "guardian.edu · Support 24/7"
+      "title": "Content de vous revoir",
+      "description": "Accédez au système complet de suivi des itinéraires scolaires.",
+      "footer": "guardian.edu · Assistance 24/7"
     },
     "right": {
       "title": "Se connecter",
-      "description": "Entrez vos identifiants pour accéder au tableau de bord",
+      "description": "Saisissez vos identifiants pour accéder au tableau de bord",
       "credentials_error": "E-mail ou mot de passe incorrect.",
       "email": {
-        "label": "Email",
+        "label": "E-mail",
         "placeholder": "votre-email@email.com",
         "errors": {
-          "invalid": "*Doit être un email valide.",
-          "required": "*L'email est requis."
+          "invalid": "*Doit être une adresse e-mail valide.",
+          "required": "*L'e-mail est requis."
         }
       },
       "password": {
         "label": "Mot de passe",
-        "placeholder": "Entrez votre mot de passe",
+        "placeholder": "Saisissez votre mot de passe",
         "errors": {
-          "required": "*Le mot de passe est requis"
+          "required": "*Le mot de passe est requis."
         }
       },
       "forgot": "Mot de passe oublié ?",
@@ -159,73 +193,70 @@
   },
   "change_contact": {
     "telephone": {
-      "title": "Changer de téléphone",
-      "sessionDescription": "Par s?curit?, nous enverrons un SMS ? votre t?l?phone actuel.",
+      "title": "Modifier le téléphone",
+      "sessionDescription": "Par sécurité, nous enverrons un SMS à votre téléphone actuel.",
       "titleStep": "Étape 1",
       "buttonText": "Envoyer le code",
       "returnStep": "Retour",
       "stepText": "1 sur 4",
-      "label": "T?l?phone actuel",
-      "error_pattern": "*Doit être un numéro valide.",
+      "label": "Téléphone actuel",
       "error_required": "*Le téléphone est requis.",
-      "help_text": "Saisissez le t?l?phone actuel de votre compte avec l'indicatif, p. ex. +573001234567."
+      "help_text": "Saisissez le téléphone actuel de votre compte, p. ex. 3001234567. Le préfixe +57 est ajouté automatiquement."
     },
     "code_first": {
       "title": "Vérifier le code",
-      "sessionDescription": "Consultez le SMS envoy? ? votre t?l?phone actuel et saisissez le code.",
+      "sessionDescription": "Consultez le SMS envoyé à votre téléphone actuel et saisissez le code.",
       "titleStep": "Étape 2",
       "buttonText": "Vérifier",
       "returnStep": "Retour",
       "stepText": "2 sur 4",
-      "description": "Consultez le SMS envoy? ? votre t?l?phone actuel et saisissez le code.",
+      "description": "Consultez le SMS envoyé à votre téléphone actuel et saisissez le code.",
       "pin_error": "*Le code saisi n'est pas valide."
     },
     "reset": {
       "title": "Mettre à jour le téléphone",
-      "sessionDescription": "Entrez votre nouveau numéro pour remplacer l'ancien.",
+      "sessionDescription": "Saisissez votre nouveau numéro pour remplacer l'ancien.",
       "titleStep": "Étape 3",
       "buttonText": "Continuer",
       "returnStep": "Retour",
       "stepText": "3 sur 4",
-      "label": "Nouveau t?l?phone",
-      "error_pattern": "*Utilisez le format international, p. ex. +573001234567.",
+      "label": "Nouveau téléphone",
+      "error_pattern": "*Saisissez un numéro valide, p. ex. 3001234567.",
       "error_required": "*Le téléphone est requis.",
-      "help_text": "Vous recevrez un SMS avec un code ? ce num?ro (+indicatif et num?ro)."
+      "help_text": "Vous recevrez un SMS contenant un code à ce numéro (le préfixe +57 est ajouté automatiquement)."
     },
     "code_second": {
       "title": "Confirmer le code",
-      "sessionDescription": "Saisissez le code SMS envoy? au nouveau num?ro.",
+      "sessionDescription": "Saisissez le code SMS envoyé au nouveau numéro.",
       "titleStep": "Étape 4",
       "buttonText": "Confirmer",
       "returnStep": "Retour",
       "stepText": "4 sur 4",
-      "description": "Saisissez le code SMS pour terminer le changement de t?l?phone.",
+      "description": "Saisissez le code SMS pour terminer la modification du téléphone.",
       "pin_error": "*Le code saisi n'est pas valide.",
       "confirmationTitle": "Téléphone mis à jour",
       "confirmationDescription": "Votre numéro de téléphone a été mis à jour avec succès."
     },
     "errors": {
-      "invalid_phone": "Le num?ro est invalide ou la demande a expir?. Utilisez le format +573001234567 ou recommencez.",
-      "sms_unavailable": "Impossible d'envoyer le SMS pour le moment. R?essayez plus tard."
+      "invalid_phone": "Le numéro de téléphone n'est pas valide. Saisissez-le, par exemple 3001234567.",
+      "sms_unavailable": "Impossible d'envoyer le SMS. Vérifiez le numéro ou réessayez plus tard."
     }
   },
   "change_email": {
     "email": {
-      "title": "Changer d'email",
-      "sessionDescription": "Entrez l'email que vous souhaitez mettre à jour.",
+      "title": "Modifier l'e-mail",
+      "sessionDescription": "Saisissez l'e-mail que vous souhaitez mettre à jour.",
       "titleStep": "Étape 1",
-      "loginDescription": "Vous devez fournir un email valide.",
+      "loginDescription": "Vous devez saisir une adresse e-mail valide.",
       "buttonText": "Envoyer le code",
       "returnStep": "Retour",
       "stepText": "1 sur 4",
-      "email_label": "Email",
-      "error_pattern": "*Doit être un email valide.",
-      "error_required": "*L'email est requis.",
-      "help_text": "Vous recevrez un code de vérification sur cet email."
+      "email_label": "E-mail",
+      "help_text": "Vous recevrez un code de vérification à cette adresse e-mail."
     },
     "code_first": {
       "title": "Vérifier le code",
-      "sessionDescription": "Entrez le code envoyé à votre email actuel.",
+      "sessionDescription": "Saisissez le code envoyé à votre adresse e-mail actuelle.",
       "titleStep": "Étape 2",
       "buttonText": "Vérifier",
       "returnStep": "Retour",
@@ -234,25 +265,25 @@
       "pin_error": "*Le code saisi n'est pas valide."
     },
     "code_second": {
-      "confirmationTitle": "Email mis à jour",
-      "confirmationDescription": "Votre email a été mis à jour avec succès."
+      "confirmationTitle": "E-mail mis à jour",
+      "confirmationDescription": "Votre e-mail a été mis à jour avec succès."
     },
     "reset": {
       "title": "Presque terminé",
-      "sessionDescription": "Entrez votre nouvel email.",
+      "sessionDescription": "Saisissez votre nouvelle adresse e-mail.",
       "titleStep": "Étape 3",
-      "loginDescription": "Vous devez saisir votre nouvel email",
+      "loginDescription": "Vous devez saisir votre nouvelle adresse e-mail.",
       "buttonText": "Envoyer le code",
       "returnStep": "Retour",
       "stepText": "3 sur 4",
-      "email_label": "Email",
-      "error_pattern": "*Doit être un email valide.",
-      "error_required": "*L'email est requis",
-      "help_text": "Vous recevrez un code à 6 chiffres"
+      "email_label": "E-mail",
+      "error_pattern": "*Doit être une adresse e-mail valide.",
+      "error_required": "*L'e-mail est requis.",
+      "help_text": "Vous recevrez un code à 6 chiffres."
     },
     "errors": {
       "email_in_use": "Cet e-mail n'est pas disponible. Essayez-en un autre.",
-      "invalid_request": "La demande est invalide ou expirée. Vérifiez que le nouvel e-mail diffère de l'actuel ou recommencez."
+      "invalid_request": "La demande est invalide ou a expiré. Vérifiez que le nouvel e-mail est différent de l'actuel ou recommencez le processus."
     }
   },
   "change_password": {
@@ -260,25 +291,23 @@
     "rules": {
       "min_length": "Minimum 8 caractères",
       "alphanumeric": "Chiffres et lettres",
-      "case": "Combinaison de minuscules et de majuscules",
+      "case": "Lettres minuscules et majuscules",
       "special": "Caractères spéciaux (. - _ @ *)"
     },
     "email": {
-      "title": "Changer le mot de passe",
-      "sessionDescription": "Entrez votre email pour recevoir un code de récupération.",
+      "title": "Modifier le mot de passe",
+      "sessionDescription": "Saisissez votre e-mail pour recevoir un code de récupération.",
       "titleStep": "Étape 1",
-      "loginDescription": "Vous devez fournir votre email enregistré.",
+      "loginDescription": "Vous devez saisir votre adresse e-mail enregistrée.",
       "buttonText": "Envoyer le code",
       "returnStep": "Retour",
       "stepText": "1 sur 3",
-      "email_label": "Email",
-      "error_pattern": "*Doit être un email valide.",
-      "error_required": "*L'email est requis.",
+      "email_label": "E-mail",
       "help_text": "Vous recevrez un code pour réinitialiser votre mot de passe."
     },
     "code": {
       "title": "Vérifier le code",
-      "sessionDescription": "Entrez le code envoyé à votre email.",
+      "sessionDescription": "Saisissez le code envoyé à votre adresse e-mail.",
       "titleStep": "Étape 2",
       "buttonText": "Vérifier",
       "returnStep": "Retour",
@@ -299,61 +328,57 @@
     }
   },
   "dashboard": {
+    "schoolInformation": {
+      "noSchool": "Aucune école n'est associée à votre session.",
+      "loadError": "Impossible de charger les informations de votre école. Réessayez."
+    },
     "welcome": "Bienvenue",
-    "role": "Tableau de bord admin · Guardian Escolar",
+    "role": "Tableau de bord d'administration · Guardian Escolar",
     "metrics": {
-      "students": "Étudiants",
+      "students": "Élèves",
       "routes": "Itinéraires actifs",
       "alerts": "Alertes aujourd'hui",
       "month": "+12 ce mois-ci",
-      "operating": "Tous en activité",
-      "attention": "Nécessitent une attention"
+      "operating": "Tous en service",
+      "attention": "Nécessitent de l'attention"
     },
     "alerts": {
-      "title": "Dernières alertes",
-      "out_of_route": "Bus hors route",
-      "sudden_brake": "Freinage brusque",
-      "driver": "Conducteur",
-      "route": "Itinéraire"
+      "title": "Dernières alertes"
     }
   },
   "superadmin_dashboard": {
     "welcome": "Bienvenue",
-    "role": "Panneau d'administration · Guardian Escolar",
+    "role": "Tableau de bord d'administration · Guardian Escolar",
     "metrics": {
       "admins": "Administrateurs",
       "schools": "Écoles enregistrées",
       "comments": "Commentaires aujourd'hui",
       "month": "+12 ce mois-ci",
-      "active": "Tous en activité",
-      "attention": "Nécessitent une attention"
+      "active": "Toutes en service",
+      "attention": "Nécessitent de l'attention"
     },
     "alerts": {
-      "title": "Dernières alertes",
-      "out_route": "Bus hors route",
-      "sudden_stop": "Arrêt brusque",
-      "driver": "Conducteur",
-      "route": "Itinéraire"
+      "title": "Dernières alertes"
     }
   },
   "sidebar": {
-    "admin": "Gérer",
+    "admin": "Gestion",
     "users": "Utilisateurs",
     "buses": "Bus",
     "profile": "Profil"
   },
   "sidebarSuperadmin": {
-    "title": "Gérer",
+    "title": "Gestion",
     "schools": "Écoles",
     "admins": "Administrateurs",
     "profile": "Profil"
   },
   "navbar-admin": {
     "title-users": "Utilisateurs",
-    "students": "Étudiants",
-    "guardian": "Tuteurs",
+    "students": "Élèves",
+    "guardian": "Responsables",
     "drivers": "Conducteurs",
-    "Family": "Famille",
+    "Family": "Familles",
     "title-routes": "Transport",
     "bus": "Bus",
     "route": "Itinéraires",
@@ -361,10 +386,10 @@
   },
   "comments_modal": {
     "title": "Avez-vous un problème ?",
-    "subtitle": "Faites-le nous savoir",
-    "label": "Dites-nous votre problème",
-    "placeholder": "Entrez le texte",
-    "error": "Veuillez décrire votre problème avant d'envoyer",
+    "subtitle": "Faites-le-nous savoir",
+    "label": "Décrivez votre problème",
+    "placeholder": "Saisissez le texte",
+    "error": "Veuillez décrire votre problème avant d'envoyer.",
     "buttons": {
       "cancel": "Annuler",
       "submit": "Envoyer",
@@ -372,28 +397,28 @@
     },
     "success": {
       "title": "Message envoyé !",
-      "description": "Merci de nous avoir signalé votre problème. Nous ferons de notre mieux pour le résoudre au plus vite"
+      "description": "Merci de nous avoir signalé votre problème. Nous ferons de notre mieux pour le résoudre au plus vite."
     }
   },
   "update_school": {
+    "loading": "Chargement des informations de l’école...",
     "title": "Mettre à jour les informations de l'école",
     "fields": {
       "name": "Nom complet",
-      "name_placeholder": "Entrez le nom de l'école",
+      "name_placeholder": "Saisissez le nom de l'école",
       "city": "Ville",
       "city_placeholder": "Sélectionnez une ville",
       "address": "Adresse",
-      "address_placeholder": "Entrez l'adresse",
+      "address_placeholder": "Saisissez l'adresse",
       "phone": "Téléphone",
-      "phone_placeholder": "Entrez le téléphone",
+      "phone_placeholder": "Saisissez le téléphone",
       "logo": "Logo",
-      "upload": "Télécharger un nouveau logo",
-      "email": "Email",
-      "email_placeholder": "Entrez l'email",
-      "website": "Site web",
-      "web_placeholder": "Entrez le site web"
+      "upload": "Importer un nouveau logo",
+      "email": "E-mail",
+      "email_placeholder": "Saisissez l'e-mail",
+      "web_placeholder": "Saisissez le site web"
     },
-    "error": "Veuillez compléter au moins un champ avant de mettre à jour",
+    "error": "La mise à jour a échoué. Vérifiez les informations de l’école et de ses sites, puis réessayez.",
     "buttons": {
       "cancel": "Annuler",
       "update": "Mettre à jour",
@@ -401,14 +426,15 @@
     },
     "success": {
       "title": "Informations mises à jour !",
-      "description": "Les changements ont été enregistrés avec succès"
+      "description": "Les modifications ont été enregistrées avec succès."
     }
   },
   "theme": {
     "title": "Changer le thème",
-    "subtitle": "Sélectionner la couleur du panneau",
+    "subtitle": "Sélectionnez la couleur du tableau de bord",
     "light": "Clair",
     "dark": "Sombre",
+    "color": "Couleur",
     "select": "actif",
     "blue": "Bleu",
     "green": "Vert",
@@ -431,25 +457,25 @@
   },
   "record_information": {
     "student": {
-      "title": "Informations sur l'étudiant",
+      "title": "Informations sur l'élève",
       "fields": {
         "names": "Prénoms",
         "lastNames": "Noms de famille",
         "documentType": "Type de document",
         "identification": "Identification",
         "birthDate": "Date de naissance",
-        "grade": "Niveau",
+        "grade": "Classe",
         "phone": "Téléphone",
         "address": "Adresse",
-        "email": "Email"
+        "email": "E-mail"
       }
     },
     "guardian": {
-      "title": "Informations du tuteur",
+      "title": "Informations sur le responsable",
       "fields": {
         "name": "Nom",
         "lastNames": "Noms de famille",
-        "email": "Email",
+        "email": "E-mail",
         "documentType": "Type de document",
         "identification": "Identification",
         "birthDate": "Date de naissance",
@@ -458,25 +484,25 @@
       }
     },
     "driver": {
-      "title": "Informations du conducteur",
+      "title": "Informations sur le conducteur",
       "fields": {
         "names": "Prénoms",
         "lastNames": "Noms de famille",
         "documentType": "Type de document",
         "identification": "Identification",
         "birthDate": "Date de naissance",
-        "licenseExpiration": "Expiration du permis",
-        "licenseNumber": "Permis",
+        "licenseExpiration": "Date d'expiration du permis",
+        "licenseNumber": "Permis de conduire",
         "address": "Adresse",
-        "email": "Email"
+        "email": "E-mail"
       }
     },
     "family": {
       "title": "Informations sur la famille",
       "fields": {
         "name": "Nom",
-        "guardian": "Tuteur",
-        "student": "Étudiant",
+        "guardian": "Responsable",
+        "student": "Élève",
         "observations": "Observations"
       }
     },
@@ -496,7 +522,7 @@
       "title": "Informations sur l'arrêt",
       "fields": {
         "name": "Nom",
-        "student": "Étudiant",
+        "student": "Élève",
         "city": "Ville",
         "school": "École",
         "address": "Adresse",
@@ -516,89 +542,91 @@
       }
     },
     "admins": {
-      "title": "Informations de l'administrateur",
+      "title": "Informations sur l'administrateur",
       "fields": {
         "name": "Nom",
         "lastNames": "Noms de famille",
-        "email": "Email",
+        "email": "E-mail",
         "identification": "Identification",
         "birthDate": "Date de naissance",
         "phone": "Téléphone",
-        "address": "Adresse"
+        "address": "Adresse",
+        "cityName": "Ville",
+        "schoolName": "École"
       }
     },
     "schools": {
-      "title": "Informations de l'école",
+      "title": "Informations sur l'école",
       "fields": {
         "name": "Nom",
         "city": "Ville",
         "schooling": "Niveau scolaire",
         "address": "Adresse",
         "phone": "Téléphone",
-        "email": "Email",
+        "email": "E-mail",
         "website": "Site web"
       }
     }
   },
   "delete_record": {
     "student": {
-      "title": "Supprimer l'étudiant",
-      "text": "Cela supprimera définitivement l'enregistrement de l'étudiant sélectionné."
+      "title": "Supprimer l'élève",
+      "text": "Cela supprimera définitivement la fiche de l'élève sélectionné."
     },
     "guardian": {
-      "title": "Supprimer le tuteur",
-      "text": "Cela supprimera définitivement l'enregistrement du tuteur sélectionné."
+      "title": "Supprimer le responsable",
+      "text": "Cela supprimera définitivement la fiche du responsable sélectionné."
     },
     "driver": {
       "title": "Supprimer le conducteur",
-      "text": "Cela supprimera définitivement l'enregistrement du conducteur sélectionné."
+      "text": "Cela supprimera définitivement la fiche du conducteur sélectionné."
     },
     "family": {
       "title": "Supprimer la famille",
-      "text": "Cela supprimera définitivement l'enregistrement de la famille sélectionnée."
+      "text": "Cela supprimera définitivement la fiche de la famille sélectionnée."
     },
     "bus": {
       "title": "Supprimer le bus",
-      "text": "Cela supprimera définitivement l'enregistrement du bus sélectionné."
+      "text": "Cela supprimera définitivement la fiche du bus sélectionné."
     },
     "stop": {
       "title": "Supprimer l'arrêt",
-      "text": "Cela supprimera définitivement l'enregistrement de l'arrêt sélectionné."
+      "text": "Cela supprimera définitivement la fiche de l'arrêt sélectionné."
     },
     "route": {
       "title": "Supprimer l'itinéraire",
-      "text": "Cela supprimera définitivement l'enregistrement de l'itinéraire sélectionné."
+      "text": "Cela supprimera définitivement la fiche de l'itinéraire sélectionné."
     },
     "admins": {
       "title": "Supprimer l'administrateur",
-      "text": "Cela supprimera définitivement l'enregistrement de l'administrateur sélectionné."
+      "text": "Cela supprimera définitivement la fiche de l'administrateur sélectionné."
     },
     "schools": {
       "title": "Supprimer l'école",
-      "text": "Cela supprimera définitivement l'enregistrement de l'école sélectionnée."
+      "text": "Cela supprimera définitivement la fiche de l'école sélectionnée."
     }
   },
   "update_record": {
     "student": {
-      "title": "Mettre à jour l'étudiant",
+      "title": "Mettre à jour l'élève",
       "fields": {
         "names": "Prénoms",
         "lastNames": "Noms de famille",
         "documentType": "Type de document",
         "identification": "Identification",
         "birthDate": "Date de naissance",
-        "grade": "Niveau",
+        "grade": "Classe",
         "phone": "Téléphone",
         "address": "Adresse",
-        "email": "Email"
+        "email": "E-mail"
       }
     },
     "guardian": {
-      "title": "Mettre à jour le tuteur",
+      "title": "Mettre à jour le responsable",
       "fields": {
         "name": "Nom",
         "lastNames": "Noms de famille",
-        "email": "Email",
+        "email": "E-mail",
         "documentType": "Type de document",
         "identification": "Identification",
         "birthDate": "Date de naissance",
@@ -614,18 +642,20 @@
         "documentType": "Type de document",
         "identification": "Identification",
         "birthDate": "Date de naissance",
-        "licenseExpiration": "Expiration du permis",
-        "licenseNumber": "Permis",
+        "licenseExpiration": "Date d'expiration du permis",
+        "licenseNumber": "Permis de conduire",
         "address": "Adresse",
-        "email": "Email"
+        "email": "E-mail"
       }
     },
     "family": {
       "title": "Mettre à jour la famille",
+      "addChildrenHint": "Sélectionnez des élèves pour ajouter des enfants à la famille.",
+      "removeChild": "Retirer {{name}} de la famille",
       "fields": {
         "name": "Nom",
-        "guardian": "Tuteur",
-        "student": "Étudiant",
+        "guardian": "Responsable",
+        "student": "Élève",
         "observations": "Observations"
       }
     },
@@ -645,7 +675,7 @@
       "title": "Mettre à jour l'arrêt",
       "fields": {
         "name": "Nom",
-        "student": "Étudiant",
+        "student": "Élève",
         "city": "Ville",
         "school": "École",
         "address": "Adresse",
@@ -669,7 +699,9 @@
       "fields": {
         "name": "Nom",
         "lastNames": "Noms de famille",
-        "email": "Email",
+        "city": "Ville",
+        "school": "École",
+        "email": "E-mail",
         "identification": "Identification",
         "birthDate": "Date de naissance",
         "phone": "Téléphone",
@@ -684,7 +716,7 @@
         "schooling": "Niveau scolaire",
         "address": "Adresse",
         "phone": "Téléphone",
-        "email": "Email",
+        "email": "E-mail",
         "website": "Site web"
       }
     },
@@ -694,17 +726,17 @@
     }
   },
   "register": {
-    "select": "Sélectionner…",
+    "select": "Sélectionner un élève",
     "button": "Enregistrer",
     "student": {
-      "title": "Enregistrer l'étudiant",
+      "title": "Enregistrer l'élève",
       "fields": {
         "names": "Prénoms",
         "lastNames": "Noms de famille",
         "documentType": "Type de document",
         "identification": "Numéro d'identification",
         "birthDate": "Date de naissance",
-        "grade": "Niveau",
+        "grade": "Classe",
         "phone": "Téléphone",
         "address": "Adresse",
         "email": "Email",
@@ -712,11 +744,11 @@
       }
     },
     "guardian": {
-      "title": "Enregistrer le tuteur",
+      "title": "Enregistrer le responsable",
       "fields": {
         "names": "Prénoms",
         "lastNames": "Noms de famille",
-        "email": "Email",
+        "email": "E-mail",
         "documentType": "Type de document",
         "identification": "Numéro d'identification",
         "birthDate": "Date de naissance",
@@ -733,8 +765,8 @@
         "documentType": "Type de document",
         "identification": "Numéro d'identification",
         "birthDate": "Date de naissance",
-        "licenseExpiration": "Expiration du permis",
-        "licenseNumber": "Numéro du permis",
+        "licenseExpiration": "Date d'expiration du permis",
+        "licenseNumber": "Numéro de permis",
         "address": "Adresse",
         "email": "Email",
         "campus": "Site"
@@ -743,29 +775,31 @@
     "family": {
       "title": "Enregistrer la famille",
       "fields": {
-        "name": "Nom de famille",
-        "guardian": "Tuteur",
-        "student": "Étudiant",
+        "name": "Nom de la famille",
+        "guardian": "Responsable",
+        "student": "Élève",
         "observations": "Observations"
       }
     },
     "bus": {
       "title": "Enregistrer le bus",
       "fields": {
+        "campus": "Site",
         "plate": "Plaque d'immatriculation",
+        "matricula": "Plaque d'immatriculation",
         "driver": "Conducteur",
         "model": "Modèle",
         "brand": "Marque",
         "capacity": "Capacité",
-        "soat": "Validité SOAT",
-        "gps": "État GPS"
+        "soat": "Validité du SOAT",
+        "gps": "État du GPS"
       }
     },
     "stop": {
       "title": "Enregistrer l'arrêt",
       "fields": {
         "name": "Nom de l'arrêt",
-        "student": "Étudiant",
+        "student": "Élève",
         "city": "Ville",
         "school": "École",
         "address": "Adresse",
@@ -789,7 +823,8 @@
       "fields": {
         "name": "Nom",
         "lastNames": "Noms de famille",
-        "email": "Email",
+        "city": "Ville",
+        "email": "E-mail",
         "identification": "Identification",
         "birthDate": "Date de naissance",
         "phone": "Téléphone",
@@ -808,12 +843,16 @@
         "schooling": "Niveau scolaire",
         "email": "Email",
         "website": "Site web",
-        "campusNames": "Sites"
+        "campusNames": "Sites supplémentaires"
       },
       "campusNamePlaceholder": "Nom du site",
+      "chooseLocation": "Choisir l’emplacement de l’école sur la carte",
+      "chooseCampusLocation": "Choisir l’emplacement du site {{name}} sur la carte",
       "addCampus": "Ajouter un site",
       "removeCampus": "Retirer le site",
-      "campusNamesRequired": "Ajoutez au moins un site pour l'école",
+      "campusNamesHint": "Facultatif : l'école peut fonctionner uniquement depuis son site principal.",
+      "logoReadError": "Le logo n'a pas pu être lu. Essayez une autre image.",
+      "campusAddressRequired": "Chaque site doit avoir un nom (30 caractères maximum) et une adresse (255 caractères maximum)",
       "campusNamesDuplicated": "Le site « {{name}} » est en double"
     },
     "options": {
@@ -827,32 +866,38 @@
   },
   "assign_record": {
     "route": {
-      "title": "Assigner un bus à la route",
       "bus": "Bus",
       "selectBus": "Sélectionnez un bus"
     },
     "student": {
-      "title": "Assigner un étudiant à la route",
-      "route": "Route",
+      "route": "Itinéraire",
       "stop": "Arrêt de montée",
-      "selectRoute": "Sélectionnez une route",
+      "selectRoute": "Sélectionnez un itinéraire",
       "selectStop": "Sélectionnez un arrêt"
     },
     "bus": {
-      "title": "Assigner un conducteur au bus",
       "driver": "Conducteur",
       "currentDriver": "Conducteur actuel",
       "selectDriver": "Sélectionnez un conducteur"
     },
     "buttons": {
       "assign": "Assigner",
-      "unassign": "Désassigner"
+      "unassign": "Retirer"
     },
-    "genericError": "L'action n'a pas pu être complétée. Vérifiez que le backend est disponible."
+    "genericError": "L'action n'a pas pu être effectuée. Vérifiez que le serveur est disponible."
   },
   "card_list": {
-    "student": "Étudiants enregistrés",
-    "guardian": "Tuteurs enregistrés",
+    "pagination": {
+      "navigation": "Pagination des enregistrements",
+      "top": "haut",
+      "bottom": "bas",
+      "previous": "Page précédente",
+      "next": "Page suivante",
+      "goTo": "Aller à la page {{page}}",
+      "summary": "{{first}}–{{last}} sur {{total}} · Page {{page}} sur {{pages}}"
+    },
+    "student": "Élèves enregistrés",
+    "guardian": "Responsables enregistrés",
     "driver": "Conducteurs enregistrés",
     "family": "Familles enregistrées",
     "bus": "Bus enregistrés",
@@ -864,57 +909,65 @@
       "validLicense": "Permis valide",
       "plate": "Plaque d'immatriculation",
       "driverName": "Nom du conducteur",
-      "guardian": "Tuteur",
+      "guardian": "Responsable",
       "address": "Adresse",
       "finalDestination": "Destination finale",
       "startTime": "Heure de début",
       "endTime": "Heure de fin",
-      "email": "Email"
+      "email": "E-mail"
     }
   },
   "admin_profile": {
-    "title": "Informations de l'administrateur",
+    "title": "Informations sur l'administrateur",
+    "loading": "Chargement de vos informations...",
+    "load_failed": "Impossible de charger toutes vos informations. Réessayez.",
+    "retry": "Réessayer",
     "user": {
       "name": "Nom de l'administrateur",
       "role": "Administrateur"
     },
     "labels": {
-      "email": "Email",
+      "email": "E-mail",
       "phone": "Téléphone",
       "address": "Adresse",
       "city": "Ville",
       "school": "École",
       "password": "Mot de passe",
       "id": "ID"
-    }
+    },
+    "logout": "Se déconnecter",
+    "logout_title": "Se déconnecter ?",
+    "logout_text": "Vous devrez vous reconnecter pour revenir."
   },
   "forgot_password": {
     "title": "Récupérez votre accès",
-    "session_description": "Nous vous enverrons un code de vérification à votre email enregistré.",
+    "session_description": "Nous enverrons un code de vérification à votre adresse e-mail enregistrée.",
     "title_step": "Réinitialiser le mot de passe",
-    "login_description": "Entrez l'email avec lequel vous vous êtes inscrit",
+    "login_description": "Saisissez l'e-mail utilisé lors de votre inscription",
     "button": "Envoyer le code",
     "return": "Retour à la connexion",
     "step_text": "1 sur 3",
     "hint": "Vous recevrez un code à 6 chiffres",
     "errors": {
       "email_too_long": "*L'adresse e-mail ne peut pas dépasser 100 caractères.",
-      "request_failed": "Impossible de démarrer la récupération du mot de passe. Réessayez.",
-      "rate_limited": "Trop de demandes. Attendez quelques minutes avant de réessayer."
+      "invalid_email": "L'adresse e-mail est invalide. Vérifiez qu'elle est correctement saisie.",
+      "request_failed": "Impossible de traiter la demande. Vérifiez votre connexion et réessayez plus tard.",
+      "rate_limited": "Vous avez atteint la limite de demandes. Attendez quelques minutes avant de réessayer.",
+      "account_not_found": "Aucun compte ne correspond à cet e-mail, donc aucun code n'a été envoyé.",
+      "phone_mismatch": "Le téléphone ne correspond pas à celui enregistré sur votre compte, donc aucun SMS n'a été envoyé.",
+      "delivery_failed": "Impossible d'envoyer le code (le service d'e-mail ou de SMS a échoué). Réessayez plus tard."
     },
     "code": {
       "title": "Vérifiez votre e-mail",
-      "session_description": "Saisissez le code à 6 chiffres envoyé par e-mail.",
+      "session_description": "Saisissez le code à 6 chiffres envoyé à votre adresse e-mail.",
       "title_step": "Code de vérification",
       "button": "Vérifier",
       "return": "Retour",
       "step_text": "2 sur 3",
-      "sent_to": "Code envoyé à",
-      "valid": "Valide pendant 10 minutes.",
       "error": "*Saisissez les 6 chiffres",
       "digit_label": "Chiffre {{number}} du code",
       "errors": {
-        "invalid": "Le code est invalide ou expiré. Vérifiez-le et réessayez.",
+        "invalid": "Le code est invalide ou a expiré. Vérifiez-le et réessayez.",
         "rate_limited": "La limite de tentatives est atteinte. Demandez un nouveau code plus tard.",
         "failed": "Impossible de vérifier le code. Réessayez."
       }
@@ -935,27 +988,27 @@
         "required": "*Ce champ est requis",
         "minlength": "*Minimum 8 caractères",
         "maxlength": "*Maximum 128 caractères",
-        "pattern": "*Doit contenir des majuscules, minuscules, chiffres et caractères spéciaux (. - _ @ *)",
+        "pattern": "*Doit contenir des lettres majuscules et minuscules, des chiffres et des caractères spéciaux (. - _ @ *)",
         "no_match": "*Les mots de passe ne correspondent pas",
         "expired": "Le jeton de récupération a expiré ou a déjà été utilisé. Demandez un nouveau code.",
         "rate_limited": "La limite de tentatives est atteinte. Demandez un nouveau code plus tard.",
         "failed": "Impossible de mettre à jour le mot de passe. Réessayez."
       },
       "confirmationTitle": "Mot de passe mis à jour",
-      "confirmationDescription": "Votre mot de passe a été mis à jour."
+      "confirmationDescription": "Votre mot de passe a été mis à jour avec succès."
     }
   },
   "right_index": {
-    "brand": "Gardien Scolaire",
+    "brand": "Guardian Escolar",
     "dashboardTitle": "Suivi en direct",
     "allVehicles": "Tous les véhicules",
     "filters": "Filtres",
     "live": "En direct",
-    "totalVehicles": "Véhicules totaux",
+    "totalVehicles": "Total des véhicules",
     "onRoute": "En route",
     "alerts": "Alertes",
-    "active": "Actives",
-    "students": "Étudiants",
+    "active": "Actifs",
+    "students": "Élèves",
     "pickupPoint": "Point de prise en charge",
     "greenStreet": "Rue Verte",
     "school": "École",
@@ -964,29 +1017,34 @@
     "bus05": "Bus 05",
     "bus08": "Bus 08",
     "liveActivity": "Activité en direct",
-    "delayed": "Retardé",
+    "delayed": "En retard",
     "mapleAvenue": "Avenue Maple",
     "oakBoulevard": "Boulevard Oak",
-    "geofenceAlert": "Alerte de géofence",
-    "geofenceMessage": "Le bus 02 est arrivé à l’école Springfield",
-    "eta": "ETA",
-    "etaValue": "7:45 AM",
+    "geofenceAlert": "Alerte de géorepérage",
+    "geofenceMessage": "Le bus 02 est arrivé à l'école Springfield",
+    "eta": "Arrivée prévue",
+    "etaValue": "7 h 45",
     "speedLabel": "Vitesse",
     "busSpeed": "45 km/h",
-    "nextStop": "Prochaine étape",
+    "nextStop": "Prochain arrêt",
     "nextStopValue": "École Springfield"
   },
   "validation": {
     "required": "Ce champ est requis",
     "email": "Adresse e-mail invalide",
-    "phone": "Téléphone invalide (chiffres uniquement, 7-15 chiffres)",
-    "minLength": "Minimum {{min}} caractères",
-    "maxLength": "Maximum {{max}} caractères",
+    "url": "Saisissez une adresse web valide",
+    "phone": "Téléphone invalide (chiffres uniquement, de 7 à 15 chiffres)",
+    "minLength": "{{min}} caractères minimum",
+    "maxLength": "{{max}} caractères maximum",
     "number": "Doit être un nombre",
-    "min": "Minimum {{min}}",
-    "max": "Maximum {{max}}",
+    "min": "Minimum : {{min}}",
+    "max": "Maximum : {{max}}",
     "text": "Lettres et espaces uniquement",
-    "birthDate": "La date ne peut pas être dans le futur ou il y a plus de 100 ans",
-    "futureDate": "La date doit être dans le futur"
+    "birthDate": "La date ne peut pas être future ni remonter à plus de 100 ans",
+    "futureDate": "La date doit être future"
+  },
+  "resend_code": {
+    "button": "Demander un nouveau code",
+    "wait": "Demander un nouveau code dans {{seconds}} s"
   }
 }

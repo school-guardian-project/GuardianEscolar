@@ -3,6 +3,7 @@
 <div class="page-wrapper">
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
+    <p *ngIf="catalogLoadError" role="alert">{{ 'register.options.loadError' | translate }}</p>
     <app-card-register
       type="stop"
       [fieldOptions]="fieldOptions"

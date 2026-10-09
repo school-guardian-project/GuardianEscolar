@@ -10,6 +10,12 @@ export interface UserProfileDto {
   roleId: number;
   roleName: string;
   campusId: string | null;
+  campusName?: string | null;
+  schoolId?: string | null;
+  schoolName?: string | null;
+  cityName?: string | null;
+  name?: string | null;
+  lastName?: string | null;
 }
 
 @Injectable({ providedIn: 'root' })

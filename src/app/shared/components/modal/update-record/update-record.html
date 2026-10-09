@@ -82,7 +82,7 @@
                   (click)="campusMapOpenIndex = campusMapOpenIndex === i ? null : i">
             <mat-icon>place</mat-icon>
           </button>
-          <button *ngIf="!campus.id && campuses.length > 1"
+          <button *ngIf="!campus.id"
                   type="button"
                   class="modal__remove-campus"
                   [attr.aria-label]="'register.schools.removeCampus' | translate"

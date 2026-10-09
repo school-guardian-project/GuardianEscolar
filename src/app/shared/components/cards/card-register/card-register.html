@@ -168,7 +168,7 @@
                    [name]="'campusName' + i"
                    (ngModelChange)="onCampusNameChange(i, $event)"
                    [placeholder]="'register.schools.campusNamePlaceholder' | translate" />
-            <button *ngIf="campuses.length > 1"
+            <button
                   type="button"
                   class="card-register__remove-btn"
                   (click)="removeCampusName(i)"

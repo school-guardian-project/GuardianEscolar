@@ -760,7 +760,9 @@
     "bus": {
       "title": "Registrar ônibus",
       "fields": {
+        "campus": "Unidade",
         "plate": "Placa",
+        "matricula": "Placa",
         "driver": "Motorista",
         "model": "Modelo",
         "brand": "Marca",

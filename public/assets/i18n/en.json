@@ -753,7 +753,9 @@
     "bus": {
       "title": "Register bus",
       "fields": {
+        "campus": "Campus",
         "plate": "License plate",
+        "matricula": "License plate",
         "driver": "Driver",
         "model": "Model",
         "brand": "Brand",

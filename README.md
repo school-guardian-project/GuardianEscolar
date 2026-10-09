@@ -10,6 +10,12 @@ City and school come from IAM; contact details come from user management.
 Loading failures are visible and can be retried. User management must run an
 image that maps SQL `BIGINT` phone numbers to .NET `long`.
 
+Student, parent and driver registration automatically selects the school's campus
+and hides the campus selector when only one campus is available (including schools
+with only their central campus). The campus ID is still submitted and restored
+after resetting the form. Schools with multiple campuses require a selection;
+missing campuses or loading errors remain visible. Bus registration is unchanged.
+
 To start a local development server, run:
 
 ```bash

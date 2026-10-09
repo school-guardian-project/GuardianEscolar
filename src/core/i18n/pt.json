@@ -11,6 +11,7 @@
     "update": "Atualizar"
   },
   "accept": {
+    "blocked": "Sua conta ainda não foi autorizada pelo seu responsável. Peça para aceitar os Termos na sessão dele.",
     "error": "Não foi possível registrar a aceitação. Tente novamente."
   },
   "serviceErrors": {

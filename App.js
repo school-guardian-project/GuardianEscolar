@@ -111,22 +111,32 @@ export default function App() {
 
       // Recupera la sesión desde SecureStore y rota el access token antes de navegar.
       // Loguearse es aceptar: también en sesión restaurada se registra la evidencia.
+      // El estudiante entra solo si su acudiente ya lo autorizó.
       try {
         if (await hasSession()) {
           await refresh();
-          const { getPendingAcceptance, acceptTerms } = await import(
+          const { getSession } = await import("@core/services/authService");
+          const { getPendingAcceptance, acceptTerms, getTermsStatus } = await import(
             "@core/services/termsService"
           );
-          const pending = await getPendingAcceptance();
-          if (pending.ownMissing || pending.minors.length > 0) {
-            if (pending.minors.length > 0) {
-              await acceptTerms(
-                pending.termsVersion,
-                pending.minors.map((m) => m.profileId)
-              );
+          const session = await getSession();
+          if (session?.roleId === 2) {
+            const status = await getTermsStatus();
+            if (!status?.accepted) {
+              throw new Error("student not authorized by guardian");
             }
-            if (pending.ownMissing) {
-              await acceptTerms(pending.termsVersion, []);
+          } else {
+            const pending = await getPendingAcceptance();
+            if (pending.ownMissing || pending.minors.length > 0) {
+              if (pending.minors.length > 0) {
+                await acceptTerms(
+                  pending.termsVersion,
+                  pending.minors.map((m) => m.profileId)
+                );
+              }
+              if (pending.ownMissing) {
+                await acceptTerms(pending.termsVersion, []);
+              }
             }
           }
           setInitialRoute("MainPage");

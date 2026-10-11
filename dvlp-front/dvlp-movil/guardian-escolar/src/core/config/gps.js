@@ -1,5 +1,5 @@
 export const GPS_CONFIG = {
-  baseUrl: "http://10.3.234.50:8084",
+  baseUrl: "http://19.20.21.116:8084",
   imei: "355468590730586",
   pollingIntervalMs: 10000,
 };

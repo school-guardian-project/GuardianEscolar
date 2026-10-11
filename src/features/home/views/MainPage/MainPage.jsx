@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, Pressable } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Polyline } from "react-native-maps";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import RouteInfoCard from "@components/cards/RouteInfoCard";
@@ -235,6 +235,17 @@ export default function MainPage() {
           fitStopsOnMap();
         }}
       >
+        {routeStops.length >= 2 && (
+          <Polyline
+            coordinates={routeStops.map(({ latitude, longitude }) => ({
+              latitude,
+              longitude,
+            }))}
+            strokeColor="#1A56DB"
+            strokeWidth={4}
+          />
+        )}
+
         {routeStops.map((stop, index) => (
           <Marker
             key={stop.id}

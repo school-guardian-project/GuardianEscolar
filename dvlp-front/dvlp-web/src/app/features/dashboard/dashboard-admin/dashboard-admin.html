@@ -1,7 +1,7 @@
 <div class="container">
   <!-- MODALES -->
   <app-comments *ngIf="showComments" (closed)="showComments = false"></app-comments>
-  <app-update-information *ngIf="showUpdateInformation" [schoolId]="schoolId"
+  <app-update-information *ngIf="showUpdateInformation" [schoolId]="schoolIdForUpdate"
     (closed)="showUpdateInformation = false"></app-update-information>
   <app-record-information *ngIf="showInformation" type="schools" [record]="schoolSelected" (closed)="closeModal()">
   </app-record-information>
@@ -88,7 +88,9 @@
         <mat-icon>info</mat-icon>
       </button>
 
-      <button type="button" class="icon-circle" (click)="showUpdateInformation = true"
+      <button type="button" class="icon-circle" (click)="openSchoolUpdate()"
+        [disabled]="loadingSchool"
+        [attr.aria-busy]="loadingSchool"
         [attr.aria-label]="'responsive.editSchool' | translate">
         <mat-icon>edit</mat-icon>
       </button>

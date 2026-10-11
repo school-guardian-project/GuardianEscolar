@@ -280,6 +280,10 @@
       "error_pattern": "*Must be a valid email.",
       "error_required": "*Email is required",
       "help_text": "You will receive a 6-digit code"
+    },
+    "errors": {
+      "email_in_use": "That email is not available. Try another one.",
+      "invalid_request": "The request is invalid or has expired. Make sure the new email is different from the current one or restart the process."
     }
   },
   "change_password": {
@@ -412,7 +416,8 @@
       "upload": "Upload new logo",
       "email": "Email",
       "email_placeholder": "Enter the email",
-      "web_placeholder": "Enter the website"
+      "web_placeholder": "Enter the website",
+      "web": "Website"
     },
     "error": "Could not update the school. Check the school and campus details and try again.",
     "buttons": {
@@ -449,7 +454,8 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "close": "Close",
-    "accept": "Accept"
+    "accept": "Accept",
+    "confirm": "Confirm"
   },
   "record_information": {
     "student": {
@@ -507,11 +513,16 @@
       "fields": {
         "plate": "License plate",
         "driver": "Driver",
+        "campuseId": "Campus ID",
         "model": "Model",
+        "modelId": "Model ID",
         "brand": "Brand",
         "capacity": "Capacity",
-        "gps": "GPS",
-        "soat": "SOAT"
+        "gps": "GPS device (IMEI)",
+        "soat": "SOAT validity",
+        "status": "Status",
+        "gpsStatus": "GPS status",
+        "campusName": "Campus"
       }
     },
     "stop": {
@@ -523,7 +534,8 @@
         "school": "School",
         "address": "Address",
         "latitude": "Latitude",
-        "longitude": "Longitude"
+        "longitude": "Longitude",
+        "route": "Route"
       }
     },
     "route": {
@@ -534,7 +546,8 @@
         "startTime": "Start time",
         "endTime": "End time",
         "destination": "Destination",
-        "routeSector": "Route sector"
+        "routeSector": "Route sector",
+        "campusName": "Campus"
       }
     },
     "admins": {
@@ -560,7 +573,8 @@
         "address": "Address",
         "phone": "Phone",
         "email": "Email",
-        "website": "Website"
+        "website": "Website",
+        "status": "Status"
       }
     }
   },
@@ -620,7 +634,7 @@
     "guardian": {
       "title": "Update guardian",
       "fields": {
-        "name": "Name",
+        "names": "Names",
         "lastNames": "Last names",
         "email": "Email",
         "documentType": "ID type",
@@ -663,9 +677,12 @@
         "model": "Model",
         "brand": "Brand",
         "capacity": "Capacity",
-        "gps": "GPS",
-        "soat": "SOAT"
-      }
+        "gps": "GPS device (IMEI)",
+        "soat": "SOAT",
+        "gpsImei": "New GPS IMEI (optional)",
+        "gpsStatus": "GPS status"
+      },
+      "noDriver": "No driver"
     },
     "stop": {
       "title": "Update stop",
@@ -676,7 +693,8 @@
         "school": "School",
         "address": "Address",
         "latitude": "Latitude",
-        "longitude": "Longitude"
+        "longitude": "Longitude",
+        "route": "Route"
       }
     },
     "route": {
@@ -687,7 +705,8 @@
         "startTime": "Start time",
         "endTime": "End time",
         "destination": "Destination",
-        "routeSector": "Route sector"
+        "routeSector": "Route sector",
+        "campus": "Campus"
       }
     },
     "admins": {
@@ -713,7 +732,12 @@
         "address": "Address",
         "phone": "Phone",
         "email": "Email",
-        "website": "Website"
+        "website": "Website",
+        "status": "Status"
+      },
+      "statusValues": {
+        "Active": "Active",
+        "Inactive": "Inactive"
       }
     },
     "buttons": {
@@ -788,7 +812,13 @@
         "brand": "Brand",
         "capacity": "Capacity",
         "soat": "SOAT validity",
-        "gps": "GPS status"
+        "gps": "GPS device (IMEI)",
+        "gpsImei": "New GPS IMEI (optional)",
+        "gpsStatus": "GPS status"
+      },
+      "gpsStatusValues": {
+        "true": "Active",
+        "false": "Inactive"
       }
     },
     "stop": {
@@ -811,7 +841,8 @@
         "endTime": "End time",
         "destination": "Destination",
         "routeSector": "Sector",
-        "bus": "Bus"
+        "bus": "Bus",
+        "campus": "Campus"
       }
     },
     "admins": {
@@ -863,18 +894,22 @@
   "assign_record": {
     "route": {
       "bus": "Bus",
-      "selectBus": "Select a bus"
+      "selectBus": "Select a bus",
+      "alreadyAssigned": "This route already has a bus assigned.",
+      "title": "Assign bus to route"
     },
     "student": {
       "route": "Route",
       "stop": "Boarding stop",
       "selectRoute": "Select a route",
-      "selectStop": "Select a stop"
+      "selectStop": "Select a stop",
+      "title": "Assign route to student"
     },
     "bus": {
       "driver": "Driver",
       "currentDriver": "Current driver",
-      "selectDriver": "Select a driver"
+      "selectDriver": "Select a driver",
+      "title": "Assign driver to bus"
     },
     "buttons": {
       "assign": "Assign",
@@ -910,7 +945,10 @@
       "finalDestination": "Final destination",
       "startTime": "Start time",
       "endTime": "End time",
-      "email": "Email"
+      "email": "Email",
+      "city": "City",
+      "school": "School",
+      "status": "Status"
     }
   },
   "admin_profile": {
@@ -973,7 +1011,25 @@
         "no_match": "*Passwords do not match",
         "expired": "The recovery link has expired or was already used. Request a new code.",
         "rate_limited": "Attempt limit reached. Request a new code later.",
-        "failed": "The password could not be updated. Please try again."
+        "failed": "The password could not be updated. Please try again.",
+        "maxlength": "*Maximum 128 characters"
+      },
+      "confirmationTitle": "Password reset",
+      "confirmationDescription": "Your password was reset successfully."
+    },
+    "code": {
+      "title": "Verify your email",
+      "session_description": "We sent a 6-digit code to your email.",
+      "title_step": "Verification code",
+      "button": "Validate",
+      "return": "Back",
+      "step_text": "2 of 3",
+      "error": "*Enter the 6 digits of the code",
+      "digit_label": "Code digit {{number}}",
+      "errors": {
+        "invalid": "The code is invalid or has expired. Check the code and try again.",
+        "rate_limited": "Attempt limit reached. Request a new code later.",
+        "failed": "The code could not be verified. Please try again."
       }
     }
   },
@@ -1020,10 +1076,38 @@
     "max": "Maximum {{max}}",
     "text": "Letters and spaces only",
     "birthDate": "Date cannot be in the future or more than 100 years ago",
-    "futureDate": "Date must be in the future"
+    "futureDate": "Date must be in the future",
+    "timeOrder": "End time must be after start time",
+    "imei": "The IMEI must have 15 digits",
+    "gpsRequired": "Select a GPS or type the IMEI of a new one"
   },
   "resend_code": {
     "button": "Request a new code",
     "wait": "Request a new code in {{seconds}} s"
+  },
+  "school_status": {
+    "Active": "Active",
+    "Inactive": "Inactive"
+  },
+  "errors": {
+    "backend": {
+      "plateExists": "A bus with that plate already exists.",
+      "plateRequired": "The plate is required.",
+      "gpsAssigned": "That GPS is already assigned to another bus.",
+      "gpsNotFound": "The GPS does not exist or the IMEI is invalid.",
+      "driver": "The selected driver could not be assigned.",
+      "routeNotFound": "The selected route does not exist or is inactive.",
+      "busNotFound": "The bus does not exist.",
+      "stopNotFound": "The stop does not exist.",
+      "campus": "The selected campus is not valid.",
+      "invalidTime": "The time is not valid.",
+      "duplicate": "A record with that data already exists.",
+      "unavailable": "Could not connect to the server. Please try again."
+    },
+    "bus": {
+      "create": "The bus could not be registered.",
+      "update": "The bus could not be updated.",
+      "driverNotAssigned": "The driver could not be assigned."
+    }
   }
 }

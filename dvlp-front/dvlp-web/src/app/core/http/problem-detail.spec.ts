@@ -35,4 +35,15 @@ describe('describeProblem', () => {
       '$: The JSON value could not be converted to System.Byte[].',
     );
   });
+
+  it('preserves plain-text errors returned by an API', () => {
+    const error = new HttpErrorResponse({
+      status: 409,
+      error: 'Profiles already associated with another family: 123',
+    });
+
+    expect(describeProblem(error, 'Fallback')).toBe(
+      'Profiles already associated with another family: 123',
+    );
+  });
 });

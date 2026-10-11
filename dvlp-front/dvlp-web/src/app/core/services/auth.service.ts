@@ -137,6 +137,10 @@ export class AuthService {
     this.userSession = { ...this.userSession, email };
   }
 
+  updateSessionSchoolId(schoolId: string | null): void {
+    this.userSession = { ...this.userSession, schoolId };
+  }
+
   getToken(): string | null {
     return this.accessToken;
   }

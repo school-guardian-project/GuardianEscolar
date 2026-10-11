@@ -416,7 +416,8 @@
       "upload": "Enviar novo logotipo",
       "email": "E-mail",
       "email_placeholder": "Insira o e-mail",
-      "web_placeholder": "Insira o site"
+      "web_placeholder": "Insira o site",
+      "web": "Site"
     },
     "error": "Não foi possível atualizar. Verifique os dados da escola e das unidades e tente novamente.",
     "buttons": {
@@ -550,11 +551,16 @@
       "fields": {
         "plate": "Placa",
         "driver": "Motorista",
+        "campuseId": "Identificador do campus",
         "model": "Modelo",
+        "modelId": "Identificador do modelo",
         "brand": "Marca",
         "capacity": "Capacidade",
-        "gps": "GPS",
-        "soat": "SOAT"
+        "gps": "Dispositivo GPS (IMEI)",
+        "soat": "Validade do SOAT",
+        "status": "Status",
+        "gpsStatus": "Status do GPS",
+        "campusName": "Unidade"
       }
     },
     "stop": {
@@ -566,7 +572,8 @@
         "school": "Escola",
         "address": "Endereço",
         "latitude": "Latitude",
-        "longitude": "Longitude"
+        "longitude": "Longitude",
+        "route": "Rota"
       }
     },
     "route": {
@@ -577,7 +584,8 @@
         "startTime": "Hora de início",
         "endTime": "Hora de término",
         "destination": "Destino",
-        "routeSector": "Setor da rota"
+        "routeSector": "Setor da rota",
+        "campusName": "Unidade"
       }
     },
     "admins": {
@@ -603,7 +611,8 @@
         "address": "Endereço",
         "phone": "Telefone",
         "email": "E-mail",
-        "website": "Site"
+        "website": "Site",
+        "status": "Status"
       }
     }
   },
@@ -625,7 +634,7 @@
     "guardian": {
       "title": "Atualizar responsável",
       "fields": {
-        "name": "Nome",
+        "names": "Nomes",
         "lastNames": "Sobrenomes",
         "email": "E-mail",
         "documentType": "Tipo de documento",
@@ -669,8 +678,11 @@
         "brand": "Marca",
         "capacity": "Capacidade",
         "soat": "SOAT",
-        "gps": "GPS"
-      }
+        "gps": "Dispositivo GPS (IMEI)",
+        "gpsImei": "IMEI do novo GPS (opcional)",
+        "gpsStatus": "Status do GPS"
+      },
+      "noDriver": "Sem motorista"
     },
     "stop": {
       "title": "Atualizar parada",
@@ -681,7 +693,8 @@
         "school": "Escola",
         "address": "Endereço",
         "latitude": "Latitude",
-        "longitude": "Longitude"
+        "longitude": "Longitude",
+        "route": "Rota"
       }
     },
     "route": {
@@ -692,7 +705,8 @@
         "startTime": "Hora de início",
         "endTime": "Hora de término",
         "destination": "Destino",
-        "routeSector": "Setor da rota"
+        "routeSector": "Setor da rota",
+        "campus": "Unidade"
       }
     },
     "admins": {
@@ -718,7 +732,12 @@
         "phone": "Telefone",
         "schooling": "Nível escolar",
         "email": "E-mail",
-        "website": "Site"
+        "website": "Site",
+        "status": "Status"
+      },
+      "statusValues": {
+        "Active": "Ativo",
+        "Inactive": "Inativo"
       }
     },
     "buttons": {
@@ -793,7 +812,13 @@
         "brand": "Marca",
         "capacity": "Capacidade",
         "soat": "Validade do SOAT",
-        "gps": "Status do GPS"
+        "gps": "Dispositivo GPS (IMEI)",
+        "gpsImei": "IMEI do novo GPS (opcional)",
+        "gpsStatus": "Status do GPS"
+      },
+      "gpsStatusValues": {
+        "true": "Ativo",
+        "false": "Inativo"
       }
     },
     "stop": {
@@ -816,7 +841,8 @@
         "endTime": "Hora de término",
         "destination": "Destino",
         "routeSector": "Setor",
-        "bus": "Ônibus"
+        "bus": "Ônibus",
+        "campus": "Unidade"
       }
     },
     "admins": {
@@ -868,18 +894,22 @@
   "assign_record": {
     "route": {
       "bus": "Ônibus",
-      "selectBus": "Selecione um ônibus"
+      "selectBus": "Selecione um ônibus",
+      "alreadyAssigned": "Esta rota já tem um ônibus atribuído.",
+      "title": "Atribuir ônibus à rota"
     },
     "student": {
       "route": "Rota",
       "stop": "Ponto de embarque",
       "selectRoute": "Selecione uma rota",
-      "selectStop": "Selecione um ponto"
+      "selectStop": "Selecione um ponto",
+      "title": "Atribuir rota ao aluno"
     },
     "bus": {
       "driver": "Motorista",
       "currentDriver": "Motorista atual",
-      "selectDriver": "Selecione um motorista"
+      "selectDriver": "Selecione um motorista",
+      "title": "Atribuir motorista ao ônibus"
     },
     "buttons": {
       "assign": "Atribuir",
@@ -915,7 +945,10 @@
       "finalDestination": "Destino final",
       "startTime": "Hora de início",
       "endTime": "Hora de término",
-      "email": "E-mail"
+      "email": "E-mail",
+      "city": "Cidade",
+      "school": "Escola",
+      "status": "Status"
     }
   },
   "admin_profile": {
@@ -993,8 +1026,11 @@
         "no_match": "*As senhas não coincidem",
         "expired": "O link de recuperação expirou ou já foi usado. Solicite um novo código.",
         "rate_limited": "Limite de tentativas atingido. Solicite um novo código mais tarde.",
-        "failed": "Não foi possível atualizar a senha. Tente novamente."
-      }
+        "failed": "Não foi possível atualizar a senha. Tente novamente.",
+        "maxlength": "*Máximo de 128 caracteres"
+      },
+      "confirmationTitle": "Senha redefinida",
+      "confirmationDescription": "A senha foi redefinida com sucesso."
     }
   },
   "right_index": {
@@ -1040,10 +1076,38 @@
     "max": "Máximo: {{max}}",
     "text": "Apenas letras e espaços",
     "birthDate": "A data não pode ser futura nem anterior a 100 anos atrás",
-    "futureDate": "A data deve ser futura"
+    "futureDate": "A data deve ser futura",
+    "timeOrder": "O horário final deve ser posterior ao inicial",
+    "imei": "O IMEI deve ter 15 dígitos",
+    "gpsRequired": "Selecione um GPS ou digite o IMEI de um novo"
   },
   "resend_code": {
     "button": "Solicitar novo código",
     "wait": "Solicitar novo código em {{seconds}} s"
+  },
+  "school_status": {
+    "Active": "Ativo",
+    "Inactive": "Inativo"
+  },
+  "errors": {
+    "backend": {
+      "plateExists": "Já existe um ônibus com essa placa.",
+      "plateRequired": "A placa é obrigatória.",
+      "gpsAssigned": "Esse GPS já está atribuído a outro ônibus.",
+      "gpsNotFound": "O GPS não existe ou o IMEI é inválido.",
+      "driver": "Não foi possível atribuir o motorista selecionado.",
+      "routeNotFound": "A rota selecionada não existe ou está inativa.",
+      "busNotFound": "O ônibus não existe.",
+      "stopNotFound": "A parada não existe.",
+      "campus": "A unidade selecionada não é válida.",
+      "invalidTime": "O horário não é válido.",
+      "duplicate": "Já existe um registro com esses dados.",
+      "unavailable": "Não foi possível conectar ao servidor. Tente novamente."
+    },
+    "bus": {
+      "create": "Não foi possível registrar o ônibus.",
+      "update": "Não foi possível atualizar o ônibus.",
+      "driverNotAssigned": "Não foi possível atribuir o motorista."
+    }
   }
 }

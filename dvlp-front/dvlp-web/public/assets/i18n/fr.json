@@ -416,7 +416,8 @@
       "upload": "Importer un nouveau logo",
       "email": "E-mail",
       "email_placeholder": "Saisissez l'e-mail",
-      "web_placeholder": "Saisissez le site web"
+      "web_placeholder": "Saisissez le site web",
+      "web": "Site web"
     },
     "error": "La mise à jour a échoué. Vérifiez les informations de l’école et de ses sites, puis réessayez.",
     "buttons": {
@@ -453,7 +454,8 @@
     "cancel": "Annuler",
     "delete": "Supprimer",
     "close": "Fermer",
-    "accept": "Accepter"
+    "accept": "Accepter",
+    "confirm": "Confirmer"
   },
   "record_information": {
     "student": {
@@ -511,11 +513,16 @@
       "fields": {
         "plate": "Plaque d'immatriculation",
         "driver": "Conducteur",
+        "campuseId": "Identifiant du campus",
         "model": "Modèle",
+        "modelId": "Identifiant du modèle",
         "brand": "Marque",
         "capacity": "Capacité",
-        "gps": "GPS",
-        "soat": "SOAT"
+        "gps": "Appareil GPS (IMEI)",
+        "soat": "Validité du SOAT",
+        "status": "Statut",
+        "gpsStatus": "État du GPS",
+        "campusName": "Site"
       }
     },
     "stop": {
@@ -527,7 +534,8 @@
         "school": "École",
         "address": "Adresse",
         "latitude": "Latitude",
-        "longitude": "Longitude"
+        "longitude": "Longitude",
+        "route": "Itinéraire"
       }
     },
     "route": {
@@ -538,7 +546,8 @@
         "startTime": "Heure de début",
         "endTime": "Heure de fin",
         "destination": "Destination",
-        "routeSector": "Secteur de l'itinéraire"
+        "routeSector": "Secteur de l'itinéraire",
+        "campusName": "Site"
       }
     },
     "admins": {
@@ -564,7 +573,8 @@
         "address": "Adresse",
         "phone": "Téléphone",
         "email": "E-mail",
-        "website": "Site web"
+        "website": "Site web",
+        "status": "Statut"
       }
     }
   },
@@ -624,7 +634,7 @@
     "guardian": {
       "title": "Mettre à jour le responsable",
       "fields": {
-        "name": "Nom",
+        "names": "Prénoms",
         "lastNames": "Noms de famille",
         "email": "E-mail",
         "documentType": "Type de document",
@@ -667,9 +677,12 @@
         "model": "Modèle",
         "brand": "Marque",
         "capacity": "Capacité",
-        "gps": "GPS",
-        "soat": "SOAT"
-      }
+        "gps": "Appareil GPS (IMEI)",
+        "soat": "SOAT",
+        "gpsImei": "IMEI du nouveau GPS (facultatif)",
+        "gpsStatus": "État du GPS"
+      },
+      "noDriver": "Sans chauffeur"
     },
     "stop": {
       "title": "Mettre à jour l'arrêt",
@@ -680,7 +693,8 @@
         "school": "École",
         "address": "Adresse",
         "latitude": "Latitude",
-        "longitude": "Longitude"
+        "longitude": "Longitude",
+        "route": "Itinéraire"
       }
     },
     "route": {
@@ -691,7 +705,8 @@
         "startTime": "Heure de début",
         "endTime": "Heure de fin",
         "destination": "Destination",
-        "routeSector": "Secteur de l'itinéraire"
+        "routeSector": "Secteur de l'itinéraire",
+        "campus": "Site"
       }
     },
     "admins": {
@@ -717,7 +732,12 @@
         "address": "Adresse",
         "phone": "Téléphone",
         "email": "E-mail",
-        "website": "Site web"
+        "website": "Site web",
+        "status": "Statut"
+      },
+      "statusValues": {
+        "Active": "Actif",
+        "Inactive": "Inactif"
       }
     },
     "buttons": {
@@ -792,7 +812,13 @@
         "brand": "Marque",
         "capacity": "Capacité",
         "soat": "Validité du SOAT",
-        "gps": "État du GPS"
+        "gps": "Appareil GPS (IMEI)",
+        "gpsImei": "IMEI du nouveau GPS (facultatif)",
+        "gpsStatus": "État du GPS"
+      },
+      "gpsStatusValues": {
+        "true": "Actif",
+        "false": "Inactif"
       }
     },
     "stop": {
@@ -815,7 +841,8 @@
         "endTime": "Heure de fin",
         "destination": "Destination",
         "routeSector": "Secteur",
-        "bus": "Bus"
+        "bus": "Bus",
+        "campus": "Site"
       }
     },
     "admins": {
@@ -867,18 +894,22 @@
   "assign_record": {
     "route": {
       "bus": "Bus",
-      "selectBus": "Sélectionnez un bus"
+      "selectBus": "Sélectionnez un bus",
+      "alreadyAssigned": "Un bus est déjà attribué à cet itinéraire.",
+      "title": "Attribuer un bus à l’itinéraire"
     },
     "student": {
       "route": "Itinéraire",
       "stop": "Arrêt de montée",
       "selectRoute": "Sélectionnez un itinéraire",
-      "selectStop": "Sélectionnez un arrêt"
+      "selectStop": "Sélectionnez un arrêt",
+      "title": "Attribuer un itinéraire à l’élève"
     },
     "bus": {
       "driver": "Conducteur",
       "currentDriver": "Conducteur actuel",
-      "selectDriver": "Sélectionnez un conducteur"
+      "selectDriver": "Sélectionnez un conducteur",
+      "title": "Attribuer un chauffeur au bus"
     },
     "buttons": {
       "assign": "Assigner",
@@ -914,7 +945,10 @@
       "finalDestination": "Destination finale",
       "startTime": "Heure de début",
       "endTime": "Heure de fin",
-      "email": "E-mail"
+      "email": "E-mail",
+      "city": "Ville",
+      "school": "École",
+      "status": "Statut"
     }
   },
   "admin_profile": {
@@ -924,7 +958,8 @@
     "retry": "Réessayer",
     "user": {
       "name": "Nom de l'administrateur",
-      "role": "Administrateur"
+      "role": "Administrateur",
+      "role_superadmin": "Superadministrateur"
     },
     "labels": {
       "email": "E-mail",
@@ -1041,10 +1076,38 @@
     "max": "Maximum : {{max}}",
     "text": "Lettres et espaces uniquement",
     "birthDate": "La date ne peut pas être future ni remonter à plus de 100 ans",
-    "futureDate": "La date doit être future"
+    "futureDate": "La date doit être future",
+    "timeOrder": "L’heure de fin doit être postérieure à l’heure de début",
+    "imei": "L’IMEI doit comporter 15 chiffres",
+    "gpsRequired": "Sélectionnez un GPS ou saisissez l’IMEI d’un nouveau"
   },
   "resend_code": {
     "button": "Demander un nouveau code",
     "wait": "Demander un nouveau code dans {{seconds}} s"
+  },
+  "school_status": {
+    "Active": "Actif",
+    "Inactive": "Inactif"
+  },
+  "errors": {
+    "backend": {
+      "plateExists": "Un bus avec cette immatriculation existe déjà.",
+      "plateRequired": "L’immatriculation est obligatoire.",
+      "gpsAssigned": "Ce GPS est déjà attribué à un autre bus.",
+      "gpsNotFound": "Le GPS n’existe pas ou l’IMEI n’est pas valide.",
+      "driver": "Le chauffeur sélectionné n’a pas pu être attribué.",
+      "routeNotFound": "L’itinéraire sélectionné n’existe pas ou est inactif.",
+      "busNotFound": "Le bus n’existe pas.",
+      "stopNotFound": "L’arrêt n’existe pas.",
+      "campus": "Le site sélectionné n’est pas valide.",
+      "invalidTime": "L’heure n’est pas valide.",
+      "duplicate": "Un enregistrement avec ces données existe déjà.",
+      "unavailable": "Impossible de se connecter au serveur. Réessayez."
+    },
+    "bus": {
+      "create": "Le bus n’a pas pu être enregistré.",
+      "update": "Le bus n’a pas pu être mis à jour.",
+      "driverNotAssigned": "Le chauffeur n’a pas pu être attribué."
+    }
   }
 }

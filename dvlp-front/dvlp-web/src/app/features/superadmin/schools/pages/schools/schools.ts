@@ -37,6 +37,7 @@ function fromApi(api: SchoolListDto): SchoolView {
     id: api.id,
     name: api.name ?? '',
     address: api.address ?? '',
+    status: api.status ?? '',
     latitude: api.latitude ?? null,
     longitude: api.longitude ?? null,
   };
@@ -89,6 +90,7 @@ function toPayload(form: RecordData): SchoolRequestDto {
     email: String(form['email'] ?? '').trim(),
     website: String(form['website'] ?? '').trim(),
     theme: String(form['schooling'] ?? '').trim(),
+    status: String(form['status'] ?? '').trim(),
   };
 }
 
@@ -138,6 +140,9 @@ export class Schools implements OnInit {
   private load(): void {
     this.schoolsService.list().subscribe({
       next: (list) => this.schools.set(list.map(fromApi)),
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron cargar las escuelas.');
+      },
     });
   }
 
@@ -149,6 +154,9 @@ export class Schools implements OnInit {
     }
     this.schoolsService.search(query).subscribe({
       next: (list) => this.schools.set(list.map(fromApi)),
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron buscar las escuelas.');
+      },
     });
   }
 
@@ -177,10 +185,14 @@ export class Schools implements OnInit {
   showDetails(school: RecordData): void {
     const id = school['id'];
     if (!id) return;
+    this.actionError = '';
     this.schoolsService.get(String(id)).subscribe({
       next: (detail) => {
         this.schoolSelected = fromDetail(detail);
         this.showModal = true;
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cargar la escuela.');
       },
     });
   }
@@ -196,6 +208,7 @@ export class Schools implements OnInit {
   showUpdate(school: RecordData): void {
     const id = school['id'];
     if (!id) return;
+    this.actionError = '';
     forkJoin({
       detail: this.schoolsService.get(String(id)),
       campuses: this.campusesService.listBySchool(String(id)),
@@ -210,10 +223,14 @@ export class Schools implements OnInit {
         };
         this.showUpdateModal = true;
       },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cargar la escuela para actualizarla.');
+      },
     });
   }
 
   closeUpdateModal(): void {
+    this.actionError = '';
     this.showUpdateModal = false;
     this.schoolSelected = {};
   }
@@ -229,23 +246,31 @@ export class Schools implements OnInit {
       ...toPayload(updatedRecord),
       campuses: toCampuses(updatedRecord['campuses']),
     };
+    this.actionError = '';
     this.schoolsService.updateWithCampuses(String(id), payload).subscribe({
       next: () => {
         this.closeUpdateModal();
         this.load();
       },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo actualizar el colegio.');
+      },
     });
   }
+
+  actionError = '';
 
   showDeleteModal = false;
 
   showDelete(school: RecordData): void {
     if (!school['id']) return;
+    this.actionError = '';
     this.schoolSelected = school;
     this.showDeleteModal = true;
   }
 
   closeDeleteModal(): void {
+    this.actionError = '';
     this.showDeleteModal = false;
     this.schoolSelected = {};
   }
@@ -257,10 +282,14 @@ export class Schools implements OnInit {
       return;
     }
 
+    this.actionError = '';
     this.schoolsService.remove(String(id)).subscribe({
       next: () => {
         this.closeDeleteModal();
         this.load();
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo desactivar el colegio.');
       },
     });
   }

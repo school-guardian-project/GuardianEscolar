@@ -1,4 +1,4 @@
-import { Component, OnInit, inject } from '@angular/core';
+﻿import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,8 +13,10 @@ import { UpdateRecord } from '@shared/components/modal/update-record/update-reco
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
 import { AssignRecord } from '@shared/components/modal/assign-record/assign-record';
 import { RoutesService } from '@core/services/routes.service';
-import { BusesService } from '@core/services/buses.service';
+import { CampusesService } from '@core/services/campuses.service';
+import { AuthService } from '@core/services/auth.service';
 import { RouteListDto, RouteRequestDto } from '@core/models/route.model';
+import { describeProblem, problemField } from '@core/http/problem-detail';
 
 interface RouteView extends RecordData {
   id?: string;
@@ -22,6 +24,8 @@ interface RouteView extends RecordData {
   destination: string;
   startTime: string;
   endTime: string;
+  campuseId?: string;
+  campusName?: string;
 }
 
 function fromApi(api: RouteListDto): RouteView {
@@ -31,6 +35,23 @@ function fromApi(api: RouteListDto): RouteView {
     destination: api.targetSector ?? '',
     startTime: api.startTime ?? '',
     endTime: api.endTime ?? '',
+    campuseId: api.campuseId,
+  };
+}
+
+/** El backend usa TimeOnly: <input type=time> da HH:mm y se completa a HH:mm:ss. */
+function toTime(value: unknown): string {
+  const time = String(value ?? '').trim();
+  return /^\d{2}:\d{2}$/.test(time) ? `:00` : time;
+}
+
+function toPayload(form: RecordData): RouteRequestDto {
+  return {
+    campuseId: String(form['campus'] ?? form['campuseId'] ?? '').trim(),
+    name: String(form['name'] ?? '').trim(),
+    targetSector: String(form['destination'] ?? '').trim(),
+    startTime: toTime(form['startTime']),
+    endTime: toTime(form['endTime']),
   };
 }
 
@@ -56,7 +77,10 @@ function fromApi(api: RouteListDto): RouteView {
 })
 export class RoutesPage implements OnInit {
   private routesService = inject(RoutesService);
-  private busesService = inject(BusesService);
+  private campusesService = inject(CampusesService);
+  private authService = inject(AuthService);
+
+  @ViewChild(CardRegister) register?: CardRegister;
 
   routes: RouteView[] = [];
 
@@ -66,6 +90,9 @@ export class RoutesPage implements OnInit {
    * los `targetSector` distintos de las rutas ya registradas.
    */
   fieldOptions: Record<string, string[]> = {};
+  fieldOptionLabels: Record<string, Record<string, string>> = {};
+  actionError = '';
+  saveFieldErrors: Record<string, string> = {};
 
   showModal = false;
   showUpdateModal = false;
@@ -73,28 +100,61 @@ export class RoutesPage implements OnInit {
 
   ngOnInit(): void {
     this.load();
-    this.loadBusOptions();
+    this.loadCampusOptions();
   }
 
   private load(): void {
     this.routesService.list().subscribe({
       next: (list) => {
-        this.routes = list.map(fromApi);
-        this.fieldOptions = {
-          ...this.fieldOptions,
-          routeSector: [...new Set(list.map((r) => r.targetSector ?? '').filter(Boolean))],
-        };
+        this.routes = list.map((item) => this.withCampusName(fromApi(item)));
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron cargar las rutas.');
       },
     });
   }
 
-  private loadBusOptions(): void {
-    this.busesService.list().subscribe({
-      next: (buses) => {
-        this.fieldOptions = {
-          ...this.fieldOptions,
-          bus: buses.map((b) => b.plate ?? '').filter(Boolean),
+  private loadCampusOptions(): void {
+    const schoolId = this.authService.session.schoolId;
+    if (!schoolId) {
+      this.actionError = 'No se encontró el colegio asociado a la sesión.';
+      return;
+    }
+    this.campusesService.listBySchool(schoolId).subscribe({
+      next: (campuses) => {
+        this.fieldOptions = { ...this.fieldOptions, campus: campuses.map((campus) => campus.id) };
+        this.fieldOptionLabels = {
+          ...this.fieldOptionLabels,
+          campus: Object.fromEntries(campuses.map((campus) => [campus.id, campus.name])),
         };
+        this.routes = this.routes.map((route) => this.withCampusName(route));
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron cargar las sedes del colegio.');
+      },
+    });
+  }
+
+  private withCampusName(route: RouteView): RouteView {
+    return {
+      ...route,
+      campusName: this.fieldOptionLabels['campus']?.[route.campuseId ?? ''] ?? '',
+    };
+  }
+
+  onCreated(form: RecordData): void {
+    this.actionError = '';
+    this.routesService.create(toPayload(form)).subscribe({
+      next: () => {
+        this.register?.setValidationMessage('');
+        this.register?.resetForm();
+        this.load();
+      },
+      error: (error: unknown) => {
+        const message = describeProblem(error, 'No se pudo crear la ruta.');
+        const field = problemField(error);
+        if (field) this.register?.setFieldError(field, message);
+        else this.register?.setValidationMessage(message);
       },
     });
   }
@@ -106,18 +166,54 @@ export class RoutesPage implements OnInit {
       return;
     }
     this.routesService.search(query).subscribe({
-      next: (list) => (this.routes = list.map(fromApi)),
+      next: (list) => (this.routes = list.map((item) => this.withCampusName(fromApi(item)))),
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron buscar las rutas.');
+      },
     });
   }
 
   showDetails(route: RecordData): void {
-    this.routeSelected = route;
-    this.showModal = true;
+    const id = String(route['id'] ?? '');
+    if (!id) return;
+    this.routesService.get(id).subscribe({
+      next: (detail) => {
+        this.routeSelected = this.withCampusName({
+          ...route,
+          campuseId: detail.campuseId,
+          campusName: '',
+          destination: detail.targetSector,
+          name: detail.name,
+          startTime: detail.startTime,
+          endTime: detail.endTime,
+        } as RouteView);
+        this.showModal = true;
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cargar la ruta.');
+      },
+    });
   }
 
   showUpdateDetails(route: RecordData): void {
-    this.routeSelected = route;
-    this.showUpdateModal = true;
+    const id = String(route['id'] ?? '');
+    if (!id) return;
+    this.routesService.get(id).subscribe({
+      next: (detail) => {
+        this.routeSelected = {
+          id: detail.id,
+          name: detail.name,
+          campus: detail.campuseId,
+          destination: detail.targetSector,
+          startTime: detail.startTime,
+          endTime: detail.endTime,
+        };
+        this.showUpdateModal = true;
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cargar la ruta para actualizarla.');
+      },
+    });
   }
 
   closeModal(): void {
@@ -126,6 +222,8 @@ export class RoutesPage implements OnInit {
   }
 
   closeUpdateModal(): void {
+    this.actionError = '';
+    this.saveFieldErrors = {};
     this.showUpdateModal = false;
     this.routeSelected = {};
   }
@@ -136,20 +234,31 @@ export class RoutesPage implements OnInit {
       this.closeUpdateModal();
       return;
     }
-    // ponytail: modal fields don't cover RouteRequestDto (campuseId/targetSector); real toPayload when list data is wired
-    this.routesService.update(String(id), updatedRecord as RouteRequestDto).subscribe(() => {
-      this.closeUpdateModal();
+    this.actionError = '';
+    this.saveFieldErrors = {};
+    this.routesService.update(String(id), toPayload(updatedRecord)).subscribe({
+      next: () => {
+        this.closeUpdateModal();
+        this.load();
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo actualizar la ruta.');
+        const field = problemField(error);
+        this.saveFieldErrors = field ? { [field]: this.actionError } : {};
+      },
     });
   }
 
   showDeleteModal = false;
 
   showDelete(route: RecordData): void {
+    this.actionError = '';
     this.routeSelected = route;
     this.showDeleteModal = true;
   }
 
   closeDeleteModal(): void {
+    this.actionError = '';
     this.showDeleteModal = false;
     this.routeSelected = {};
   }
@@ -160,8 +269,15 @@ export class RoutesPage implements OnInit {
       this.closeDeleteModal();
       return;
     }
-    this.routesService.remove(String(id)).subscribe(() => {
-      this.closeDeleteModal();
+    this.actionError = '';
+    this.routesService.remove(String(id)).subscribe({
+      next: () => {
+        this.closeDeleteModal();
+        this.load();
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo eliminar la ruta.');
+      },
     });
   }
 

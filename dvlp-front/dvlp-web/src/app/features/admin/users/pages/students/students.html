@@ -4,6 +4,7 @@
 <div class="page-wrapper">
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
+    <p *ngIf="actionError && !showUpdateModal && !showDeleteModal" class="action-error" role="alert">{{ actionError }}</p>
     <app-card-register type="student" (formSubmit)="onCreated($event)"> </app-card-register>
 
     <app-card-list
@@ -35,6 +36,7 @@
   *ngIf="showUpdateModal"
   type="student"
   [record]="studentSelected"
+  [saveError]="actionError"
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()"
 >
@@ -45,6 +47,7 @@
   *ngIf="showDeleteModal"
   type="student"
   [record]="studentSelected"
+  [error]="actionError"
   (confirm)="onConfirmDelete($event)"
   (cancel)="closeDeleteModal()"
 >

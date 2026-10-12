@@ -16,14 +16,10 @@ import QRScannerModal from "@components/modals/QRScannerModal";
 import { getSession } from "@core/services/authService";
 import { getRouteApi } from "@core/services/routeApi";
 import { getFleetApi } from "@core/services/fleetApi";
-import { postNotificationApi } from "@core/services/notificationApi";
+import { scanCredential } from "@core/services/notificationApi";
 
 import styles from "./MainPage.style";
 
-const EMPTY_GUID = "00000000-0000-0000-0000-000000000000";
-
-// RouteDetailDto.stops -> coordenadas validas ordenadas por orderSequence.
-// Lat/lng llegan como decimales serializados, por eso se normalizan a Number.
 function normalizeStops(route) {
   const stops = Array.isArray(route?.stops) ? route.stops : [];
 
@@ -45,19 +41,9 @@ function normalizeStops(route) {
       (stop) =>
         Number.isFinite(stop.latitude) &&
         Number.isFinite(stop.longitude) &&
-        !(stop.latitude === 0 && stop.longitude === 0)
+        !(stop.latitude === 0 && stop.longitude === 0),
     )
     .sort((a, b) => a.orderSequence - b.orderSequence);
-}
-
-async function getCurrentTrip(driverId) {
-  if (!driverId) return null;
-
-  try {
-    return await getRouteApi(`/trips/current?driverId=${driverId}`);
-  } catch {
-    return null;
-  }
 }
 
 export default function MainPage() {
@@ -72,7 +58,7 @@ export default function MainPage() {
   const [modalType, setModalType] = useState(null);
   const [routeInfo, setRouteInfo] = useState(null);
   const [routeStops, setRouteStops] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [setLoading] = useState(true);
   const [scanMode, setScanMode] = useState("ON_BOARD");
 
   const mapRef = useRef(null);
@@ -85,35 +71,23 @@ export default function MainPage() {
     if (!mapReadyRef.current || stops.length === 0) return;
 
     mapRef.current?.fitToCoordinates(
-      stops.map((stop) => ({ latitude: stop.latitude, longitude: stop.longitude })),
+      stops.map((stop) => ({
+        latitude: stop.latitude,
+        longitude: stop.longitude,
+      })),
       {
         edgePadding: { top: 90, right: 40, bottom: 280, left: 40 },
         animated: true,
-      }
+      },
     );
   };
 
   const handleOpenModal = (type) => setModalType(type);
   const handleCloseModal = () => setModalType(null);
 
-  const handleQrScan = async (data) => {
+  const handleQrScan = async (qrToken) => {
     try {
-      const qrData = JSON.parse(data);
-      const session = await getSession();
-      const routes = await getRouteApi("/routes");
-      const route = routes[0];
-
-      if (!route) return;
-
-      const trip = await getCurrentTrip(session?.profileId);
-
-      await postNotificationApi("/v1/notifications/scan", {
-        routeId: route.id,
-        routeExecutionId: trip?.id ?? EMPTY_GUID,
-        studentProfileId: qrData.id,
-        routeStopId: qrData.routeStopId || EMPTY_GUID,
-        boardingType: scanMode,
-      });
+      await scanCredential(qrToken, scanMode);
     } catch (error) {
       console.error("Error processing QR scan:", error);
     }
@@ -143,7 +117,7 @@ export default function MainPage() {
 
           try {
             const today = await getRouteApi(
-              `/routes/today?driverId=${session.profileId}`
+              `/routes/today?driverId=${session.profileId}`,
             );
 
             if (today?.status === "ACTIVE" && today.route) {
@@ -277,7 +251,12 @@ export default function MainPage() {
       >
         <View style={styles.spacer} />
 
-        <View style={[styles.bottomSection, { marginHorizontal: -horizontalPadding }]}>
+        <View
+          style={[
+            styles.bottomSection,
+            { marginHorizontal: -horizontalPadding },
+          ]}
+        >
           <RouteInfoCard
             routeName={routeInfo?.routeName ?? ""}
             driverName={routeInfo?.driverName ?? ""}
@@ -301,19 +280,24 @@ export default function MainPage() {
       <QRDisplayModal
         visible={modalType === "activeQR"}
         onClose={handleCloseModal}
-        studentData={null}
       />
 
       {modalType === "qrScanner" && (
         <View style={styles.scanModeContainer}>
           <Pressable
-            style={[styles.scanModeButton, scanMode === "ON_BOARD" && styles.scanModeActive]}
+            style={[
+              styles.scanModeButton,
+              scanMode === "ON_BOARD" && styles.scanModeActive,
+            ]}
             onPress={() => setScanMode("ON_BOARD")}
           >
             <Text style={styles.scanModeText}>ABORDAR</Text>
           </Pressable>
           <Pressable
-            style={[styles.scanModeButton, scanMode === "OFF_BOARD" && styles.scanModeActive]}
+            style={[
+              styles.scanModeButton,
+              scanMode === "OFF_BOARD" && styles.scanModeActive,
+            ]}
             onPress={() => setScanMode("OFF_BOARD")}
           >
             <Text style={styles.scanModeText}>DESCENDER</Text>

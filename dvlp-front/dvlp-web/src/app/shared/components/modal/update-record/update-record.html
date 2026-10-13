@@ -40,6 +40,7 @@
 
           <!-- SELECT -->
           <select *ngSwitchCase="'select'" class="modal__info-value" [(ngModel)]="formData[field.name]"
+            [class.modal__info-value--invalid]="getFieldError(field.name)"
             [name]="field.name" (ngModelChange)="onFieldChange(field.name, $event)">
 
             <option value="" disabled>
@@ -48,15 +49,19 @@
 
             <option *ngFor="let opt of getFieldOptions(field)" [value]="opt"
               [disabled]="type === 'family' && field.name === 'student' && selectedStudents.includes(opt)">
-              {{ field.optionLabels?.[opt] ?? opt }}
+              {{ type === 'schools' && field.name === 'status' ? (('update_record.schools.statusValues.' + opt) | translate) : (field.optionLabels?.[opt] ?? opt) }}
             </option>
           </select>
 
           <!-- INPUT -->
           <input *ngSwitchDefault class="modal__info-value" [type]="field.type" [name]="field.name"
-            [(ngModel)]="formData[field.name]" />
+            [class.modal__info-value--invalid]="getFieldError(field.name)"
+            [(ngModel)]="formData[field.name]" (ngModelChange)="onFieldChange(field.name, $event)" />
 
         </ng-container>
+        <small *ngIf="getFieldError(field.name)" class="modal__field-error" role="alert">
+          {{ getFieldError(field.name) }}
+        </small>
         <div *ngIf="type === 'family' && field.name === 'student'" class="modal__children">
           <p>{{ 'update_record.family.addChildrenHint' | translate }}</p>
           <div *ngFor="let student of selectedStudents" class="modal__child">
@@ -68,7 +73,7 @@
 
     </div>
 
-    <p *ngIf="saveError" class="modal__error" role="alert">{{ saveError }}</p>
+    <p *ngIf="generalError" class="modal__error" role="alert">{{ generalError }}</p>
 
     <app-location-map *ngIf="type === 'schools' && schoolMapOpen"
       [address]="formData['address']"

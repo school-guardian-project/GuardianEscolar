@@ -25,6 +25,41 @@ Family editing keeps all existing children and allows selecting additional
 children without duplicates or removing individual children. Saving requires a
 guardian and at least one child; API errors appear inside the editing modal.
 
+All management record lists show 10 records per page, with synchronized page
+numbers and navigation above and below the records. The header retains the
+unfiltered total from the latest full load; search results are paginated and
+searching resets to page one. Deleting records clamps the current page.
+Registration cards keep their natural height independently of the list so the
+submit button stays next to the form fields instead of stretching to the footer.
+Registration and list cards share the same responsive width (up to 640px)
+and align at the top while their heights follow their respective contents.
+
+## Responsive web layouts
+
+At widths up to 1024px, the management toolbar opens a keyboard-accessible
+navigation drawer using the existing administrator or superadministrator menus.
+It traps focus, restores it on close, and closes on Escape, backdrop click,
+menu selection, successful navigation or a resize back to desktop. Desktop
+sidebars remain visible. Themed profile-change forms offer the same role menu;
+login and public password recovery do not expose management links.
+The public menu uses the same drawer; its contact action navigates correctly and
+home-section links support routed anchors.
+
+Shared viewport rules in [src/responsive.css](src/responsive.css) cover dashboards,
+all management cards, profiles, login and recovery/change steps, six-digit codes,
+contact forms, landing sections and modal dialogs. Forms and record actions stack
+on small screens; long values wrap, dialogs scroll within the viewport, and touch
+controls remain reachable. The existing themes, translations, role guards and
+ten-record pagination are preserved. Check at 320, 375, 425, 768, 1024 and 1440px
+when changing shared layouts.
+
+The standard `npm run build` uses the existing SPA configuration. The separate
+`production` configuration currently exceeds pre-existing bundle/component
+budgets (the landing component alone is 13.6kB against an 8kB limit). These
+limits are not raised or disabled by the responsive changes. There is currently
+no lint script or configured Angular lint target; the legacy `.eslintrc` is not
+compatible with the installed ESLint 10, which requires a flat configuration.
+
 To start a local development server, run:
 
 ```bash

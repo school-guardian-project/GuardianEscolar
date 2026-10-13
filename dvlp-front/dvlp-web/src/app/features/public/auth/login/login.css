@@ -40,6 +40,10 @@ main {
     left: 0;
 }
 
+input.input-error {
+    border-color: red !important;
+}
+
 .sesion-left {
     width: 40%;
     border-top-left-radius: 9px;

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { NavComponent } from '../../../shared/components/navbar/nav-component/nav-component';
-import { Footer } from '../../../shared/footer/footer';
+import { NavComponent } from '../../../../shared/components/navbar/nav-component/nav-component';
+import { Footer } from '../../../../shared/footer/footer';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
 

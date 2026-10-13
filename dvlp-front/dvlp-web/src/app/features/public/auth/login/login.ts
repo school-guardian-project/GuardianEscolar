@@ -6,7 +6,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router } from '@angular/router';
 import { RouterLink } from '@angular/router';
-import { TranslateModule, TranslateService } from '@ngx-translate/core';
+import { TranslateModule } from '@ngx-translate/core';
 import { FormBuilder, FormGroup, FormsModule, Validators, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from '@core/services/auth.service';
 
@@ -19,19 +19,20 @@ import { AuthService } from '@core/services/auth.service';
 })
 export class Login {
   form: FormGroup;
+  credentialsError = false;
 
   constructor(
     private router: Router,
     private fb: FormBuilder,
     private authService: AuthService,
-    private translate: TranslateService,
   ) {
     const emailPattern = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/;
 
     this.form = this.fb.group({
       email: ['', [Validators.required, Validators.pattern(emailPattern)]],
       password: ['', [Validators.required]]
-    })
+    });
+    this.form.valueChanges.subscribe(() => this.credentialsError = false);
   }
 
   login() {
@@ -40,10 +41,11 @@ export class Login {
       return;
     }
 
+    this.credentialsError = false;
     const { email, password } = this.form.value;
     this.authService.login(email, password).subscribe({
       next: () => this.router.navigateByUrl(this.authService.homeRoute()),
-      error: () => alert(this.translate.instant('login.right.credentials_error')),
+      error: () => this.credentialsError = true,
     });
   }
 

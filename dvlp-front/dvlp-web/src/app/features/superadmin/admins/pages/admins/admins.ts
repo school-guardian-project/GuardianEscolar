@@ -42,6 +42,7 @@ function fromApi(api: AdminListDto): AdminView {
     id: api.id,
     name: api.name ?? '',
     lastName: api.lastName ?? '',
+    lastNames: api.lastName ?? '',
     identification: api.identificationNumber ?? '',
     phone: api.phone != null ? String(api.phone) : '',
     email: api.email ?? '',
@@ -124,16 +125,23 @@ export class Admins implements OnInit {
       next: ({ cities, schools }) => {
         this.cityOptions = cities;
         this.schoolOptions = schools;
+        this.admins.update((admins) => admins.map((admin) => this.withNames(admin)));
       },
       error: (error: unknown) => {
-        console.error('No se pudieron cargar las ciudades y colegios de administradores.', error);
+        this.actionError = describeProblem(
+          error,
+          'No se pudieron cargar las ciudades y colegios de los administradores.'
+        );
       },
     });
   }
 
   private load(): void {
     this.adminsService.list().subscribe({
-      next: (list) => this.admins.set(list.map(fromApi)),
+      next: (list) => this.admins.set(list.map((admin) => this.withNames(fromApi(admin)))),
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron cargar los administradores.');
+      },
     });
   }
 
@@ -144,7 +152,10 @@ export class Admins implements OnInit {
       return;
     }
     this.adminsService.search(query).subscribe({
-      next: (list) => this.admins.set(list.map(fromApi)),
+      next: (list) => this.admins.set(list.map((admin) => this.withNames(fromApi(admin)))),
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron buscar los administradores.');
+      },
     });
   }
 
@@ -169,10 +180,19 @@ export class Admins implements OnInit {
   showDetails(admin: RecordData): void {
     const id = admin['id'];
     if (!id) return;
-    this.adminsService.get(String(id)).subscribe({
-      next: (detail) => {
+    forkJoin({
+      detail: this.adminsService.get(String(id)),
+      cities: this.citiesService.list(),
+      schools: this.schoolsService.list(),
+    }).subscribe({
+      next: ({ detail, cities, schools }) => {
+        this.cityOptions = cities;
+        this.schoolOptions = schools;
         this.adminSelected = this.withNames(fromDetail(detail));
         this.showModal = true;
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cargar el administrador.');
       },
     });
   }
@@ -187,15 +207,26 @@ export class Admins implements OnInit {
   showUpdate(admin: RecordData): void {
     const id = admin['id'];
     if (!id) return;
-    this.adminsService.get(String(id)).subscribe({
-      next: (detail) => {
-        this.adminSelected = fromDetail(detail);
+    this.actionError = '';
+    forkJoin({
+      detail: this.adminsService.get(String(id)),
+      cities: this.citiesService.list(),
+      schools: this.schoolsService.list(),
+    }).subscribe({
+      next: ({ detail, cities, schools }) => {
+        this.cityOptions = cities;
+        this.schoolOptions = schools;
+        this.adminSelected = this.withNames(fromDetail(detail));
         this.showUpdateModal = true;
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cargar el administrador para actualizarlo.');
       },
     });
   }
 
   closeUpdateModal(): void {
+    this.actionError = '';
     this.showUpdateModal = false;
     this.adminSelected = {};
   }
@@ -207,10 +238,14 @@ export class Admins implements OnInit {
       return;
     }
 
+    this.actionError = '';
     this.adminsService.update(String(id), toPayload(updatedRecord)).subscribe({
       next: () => {
         this.closeUpdateModal();
         this.load();
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo actualizar el administrador.');
       },
     });
   }
@@ -219,11 +254,13 @@ export class Admins implements OnInit {
 
   showDelete(admin: RecordData): void {
     if (!admin['id']) return;
+    this.actionError = '';
     this.adminSelected = admin;
     this.showDeleteModal = true;
   }
 
   closeDeleteModal(): void {
+    this.actionError = '';
     this.showDeleteModal = false;
     this.adminSelected = {};
   }
@@ -235,19 +272,36 @@ export class Admins implements OnInit {
       return;
     }
 
+    this.actionError = '';
     this.adminsService.remove(String(id)).subscribe({
       next: () => {
         this.closeDeleteModal();
         this.load();
       },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo eliminar el administrador.');
+      },
     });
   }
 
+  actionError = '';
+
   private withNames(admin: AdminView): AdminView {
+    const sameId = (a?: string | null, b?: string | null) =>
+      !!a && !!b && a.toLowerCase() === b.toLowerCase();
+    const school = this.schoolOptions.find((s) => sameId(s.id, admin.schoolId));
+    // Admins antiguos tienen colegio pero no ciudad: sin ella el modal filtra
+    // los colegios por ciudad vacía y el colegio asignado se pierde al guardar.
+    const cityId = admin.cityId || school?.cityId || null;
+    const city = this.cityOptions.find((c) => sameId(c.id, cityId));
     return {
       ...admin,
-      cityName: this.cityOptions.find((city) => city.id === admin.cityId)?.name ?? '',
-      schoolName: this.schoolOptions.find((school) => school.id === admin.schoolId)?.name ?? '',
+      cityId: city?.id ?? cityId,
+      schoolId: school?.id ?? admin.schoolId,
+      ...(admin.city !== undefined ? { city: city?.id ?? cityId ?? '' } : {}),
+      ...(admin.school !== undefined ? { school: school?.id ?? admin.schoolId ?? '' } : {}),
+      cityName: city?.name ?? '',
+      schoolName: school?.name ?? '',
     };
   }
 }

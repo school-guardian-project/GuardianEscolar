@@ -1,7 +1,7 @@
 <div class="container">
   <!-- MODALES -->
   <app-comments *ngIf="showComments" (closed)="showComments = false"></app-comments>
-  <app-update-information *ngIf="showUpdateInformation" [schoolId]="schoolId"
+  <app-update-information *ngIf="showUpdateInformation" [schoolId]="schoolIdForUpdate"
     (closed)="showUpdateInformation = false"></app-update-information>
   <app-record-information *ngIf="showInformation" type="schools" [record]="schoolSelected" (closed)="closeModal()">
   </app-record-information>
@@ -76,9 +76,10 @@
 
     <!-- SIDEBAR DERECHA -->
     <div class="right-sidebar">
-      <div class="icon-circle" (click)="showComments = true">
+      <button type="button" class="icon-circle" (click)="showComments = true"
+        [attr.aria-label]="'responsive.comments' | translate">
         <mat-icon>chat</mat-icon>
-      </div>
+      </button>
 
       <button type="button" class="icon-circle" (click)="showDetails()"
         [disabled]="loadingSchool"
@@ -87,9 +88,12 @@
         <mat-icon>info</mat-icon>
       </button>
 
-      <div class="icon-circle" (click)="showUpdateInformation = true">
+      <button type="button" class="icon-circle" (click)="openSchoolUpdate()"
+        [disabled]="loadingSchool"
+        [attr.aria-busy]="loadingSchool"
+        [attr.aria-label]="'responsive.editSchool' | translate">
         <mat-icon>edit</mat-icon>
-      </div>
+      </button>
     </div>
   </div>
 </div>

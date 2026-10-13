@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+﻿import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,8 +14,12 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
 import { AssignRecord } from '@shared/components/modal/assign-record/assign-record';
 import { BusesService } from '@core/services/buses.service';
 import { DriversService } from '@core/services/drivers.service';
-import { BusListDto, BusRequestDto, BusResponseDto } from '@core/models/bus.model';
-import { describeProblem } from '@core/http/problem-detail';
+import { BusListDto, BusRequestDto, BusResponseDto, GpsDeviceDto } from '@core/models/bus.model';
+import { CampusesService } from '@core/services/campuses.service';
+import { AuthService } from '@core/services/auth.service';
+import { TranslateService } from '@ngx-translate/core';
+import { SelectOption } from '@shared/components/cards/card-register/card-register';
+import { describeProblem, problemField } from '@core/http/problem-detail';
 
 interface BusView extends RecordData {
   id?: string;
@@ -24,9 +28,12 @@ interface BusView extends RecordData {
   brand: string;
   model: string;
   campuseId?: string;
+  campusName?: string;
   modelId?: number;
   capacity?: string;
   gps?: string;
+  gpsImei?: string;
+  gpsStatus?: string;
   soat?: string;
   status?: string;
 }
@@ -42,40 +49,32 @@ function fromApi(api: BusListDto): BusView {
   };
 }
 
-function fromDetail(api: BusResponseDto): BusView {
-  return {
-    ...fromApi(api),
-    modelId: api.modelId,
-    capacity: api.capacity != null ? String(api.capacity) : '',
-    gps: api.gpsDeviceId ?? '',
-    soat: api.soatValidity ?? '',
-    status: api.status ?? '',
-  };
-}
-
 interface DriverOption {
   profileId: string;
   label: string;
 }
 
+/** Valor del select de conductor en el modal de edición para "sin conductor". */
+const NO_DRIVER = 'none';
+
 /**
  * Payload del POST /fleet/api/buses. `campus` y `model` vienen de selects con
- * `optionsSource`, asi que su valor ya es el id. `gpsDeviceId` se omite a
- * propósito: ms-fleet lo valida con GpsDeviceExistsAsync contra un proveedor
- * api/gps-devices/{id}/exists que no existe en el codebase (y cuyo HttpClient
- * no tiene BaseAddress), asi que cualquier Guid fallaria igual. El alta quedará
- * bloqueada por el backend hasta que exista ese proveedor.
+ * `optionsSource`, asi que su valor ya es el id. El GPS sale del select de
+ * dispositivos libres o, si se escribe, de un IMEI nuevo que ms-fleet crea.
  */
 function toCreatePayload(form: RecordData): BusRequestDto {
+  const imei = String(form['gpsImei'] ?? '').trim();
   return {
     campuseId: String(form['campus'] ?? '').trim(),
     soatValidity: String(form['soat'] ?? '').trim(),
     capacity: Number(form['capacity']),
     plate: String(form['matricula'] ?? '').trim(),
     modelId: Number(form['model']),
+    gpsDeviceId: imei ? undefined : String(form['gps'] ?? '').trim() || undefined,
+    gpsImei: imei || undefined,
+    gpsStatus: String(form['gpsStatus']) === 'true',
   };
 }
-
 @Component({
   selector: 'app-buses',
   imports: [
@@ -99,25 +98,61 @@ function toCreatePayload(form: RecordData): BusRequestDto {
 export class Buses implements OnInit {
   private busesService = inject(BusesService);
   private driversService = inject(DriversService);
+  private campusesService = inject(CampusesService);
+  private authService = inject(AuthService);
+  private translate = inject(TranslateService);
 
   @ViewChild(CardRegister) register?: CardRegister;
 
   buses: BusView[] = [];
   driverOptions: DriverOption[] = [];
+  gpsDevices: GpsDeviceDto[] = [];
+  campusNames: Record<string, string> = {};
+  /** Opciones del formulario de registro (el conductor se elige por nombre). */
   fieldOptions: Record<string, string[]> = {};
+  /** GPS libres para el registro: valor = id, etiqueta = IMEI. */
+  registerSelectOptions: Record<string, SelectOption[]> = {};
+  /** Opciones del modal de edición: valores = ids, etiquetas legibles. */
+  updateFieldOptions: Record<string, string[]> = {};
+  updateFieldOptionLabels: Record<string, Record<string, string>> = {};
+  saveFieldErrors: Record<string, string> = {};
 
   showModal = false;
   showUpdateModal = false;
   busSelected: RecordData = {};
+  actionError = '';
 
   ngOnInit(): void {
     this.load();
     this.loadDrivers();
+    this.loadGpsDevices();
+    this.loadCampuses();
   }
 
   private load(): void {
     this.busesService.list().subscribe({
-      next: (list) => (this.buses = list.map(fromApi)),
+      next: (list) => {
+        this.buses = list.map((bus) => this.withCampus(fromApi(bus)));
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron cargar los buses.');
+      },
+    });
+  }
+
+  private withCampus(bus: BusView): BusView {
+    return { ...bus, campusName: this.campusNames[bus.campuseId ?? ''] ?? '' };
+  }
+
+  private loadCampuses(): void {
+    const schoolId = this.authService.session.schoolId;
+    if (!schoolId) return;
+    this.campusesService.listBySchool(schoolId).subscribe({
+      next: (campuses) => {
+        this.campusNames = Object.fromEntries(campuses.map((c) => [c.id, c.name]));
+        this.buses = this.buses.map((bus) => this.withCampus(bus));
+      },
+      error: () => (this.campusNames = {}),
     });
   }
 
@@ -131,11 +166,91 @@ export class Buses implements OnInit {
           }))
           .filter((d) => d.profileId && d.label);
         this.fieldOptions = { driver: this.driverOptions.map((d) => d.label) };
+        this.buildUpdateOptions();
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron cargar los conductores.');
       },
     });
   }
 
+  private loadGpsDevices(): void {
+    this.busesService.listGpsDevices().subscribe({
+      next: (devices) => {
+        this.gpsDevices = devices;
+        this.registerSelectOptions = {
+          gps: devices.filter((d) => !d.assignedBusId).map((d) => ({ value: d.id, label: d.imei })),
+        };
+        this.buildUpdateOptions();
+      },
+      error: () => {
+        this.gpsDevices = [];
+        this.registerSelectOptions = { gps: [] };
+      },
+    });
+  }
+
+  private driverName(profileId: string | null | undefined): string {
+    return this.driverOptions.find((d) => d.profileId === profileId)?.label ?? '';
+  }
+
+  /**
+   * Opciones del modal de edición. El GPS ofrece los libres más el que ya usa
+   * el bus abierto; el conductor ofrece todos más "sin conductor".
+   */
+  private buildUpdateOptions(currentBusId?: string): void {
+    const busId = currentBusId ?? String(this.busSelected['id'] ?? '');
+    const gps = this.gpsDevices.filter((d) => !d.assignedBusId || d.assignedBusId === busId);
+    this.updateFieldOptions = {
+      driver: [NO_DRIVER, ...this.driverOptions.map((d) => d.profileId)],
+      gps: gps.map((d) => d.id),
+      gpsStatus: ['true', 'false'],
+    };
+    this.updateFieldOptionLabels = {
+      driver: {
+        [NO_DRIVER]: this.translate.instant('update_record.bus.noDriver'),
+        ...Object.fromEntries(this.driverOptions.map((d) => [d.profileId, d.label])),
+      },
+      gps: Object.fromEntries(gps.map((d) => [d.id, d.imei])),
+      gpsStatus: {
+        true: this.translate.instant('register.bus.gpsStatusValues.true'),
+        false: this.translate.instant('register.bus.gpsStatusValues.false'),
+      },
+    };
+  }
+
+  /** Detalle legible para el modal de información. */
+  private toDetailView(api: BusResponseDto): BusView {
+    return {
+      ...this.withCampus(fromApi(api)),
+      driver: this.driverName(api.driverProfileId) || api.driverName || '',
+      modelId: api.modelId,
+      capacity: api.capacity != null ? String(api.capacity) : '',
+      gps: api.gpsImei ?? '',
+      gpsStatus: api.gpsStatus == null ? '' : this.translate.instant(`register.bus.gpsStatusValues.${api.gpsStatus}`),
+      soat: (api.soatValidity ?? '').slice(0, 10),
+      status: api.status ?? '',
+    };
+  }
+
+  /** Registro para el modal de edición: los selects trabajan con ids. */
+  private toEditView(api: BusResponseDto): BusView {
+    return {
+      ...fromApi(api),
+      driver: api.driverProfileId ?? NO_DRIVER,
+      modelId: api.modelId,
+      capacity: api.capacity != null ? String(api.capacity) : '',
+      gps: api.gpsDeviceId ?? '',
+      gpsImei: '',
+      gpsStatus: api.gpsStatus == null ? '' : String(api.gpsStatus),
+      soat: (api.soatValidity ?? '').slice(0, 10),
+      status: api.status ?? '',
+      originalDriver: api.driverProfileId ?? NO_DRIVER,
+    };
+  }
+
   onCreated(form: RecordData): void {
+    this.actionError = '';
     const driverLabel = String(form['driver'] ?? '').trim();
     const payload = toCreatePayload(form);
 
@@ -144,22 +259,27 @@ export class Buses implements OnInit {
         const driver = this.driverOptions.find((d) => d.label === driverLabel);
         this.register?.setValidationMessage('');
         this.register?.resetForm();
+        this.loadGpsDevices();
 
         // El create no acepta conductor: se asigna ahora con PUT /buses/{id}/driver.
         if (driver) {
           this.busesService.assignDriver(String(busId), driver.profileId).subscribe({
             next: () => this.load(),
-            // Si la asignación falla el bus existe igual; se reintenta desde el modal.
-            error: () => this.load(),
+            error: (error: unknown) => {
+              this.actionError = this.translate.instant('errors.bus.driverNotAssigned') + ' ' + describeProblem(error, '');
+              this.load();
+            },
           });
         } else {
           this.load();
         }
       },
       error: (err) => {
-        this.register?.setValidationMessage(
-          describeProblem(err, 'No se pudo registrar el bus. Verifica que el backend esté disponible.')
-        );
+        const message = describeProblem(err, this.translate.instant('errors.bus.create'));
+        const field = problemField(err);
+        const registerField = field === 'plate' ? 'matricula' : field;
+        if (registerField) this.register?.setFieldError(registerField, message);
+        else this.register?.setValidationMessage(message);
       },
     });
   }
@@ -171,7 +291,10 @@ export class Buses implements OnInit {
       return;
     }
     this.busesService.search(query).subscribe({
-      next: (list) => (this.buses = list.map(fromApi)),
+      next: (list) => (this.buses = list.map((bus) => this.withCampus(fromApi(bus)))),
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron buscar los buses.');
+      },
     });
   }
 
@@ -184,15 +307,30 @@ export class Buses implements OnInit {
     }
     this.busesService.get(String(id)).subscribe({
       next: (detail) => {
-        this.busSelected = fromDetail(detail);
+        this.busSelected = this.toDetailView(detail);
         this.showModal = true;
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cargar la información del bus.');
       },
     });
   }
 
   showUpdateDetails(bus: RecordData): void {
-    this.busSelected = bus;
-    this.showUpdateModal = true;
+    const id = String(bus['id'] ?? '');
+    if (!id) return;
+    this.actionError = '';
+    this.saveFieldErrors = {};
+    this.busesService.get(id).subscribe({
+      next: (detail) => {
+        this.buildUpdateOptions(id);
+        this.busSelected = this.toEditView(detail);
+        this.showUpdateModal = true;
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cargar el bus para actualizarlo.');
+      },
+    });
   }
 
   closeModal(): void {
@@ -201,46 +339,78 @@ export class Buses implements OnInit {
   }
 
   closeUpdateModal(): void {
+    this.actionError = '';
+    this.saveFieldErrors = {};
     this.showUpdateModal = false;
     this.busSelected = {};
   }
 
+  private failSave(error: unknown, fallbackKey: string): void {
+    const message = describeProblem(error, this.translate.instant(fallbackKey));
+    const field = problemField(error);
+    this.saveFieldErrors = field ? { [field]: message } : {};
+    this.actionError = message;
+  }
+
   onSaved(updatedRecord: RecordData): void {
-    const id = updatedRecord['id'];
+    const id = String(updatedRecord['id'] ?? '');
     if (!id) {
       this.closeUpdateModal();
       return;
     }
-    // El modal de edición no captura sede ni el id de modelo, pero el PUT los
-    // exige y los reescribe: se conservan los del bus en la lista para no
-    // vaciar la sede (Guid.Empty) ni mandar el nombre del modelo como id (NaN).
-    const current = this.buses.find((b) => b.id === id);
-    const modelId = Number(updatedRecord['modelId']);
-    const safeModelId = Number.isFinite(modelId) && modelId > 0 ? modelId : (current?.modelId ?? 0);
+    this.actionError = '';
+    this.saveFieldErrors = {};
+    const imei = String(updatedRecord['gpsImei'] ?? '').trim();
     const payload: BusRequestDto = {
-      campuseId: String(updatedRecord['campuseId'] ?? current?.campuseId ?? '').trim(),
-      soatValidity: String(updatedRecord['soat'] ?? updatedRecord['soatValidity'] ?? '').trim(),
+      campuseId: String(updatedRecord['campuseId'] ?? '').trim(),
+      soatValidity: String(updatedRecord['soat'] ?? '').trim(),
       capacity: Number(updatedRecord['capacity']),
-      plate: String(updatedRecord['plate'] ?? current?.plate ?? '').trim(),
-      modelId: safeModelId,
+      plate: String(updatedRecord['plate'] ?? '').trim(),
+      modelId: Number(updatedRecord['modelId']),
+      gpsDeviceId: imei ? undefined : String(updatedRecord['gps'] ?? '').trim() || undefined,
+      gpsImei: imei || undefined,
+      gpsStatus: String(updatedRecord['gpsStatus']) === 'true',
     };
-    this.busesService.update(String(id), payload).subscribe({
+    const driver = String(updatedRecord['driver'] ?? NO_DRIVER);
+    const originalDriver = String(updatedRecord['originalDriver'] ?? NO_DRIVER);
+
+    this.busesService.update(id, payload).subscribe({
       next: () => {
-        this.closeUpdateModal();
-        this.load();
+        const finish = () => {
+          this.closeUpdateModal();
+          this.load();
+          this.loadGpsDevices();
+        };
+        if (driver === originalDriver) {
+          finish();
+          return;
+        }
+        const driverCall = driver === NO_DRIVER
+          ? this.busesService.unassignDriver(id)
+          : this.busesService.assignDriver(id, driver);
+        driverCall.subscribe({
+          next: finish,
+          error: (error: unknown) => {
+            this.load();
+            this.loadGpsDevices();
+            this.failSave(error, 'errors.bus.driverNotAssigned');
+            this.saveFieldErrors = { driver: this.actionError };
+          },
+        });
       },
-      error: () => undefined,
+      error: (error: unknown) => this.failSave(error, 'errors.bus.update'),
     });
   }
-
   showDeleteModal = false;
 
   showDelete(bus: RecordData): void {
+    this.actionError = '';
     this.busSelected = bus;
     this.showDeleteModal = true;
   }
 
   closeDeleteModal(): void {
+    this.actionError = '';
     this.showDeleteModal = false;
     this.busSelected = {};
   }
@@ -251,8 +421,15 @@ export class Buses implements OnInit {
       this.closeDeleteModal();
       return;
     }
-    this.busesService.remove(String(id)).subscribe(() => {
-      this.closeDeleteModal();
+    this.actionError = '';
+    this.busesService.remove(String(id)).subscribe({
+      next: () => {
+        this.closeDeleteModal();
+        this.load();
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo eliminar el bus.');
+      },
     });
   }
 
@@ -270,6 +447,7 @@ export class Buses implements OnInit {
   }
 
   onAssigned(): void {
+    this.actionError = '';
     this.load();
   }
 }

@@ -58,7 +58,7 @@ export default function MainPage() {
   const [modalType, setModalType] = useState(null);
   const [routeInfo, setRouteInfo] = useState(null);
   const [routeStops, setRouteStops] = useState([]);
-  const [setLoading] = useState(true);
+  const [, setLoading] = useState(true);
   const [scanMode, setScanMode] = useState("ON_BOARD");
 
   const mapRef = useRef(null);

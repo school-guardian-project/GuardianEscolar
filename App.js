@@ -8,6 +8,10 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { ThemeProvider } from "@core/services/ThemeService";
 import { loadLanguage } from "@core/i18n/i18n";
 import { clearSession, hasSession, refresh } from "@core/services/authService";
+import {
+  configureNotificationHandling,
+  registerPushDevice,
+} from "@core/services/pushService";
 
 // Iniciar Sesión
 import Login from "@features/auth/views/Login/Login";
@@ -108,6 +112,7 @@ export default function App() {
   useEffect(() => {
     const initialize = async () => {
       await loadLanguage();
+      configureNotificationHandling();
 
       // Recupera la sesión desde SecureStore y rota el access token antes de navegar.
       // Loguearse es aceptar: también en sesión restaurada se registra la evidencia.
@@ -140,6 +145,7 @@ export default function App() {
             }
           }
           setInitialRoute("MainPage");
+          registerPushDevice({ prompt: false });
         }
       } catch {
         await clearSession();

@@ -14,6 +14,7 @@ import { validateEmail, validateRequired } from "@core/validation/validators";
 import { login } from "@core/services/authService";
 import { getSession, clearSession } from "@core/services/authService";
 import { acceptTerms, getPendingAcceptance, getTermsStatus } from "@core/services/termsService";
+import { registerPushDevice } from "@core/services/pushService";
 import LegalInfoModal from "./LegalInfoModal";
 import useSession from "@core/hooks/useSession";
 
@@ -90,6 +91,7 @@ export default function Login({ navigation }) {
         return;
       }
       navigation.navigate("MainPage");
+      registerPushDevice();
     } catch (error) {
       setFormError(
         error?.status === 401 || error?.status === 400 || error?.status === 403

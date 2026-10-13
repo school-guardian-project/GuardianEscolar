@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "953275039078",
+    "project_id": "school-guardian-641a4",
+    "storage_bucket": "school-guardian-641a4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:953275039078:android:9b1973f83101b16d16dca7",
+        "android_client_info": {
+          "package_name": "com.schoolguardian.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBtYkm9XhMfBJ2rBP6Py5_ZdexfjvlMM58"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

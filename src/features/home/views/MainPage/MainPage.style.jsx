@@ -11,6 +11,11 @@ export default StyleSheet.create({
     flex: 1,
     zIndex: 0,
   },
+  routeStatus: { position: "absolute", top: 92, left: 16, right: 16, zIndex: 4, backgroundColor: "#FFFFFFE8", padding: 10, borderRadius: 8 },
+  routeStatusText: { color: "#334155", textAlign: "center" },
+  studentSelector: { position: "absolute", top: 132, left: 16, right: 16, zIndex: 4, gap: 6 },
+  studentButton: { backgroundColor: "#FFFFFFE8", padding: 8, borderRadius: 6 },
+  studentButtonActive: { borderWidth: 2, borderColor: "#1A56DB" },
 
   topBarContainer: {
     position: 'absolute',

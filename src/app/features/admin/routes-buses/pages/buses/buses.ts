@@ -46,6 +46,7 @@ function fromApi(api: BusListDto): BusView {
     brand: api.brand ?? '',
     model: api.model ?? '',
     campuseId: api.campuseId ?? '',
+    status: api.status ?? '',
   };
 }
 

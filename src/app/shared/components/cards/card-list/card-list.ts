@@ -71,6 +71,7 @@ const ITEM_FIELDS: Record<CardType, ItemField[]> = {
     { key: 'driver', labelKey: 'card_list.labels.driverName' },
     { key: 'brand', halfWidth: true },
     { key: 'model', halfWidth: true },
+    { key: 'status', labelKey: 'card_list.labels.status' },
   ],
   stop: [
     { key: 'name' },

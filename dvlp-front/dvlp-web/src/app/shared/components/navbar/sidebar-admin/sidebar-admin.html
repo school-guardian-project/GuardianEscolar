@@ -3,12 +3,12 @@
   <div class="admin-section">
     <h3>{{ 'sidebar.admin' | translate }}</h3>
 
-    <a routerLink="/admin/users" class="menu-item" routerLinkActive="active">
+    <a *ngIf="auth.hasPermission(permissions.STUDENTS_READ)" routerLink="/admin/users" class="menu-item" routerLinkActive="active">
       <mat-icon>group</mat-icon> 
       {{ 'sidebar.users' | translate }}
     </a>
 
-    <a routerLink="/admin/buses" class="menu-item" routerLinkActive="active">
+    <a *ngIf="auth.hasPermission(permissions.BUSES_READ)" routerLink="/admin/buses" class="menu-item" routerLinkActive="active">
       <mat-icon>directions_bus</mat-icon> 
       {{ 'sidebar.buses' | translate }}
     </a>

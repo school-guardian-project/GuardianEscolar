@@ -15,7 +15,7 @@ describe('NavComponent', () => {
       imports: [NavComponent, TranslateModule.forRoot()],
       providers: [
         provideRouter([]),
-        { provide: AuthService, useValue: { roleId: 1, hasRole: () => true } },
+        { provide: AuthService, useValue: { roleId: 1, hasRole: () => true, hasPermission: () => true } },
       ],
     }).compileComponents();
 

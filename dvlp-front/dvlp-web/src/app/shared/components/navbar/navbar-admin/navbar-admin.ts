@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
@@ -7,6 +7,7 @@ import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
 import { RouterModule } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
+import { AuthService, PERMISSIONS } from '@core/services/auth.service';
 
 @Component({
   selector: 'app-navbar-admin',
@@ -16,17 +17,15 @@ import { TranslateModule } from '@ngx-translate/core';
   styleUrl: './navbar-admin.scss',
 })
 export class NavbarAdmin {
-  
-navItems = [
-  { icon: 'person_raised_hand', route: '/admin/users' },
-  { icon: 'escalator_warning',  route: '/admin/guardians' },
-  { icon: 'engineering',        route: '/admin/drivers' },
-  { icon: 'family_restroom',    route: '/admin/families' },
-];
+  private readonly router = inject(Router);
+  protected readonly auth = inject(AuthService);
+
+  /** Catálogo de permisos expuesto a la plantilla para gatear los menús (FR-2.1). */
+  protected readonly permissions = PERMISSIONS;
 
   activeRoute = '';
 
-  constructor(private router: Router) {
+  constructor() {
     // Escucha cambios de ruta para actualizar el botón activo
     this.router.events
       .pipe(filter(e => e instanceof NavigationEnd))

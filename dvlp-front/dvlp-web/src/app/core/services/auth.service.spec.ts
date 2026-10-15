@@ -94,4 +94,47 @@ describe('AuthService session', () => {
     expect(service.session.schoolId).toBe('school-id');
     expect(service.session.campusId).toBeNull();
   });
+
+  describe('RBAC capabilities (FR-2.1)', () => {
+    function loginWith(claims: Record<string, unknown>): void {
+      service.login('admin@school.com', 'secret').subscribe();
+      httpMock.expectOne((req) => req.url.endsWith('/login')).flush({ accessToken: jwt(claims) });
+    }
+
+    it('exposes the human-readable role name from the `role` claim', () => {
+      loginWith({ roleId: 1, role: 'Admin' });
+      expect(service.roleName).toBe('Admin');
+    });
+
+    it('exposes the identification number from the `documentNumber` claim', () => {
+      loginWith({ roleId: 1, documentNumber: '99000000001' });
+      expect(service.identificationNumber).toBe('99000000001');
+    });
+
+    it('exposes granted permissions from the `permissions` claim', () => {
+      loginWith({ roleId: 1, permissions: ['students.read', 'buses.read'] });
+      expect(service.permissions).toEqual(['students.read', 'buses.read']);
+    });
+
+    it('ignores a malformed `permissions` claim instead of throwing', () => {
+      loginWith({ roleId: 1, permissions: 'students.read' });
+      expect(service.permissions).toEqual([]);
+    });
+
+    it('grants access when at least one requested permission is present (any-of)', () => {
+      loginWith({ roleId: 1, permissions: ['students.read'] });
+      expect(service.hasPermission('students.read', 'drivers.read')).toBe(true);
+      expect(service.hasPermission('drivers.read')).toBe(false);
+    });
+
+    it('denies access when no permission is requested', () => {
+      loginWith({ roleId: 1, permissions: ['students.read'] });
+      expect(service.hasPermission()).toBe(false);
+    });
+
+    it('denies access without a session token', () => {
+      expect(service.permissions).toEqual([]);
+      expect(service.hasPermission('students.read')).toBe(false);
+    });
+  });
 });

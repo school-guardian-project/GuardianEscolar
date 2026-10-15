@@ -15,7 +15,7 @@ import QRDisplayModal from "@components/modals/QRDisplayModal";
 import QRScannerModal from "@components/modals/QRScannerModal";
 import { getSession } from "@core/services/authService";
 import { getRouteApi } from "@core/services/routeApi";
-import { getFleetApi } from "@core/services/fleetApi";
+import { getLinkedStudents } from "@core/services/familyService";
 import { scanCredential } from "@core/services/notificationApi";
 
 import styles from "./MainPage.style";
@@ -44,6 +44,66 @@ function normalizeStops(route) {
         !(stop.latitude === 0 && stop.longitude === 0),
     )
     .sort((a, b) => a.orderSequence - b.orderSequence);
+}
+
+/** "06:30:00" -> "06:30". */
+function shortTime(value) {
+  const text = String(value ?? "");
+  return text.length >= 5 ? text.slice(0, 5) : text;
+}
+
+/**
+ * Salidas programadas de la ruta (FR-9.1/FR-9.2), resumidas para la tarjeta.
+ * Usa los horarios reales (`schedules[]`) y cae al rango de la ruta si aún no hay.
+ */
+function formatSchedules(route) {
+  const schedules = Array.isArray(route?.schedules) ? route.schedules : [];
+  const times = [
+    ...new Set(schedules.map((schedule) => shortTime(schedule?.startTime)).filter(Boolean)),
+  ].sort();
+
+  if (times.length > 0) {
+    return times.join(" · ");
+  }
+
+  const start = shortTime(route?.startTime);
+  const end = shortTime(route?.endTime);
+  return start && end ? `${start} - ${end}` : "";
+}
+
+/** GET a ms-route que devuelve null en vez de propagar el error. */
+async function fetchRoute(path) {
+  try {
+    return await getRouteApi(path);
+  } catch {
+    return null;
+  }
+}
+
+/**
+ * Ruta visible para el rol autenticado:
+ * - student: su propia ruta asignada.
+ * - driver:  su ruta del día, solo dentro de la ventana activa.
+ * - father:  la ruta del estudiante vinculado (FR-9.1).
+ * - otros:   primera ruta, como respaldo.
+ */
+async function resolveRouteForRole(role, session) {
+  if (role === "student") {
+    return fetchRoute(`/routes/student/${session.profileId}`);
+  }
+
+  if (role === "driver") {
+    const today = await fetchRoute(`/routes/today?driverId=${session.profileId}`);
+    return today?.status === "ACTIVE" ? (today.route ?? null) : null;
+  }
+
+  if (role === "father") {
+    const [student] = await getLinkedStudents(session);
+    return student ? fetchRoute(`/routes/student/${student.profileId}`) : null;
+  }
+
+  const routes = await fetchRoute("/routes");
+  return Array.isArray(routes) ? (routes[0] ?? null) : null;
 }
 
 export default function MainPage() {
@@ -102,37 +162,10 @@ export default function MainPage() {
           return;
         }
 
-        let route = null;
-
-        // Cargar ruta según el rol del usuario
-        if (role === "student") {
-          // Estudiante: obtener su ruta asignada
-          try {
-            route = await getRouteApi(`/routes/student/${session.profileId}`);
-          } catch {
-            route = null;
-          }
-        } else if (role === "driver") {
-          // Conductor: el backend valida el horario. Solo si la ruta esta
-
-          try {
-            const today = await getRouteApi(
-              `/routes/today?driverId=${session.profileId}`,
-            );
-
-            if (today?.status === "ACTIVE" && today.route) {
-              route = today.route;
-            } else {
-              route = null;
-            }
-          } catch {
-            route = null;
-          }
-        } else {
-          // Otros roles: obtener primera ruta (fallback)
-          const routes = await getRouteApi("/routes");
-          route = routes[0];
-        }
+        // Ruta según el rol. El bus, el conductor y los horarios vienen en el
+        // mismo detalle de ms-route (FR-9.1/FR-9.2), así que ya no hay que
+        // cruzar ms-fleet a mano como antes.
+        const route = await resolveRouteForRole(role, session);
 
         if (!route) {
           stopsRef.current = [];
@@ -141,42 +174,23 @@ export default function MainPage() {
           return;
         }
 
-        let driverName = "";
-        let plate = "";
-
-        if (role === "driver") {
-          const buses = await getFleetApi("/buses");
-          const bus = buses.find((b) => b.campuseId === route.campuseId);
-          if (bus) {
-            plate = bus.plate ?? "";
-            driverName = bus.driverName ?? "";
-          }
-        }
-
         // RouteDetailDto (conductor/estudiante) incluye stops[];
         // RouteListDto solo trae stopsCount.
         const stops = normalizeStops(route);
         stopsRef.current = stops;
         setRouteStops(stops);
 
-        // RouteListDto: horario real = startTime/endTime; targetSector es el destino.
-        const schedule =
-          route.startTime && route.endTime
-            ? `${route.startTime} - ${route.endTime}`
-            : "";
-        const stopsCount =
-          route.stopsCount != null && route.stopsCount !== ""
-            ? String(route.stopsCount)
-            : stops.length > 0
-              ? String(stops.length)
-              : "—";
-
         setRouteInfo({
           routeName: route.name,
-          driverName,
-          plate,
-          schedule,
-          stopsCount,
+          driverName: route.bus?.driverName ?? "",
+          plate: route.bus?.plate ?? "",
+          schedule: formatSchedules(route),
+          stopsCount:
+            route.stopsCount != null && route.stopsCount !== ""
+              ? String(route.stopsCount)
+              : stops.length > 0
+                ? String(stops.length)
+                : "—",
           finalDestination: route.targetSector ?? "",
         });
       } catch (error) {

@@ -12,6 +12,36 @@ export const ROLES = {
   SUPER_ADMIN: 5,
 } as const;
 
+/**
+ * Catálogo de permisos RBAC (FR-2.1). Es el espejo en el cliente de las filas de
+ * `Iam.Permissions`; evita strings sueltos en los menús y los guards. El backend
+ * es la fuente de verdad: aquí solo se usan para decidir qué mostrar.
+ */
+export const PERMISSIONS = {
+  SCHOOLS_READ: 'schools.read',
+  SCHOOLS_CREATE: 'schools.create',
+  SCHOOLS_UPDATE: 'schools.update',
+  STUDENTS_READ: 'students.read',
+  STUDENTS_MANAGE: 'students.manage',
+  ROUTES_READ: 'routes.read',
+  ROUTES_MANAGE: 'routes.manage',
+  BUSES_READ: 'buses.read',
+  BUSES_MANAGE: 'buses.manage',
+  DRIVERS_READ: 'drivers.read',
+  DRIVERS_MANAGE: 'drivers.manage',
+  ALERTS_READ: 'alerts.read',
+  ALERTS_ACK: 'alerts.ack',
+  BOARDING_READ: 'boarding.read',
+  BOARDING_MANAGE: 'boarding.manage',
+  USERS_READ: 'users.read',
+  USERS_MANAGE: 'users.manage',
+  REPORTS_READ: 'reports.read',
+  SETTINGS_MANAGE: 'settings.manage',
+  AUDIT_READ: 'audit.read',
+} as const;
+
+export type Permission = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];
+
 interface LoginResponse {
   accessToken: string;
   profileId: string;
@@ -163,6 +193,36 @@ export class AuthService {
   hasRole(...roles: number[]): boolean {
     const roleId = this.roleId;
     return roleId !== null && roles.includes(roleId);
+  }
+
+  /** Claim `role` del JWT: nombre legible del rol (p. ej. "Admin"). */
+  get roleName(): string | null {
+    const role = this.claims()['role'];
+    return typeof role === 'string' && role ? role : null;
+  }
+
+  /** Claim `documentNumber` del JWT: número de identificación de la persona (FR-2.1). */
+  get identificationNumber(): string | null {
+    const documentNumber = this.claims()['documentNumber'];
+    return typeof documentNumber === 'string' && documentNumber ? documentNumber : null;
+  }
+
+  /** Claim `permissions` del JWT: permisos RBAC concedidos (FR-2.1). */
+  get permissions(): string[] {
+    const permissions = this.claims()['permissions'];
+    if (!Array.isArray(permissions)) return [];
+    return permissions.filter((permission): permission is string => typeof permission === 'string');
+  }
+
+  /**
+   * true si la sesión tiene alguno de los permisos indicados. Espeja `hasRole`:
+   * los menús y botones lo usan para no ofrecer acciones que el backend
+   * rechazaría con 403. Sin permisos concedidos siempre devuelve false.
+   */
+  hasPermission(...permissions: string[]): boolean {
+    if (permissions.length === 0) return false;
+    const granted = this.permissions;
+    return permissions.some((permission) => granted.includes(permission));
   }
 
   /**

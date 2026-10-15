@@ -1,31 +1,31 @@
 <div class="sidebar">
   <div class="admin-section">
     <h3>{{ 'navbar-admin.title-users' | translate }}</h3>
-    <a routerLink="/admin/users" class="menu-item" routerLinkActive="active">
+    <a *ngIf="auth.hasPermission(permissions.STUDENTS_READ)" routerLink="/admin/users" class="menu-item" routerLinkActive="active">
       <mat-icon>person</mat-icon> {{ 'navbar-admin.students' | translate }}
     </a>
-    <a routerLink="/admin/guardians" class="menu-item" routerLinkActive="active">
+    <a *ngIf="auth.hasPermission(permissions.STUDENTS_READ)" routerLink="/admin/guardians" class="menu-item" routerLinkActive="active">
       <mat-icon>escalator_warning</mat-icon> {{ 'navbar-admin.guardian' | translate }}
     </a>
-    <a routerLink="/admin/drivers" class="menu-item" routerLinkActive="active">
+    <a *ngIf="auth.hasPermission(permissions.DRIVERS_READ)" routerLink="/admin/drivers" class="menu-item" routerLinkActive="active">
       <mat-icon>engineering</mat-icon> {{ 'navbar-admin.drivers' | translate }}
     </a>
-    <a routerLink="/admin/families" class="menu-item" routerLinkActive="active">
+    <a *ngIf="auth.hasPermission(permissions.STUDENTS_READ)" routerLink="/admin/families" class="menu-item" routerLinkActive="active">
       <mat-icon>family_restroom</mat-icon> {{ 'navbar-admin.Family' | translate }}
     </a>
   </div>
   <div class="sidebar-divider"></div>
   <div class="admin-section">
     <h3>{{ 'navbar-admin.title-routes' | translate }}</h3>
-    <a routerLink="/admin/buses" class="menu-item" routerLinkActive="active">
+    <a *ngIf="auth.hasPermission(permissions.BUSES_READ)" routerLink="/admin/buses" class="menu-item" routerLinkActive="active">
       <mat-icon>directions_bus</mat-icon> {{ 'navbar-admin.bus' | translate }}
     </a>
 
-    <a routerLink="/admin/routes" class="menu-item" routerLinkActive="active">
+    <a *ngIf="auth.hasPermission(permissions.ROUTES_READ)" routerLink="/admin/routes" class="menu-item" routerLinkActive="active">
       <mat-icon>route</mat-icon> {{ 'navbar-admin.route' | translate }}
     </a>
 
-    <a routerLink="/admin/stops" class="menu-item" routerLinkActive="active">
+    <a *ngIf="auth.hasPermission(permissions.ROUTES_READ)" routerLink="/admin/stops" class="menu-item" routerLinkActive="active">
       <mat-icon>location_on</mat-icon> {{ 'navbar-admin.bus-stops' | translate }}
     </a>
 

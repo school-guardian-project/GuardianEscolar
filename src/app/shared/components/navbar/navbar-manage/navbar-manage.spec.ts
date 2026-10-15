@@ -16,7 +16,7 @@ describe('NavbarManage', () => {
       imports: [NavbarManage, TranslateModule.forRoot()],
       providers: [
         provideRouter([]),
-        { provide: AuthService, useValue: { roleId: 1, homeRoute: vi.fn(), logout: () => of(undefined) } },
+        { provide: AuthService, useValue: { roleId: 1, homeRoute: vi.fn(), logout: () => of(undefined), hasPermission: () => true } },
       ],
     }).compileComponents();
 

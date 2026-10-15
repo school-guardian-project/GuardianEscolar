@@ -10,10 +10,12 @@ export const roleGuard: CanMatchFn = (route) => {
   const router = inject(Router);
   const platformId = inject(PLATFORM_ID);
   const allowed = (route.data?.['roles'] as number[] | undefined) ?? [];
+  const required = (route.data?.['permissions'] as string[] | undefined) ?? [];
 
   const decide = () => {
-    const roleId = auth.roleId;
-    if (roleId !== null && allowed.includes(roleId)) {
+    const roleOk = allowed.length === 0 || auth.hasRole(...allowed);
+    const permissionOk = required.length === 0 || auth.hasPermission(...required);
+    if (roleOk && permissionOk) {
       return true;
     }
     return router.parseUrl('/home');

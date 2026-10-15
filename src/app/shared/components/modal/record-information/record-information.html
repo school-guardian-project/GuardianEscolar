@@ -31,9 +31,7 @@
           </p>
 
           <p class="modal__info-value">
-            {{ type === 'schools' && field.key === 'status'
-              ? (('update_record.schools.statusValues.' + field.value) | translate)
-              : field.value }}
+            {{ displayValue(field) }}
           </p>
 
         </div>
@@ -49,6 +47,15 @@
         (click)="assignRecord()"
       >
         {{ 'assign_record.buttons.assign' | translate }}
+      </button>
+
+      <button
+        *ngIf="canToggleStatus"
+        class="modal__btn modal__btn--secondary"
+        type="button"
+        (click)="toggleStatusRecord()"
+      >
+        {{ statusToggleLabelKey | translate }}
       </button>
 
       <button

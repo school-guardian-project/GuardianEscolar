@@ -458,6 +458,10 @@
     "confirm": "Confirm"
   },
   "record_information": {
+    "status": {
+      "activate": "Activate",
+      "deactivate": "Deactivate"
+    },
     "student": {
       "title": "Student information",
       "fields": {
@@ -682,7 +686,11 @@
         "gpsImei": "New GPS IMEI (optional)",
         "gpsStatus": "GPS status"
       },
-      "noDriver": "No driver"
+      "noDriver": "No driver",
+      "statusValues": {
+        "Active": "Active",
+        "Inactive": "Inactive"
+      }
     },
     "stop": {
       "title": "Update stop",

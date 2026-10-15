@@ -1097,6 +1097,10 @@
     "Active": "Actif",
     "Inactive": "Inactif"
   },
+  "bus_status": {
+    "Active": "Actif",
+    "Inactive": "Inactif"
+  },
   "errors": {
     "backend": {
       "plateExists": "Un bus avec cette immatriculation existe déjà.",

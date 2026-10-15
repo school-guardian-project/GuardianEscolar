@@ -1,0 +1,39 @@
+<div class="navigation-header">
+  <h2 id="mobile-navigation-title">{{ 'responsive.navigation' | translate }}</h2>
+  <button
+    type="button"
+    class="navigation-close"
+    (click)="close()"
+    [attr.aria-label]="'responsive.closeMenu' | translate"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+@switch (data.mode) {
+  @case ('superadmin') {
+    <app-sidebar-superadmin (click)="onMenuClick($event)"></app-sidebar-superadmin>
+  }
+  @case ('admin') {
+    <app-navbar-admin (click)="onMenuClick($event)"></app-navbar-admin>
+  }
+  @case ('public') {
+    <nav class="public-navigation" [attr.aria-label]="'responsive.navigation' | translate">
+      @if (!data.logged) {
+        <button type="button" (click)="close('login')">
+          {{ 'login.right.title' | translate }}
+        </button>
+      }
+      @if (data.logged && data.dashboard) {
+        <button type="button" (click)="close('dashboard')">
+          {{ 'navbar.dashboard' | translate }}
+        </button>
+      }
+      <button type="button" (click)="close('features')">{{ 'navbar.features' | translate }}</button>
+      <button type="button" (click)="close('how')">{{ 'navbar.how_it_works' | translate }}</button>
+      <button type="button" (click)="close('contact')">{{ 'navbar.contact' | translate }}</button>
+      @if (data.logged) {
+        <button type="button" (click)="close('logout')">{{ 'navbar.logout' | translate }}</button>
+      }
+    </nav>
+  }
+}

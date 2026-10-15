@@ -32,7 +32,7 @@ echo " Verificacion de rutas frontend -> Kong -> microservicios"
 echo " API: $API"
 echo "=============================================================="
 
-ADMIN=$(login admin@school-guardian.com 'Demo2026!')
+ADMIN=$(login admin@school-guardian.com 99000000001)
 STUDENT=$(login student@school-guardian.com 99000000004)
 DRIVER=$(login driver@school-guardian.com 99000000002)
 PARENT=$(login parent@school-guardian.com 99000000003)
@@ -40,7 +40,7 @@ PARENT=$(login parent@school-guardian.com 99000000003)
 echo
 echo "-- ms-iam (sin token / con token) --"
 code "login sin credenciales validas"   POST "/api/v1/auth/login" "" 401 '{"email":"nadie@school-guardian.com","password":"incorrecta"}'
-code "login admin"                      POST "/api/v1/auth/login" "" 200 '{"email":"admin@school-guardian.com","password":"Demo2026!"}'
+code "login admin"                      POST "/api/v1/auth/login" "" 200 '{"email":"admin@school-guardian.com","password":"99000000001"}'
 code "perfil sin token (debe ser 401)"  GET  "/api/v1/auth/profile" "" 401
 code "perfil con token admin"           GET  "/api/v1/auth/profile" "$ADMIN" 200
 code "perfil con token student"         GET  "/api/v1/auth/profile" "$STUDENT" 200
@@ -68,10 +68,10 @@ echo "-- ms-school-management: alta de colegio con sedes --"
 # La ciudad se toma de la primera del catalogo: es un seed estable y el endpoint
 # de ciudades responde por Kong.
 CITY=$(curl -s "$API/route/api/cities" -H "Authorization: Bearer $ADMIN" | jq -r '.[0].id // empty')
-SCHOOL_BODY="{\"cityId\":\"$CITY\",\"name\":\"Colegio Verify Script\",\"address\":\"Calle 1 #2-3\",\"phone\":6050000,\"email\":\"verify@colegio.com\",\"campusNames\":[\"Sede Verify 1\",\"Sede Verify 2\"]}"
+SCHOOL_BODY="{\"cityId\":\"$CITY\",\"logo\":\"\",\"name\":\"Colegio Verify Script\",\"address\":\"Calle 1 #2-3\",\"phone\":6050000,\"email\":\"verify@colegio.com\",\"campuses\":[{\"name\":\"Sede Verify 1\",\"address\":\"Calle 1 #2-3\"},{\"name\":\"Sede Verify 2\",\"address\":\"Calle 4 #5-6\"}]}"
 code "alta colegio con sedes (201)"      POST "/school-management/api/v1/schools/with-campuses" "$ADMIN" 201 "$SCHOOL_BODY"
-code "alta colegio sin sedes (400)"      POST "/school-management/api/v1/schools/with-campuses" "$ADMIN" 400 "{\"cityId\":\"$CITY\",\"name\":\"X\",\"address\":\"Y\",\"phone\":1,\"email\":\"e@e.com\",\"campusNames\":[]}"
-code "alta colegio con sedes repetidas" POST "/school-management/api/v1/schools/with-campuses" "$ADMIN" 409 "{\"cityId\":\"$CITY\",\"name\":\"X\",\"address\":\"Y\",\"phone\":1,\"email\":\"e@e.com\",\"campusNames\":[\"A\",\"a\"]}"
+code "alta colegio sin sedes (201)"      POST "/school-management/api/v1/schools/with-campuses" "$ADMIN" 201 "{\"cityId\":\"$CITY\",\"logo\":\"\",\"name\":\"Colegio Verify Sin Sedes\",\"address\":\"Calle 1 #2-3\",\"phone\":6050001,\"email\":\"verify-sin-sedes@colegio.com\",\"campuses\":[]}"
+code "alta colegio con sedes repetidas" POST "/school-management/api/v1/schools/with-campuses" "$ADMIN" 409 "{\"cityId\":\"$CITY\",\"logo\":\"\",\"name\":\"Colegio Verify Duplicado\",\"address\":\"Calle 1 #2-3\",\"phone\":6050002,\"email\":\"verify-duplicado@colegio.com\",\"campuses\":[{\"name\":\"Sede A\",\"address\":\"Calle 1 #2-3\"},{\"name\":\"sede a\",\"address\":\"Calle 4 #5-6\"}]}"
 
 echo
 echo "-- ms-user-management --"

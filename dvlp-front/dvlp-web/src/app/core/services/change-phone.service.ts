@@ -1,7 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 import { Observable, map, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
+
+export const phoneValidator: ValidatorFn = (control: AbstractControl): ValidationErrors | null => {
+  const value = String(control.value ?? '').trim();
+  return !value || /^\+[1-9]\d{7,14}$/.test(ChangePhoneService.toE164(value)) ? null : { pattern: true };
+};
 
 interface TokenResponse {
   resetToken: string;
@@ -24,17 +30,36 @@ export class ChangePhoneService {
 
   constructor(private readonly http: HttpClient) {}
 
+  /** Quita separadores y antepone +57 cuando el usuario no escribe prefijo internacional. */
+  static toE164(phone: string): string {
+    let digits = phone.replace(/[\s\-().]/g, '');
+    if (digits.startsWith('00')) {
+      digits = `+${digits.slice(2)}`;
+    }
+    return digits.startsWith('+') ? digits : `+57${digits.replace(/^0+/, '')}`;
+  }
+
   /** `email` identifica el perfil (sesión); `currentPhone` es el teléfono actual, al que se envía el SMS. */
   request(email: string, currentPhone: string): Observable<void> {
     this.clear();
     const normalized = email.trim().toLowerCase();
-    const phone = currentPhone.replace(/[\s-]/g, '');
+    const phone = ChangePhoneService.toE164(currentPhone);
     return this.http.post<void>(`${this.base}/request`, { email: normalized, currentPhone: phone }).pipe(
       tap(() => {
         this.currentEmail = normalized;
         this.currentPhone = phone;
       }),
     );
+  }
+
+  resendCurrent(): Observable<void> {
+    const body = { email: this.requireEmail(), currentPhone: this.currentPhone };
+    return this.http.post<void>(`${this.base}/request`, body);
+  }
+
+  resendSms(): Observable<void> {
+    const body = { email: this.requireEmail(), newPhone: this.newPhone };
+    return this.http.post<void>(`${this.base}/verification/resend`, body);
   }
 
   verifyIdentity(code: string): Observable<void> {
@@ -47,7 +72,7 @@ export class ChangePhoneService {
 
   /** Pide a Twilio Verify enviar el SMS al teléfono nuevo (+país + número). */
   requestSms(newPhone: string): Observable<void> {
-    const normalized = newPhone.replace(/[\s-]/g, '');
+    const normalized = ChangePhoneService.toE164(newPhone);
     const body = { email: this.requireEmail(), resetToken: this.currentToken, newPhone: normalized };
     return this.http.post<void>(`${this.base}/verification/request`, body).pipe(
       tap(() => {

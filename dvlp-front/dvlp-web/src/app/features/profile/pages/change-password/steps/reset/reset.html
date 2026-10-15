@@ -1,4 +1,4 @@
-<app-change-password
+﻿<app-change-password
   iconHead="lock"
   [title]="'change_password.reset.title' | translate"
   [sessionDescription]="'change_password.reset.sessionDescription' | translate"
@@ -17,7 +17,7 @@
     <div class="input-password">
       <div class="password">
         <label for="password">{{ 'forgot_password.reset.fields.password' | translate }}</label>
-        <input type="password" id="password" formControlName="password" />
+        <input appPasswordToggle type="password" id="password" formControlName="password" />
       </div>
 
       <div class="container-errors">
@@ -35,7 +35,7 @@
 <br><br><br>
     <div class="input-confirm-password">
       <label for="confirmPassword">{{ 'forgot_password.reset.fields.confirm_password' | translate }}</label>
-      <input type="password" id="confirmPassword" formControlName="confirmPassword" />
+      <input appPasswordToggle type="password" id="confirmPassword" formControlName="confirmPassword" />
 
       <div class="container-errors-confirm">
         @if (form.get('confirmPassword')?.touched && form.get('confirmPassword')?.errors?.['required']) {

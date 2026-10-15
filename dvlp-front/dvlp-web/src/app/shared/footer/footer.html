@@ -13,7 +13,7 @@
             </div>
             <div class="col">
                 <div class="title">{{ 'footer.col_legal' | translate }}</div>
-                <p class="link" *ngFor="let link of linksLegal">{{ link }}</p>
+                <p class="link" *ngFor="let link of linksLegal; let i = index" (click)="navigateLegal(i)">{{ link }}</p>
             </div>
         </div>
     </div>
@@ -21,8 +21,8 @@
     <div class="footer-down">
         <div class="down-left">{{ 'footer.rights' | translate }}</div>
         <div class="down-right">
-            <a class="social" href="mailto:guardianescolar0@gmail.com" target="_blank"
-                rel="noopener noreferrer">guardianescolar0@gmail.com</a>
+            <a class="social" href="mailto:sch00l.guard4n@gmail.com" target="_blank"
+                rel="noopener noreferrer">sch00l.guard4n@gmail.com</a>
         </div>
     </div>
 </footer>

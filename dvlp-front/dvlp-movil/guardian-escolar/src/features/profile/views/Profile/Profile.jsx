@@ -75,6 +75,14 @@ export default function Profile() {
 
                 <View style={styles.card}>
                     <SettingsItem
+                        icon={<Ionicons name="document-text" size={22} color={theme.iconColor} />}
+                        title={t("inputs.terms")}
+                        onPress={() => navigation.navigate("TermsConditions")}
+                    />
+                </View>
+
+                <View style={styles.card}>
+                    <SettingsItem
                         icon={<Ionicons name="information-circle" size={22} color={theme.iconColor} />}
                         title={t("inputs.aboutus")}
                         onPress={() => navigation.navigate("AboutUs")}

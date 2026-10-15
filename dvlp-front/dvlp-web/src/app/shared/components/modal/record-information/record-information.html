@@ -31,7 +31,9 @@
           </p>
 
           <p class="modal__info-value">
-            {{ field.value }}
+            {{ type === 'schools' && field.key === 'status'
+              ? (('update_record.schools.statusValues.' + field.value) | translate)
+              : field.value }}
           </p>
 
         </div>
@@ -40,6 +42,15 @@
 
     <!-- FOOTER -->
     <div class="modal__footer">
+      <button
+        *ngIf="canAssign"
+        class="modal__btn modal__btn--secondary"
+        type="button"
+        (click)="assignRecord()"
+      >
+        {{ 'assign_record.buttons.assign' | translate }}
+      </button>
+
       <button
         class="modal__btn modal__btn--submit"
         type="button"

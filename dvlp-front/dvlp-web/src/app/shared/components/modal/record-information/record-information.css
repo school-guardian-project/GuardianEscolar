@@ -134,6 +134,7 @@
 .modal__footer {
   display: flex;
   justify-content: center;
+  gap: 12px;
 }
 
 .modal__btn {
@@ -149,6 +150,17 @@
 .modal__btn--submit {
   background: var(--button-apply);
   color: white;
+}
+
+.modal__btn--secondary {
+  background: transparent;
+  color: inherit;
+  border: 1px solid currentColor;
+  opacity: 0.75;
+}
+
+.modal__btn--secondary:hover {
+  opacity: 1;
 }
 
 .modal__btn--submit:hover {

@@ -4,6 +4,7 @@
 <div class="page-wrapper">
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
+    <p *ngIf="actionError && !showUpdateModal && !showDeleteModal" class="action-error" role="alert">{{ actionError }}</p>
     <app-card-register
       type="family"
       [fieldOptions]="fieldOptions"
@@ -38,7 +39,9 @@
   *ngIf="showUpdateModal"
   type="family"
   [record]="familyToUpdate"
-  [fieldOptions]="fieldOptions"
+  [saveError]="updateError"
+  [fieldOptions]="updateFieldOptions"
+  [fieldOptionLabels]="updateFieldOptionLabels"
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()"
 >
@@ -49,6 +52,7 @@
   *ngIf="showDeleteModal"
   type="family"
   [record]="familySelected"
+  [error]="actionError"
   (confirm)="onConfirmDelete($event)"
   (cancel)="closeDeleteModal()"
 >

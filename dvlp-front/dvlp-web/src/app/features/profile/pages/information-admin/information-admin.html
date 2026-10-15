@@ -5,7 +5,11 @@
 
   <div class="main-container">
 
-    <app-sidebar-admin></app-sidebar-admin>
+    @if (isSuperAdmin) {
+      <app-sidebar-superadmin></app-sidebar-superadmin>
+    } @else {
+      <app-sidebar-admin></app-sidebar-admin>
+    }
 
     <div class="information-container">
       <div class="card">
@@ -17,14 +21,24 @@
           </h3>
 
           <div class="header-actions">
-            <div class="icon-action" (click)="changeLanguage = true" title="language">
+            <button type="button" class="icon-action" (click)="changeLanguage = true"
+              [attr.aria-label]="'responsive.language' | translate">
               <mat-icon>translate</mat-icon>
-            </div>
+            </button>
 
-            <div class="icon-action" (click)="changeTheme = true" title="Theme">
+            <button type="button" class="icon-action" (click)="changeTheme = true"
+              [attr.aria-label]="'responsive.theme' | translate">
               <mat-icon>palette</mat-icon>
-            </div>
+            </button>
           </div>
+        </div>
+
+        <p *ngIf="loading" role="status">{{ 'admin_profile.loading' | translate }}</p>
+        <div *ngIf="loadFailed" role="alert">
+          <p>{{ 'admin_profile.load_failed' | translate }}</p>
+          <button mat-button type="button" (click)="loadProfile()">
+            {{ 'admin_profile.retry' | translate }}
+          </button>
         </div>
 
         <div class="content">
@@ -45,11 +59,7 @@
                 <mat-icon>photo_camera</mat-icon>
               </button>
 
-              <input type="file"
-                     #fileInput
-                     hidden
-                     accept="image/*"
-                     (change)="onFileSelected($event)">
+              <input type="file" #fileInput hidden accept="image/*" (change)="onFileSelected($event)">
             </div>
 
             <p class="user-name">
@@ -62,7 +72,7 @@
 
             <div class="user-meta">
               <p class="user-meta-item">
-                <mat-icon>badge</mat-icon> 
+                <mat-icon>badge</mat-icon>
                 {{ 'admin_profile.labels.id' | translate }} {{ id }}
               </p>
               <p class="user-meta-item">
@@ -80,7 +90,7 @@
             <div class="info-item">
               <div class="info-item-header">
                 <p class="info-label">
-                  <mat-icon>email</mat-icon> 
+                  <mat-icon>email</mat-icon>
                   {{ 'admin_profile.labels.email' | translate }}
                 </p>
                 <button class="edit-btn" (click)="changeEmail()">
@@ -93,7 +103,7 @@
             <div class="info-item">
               <div class="info-item-header">
                 <p class="info-label">
-                  <mat-icon>phone</mat-icon> 
+                  <mat-icon>phone</mat-icon>
                   {{ 'admin_profile.labels.phone' | translate }}
                 </p>
                 <button class="edit-btn" (click)="changeContact()">
@@ -106,7 +116,7 @@
             <div class="info-item">
               <div class="info-item-header">
                 <p class="info-label">
-                  <mat-icon>home</mat-icon> 
+                  <mat-icon>home</mat-icon>
                   {{ 'admin_profile.labels.address' | translate }}
                 </p>
               </div>
@@ -116,37 +126,39 @@
             <div class="info-item">
               <div class="info-item-header">
                 <p class="info-label">
-                  <mat-icon>location_city</mat-icon> 
+                  <mat-icon>location_city</mat-icon>
                   {{ 'admin_profile.labels.city' | translate }}
                 </p>
               </div>
-              <p class="info-value"></p>
+              <p class="info-value">{{ city }}</p>
             </div>
 
             <div class="info-item">
               <div class="info-item-header">
                 <p class="info-label">
-                  <mat-icon>school</mat-icon> 
+                  <mat-icon>school</mat-icon>
                   {{ 'admin_profile.labels.school' | translate }}
                 </p>
               </div>
-              <p class="info-value"></p>
+              <p class="info-value">{{ school }}</p>
             </div>
 
             <div class="info-item">
               <div class="info-item-header">
                 <p class="info-label">
-                  <mat-icon>lock</mat-icon> 
+                  <mat-icon>lock</mat-icon>
                   {{ 'admin_profile.labels.password' | translate }}
                 </p>
                 <button class="edit-btn" (click)="changePassword()">
                   <mat-icon>edit</mat-icon>
                 </button>
               </div>
-              <p class="info-value"></p>
+              <p class="info-value">{{ passwordMask }}</p>
             </div>
 
           </div>
+
+
         </div>
 
       </div>
@@ -154,6 +166,7 @@
 
   </div>
 </div>
+
 
 <!-- MODALES -->
 <app-themes *ngIf="changeTheme" (close)="changeTheme = false"></app-themes>

@@ -22,14 +22,26 @@ import { routes as changePasswordRoutes } from './features/profile/pages/change-
 import {routes as changeContactRoutes } from './features/profile/pages/change-contact/change-contact.routes'
 import { ChangeContact } from './features/profile/pages/change-contact/change-contact';
 import { Contact } from './features/public/contact/contact';
+import { Terms } from './features/public/legal/terms/terms';
+import { Privacy } from './features/public/legal/privacy/privacy';
 import { roleGuard } from '@core/guards/role.guard';
-import { ROLES } from '@core/services/auth.service';
+import { PERMISSIONS, ROLES } from '@core/services/auth.service';
 
 /** ADMIN y SUPER_ADMIN comparten perfil y flujos de cambio de datos (12-ux-ui/navigation-map.md). */
 const adminAccess = {
   canMatch: [roleGuard],
   data: { roles: [ROLES.ADMIN, ROLES.SUPER_ADMIN] },
 };
+
+/**
+ * Acceso de administración a un recurso: además del rol, exige el permiso de
+ * lectura del recurso (FR-2.1). Se combina con `canMatch` para que un ADMIN sin
+ * el permiso no pueda abrir la pantalla ni escribiendo la URL a mano.
+ */
+const adminAccessWith = (permission: string) => ({
+  canMatch: [roleGuard],
+  data: { roles: [ROLES.ADMIN, ROLES.SUPER_ADMIN], permissions: [permission] },
+});
 
 const superAdminAccess = {
   canMatch: [roleGuard],
@@ -53,13 +65,13 @@ export const routes: Routes = [
   { path: 'dashboard-superadmin', component: DashboardSuperadmin, ...superAdminAccess },
 
   /* ADMIN */
-  { path: 'admin/users', component: Students, ...adminAccess },
-  { path: 'admin/guardians', component: Guardians, ...adminAccess },
-  { path: 'admin/drivers', component: Drivers, ...adminAccess },
-  { path: 'admin/families', component: Families, ...adminAccess },
-  { path: 'admin/buses', component: Buses, ...adminAccess },
-  { path: 'admin/stops', component: Stops, ...adminAccess },
-  { path: 'admin/routes', component: RoutesPage, ...adminAccess },
+  { path: 'admin/users', component: Students, ...adminAccessWith(PERMISSIONS.STUDENTS_READ) },
+  { path: 'admin/guardians', component: Guardians, ...adminAccessWith(PERMISSIONS.STUDENTS_READ) },
+  { path: 'admin/drivers', component: Drivers, ...adminAccessWith(PERMISSIONS.DRIVERS_READ) },
+  { path: 'admin/families', component: Families, ...adminAccessWith(PERMISSIONS.STUDENTS_READ) },
+  { path: 'admin/buses', component: Buses, ...adminAccessWith(PERMISSIONS.BUSES_READ) },
+  { path: 'admin/stops', component: Stops, ...adminAccessWith(PERMISSIONS.ROUTES_READ) },
+  { path: 'admin/routes', component: RoutesPage, ...adminAccessWith(PERMISSIONS.ROUTES_READ) },
 
   /* INFORMATION */
   { path: 'admin/profile', component: InformationAdmin, ...adminAccess },
@@ -73,6 +85,9 @@ export const routes: Routes = [
   { path: 'superadmin/schools', component: Schools, ...superAdminAccess },
 
   { path: 'contact', component: Contact},
+
+  { path: 'terms', component: Terms },
+  { path: 'privacy', component: Privacy },
 
   /* fallback */
   { path: '**', redirectTo: 'home' }

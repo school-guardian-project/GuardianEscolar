@@ -7,18 +7,11 @@ export interface AdminRequestDto {
   phone: number;
   residenceAddress: string;
   dateBirth: string;
-}
-
-/**
- * Alta de admin.
- *
- * `schoolId` es el colegio que administra (no una sede): la relación admin↔
- * colegio vive en School.SchoolAdmin. Solo va en el POST; el PUT usa
- * {@link AdminRequestDto}.
- */
-export interface CreateAdminRequestDto extends AdminRequestDto {
+  cityId: string;
   schoolId: string;
 }
+
+export type CreateAdminRequestDto = AdminRequestDto;
 
 export interface AdminListDto {
   id: string;
@@ -27,6 +20,8 @@ export interface AdminListDto {
   identificationNumber: string;
   email: string;
   phone: number;
+  cityId: string | null;
+  schoolId: string | null;
 }
 
 export interface AdminResponseDto extends AdminListDto {

@@ -1,4 +1,13 @@
 <div class="location-map">
+  <div class="location-map__toolbar">
+    <button type="button" class="location-map__locate" (click)="useDeviceLocation()" [disabled]="locating">
+      <mat-icon aria-hidden="true">my_location</mat-icon>
+      {{ (locating ? 'locationMap.locating' : 'locationMap.useDeviceLocation') | translate }}
+    </button>
+  </div>
   <div #canvas class="location-map__canvas" aria-label="Map"></div>
   <p class="location-map__coords" aria-live="polite">{{ coordinatesLabel }}</p>
+  @if (mapMessageKey) {
+    <p class="location-map__message" role="status">{{ mapMessageKey | translate }}</p>
+  }
 </div>

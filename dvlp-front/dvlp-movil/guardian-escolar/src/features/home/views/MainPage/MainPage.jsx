@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { View, Text, Pressable } from "react-native";
-import MapView from "react-native-maps";
+import MapView, { Marker } from "react-native-maps";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import { useTranslation } from "react-i18next";
 import RouteInfoCard from "@components/cards/RouteInfoCard";
 import BottomTabBar from "@components/layout/BottomTabBar";
 import useWindow from "@core/hooks/useWindow";
@@ -14,21 +15,95 @@ import QRDisplayModal from "@components/modals/QRDisplayModal";
 import QRScannerModal from "@components/modals/QRScannerModal";
 import { getSession } from "@core/services/authService";
 import { getRouteApi } from "@core/services/routeApi";
-import { getFleetApi } from "@core/services/fleetApi";
-import { postNotificationApi } from "@core/services/notificationApi";
+import { getLinkedStudents } from "@core/services/familyService";
+import { scanCredential } from "@core/services/notificationApi";
 
 import styles from "./MainPage.style";
 
-const EMPTY_GUID = "00000000-0000-0000-0000-000000000000";
+function normalizeStops(route) {
+  const stops = Array.isArray(route?.stops) ? route.stops : [];
 
-async function getCurrentTrip(driverId) {
-  if (!driverId) return null;
+  return stops
+    .map((stop, index) => {
+      const latitude = Number(stop?.latitude);
+      const longitude = Number(stop?.longitude);
 
+      return {
+        id: stop?.id ?? index,
+        name: stop?.name ?? "",
+        address: stop?.address ?? "",
+        orderSequence: stop?.orderSequence ?? index,
+        latitude,
+        longitude,
+      };
+    })
+    .filter(
+      (stop) =>
+        Number.isFinite(stop.latitude) &&
+        Number.isFinite(stop.longitude) &&
+        !(stop.latitude === 0 && stop.longitude === 0),
+    )
+    .sort((a, b) => a.orderSequence - b.orderSequence);
+}
+
+/** "06:30:00" -> "06:30". */
+function shortTime(value) {
+  const text = String(value ?? "");
+  return text.length >= 5 ? text.slice(0, 5) : text;
+}
+
+/**
+ * Salidas programadas de la ruta (FR-9.1/FR-9.2), resumidas para la tarjeta.
+ * Usa los horarios reales (`schedules[]`) y cae al rango de la ruta si aún no hay.
+ */
+function formatSchedules(route) {
+  const schedules = Array.isArray(route?.schedules) ? route.schedules : [];
+  const times = [
+    ...new Set(schedules.map((schedule) => shortTime(schedule?.startTime)).filter(Boolean)),
+  ].sort();
+
+  if (times.length > 0) {
+    return times.join(" · ");
+  }
+
+  const start = shortTime(route?.startTime);
+  const end = shortTime(route?.endTime);
+  return start && end ? `${start} - ${end}` : "";
+}
+
+/** GET a ms-route que devuelve null en vez de propagar el error. */
+async function fetchRoute(path) {
   try {
-    return await getRouteApi(`/trips/current?driverId=${driverId}`);
+    return await getRouteApi(path);
   } catch {
     return null;
   }
+}
+
+/**
+ * Ruta visible para el rol autenticado:
+ * - student: su propia ruta asignada.
+ * - driver:  su ruta del día, solo dentro de la ventana activa.
+ * - father:  la ruta del estudiante vinculado (FR-9.1).
+ * - otros:   primera ruta, como respaldo.
+ */
+async function resolveRouteForRole(role, session) {
+  if (role === "student") {
+    return fetchRoute(`/routes/student/${session.profileId}`);
+  }
+
+  if (role === "driver") {
+    const today = await fetchRoute(`/routes/today?driverId=${session.profileId}`);
+    return today?.status === "ACTIVE" ? (today.route ?? null) : null;
+  }
+
+  if (role === "father") {
+    const [student] = await getLinkedStudents(session);
+    return student ? fetchRoute(`/routes/student/${student.profileId}`) : null;
+  }
+
+  const routes = await fetchRoute("/routes");
+  return Array.isArray(routes) ? (routes[0] ?? null) : null;
 }
 
 export default function MainPage() {
@@ -37,34 +112,42 @@ export default function MainPage() {
   const horizontalPadding = width < 360 ? 12 : 16;
   const navigation = useNavigation();
   const { role } = useSession();
+  const { t } = useTranslation();
   const config = roleConfig[role];
 
   const [modalType, setModalType] = useState(null);
   const [routeInfo, setRouteInfo] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [routeStops, setRouteStops] = useState([]);
+  const [, setLoading] = useState(true);
   const [scanMode, setScanMode] = useState("ON_BOARD");
+
+  const mapRef = useRef(null);
+  const mapReadyRef = useRef(false);
+  const stopsRef = useRef([]);
+
+  // Encuadra el mapa sobre las paradas de la ruta (si las hay).
+  const fitStopsOnMap = () => {
+    const stops = stopsRef.current;
+    if (!mapReadyRef.current || stops.length === 0) return;
+
+    mapRef.current?.fitToCoordinates(
+      stops.map((stop) => ({
+        latitude: stop.latitude,
+        longitude: stop.longitude,
+      })),
+      {
+        edgePadding: { top: 90, right: 40, bottom: 280, left: 40 },
+        animated: true,
+      },
+    );
+  };
 
   const handleOpenModal = (type) => setModalType(type);
   const handleCloseModal = () => setModalType(null);
 
-  const handleQrScan = async (data) => {
+  const handleQrScan = async (qrToken) => {
     try {
-      const qrData = JSON.parse(data);
-      const session = await getSession();
-      const routes = await getRouteApi("/routes");
-      const route = routes[0];
-
-      if (!route) return;
-
-      const trip = await getCurrentTrip(session?.profileId);
-
-      await postNotificationApi("/v1/notifications/scan", {
-        routeId: route.id,
-        routeExecutionId: trip?.id ?? EMPTY_GUID,
-        studentProfileId: qrData.id,
-        routeStopId: qrData.routeStopId || EMPTY_GUID,
-        boardingType: scanMode,
-      });
+      await scanCredential(qrToken, scanMode);
     } catch (error) {
       console.error("Error processing QR scan:", error);
     }
@@ -79,62 +162,35 @@ export default function MainPage() {
           return;
         }
 
-        let route = null;
-
-        // Cargar ruta según el rol del usuario
-        if (role === "student") {
-          // Estudiante: obtener su ruta asignada
-          try {
-            route = await getRouteApi(`/routes/student/${session.profileId}`);
-          } catch {
-            route = null;
-          }
-        } else if (role === "driver") {
-          // Conductor: obtener su ruta actual
-          try {
-            route = await getRouteApi(`/routes/current?driverId=${session.profileId}`);
-          } catch {
-            route = null;
-          }
-        } else {
-          // Otros roles: obtener primera ruta (fallback)
-          const routes = await getRouteApi("/routes");
-          route = routes[0];
-        }
+        // Ruta según el rol. El bus, el conductor y los horarios vienen en el
+        // mismo detalle de ms-route (FR-9.1/FR-9.2), así que ya no hay que
+        // cruzar ms-fleet a mano como antes.
+        const route = await resolveRouteForRole(role, session);
 
         if (!route) {
+          stopsRef.current = [];
+          setRouteStops([]);
           setLoading(false);
           return;
         }
 
-        let driverName = "";
-        let plate = "";
-
-        if (role === "driver") {
-          const buses = await getFleetApi("/buses");
-          const bus = buses.find((b) => b.campuseId === route.campuseId);
-          if (bus) {
-            plate = bus.plate ?? "";
-            driverName = bus.driverName ?? "";
-          }
-        }
-
-        // RouteListDto: horario real = startTime/endTime; targetSector es el destino.
-        const schedule =
-          route.startTime && route.endTime
-            ? `${route.startTime} - ${route.endTime}`
-            : "";
-        const stopsCount =
-          route.stopsCount != null && route.stopsCount !== ""
-            ? String(route.stopsCount)
-            : "—";
+        // RouteDetailDto (conductor/estudiante) incluye stops[];
+        // RouteListDto solo trae stopsCount.
+        const stops = normalizeStops(route);
+        stopsRef.current = stops;
+        setRouteStops(stops);
 
         setRouteInfo({
           routeName: route.name,
-          driverName,
-          plate,
-          schedule,
-          stopsCount,
+          driverName: route.bus?.driverName ?? "",
+          plate: route.bus?.plate ?? "",
+          schedule: formatSchedules(route),
+          stopsCount:
+            route.stopsCount != null && route.stopsCount !== ""
+              ? String(route.stopsCount)
+              : stops.length > 0
+                ? String(stops.length)
+                : "—",
           finalDestination: route.targetSector ?? "",
         });
       } catch (error) {
@@ -147,9 +203,14 @@ export default function MainPage() {
     loadRouteInfo();
   }, [role]);
 
+  useEffect(() => {
+    fitStopsOnMap();
+  }, [routeStops]);
+
   return (
     <View style={styles.container}>
       <MapView
+        ref={mapRef}
         style={styles.map}
         initialRegion={{
           latitude: 2.9273,
@@ -157,7 +218,24 @@ export default function MainPage() {
           latitudeDelta: 0.08,
           longitudeDelta: 0.08,
         }}
-      />
+        onMapReady={() => {
+          mapReadyRef.current = true;
+          fitStopsOnMap();
+        }}
+      >
+        {routeStops.map((stop, index) => (
+          <Marker
+            key={stop.id}
+            coordinate={{
+              latitude: stop.latitude,
+              longitude: stop.longitude,
+            }}
+            title={stop.name || `${t("cards.stops")} ${index + 1}`}
+            description={stop.address || undefined}
+            tracksViewChanges={false}
+          />
+        ))}
+      </MapView>
 
       <View
         style={[
@@ -187,7 +265,12 @@ export default function MainPage() {
       >
         <View style={styles.spacer} />
 
-        <View style={[styles.bottomSection, { marginHorizontal: -horizontalPadding }]}>
+        <View
+          style={[
+            styles.bottomSection,
+            { marginHorizontal: -horizontalPadding },
+          ]}
+        >
           <RouteInfoCard
             routeName={routeInfo?.routeName ?? ""}
             driverName={routeInfo?.driverName ?? ""}
@@ -211,19 +294,24 @@ export default function MainPage() {
       <QRDisplayModal
         visible={modalType === "activeQR"}
         onClose={handleCloseModal}
-        studentData={null}
       />
 
       {modalType === "qrScanner" && (
         <View style={styles.scanModeContainer}>
           <Pressable
-            style={[styles.scanModeButton, scanMode === "ON_BOARD" && styles.scanModeActive]}
+            style={[
+              styles.scanModeButton,
+              scanMode === "ON_BOARD" && styles.scanModeActive,
+            ]}
             onPress={() => setScanMode("ON_BOARD")}
           >
             <Text style={styles.scanModeText}>ABORDAR</Text>
           </Pressable>
           <Pressable
-            style={[styles.scanModeButton, scanMode === "OFF_BOARD" && styles.scanModeActive]}
+            style={[
+              styles.scanModeButton,
+              scanMode === "OFF_BOARD" && styles.scanModeActive,
+            ]}
             onPress={() => setScanMode("OFF_BOARD")}
           >
             <Text style={styles.scanModeText}>DESCENDER</Text>

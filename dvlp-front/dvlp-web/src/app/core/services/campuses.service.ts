@@ -7,6 +7,8 @@ export interface CampusListDto {
   id: string;
   name: string;
   address: string;
+  latitude: number | null;
+  longitude: number | null;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -17,5 +19,9 @@ export class CampusesService {
 
   listBySchool(schoolId: string): Observable<CampusListDto[]> {
     return this.http.get<CampusListDto[]>(`${this.base}/schools/${schoolId}/campuses`);
+  }
+
+  updateBySchool(schoolId: string, campuses: CampusListDto[]): Observable<void> {
+    return this.http.put<void>(`${this.base}/schools/${schoolId}/campuses`, { campuses });
   }
 }

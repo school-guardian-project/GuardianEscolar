@@ -58,5 +58,9 @@ link: {
   alignSelf: "center",
 },
 
+error: {
+  color: "#D32F2F",
+  marginBottom: 12,
+},
 
 });

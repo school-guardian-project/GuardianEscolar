@@ -3,6 +3,7 @@ import { useTranslation } from "react-i18next";
 
 
 import FormScreen from "@components/account/screens/FormScreen";
+import { requestNewPhoneCode } from "@core/services/forgotInformationService";
 
 export default function NewPhone() {
 
@@ -18,6 +19,9 @@ export default function NewPhone() {
             placeholder={t("inputs.numeroPlaceholder")}
             buttonText={t("button.update")}
             nextScreen="VerifyNewPhone"
+            inputType="phone"
+            errorContext="phoneFlow"
+            onSubmit={requestNewPhoneCode}
             
         />
 

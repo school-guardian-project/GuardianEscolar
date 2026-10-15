@@ -1,8 +1,32 @@
 {
+  "responsive": {
+    "navigation": "Navigation",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "dashboard": "Go to dashboard",
+    "comments": "Open comments",
+    "editSchool": "Update school",
+    "language": "Change language",
+    "theme": "Change theme"
+  },
   "navbar": {
     "features": "Features",
     "how_it_works": "How it works",
-    "contact": "Contact"
+    "contact": "Contact",
+    "dashboard": "Dashboard",
+    "logout": "Log out"
+  },
+  "locationMap": {
+    "useDeviceLocation": "Use my location",
+    "locating": "Getting location…",
+    "resolvingAddress": "Finding address…",
+    "addressNotFound": "No address was found for this point.",
+    "geocodeFailed": "The address could not be searched.",
+    "geolocationUnavailable": "This device cannot provide its location.",
+    "permissionDenied": "Allow location access to use this feature.",
+    "locationTimeout": "Timed out while getting your location.",
+    "positionUnavailable": "The device location could not be obtained.",
+    "reverseGeocodeFailed": "The address for the selected point could not be obtained."
   },
   "hero": {
     "line1": "School",
@@ -92,7 +116,7 @@
     "info_subtitle": "Multiple channels available.",
     "email": {
       "title": "Email",
-      "value": "guardianescolar0@gmail.com",
+      "value": "sch00l.guard4n@gmail.com",
       "subtitle": "Response within 2 hours",
       "button": "Send email"
     },
@@ -118,9 +142,21 @@
       "Contact"
     ],
     "links_legal": [
-      "Privacy and terms"
+      "Privacy",
+      "Terms"
     ],
     "rights": "© 2026 Guardian Escolar · All rights reserved"
+  },
+  "legal": {
+    "kicker": "Legal document",
+    "terms_title": "Terms and Conditions of Use",
+    "privacy_title": "Personal Data Processing Policy",
+    "updated": "Last updated: August 2026",
+    "data_title": "Data we process",
+    "purpose_title": "Purposes",
+    "minors_title": "Minors' data",
+    "rights_title": "Your rights",
+    "channel_title": "Contact channel"
   },
   "login": {
     "left": {
@@ -164,9 +200,8 @@
       "returnStep": "Back",
       "stepText": "1 of 4",
       "label": "Current phone",
-      "error_pattern": "*Must be a valid phone number.",
       "error_required": "*Phone is required.",
-      "help_text": "Enter the current phone of your account with country code, e.g. +573001234567."
+      "help_text": "Enter the current phone of your account, e.g. 3001234567. The +57 prefix is added automatically."
     },
     "code_first": {
       "title": "Verify code",
@@ -186,9 +221,9 @@
       "returnStep": "Back",
       "stepText": "3 of 4",
       "label": "New phone",
-      "error_pattern": "*Use international format, e.g. +573001234567.",
+      "error_pattern": "*Enter a valid number, e.g. 3001234567.",
       "error_required": "*Phone is required.",
-      "help_text": "You will receive an SMS with a code at this number (+country code and number)."
+      "help_text": "You will receive an SMS with a code at this number (the +57 prefix is added automatically)."
     },
     "code_second": {
       "title": "Confirm code",
@@ -203,8 +238,8 @@
       "confirmationDescription": "Your phone number has been updated successfully."
     },
     "errors": {
-      "invalid_phone": "The number is invalid or the request expired. Use the format +573001234567 or restart the process.",
-      "sms_unavailable": "We could not send the SMS right now. Please try again later."
+      "invalid_phone": "The phone number is invalid. Enter it, for example 3001234567.",
+      "sms_unavailable": "We couldn't send the SMS. Check the number or try again later."
     }
   },
   "change_email": {
@@ -217,8 +252,6 @@
       "returnStep": "Back",
       "stepText": "1 of 4",
       "email_label": "Email",
-      "error_pattern": "*Must be a valid email.",
-      "error_required": "*Email is required.",
       "help_text": "You will receive a verification code at this email."
     },
     "code_first": {
@@ -247,6 +280,10 @@
       "error_pattern": "*Must be a valid email.",
       "error_required": "*Email is required",
       "help_text": "You will receive a 6-digit code"
+    },
+    "errors": {
+      "email_in_use": "That email is not available. Try another one.",
+      "invalid_request": "The request is invalid or has expired. Make sure the new email is different from the current one or restart the process."
     }
   },
   "change_password": {
@@ -266,8 +303,6 @@
       "returnStep": "Back",
       "stepText": "1 of 3",
       "email_label": "Email",
-      "error_pattern": "*Must be a valid email.",
-      "error_required": "*Email is required.",
       "help_text": "You will receive a code to reset your password."
     },
     "code": {
@@ -293,6 +328,10 @@
     }
   },
   "dashboard": {
+    "schoolInformation": {
+      "noSchool": "No school is associated with your session.",
+      "loadError": "Could not load your school information. Try again."
+    },
     "welcome": "Welcome",
     "role": "Admin dashboard · Guardian Escolar",
     "metrics": {
@@ -304,11 +343,7 @@
       "attention": "Require attention"
     },
     "alerts": {
-      "title": "Latest alerts",
-      "out_of_route": "Bus off route",
-      "sudden_brake": "Sudden braking",
-      "driver": "Driver",
-      "route": "Route"
+      "title": "Latest alerts"
     }
   },
   "superadmin_dashboard": {
@@ -323,11 +358,7 @@
       "attention": "Require attention"
     },
     "alerts": {
-      "title": "Latest alerts",
-      "out_route": "Bus off route",
-      "sudden_stop": "Sudden brake",
-      "driver": "Driver",
-      "route": "Route"
+      "title": "Latest alerts"
     }
   },
   "sidebar": {
@@ -370,6 +401,7 @@
     }
   },
   "update_school": {
+    "loading": "Loading school information...",
     "title": "Update school information",
     "fields": {
       "name": "Full name",
@@ -384,10 +416,10 @@
       "upload": "Upload new logo",
       "email": "Email",
       "email_placeholder": "Enter the email",
-      "website": "Website",
-      "web_placeholder": "Enter the website"
+      "web_placeholder": "Enter the website",
+      "web": "Website"
     },
-    "error": "Please complete at least one field before updating",
+    "error": "Could not update the school. Check the school and campus details and try again.",
     "buttons": {
       "cancel": "Cancel",
       "update": "Update",
@@ -403,6 +435,7 @@
     "subtitle": "Select the panel color",
     "light": "Light",
     "dark": "Dark",
+    "color": "Color",
     "select": "active",
     "blue": "Blue",
     "green": "Green",
@@ -421,7 +454,8 @@
     "cancel": "Cancel",
     "delete": "Delete",
     "close": "Close",
-    "accept": "Accept"
+    "accept": "Accept",
+    "confirm": "Confirm"
   },
   "record_information": {
     "student": {
@@ -479,11 +513,16 @@
       "fields": {
         "plate": "License plate",
         "driver": "Driver",
+        "campuseId": "Campus ID",
         "model": "Model",
+        "modelId": "Model ID",
         "brand": "Brand",
         "capacity": "Capacity",
-        "gps": "GPS",
-        "soat": "SOAT"
+        "gps": "GPS device (IMEI)",
+        "soat": "SOAT validity",
+        "status": "Status",
+        "gpsStatus": "GPS status",
+        "campusName": "Campus"
       }
     },
     "stop": {
@@ -495,7 +534,8 @@
         "school": "School",
         "address": "Address",
         "latitude": "Latitude",
-        "longitude": "Longitude"
+        "longitude": "Longitude",
+        "route": "Route"
       }
     },
     "route": {
@@ -506,7 +546,8 @@
         "startTime": "Start time",
         "endTime": "End time",
         "destination": "Destination",
-        "routeSector": "Route sector"
+        "routeSector": "Route sector",
+        "campusName": "Campus"
       }
     },
     "admins": {
@@ -518,7 +559,9 @@
         "identification": "Identification",
         "birthDate": "Date of birth",
         "phone": "Phone",
-        "address": "Address"
+        "address": "Address",
+        "cityName": "City",
+        "schoolName": "School"
       }
     },
     "schools": {
@@ -530,7 +573,8 @@
         "address": "Address",
         "phone": "Phone",
         "email": "Email",
-        "website": "Website"
+        "website": "Website",
+        "status": "Status"
       }
     }
   },
@@ -590,7 +634,7 @@
     "guardian": {
       "title": "Update guardian",
       "fields": {
-        "name": "Name",
+        "names": "Names",
         "lastNames": "Last names",
         "email": "Email",
         "documentType": "ID type",
@@ -616,6 +660,8 @@
     },
     "family": {
       "title": "Update family",
+      "addChildrenHint": "Select students to add children to the family.",
+      "removeChild": "Remove {{name}} from the family",
       "fields": {
         "name": "Name",
         "guardian": "Guardian",
@@ -631,9 +677,12 @@
         "model": "Model",
         "brand": "Brand",
         "capacity": "Capacity",
-        "gps": "GPS",
-        "soat": "SOAT"
-      }
+        "gps": "GPS device (IMEI)",
+        "soat": "SOAT",
+        "gpsImei": "New GPS IMEI (optional)",
+        "gpsStatus": "GPS status"
+      },
+      "noDriver": "No driver"
     },
     "stop": {
       "title": "Update stop",
@@ -644,7 +693,8 @@
         "school": "School",
         "address": "Address",
         "latitude": "Latitude",
-        "longitude": "Longitude"
+        "longitude": "Longitude",
+        "route": "Route"
       }
     },
     "route": {
@@ -655,7 +705,8 @@
         "startTime": "Start time",
         "endTime": "End time",
         "destination": "Destination",
-        "routeSector": "Route sector"
+        "routeSector": "Route sector",
+        "campus": "Campus"
       }
     },
     "admins": {
@@ -663,6 +714,8 @@
       "fields": {
         "name": "Name",
         "lastNames": "Last names",
+        "city": "City",
+        "school": "School",
         "email": "Email",
         "identification": "Identification",
         "birthDate": "Date of birth",
@@ -679,7 +732,12 @@
         "address": "Address",
         "phone": "Phone",
         "email": "Email",
-        "website": "Website"
+        "website": "Website",
+        "status": "Status"
+      },
+      "statusValues": {
+        "Active": "Active",
+        "Inactive": "Inactive"
       }
     },
     "buttons": {
@@ -746,13 +804,21 @@
     "bus": {
       "title": "Register bus",
       "fields": {
+        "campus": "Campus",
         "plate": "License plate",
+        "matricula": "License plate",
         "driver": "Driver",
         "model": "Model",
         "brand": "Brand",
         "capacity": "Capacity",
         "soat": "SOAT validity",
-        "gps": "GPS status"
+        "gps": "GPS device (IMEI)",
+        "gpsImei": "New GPS IMEI (optional)",
+        "gpsStatus": "GPS status"
+      },
+      "gpsStatusValues": {
+        "true": "Active",
+        "false": "Inactive"
       }
     },
     "stop": {
@@ -775,7 +841,8 @@
         "endTime": "End time",
         "destination": "Destination",
         "routeSector": "Sector",
-        "bus": "Bus"
+        "bus": "Bus",
+        "campus": "Campus"
       }
     },
     "admins": {
@@ -783,6 +850,7 @@
       "fields": {
         "name": "Name",
         "lastNames": "Last names",
+        "city": "City",
         "email": "Email",
         "identification": "Identification",
         "birthDate": "Date of birth",
@@ -802,12 +870,16 @@
         "schooling": "Education level",
         "email": "Email",
         "website": "Website",
-        "campusNames": "Campuses"
+        "campusNames": "Additional campuses"
       },
       "campusNamePlaceholder": "Campus name",
+      "chooseLocation": "Choose the school location on the map",
+      "chooseCampusLocation": "Choose the location of campus {{name}} on the map",
       "addCampus": "Add campus",
       "removeCampus": "Remove campus",
-      "campusNamesRequired": "Add at least one campus for the school",
+      "campusNamesHint": "Optional: the school can operate from its main campus only.",
+      "logoReadError": "The logo could not be read. Try another image.",
+      "campusAddressRequired": "Each campus must have a name (maximum 30 characters) and address (maximum 255 characters)",
       "campusNamesDuplicated": "The campus “{{name}}” is duplicated"
     },
     "options": {
@@ -821,22 +893,23 @@
   },
   "assign_record": {
     "route": {
-      "title": "Assign bus to route",
       "bus": "Bus",
-      "selectBus": "Select a bus"
+      "selectBus": "Select a bus",
+      "alreadyAssigned": "This route already has a bus assigned.",
+      "title": "Assign bus to route"
     },
     "student": {
-      "title": "Assign student to route",
       "route": "Route",
       "stop": "Boarding stop",
       "selectRoute": "Select a route",
-      "selectStop": "Select a stop"
+      "selectStop": "Select a stop",
+      "title": "Assign route to student"
     },
     "bus": {
-      "title": "Assign driver to bus",
       "driver": "Driver",
       "currentDriver": "Current driver",
-      "selectDriver": "Select a driver"
+      "selectDriver": "Select a driver",
+      "title": "Assign driver to bus"
     },
     "buttons": {
       "assign": "Assign",
@@ -845,6 +918,15 @@
     "genericError": "The action could not be completed. Check that the backend is available."
   },
   "card_list": {
+    "pagination": {
+      "navigation": "Record pagination",
+      "top": "top",
+      "bottom": "bottom",
+      "previous": "Previous page",
+      "next": "Next page",
+      "goTo": "Go to page {{page}}",
+      "summary": "{{first}}–{{last}} of {{total}} · Page {{page}} of {{pages}}"
+    },
     "student": "Registered students",
     "guardian": "Registered guardians",
     "driver": "Registered drivers",
@@ -863,11 +945,17 @@
       "finalDestination": "Final destination",
       "startTime": "Start time",
       "endTime": "End time",
-      "email": "Email"
+      "email": "Email",
+      "city": "City",
+      "school": "School",
+      "status": "Status"
     }
   },
   "admin_profile": {
     "title": "Administrator information",
+    "loading": "Loading your information...",
+    "load_failed": "We could not load all your information. Please try again.",
+    "retry": "Retry",
     "user": {
       "name": "Administrator name",
       "role": "Administrator",
@@ -881,7 +969,10 @@
       "school": "School",
       "password": "Password",
       "id": "ID"
-    }
+    },
+    "logout": "Log out",
+    "logout_title": "Log out?",
+    "logout_text": "You will need to sign in again to get back in."
   },
   "forgot_password": {
     "title": "Recover your access",
@@ -892,6 +983,15 @@
     "return": "Back to sign in",
     "step_text": "1 of 3",
     "hint": "You will receive a 6-digit code",
+    "errors": {
+      "email_too_long": "*Email cannot exceed 100 characters.",
+      "invalid_email": "The email address is invalid. Check that it is entered correctly.",
+      "request_failed": "We couldn't complete the request. Check your connection and try again later.",
+      "rate_limited": "You've reached the request limit. Wait a few minutes before trying again.",
+      "account_not_found": "We couldn't find an account with that email, so no code was sent.",
+      "phone_mismatch": "The phone doesn't match the one registered on your account, so no SMS was sent.",
+      "delivery_failed": "We couldn't send the code (the email or SMS service failed). Please try again later."
+    },
     "reset": {
       "title": "Create a secure password",
       "session_description": "Keep the security recommendations in mind.",
@@ -908,7 +1008,28 @@
         "required": "*This field is required",
         "minlength": "*Minimum 8 characters",
         "pattern": "*Must contain uppercase, lowercase, numbers and special characters (. - _ @ *)",
-        "no_match": "*Passwords do not match"
+        "no_match": "*Passwords do not match",
+        "expired": "The recovery link has expired or was already used. Request a new code.",
+        "rate_limited": "Attempt limit reached. Request a new code later.",
+        "failed": "The password could not be updated. Please try again.",
+        "maxlength": "*Maximum 128 characters"
+      },
+      "confirmationTitle": "Password reset",
+      "confirmationDescription": "Your password was reset successfully."
+    },
+    "code": {
+      "title": "Verify your email",
+      "session_description": "We sent a 6-digit code to your email.",
+      "title_step": "Verification code",
+      "button": "Validate",
+      "return": "Back",
+      "step_text": "2 of 3",
+      "error": "*Enter the 6 digits of the code",
+      "digit_label": "Code digit {{number}}",
+      "errors": {
+        "invalid": "The code is invalid or has expired. Check the code and try again.",
+        "rate_limited": "Attempt limit reached. Request a new code later.",
+        "failed": "The code could not be verified. Please try again."
       }
     }
   },
@@ -946,6 +1067,7 @@
   "validation": {
     "required": "This field is required",
     "email": "Invalid email address",
+    "url": "Enter a valid website address",
     "phone": "Invalid phone (numbers only, 7-15 digits)",
     "minLength": "Minimum {{min}} characters",
     "maxLength": "Maximum {{max}} characters",
@@ -954,6 +1076,38 @@
     "max": "Maximum {{max}}",
     "text": "Letters and spaces only",
     "birthDate": "Date cannot be in the future or more than 100 years ago",
-    "futureDate": "Date must be in the future"
+    "futureDate": "Date must be in the future",
+    "timeOrder": "End time must be after start time",
+    "imei": "The IMEI must have 15 digits",
+    "gpsRequired": "Select a GPS or type the IMEI of a new one"
+  },
+  "resend_code": {
+    "button": "Request a new code",
+    "wait": "Request a new code in {{seconds}} s"
+  },
+  "school_status": {
+    "Active": "Active",
+    "Inactive": "Inactive"
+  },
+  "errors": {
+    "backend": {
+      "plateExists": "A bus with that plate already exists.",
+      "plateRequired": "The plate is required.",
+      "gpsAssigned": "That GPS is already assigned to another bus.",
+      "gpsNotFound": "The GPS does not exist or the IMEI is invalid.",
+      "driver": "The selected driver could not be assigned.",
+      "routeNotFound": "The selected route does not exist or is inactive.",
+      "busNotFound": "The bus does not exist.",
+      "stopNotFound": "The stop does not exist.",
+      "campus": "The selected campus is not valid.",
+      "invalidTime": "The time is not valid.",
+      "duplicate": "A record with that data already exists.",
+      "unavailable": "Could not connect to the server. Please try again."
+    },
+    "bus": {
+      "create": "The bus could not be registered.",
+      "update": "The bus could not be updated.",
+      "driverNotAssigned": "The driver could not be assigned."
+    }
   }
 }

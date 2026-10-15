@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+﻿import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
@@ -6,15 +6,15 @@ import { RecordData, RegisterType } from './record-information.types';
 export type { RecordData, RegisterType } from './record-information.types';
 
 const RECORD_CONFIG: Record<RegisterType, { icon: string; fields: string[] }> = {
-  student: { icon: 'person', fields: ['names', 'lastNames', 'documentType', 'identification', 'birthDate', 'phone', 'address', 'email'] },
-  guardian: { icon: 'people', fields: ['name', 'lastNames', 'email', 'documentType', 'identification', 'birthDate', 'phone', 'address'] },
-  driver: { icon: 'directions_car', fields: ['names', 'lastNames', 'documentType', 'identification', 'birthDate', 'licenseExpiration', 'licenseNumber', 'address', 'email'] },
+  student: { icon: 'person', fields: ['names', 'lastNames', 'documentType', 'identification', 'birthDate', 'campusName', 'phone', 'address', 'email'] },
+  guardian: { icon: 'people', fields: ['names', 'lastNames', 'email', 'documentType', 'identification', 'birthDate', 'campusName', 'phone', 'address'] },
+  driver: { icon: 'directions_car', fields: ['names', 'lastNames', 'documentType', 'identification', 'birthDate', 'campusName', 'licenseExpiration', 'licenseNumber', 'address', 'email'] },
   family: { icon: 'family_restroom', fields: ['name', 'guardian', 'student', 'observations'] },
-  bus: { icon: 'directions_bus', fields: ['plate', 'driver', 'model', 'brand', 'capacity', 'gps', 'soat'] },
-  stop: { icon: 'location_on', fields: ['name', 'student', 'city', 'school', 'address', 'latitude', 'longitude'] },
-  route: { icon: 'route', fields: ['name', 'sector', 'startTime', 'endTime', 'destination', 'routeSector'] },
-  admins: { icon: 'admin_panel_settings', fields: ['name', 'lastNames', 'email', 'identification', 'phone', 'birthDate', 'address'] },
-  schools: { icon: 'school', fields: ['name', 'city', 'schooling', 'address', 'phone', 'email', 'website'] },
+  bus: { icon: 'directions_bus', fields: ['plate', 'driver', 'campusName', 'brand', 'model', 'capacity', 'soat', 'gps', 'gpsStatus', 'status'] },
+  stop: { icon: 'location_on', fields: ['name', 'student', 'city', 'school', 'address', 'route'] },
+  route: { icon: 'route', fields: ['name', 'campusName', 'startTime', 'endTime', 'destination'] },
+  admins: { icon: 'admin_panel_settings', fields: ['name', 'lastNames', 'cityName', 'schoolName', 'email', 'identification', 'birthDate', 'phone', 'address'] },
+  schools: { icon: 'school', fields: ['name', 'city', 'address', 'phone', 'schooling', 'email', 'website', 'status'] },
 };
 
 @Component({
@@ -27,10 +27,21 @@ const RECORD_CONFIG: Record<RegisterType, { icon: string; fields: string[] }> = 
 export class RecordInformation {
   @Input() type: RegisterType = 'student';
   @Input() record: RecordData = {};
+  /**
+   * Muestra el botón «Asignar» en el modal. Solo lo activa la vista que tiene
+   * flujo de asignación (estudiante→ruta/parada, bus→conductor, ruta→bus): el
+   * listado ya no ofrece ese acceso, la acción vive en la vista.
+   */
+  @Input() canAssign = false;
   @Output() closed = new EventEmitter<void>();
+  @Output() assign = new EventEmitter<RecordData>();
 
   close(): void {
     this.closed.emit();
+  }
+
+  assignRecord(): void {
+    this.assign.emit(this.record);
   }
 
   get config() {
@@ -43,6 +54,7 @@ export class RecordInformation {
 
   get displayName(): string {
     return (
+      (this.type === 'schools' ? this.record?.['name'] : '') ||
       this.record?.['nombres'] ||
       this.record?.['nombre'] ||
       this.record?.['correo'] ||

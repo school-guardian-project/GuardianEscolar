@@ -2,7 +2,7 @@ export interface ValidationRule {
   required?: boolean;
   minLength?: number;
   maxLength?: number;
-  pattern?: 'email' | 'phone' | 'number' | 'text';
+  pattern?: 'email' | 'phone' | 'number' | 'text' | 'url';
   min?: number;
   max?: number;
   custom?: (value: any) => string | null;
@@ -12,6 +12,15 @@ export type ValidationSchema = Record<string, ValidationRule>;
 
 const EMAIL_PATTERN = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 const PHONE_PATTERN = /^[0-9]{7,15}$/;
+
+function isValidUrl(value: string): boolean {
+  try {
+    const url = new URL(/^[a-z][a-z\d+.-]*:\/\//i.test(value) ? value : `https://${value}`);
+    return (url.protocol === 'http:' || url.protocol === 'https:') && !!url.hostname;
+  } catch {
+    return false;
+  }
+}
 
 export function validateField(value: any, rule: ValidationRule): string | null {
   const str = String(value ?? '').trim();
@@ -32,6 +41,10 @@ export function validateField(value: any, rule: ValidationRule): string | null {
 
   if (rule.pattern === 'email' && !EMAIL_PATTERN.test(str)) {
     return 'Correo electrónico inválido';
+  }
+
+  if (rule.pattern === 'url' && !isValidUrl(str)) {
+    return 'URL inválida';
   }
 
   if (rule.pattern === 'phone' && !PHONE_PATTERN.test(str)) {

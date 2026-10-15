@@ -1,130 +1,128 @@
 <div class="modal-overlay" (click)="close()">
   <div class="modal" (click)="$event.stopPropagation()">
-
     <div class="modal_header">
-      <h2 class="modal__title">
-        {{ 'update_school.title' | translate }}
-      </h2>
+      <h2 class="modal__title">{{ 'update_school.title' | translate }}</h2>
     </div>
 
-    <div class="modal_form">
+    <div *ngIf="loading" class="modal__loading">{{ 'update_school.loading' | translate }}</div>
 
-      <!-- Nombre -->
+    <div *ngIf="!loading && !enviado" class="modal_form">
       <div>
-        <label class="modal_form-label">
-          {{ 'update_school.fields.name' | translate }}
-        </label>
+        <label class="modal_form-label">{{ 'update_school.fields.name' | translate }}</label>
         <input type="text" class="modal_form-input"
           [placeholder]="'update_school.fields.name_placeholder' | translate"
           [(ngModel)]="nombreEscuela">
       </div>
 
-      <!-- Ciudad + Dirección -->
       <div class="modal_form-row">
         <div>
-          <label class="modal_form-label">
-            {{ 'update_school.fields.city' | translate }}
-          </label>
-          <select [(ngModel)]="ciudad">
-            <option value="">
-              {{ 'update_school.fields.city_placeholder' | translate }}
-            </option>
-            <option>Neiva</option>
-            <option>Bogotá</option>
-            <option>Medellín</option>
-            <option>Cali</option>
+          <label class="modal_form-label">{{ 'update_school.fields.city' | translate }}</label>
+          <select class="modal_form-input" [(ngModel)]="ciudad">
+            <option value="">{{ 'update_school.fields.city_placeholder' | translate }}</option>
+            <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
           </select>
         </div>
 
         <div>
-          <label class="modal_form-label">
-            {{ 'update_school.fields.address' | translate }}
-          </label>
+          <div class="modal_form-label-row">
+            <label class="modal_form-label">{{ 'update_school.fields.address' | translate }}</label>
+            <button type="button" class="modal_map-btn"
+              [attr.aria-label]="'register.schools.chooseLocation' | translate"
+              (click)="schoolMapOpen = !schoolMapOpen">
+              <mat-icon>location_on</mat-icon>
+            </button>
+          </div>
           <input type="text" class="modal_form-input"
             [placeholder]="'update_school.fields.address_placeholder' | translate"
             [(ngModel)]="direccion">
         </div>
       </div>
 
-      <!-- Teléfono + Logo -->
+      <app-location-map *ngIf="schoolMapOpen" [address]="direccion"
+        [latitude]="latitude" [longitude]="longitude"
+        (coordinatesChange)="updateSchoolLocation($event)"
+        (addressChange)="updateSchoolAddress($event)">
+      </app-location-map>
+
       <div class="modal_form-row">
         <div>
-          <label class="modal_form-label">
-            {{ 'update_school.fields.phone' | translate }}
-          </label>
-          <input type="text" class="modal_form-input"
+          <label class="modal_form-label">{{ 'update_school.fields.phone' | translate }}</label>
+          <input type="tel" class="modal_form-input"
             [placeholder]="'update_school.fields.phone_placeholder' | translate"
             [(ngModel)]="telefono">
         </div>
-
-        <div class="modal_form-upload">
-          <label class="modal_form-label">
-            {{ 'update_school.fields.logo' | translate }}
-          </label>
-
+        <div>
+          <label class="modal_form-label">{{ 'update_school.fields.logo' | translate }}</label>
           <img src="assets/images/escuela.png" alt="Logo" class="modal_form-logo">
-
-          <label for="logo" class="modal_form-upload-label">
-            {{ 'update_school.fields.upload' | translate }}
-            <input type="file" id="logo" class="modal_form-upload-input">
-          </label>
         </div>
       </div>
 
-      <!-- Correo -->
       <div>
-        <label class="modal_form-label">
-          {{ 'update_school.fields.email' | translate }}
-        </label>
+        <label class="modal_form-label">{{ 'update_school.fields.email' | translate }}</label>
         <input type="email" class="modal_form-input"
           [placeholder]="'update_school.fields.email_placeholder' | translate"
           [(ngModel)]="email">
       </div>
 
-      <!-- Web -->
       <div>
-        <label class="modal_form-label">
-          {{ 'update_school.fields.web' | translate }}
-        </label>
+        <label class="modal_form-label">{{ 'update_school.fields.web' | translate }}</label>
         <input type="text" class="modal_form-input"
           [placeholder]="'update_school.fields.web_placeholder' | translate"
           [(ngModel)]="website">
       </div>
 
-      <!-- Error -->
-      <div *ngIf="mostrandoError" class="error-message">
+      <section class="modal__campuses">
+        <h3>{{ 'register.schools.fields.campusNames' | translate }}</h3>
+        <div class="modal__campus" *ngFor="let campus of campuses; let i = index">
+          <div>
+            <div class="modal_form-label-row">
+              <label class="modal_form-label">{{ 'register.schools.campusNamePlaceholder' | translate }}</label>
+              <button type="button" class="modal_map-btn"
+                [attr.aria-label]="'register.schools.chooseCampusLocation' | translate: {name: campus.name}"
+                (click)="campusMaps[i] = !campusMaps[i]">
+                <mat-icon>location_on</mat-icon>
+              </button>
+            </div>
+            <input class="modal_form-input" [(ngModel)]="campus.name">
+          </div>
+          <div>
+            <label class="modal_form-label">{{ 'update_school.fields.address' | translate }}</label>
+            <input class="modal_form-input" maxlength="255" [(ngModel)]="campus.address">
+          </div>
+          <app-location-map *ngIf="campusMaps[i]" [address]="campus.address"
+            [latitude]="campus.latitude" [longitude]="campus.longitude"
+          (coordinatesChange)="updateCampusLocation(i, $event)"
+          (addressChange)="updateCampusAddress(i, $event)">
+          </app-location-map>
+        </div>
+        <button type="button" class="modal__add-campus" (click)="addCampus()">
+          {{ 'register.schools.addCampus' | translate }}
+        </button>
+      </section>
+
+      <div *ngIf="mostrandoError" class="error-message" role="alert">
         <mat-icon>error_outline</mat-icon>
         {{ 'update_school.error' | translate }}
       </div>
 
-      <!-- Footer -->
       <div class="modal_footer">
         <button class="modal_btn modal_btn--submit" type="button" (click)="close()">
           {{ 'update_school.buttons.cancel' | translate }}
         </button>
-
-        <button class="modal_btn modal_btn--cancel" type="button" (click)="update()">
+        <button class="modal_btn modal_btn--cancel" type="button" (click)="update()" [disabled]="saving">
           {{ 'update_school.buttons.update' | translate }}
         </button>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- SUCCESS -->
 <div *ngIf="enviado" class="modal-overlay">
   <div class="modal modal--small">
     <div class="modal_header">
-      <h2 class="modal__title">
-        {{ 'update_school.success.title' | translate }}
-      </h2>
-
-      <p class="modal__subtitle">
-        {{ 'update_school.success.description' | translate }}
-      </p>
+      <h2 class="modal__title">{{ 'update_school.success.title' | translate }}</h2>
+      <p class="modal__subtitle">{{ 'update_school.success.description' | translate }}</p>
     </div>
-
     <div class="modal_footer modal__footer--center">
       <button class="modal_btn modal_btn--cancel" type="button" (click)="close()">
         {{ 'update_school.buttons.exit' | translate }}

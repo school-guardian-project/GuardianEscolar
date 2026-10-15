@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { Observable, catchError, finalize, map, share, throwError } from 'rxjs';
+import { Observable, catchError, finalize, map, of, share, switchMap, throwError } from 'rxjs';
 import { environment } from '../../../environments/environment';
 
 export const ROLES = {
@@ -11,6 +11,36 @@ export const ROLES = {
   PARENT: 4,
   SUPER_ADMIN: 5,
 } as const;
+
+/**
+ * Catálogo de permisos RBAC (FR-2.1). Es el espejo en el cliente de las filas de
+ * `Iam.Permissions`; evita strings sueltos en los menús y los guards. El backend
+ * es la fuente de verdad: aquí solo se usan para decidir qué mostrar.
+ */
+export const PERMISSIONS = {
+  SCHOOLS_READ: 'schools.read',
+  SCHOOLS_CREATE: 'schools.create',
+  SCHOOLS_UPDATE: 'schools.update',
+  STUDENTS_READ: 'students.read',
+  STUDENTS_MANAGE: 'students.manage',
+  ROUTES_READ: 'routes.read',
+  ROUTES_MANAGE: 'routes.manage',
+  BUSES_READ: 'buses.read',
+  BUSES_MANAGE: 'buses.manage',
+  DRIVERS_READ: 'drivers.read',
+  DRIVERS_MANAGE: 'drivers.manage',
+  ALERTS_READ: 'alerts.read',
+  ALERTS_ACK: 'alerts.ack',
+  BOARDING_READ: 'boarding.read',
+  BOARDING_MANAGE: 'boarding.manage',
+  USERS_READ: 'users.read',
+  USERS_MANAGE: 'users.manage',
+  REPORTS_READ: 'reports.read',
+  SETTINGS_MANAGE: 'settings.manage',
+  AUDIT_READ: 'audit.read',
+} as const;
+
+export type Permission = (typeof PERMISSIONS)[keyof typeof PERMISSIONS];
 
 interface LoginResponse {
   accessToken: string;
@@ -90,6 +120,8 @@ export class AuthService {
             this.applySession(res);
             return res.accessToken;
           }),
+          // El refresh token no lleva el correo: tras un F5 se recupera desde /profile.
+          switchMap((token) => this.userSession.email ? of(token) : this.loadEmail(token)),
           catchError((err) => {
             this.accessToken = null;
             this.userSession = { ...EMPTY_SESSION };
@@ -102,6 +134,17 @@ export class AuthService {
     return this.refreshInFlight;
   }
 
+  private loadEmail(token: string): Observable<string> {
+    return this.http
+      .get<{ email?: string }>(`${this.base}/profile`, { headers: { Authorization: `Bearer ${token}` } })
+      .pipe(
+        map((profile) => {
+          if (profile.email) this.userSession = { ...this.userSession, email: profile.email };
+          return token;
+        }),
+        catchError(() => of(token)),
+      );
+  }
   logout(): Observable<void> {
     const headers: Record<string, string> = this.accessToken
       ? { Authorization: `Bearer ${this.accessToken}` }
@@ -122,6 +165,10 @@ export class AuthService {
   /** Refleja en la sesión un correo ya cambiado en el backend (el claim del JWT queda viejo hasta el próximo refresh). */
   updateSessionEmail(email: string): void {
     this.userSession = { ...this.userSession, email };
+  }
+
+  updateSessionSchoolId(schoolId: string | null): void {
+    this.userSession = { ...this.userSession, schoolId };
   }
 
   getToken(): string | null {
@@ -148,6 +195,36 @@ export class AuthService {
     return roleId !== null && roles.includes(roleId);
   }
 
+  /** Claim `role` del JWT: nombre legible del rol (p. ej. "Admin"). */
+  get roleName(): string | null {
+    const role = this.claims()['role'];
+    return typeof role === 'string' && role ? role : null;
+  }
+
+  /** Claim `documentNumber` del JWT: número de identificación de la persona (FR-2.1). */
+  get identificationNumber(): string | null {
+    const documentNumber = this.claims()['documentNumber'];
+    return typeof documentNumber === 'string' && documentNumber ? documentNumber : null;
+  }
+
+  /** Claim `permissions` del JWT: permisos RBAC concedidos (FR-2.1). */
+  get permissions(): string[] {
+    const permissions = this.claims()['permissions'];
+    if (!Array.isArray(permissions)) return [];
+    return permissions.filter((permission): permission is string => typeof permission === 'string');
+  }
+
+  /**
+   * true si la sesión tiene alguno de los permisos indicados. Espeja `hasRole`:
+   * los menús y botones lo usan para no ofrecer acciones que el backend
+   * rechazaría con 403. Sin permisos concedidos siempre devuelve false.
+   */
+  hasPermission(...permissions: string[]): boolean {
+    if (permissions.length === 0) return false;
+    const granted = this.permissions;
+    return permissions.some((permission) => granted.includes(permission));
+  }
+
   /**
    * Rellena la sesión desde la respuesta del backend y, en refresh, desde los
    * claims del JWT cuando el endpoint no repite los datos.
@@ -155,19 +232,17 @@ export class AuthService {
   private applySession(res: Partial<LoginResponse>): void {
     const claims = this.claims();
     const pick = (key: keyof Session): string | null => {
+      if (res[key] === null) return null;
       const fromRes = res[key];
       if (typeof fromRes === 'string' && fromRes) return fromRes;
-      const fromClaims = claims[key];
-      return typeof fromClaims === 'string' && fromClaims ? fromClaims : this.userSession[key];
+      const fromClaims = key === 'profileId' ? claims['profileId'] ?? claims['sub'] : claims[key];
+      return typeof fromClaims === 'string' && fromClaims ? fromClaims : null;
     };
     this.userSession = {
       profileId: pick('profileId'),
       personId: pick('personId'),
       email: pick('email'),
       campusId: pick('campusId'),
-      // El login y el refresh no lo repiten en el body (solo en el JWT), asi que
-      // casi siempre llega de los claims. Mirar el claim de todas formas deja
-      // que un backend futuro lo exponga sin tocar este servicio.
       schoolId: pick('schoolId'),
     };
   }

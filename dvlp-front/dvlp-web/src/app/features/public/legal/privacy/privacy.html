@@ -1,0 +1,46 @@
+<app-nav-component></app-nav-component>
+
+<div class="legal-page">
+  <header class="legal-hero">
+    <div class="legal-kicker"><span class="object"></span>{{ 'legal.kicker' | translate }}</div>
+    <h1 class="legal-title">{{ 'legal.privacy_title' | translate }}</h1>
+    <div class="legal-updated">{{ 'legal.updated' | translate }}</div>
+  </header>
+
+  <main class="legal-body">
+    <p class="legal-lead">Guardian Escolar cumple la Ley 1581 de 2012, el Decreto 1377 de 2013 y normas concordantes de protección de datos personales en Colombia. Esta página resume qué datos se tratan, para qué y cuáles son tus derechos. El texto completo aplicable está en los <a routerLink="/terms">{{ 'legal.terms_title' | translate }}</a>, numeral 8.</p>
+
+    <section class="legal-section">
+      <h2>{{ 'legal.data_title' | translate }}</h2>
+      <ul>
+        <li>Identificación: nombre completo, documento, teléfono y correo.</li>
+        <li>Estudiante: nombre, curso, institución y ruta asociada.</li>
+        <li>Institución educativa y rutas escolares.</li>
+        <li>Ubicación GPS del vehículo durante recorridos autorizados.</li>
+        <li>Registros de abordaje y descenso, e historial de notificaciones.</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>{{ 'legal.purpose_title' | translate }}</h2>
+      <p>Identificación de usuarios, gestión de rutas, seguimiento del transporte, generación de notificaciones y mejora de la Plataforma. Nunca con fines publicitarios o comerciales, ni vendidos o cedidos a terceros no autorizados o no exigidos por la ley.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>{{ 'legal.minors_title' | translate }}</h2>
+      <p>El registro de menores requiere autorización previa, expresa e informada del padre, madre o acudiente legal, quien actúa en representación del menor. Solo se recolecta lo estrictamente necesario para el monitoreo del transporte.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>{{ 'legal.rights_title' | translate }}</h2>
+      <p>Conocer, actualizar, rectificar o suprimir tus datos y revocar la autorización, mediante solicitud al administrador del sistema (numeral 17 de los Términos).</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>{{ 'legal.channel_title' | translate }}</h2>
+      <p><a routerLink="/contact">{{ 'contact.title' | translate }}</a> · <a href="mailto:sch00l.guard4n@gmail.com">sch00l.guard4n@gmail.com</a></p>
+    </section>
+  </main>
+</div>
+
+<app-footer></app-footer>

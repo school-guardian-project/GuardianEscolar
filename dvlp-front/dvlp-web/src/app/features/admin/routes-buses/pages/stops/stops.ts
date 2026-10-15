@@ -1,10 +1,11 @@
-import { Component, OnInit, ViewChild, inject } from '@angular/core';
+﻿import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { forkJoin } from 'rxjs';
+import { catchError, forkJoin, Observable, of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-manage';
 import { CardRegister } from '@shared/components/cards/card-register/card-register';
 import { CardList } from '@shared/components/cards/card-list/card-list';
@@ -16,7 +17,9 @@ import { StopsService } from '@core/services/stops.service';
 import { CitiesService } from '@core/services/cities.service';
 import { SchoolsService } from '@core/services/schools.service';
 import { RoutesService } from '@core/services/routes.service';
+import { StudentsService } from '@core/services/students.service';
 import { StopListDto, StopRequestDto } from '@core/models/stop.model';
+import { describeProblem, problemField } from '@core/http/problem-detail';
 
 interface StopView extends RecordData {
   id?: string;
@@ -28,6 +31,11 @@ interface StopView extends RecordData {
   school: string;
   cityId: string;
   schoolId: string;
+  /** Todas las rutas en las que está la parada, para mostrar. */
+  route: string;
+  /** Ruta principal (la que se edita en el modal). */
+  routeId: string;
+  routeName: string;
 }
 
 @Component({
@@ -45,6 +53,7 @@ interface StopView extends RecordData {
     RecordInformation,
     UpdateRecord,
     DeleteRecord,
+    TranslateModule,
   ],
   templateUrl: './stops.html',
   styleUrl: './stops.scss',
@@ -54,11 +63,23 @@ export class Stops implements OnInit {
   private citiesService = inject(CitiesService);
   private schoolsService = inject(SchoolsService);
   private routesService = inject(RoutesService);
+  private studentsService = inject(StudentsService);
 
   @ViewChild(CardRegister) register?: CardRegister;
 
   stops: StopView[] = [];
   fieldOptions: Record<string, string[]> = {};
+  catalogLoadError = false;
+  actionError = '';
+  saveFieldErrors: Record<string, string> = {};
+
+  private loadCatalog<T>(source: Observable<T[]>, name: string): Observable<T[]> {
+    return source.pipe(catchError(error => {
+      console.error(`Error loading stop ${name}:`, error);
+      this.catalogLoadError = true;
+      return of([]);
+    }));
+  }
 
   showModal = false;
   showUpdateModal = false;
@@ -73,11 +94,12 @@ export class Stops implements OnInit {
 
   ngOnInit(): void {
     forkJoin({
-      cities: this.citiesService.list(),
-      schools: this.schoolsService.list(),
-      routes: this.routesService.list(),
+      cities: this.loadCatalog(this.citiesService.list(), 'cities'),
+      schools: this.loadCatalog(this.schoolsService.list(), 'schools'),
+      routes: this.loadCatalog(this.routesService.list(), 'routes'),
+      students: this.loadCatalog(this.studentsService.list(), 'students'),
     }).subscribe({
-      next: ({ cities, schools, routes }) => {
+      next: ({ cities, schools, routes, students }) => {
         this.cityIdByLabel = Object.fromEntries(cities.map((city) => [city.name, city.id]));
         this.schoolIdByLabel = Object.fromEntries(schools.map((school) => [school.name, school.id]));
         this.routeIdByLabel = Object.fromEntries(routes.map((route) => [route.name, route.id]));
@@ -88,17 +110,25 @@ export class Stops implements OnInit {
           city: Object.keys(this.cityIdByLabel),
           school: Object.keys(this.schoolIdByLabel),
           route: Object.keys(this.routeIdByLabel),
+          student: students
+            .map((s) => `${s.name ?? ''} ${s.lastName ?? ''}`.trim())
+            .filter(Boolean),
         };
 
         this.load();
       },
-      error: () => this.load(),
     });
   }
 
   private load(): void {
     this.stopsService.list().subscribe({
-      next: (list) => (this.stops = list.map((api) => this.fromApi(api))),
+      next: (list) => {
+        this.stops = list.map((api) => this.fromApi(api));
+        this.resolveMissingSchools(this.stops);
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron cargar las paradas.');
+      },
     });
   }
 
@@ -113,7 +143,29 @@ export class Stops implements OnInit {
       schoolId: api.schoolId ?? '',
       city: this.cityLabelById[api.cityId ?? ''] ?? '',
       school: this.schoolLabelById[api.schoolId ?? ''] ?? '',
+      route: (api.routeNames?.length ? api.routeNames : [api.routeName ?? '']).filter(Boolean).join(', '),
+      routeId: api.routeId ?? '',
+      routeName: api.routeName ?? '',
     };
+  }
+
+  /**
+   * El catálogo de colegios puede no traer el de la parada (p. ej. fuera del
+   * listado del rol): se pide por id para mostrar el nombre, nunca el id.
+   */
+  private resolveMissingSchools(stops: StopView[]): void {
+    const missing = [...new Set(stops.filter((s) => s.schoolId && !s.school).map((s) => s.schoolId))];
+    for (const schoolId of missing) {
+      this.schoolsService.get(schoolId).subscribe({
+        next: (school) => {
+          if (!school?.name) return;
+          this.schoolLabelById[schoolId] = school.name;
+          this.schoolIdByLabel[school.name] = schoolId;
+          this.stops = this.stops.map((s) => (s.schoolId === schoolId ? { ...s, school: school.name } : s));
+        },
+        error: () => undefined,
+      });
+    }
   }
 
   onSearch(term: string): void {
@@ -123,7 +175,13 @@ export class Stops implements OnInit {
       return;
     }
     this.stopsService.search(query).subscribe({
-      next: (list) => (this.stops = list.map((api) => this.fromApi(api))),
+      next: (list) => {
+        this.stops = list.map((api) => this.fromApi(api));
+        this.resolveMissingSchools(this.stops);
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudieron buscar las paradas.');
+      },
     });
   }
 
@@ -154,19 +212,27 @@ export class Stops implements OnInit {
 
     this.stopsService.create(payload).subscribe({
       next: (created) => this.attachToRoute(created.id, routeId),
-      error: () => this.register?.setValidationMessage('No se pudo registrar la parada.'),
+      error: (error: unknown) => {
+        const message = describeProblem(error, 'No se pudo registrar la parada.');
+        const field = problemField(error);
+        if (field) this.register?.setFieldError(field, message);
+        else this.register?.setValidationMessage(message);
+      },
     });
   }
 
   private attachToRoute(stopId: string, routeId: string): void {
     if (!routeId) {
       this.register?.setValidationMessage('Selecciona una ruta válida.');
+      this.load();
       return;
     }
 
     this.routesService.addStop(routeId, stopId).subscribe({
       next: () => this.finishRegistration(''),
-      error: () => this.finishRegistration('La parada se creó, pero no se pudo agregar a la ruta.'),
+      error: (error: unknown) => this.finishRegistration(
+        `La parada se creó, pero no se pudo agregar a la ruta. ${describeProblem(error, '')}`.trim()
+      ),
     });
   }
 
@@ -182,7 +248,10 @@ export class Stops implements OnInit {
   }
 
   showUpdateDetails(stop: RecordData): void {
-    this.stopSelected = stop;
+    this.actionError = '';
+    this.saveFieldErrors = {};
+    // El select de ruta trabaja con un solo nombre: se edita la ruta principal.
+    this.stopSelected = { ...stop, route: stop['routeName'] ?? '' };
     this.showUpdateModal = true;
   }
 
@@ -192,6 +261,8 @@ export class Stops implements OnInit {
   }
 
   closeUpdateModal(): void {
+    this.actionError = '';
+    this.saveFieldErrors = {};
     this.showUpdateModal = false;
     this.stopSelected = {};
   }
@@ -206,7 +277,10 @@ export class Stops implements OnInit {
     const latitude = this.toCoordinate(updatedRecord['latitude']) ?? this.toCoordinate(this.stopSelected['latitude']);
     const longitude = this.toCoordinate(updatedRecord['longitude']) ?? this.toCoordinate(this.stopSelected['longitude']);
 
-    if (latitude === null || longitude === null) return;
+    if (latitude === null || longitude === null) {
+      this.actionError = 'La ubicación de la parada debe tener latitud y longitud válidas.';
+      return;
+    }
 
     const payload: StopRequestDto = {
       name: String(updatedRecord['name'] ?? ''),
@@ -219,21 +293,36 @@ export class Stops implements OnInit {
       latitude,
       longitude,
     };
+    const routeId = this.routeIdByLabel[String(updatedRecord['route'] ?? '')] ?? '';
+    const previousRouteId = String(this.stopSelected['routeId'] ?? '');
+    if (routeId && routeId !== previousRouteId) {
+      payload.routeId = routeId;
+      if (previousRouteId) payload.previousRouteId = previousRouteId;
+    }
 
+    this.actionError = '';
+    this.saveFieldErrors = {};
     this.stopsService.update(String(id), payload).subscribe({
       next: () => {
         this.closeUpdateModal();
         this.load();
       },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo actualizar la parada.');
+        const field = problemField(error);
+        this.saveFieldErrors = field ? { [field]: this.actionError } : {};
+      },
     });
   }
 
   showDelete(stop: RecordData): void {
+    this.actionError = '';
     this.stopSelected = stop;
     this.showDeleteModal = true;
   }
 
   closeDeleteModal(): void {
+    this.actionError = '';
     this.showDeleteModal = false;
     this.stopSelected = {};
   }
@@ -244,9 +333,15 @@ export class Stops implements OnInit {
       this.closeDeleteModal();
       return;
     }
-    this.stopsService.remove(String(id)).subscribe(() => {
-      this.closeDeleteModal();
-      this.load();
+    this.actionError = '';
+    this.stopsService.remove(String(id)).subscribe({
+      next: () => {
+        this.closeDeleteModal();
+        this.load();
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo eliminar la parada.');
+      },
     });
   }
 

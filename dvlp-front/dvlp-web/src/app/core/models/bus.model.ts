@@ -31,6 +31,8 @@ export interface BusListDto {
   driverName: string;
   brand: string;
   model: string;
+  /** Estado de activación del bus (FR-3.8). Opcional hasta que ms-fleet lo exponga en el listado. */
+  status?: BusStatus;
 }
 
 export interface BusResponseDto extends BusListDto {

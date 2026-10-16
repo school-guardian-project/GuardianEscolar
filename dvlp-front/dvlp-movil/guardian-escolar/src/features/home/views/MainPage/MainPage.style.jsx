@@ -43,6 +43,14 @@ export default StyleSheet.create({
     elevation: 8,
   },
 
+  incidentButtonContainer: {
+    position: 'absolute',
+    right: 16,
+    bottom: 200,
+    zIndex: 3,
+    elevation: 8,
+  },
+
   scanModeContainer: {
     position: 'absolute',
     top: '40%',

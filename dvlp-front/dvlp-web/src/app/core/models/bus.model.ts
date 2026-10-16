@@ -2,9 +2,10 @@
 
 /**
  * Contrato real de ms-fleet (BusController):
- * - POST /fleet/api/buses  { campuseId, soatValidity, gpsDeviceId, capacity, plate, modelId, gpsStatus } → Ok(busId)
- * - PUT  /fleet/api/buses/{id} { campuseId, soatValidity, capacity, modelId, plate, gpsDeviceId, gpsStatus }
- * - GET  /fleet/api/gps-devices → dispositivos GPS con el bus que los usa.
+ * - POST  /fleet/api/buses  { campuseId, soatValidity, gpsDeviceId, capacity, plate, modelId, gpsStatus } → Ok(busId)
+ * - PUT   /fleet/api/buses/{id} { campuseId, soatValidity, capacity, modelId, plate, gpsDeviceId, gpsStatus }
+ * - PATCH /fleet/api/buses/{id}/status { status } → activa/desactiva el bus (FR-3.8)
+ * - GET   /fleet/api/gps-devices → dispositivos GPS con el bus que los usa.
  */
 export interface BusRequestDto {
   campuseId: string;
@@ -18,6 +19,11 @@ export interface BusRequestDto {
   modelId: number;
 }
 
+/** PATCH /fleet/api/buses/{id}/status (FR-3.8). */
+export interface BusStatusChangeRequest {
+  status: BusStatus;
+}
+
 export interface BusListDto {
   id: string;
   plate: string;
@@ -25,6 +31,8 @@ export interface BusListDto {
   driverName: string;
   brand: string;
   model: string;
+  /** Estado de activación del bus (FR-3.8). Opcional hasta que ms-fleet lo exponga en el listado. */
+  status?: BusStatus;
 }
 
 export interface BusResponseDto extends BusListDto {

@@ -27,7 +27,9 @@
   type="bus"
   [record]="busSelected"
   [canAssign]="true"
+  [canToggleStatus]="!!busSelected['id']"
   (assign)="showAssignDetails($event)"
+  (toggleStatus)="onToggleStatus($event)"
   (closed)="closeModal()">
 </app-record-information>
 

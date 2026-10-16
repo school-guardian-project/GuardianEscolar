@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
-import { BusListDto, BusRequestDto, BusResponseDto, GpsDeviceDto } from '../models/bus.model';
+import { BusListDto, BusRequestDto, BusResponseDto, BusStatus, BusStatusChangeRequest, GpsDeviceDto } from '../models/bus.model';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +32,12 @@ export class BusesService {
 
   update(id: string, payload: BusRequestDto): Observable<void> {
     return this.http.put<void>(`${this.base}/${id}`, payload);
+  }
+
+  /** Activa o desactiva un bus (FR-3.8). */
+  changeStatus(id: string, status: BusStatus): Observable<void> {
+    const payload: BusStatusChangeRequest = { status };
+    return this.http.patch<void>(`${this.base}/${id}/status`, payload);
   }
 
   remove(id: string): Observable<void> {

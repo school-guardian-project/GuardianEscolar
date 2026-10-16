@@ -30,6 +30,20 @@ export interface GuardianNotification {
   alert: GuardianAlertDetail;
 }
 
+/** Cuerpo del reporte de incidente (FR-8.1). El `alertTypeId` sale del catalogo. */
+export interface ReportIncidentRequest {
+  alertTypeId: number;
+  description?: string;
+}
+
+/** Respuesta de `POST /notifications/incidents`: a quien le quedo el registro. */
+export interface IncidentResponse {
+  alertId: string;
+  routeExecutionId: string;
+  studentsOnBoard: number;
+  recipientsNotified: number;
+}
+
 export interface ApiError extends Error {
   status?: number;
   data?: unknown;

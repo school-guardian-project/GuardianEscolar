@@ -225,6 +225,29 @@
     "school": "Escuela"
   },
 
+  "incidents": {
+    "open": "Reportar incidente",
+    "title": "Reportar incidente",
+    "subtitle": "Cuéntanos qué está pasando en la ruta.",
+    "typeAccident": "Accidente",
+    "typeMedical": "Emergencia médica",
+    "typeBreakdown": "Falla mecánica",
+    "typeSecurity": "Situación de inseguridad",
+    "descriptionLabel": "Detalle (opcional)",
+    "descriptionPlaceholder": "Describe brevemente lo ocurrido",
+    "submit": "Enviar reporte",
+    "sending": "Enviando...",
+    "success": "Reporte enviado. Se avisó al colegio y a {{notified}} acudiente(s).",
+    "successNoRecipients": "Reporte enviado. Quedó registrado en el colegio.",
+    "done": "Listo",
+    "noTrip": "No se pudo reportar: no hay un viaje activo. Inicia la ruta e intenta de nuevo.",
+    "unknownType": "Ese tipo de incidente no está disponible.",
+    "descriptionTooLong": "El detalle es demasiado largo (máximo 500 caracteres).",
+    "forbidden": "Solo el conductor asignado puede reportar incidentes.",
+    "unavailable": "El servicio no está disponible en este momento. Intenta más tarde.",
+    "failed": "No se pudo enviar el reporte. Revisa tu conexión e intenta de nuevo."
+  },
+
   "reminder": {
     "title": "Recordatorio de ruta",
     "message": "Tu ruta {{name}} inicia a las {{time}}",

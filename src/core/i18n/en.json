@@ -225,6 +225,29 @@
     "school": "School"
   },
 
+  "incidents": {
+    "open": "Report an incident",
+    "title": "Report an incident",
+    "subtitle": "Tell us what is happening on the route.",
+    "typeAccident": "Accident",
+    "typeMedical": "Medical emergency",
+    "typeBreakdown": "Mechanical breakdown",
+    "typeSecurity": "Security incident",
+    "descriptionLabel": "Details (optional)",
+    "descriptionPlaceholder": "Briefly describe what happened",
+    "submit": "Send report",
+    "sending": "Sending...",
+    "success": "Report sent. The school and {{notified}} guardian(s) were notified.",
+    "successNoRecipients": "Report sent. It was recorded at the school.",
+    "done": "Done",
+    "noTrip": "Could not report: there is no active trip. Start the route and try again.",
+    "unknownType": "That incident type is not available.",
+    "descriptionTooLong": "The details are too long (500 characters max).",
+    "forbidden": "Only the assigned driver can report incidents.",
+    "unavailable": "The service is unavailable right now. Try again later.",
+    "failed": "The report could not be sent. Check your connection and try again."
+  },
+
   "reminder": {
     "title": "Route reminder",
     "message": "Your route {{name}} starts at {{time}}",

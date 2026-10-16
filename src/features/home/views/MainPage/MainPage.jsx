@@ -11,8 +11,10 @@ import { roleConfig } from "@core/config/roles/roleConfig";
 import { useNavigation } from "@react-navigation/native";
 import useSession from "@core/hooks/useSession";
 import QRButtom from "@components/buttons/QRButtom";
+import IncidentReportButton from "@components/buttons/IncidentReportButton";
 import QRDisplayModal from "@components/modals/QRDisplayModal";
 import QRScannerModal from "@components/modals/QRScannerModal";
+import IncidentReportModal from "@components/modals/IncidentReportModal";
 import { getSession } from "@core/services/authService";
 import { getRouteApi } from "@core/services/routeApi";
 import { getLinkedStudents } from "@core/services/familyService";
@@ -116,6 +118,7 @@ export default function MainPage() {
   const config = roleConfig[role];
 
   const [modalType, setModalType] = useState(null);
+  const [incidentOpen, setIncidentOpen] = useState(false);
   const [routeInfo, setRouteInfo] = useState(null);
   const [routeStops, setRouteStops] = useState([]);
   const [, setLoading] = useState(true);
@@ -289,7 +292,18 @@ export default function MainPage() {
         <View style={styles.qrButtonContainer} pointerEvents="box-none">
           <QRButtom config={config.card} onOpenModel={handleOpenModal} />
         </View>
+
+        {config.card.showIncidentReport && (
+          <View style={styles.incidentButtonContainer} pointerEvents="box-none">
+            <IncidentReportButton onPress={() => setIncidentOpen(true)} />
+          </View>
+        )}
       </View>
+
+      <IncidentReportModal
+        visible={incidentOpen}
+        onClose={() => setIncidentOpen(false)}
+      />
 
       <QRDisplayModal
         visible={modalType === "activeQR"}

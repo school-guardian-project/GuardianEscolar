@@ -1,7 +1,7 @@
-﻿import { Component, EventEmitter, Input, Output } from '@angular/core';
+﻿import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { TranslateModule } from '@ngx-translate/core';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { RecordData, RegisterType } from './record-information.types';
 export type { RecordData, RegisterType } from './record-information.types';
 
@@ -33,8 +33,16 @@ export class RecordInformation {
    * listado ya no ofrece ese acceso, la acción vive en la vista.
    */
   @Input() canAssign = false;
+  /**
+   * Muestra el botón «Activar»/«Desactivar» según el estado del registro. Solo
+   * lo activa la vista con flujo de estado (bus, FR-3.8).
+   */
+  @Input() canToggleStatus = false;
   @Output() closed = new EventEmitter<void>();
   @Output() assign = new EventEmitter<RecordData>();
+  @Output() toggleStatus = new EventEmitter<RecordData>();
+
+  private readonly translate = inject(TranslateService);
 
   close(): void {
     this.closed.emit();
@@ -42,6 +50,21 @@ export class RecordInformation {
 
   assignRecord(): void {
     this.assign.emit(this.record);
+  }
+
+  toggleStatusRecord(): void {
+    this.toggleStatus.emit(this.record);
+  }
+
+  /** El registro está activo (el estado lo trae el detalle de ms-fleet). */
+  get isActive(): boolean {
+    return this.record?.['status'] === 'Active';
+  }
+
+  get statusToggleLabelKey(): string {
+    return this.isActive
+      ? 'record_information.status.deactivate'
+      : 'record_information.status.activate';
   }
 
   get config() {
@@ -76,6 +99,23 @@ export class RecordInformation {
 
   getLabelKey(key: string): string {
     return `record_information.${this.type}.fields.${key}`;
+  }
+
+  /**
+   * Valor legible de un campo. El estado (`Active`/`Inactive`) se traduce con
+   * las claves del registro correspondiente; el resto se muestra tal cual.
+   */
+  displayValue(field: { key: string; value: any }): any {
+    if (field.key !== 'status') return field.value;
+
+    const key =
+      this.type === 'bus'
+        ? `update_record.bus.statusValues.${field.value}`
+        : this.type === 'schools'
+          ? `update_record.schools.statusValues.${field.value}`
+          : '';
+
+    return key ? this.translate.instant(key) : field.value;
   }
 
   getGridClass(field: { key: string }): string {

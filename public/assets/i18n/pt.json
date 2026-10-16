@@ -496,6 +496,10 @@
     "accept": "Aceitar"
   },
   "record_information": {
+    "status": {
+      "activate": "Ativar",
+      "deactivate": "Desativar"
+    },
     "student": {
       "title": "Informações do estudante",
       "fields": {
@@ -682,7 +686,11 @@
         "gpsImei": "IMEI do novo GPS (opcional)",
         "gpsStatus": "Status do GPS"
       },
-      "noDriver": "Sem motorista"
+      "noDriver": "Sem motorista",
+      "statusValues": {
+        "Active": "Ativo",
+        "Inactive": "Inativo"
+      }
     },
     "stop": {
       "title": "Atualizar parada",
@@ -1086,6 +1094,10 @@
     "wait": "Solicitar novo código em {{seconds}} s"
   },
   "school_status": {
+    "Active": "Ativo",
+    "Inactive": "Inativo"
+  },
+  "bus_status": {
     "Active": "Ativo",
     "Inactive": "Inativo"
   },

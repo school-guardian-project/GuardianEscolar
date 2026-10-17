@@ -6,7 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
 import BackButton from "@components/buttons/BackButton";
 import { getSession } from "@core/services/authService";
-import { getNotificationApi } from "@core/services/notificationApi";
+import { getGuardianNotifications } from "@core/services/notificationApi";
 import styles from "./Notifications.style";
 
 const filterOptions = [
@@ -34,16 +34,16 @@ export default function Notifications() {
           const session = await getSession();
           if (!session?.profileId) return;
 
-          const data = await getNotificationApi(`/v1/notifications/guardian/${session.profileId}`);
+          const data = await getGuardianNotifications();
           if (!active) return;
 
           setNotifications(data.map((item) => ({
             id: item.id,
-            type: item.BoardingType === "OFF_BOARD" ? "alighting" : "boarding",
-            icon: item.BoardingType === "OFF_BOARD" ? "home" : "bus",
-            titleKey: item.Alert?.Description || "Notificación",
-            messageKey: item.Alert?.Description || "",
-            dateTime: item.Alert?.DateTime || item.DateTimeRead,
+            type: item.boardingType === "OFF_BOARD" ? "alighting" : "boarding",
+            icon: item.boardingType === "OFF_BOARD" ? "home" : "bus",
+            titleKey: item.alert?.description || "Notificación",
+            messageKey: item.alert?.description || "",
+            dateTime: item.alert?.dateTime || item.dateTimeRead,
           })));
         } catch (error) {
           console.error("Error loading notifications:", error);

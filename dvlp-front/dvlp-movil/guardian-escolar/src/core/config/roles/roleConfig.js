@@ -22,7 +22,8 @@ export const roleConfig = {
             showNearbyRoutes: true, // Rutas cercanas
             showStop: true,
             showQR: true,
-            qrMode: 'scan'
+            qrMode: 'scan',
+            showIncidentReport: true // FR-8.1: solo el conductor reporta incidentes
         },
         MapMarkers: 'all-students'
     },

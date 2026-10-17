@@ -14,7 +14,7 @@ import { DeleteRecord } from '@shared/components/modal/delete-record/delete-reco
 import { AssignRecord } from '@shared/components/modal/assign-record/assign-record';
 import { BusesService } from '@core/services/buses.service';
 import { DriversService } from '@core/services/drivers.service';
-import { BusListDto, BusRequestDto, BusResponseDto, GpsDeviceDto } from '@core/models/bus.model';
+import { BusListDto, BusRequestDto, BusResponseDto, BusStatus, GpsDeviceDto } from '@core/models/bus.model';
 import { CampusesService } from '@core/services/campuses.service';
 import { AuthService } from '@core/services/auth.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -46,6 +46,7 @@ function fromApi(api: BusListDto): BusView {
     brand: api.brand ?? '',
     model: api.model ?? '',
     campuseId: api.campuseId ?? '',
+    status: api.status ?? '',
   };
 }
 
@@ -312,6 +313,35 @@ export class Buses implements OnInit {
       },
       error: (error: unknown) => {
         this.actionError = describeProblem(error, 'No se pudo cargar la información del bus.');
+      },
+    });
+  }
+
+  /** Recarga el detalle abierto (p. ej. tras cambiar el estado). */
+  private refreshDetails(id: string): void {
+    this.busesService.get(id).subscribe({
+      next: (detail) => (this.busSelected = this.toDetailView(detail)),
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cargar la información del bus.');
+      },
+    });
+  }
+
+  /** Activa/desactiva el bus desde el modal de detalle (FR-3.8). */
+  onToggleStatus(record: RecordData): void {
+    const id = String(record['id'] ?? '');
+    if (!id) return;
+
+    const nextStatus: BusStatus = record['status'] === 'Active' ? 'Inactive' : 'Active';
+    this.actionError = '';
+    this.busesService.changeStatus(id, nextStatus).subscribe({
+      next: () => {
+        // El listado no trae estado; se refresca el detalle para reflejarlo ya.
+        this.refreshDetails(id);
+        this.load();
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, 'No se pudo cambiar el estado del bus.');
       },
     });
   }

@@ -74,6 +74,11 @@ function claimOf(data, claims, key) {
   return value === undefined || value === "" ? null : value;
 }
 
+/** Normaliza el claim `permissions` a un arreglo de strings (ignora valores malformados). */
+function normalizePermissions(value) {
+  return Array.isArray(value) ? value.filter((permission) => typeof permission === "string") : [];
+}
+
 /** Combina la respuesta del login con los claims del JWT (la respuesta puede no traer todos los campos). */
 async function saveSession(data) {
   const claims = tokenClaims(data?.accessToken ?? accessToken);
@@ -82,6 +87,10 @@ async function saveSession(data) {
     personId: claimOf(data, claims, "personId"),
     email: claimOf(data, claims, "email"),
     roleId: claimOf(data, claims, "roleId"),
+    roleName: claimOf(data, claims, "roleName") ?? claimOf(data, claims, "role"),
+    identificationNumber:
+      claimOf(data, claims, "identificationNumber") ?? claimOf(data, claims, "documentNumber"),
+    permissions: normalizePermissions(data?.permissions ?? claims.permissions),
     campusId: claimOf(data, claims, "campusId"),
     schoolId: claimOf(data, claims, "schoolId"),
   };
@@ -188,28 +197,41 @@ export function getAccessToken() {
 
 /** Claim `roleId` del JWT. Se decodifica sin verificar: la firma la valida el gateway. */
 export function getRoleId() {
-  if (!accessToken) {
-    return null;
-  }
-  try {
-    const payload = accessToken.split(".")[1];
-    const decoded = JSON.parse(atob(payload.replace(/-/g, "+").replace(/_/g, "/")));
-    return typeof decoded.roleId === "number" ? decoded.roleId : null;
-  } catch {
-    return null;
-  }
+  const value = tokenClaims(accessToken).roleId;
+  return typeof value === "number" ? value : null;
 }
 
 /** Claim `campusId` del JWT. */
 export function getCampusId() {
-  if (!accessToken) {
-    return null;
+  const value = tokenClaims(accessToken).campusId;
+  return typeof value === "string" ? value : null;
+}
+
+/** Claim `role` del JWT: nombre legible del rol (p. ej. "Admin"). */
+export function getRoleName() {
+  const value = tokenClaims(accessToken).role;
+  return typeof value === "string" && value !== "" ? value : null;
+}
+
+/** Claim `documentNumber` del JWT: número de identificación de la persona (FR-2.1). */
+export function getIdentificationNumber() {
+  const value = tokenClaims(accessToken).documentNumber;
+  return typeof value === "string" && value !== "" ? value : null;
+}
+
+/** Claim `permissions` del JWT: permisos RBAC concedidos (FR-2.1). */
+export function getPermissions() {
+  return normalizePermissions(tokenClaims(accessToken).permissions);
+}
+
+/**
+ * true si la sesión tiene alguno de los permisos indicados (semántica "any-of").
+ * Sin permisos concedidos siempre devuelve false.
+ */
+export function hasPermission(...permissions) {
+  if (permissions.length === 0) {
+    return false;
   }
-  try {
-    const payload = accessToken.split(".")[1];
-    const decoded = JSON.parse(atob(payload.replace(/-/g, "+").replace(/_/g, "/")));
-    return typeof decoded.campusId === "string" ? decoded.campusId : null;
-  } catch {
-    return null;
-  }
+  const granted = getPermissions();
+  return permissions.some((permission) => granted.includes(permission));
 }

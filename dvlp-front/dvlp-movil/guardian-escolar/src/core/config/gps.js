@@ -1,8 +1,6 @@
 export const GPS_CONFIG = {
-  baseUrl: "http://10.3.235.83:8084",
+  baseUrl: "http://172.27.48.1:8000",  // Cambiado a API Gateway Kong (puerto 8000)
   imei: "355468590730586",
-  pollingIntervalMs: 10000,
+  pollingIntervalMs: 5000,  // Cambiado de 10000ms (10s) a 5000ms (5s) para mayor frecuencia
 };
 
-// Para Android físico o Expo Go, cambiar baseUrl por la IP LAN del equipo
-// donde corre el backend, por ejemplo: http://192.168.1.X:8084

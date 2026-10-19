@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, Pressable } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Polyline } from "react-native-maps";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import RouteInfoCard from "@components/cards/RouteInfoCard";
@@ -8,8 +8,9 @@ import BottomTabBar from "@components/layout/BottomTabBar";
 import useWindow from "@core/hooks/useWindow";
 import TopBar from "@components/TopBar";
 import { roleConfig } from "@core/config/roles/roleConfig";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import useSession from "@core/hooks/useSession";
+import useGpsTracking from "@features/gps/hooks/useGpsTracking";
 import QRButtom from "@components/buttons/QRButtom";
 import IncidentReportButton from "@components/buttons/IncidentReportButton";
 import QRDisplayModal from "@components/modals/QRDisplayModal";
@@ -24,12 +25,10 @@ import styles from "./MainPage.style";
 
 function normalizeStops(route) {
   const stops = Array.isArray(route?.stops) ? route.stops : [];
-
   return stops
     .map((stop, index) => {
       const latitude = Number(stop?.latitude);
       const longitude = Number(stop?.longitude);
-
       return {
         id: stop?.id ?? index,
         name: stop?.name ?? "",
@@ -115,24 +114,26 @@ export default function MainPage() {
   const navigation = useNavigation();
   const { role } = useSession();
   const { t } = useTranslation();
+  const isFocused = useIsFocused();
   const config = roleConfig[role];
-
   const [modalType, setModalType] = useState(null);
   const [incidentOpen, setIncidentOpen] = useState(false);
   const [routeInfo, setRouteInfo] = useState(null);
   const [routeStops, setRouteStops] = useState([]);
   const [, setLoading] = useState(true);
   const [scanMode, setScanMode] = useState("ON_BOARD");
-
+  const [status, setStatus] = useState(null);
   const mapRef = useRef(null);
   const mapReadyRef = useRef(false);
   const stopsRef = useRef([]);
+
+  // GPS Tracking (solo si está enfocada la pantalla)
+  const { location, routeCoordinates } = useGpsTracking(undefined, isFocused);
 
   // Encuadra el mapa sobre las paradas de la ruta (si las hay).
   const fitStopsOnMap = () => {
     const stops = stopsRef.current;
     if (!mapReadyRef.current || stops.length === 0) return;
-
     mapRef.current?.fitToCoordinates(
       stops.map((stop) => ({
         latitude: stop.latitude,
@@ -150,7 +151,22 @@ export default function MainPage() {
 
   const handleQrScan = async (qrToken) => {
     try {
-      await scanCredential(qrToken, scanMode);
+      const qrData = JSON.parse(data);
+      const session = await getSession();
+      const routes = await getRouteApi("/routes");
+      const route = routes[0];
+
+      if (!route) return;
+
+      const trip = await getCurrentTrip(session?.profileId);
+
+      await postNotificationApi("/v1/notifications/scan", {
+        routeId: route.id,
+        routeExecutionId: trip?.id ?? EMPTY_GUID,
+        studentProfileId: qrData.id,
+        routeStopId: qrData.routeStopId || EMPTY_GUID,
+        boardingType: scanMode,
+      });
     } catch (error) {
       console.error("Error processing QR scan:", error);
     }
@@ -162,13 +178,41 @@ export default function MainPage() {
         const session = await getSession();
         if (!session) {
           setLoading(false);
+          setStatus("No se pudo verificar la ruta asignada.");
           return;
         }
 
-        // Ruta según el rol. El bus, el conductor y los horarios vienen en el
-        // mismo detalle de ms-route (FR-9.1/FR-9.2), así que ya no hay que
-        // cruzar ms-fleet a mano como antes.
-        const route = await resolveRouteForRole(role, session);
+        let route = null;
+
+        // Cargar ruta según el rol del usuario
+        if (role === "student") {
+          // Estudiante: obtener su ruta asignada
+          try {
+            route = await getRouteApi(`/routes/student/${session.profileId}`);
+          } catch {
+            route = null;
+          }
+        } else if (role === "driver") {
+          // Conductor: el backend valida el horario. Solo si la ruta esta
+
+          try {
+            const today = await getRouteApi(
+              `/routes/today?driverId=${session.profileId}`
+            );
+
+            if (today?.status === "ACTIVE" && today.route) {
+              route = today.route;
+            } else {
+              route = null;
+            }
+          } catch {
+            route = null;
+          }
+        } else {
+          // Otros roles: obtener primera ruta (fallback)
+          const routes = await getRouteApi("/routes");
+          route = routes[0];
+        }
 
         if (!route) {
           stopsRef.current = [];
@@ -177,27 +221,47 @@ export default function MainPage() {
           return;
         }
 
+        let driverName = "";
+        let plate = "";
+
+        if (role === "driver") {
+          const buses = await getFleetApi("/buses");
+          const bus = buses.find((b) => b.campuseId === route.campuseId);
+          if (bus) {
+            plate = bus.plate ?? "";
+            driverName = bus.driverName ?? "";
+          }
+        }
+
         // RouteDetailDto (conductor/estudiante) incluye stops[];
         // RouteListDto solo trae stopsCount.
         const stops = normalizeStops(route);
         stopsRef.current = stops;
         setRouteStops(stops);
 
+        // RouteListDto: horario real = startTime/endTime; targetSector es el destino.
+        const schedule =
+          route.startTime && route.endTime
+            ? `${route.startTime} - ${route.endTime}`
+            : "";
+        const stopsCount =
+          route.stopsCount != null && route.stopsCount !== ""
+            ? String(route.stopsCount)
+            : stops.length > 0
+              ? String(stops.length)
+              : "—";
+
         setRouteInfo({
           routeName: route.name,
-          driverName: route.bus?.driverName ?? "",
-          plate: route.bus?.plate ?? "",
-          schedule: formatSchedules(route),
-          stopsCount:
-            route.stopsCount != null && route.stopsCount !== ""
-              ? String(route.stopsCount)
-              : stops.length > 0
-                ? String(stops.length)
-                : "—",
+          driverName,
+          plate,
+          schedule,
+          stopsCount,
           finalDestination: route.targetSector ?? "",
         });
       } catch (error) {
         console.error("Error loading route info:", error);
+        setStatus("No fue posible verificar la ruta asignada.");
       } finally {
         setLoading(false);
       }
@@ -226,6 +290,19 @@ export default function MainPage() {
           fitStopsOnMap();
         }}
       >
+        {/* Trazo de la ruta (paradas) */}
+        {routeStops.length >= 2 && (
+          <Polyline
+            coordinates={routeStops.map(({ latitude, longitude }) => ({
+              latitude,
+              longitude,
+            }))}
+            strokeColor="#1A56DB"
+            strokeWidth={4}
+          />
+        )}
+
+        {/* Marcadores de paradas */}
         {routeStops.map((stop, index) => (
           <Marker
             key={stop.id}
@@ -238,8 +315,10 @@ export default function MainPage() {
             tracksViewChanges={false}
           />
         ))}
+
       </MapView>
 
+      {/* Encabezado */}
       <View
         style={[
           styles.topBarContainer,
@@ -256,6 +335,14 @@ export default function MainPage() {
         />
       </View>
 
+      {/* Mensaje de estado */}
+      {status ? (
+        <View style={[styles.statusMessage, { left: horizontalPadding, right: horizontalPadding }]}>
+          <Text style={styles.statusMessageText}>{status}</Text>
+        </View>
+      ) : null}
+
+      {/* Overlay: tarjeta de ruta + navegación */}
       <View
         style={[
           styles.overlay,
@@ -268,12 +355,7 @@ export default function MainPage() {
       >
         <View style={styles.spacer} />
 
-        <View
-          style={[
-            styles.bottomSection,
-            { marginHorizontal: -horizontalPadding },
-          ]}
-        >
+        <View style={[styles.bottomSection, { marginHorizontal: -horizontalPadding }]}>
           <RouteInfoCard
             routeName={routeInfo?.routeName ?? ""}
             driverName={routeInfo?.driverName ?? ""}
@@ -288,7 +370,6 @@ export default function MainPage() {
             onProfilePress={() => navigation.navigate("Profile")}
           />
         </View>
-
         <View style={styles.qrButtonContainer} pointerEvents="box-none">
           <QRButtom config={config.card} onOpenModel={handleOpenModal} />
         </View>
@@ -305,11 +386,11 @@ export default function MainPage() {
         onClose={() => setIncidentOpen(false)}
       />
 
+      {/* Modales */}
       <QRDisplayModal
         visible={modalType === "activeQR"}
         onClose={handleCloseModal}
       />
-
       {modalType === "qrScanner" && (
         <View style={styles.scanModeContainer}>
           <Pressable
@@ -332,7 +413,6 @@ export default function MainPage() {
           </Pressable>
         </View>
       )}
-
       <QRScannerModal
         visible={modalType === "qrScanner"}
         onClose={handleCloseModal}

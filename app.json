@@ -11,7 +11,11 @@
       "android"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.schoolguardian.app",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
     },
     "android": {
       "package": "com.schoolguardian.app",
@@ -34,7 +38,7 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Guardian Escolar necesita la cámara para escanear el QR del estudiante."
+          "cameraPermission": "Guardian Escolar necesita la c\u00e1mara para escanear el QR del estudiante."
         }
       ],
       "expo-secure-store",

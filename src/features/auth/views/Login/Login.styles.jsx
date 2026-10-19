@@ -9,12 +9,12 @@ export const styles = StyleSheet.create({
   },
   form: {
     width: '100%',
-    
   },
   icon: {
-    fontSize: 70,
-    textAlign: 'center',
-    marginBottom: 10,
+    width: 92,
+    height: 113,
+    alignSelf: "center",
+    marginBottom: 16,
   },
   title: {
     fontSize: 26,
@@ -32,7 +32,7 @@ export const styles = StyleSheet.create({
     marginTop: 15,
   },
 
-    error: {
+  error: {
     color: "#D32F2F",
     marginBottom: 10,
   },

@@ -3,7 +3,9 @@ import type {
   BoardingType,
   Credential,
   GuardianNotification,
+  IncidentResponse,
   RegisterDeviceRequest,
+  ReportIncidentRequest,
 } from "@core/types/notifications";
 
 /**
@@ -15,6 +17,7 @@ const SCAN = process.env.EXPO_PUBLIC_NOTIFICATION_SCAN_PATH;
 const DEVICES = process.env.EXPO_PUBLIC_NOTIFICATION_DEVICES_PATH;
 const CREDENTIAL = process.env.EXPO_PUBLIC_NOTIFICATION_CREDENTIAL_PATH;
 const GUARDIAN = process.env.EXPO_PUBLIC_NOTIFICATION_GUARDIAN_PATH;
+const INCIDENTS = process.env.EXPO_PUBLIC_NOTIFICATION_INCIDENTS_PATH;
 
 /** GET a ms-notification. El camino lo aporta el llamador. */
 export function getNotificationApi(path: string | undefined): Promise<unknown> {
@@ -52,4 +55,16 @@ export async function registerDevice(
 /** Alertas dirigidas al perfil autenticado. */
 export async function getGuardianNotifications(): Promise<GuardianNotification[]> {
   return (await getNotificationApi(GUARDIAN)) as GuardianNotification[];
+}
+
+/**
+ * Reporta un incidente o emergencia durante el viaje (FR-8.1).
+ *
+ * El servidor saca el viaje del conductor autenticado y resuelve solo quienes
+ * deben enterarse (FR-8.2), asi que aqui no se manda ni viaje ni destinatarios.
+ */
+export async function reportIncident(
+  request: ReportIncidentRequest
+): Promise<IncidentResponse> {
+  return (await postNotificationApi(INCIDENTS, request)) as IncidentResponse;
 }

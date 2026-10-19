@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
+    "test": "node --experimental-vm-modules --test",
     "api:sync": "node scripts/sync-api-tunnels.mjs",
     "prestart": "node scripts/sync-api-tunnels.mjs --if-configured",
     "start": "expo start",

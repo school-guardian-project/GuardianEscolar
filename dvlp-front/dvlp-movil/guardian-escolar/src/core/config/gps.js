@@ -1,5 +1,5 @@
 export const GPS_CONFIG = {
-  baseUrl: "https://3-15-21-147.sslip.io",
+  baseUrl: "https://52-15-190-40.sslip.io",
   imei: "355468590730586",
   pollingIntervalMs: 5000,  // Cambiado de 10000ms (10s) a 5000ms (5s) para mayor frecuencia
 };

@@ -151,6 +151,7 @@
     "routeArrivingMessage": "O ônibus chegará à sua parada em aproximadamente 10 minutos.",
     "studentLeftTitle": "Desembarque registrado",
     "studentLeftMessage": "O desembarque do estudante do ônibus foi registrado.",
+    "incidentNoDescription": "O motorista relatou uma emergência durante a viagem.",
     "routeDetourTitle": "Desvio de rota",
     "routeDetourMessage": "A rota apresenta um desvio temporário.",
     "justNow": "Agora",
@@ -163,6 +164,7 @@
       "all": "Todas",
       "boarding": "Embarque no ônibus",
       "alighting": "Desembarque do ônibus",
+      "incident": "Incidentes",
       "delays": "Atrasos",
       "detours": "Desvios de rota",
       "saved": "Notificações salvas"
@@ -222,7 +224,33 @@
   "cards": {
     "finalDestination": "Destino final",
     "stops": "Paradas",
-    "school": "Escola"
+    "school": "Escola",
+    "scanBoarded": "Embarque registrado. O responsável foi notificado.",
+    "scanAlighted": "Desembarque registrado. O responsável foi notificado.",
+    "scanAlready": "Já foi notificado. Nenhum registro duplicado foi criado."
+  },
+
+  "incidents": {
+    "open": "Reportar incidente",
+    "title": "Reportar incidente",
+    "subtitle": "Conte-nos o que está acontecendo na rota.",
+    "typeAccident": "Acidente",
+    "typeMedical": "Emergência médica",
+    "typeBreakdown": "Falha mecânica",
+    "typeSecurity": "Situação de insegurança",
+    "descriptionLabel": "Detalhes (opcional)",
+    "descriptionPlaceholder": "Descreva brevemente o que aconteceu",
+    "submit": "Enviar relato",
+    "sending": "Enviando...",
+    "success": "Relato enviado. A escola e {{notified}} responsável(is) foram avisados.",
+    "successNoRecipients": "Relato enviado. Foi registrado na escola.",
+    "done": "Pronto",
+    "noTrip": "Não foi possível reportar: não há viagem ativa. Inicie a rota e tente novamente.",
+    "unknownType": "Esse tipo de incidente não está disponível.",
+    "descriptionTooLong": "Os detalhes são muito longos (máximo de 500 caracteres).",
+    "forbidden": "Somente o motorista designado pode reportar incidentes.",
+    "unavailable": "O serviço está indisponível no momento. Tente mais tarde.",
+    "failed": "Não foi possível enviar o relato. Verifique sua conexão e tente novamente."
   },
 
   "incidents": {

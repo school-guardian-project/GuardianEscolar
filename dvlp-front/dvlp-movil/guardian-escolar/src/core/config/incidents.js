@@ -16,3 +16,16 @@ export const INCIDENT_TYPES = [
 
 /** Limite de Notification.Alert.Description ensanchado en FR-8.1. */
 export const MAX_INCIDENT_DESCRIPTION = 500;
+
+/**
+ * Clave de i18n del tipo de incidente, o null si el alertTypeId no pertenece
+ * al catalogo de incidentes (FR-8.2).
+ *
+ * La lista del acudiente (GET /notifications/guardian) mezcla alertas de
+ * abordaje, descenso e incidente en el mismo flujo; el alertTypeId es lo unico
+ * que distingue a un incidente, porque su Alert no trae boardingType.
+ */
+export function incidentTypeLabelKey(alertTypeId) {
+  const type = INCIDENT_TYPES.find((item) => item.alertTypeId === alertTypeId);
+  return type ? type.labelKey : null;
+}

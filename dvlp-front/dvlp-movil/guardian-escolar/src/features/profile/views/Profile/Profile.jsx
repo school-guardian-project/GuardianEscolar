@@ -6,6 +6,8 @@ import { useTranslation } from "react-i18next";
 import { useNavigation } from "@react-navigation/native";
 import SettingsItem from "@components/inputs/SettingsItem";
 import BottomTabBar from "@components/layout/BottomTabBar";
+import useSession from "@core/hooks/useSession";
+import { roleConfig } from "@core/config/roles/roleConfig";
 
 import styles from "./Profile.style";
 
@@ -13,6 +15,9 @@ export default function Profile() {
     const { theme } = useTheme();
     const { t } = useTranslation();
     const navigation = useNavigation();
+    const { role } = useSession();
+    // La tarjeta "Mi familia" se oculta al conductor (roleConfig.profile).
+    const showFamily = roleConfig[role]?.profile?.showFamily ?? true;
     return (
         <View style={[styles.container, { backgroundColor: theme.bgColor }]}>
             <ScrollView
@@ -32,13 +37,15 @@ export default function Profile() {
 
                 </View>
 
-                <View style={styles.card}>
-                    <SettingsItem
-                        icon={<FontAwesome5 name="users" size={20} color={theme.iconColor} />}
-                        title={t("inputs.family")}
-                        onPress={() => navigation.navigate("Family")}
-                    />
-                </View>
+                {showFamily && (
+                    <View style={styles.card}>
+                        <SettingsItem
+                            icon={<FontAwesome5 name="users" size={20} color={theme.iconColor} />}
+                            title={t("inputs.family")}
+                            onPress={() => navigation.navigate("Family")}
+                        />
+                    </View>
+                )}
 
                 <View style={styles.card}>
                     <SettingsItem

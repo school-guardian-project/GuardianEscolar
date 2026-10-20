@@ -2,19 +2,21 @@ import { isPlatformBrowser } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
 import {
-  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
   Input,
+  NgZone,
   OnChanges,
   OnDestroy,
   Output,
   PLATFORM_ID,
   SimpleChanges,
+  afterNextRender,
   inject,
   ViewChild,
 } from '@angular/core';
+import type * as Leaflet from 'leaflet';
 
 @Component({
   selector: 'app-location-map',
@@ -23,7 +25,7 @@ import {
   templateUrl: './location-map.html',
   styleUrl: './location-map.css',
 })
-export class LocationMap implements AfterViewInit, OnChanges, OnDestroy {
+export class LocationMap implements OnChanges, OnDestroy {
   @Input() address = '';
   @Input() latitude: unknown;
   @Input() longitude: unknown;
@@ -33,12 +35,13 @@ export class LocationMap implements AfterViewInit, OnChanges, OnDestroy {
   @ViewChild('canvas', { static: true }) private canvas!: ElementRef<HTMLDivElement>;
 
   private platformId = inject(PLATFORM_ID);
-  private L: typeof import('leaflet') | null = null;
-  private map: import('leaflet').Map | null = null;
-  private marker: import('leaflet').Marker | null = null;
+  private zone = inject(NgZone);
+  private map: Leaflet.Map | null = null;
+  private marker: Leaflet.Marker | null = null;
   private geocodeTimer: ReturnType<typeof setTimeout> | null = null;
   private reverseController: AbortController | null = null;
   private geocodeController: AbortController | null = null;
+  private resizeObserver: ResizeObserver | null = null;
   private lastResolvedAddress = '';
   mapMessageKey = '';
   locating = false;
@@ -49,32 +52,69 @@ export class LocationMap implements AfterViewInit, OnChanges, OnDestroy {
     return lat === null || lng === null ? '—' : `${lat}, ${lng}`;
   }
 
-  ngAfterViewInit(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
+  constructor() {
+    // El mapa se crea solo en el navegador y despues del primer render. La
+    // aplicacion se prerenderiza (RenderMode.Prerender) e hidrata con
+    // eventReplay: crear Leaflet durante ngAfterViewInit escribia DOM
+    // imperativo dentro de un contenedor hidratado, Angular lo tomaba como
+    // un desajuste de hidratacion y dejaba de enlazar los eventos, asi que el
+    // mapa no se veia ni permitia registrar lat/lon.
+    afterNextRender(() => {
+      if (!isPlatformBrowser(this.platformId)) return;
+      void this.createMap();
+    });
+  }
 
-    void import('leaflet').then((L) => {
-      this.L = L;
+  private async createMap(): Promise<void> {
+    // Leaflet 1.9 se publica como CommonJS (`main`, sin `module` ni
+    // `exports`), asi que el namespace del import solo trae `default`:
+    // `L.map` seria undefined y el mapa reventaba con "L.map is not a
+    // function". Hay que desenvolver el default antes de usarlo.
+    const L = (await import('leaflet')).default;
 
-      const map = L.map(this.canvas.nativeElement, {
-        center: [4.5709, -74.2973],
-        zoom: 5,
-        scrollWheelZoom: false,
-      });
+    const map = L.map(this.canvas.nativeElement, {
+      center: [4.5709, -74.2973],
+      zoom: 5,
+      scrollWheelZoom: false,
+    });
 
-      const marker = L.marker([4.5709, -74.2973], { draggable: true }).addTo(map);
+    const marker = L.marker([4.5709, -74.2973], { draggable: true }).addTo(map);
 
-      L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap',
-      }).addTo(map);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap',
+    }).addTo(map);
 
-      marker.on('dragend', () => this.onMarkerDrag());
-      map.on('click', (event) => this.moveTo(event.latlng.lat, event.latlng.lng, true));
+    marker.on('dragend', () => this.onMarkerDrag());
+    map.on('click', (event) => this.moveTo(event.latlng.lat, event.latlng.lng, true));
 
-      this.map = map;
-      this.marker = marker;
+    this.map = map;
+    this.marker = marker;
 
-      this.syncFromInputs();
-      if (this.toCoordinate(this.latitude) === null) this.scheduleGeocode(0);
+    this.observeSize();
+
+    // Leaflet mide el contenedor al crearse. Si el layout aun no le dio
+    // tamano (contenedor oculto o recien hidratado) queda en blanco hasta que
+    // se recalcula, de ahi el invalidateSize explicito en el siguiente frame.
+    this.refreshSize();
+
+    this.syncFromInputs();
+    if (this.toCoordinate(this.latitude) === null) this.scheduleGeocode(0);
+  }
+
+  private observeSize(): void {
+    if (typeof ResizeObserver === 'undefined') return;
+
+    this.resizeObserver = new ResizeObserver(() => this.refreshSize());
+    this.resizeObserver.observe(this.canvas.nativeElement);
+  }
+
+  private refreshSize(): void {
+    if (!this.map) return;
+
+    // Fuera de Angular: los tiles no dependen del ciclo de deteccion y asi no
+    // se dispara una deteccion extra por cada frame de redimension.
+    this.zone.runOutsideAngular(() => {
+      requestAnimationFrame(() => this.map?.invalidateSize());
     });
   }
 
@@ -88,6 +128,8 @@ export class LocationMap implements AfterViewInit, OnChanges, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.geocodeTimer) clearTimeout(this.geocodeTimer);
+    this.resizeObserver?.disconnect();
+    this.resizeObserver = null;
     this.reverseController?.abort();
     this.geocodeController?.abort();
     this.map?.remove();

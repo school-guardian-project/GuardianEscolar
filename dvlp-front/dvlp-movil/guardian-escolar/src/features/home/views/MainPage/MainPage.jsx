@@ -47,31 +47,6 @@ function normalizeStops(route) {
     .sort((a, b) => a.orderSequence - b.orderSequence);
 }
 
-/** "06:30:00" -> "06:30". */
-function shortTime(value) {
-  const text = String(value ?? "");
-  return text.length >= 5 ? text.slice(0, 5) : text;
-}
-
-/**
- * Salidas programadas de la ruta (FR-9.1/FR-9.2), resumidas para la tarjeta.
- * Usa los horarios reales (`schedules[]`) y cae al rango de la ruta si aún no hay.
- */
-function formatSchedules(route) {
-  const schedules = Array.isArray(route?.schedules) ? route.schedules : [];
-  const times = [
-    ...new Set(schedules.map((schedule) => shortTime(schedule?.startTime)).filter(Boolean)),
-  ].sort();
-
-  if (times.length > 0) {
-    return times.join(" · ");
-  }
-
-  const start = shortTime(route?.startTime);
-  const end = shortTime(route?.endTime);
-  return start && end ? `${start} - ${end}` : "";
-}
-
 /** GET a ms-route que devuelve null en vez de propagar el error. */
 async function fetchRoute(path) {
   try {
@@ -123,6 +98,7 @@ export default function MainPage() {
   const [, setLoading] = useState(true);
   const [scanMode, setScanMode] = useState("ON_BOARD");
   const [status, setStatus] = useState(null);
+  const [scanFeedback, setScanFeedback] = useState(null);
   const mapRef = useRef(null);
   const mapReadyRef = useRef(false);
   const stopsRef = useRef([]);
@@ -151,24 +127,33 @@ export default function MainPage() {
 
   const handleQrScan = async (qrToken) => {
     try {
-      const qrData = JSON.parse(data);
-      const session = await getSession();
-      const routes = await getRouteApi("/routes");
-      const route = routes[0];
+      // Contrato de ms-notification (FR-4.1): { qrToken, boardingType }.
+      // scanMode ya usa los valores del enum ON_BOARD/OFF_BOARD.
+      const result = await scanCredential(qrToken, scanMode);
+      handleCloseModal();
 
-      if (!route) return;
-
-      const trip = await getCurrentTrip(session?.profileId);
-
-      await postNotificationApi("/v1/notifications/scan", {
-        routeId: route.id,
-        routeExecutionId: trip?.id ?? EMPTY_GUID,
-        studentProfileId: qrData.id,
-        routeStopId: qrData.routeStopId || EMPTY_GUID,
-        boardingType: scanMode,
+      // El driver necesita saber que el sistema ya hizo lo suyo: sin esto el
+      // escaneo cerraba el modal y no confirmaba nada. `alreadyProcessed`
+      // distingue un registro nuevo de un movimiento que ya se había notificado.
+      setScanFeedback({
+        type: "success",
+        message: result?.alreadyProcessed
+          ? t("cards.scanAlready")
+          : scanMode === "OFF_BOARD"
+            ? t("cards.scanAlighted")
+            : t("cards.scanBoarded"),
       });
     } catch (error) {
-      console.error("Error processing QR scan:", error);
+      handleCloseModal();
+
+      // El backend explica el motivo real (fuera de horario, QR de otra ruta,
+      // sin abordaje activo) en `message`; se muestra en vez de solo loguearlo.
+      setScanFeedback({
+        type: "error",
+        message:
+          error?.data?.message ??
+          t("serviceErrors.requestFailed"),
+      });
     }
   };
 
@@ -176,70 +161,31 @@ export default function MainPage() {
     async function loadRouteInfo() {
       try {
         const session = await getSession();
-        if (!session) {
-          setLoading(false);
+        if (!session?.profileId) {
           setStatus("No se pudo verificar la ruta asignada.");
           return;
         }
 
-        let route = null;
-
-        // Cargar ruta según el rol del usuario
-        if (role === "student") {
-          // Estudiante: obtener su ruta asignada
-          try {
-            route = await getRouteApi(`/routes/student/${session.profileId}`);
-          } catch {
-            route = null;
-          }
-        } else if (role === "driver") {
-          // Conductor: el backend valida el horario. Solo si la ruta esta
-
-          try {
-            const today = await getRouteApi(
-              `/routes/today?driverId=${session.profileId}`
-            );
-
-            if (today?.status === "ACTIVE" && today.route) {
-              route = today.route;
-            } else {
-              route = null;
-            }
-          } catch {
-            route = null;
-          }
-        } else {
-          // Otros roles: obtener primera ruta (fallback)
-          const routes = await getRouteApi("/routes");
-          route = routes[0];
-        }
+        // Resuelve la ruta visible por rol con los endpoints reales de
+        // ms-route: el padre usa la ruta del estudiante vinculado (FR-9.1)
+        // en lugar de caer al listado general, que exige permisos de admin.
+        const route = await resolveRouteForRole(role, session);
 
         if (!route) {
           stopsRef.current = [];
           setRouteStops([]);
-          setLoading(false);
+          setRouteInfo(null);
+          if (role === "driver") setStatus("No hay una ruta asignada.");
           return;
         }
 
-        let driverName = "";
-        let plate = "";
-
-        if (role === "driver") {
-          const buses = await getFleetApi("/buses");
-          const bus = buses.find((b) => b.campuseId === route.campuseId);
-          if (bus) {
-            plate = bus.plate ?? "";
-            driverName = bus.driverName ?? "";
-          }
-        }
-
-        // RouteDetailDto (conductor/estudiante) incluye stops[];
-        // RouteListDto solo trae stopsCount.
+        // RouteDetailDto ya incluye el bus asignado con su conductor
+        // (ms-route lo resuelve vía gRPC a ms-fleet), así que el móvil
+        // no necesita consultar la flota directamente.
         const stops = normalizeStops(route);
         stopsRef.current = stops;
         setRouteStops(stops);
 
-        // RouteListDto: horario real = startTime/endTime; targetSector es el destino.
         const schedule =
           route.startTime && route.endTime
             ? `${route.startTime} - ${route.endTime}`
@@ -252,9 +198,9 @@ export default function MainPage() {
               : "—";
 
         setRouteInfo({
-          routeName: route.name,
-          driverName,
-          plate,
+          routeName: route.name ?? "",
+          driverName: route.bus?.driverName ?? "",
+          plate: route.bus?.plate ?? "",
           schedule,
           stopsCount,
           finalDestination: route.targetSector ?? "",
@@ -273,6 +219,14 @@ export default function MainPage() {
   useEffect(() => {
     fitStopsOnMap();
   }, [routeStops]);
+
+  // El aviso del escaneo se retira solo: el driver no debe cerrarlo a mano
+  // para volver a la operación.
+  useEffect(() => {
+    if (!scanFeedback) return undefined;
+    const timeout = setTimeout(() => setScanFeedback(null), 4000);
+    return () => clearTimeout(timeout);
+  }, [scanFeedback]);
 
   return (
     <View style={styles.container}>
@@ -339,6 +293,19 @@ export default function MainPage() {
       {status ? (
         <View style={[styles.statusMessage, { left: horizontalPadding, right: horizontalPadding }]}>
           <Text style={styles.statusMessageText}>{status}</Text>
+        </View>
+      ) : null}
+
+      {/* Aviso del último escaneo: éxito, repetido o rechazo del backend */}
+      {scanFeedback ? (
+        <View
+          style={[
+            styles.scanFeedback,
+            scanFeedback.type === "error" ? styles.scanFeedbackError : styles.scanFeedbackSuccess,
+            { left: horizontalPadding, right: horizontalPadding },
+          ]}
+        >
+          <Text style={styles.scanFeedbackText}>{scanFeedback.message}</Text>
         </View>
       ) : null}
 

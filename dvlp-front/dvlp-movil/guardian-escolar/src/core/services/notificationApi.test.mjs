@@ -101,6 +101,18 @@ test('scanCredential propaga el error del backend para que la pantalla lo muestr
   });
 });
 
+test('scanCredential devuelve el resultado para que el conductor vea la confirmación', async () => {
+  const result = {
+    boardingId: 'boarding-1',
+    alertId: 'alert-1',
+    parentsNotified: 2,
+    alreadyProcessed: true,
+  };
+  const { service } = await loadNotificationApi(() => result);
+
+  assert.deepEqual(plain(await service.scanCredential('qr-token-4', 'ON_BOARD')), result);
+});
+
 test('generateCredential devuelve la credencial del backend', async () => {
   const credential = { qrToken: 'signed-token', expiresAt: '2026-10-15T12:00:00Z' };
   const { service, calls } = await loadNotificationApi(() => credential);

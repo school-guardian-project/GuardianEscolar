@@ -72,3 +72,18 @@ test('el limite del detalle coincide con el que aplica el backend', async () => 
   // ReportIncidentService.MaxDescriptionLength (FR-8.1).
   assert.equal(MAX_INCIDENT_DESCRIPTION, 500);
 });
+
+test('incidentTypeLabelKey devuelve la etiqueta solo para los tipos del catalogo', async () => {
+  const { INCIDENT_TYPES, incidentTypeLabelKey } = await loadIncidentTypes();
+
+  for (const type of INCIDENT_TYPES) {
+    assert.equal(incidentTypeLabelKey(type.alertTypeId), type.labelKey);
+  }
+
+  // Ids fuera del catalogo: un abordaje (alertTypeId de los 20 tipos
+  // operativos) y ruido no numerico no deben tratarse como incidente.
+  assert.equal(incidentTypeLabelKey(1), null);
+  assert.equal(incidentTypeLabelKey(20), null);
+  assert.equal(incidentTypeLabelKey(undefined), null);
+  assert.equal(incidentTypeLabelKey(null), null);
+});

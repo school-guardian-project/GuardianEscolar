@@ -151,6 +151,7 @@
     "routeArrivingMessage": "O ônibus chegará à sua parada em aproximadamente 10 minutos.",
     "studentLeftTitle": "Desembarque registrado",
     "studentLeftMessage": "O desembarque do estudante do ônibus foi registrado.",
+    "incidentNoDescription": "O motorista relatou uma emergência durante a viagem.",
     "routeDetourTitle": "Desvio de rota",
     "routeDetourMessage": "A rota apresenta um desvio temporário.",
     "justNow": "Agora",
@@ -163,6 +164,7 @@
       "all": "Todas",
       "boarding": "Embarque no ônibus",
       "alighting": "Desembarque do ônibus",
+      "incident": "Incidentes",
       "delays": "Atrasos",
       "detours": "Desvios de rota",
       "saved": "Notificações salvas"

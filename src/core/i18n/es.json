@@ -151,6 +151,7 @@
     "routeArrivingMessage": "El bus llegará a tu parada en aproximadamente 10 minutos.",
     "studentLeftTitle": "Descenso registrado",
     "studentLeftMessage": "Se registró el descenso del estudiante del bus.",
+    "incidentNoDescription": "El conductor reportó una emergencia durante el viaje.",
     "routeDetourTitle": "Desvío de ruta",
     "routeDetourMessage": "La ruta presenta un desvío temporal.",
     "justNow": "Ahora",
@@ -163,6 +164,7 @@
       "all": "Todas",
       "boarding": "Ascenso al bus",
       "alighting": "Descenso del bus",
+      "incident": "Incidentes",
       "delays": "Retrasos",
       "detours": "Desvíos de ruta",
       "saved": "Notificaciones guardadas"

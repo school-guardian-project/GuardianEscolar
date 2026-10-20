@@ -6,6 +6,7 @@ import type {
   IncidentResponse,
   RegisterDeviceRequest,
   ReportIncidentRequest,
+  ScanResponse,
 } from "@core/types/notifications";
 
 /**
@@ -41,8 +42,11 @@ export async function generateCredential(): Promise<Credential> {
 export async function scanCredential(
   qrToken: string,
   boardingType: BoardingType
-): Promise<void> {
-  await postNotificationApi(SCAN, { qrToken, boardingType });
+): Promise<ScanResponse> {
+  return (await postNotificationApi(SCAN, {
+    qrToken,
+    boardingType,
+  })) as ScanResponse;
 }
 
 /** Alta idempotente del dispositivo para recibir push. */

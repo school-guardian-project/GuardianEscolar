@@ -224,7 +224,10 @@
   "cards": {
     "finalDestination": "Destino final",
     "stops": "Paradas",
-    "school": "Escuela"
+    "school": "Escuela",
+    "scanBoarded": "Abordaje registrado. Se notificó al acudiente.",
+    "scanAlighted": "Descenso registrado. Se notificó al acudiente.",
+    "scanAlready": "Ya fue notificado. No se duplicó el registro."
   },
 
   "incidents": {

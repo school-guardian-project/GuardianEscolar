@@ -1,53 +1,61 @@
+/**
+ * Configuración por rol para la vista principal (MainPage) y el perfil.
+ * Cada rol declara qué componentes se muestran, y MainPage/Profile los
+ * renderizan según esta configuración.
+ */
 export const roleConfig = {
-    student: {
-        topBar: {
-            showSearchInput: true,
-            showNotifications: true,
-        },
-        card: {
-            showNearbyRoutes: true, // Rutas cercanas
-            showStop: true,
-            showQR: true,
-            qrMode: 'activate'
-        },
-        MapMarkers: 'own'
+  student: {
+    topBar: {
+      showNotifications: true,
     },
-
-    driver: {
-        topBar: {
-            showSearchInput: false,
-            showNotifications: true,
-        },
-        card: {
-            showNearbyRoutes: true, // Rutas cercanas
-            showStop: true,
-            showQR: true,
-            qrMode: 'scan',
-            showIncidentReport: true // FR-8.1: solo el conductor reporta incidentes
-        },
-        MapMarkers: 'all-students'
+    card: {
+      showQR: true,
+      showIncidentReport: false,
     },
-
-    father: {
-        topBar: {
-            showSearchInput: false,
-            showNotifications: true,
-        },
-        card: {
-            showNearbyRoutes: false, // Rutas cercanas
-            showStop: true,
-            showQR: false,
-            qrMode: null
-        },
-        MapMarkers: 'child-only'
-    }
-}
-
-export const VALID_ROLES = Object.keys(roleConfig);
-
-// roleId del JWT (catálogo Iam.Role) -> clave local de roleConfig.
-const ROLE_ID_TO_KEY = { 2: "student", 3: "driver", 4: "father" };
-
-export function roleKeyFromRoleId(roleId) {
-    return ROLE_ID_TO_KEY[roleId] ?? "student";
-}
+    MapMarkers: {
+      showRouteStops: true,
+      showStudentMarker: true,
+      showDriverMarker: false,
+      showGeofence: true,
+    },
+    profile: {
+      showFamily: true,
+    },
+  },
+  driver: {
+    topBar: {
+      showNotifications: true,
+    },
+    card: {
+      showQR: true,
+      showIncidentReport: true,
+    },
+    MapMarkers: {
+      showRouteStops: true,
+      showStudentMarker: false,
+      showDriverMarker: true,
+      showGeofence: false,
+    },
+    profile: {
+      showFamily: false,
+    },
+  },
+  father: {
+    topBar: {
+      showNotifications: true,
+    },
+    card: {
+      showQR: false,
+      showIncidentReport: false,
+    },
+    MapMarkers: {
+      showRouteStops: true,
+      showStudentMarker: true,
+      showDriverMarker: true,
+      showGeofence: true,
+    },
+    profile: {
+      showFamily: true,
+    },
+  },
+};

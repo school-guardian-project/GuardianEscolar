@@ -224,7 +224,10 @@
   "cards": {
     "finalDestination": "Final destination",
     "stops": "Stops",
-    "school": "School"
+    "school": "School",
+    "scanBoarded": "Boarding registered. The guardian was notified.",
+    "scanAlighted": "Alighting registered. The guardian was notified.",
+    "scanAlready": "Already notified. No duplicate was created."
   },
 
   "incidents": {

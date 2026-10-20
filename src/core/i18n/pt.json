@@ -224,7 +224,10 @@
   "cards": {
     "finalDestination": "Destino final",
     "stops": "Paradas",
-    "school": "Escola"
+    "school": "Escola",
+    "scanBoarded": "Embarque registrado. O responsável foi notificado.",
+    "scanAlighted": "Desembarque registrado. O responsável foi notificado.",
+    "scanAlready": "Já foi notificado. Nenhum registro duplicado foi criado."
   },
 
   "incidents": {

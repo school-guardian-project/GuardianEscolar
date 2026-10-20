@@ -224,7 +224,10 @@
   "cards": {
     "finalDestination": "Destination finale",
     "stops": "Arrêts",
-    "school": "École"
+    "school": "École",
+    "scanBoarded": "Montée enregistrée. Le responsable a été notifié.",
+    "scanAlighted": "Descente enregistrée. Le responsable a été notifié.",
+    "scanAlready": "Déjà notifié. Aucun doublon n'a été créé."
   },
   "incidents": {
     "open": "Signaler un incident",

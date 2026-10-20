@@ -33,6 +33,28 @@ export default StyleSheet.create({
     textAlign: "center",
     fontSize: 14,
   },
+  scanFeedback: {
+    position: "absolute",
+    top: 92,
+    zIndex: 4,
+    padding: 12,
+    borderRadius: 8,
+    borderLeftWidth: 4,
+  },
+  scanFeedbackSuccess: {
+    backgroundColor: "#DCFCE7E8",
+    borderLeftColor: "#16A34A",
+  },
+  scanFeedbackError: {
+    backgroundColor: "#FEE2E2E8",
+    borderLeftColor: "#DC2626",
+  },
+  scanFeedbackText: {
+    color: "#1E293B",
+    textAlign: "center",
+    fontSize: 14,
+    fontWeight: "600",
+  },
   overlay: {
     ...StyleSheet.absoluteFillObject,
     justifyContent: "flex-end",

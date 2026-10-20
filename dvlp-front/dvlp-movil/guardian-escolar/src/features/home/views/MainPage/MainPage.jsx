@@ -98,6 +98,7 @@ export default function MainPage() {
   const [, setLoading] = useState(true);
   const [scanMode, setScanMode] = useState("ON_BOARD");
   const [status, setStatus] = useState(null);
+  const [scanFeedback, setScanFeedback] = useState(null);
   const mapRef = useRef(null);
   const mapReadyRef = useRef(false);
   const stopsRef = useRef([]);
@@ -128,10 +129,31 @@ export default function MainPage() {
     try {
       // Contrato de ms-notification (FR-4.1): { qrToken, boardingType }.
       // scanMode ya usa los valores del enum ON_BOARD/OFF_BOARD.
-      await scanCredential(qrToken, scanMode);
+      const result = await scanCredential(qrToken, scanMode);
       handleCloseModal();
+
+      // El driver necesita saber que el sistema ya hizo lo suyo: sin esto el
+      // escaneo cerraba el modal y no confirmaba nada. `alreadyProcessed`
+      // distingue un registro nuevo de un movimiento que ya se había notificado.
+      setScanFeedback({
+        type: "success",
+        message: result?.alreadyProcessed
+          ? t("cards.scanAlready")
+          : scanMode === "OFF_BOARD"
+            ? t("cards.scanAlighted")
+            : t("cards.scanBoarded"),
+      });
     } catch (error) {
-      console.error("Error processing QR scan:", error);
+      handleCloseModal();
+
+      // El backend explica el motivo real (fuera de horario, QR de otra ruta,
+      // sin abordaje activo) en `message`; se muestra en vez de solo loguearlo.
+      setScanFeedback({
+        type: "error",
+        message:
+          error?.data?.message ??
+          t("serviceErrors.requestFailed"),
+      });
     }
   };
 
@@ -198,6 +220,14 @@ export default function MainPage() {
     fitStopsOnMap();
   }, [routeStops]);
 
+  // El aviso del escaneo se retira solo: el driver no debe cerrarlo a mano
+  // para volver a la operación.
+  useEffect(() => {
+    if (!scanFeedback) return undefined;
+    const timeout = setTimeout(() => setScanFeedback(null), 4000);
+    return () => clearTimeout(timeout);
+  }, [scanFeedback]);
+
   return (
     <View style={styles.container}>
       <MapView
@@ -263,6 +293,19 @@ export default function MainPage() {
       {status ? (
         <View style={[styles.statusMessage, { left: horizontalPadding, right: horizontalPadding }]}>
           <Text style={styles.statusMessageText}>{status}</Text>
+        </View>
+      ) : null}
+
+      {/* Aviso del último escaneo: éxito, repetido o rechazo del backend */}
+      {scanFeedback ? (
+        <View
+          style={[
+            styles.scanFeedback,
+            scanFeedback.type === "error" ? styles.scanFeedbackError : styles.scanFeedbackSuccess,
+            { left: horizontalPadding, right: horizontalPadding },
+          ]}
+        >
+          <Text style={styles.scanFeedbackText}>{scanFeedback.message}</Text>
         </View>
       ) : null}
 

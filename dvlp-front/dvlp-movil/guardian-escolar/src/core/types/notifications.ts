@@ -5,6 +5,15 @@ export interface ScanRequest {
   boardingType: BoardingType;
 }
 
+/** Respuesta de `POST /notifications/scan` (FR-4.1). */
+export interface ScanResponse {
+  boardingId: string;
+  alertId: string;
+  parentsNotified: number;
+  /** true cuando el movimiento ya estaba registrado y no se volvió a notificar. */
+  alreadyProcessed: boolean;
+}
+
 export interface Credential {
   qrToken: string;
   expiresAt: string;

@@ -48,7 +48,14 @@ export default StyleSheet.create({
   qrButtonContainer: {
     position: "absolute",
     left: 16,
-    bottom: 200,
+    bottom: 280,
+    zIndex: 3,
+    elevation: 8,
+  },
+  incidentButtonContainer: {
+    position: "absolute",
+    right: 16,
+    bottom: 280,
     zIndex: 3,
     elevation: 8,
   },

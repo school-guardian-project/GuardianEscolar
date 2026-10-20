@@ -253,6 +253,29 @@
     "failed": "Não foi possível enviar o relato. Verifique sua conexão e tente novamente."
   },
 
+  "incidents": {
+    "open": "Reportar incidente",
+    "title": "Reportar incidente",
+    "subtitle": "Conte-nos o que está acontecendo na rota.",
+    "typeAccident": "Acidente",
+    "typeMedical": "Emergência médica",
+    "typeBreakdown": "Falha mecânica",
+    "typeSecurity": "Situação de insegurança",
+    "descriptionLabel": "Detalhes (opcional)",
+    "descriptionPlaceholder": "Descreva brevemente o que aconteceu",
+    "submit": "Enviar relato",
+    "sending": "Enviando...",
+    "success": "Relato enviado. A escola e {{notified}} responsável(is) foram avisados.",
+    "successNoRecipients": "Relato enviado. Foi registrado na escola.",
+    "done": "Pronto",
+    "noTrip": "Não foi possível reportar: não há viagem ativa. Inicie a rota e tente novamente.",
+    "unknownType": "Esse tipo de incidente não está disponível.",
+    "descriptionTooLong": "Os detalhes são muito longos (máximo de 500 caracteres).",
+    "forbidden": "Somente o motorista designado pode reportar incidentes.",
+    "unavailable": "O serviço está indisponível no momento. Tente mais tarde.",
+    "failed": "Não foi possível enviar o relato. Verifique sua conexão e tente novamente."
+  },
+
   "reminder": {
     "title": "Lembrete da rota",
     "message": "Sua rota {{name}} começa às {{time}}",

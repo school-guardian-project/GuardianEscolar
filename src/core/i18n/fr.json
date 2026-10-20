@@ -251,6 +251,28 @@
     "unavailable": "Le service est indisponible pour le moment. Réessayez plus tard.",
     "failed": "Le signalement n'a pas pu être envoyé. Vérifiez votre connexion et réessayez."
   },
+  "incidents": {
+    "open": "Signaler un incident",
+    "title": "Signaler un incident",
+    "subtitle": "Dites-nous ce qui se passe sur le trajet.",
+    "typeAccident": "Accident",
+    "typeMedical": "Urgence médicale",
+    "typeBreakdown": "Panne mécanique",
+    "typeSecurity": "Incident de sécurité",
+    "descriptionLabel": "Détails (facultatif)",
+    "descriptionPlaceholder": "Décrivez brièvement ce qui s'est passé",
+    "submit": "Envoyer le signalement",
+    "sending": "Envoi...",
+    "success": "Signalement envoyé. L'école et {{notified}} tuteur(s) ont été prévenus.",
+    "successNoRecipients": "Signalement envoyé. Il a été enregistré à l'école.",
+    "done": "Terminé",
+    "noTrip": "Signalement impossible : aucun trajet actif. Démarrez le trajet et réessayez.",
+    "unknownType": "Ce type d'incident n'est pas disponible.",
+    "descriptionTooLong": "Les détails sont trop longs (500 caractères maximum).",
+    "forbidden": "Seul le conducteur assigné peut signaler des incidents.",
+    "unavailable": "Le service est indisponible pour le moment. Réessayez plus tard.",
+    "failed": "Le signalement n'a pas pu être envoyé. Vérifiez votre connexion et réessayez."
+  },
   "bottom": {
     "route": "Itinéraire",
     "location": "Localisation",

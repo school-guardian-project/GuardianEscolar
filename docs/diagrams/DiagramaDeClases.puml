@@ -1,262 +1,266 @@
 @startuml GuardianEscolar
-'Clase a observar'
+'Observer package'
 
 package Observer {
-    interface AccionEstudiante {
-        bajar(estudiante : Estudiante);
-        subir(estudiante : Estudiante);
+    interface StudentAction {
+        disembark(student : Student)
+        board(student : Student)
     }
 
-    class Alerta {
+    class Alert {
 
-        - titulo : String
-        - tipoAlerta : String
-        - fechaHora : LocalDate
+        - title : String
+        - alertType : String
+        - dateTime : LocalDate
         - bus : Bus
 
-        +crearAlerta (titulo, tipoAlerta, fechaHora, bus) : void
+        +createAlert(title, alertType, dateTime, bus) : void
     }
 
     class Bus {
-        - placa : String
-        - marca : String
-        - capacidadPasajeros : int
-        - vigenciaSOAT : MediumBlob
-        - estadoSOAT : Boolean
-        - estadoGPS : ENUM
-        - observadores : List<IObervador>
+        - plate : String
+        - brand : String
+        - passengerCapacity : int
+        - soatValidity : MediumBlob
+        - soatStatus : Boolean
+        - gpsStatus : ENUM
+        - observers : List<IObserver>
 
-
-
-        +actualizarVigenciaSOAT (estadoSOAT) : void
-        +avisarVigenciaVencida (estadoSOAT) : void
-        +actualizarEstadoGPS (estadoGPS) : void
-        +avisarEstadoGPS (estadoGPS) : void
+        +updateSoatValidity(soatStatus) : void
+        +notifySoatExpired(soatStatus) : void
+        +updateGpsStatus(gpsStatus) : void
+        +notifyGpsStatus(gpsStatus) : void
     }
 
-    interface IObservador {
-        +recibirNotificacion(data : String);
+    interface IObserver {
+        +receiveNotification(data : String)
     }
 
-    Bus ..|> AccionEstudiante
+    Bus ..|> StudentAction
 }
-class Escuela {
-    - nombre : String
-    - direccion : String
-    - ciudad : String
-    - telefono : String
+
+class School {
+    - name : String
+    - address : String
+    - city : String
+    - phone : String
     - email : String
     - logo : TinyBlob
-    - tema : ENUM
+    - theme : ENUM
 
 }
 
 package Comando-GestordeRutas {
-    'Comando gestion de rutas
-    'Invocador
-    class GestorRutas {
-        +ejecutarComando(command : Command) : void
+    'Route management commands
+    'Invoker
+    class RouteManager {
+        +executeCommand(command : Command) : void
     }
 
-    'Interfaz comando
+    'Command interface
     interface Command {
         +execute() : void
     }
 
-    'Comandos concretos
-    class AgregarPasajeroCommand {
-        -ruta : Ruta
-        -estudiante : Estudiante
+    'Concrete commands
+    class AddPassengerCommand {
+        - route : Route
+        - student : Student
         +execute() : void
     }
 
-    class EliminarPasajeroCommand {
-        -ruta : Ruta
-        -estudiante : Estudiante
+    class RemovePassengerCommand {
+        - route : Route
+        - student : Student
         +execute() : void
     }
 
-    class AgregarParadaCommand {
-        -ruta : Ruta
-        -parada : Parada
+    class AddStopCommand {
+        - route : Route
+        - stop : Stop
         +execute() : void
     }
 
-    class EliminarParadaCommand {
-        -ruta : Ruta
-        -parada : Parada
+    class RemoveStopCommand {
+        - route : Route
+        - stop : Stop
         +execute() : void
     }
 
-    class ActualizarHoraInicioCommand {
-        -ruta : Ruta
-        -horaInicio : LocalDate
+    class UpdateStartTimeCommand {
+        - route : Route
+        - startTime : LocalDate
         +execute() : void
     }
 
-    class ActualizarHoraFinCommand {
-        -ruta : Ruta
-        -horaFin : LocalDate
+    class UpdateEndTimeCommand {
+        - route : Route
+        - endTime : LocalDate
         +execute() : void
     }
 
-    class Ruta {
-        - codigo : String
-        - sectorDestinado : String
-        - horaInicio : LocalDate
-        - horaFin : LocalDate
-        - paradas : ArrayList<Parada>
-        - pasajeros : ArrayList<Estudiante>
+    class Route {
+        - code : String
+        - targetSector : String
+        - startTime : LocalDate
+        - endTime : LocalDate
+        - stops : ArrayList<Stop>
+        - passengers : ArrayList<Student>
 
-        + agregarPasajero(estudiante) : void
-        + eliminarPasajero(estudiante) : void
-        + agregarParada(parada) : void
-        + eliminarParada(parada) : void
+        +addPassenger(student) : void
+        +removePassenger(student) : void
+        +addStop(stop) : void
+        +removeStop(stop) : void
     }
 }
-class Parada {
-    - nombre : String
-    - direccion : String
-    - horaLlegada : LocalDate
+
+class Stop {
+    - name : String
+    - address : String
+    - arrivalTime : LocalDate
 }
-class Abordaje {
-    -tipo
-    -fechaHora : LocalDate
+
+class Boarding {
+    - type
+    - dateTime : LocalDate
     - bus : Bus
-    - usuario : usuario
+    - user : User
 
-    +agregarAbordaje (tipo, fechaHora, bus, usuario)
+    +addBoarding(type, dateTime, bus, user)
 }
-class Curso {
-    - nombre : String
-    - grado : String
-    -estudiantes : ArrayList<Estudiante>
+
+class Course {
+    - name : String
+    - grade : String
+    - students : ArrayList<Student>
 }
+
 Package Seguridad{
-    'Seguridad
-    class Persona {
-        - nombre : String
-        - apellido : String
-        - direccion : String
-        - telefono : int
+    'Security
+    class Person {
+        - firstName : String
+        - lastName : String
+        - address : String
+        - phone : int
         - email : String
-        - tipoIdentificacion : Sting
-        - identificacion : int
+        - idType : String
+        - idNumber : int
     }
 }
-package EstrategiasUsuario {
-    class Usuario {
-        - nombreUsuario : String
-        - contraseña : String
-        - persona : Persona
-    }
-    class Conductor {
-        - licencia : String
-        - estadoLicencia : Boolean
-        - vigenciaLicencia : MediumBlob
 
-        +actualizarEstadoLicencia (estadoLicencia) : void
-        +avisarVigenciaLicencia (vigenciaLicencia) : void
+package EstrategiasUsuario {
+    class User {
+        - username : String
+        - password : String
+        - person : Person
+    }
+    class Driver {
+        - license : String
+        - licenseStatus : Boolean
+        - licenseValidity : MediumBlob
+
+        +updateLicenseStatus(licenseStatus) : void
+        +notifyLicenseExpiry(licenseValidity) : void
     }
 
     package Familias{
-        class Padre {
+        class Parent {
 
         }
-        class Estudiante {
-            +escanearQR(bus : Bus);
+        class Student {
+            +scanQR(bus : Bus)
 
         }
-        class Familia {
-            - nombre : String
-            - cantidadMiembros : int
-            - Observaciones : String
-            - estudiantes : ArrayList<Estudiante>
-            - padres : ArrayList<Padre>
+        class Family {
+            - name : String
+            - memberCount : int
+            - observations : String
+            - students : ArrayList<Student>
+            - parents : ArrayList<Parent>
         }
 
     }
-    class Administrador {
+    class Administrator {
 
     }
-    interface PermisoUsuario {
-        +verRuta ( ) : void
-        +verAlertas ( ) : void
-        +verAbordajes ( ) : void
-        +verParadas ( ) : void
-        +seleccionarRuta ( ) : void
-        +actualizarInformacionPersonal ( ) : void
+    interface UserPermission {
+        +viewRoute() : void
+        +viewAlerts() : void
+        +viewBoardings() : void
+        +viewStops() : void
+        +selectRoute() : void
+        +updatePersonalInformation() : void
     }
-    interface PermisoAdministrador {
-        +registrarUsuario ( ) : void
-        +eliminarUsuario ( ) : void
-        +actualizarInformacionUsuario ( ) : void
-        +asignarPermisos ( ) : void
-        +verAlertas ( ) : void
-        +crearRuta ( ) : void
-        +eliminarRuta ( ) : void
-        +actualizarRuta ( ) : void
-        +crearParada ( ) : void
-        +eliminarParada ( ) : void
-        +verAbordajes ( ) : void
-        +verParadas ( ) : void
-        +verRutas ( ) : void
-        +agregarBus ( ) : void
-        +eliminarBus ( ) : void
-        +actualizarInformacionPersonal ( ) : void
-        +actualizarInoformacionBus ( ) : void
-        +actualizarInformacionEscuela ( ) : void
+    interface AdminPermission {
+        +registerUser() : void
+        +removeUser() : void
+        +updateUserInformation() : void
+        +assignPermissions() : void
+        +viewAlerts() : void
+        +createRoute() : void
+        +removeRoute() : void
+        +updateRoute() : void
+        +createStop() : void
+        +removeStop() : void
+        +viewBoardings() : void
+        +viewStops() : void
+        +viewRoutes() : void
+        +addBus() : void
+        +removeBus() : void
+        +updatePersonalInformation() : void
+        +updateBusInformation() : void
+        +updateSchoolInformation() : void
     }
 }
 
-'Relaciones'
-Usuario <|--- PermisoUsuario
-Usuario <|--- PermisoAdministrador
+'Relations'
+User <|--- UserPermission
+User <|--- AdminPermission
 
-PermisoUsuario <|... Conductor
-PermisoUsuario <|... Padre
-PermisoUsuario <|... Estudiante
-PermisoAdministrador <|... Administrador
-
-
-'Asociaciones'
-Alerta o--- Bus
-Usuario o--- Alerta
-
-Escuela o--- Usuario
-Persona o--- Usuario
-Curso o--- Estudiante
-
-Bus o--- Ruta
-Bus o--- Conductor
-Bus o--- Estudiante
+UserPermission <|... Driver
+UserPermission <|... Parent
+UserPermission <|... Student
+AdminPermission <|... Administrator
 
 
-Ruta *--- Parada
-Abordaje o--- Bus
+'Associations'
+Alert o--- Bus
+User o--- Alert
 
-Familia o--- Padre
-Familia o--- Estudiante
+School o--- User
+Person o--- User
+Course o--- Student
+
+Bus o--- Route
+Bus o--- Driver
+Bus o--- Student
 
 
-'Relaciones comando
-Command <|.. AgregarPasajeroCommand
-Command <|.. EliminarPasajeroCommand
-Command <|.. AgregarParadaCommand
-Command <|.. EliminarParadaCommand
-Command <|.. ActualizarHoraInicioCommand
-Command <|.. ActualizarHoraFinCommand
+Route *--- Stop
+Boarding o--- Bus
 
-GestorRutas --> Command
-AgregarPasajeroCommand --> Ruta
-AgregarPasajeroCommand --> Estudiante
-EliminarPasajeroCommand --> Ruta
-EliminarPasajeroCommand --> Estudiante
-AgregarParadaCommand --> Ruta
-AgregarParadaCommand --> Parada
-EliminarParadaCommand --> Ruta
-EliminarParadaCommand --> Parada
-ActualizarHoraInicioCommand --> Ruta
-ActualizarHoraFinCommand --> Ruta
+Family o--- Parent
+Family o--- Student
+
+
+'Command relations
+Command <|.. AddPassengerCommand
+Command <|.. RemovePassengerCommand
+Command <|.. AddStopCommand
+Command <|.. RemoveStopCommand
+Command <|.. UpdateStartTimeCommand
+Command <|.. UpdateEndTimeCommand
+
+RouteManager --> Command
+AddPassengerCommand --> Route
+AddPassengerCommand --> Student
+RemovePassengerCommand --> Route
+RemovePassengerCommand --> Student
+AddStopCommand --> Route
+AddStopCommand --> Stop
+RemoveStopCommand --> Route
+RemoveStopCommand --> Stop
+UpdateStartTimeCommand --> Route
+UpdateEndTimeCommand --> Route
 
 @enduml

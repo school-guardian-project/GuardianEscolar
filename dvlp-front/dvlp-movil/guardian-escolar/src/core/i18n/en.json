@@ -151,6 +151,7 @@
     "routeArrivingMessage": "The bus will arrive at your stop in approximately 10 minutes.",
     "studentLeftTitle": "Drop-off registered",
     "studentLeftMessage": "The student's drop-off from the bus was registered.",
+    "incidentNoDescription": "The driver reported an emergency during the trip.",
     "routeDetourTitle": "Route detour",
     "routeDetourMessage": "The route has a temporary detour.",
     "justNow": "Now",
@@ -163,6 +164,7 @@
       "all": "All",
       "boarding": "Bus boarding",
       "alighting": "Bus drop-off",
+      "incident": "Incidents",
       "delays": "Delays",
       "detours": "Route detours",
       "saved": "Saved notifications"

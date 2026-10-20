@@ -151,6 +151,7 @@
     "routeArrivingMessage": "Le bus arrivera à votre arrêt dans environ 10 minutes.",
     "studentLeftTitle": "Descente enregistrée",
     "studentLeftMessage": "La descente de l'élève du bus a été enregistrée.",
+    "incidentNoDescription": "Le conducteur a signalé une urgence pendant le trajet.",
     "routeDetourTitle": "Déviation de l'itinéraire",
     "routeDetourMessage": "L'itinéraire présente une déviation temporaire.",
     "justNow": "À l'instant",
@@ -163,6 +164,7 @@
       "all": "Toutes",
       "boarding": "Montée dans le bus",
       "alighting": "Descente du bus",
+      "incident": "Incidents",
       "delays": "Retards",
       "detours": "Déviations de l'itinéraire",
       "saved": "Notifications enregistrées"

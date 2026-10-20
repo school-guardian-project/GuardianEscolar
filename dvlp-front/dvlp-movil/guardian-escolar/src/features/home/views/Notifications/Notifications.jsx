@@ -7,12 +7,14 @@ import { useTheme } from "@core/services/ThemeService";
 import BackButton from "@components/buttons/BackButton";
 import { getSession } from "@core/services/authService";
 import { getGuardianNotifications } from "@core/services/notificationApi";
+import { incidentTypeLabelKey } from "@core/config/incidents";
 import styles from "./Notifications.style";
 
 const filterOptions = [
   { key: "all", labelKey: "notifications.filters.all" },
   { key: "boarding", labelKey: "notifications.filters.boarding" },
   { key: "alighting", labelKey: "notifications.filters.alighting" },
+  { key: "incident", labelKey: "notifications.filters.incident" },
   { key: "delay", labelKey: "notifications.filters.delays" },
   { key: "detour", labelKey: "notifications.filters.detours" },
   { key: "saved", labelKey: "notifications.filters.saved" },
@@ -37,14 +39,32 @@ export default function Notifications() {
           const data = await getGuardianNotifications();
           if (!active) return;
 
-          setNotifications(data.map((item) => ({
-            id: item.id,
-            type: item.boardingType === "OFF_BOARD" ? "alighting" : "boarding",
-            icon: item.boardingType === "OFF_BOARD" ? "home" : "bus",
-            titleKey: item.alert?.description || "Notificación",
-            messageKey: item.alert?.description || "",
-            dateTime: item.alert?.dateTime || item.dateTimeRead,
-          })));
+          setNotifications(data.map((item) => {
+            const incidentLabelKey = incidentTypeLabelKey(item.alert?.alertTypeId);
+
+            // Una alerta de incidente (FR-8.2) no trae boardingType: el
+            // catalogo AlertType (21..24) es lo unico que la distingue en el
+            // listado del acudiente, asi que ahi va su tipo como titulo.
+            if (incidentLabelKey) {
+              return {
+                id: item.id,
+                type: "incident",
+                icon: "alert-circle",
+                titleKey: incidentLabelKey,
+                messageKey: item.alert?.description ?? null,
+                dateTime: item.alert?.dateTime || item.dateTimeRead,
+              };
+            }
+
+            return {
+              id: item.id,
+              type: item.boardingType === "OFF_BOARD" ? "alighting" : "boarding",
+              icon: item.boardingType === "OFF_BOARD" ? "home" : "bus",
+              titleKey: item.alert?.description || "Notificación",
+              messageKey: item.alert?.description || "",
+              dateTime: item.alert?.dateTime || item.dateTimeRead,
+            };
+          }));
         } catch (error) {
           console.error("Error loading notifications:", error);
         }
@@ -76,49 +96,67 @@ export default function Notifications() {
         : notification.type === selectedFilter,
   );
 
-  const renderNotification = ({ item }) => (
-    <View
-      style={[
-        styles.notification,
-        { backgroundColor: theme.cardBg, borderColor: theme.borderColor },
-      ]}
-    >
-      <View style={[styles.iconContainer, { backgroundColor: theme.cardSecondaryBg }]}>
-        <Ionicons name={item.icon} size={24} color={theme.iconColor} />
-      </View>
+  const renderNotification = ({ item }) => {
+    const isIncident = item.type === "incident";
 
-      <View style={styles.notificationContent}>
-        <View style={styles.notificationHeader}>
-          <Text style={[styles.notificationTitle, { color: theme.textColor }]}>
-            {item.titleKey}
-          </Text>
-          <Text style={[styles.time, { color: theme.textSecondary }]}>
-            {new Date(item.dateTime).toLocaleTimeString()}
+    return (
+      <View
+        style={[
+          styles.notification,
+          { backgroundColor: theme.cardBg, borderColor: theme.borderColor },
+        ]}
+      >
+        <View
+          style={[
+            styles.iconContainer,
+            { backgroundColor: isIncident ? theme.alertBg : theme.cardSecondaryBg },
+          ]}
+        >
+          <Ionicons
+            name={item.icon}
+            size={24}
+            color={isIncident ? theme.alertIcon : theme.iconColor}
+          />
+        </View>
+
+        <View style={styles.notificationContent}>
+          <View style={styles.notificationHeader}>
+            <Text
+              style={[
+                styles.notificationTitle,
+                { color: isIncident ? theme.alertIcon : theme.textColor },
+              ]}
+            >
+              {isIncident ? t(item.titleKey) : item.titleKey}
+            </Text>
+            <Text style={[styles.time, { color: theme.textSecondary }]}>
+              {new Date(item.dateTime).toLocaleTimeString()}
+            </Text>
+          </View>
+          <Text style={[styles.message, { color: theme.textSecondary }]}>
+            {item.messageKey ?? t("notifications.incidentNoDescription")}
           </Text>
         </View>
-        <Text style={[styles.message, { color: theme.textSecondary }]}>
-          {item.messageKey}
-        </Text>
-      </View>
 
-      <Pressable
-        onPress={() => toggleSaved(item.id)}
-        style={styles.saveButton}
-        hitSlop={8}
-        accessibilityLabel={t(
-          item.saved
-            ? "notifications.removeSaved"
-            : "notifications.saveNotification",
-        )}
-      >
-        <Ionicons
-          name={item.saved ? "star" : "star-outline"}
-          size={22}
-          color={item.saved ? "#F2B705" : theme.textSecondary}
-        />
-      </Pressable>
-    </View>
-  );
+        <Pressable
+          onPress={() => toggleSaved(item.id)}
+          style={styles.saveButton}
+          hitSlop={8}
+          accessibilityLabel={t(
+            item.saved
+              ? "notifications.removeSaved"
+              : "notifications.saveNotification",
+          )}
+        >
+          <Ionicons
+            name={item.saved ? "star" : "star-outline"}
+            size={22}
+            color={item.saved ? "#F2B705" : theme.textSecondary}
+          />
+        </Pressable>
+      </View>
+    );
+  };
 
   return (
     <View style={[styles.container, { backgroundColor: theme.bgColor }]}>

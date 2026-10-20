@@ -5,7 +5,10 @@
       {{ (locating ? 'locationMap.locating' : 'locationMap.useDeviceLocation') | translate }}
     </button>
   </div>
-  <div #canvas class="location-map__canvas" aria-label="Map"></div>
+  <!-- ngSkipHydration: Leaflet escribe su propio DOM dentro de este nodo; sin
+       esto Angular compara el HTML prerenderizado con el que inserta Leaflet,
+       marca un desajuste de hidratacion y deja de enlazar los eventos. -->
+  <div #canvas class="location-map__canvas" aria-label="Map" ngSkipHydration></div>
   <p class="location-map__coords" aria-live="polite">{{ coordinatesLabel }}</p>
   @if (mapMessageKey) {
     <p class="location-map__message" role="status">{{ mapMessageKey | translate }}</p>

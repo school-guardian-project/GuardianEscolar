@@ -42,7 +42,7 @@ function fromApi(api: RouteListDto): RouteView {
 /** El backend usa TimeOnly: <input type=time> da HH:mm y se completa a HH:mm:ss. */
 function toTime(value: unknown): string {
   const time = String(value ?? '').trim();
-  return /^\d{2}:\d{2}$/.test(time) ? `:00` : time;
+  return /^\d{2}:\d{2}$/.test(time) ? `${time}:00` : time;
 }
 
 function toPayload(form: RecordData): RouteRequestDto {

@@ -151,6 +151,7 @@
     "routeArrivingMessage": "El bus llegará a tu parada en aproximadamente 10 minutos.",
     "studentLeftTitle": "Descenso registrado",
     "studentLeftMessage": "Se registró el descenso del estudiante del bus.",
+    "incidentNoDescription": "El conductor reportó una emergencia durante el viaje.",
     "routeDetourTitle": "Desvío de ruta",
     "routeDetourMessage": "La ruta presenta un desvío temporal.",
     "justNow": "Ahora",
@@ -163,6 +164,7 @@
       "all": "Todas",
       "boarding": "Ascenso al bus",
       "alighting": "Descenso del bus",
+      "incident": "Incidentes",
       "delays": "Retrasos",
       "detours": "Desvíos de ruta",
       "saved": "Notificaciones guardadas"
@@ -222,7 +224,33 @@
   "cards": {
     "finalDestination": "Destino final",
     "stops": "Paradas",
-    "school": "Escuela"
+    "school": "Escuela",
+    "scanBoarded": "Abordaje registrado. Se notificó al acudiente.",
+    "scanAlighted": "Descenso registrado. Se notificó al acudiente.",
+    "scanAlready": "Ya fue notificado. No se duplicó el registro."
+  },
+
+  "incidents": {
+    "open": "Reportar incidente",
+    "title": "Reportar incidente",
+    "subtitle": "Cuéntanos qué está pasando en la ruta.",
+    "typeAccident": "Accidente",
+    "typeMedical": "Emergencia médica",
+    "typeBreakdown": "Falla mecánica",
+    "typeSecurity": "Situación de inseguridad",
+    "descriptionLabel": "Detalle (opcional)",
+    "descriptionPlaceholder": "Describe brevemente lo ocurrido",
+    "submit": "Enviar reporte",
+    "sending": "Enviando...",
+    "success": "Reporte enviado. Se avisó al colegio y a {{notified}} acudiente(s).",
+    "successNoRecipients": "Reporte enviado. Quedó registrado en el colegio.",
+    "done": "Listo",
+    "noTrip": "No se pudo reportar: no hay un viaje activo. Inicia la ruta e intenta de nuevo.",
+    "unknownType": "Ese tipo de incidente no está disponible.",
+    "descriptionTooLong": "El detalle es demasiado largo (máximo 500 caracteres).",
+    "forbidden": "Solo el conductor asignado puede reportar incidentes.",
+    "unavailable": "El servicio no está disponible en este momento. Intenta más tarde.",
+    "failed": "No se pudo enviar el reporte. Revisa tu conexión e intenta de nuevo."
   },
 
   "incidents": {

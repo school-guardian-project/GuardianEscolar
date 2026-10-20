@@ -151,6 +151,7 @@
     "routeArrivingMessage": "The bus will arrive at your stop in approximately 10 minutes.",
     "studentLeftTitle": "Drop-off registered",
     "studentLeftMessage": "The student's drop-off from the bus was registered.",
+    "incidentNoDescription": "The driver reported an emergency during the trip.",
     "routeDetourTitle": "Route detour",
     "routeDetourMessage": "The route has a temporary detour.",
     "justNow": "Now",
@@ -163,6 +164,7 @@
       "all": "All",
       "boarding": "Bus boarding",
       "alighting": "Bus drop-off",
+      "incident": "Incidents",
       "delays": "Delays",
       "detours": "Route detours",
       "saved": "Saved notifications"
@@ -222,7 +224,33 @@
   "cards": {
     "finalDestination": "Final destination",
     "stops": "Stops",
-    "school": "School"
+    "school": "School",
+    "scanBoarded": "Boarding registered. The guardian was notified.",
+    "scanAlighted": "Alighting registered. The guardian was notified.",
+    "scanAlready": "Already notified. No duplicate was created."
+  },
+
+  "incidents": {
+    "open": "Report an incident",
+    "title": "Report an incident",
+    "subtitle": "Tell us what is happening on the route.",
+    "typeAccident": "Accident",
+    "typeMedical": "Medical emergency",
+    "typeBreakdown": "Mechanical breakdown",
+    "typeSecurity": "Security incident",
+    "descriptionLabel": "Details (optional)",
+    "descriptionPlaceholder": "Briefly describe what happened",
+    "submit": "Send report",
+    "sending": "Sending...",
+    "success": "Report sent. The school and {{notified}} guardian(s) were notified.",
+    "successNoRecipients": "Report sent. It was recorded at the school.",
+    "done": "Done",
+    "noTrip": "Could not report: there is no active trip. Start the route and try again.",
+    "unknownType": "That incident type is not available.",
+    "descriptionTooLong": "The details are too long (500 characters max).",
+    "forbidden": "Only the assigned driver can report incidents.",
+    "unavailable": "The service is unavailable right now. Try again later.",
+    "failed": "The report could not be sent. Check your connection and try again."
   },
 
   "incidents": {

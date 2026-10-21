@@ -457,6 +457,9 @@
     "accept": "Accepter",
     "confirm": "Confirmer"
   },
+  "error_alert": {
+    "title": "Une erreur s'est produite"
+  },
   "record_information": {
     "status": {
       "activate": "Activer",

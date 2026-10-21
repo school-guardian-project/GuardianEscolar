@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { View, Text } from "react-native";
+import { View, Text, Alert, Linking, Pressable } from "react-native";
 import { RoleSwitcherProvider } from "@core/dev/RoleSwitcherContext";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import { ThemeProvider } from "@core/services/ThemeService";
-import { loadLanguage } from "@core/i18n/i18n";
+import i18n, { loadLanguage } from "@core/i18n/i18n";
 import { clearSession, hasSession, refresh } from "@core/services/authService";
 import {
   configureNotificationHandling,
   registerPushDevice,
 } from "@core/services/pushService";
+import { checkForApkUpdate } from "@core/services/updateService";
 
 // Iniciar Sesión
 import Login from "@features/auth/views/Login/Login";
@@ -109,6 +110,32 @@ export default function App() {
   const [ready, setReady] = useState(false);
   const [initialRoute, setInitialRoute] = useState("Login");
 
+  const [update, setUpdate] = useState(null);
+
+  // Revisa si hay un APK más nuevo cuando la app ya cargó idioma y sesión.
+  useEffect(() => {
+    if (!ready) return;
+
+    checkForApkUpdate().then((found) => {
+      if (!found) return;
+      setUpdate(found);
+
+      if (!found.forced) {
+        Alert.alert(
+          i18n.t("appUpdate.title"),
+          i18n.t("appUpdate.message", { version: found.versionName }),
+          [
+            { text: i18n.t("appUpdate.later"), style: "cancel" },
+            {
+              text: i18n.t("appUpdate.update"),
+              onPress: () => Linking.openURL(found.apkUrl),
+            },
+          ],
+        );
+      }
+    });
+  }, [ready]);
+
   useEffect(() => {
     const initialize = async () => {
       await loadLanguage();
@@ -121,9 +148,8 @@ export default function App() {
         if (await hasSession()) {
           await refresh();
           const { getSession } = await import("@core/services/authService");
-          const { getPendingAcceptance, acceptTerms, getTermsStatus } = await import(
-            "@core/services/termsService"
-          );
+          const { getPendingAcceptance, acceptTerms, getTermsStatus } =
+            await import("@core/services/termsService");
           const session = await getSession();
           if (session?.roleId === 2) {
             const status = await getTermsStatus();
@@ -136,7 +162,7 @@ export default function App() {
               if (pending.minors.length > 0) {
                 await acceptTerms(
                   pending.termsVersion,
-                  pending.minors.map((m) => m.profileId)
+                  pending.minors.map((m) => m.profileId),
                 );
               }
               if (pending.ownMissing) {
@@ -171,6 +197,20 @@ export default function App() {
       </View>
     );
   }
+
+    if (update?.forced) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center", padding: 24 }}>
+        <Text style={{ textAlign: "center", marginBottom: 16 }}>
+          {i18n.t("appUpdate.forcedMessage", { version: update.versionName })}
+        </Text>
+        <Pressable onPress={() => Linking.openURL(update.apkUrl)}>
+          <Text style={{ fontWeight: "600" }}>{i18n.t("appUpdate.download")}</Text>
+        </Pressable>
+      </View>
+    );
+  }
+
 
   return (
     <RoleSwitcherProvider>

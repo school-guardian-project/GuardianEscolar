@@ -27,6 +27,9 @@
       "permissions": [
         "android.permission.CAMERA",
         "android.permission.RECORD_AUDIO",
+        "android.permission.SCHEDULE_EXACT_ALARM",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
         "android.permission.SCHEDULE_EXACT_ALARM"
       ]
     },
@@ -38,7 +41,7 @@
       [
         "expo-camera",
         {
-          "cameraPermission": "Guardian Escolar necesita la c\u00e1mara para escanear el QR del estudiante."
+          "cameraPermission": "Guardian Escolar necesita la cámara para escanear el QR del estudiante."
         }
       ],
       "expo-secure-store",
@@ -50,6 +53,10 @@
         "projectId": "7aabee78-c36a-4cc8-9d9f-be9f6ed5f5bc"
       }
     },
-    "owner": "school-guardian"
+    "owner": "school-guardian",
+    "runtimeVersion": { "policy": "fingerprint" },
+    "updates": {
+      "url": "https://u.expo.dev/7aabee78-c36a-4cc8-9d9f-be9f6ed5f5bc"
+    }
   }
 }

@@ -1,0 +1,73 @@
+name: Mobile release
+
+on:
+  workflow_dispatch:
+    inputs:
+      notes:
+        description: Notas del release
+        required: true
+      min_version_code:
+        description: versionCode mínimo soportado
+        required: true
+        default: "1"
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: dvlp-front/dvlp-movil/guardian-escolar
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: dvlp-front/dvlp-movil/guardian-escolar/package-lock.json
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: expo/expo-github-action@v8
+        with:
+          eas-version: latest
+          token: ${{ secrets.EXPO_TOKEN }}
+
+      - run: npm ci
+
+      - name: Compilar APK en el runner (no gasta builds de EAS)
+        run: eas build -p android --profile production --local --non-interactive --output guardian-escolar.apk
+
+      - name: Leer la versión del APK
+        run: |
+          AAPT="$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -1)aapt"
+          BADGING="$("$AAPT" dump badging guardian-escolar.apk | head -1)"
+          echo "VERSION_CODE=$(echo "$BADGING" | sed -n "s/.*versionCode='\([0-9]*\)'.*/\1/p")" >> "$GITHUB_ENV"
+          echo "VERSION_NAME=$(echo "$BADGING" | sed -n "s/.*versionName='\([^']*\)'.*/\1/p")" >> "$GITHUB_ENV"
+
+      - name: Preparar latest.json
+        env:
+          NOTES: ${{ inputs.notes }}
+          MIN_CODE: ${{ inputs.min_version_code }}
+        run: |
+          jq -n \
+            --arg vn "$VERSION_NAME" --argjson vc "$VERSION_CODE" --argjson min "$MIN_CODE" \
+            --arg url "https://github.com/${{ github.repository }}/releases/latest/download/guardian-escolar.apk" \
+            --arg notes "$NOTES" \
+            '{versionName:$vn, versionCode:$vc, minVersionCode:$min, apkUrl:$url, notes:$notes}' > latest.json
+
+      - name: Publicar release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          NOTES: ${{ inputs.notes }}
+        run: |
+          gh release create "mobile-v${VERSION_NAME}-${VERSION_CODE}" \
+            guardian-escolar.apk latest.json \
+            --title "App móvil ${VERSION_NAME} (${VERSION_CODE})" \
+            --notes "$NOTES" --latest

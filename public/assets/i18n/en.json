@@ -457,6 +457,9 @@
     "accept": "Accept",
     "confirm": "Confirm"
   },
+  "error_alert": {
+    "title": "Something went wrong"
+  },
   "record_information": {
     "status": {
       "activate": "Activate",

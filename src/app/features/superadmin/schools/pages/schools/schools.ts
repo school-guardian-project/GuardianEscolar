@@ -11,6 +11,7 @@ import { SidebarSuperadmin } from '@shared/components/navbar/sidebar-superadmin/
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
+import { ErrorAlert } from '@shared/components/modal/error-alert/error-alert';
 import { SchoolsService } from '@core/services/schools.service';
 import { CampusesService } from '@core/services/campuses.service';
 import { CitiesService } from '@core/services/cities.service';
@@ -120,6 +121,7 @@ function toCreatePayload(form: RecordData): SchoolWithCampusesRequestDto {
     RecordInformation,
     UpdateRecord,
     DeleteRecord,
+    ErrorAlert,
   ],
   templateUrl: './schools.html',
   styleUrl: './schools.scss',

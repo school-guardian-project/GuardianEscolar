@@ -301,5 +301,15 @@
     "errorLoadingLocation": "Error al obtener la ubicación",
     "noLocationAvailable": "Sin ubicación disponible",
     "lastKnownLocation": "Última ubicación disponible"
+  },
+
+  "appUpdate": {
+    "title": "Nueva versión disponible",
+    "message": "Guardian Escolar {{version}} ya está disponible.",
+    "later": "Más tarde",
+    "update": "Actualizar",
+    "forcedMessage": "Esta versión ya no es compatible. Instala la versión {{version}} para continuar.",
+    "download": "Descargar actualización"
   }
+
 }

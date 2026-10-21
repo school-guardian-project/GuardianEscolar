@@ -5,6 +5,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { RouterLink } from '@angular/router';
+import { environment } from '../../../environments/environment.development';
 
 @Component({
   selector: 'app-main',
@@ -13,6 +14,7 @@ import { RouterLink } from '@angular/router';
   styleUrl: './main.css',
 })
 export class Main {
+  readonly apkDownloadUrl = environment.apkDownloadUrl;
   private translate = inject(TranslateService);
   cards: any[] = [];
   steps: any[] = [];

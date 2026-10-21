@@ -10,6 +10,7 @@ import { SchoolsService } from '@core/services/schools.service';
 import { VehicleTypesService } from '@core/services/vehicle-types.service';
 import { AuthService } from '@core/services/auth.service';
 import { MatIconModule } from '@angular/material/icon';
+import { ErrorAlert } from '@shared/components/modal/error-alert/error-alert';
 
 /** Opción de select: el id va al backend, el texto se muestra. */
 export interface SelectOption {
@@ -259,7 +260,7 @@ const VALIDATION_SCHEMAS: Record<RegisterType, ValidationSchema> = {
 @Component({
   selector: 'app-card-register',
   standalone: true,
-  imports: [CommonModule, FormsModule, TranslateModule, LocationMap, MatIconModule],
+  imports: [CommonModule, FormsModule, TranslateModule, LocationMap, MatIconModule, ErrorAlert],
   templateUrl: './card-register.html',
   styleUrl: './card-register.css',
 })

@@ -11,6 +11,7 @@ import { NavbarAdmin } from '@shared/components/navbar/navbar-admin/navbar-admin
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
+import { ErrorAlert } from '@shared/components/modal/error-alert/error-alert';
 import { AssignRecord } from '@shared/components/modal/assign-record/assign-record';
 import { BusesService } from '@core/services/buses.service';
 import { DriversService } from '@core/services/drivers.service';
@@ -91,6 +92,7 @@ function toCreatePayload(form: RecordData): BusRequestDto {
     RecordInformation,
     UpdateRecord,
     DeleteRecord,
+    ErrorAlert,
     AssignRecord,
   ],
   templateUrl: './buses.html',

@@ -1,0 +1,28 @@
+<div class="modal-overlay" (click)="close()">
+  <div class="modal modal--small" role="alertdialog" aria-modal="true"
+       aria-labelledby="error-alert-title" aria-describedby="error-alert-message"
+       (click)="$event.stopPropagation()">
+
+    <div class="modal_form-upload">
+      <div class="modal_form-logo modal_form-logo--error">
+        <mat-icon>error_outline</mat-icon>
+      </div>
+    </div>
+
+    <div class="modal_header">
+      <h2 id="error-alert-title" class="modal__title">{{ 'error_alert.title' | translate }}</h2>
+      <p id="error-alert-message" class="modal__subtitle">{{ message }}</p>
+    </div>
+
+    <div class="modal_footer modal__footer--center">
+      <button class="modal_btn modal_btn--close" type="button" (click)="close()">
+        {{ 'common.close' | translate }}
+      </button>
+
+      <button class="modal_btn modal_btn--accept" type="button" (click)="close()">
+        {{ 'common.accept' | translate }}
+      </button>
+    </div>
+
+  </div>
+</div>

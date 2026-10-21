@@ -12,6 +12,7 @@ import { NavbarAdmin } from '@shared/components/navbar/navbar-admin/navbar-admin
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
+import { ErrorAlert } from '@shared/components/modal/error-alert/error-alert';
 import { DriversService } from '@core/services/drivers.service';
 import { PersonListDto, PersonRequestDto, CreatePersonRequestDto, PersonResponseDto } from '@core/models/student.model';
 import { describeProblem } from '@core/http/problem-detail';
@@ -100,6 +101,7 @@ function toCreatePayload(form: RecordData): CreatePersonRequestDto {
     RecordInformation,
     UpdateRecord,
     DeleteRecord,
+    ErrorAlert,
   ],
   templateUrl: './drivers.html',
   styleUrl: './drivers.scss',

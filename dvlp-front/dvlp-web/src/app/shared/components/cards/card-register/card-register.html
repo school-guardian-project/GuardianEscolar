@@ -223,8 +223,13 @@
       {{ 'register.button' | translate }}
     </button>
 
-    <p class="card-register__message" *ngIf="validationMessage" role="alert">
-      {{ validationMessage }}
-    </p>
   </form>
 </div>
+
+<!-- Fuera de .card-register: su transform en :hover haria que el overlay fixed
+     se recortara a la card en vez de cubrir la pantalla. -->
+<app-error-alert
+  *ngIf="validationMessage"
+  [message]="validationMessage"
+  (closed)="validationMessage = ''">
+</app-error-alert>

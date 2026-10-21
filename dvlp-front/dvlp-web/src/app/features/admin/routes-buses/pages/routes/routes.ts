@@ -11,6 +11,7 @@ import { NavbarAdmin } from '@shared/components/navbar/navbar-admin/navbar-admin
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
+import { ErrorAlert } from '@shared/components/modal/error-alert/error-alert';
 import { AssignRecord } from '@shared/components/modal/assign-record/assign-record';
 import { RoutesService } from '@core/services/routes.service';
 import { CampusesService } from '@core/services/campuses.service';
@@ -70,6 +71,7 @@ function toPayload(form: RecordData): RouteRequestDto {
     RecordInformation,
     UpdateRecord,
     DeleteRecord,
+    ErrorAlert,
     AssignRecord,
   ],
   templateUrl: './routes.html',

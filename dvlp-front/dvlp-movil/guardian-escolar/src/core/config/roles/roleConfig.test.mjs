@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { roleConfig } from "./roleConfig.js";
+import { roleConfig, roleKeyFromRoleId } from "./roleConfig.js";
 
 test("the search bar is hidden for every role", () => {
   for (const role of ["student", "driver", "father"]) {
@@ -27,4 +27,11 @@ test("the incident report button is available only for the driver role", () => {
   assert.equal(roleConfig.driver.card.showIncidentReport, true);
   assert.equal(roleConfig.student.card.showIncidentReport, false);
   assert.equal(roleConfig.father.card.showIncidentReport, false);
+});
+
+test("the JWT roleId maps to its roleConfig key, defaulting to student", () => {
+  assert.equal(roleKeyFromRoleId(2), "student");
+  assert.equal(roleKeyFromRoleId(3), "driver");
+  assert.equal(roleKeyFromRoleId(4), "father");
+  assert.equal(roleKeyFromRoleId(null), "student");
 });

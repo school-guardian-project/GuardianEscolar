@@ -576,12 +576,3 @@ body.internal-page .close-btn:hover {
   --input-bg: #0D0F12;
   --input-border: #2B1F1F;
 }
-/* Mensaje de error de página (carga/búsqueda): mismo estilo discreto del login. */
-.action-error {
-  margin: 8px auto;
-  max-width: 900px;
-  color: var(--alert-icon);
-  font-size: 0.82rem;
-  line-height: 1.35;
-  text-align: center;
-}

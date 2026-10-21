@@ -12,6 +12,7 @@ import { CardList } from '@shared/components/cards/card-list/card-list';
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
+import { ErrorAlert } from '@shared/components/modal/error-alert/error-alert';
 import { FamiliesService } from '@core/services/families.service';
 import { ParentsService } from '@core/services/parents.service';
 import { StudentsService } from '@core/services/students.service';
@@ -47,6 +48,7 @@ function labelOf(person: PersonListDto): string {
     RecordInformation,
     UpdateRecord,
     DeleteRecord,
+    ErrorAlert,
   ],
   templateUrl: './families.html',
   styleUrl: './families.scss',

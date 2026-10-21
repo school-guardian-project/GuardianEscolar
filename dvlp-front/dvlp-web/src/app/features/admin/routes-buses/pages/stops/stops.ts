@@ -13,6 +13,7 @@ import { NavbarAdmin } from '@shared/components/navbar/navbar-admin/navbar-admin
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
+import { ErrorAlert } from '@shared/components/modal/error-alert/error-alert';
 import { StopsService } from '@core/services/stops.service';
 import { CitiesService } from '@core/services/cities.service';
 import { SchoolsService } from '@core/services/schools.service';
@@ -53,6 +54,7 @@ interface StopView extends RecordData {
     RecordInformation,
     UpdateRecord,
     DeleteRecord,
+    ErrorAlert,
     TranslateModule,
   ],
   templateUrl: './stops.html',

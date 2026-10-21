@@ -11,6 +11,7 @@ import { SidebarSuperadmin } from '@shared/components/navbar/sidebar-superadmin/
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
+import { ErrorAlert } from '@shared/components/modal/error-alert/error-alert';
 import { AdminsService } from '../../services/admins.service';
 import { AdminListDto, AdminRequestDto, CreateAdminRequestDto, AdminResponseDto } from '../../models/admin.model';
 import { describeProblem } from '@core/http/problem-detail';
@@ -101,6 +102,7 @@ function toCreatePayload(form: RecordData): CreateAdminRequestDto {
     RecordInformation,
     UpdateRecord,
     DeleteRecord,
+    ErrorAlert,
   ],
   templateUrl: './admins.html',
   styleUrl: './admins.scss',

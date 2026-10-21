@@ -8,7 +8,7 @@ import { AdminListDto, AdminRequestDto, CreateAdminRequestDto, AdminResponseDto 
   providedIn: 'root',
 })
 export class AdminsService {
-  private readonly base = `${environment.apiUrl}/user/api/admins`;
+  private readonly base = `${environment.apiUrl}/user/api/v1/admins`;
 
   constructor(private http: HttpClient) {}
 

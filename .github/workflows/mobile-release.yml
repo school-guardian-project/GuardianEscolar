@@ -41,6 +41,14 @@ jobs:
 
       - run: npm ci
 
+      # El android/ que genera prebuild deja a Gradle con 2 GiB y 512 MiB de metaspace,
+      # y el lint de release se queda sin memoria. ~/.gradle/gradle.properties tiene
+      # prioridad sobre el del proyecto, así que aquí se sube el límite.
+      - name: Dar más memoria a Gradle
+        run: |
+          mkdir -p ~/.gradle
+          echo "org.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=2g -Dfile.encoding=UTF-8" >> ~/.gradle/gradle.properties
+
       - name: Compilar APK en el runner (no gasta builds de EAS)
         run: eas build -p android --profile production --local --non-interactive --output guardian-escolar.apk
 

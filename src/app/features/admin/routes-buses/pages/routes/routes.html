@@ -4,7 +4,11 @@
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
     <app-card-register type="route" [fieldOptions]="fieldOptions" (formSubmit)="onCreated($event)"></app-card-register>
-    <p *ngIf="actionError && !showUpdateModal && !showDeleteModal" class="action-error" role="alert">{{ actionError }}</p>
+    <app-error-alert
+      *ngIf="actionError && !showUpdateModal && !showDeleteModal"
+      [message]="actionError"
+      (closed)="actionError = ''">
+    </app-error-alert>
     <app-card-list type="route"
     [data]="routes"
     [remoteSearch]="true"

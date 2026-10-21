@@ -12,6 +12,7 @@ import { NavbarAdmin } from '@shared/components/navbar/navbar-admin/navbar-admin
 import { RecordInformation, RecordData } from '@shared/components/modal/record-information/record-information';
 import { UpdateRecord } from '@shared/components/modal/update-record/update-record';
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
+import { ErrorAlert } from '@shared/components/modal/error-alert/error-alert';
 import { AssignRecord } from '@shared/components/modal/assign-record/assign-record';
 import { StudentsService } from '@core/services/students.service';
 import { PersonListDto, PersonRequestDto, CreatePersonRequestDto, PersonResponseDto } from '@core/models/student.model';
@@ -160,6 +161,7 @@ function isValidStudentForm(form: RecordData, includeCampus = true): boolean {
     RecordInformation,
     UpdateRecord,
     DeleteRecord,
+    ErrorAlert,
     AssignRecord,
   ],
   templateUrl: './students.html',

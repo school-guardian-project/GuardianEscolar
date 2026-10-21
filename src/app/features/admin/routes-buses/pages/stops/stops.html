@@ -3,8 +3,16 @@
 <div class="page-wrapper">
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
-    <p *ngIf="catalogLoadError" role="alert">{{ 'register.options.loadError' | translate }}</p>
-    <p *ngIf="actionError && !showUpdateModal && !showDeleteModal" class="action-error" role="alert">{{ actionError }}</p>
+    <app-error-alert
+      *ngIf="catalogLoadError && !actionError"
+      [message]="'register.options.loadError' | translate"
+      (closed)="catalogLoadError = false">
+    </app-error-alert>
+    <app-error-alert
+      *ngIf="actionError && !showUpdateModal && !showDeleteModal"
+      [message]="actionError"
+      (closed)="actionError = ''">
+    </app-error-alert>
     <app-card-register
       type="stop"
       [fieldOptions]="fieldOptions"

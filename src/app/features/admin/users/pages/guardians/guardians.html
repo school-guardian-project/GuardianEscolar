@@ -3,7 +3,11 @@
 <div class="page-wrapper">
   <app-navbar-admin></app-navbar-admin>
   <div class="container">
-    <p *ngIf="actionError && !showUpdateModal && !showDeleteModal" class="action-error" role="alert">{{ actionError }}</p>
+    <app-error-alert
+      *ngIf="actionError && !showUpdateModal && !showDeleteModal"
+      [message]="actionError"
+      (closed)="actionError = ''">
+    </app-error-alert>
     <app-card-register type="guardian" (formSubmit)="onCreated($event)"></app-card-register>
 
     <app-card-list

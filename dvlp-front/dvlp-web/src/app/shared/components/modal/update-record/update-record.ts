@@ -416,7 +416,11 @@ export class UpdateRecord implements OnInit, OnChanges {
     this.campuses = [...this.campuses, { id: '', name: '', address: '', latitude: null, longitude: null }];
   }
 
+  removedCampusIds: string[] = [];
+
   removeCampus(index: number): void {
+    const campus = this.campuses[index];
+    if (campus.id) this.removedCampusIds.push(campus.id);
     this.campuses = this.campuses.filter((_, campusIndex) => campusIndex !== index);
     if (this.campusMapOpenIndex === index) this.campusMapOpenIndex = null;
     else if (this.campusMapOpenIndex !== null && this.campusMapOpenIndex > index) this.campusMapOpenIndex--;
@@ -453,6 +457,7 @@ export class UpdateRecord implements OnInit, OnChanges {
       latitude: this.formData['latitude'] ? Number(this.formData['latitude']) : null,
       longitude: this.formData['longitude'] ? Number(this.formData['longitude']) : null,
       campuses: this.campuses.map((campus) => ({ ...campus })),
+      ...(this.type === 'schools' ? { removedCampusIds: [...this.removedCampusIds] } : {}),
     });
   }
 }

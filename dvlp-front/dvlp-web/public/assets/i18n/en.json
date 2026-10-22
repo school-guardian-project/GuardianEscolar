@@ -888,6 +888,7 @@
       "chooseCampusLocation": "Choose the location of campus {{name}} on the map",
       "addCampus": "Add campus",
       "removeCampus": "Remove campus",
+      "deleteCampus": "Delete campus",
       "campusNamesHint": "Optional: the school can operate from its main campus only.",
       "logoReadError": "The logo could not be read. Try another image.",
       "campusAddressRequired": "Each campus must have a name (maximum 30 characters) and address (maximum 255 characters)",

@@ -9,18 +9,9 @@ import InfoCard from "@components/cards/InfoCard";
 import InfoRow from "@components/cards/InfoRow";
 
 import { getSession } from "@core/services/authService";
-import { getUserApi } from "@core/services/userApi";
+import { findMyFamily, namesByProfileId } from "@core/services/familyService";
 
 import styles from "@core/styles/profileScreen.style";
-
-async function personName(path) {
-  try {
-    const person = await getUserApi(path);
-    return `${person.name ?? ""} ${person.lastName ?? ""}`.trim();
-  } catch {
-    return "";
-  }
-}
 
 export default function Family() {
     const { theme } = useTheme();
@@ -34,33 +25,19 @@ export default function Family() {
         (async () => {
             try {
                 const session = await getSession();
-                const myIds = [session?.personId, session?.profileId].filter(Boolean);
-                if (myIds.length === 0) {
-                    return;
-                }
-
-                // ponytail: recorre las familias hasta encontrar la del usuario;
-                // pedir ?personId= al backend cuando la lista crezca.
-                const list = await getUserApi("/families");
-                let mine = null;
-                for (const item of list) {
-                    const detail = await getUserApi(`/families/${item.id}`);
-                    const ids = [detail.parentProfileId, ...(detail.children ?? [])];
-                    if (ids.some((id) => myIds.includes(id))) {
-                        mine = detail;
-                        break;
-                    }
-                }
+                const mine = await findMyFamily(session);
                 if (!mine || !alive) {
                     return;
                 }
 
-                const holderName = mine.parentProfileId
-                    ? await personName(`parents/${mine.parentProfileId}`)
-                    : "";
-                const memberNames = await Promise.all(
-                    (mine.children ?? []).map((id) => personName(`students/${id}`))
-                );
+                // La familia trae profileIds; los nombres salen de los listados,
+                // que son los que traen el profileId de cada persona.
+                const [parents, students] = await Promise.all([
+                    namesByProfileId("/parents"),
+                    namesByProfileId("/students"),
+                ]);
+                const holderName = parents.get(mine.parentProfileId) ?? "";
+                const memberNames = (mine.children ?? []).map((id) => students.get(id) ?? "");
 
                 if (!alive) {
                     return;

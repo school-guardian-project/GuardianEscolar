@@ -1124,5 +1124,106 @@
       "update": "No se pudo actualizar el bus.",
       "driverNotAssigned": "No se pudo asignar el conductor."
     }
+  },
+  "sidebar": {
+    "alerts": "Alertas",
+    "incidents": "Incidentes"
+  },
+  "alerts": {
+    "title": "Gestión de Alertas",
+    "subtitle": "Monitoreo y confirmación de eventos de abordaje, descenso e incidentes",
+    "columns": {
+      "timestamp": "Fecha y Hora",
+      "student": "Estudiante",
+      "route": "Ruta",
+      "type": "Tipo",
+      "message": "Mensaje",
+      "acknowledged": "Confirmado",
+      "actions": "Acciones"
+    },
+    "types": {
+      "BOARDING": "Abordaje",
+      "ALIGHTING": "Descenso",
+      "INCIDENT": "Incidente",
+      "DELAY": "Retraso",
+      "DEVIATION": "Desviación"
+    },
+    "status": {
+      "acknowledged": "Confirmado",
+      "pending": "Pendiente"
+    },
+    "filters": {
+      "search": "Buscar",
+      "searchPlaceholder": "Buscar por estudiante, ruta o mensaje...",
+      "type": "Tipo de alerta",
+      "allTypes": "Todos los tipos",
+      "acknowledged": "Confirmación",
+      "all": "Todas",
+      "pending": "Pendientes",
+      "acknowledged": "Confirmadas",
+      "dateFrom": "Desde",
+      "dateTo": "Hasta",
+      "apply": "Aplicar filtros",
+      "clear": "Limpiar filtros"
+    },
+    "actions": {
+      "acknowledge": "Confirmar alerta",
+      "viewDetails": "Ver detalles"
+    },
+    "empty": "No hay alertas registradas con los filtros actuales",
+    "emptyState": "No hay alertas registradas con los filtros actuales"
+  },
+  "incidents": {
+    "title": "Gestión de Incidentes",
+    "subtitle": "Registro y seguimiento de incidentes en rutas escolares",
+    "columns": {
+      "reportedAt": "Fecha y Hora",
+      "route": "Ruta",
+      "driver": "Conductor",
+      "bus": "Bus",
+      "type": "Tipo",
+      "severity": "Gravedad",
+      "status": "Estado",
+      "actions": "Acciones"
+    },
+    "types": {
+      "DELAY": "Retraso",
+      "BREAKDOWN": "Falla Mecánica",
+      "ACCIDENT": "Accidente",
+      "DEVIATION": "Desviación de Ruta",
+      "OTHER": "Otro"
+    },
+    "severities": {
+      "LOW": "Baja",
+      "MEDIUM": "Media",
+      "HIGH": "Alta",
+      "CRITICAL": "Crítica"
+    },
+    "statuses": {
+      "OPEN": "Abierto",
+      "IN_PROGRESS": "En Progreso",
+      "RESOLVED": "Resuelto",
+      "CLOSED": "Cerrado"
+    },
+    "filters": {
+      "search": "Buscar",
+      "searchPlaceholder": "Buscar por ruta, conductor o descripción...",
+      "type": "Tipo de incidente",
+      "allTypes": "Todos los tipos",
+      "severity": "Gravedad",
+      "allSeverities": "Todas las gravedades",
+      "status": "Estado",
+      "allStatuses": "Todos los estados",
+      "dateFrom": "Desde",
+      "dateTo": "Hasta",
+      "apply": "Aplicar filtros",
+      "clear": "Limpiar filtros"
+    },
+    "actions": {
+      "viewDetails": "Ver detalles",
+      "resolve": "Resolver incidente"
+    },
+    "empty": "No hay incidentes registrados con los filtros actuales",
+    "emptyState": "No hay incidentes registrados con los filtros actuales"
   }
 }

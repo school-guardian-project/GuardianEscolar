@@ -59,12 +59,333 @@
             </div>
           </div>
 
+          <!-- ===== ALERTAS SECTION ===== -->
           <div class="alerts-section">
             <div class="alerts-container">
-              <h2>
-                {{ 'dashboard.alerts.title' | translate }}
-              </h2>
+              <div class="section-header">
+                <h2>{{ 'alerts.title' | translate }}</h2>
+              </div>
 
+              <!-- Filtros Alertas -->
+              <mat-card class="filters-card">
+                <form (ngSubmit)="alertsFiltersSubject.next()" class="filters-form">
+                  <div class="filter-row">
+                    <mat-form-field appearance="outline" class="filter-field">
+                      <mat-label>{{ 'alerts.filters.search' | translate }}</mat-label>
+                      <input matInput [(ngModel)]="alertsSearchFilter" name="alertsSearch" placeholder="{{ 'alerts.filters.searchPlaceholder' | translate }}">
+                      <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="filter-field">
+                      <mat-label>{{ 'alerts.filters.type' | translate }}</mat-label>
+                      <mat-select [(ngModel)]="alertsAlertTypeFilter" name="alertsType">
+                        <mat-option value="">{{ 'alerts.filters.allTypes' | translate }}</mat-option>
+                        <mat-option value="BOARDING">{{ 'alerts.types.BOARDING' | translate }}</mat-option>
+                        <mat-option value="ALIGHTING">{{ 'alerts.types.ALIGHTING' | translate }}</mat-option>
+                        <mat-option value="INCIDENT">{{ 'alerts.types.INCIDENT' | translate }}</mat-option>
+                        <mat-option value="DELAY">{{ 'alerts.types.DELAY' | translate }}</mat-option>
+                        <mat-option value="DEVIATION">{{ 'alerts.types.DEVIATION' | translate }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="filter-field">
+                      <mat-label>{{ 'alerts.filters.acknowledged' | translate }}</mat-label>
+                      <mat-select [(ngModel)]="alertsAcknowledgedFilter" name="alertsAcknowledged">
+                        <mat-option value="">{{ 'alerts.filters.all' | translate }}</mat-option>
+                        <mat-option value="true">{{ 'alerts.filters.acknowledged' | translate }}</mat-option>
+                        <mat-option value="false">{{ 'alerts.filters.pending' | translate }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="filter-row">
+                    <mat-form-field appearance="outline" class="filter-field date-field">
+                      <mat-label>{{ 'alerts.filters.dateFrom' | translate }}</mat-label>
+                      <input matInput [matDatepicker]="alertsPickerFrom" [(ngModel)]="alertsDateFromFilter" name="alertsDateFrom">
+                      <mat-datepicker-toggle matIconSuffix [for]="alertsPickerFrom"></mat-datepicker-toggle>
+                      <mat-datepicker #alertsPickerFrom></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="filter-field date-field">
+                      <mat-label>{{ 'alerts.filters.dateTo' | translate }}</mat-label>
+                      <input matInput [matDatepicker]="alertsPickerTo" [(ngModel)]="alertsDateToFilter" name="alertsDateTo">
+                      <mat-datepicker-toggle matIconSuffix [for]="alertsPickerTo"></mat-datepicker-toggle>
+                      <mat-datepicker #alertsPickerTo></mat-datepicker>
+                    </mat-form-field>
+
+                    <div class="filter-actions">
+                      <button mat-raised-button color="primary" type="submit">
+                        <mat-icon>filter_list</mat-icon>
+                        {{ 'alerts.filters.apply' | translate }}
+                      </button>
+                      <button mat-stroked-button type="button" (click)="alertsSearchFilter=''; alertsAlertTypeFilter=''; alertsAcknowledgedFilter=''; alertsDateFromFilter=null; alertsDateToFilter=null; alertsFiltersSubject.next()">
+                        <mat-icon>clear</mat-icon>
+                        {{ 'alerts.filters.clear' | translate }}
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </mat-card>
+
+              <!-- Tabla Alertas -->
+              <div class="table-container" *ngIf="!alertsLoading; else alertsLoadingTpl">
+                <table mat-table [dataSource]="alertsData" matSort (matSortChange)="onAlertsSortChange($event)" class="alerts-table">
+                  <ng-container matColumnDef="timestamp">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="timestamp">{{ 'alerts.columns.timestamp' | translate }}</th>
+                    <td mat-cell *matCellDef="let alert">{{ alert.timestamp | date:'medium' }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="studentName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="studentName">{{ 'alerts.columns.student' | translate }}</th>
+                    <td mat-cell *matCellDef="let alert">{{ alert.studentName }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="routeName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="routeName">{{ 'alerts.columns.route' | translate }}</th>
+                    <td mat-cell *matCellDef="let alert">{{ alert.routeName }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="alertType">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="alertType">{{ 'alerts.columns.type' | translate }}</th>
+                    <td mat-cell *matCellDef="let alert">
+                      <span class="type-badge" [class]="alert.alertType.toLowerCase()">
+                        <mat-icon>{{ getAlertTypeIcon(alert.alertType) }}</mat-icon>
+                        {{ getAlertTypeLabel(alert.alertType) }}
+                      </span>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="message">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'alerts.columns.message' | translate }}</th>
+                    <td mat-cell *matCellDef="let alert">{{ alert.message }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="acknowledged">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'alerts.columns.acknowledged' | translate }}</th>
+                    <td mat-cell *matCellDef="let alert">
+                      <mat-icon [class.acknowledged]="alert.acknowledged" [class.pending]="!alert.acknowledged">
+                        {{ alert.acknowledged ? 'check_circle' : 'radio_button_unchecked' }}
+                      </mat-icon>
+                      <span>{{ alert.acknowledged ? ('alerts.status.acknowledged' | translate) : ('alerts.status.pending' | translate) }}</span>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'alerts.columns.actions' | translate }}</th>
+                    <td mat-cell *matCellDef="let alert">
+                      <button 
+                        *ngIf="!alert.acknowledged" 
+                        mat-icon-button 
+                        color="primary" 
+                        (click)="acknowledgeAlert(alert)"
+                        [matTooltip]="'alerts.actions.acknowledge' | translate"
+                      >
+                        <mat-icon>check</mat-icon>
+                      </button>
+                      <button mat-icon-button color="warn" [matTooltip]="'alerts.actions.viewDetails' | translate">
+                        <mat-icon>visibility</mat-icon>
+                      </button>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="alertsColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: alertsColumns"></tr>
+                </table>
+
+                <mat-paginator
+                  [length]="alertsTotal"
+                  [pageSize]="alertsPageSize"
+                  [pageIndex]="alertsPageIndex"
+                  [pageSizeOptions]="[5, 10, 25, 50]"
+                  (page)="onAlertsPageChange($event)"
+                  showFirstLastButtons
+                  aria-label="Select page of alerts">
+                </mat-paginator>
+              </div>
+
+              <ng-template #alertsLoadingTpl>
+                <div class="loading-state">
+                  <mat-spinner diameter="40"></mat-spinner>
+                  <p>{{ 'common.loading' | translate }}</p>
+                </div>
+              </ng-template>
+
+              <div *ngIf="!alertsLoading && alertsData.length === 0" class="empty-state">
+                <mat-icon>notifications_off</mat-icon>
+                <p>{{ 'alerts.empty' | translate }}</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- ===== INCIDENTES SECTION ===== -->
+          <div class="incidents-section">
+            <div class="incidents-container">
+              <div class="section-header">
+                <h2>{{ 'incidents.title' | translate }}</h2>
+              </div>
+
+              <!-- Filtros Incidentes -->
+              <mat-card class="filters-card">
+                <form (ngSubmit)="incidentsFiltersSubject.next()" class="filters-form">
+                  <div class="filter-row">
+                    <mat-form-field appearance="outline" class="filter-field">
+                      <mat-label>{{ 'incidents.filters.search' | translate }}</mat-label>
+                      <input matInput [(ngModel)]="incidentsSearchFilter" name="incidentsSearch" placeholder="{{ 'incidents.filters.searchPlaceholder' | translate }}">
+                      <mat-icon matSuffix>search</mat-icon>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="filter-field">
+                      <mat-label>{{ 'incidents.filters.type' | translate }}</mat-label>
+                      <mat-select [(ngModel)]="incidentsTypeFilter" name="incidentsType">
+                        <mat-option value="">{{ 'incidents.filters.allTypes' | translate }}</mat-option>
+                        <mat-option value="DELAY">{{ 'incidents.types.DELAY' | translate }}</mat-option>
+                        <mat-option value="BREAKDOWN">{{ 'incidents.types.BREAKDOWN' | translate }}</mat-option>
+                        <mat-option value="ACCIDENT">{{ 'incidents.types.ACCIDENT' | translate }}</mat-option>
+                        <mat-option value="DEVIATION">{{ 'incidents.types.DEVIATION' | translate }}</mat-option>
+                        <mat-option value="OTHER">{{ 'incidents.types.OTHER' | translate }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="filter-field">
+                      <mat-label>{{ 'incidents.filters.severity' | translate }}</mat-label>
+                      <mat-select [(ngModel)]="incidentsSeverityFilter" name="incidentsSeverity">
+                        <mat-option value="">{{ 'incidents.filters.allSeverities' | translate }}</mat-option>
+                        <mat-option value="LOW">{{ 'incidents.severities.LOW' | translate }}</mat-option>
+                        <mat-option value="MEDIUM">{{ 'incidents.severities.MEDIUM' | translate }}</mat-option>
+                        <mat-option value="HIGH">{{ 'incidents.severities.HIGH' | translate }}</mat-option>
+                        <mat-option value="CRITICAL">{{ 'incidents.severities.CRITICAL' | translate }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="filter-field">
+                      <mat-label>{{ 'incidents.filters.status' | translate }}</mat-label>
+                      <mat-select [(ngModel)]="incidentsStatusFilter" name="incidentsStatus">
+                        <mat-option value="">{{ 'incidents.filters.allStatuses' | translate }}</mat-option>
+                        <mat-option value="OPEN">{{ 'incidents.statuses.OPEN' | translate }}</mat-option>
+                        <mat-option value="IN_PROGRESS">{{ 'incidents.statuses.IN_PROGRESS' | translate }}</mat-option>
+                        <mat-option value="RESOLVED">{{ 'incidents.statuses.RESOLVED' | translate }}</mat-option>
+                        <mat-option value="CLOSED">{{ 'incidents.statuses.CLOSED' | translate }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="filter-row">
+                    <mat-form-field appearance="outline" class="filter-field date-field">
+                      <mat-label>{{ 'incidents.filters.dateFrom' | translate }}</mat-label>
+                      <input matInput [matDatepicker]="incidentsPickerFrom" [(ngModel)]="incidentsDateFromFilter" name="incidentsDateFrom">
+                      <mat-datepicker-toggle matIconSuffix [for]="incidentsPickerFrom"></mat-datepicker-toggle>
+                      <mat-datepicker #incidentsPickerFrom></mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="filter-field date-field">
+                      <mat-label>{{ 'incidents.filters.dateTo' | translate }}</mat-label>
+                      <input matInput [matDatepicker]="incidentsPickerTo" [(ngModel)]="incidentsDateToFilter" name="incidentsDateTo">
+                      <mat-datepicker-toggle matIconSuffix [for]="incidentsPickerTo"></mat-datepicker-toggle>
+                      <mat-datepicker #incidentsPickerTo></mat-datepicker>
+                    </mat-form-field>
+
+                    <div class="filter-actions">
+                      <button mat-raised-button color="primary" type="submit">
+                        <mat-icon>filter_list</mat-icon>
+                        {{ 'incidents.filters.apply' | translate }}
+                      </button>
+                      <button mat-stroked-button type="button" (click)="incidentsSearchFilter=''; incidentsTypeFilter=''; incidentsSeverityFilter=''; incidentsStatusFilter=''; incidentsDateFromFilter=null; incidentsDateToFilter=null; incidentsFiltersSubject.next()">
+                        <mat-icon>clear</mat-icon>
+                        {{ 'incidents.filters.clear' | translate }}
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </mat-card>
+
+              <!-- Tabla Incidentes -->
+              <div class="table-container" *ngIf="!incidentsLoading; else incidentsLoadingTpl">
+                <table mat-table [dataSource]="incidentsData" matSort (matSortChange)="onIncidentsSortChange($event)" class="incidents-table">
+                  <ng-container matColumnDef="reportedAt">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="reportedAt">{{ 'incidents.columns.reportedAt' | translate }}</th>
+                    <td mat-cell *matCellDef="let incident">{{ incident.reportedAt | date:'medium' }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="routeName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="routeName">{{ 'incidents.columns.route' | translate }}</th>
+                    <td mat-cell *matCellDef="let incident">{{ incident.routeName }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="driverName">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="driverName">{{ 'incidents.columns.driver' | translate }}</th>
+                    <td mat-cell *matCellDef="let incident">{{ incident.driverName }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="busPlate">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="busPlate">{{ 'incidents.columns.bus' | translate }}</th>
+                    <td mat-cell *matCellDef="let incident">{{ incident.busPlate }}</td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="incidentType">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="incidentType">{{ 'incidents.columns.type' | translate }}</th>
+                    <td mat-cell *matCellDef="let incident">
+                      <span class="type-badge" [class]="incident.incidentType.toLowerCase()">
+                        {{ getIncidentTypeLabel(incident.incidentType) }}
+                      </span>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="severity">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="severity">{{ 'incidents.columns.severity' | translate }}</th>
+                    <td mat-cell *matCellDef="let incident">
+                      <span class="severity-badge" [class]="incident.severity.toLowerCase()">
+                        {{ getSeverityLabel(incident.severity) }}
+                      </span>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="status">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header="status">{{ 'incidents.columns.status' | translate }}</th>
+                    <td mat-cell *matCellDef="let incident">
+                      <span class="status-badge" [class]="incident.status.toLowerCase()">
+                        {{ getStatusLabel(incident.status) }}
+                      </span>
+                    </td>
+                  </ng-container>
+
+                  <ng-container matColumnDef="actions">
+                    <th mat-header-cell *matHeaderCellDef>{{ 'incidents.columns.actions' | translate }}</th>
+                    <td mat-cell *matCellDef="let incident">
+                      <button mat-icon-button color="primary" [matTooltip]="'incidents.actions.viewDetails' | translate">
+                        <mat-icon>visibility</mat-icon>
+                      </button>
+                      <button mat-icon-button color="warn" [matTooltip]="'incidents.actions.resolve' | translate" *ngIf="incident.status !== 'CLOSED' && incident.status !== 'RESOLVED'">
+                        <mat-icon>check_circle</mat-icon>
+                      </button>
+                    </td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="incidentsColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: incidentsColumns"></tr>
+                </table>
+
+                <mat-paginator
+                  [length]="incidentsTotal"
+                  [pageSize]="incidentsPageSize"
+                  [pageIndex]="incidentsPageIndex"
+                  [pageSizeOptions]="[5, 10, 25, 50]"
+                  (page)="onIncidentsPageChange($event)"
+                  showFirstLastButtons
+                  aria-label="Select page of incidents">
+                </mat-paginator>
+              </div>
+
+              <ng-template #incidentsLoadingTpl>
+                <div class="loading-state">
+                  <mat-spinner diameter="40"></mat-spinner>
+                  <p>{{ 'common.loading' | translate }}</p>
+                </div>
+              </ng-template>
+
+              <div *ngIf="!incidentsLoading && incidentsData.length === 0" class="empty-state">
+                <mat-icon>warning_off</mat-icon>
+                <p>{{ 'incidents.empty' | translate }}</p>
+              </div>
             </div>
           </div>
 

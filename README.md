@@ -25,6 +25,12 @@ Family editing keeps all existing children and allows selecting additional
 children without duplicates or removing individual children. Saving requires a
 guardian and at least one child; API errors appear inside the editing modal.
 
+School editing for admin and superadmin includes an "Eliminar sede" action below
+each campus address and its optional map. Removal takes effect only when saving;
+cancelling leaves the school unchanged. Saved campus IDs are sent through
+`removedCampusIds` to deactivate them atomically without deleting related data.
+Removing a new, unsaved campus does not send a deactivation request.
+
 All management record lists show 10 records per page, with synchronized page
 numbers and navigation above and below the records. The header retains the
 unfiltered total from the latest full load; search results are paginated and

@@ -888,6 +888,7 @@
       "chooseCampusLocation": "Elegir ubicación de la sede {{name}} en el mapa",
       "addCampus": "Agregar sede",
       "removeCampus": "Quitar sede",
+      "deleteCampus": "Eliminar sede",
       "campusNamesHint": "Opcional: el colegio puede operar únicamente desde su sede central.",
       "logoReadError": "No se pudo leer el logo. Prueba con otra imagen.",
       "campusAddressRequired": "Cada sede debe tener nombre (máximo 30 caracteres) y dirección (máximo 255 caracteres)",

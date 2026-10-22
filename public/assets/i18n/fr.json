@@ -888,6 +888,7 @@
       "chooseCampusLocation": "Choisir l’emplacement du site {{name}} sur la carte",
       "addCampus": "Ajouter un site",
       "removeCampus": "Retirer le site",
+      "deleteCampus": "Supprimer le site",
       "campusNamesHint": "Facultatif : l'école peut fonctionner uniquement depuis son site principal.",
       "logoReadError": "Le logo n'a pas pu être lu. Essayez une autre image.",
       "campusAddressRequired": "Chaque site doit avoir un nom (30 caractères maximum) et une adresse (255 caractères maximum)",

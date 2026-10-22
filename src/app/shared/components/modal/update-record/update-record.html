@@ -97,11 +97,6 @@
                   (click)="campusMapOpenIndex = campusMapOpenIndex === i ? null : i">
             <mat-icon>place</mat-icon>
           </button>
-          <button *ngIf="!campus.id"
-                  type="button"
-                  class="modal__remove-campus"
-                  [attr.aria-label]="'register.schools.removeCampus' | translate"
-                  (click)="removeCampus(i)">×</button>
         </div>
         <input class="modal__info-value"
                [id]="'editCampusName' + i"
@@ -123,6 +118,11 @@
           (coordinatesChange)="onCampusLocationChange(i, $event)"
           (addressChange)="onCampusAddressChange(i, $event)">
         </app-location-map>
+        <button type="button" class="modal__remove-campus"
+                (click)="removeCampus(i)">
+          <mat-icon>delete_outline</mat-icon>
+          {{ 'register.schools.deleteCampus' | translate }}
+        </button>
       </div>
       <button type="button" class="modal__add-campus" (click)="addCampus()">
         {{ 'register.schools.addCampus' | translate }}

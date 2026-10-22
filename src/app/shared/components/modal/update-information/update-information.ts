@@ -36,6 +36,7 @@ export class UpdateInformation implements OnInit {
   cities: CityListDto[] = [];
   campuses: CampusListDto[] = [];
   campusMaps: boolean[] = [];
+  removedCampusIds: string[] = [];
   schoolMapOpen = false;
   loading = true;
   saving = false;
@@ -94,6 +95,13 @@ export class UpdateInformation implements OnInit {
     this.campusMaps.push(false);
   }
 
+  removeCampus(index: number): void {
+    const campus = this.campuses[index];
+    if (campus.id) this.removedCampusIds.push(campus.id);
+    this.campuses.splice(index, 1);
+    this.campusMaps.splice(index, 1);
+  }
+
   updateSchoolLocation(location: { latitude: number; longitude: number }): void {
     this.latitude = location.latitude;
     this.longitude = location.longitude;
@@ -147,6 +155,7 @@ export class UpdateInformation implements OnInit {
       theme: this.theme,
       status: this.status,
       campuses,
+      removedCampusIds: [...this.removedCampusIds],
     };
 
     if (!Number.isFinite(payload.phone)) {
@@ -181,6 +190,7 @@ export class UpdateInformation implements OnInit {
     this.status = '';
     this.campuses = [];
     this.campusMaps = [];
+    this.removedCampusIds = [];
     this.closed.emit();
   }
 }

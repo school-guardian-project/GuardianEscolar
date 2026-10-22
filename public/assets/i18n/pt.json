@@ -888,6 +888,7 @@
       "chooseCampusLocation": "Escolher a localização da unidade {{name}} no mapa",
       "addCampus": "Adicionar unidade",
       "removeCampus": "Remover unidade",
+      "deleteCampus": "Eliminar unidade",
       "campusNamesHint": "Opcional: a escola pode funcionar apenas na unidade central.",
       "logoReadError": "Não foi possível ler o logotipo. Tente outra imagem.",
       "campusAddressRequired": "Cada unidade precisa de nome (máximo de 30 caracteres) e endereço (máximo de 255 caracteres)",

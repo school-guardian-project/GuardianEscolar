@@ -1124,5 +1124,106 @@
       "update": "The bus could not be updated.",
       "driverNotAssigned": "The driver could not be assigned."
     }
+  },
+  "sidebar": {
+    "alerts": "Alerts",
+    "incidents": "Incidents"
+  },
+  "alerts": {
+    "title": "Alert Management",
+    "subtitle": "Monitoring and confirmation of boarding, alighting and incident events",
+    "columns": {
+      "timestamp": "Date & Time",
+      "student": "Student",
+      "route": "Route",
+      "type": "Type",
+      "message": "Message",
+      "acknowledged": "Acknowledged",
+      "actions": "Actions"
+    },
+    "types": {
+      "BOARDING": "Boarding",
+      "ALIGHTING": "Alighting",
+      "INCIDENT": "Incident",
+      "DELAY": "Delay",
+      "DEVIATION": "Deviation"
+    },
+    "status": {
+      "acknowledged": "Acknowledged",
+      "pending": "Pending"
+    },
+    "filters": {
+      "search": "Search",
+      "searchPlaceholder": "Search by student, route or message...",
+      "type": "Alert Type",
+      "allTypes": "All Types",
+      "acknowledged": "Acknowledgment",
+      "all": "All",
+      "pending": "Pending",
+      "acknowledged": "Acknowledged",
+      "dateFrom": "From",
+      "dateTo": "To",
+      "apply": "Apply Filters",
+      "clear": "Clear Filters"
+    },
+    "actions": {
+      "acknowledge": "Acknowledge Alert",
+      "viewDetails": "View Details"
+    },
+    "empty": "No alerts found with current filters",
+    "emptyState": "No alerts found with current filters"
+  },
+  "incidents": {
+    "title": "Incident Management",
+    "subtitle": "Registration and tracking of incidents on school routes",
+    "columns": {
+      "reportedAt": "Date & Time",
+      "route": "Route",
+      "driver": "Driver",
+      "bus": "Bus",
+      "type": "Type",
+      "severity": "Severity",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "types": {
+      "DELAY": "Delay",
+      "BREAKDOWN": "Breakdown",
+      "ACCIDENT": "Accident",
+      "DEVIATION": "Route Deviation",
+      "OTHER": "Other"
+    },
+    "severities": {
+      "LOW": "Low",
+      "MEDIUM": "Medium",
+      "HIGH": "High",
+      "CRITICAL": "Critical"
+    },
+    "statuses": {
+      "OPEN": "Open",
+      "IN_PROGRESS": "In Progress",
+      "RESOLVED": "Resolved",
+      "CLOSED": "Closed"
+    },
+    "filters": {
+      "search": "Search",
+      "searchPlaceholder": "Search by route, driver or description...",
+      "type": "Incident Type",
+      "allTypes": "All Types",
+      "severity": "Severity",
+      "allSeverities": "All Severities",
+      "status": "Status",
+      "allStatuses": "All Statuses",
+      "dateFrom": "From",
+      "dateTo": "To",
+      "apply": "Apply Filters",
+      "clear": "Clear Filters"
+    },
+    "actions": {
+      "viewDetails": "View Details",
+      "resolve": "Resolve Incident"
+    },
+    "empty": "No incidents found with current filters",
+    "emptyState": "No incidents found with current filters"
   }
 }

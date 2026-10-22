@@ -8,7 +8,7 @@ import { PersonListDto, PersonRequestDto, CreatePersonRequestDto, PersonResponse
   providedIn: 'root',
 })
 export class StudentsService {
-  private readonly base = `${environment.apiUrl}/user/api/students`;
+  private readonly base = `${environment.apiUrl}/user/api/v1/students`;
 
   constructor(private http: HttpClient) {}
 

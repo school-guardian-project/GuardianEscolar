@@ -10,6 +10,8 @@ export const roleConfig = {
     },
     card: {
       showQR: true,
+      // "activate": el estudiante muestra su QR; "scan": el conductor lo escanea.
+      qrMode: "activate",
       showIncidentReport: false,
     },
     MapMarkers: {
@@ -28,6 +30,7 @@ export const roleConfig = {
     },
     card: {
       showQR: true,
+      qrMode: "scan",
       showIncidentReport: true,
     },
     MapMarkers: {
@@ -46,6 +49,7 @@ export const roleConfig = {
     },
     card: {
       showQR: false,
+      qrMode: null,
       showIncidentReport: false,
     },
     MapMarkers: {

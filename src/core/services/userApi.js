@@ -1,6 +1,7 @@
 import { apiGet } from "./apiClient";
 
-const PREFIX = "/user/api";
+// ms-user-management publica sus rutas bajo api/v1 (igual que la web).
+const PREFIX = "/user/api/v1";
 
 /** GET a ms-user-management a través del API Gateway. */
 export async function getUserApi(path) {

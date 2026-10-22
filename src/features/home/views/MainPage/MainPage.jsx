@@ -57,7 +57,8 @@ async function fetchRoute(path) {
 }
 
 /**
- * Ruta visible para el rol autenticado:
+ * Ruta visible para el rol autenticado, con el aviso que corresponde cuando
+ * no hay una que mostrar:
  * - student: su propia ruta asignada.
  * - driver:  su ruta del día, solo dentro de la ventana activa.
  * - father:  la ruta del estudiante vinculado (FR-9.1).
@@ -65,21 +66,38 @@ async function fetchRoute(path) {
  */
 async function resolveRouteForRole(role, session) {
   if (role === "student") {
-    return fetchRoute(`/routes/student/${session.profileId}`);
+    const route = await fetchRoute(`/routes/student/${session.profileId}`);
+    return { route, note: route ? null : "Aún no tienes una ruta asignada." };
   }
 
   if (role === "driver") {
     const today = await fetchRoute(`/routes/today?driverId=${session.profileId}`);
-    return today?.status === "ACTIVE" ? (today.route ?? null) : null;
+    if (today?.status === "ACTIVE") {
+      return { route: today.route ?? null, note: null };
+    }
+    // SCHEDULED trae la próxima salida: decir "sin ruta" confundía al conductor.
+    if (today?.status === "SCHEDULED" && today.nextOccurrence) {
+      const next = new Date(today.nextOccurrence).toLocaleString("es-CO", {
+        weekday: "long",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+      return { route: null, note: `Tu próximo recorrido es el ${next}.` };
+    }
+    return { route: null, note: "No hay una ruta asignada." };
   }
 
   if (role === "father") {
     const [student] = await getLinkedStudents(session);
-    return student ? fetchRoute(`/routes/student/${student.profileId}`) : null;
+    if (!student) {
+      return { route: null, note: "No hay estudiantes vinculados a tu cuenta." };
+    }
+    const route = await fetchRoute(`/routes/student/${student.profileId}`);
+    return { route, note: route ? null : "El estudiante aún no tiene una ruta asignada." };
   }
 
   const routes = await fetchRoute("/routes");
-  return Array.isArray(routes) ? (routes[0] ?? null) : null;
+  return { route: Array.isArray(routes) ? (routes[0] ?? null) : null, note: null };
 }
 
 export default function MainPage() {
@@ -169,13 +187,13 @@ export default function MainPage() {
         // Resuelve la ruta visible por rol con los endpoints reales de
         // ms-route: el padre usa la ruta del estudiante vinculado (FR-9.1)
         // en lugar de caer al listado general, que exige permisos de admin.
-        const route = await resolveRouteForRole(role, session);
+        const { route, note } = await resolveRouteForRole(role, session);
+        setStatus(note);
 
         if (!route) {
           stopsRef.current = [];
           setRouteStops([]);
           setRouteInfo(null);
-          if (role === "driver") setStatus("No hay una ruta asignada.");
           return;
         }
 

@@ -35,3 +35,9 @@ test("the JWT roleId maps to its roleConfig key, defaulting to student", () => {
   assert.equal(roleKeyFromRoleId(4), "father");
   assert.equal(roleKeyFromRoleId(null), "student");
 });
+
+test("the student shows its QR and the driver scans it", () => {
+  assert.equal(roleConfig.student.card.qrMode, "activate");
+  assert.equal(roleConfig.driver.card.qrMode, "scan");
+  assert.equal(roleConfig.father.card.qrMode, null);
+});

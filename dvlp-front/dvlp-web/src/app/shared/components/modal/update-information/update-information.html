@@ -94,6 +94,11 @@
           (coordinatesChange)="updateCampusLocation(i, $event)"
           (addressChange)="updateCampusAddress(i, $event)">
           </app-location-map>
+          <button type="button" class="modal__remove-campus" [disabled]="saving"
+            (click)="removeCampus(i)">
+            <mat-icon>delete_outline</mat-icon>
+            {{ 'register.schools.deleteCampus' | translate }}
+          </button>
         </div>
         <button type="button" class="modal__add-campus" (click)="addCampus()">
           {{ 'register.schools.addCampus' | translate }}

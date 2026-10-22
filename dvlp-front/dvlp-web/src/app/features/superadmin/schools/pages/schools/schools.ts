@@ -247,6 +247,9 @@ export class Schools implements OnInit {
     const payload: SchoolWithCampusesRequestDto = {
       ...toPayload(updatedRecord),
       campuses: toCampuses(updatedRecord['campuses']),
+      removedCampusIds: Array.isArray(updatedRecord['removedCampusIds'])
+        ? updatedRecord['removedCampusIds'].filter((id): id is string => typeof id === 'string')
+        : [],
     };
     this.actionError = '';
     this.schoolsService.updateWithCampuses(String(id), payload).subscribe({

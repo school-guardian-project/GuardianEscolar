@@ -21,6 +21,7 @@ export interface SchoolRequestDto {
  */
 export interface SchoolWithCampusesRequestDto extends SchoolRequestDto {
   campuses: SchoolCampusRequestDto[];
+  removedCampusIds?: string[];
 }
 
 export interface SchoolCampusRequestDto {

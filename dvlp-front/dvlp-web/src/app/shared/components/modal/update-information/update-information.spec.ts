@@ -1,5 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { TranslateModule } from '@ngx-translate/core';
 import { CitiesService } from '@core/services/cities.service';
 import { CampusesService } from '@core/services/campuses.service';
 import { SchoolsService } from '@core/services/schools.service';
@@ -14,7 +15,7 @@ describe('UpdateInformation', () => {
   beforeEach(async () => {
     updateWithCampuses = vi.fn(() => of(void 0));
     await TestBed.configureTestingModule({
-      imports: [UpdateInformation],
+      imports: [UpdateInformation, TranslateModule.forRoot()],
       providers: [
         {
           provide: SchoolsService,
@@ -49,10 +50,11 @@ describe('UpdateInformation', () => {
         },
         { provide: CitiesService, useValue: { list: () => of([{ id: 'city-1', name: 'City' }]) } },
       ],
-    }).overrideComponent(UpdateInformation, { set: { template: '' } }).compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(UpdateInformation);
     component = fixture.componentInstance;
+    fixture.detectChanges();
     await fixture.whenStable();
   });
 
@@ -94,5 +96,43 @@ describe('UpdateInformation', () => {
     expect(updateWithCampuses).toHaveBeenCalledWith('school-1', expect.objectContaining({
       campuses: [],
     }));
+  });
+
+  it('places the remove button below the address and only removes the clicked campus on save', () => {
+    component.schoolId = 'school-1';
+    component.ngOnInit();
+    component.addCampus();
+    component.campuses[1] = {
+      id: 'campus-2', name: 'North', address: 'North street', latitude: null, longitude: null,
+    };
+    component.campusMaps = [false, false];
+    fixture.detectChanges();
+    const campus: HTMLElement = fixture.nativeElement.querySelector('.modal__campus');
+    const button = campus.querySelector<HTMLButtonElement>('.modal__remove-campus')!;
+    expect(button.previousElementSibling?.querySelector('input')).not.toBeNull();
+
+    component.campusMaps[1] = true;
+    button.click();
+
+    expect(updateWithCampuses).not.toHaveBeenCalled();
+    expect(component.campuses.map(campus => campus.id)).toEqual(['campus-2']);
+    expect(component.campusMaps).toEqual([true]);
+    component.update();
+    expect(updateWithCampuses).toHaveBeenCalledWith('school-1', expect.objectContaining({
+      removedCampusIds: ['campus-1'],
+      campuses: [expect.objectContaining({ id: 'campus-2' })],
+    }));
+  });
+
+  it('does not deactivate new unsaved campuses or persist removals when cancelled', () => {
+    component.schoolId = 'school-1';
+    component.ngOnInit();
+    component.addCampus();
+    component.removeCampus(1);
+    expect(component.removedCampusIds).toEqual([]);
+    component.removeCampus(0);
+    component.close();
+    expect(updateWithCampuses).not.toHaveBeenCalled();
+    expect(component.removedCampusIds).toEqual([]);
   });
 });

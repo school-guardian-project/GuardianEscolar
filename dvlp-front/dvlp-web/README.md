@@ -30,6 +30,10 @@ each campus address and its optional map. Removal takes effect only when saving;
 cancelling leaves the school unchanged. Saved campus IDs are sent through
 `removedCampusIds` to deactivate them atomically without deleting related data.
 Removing a new, unsaved campus does not send a deactivation request.
+Campus removal buttons use a red background and white text. The registration
+form uses a gray, labeled add-campus button; both school update modals use white
+add-campus buttons. Registration removal appears below the address and optional
+map, rather than beside the campus name.
 
 All management record lists show 10 records per page, with synchronized page
 numbers and navigation above and below the records. The header retains the

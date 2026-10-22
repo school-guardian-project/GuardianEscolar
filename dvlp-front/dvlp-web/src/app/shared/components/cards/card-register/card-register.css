@@ -279,6 +279,26 @@
   font-size: 0.8rem;
 }
 
+.card-register__add-campus,
+.card-register__delete-campus {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid #CBD5E1;
+  border-radius: 8px;
+  background: #E2E8F0;
+  color: #1A2E4A;
+  cursor: pointer;
+}
+
+.card-register__delete-campus {
+  border-color: #DC2626;
+  background: #DC2626;
+  color: #FFFFFF;
+}
+
 /* ── SELECT SIN OPCIONES ───────────────────────────────── */
 .card-register__options-empty {
   margin: 0;

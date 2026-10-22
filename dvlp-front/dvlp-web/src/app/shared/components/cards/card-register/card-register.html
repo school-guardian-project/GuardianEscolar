@@ -168,13 +168,6 @@
                    [name]="'campusName' + i"
                    (ngModelChange)="onCampusNameChange(i, $event)"
                    [placeholder]="'register.schools.campusNamePlaceholder' | translate" />
-            <button
-                  type="button"
-                  class="card-register__remove-btn"
-                  (click)="removeCampusName(i)"
-                  [attr.aria-label]="'register.schools.removeCampus' | translate">
-              x
-            </button>
           </div>
           <input class="card-register__input"
                  type="text"
@@ -191,18 +184,20 @@
             (coordinatesChange)="onCampusLocationChange(i, $event)"
             (addressChange)="onCampusAddressChange(i, $event)">
           </app-location-map>
+          <button type="button" class="card-register__delete-campus"
+                  (click)="removeCampusName(i)">
+            <mat-icon>delete_outline</mat-icon>
+            {{ 'register.schools.deleteCampus' | translate }}
+          </button>
         </div>
 
         <div class="card-register__campus-row card-register__campus-row--actions">
           <button type="button"
-                  class="card-register__add-btn"
+                  class="card-register__add-campus"
                   (click)="addCampusName()"
                   [attr.aria-label]="'register.schools.addCampus' | translate">
-            +
-          </button>
-          <span class="card-register__campus-hint">
             {{ 'register.schools.addCampus' | translate }}
-          </span>
+          </button>
         </div>
       </div>
 

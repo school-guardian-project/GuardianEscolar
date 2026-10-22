@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { View, Text, Pressable } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import RouteInfoCard from "@components/cards/RouteInfoCard";
@@ -122,7 +123,13 @@ export default function MainPage() {
   const stopsRef = useRef([]);
 
   // GPS Tracking (solo si está enfocada la pantalla)
-  const { location, routeCoordinates } = useGpsTracking(undefined, isFocused);
+  const { location } = useGpsTracking(undefined, isFocused);
+  const busLatitude = Number(location?.latitude);
+  const busLongitude = Number(location?.longitude);
+  const busCoordinate =
+    location && Number.isFinite(busLatitude) && Number.isFinite(busLongitude)
+      ? { latitude: busLatitude, longitude: busLongitude }
+      : null;
 
   // Encuadra el mapa sobre las paradas de la ruta (si las hay).
   const fitStopsOnMap = () => {
@@ -288,6 +295,19 @@ export default function MainPage() {
           />
         ))}
 
+        {/* Bus en tiempo real (ms-gps) */}
+        {busCoordinate && (
+          <Marker
+            coordinate={busCoordinate}
+            title={t("gps.vehicleLocation")}
+            rotation={Number(location.course) || 0}
+            anchor={{ x: 0.5, y: 0.5 }}
+          >
+            <View style={styles.busMarker}>
+              <FontAwesome5 name="bus" size={19} color="#FFFFFF" />
+            </View>
+          </Marker>
+        )}
       </MapView>
 
       {/* Encabezado */}

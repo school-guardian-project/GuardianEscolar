@@ -1,4 +1,5 @@
 import { GPS_CONFIG } from "@core/config/gps";
+import { apiRequestAt } from "./apiClient";
 
 function normalizeGpsValue(value, fallback = null) {
   if (value === null || value === undefined || value === "") {
@@ -20,43 +21,32 @@ export async function getCurrentVehicleLocation(
     throw new Error("No se ha configurado la URL base del backend GPS.");
   }
 
-  const url = `${baseUrl.replace(/\/+$/, "")}/api/gps/devices/${encodeURIComponent(
-    imei
-  )}/location`;
+  const path = `/api/gps/devices/${encodeURIComponent(imei)}/location`;
 
-  console.log("[GPS] Fetching:", url);
+  console.log("[GPS] Fetching:", path);
 
-  let response;
+  // Kong exige el JWT en /api/gps: apiRequestAt agrega el Bearer, renueva el
+  // token ante un 401 y corta la petición a los 15 s (sin ese corte, una
+  // petición colgada detenía el polling de useGpsTracking).
+  let payload;
 
   try {
-    response = await fetch(url);
-    console.log("[GPS] Response:", response.status);
+    payload = await apiRequestAt(baseUrl, path, { method: "GET" }, true, true);
+    console.log("[GPS] Location:", payload);
   } catch (error) {
-    console.error("[GPS] Network error:", error);
-    throw new Error("No se pudo conectar con el backend GPS.");
-  }
+    console.error("[GPS] Request failed:", error);
 
-  let payload = null;
+    if (error?.status) {
+      throw new Error(
+        error.data?.message || `Error del backend GPS (${error.status}).`
+      );
+    }
 
-  const responseText = await response.text();
-
-  if (responseText) {
-    try {
-      payload = JSON.parse(responseText);
-      console.log("[GPS] Location:", payload);
-    } catch (error) {
-      console.error("[GPS] Invalid JSON:", responseText);
+    if (error instanceof SyntaxError) {
       throw new Error("La respuesta del backend GPS no es válida.");
     }
-  }
 
-  if (!response.ok) {
-    const errorMessage =
-      payload && typeof payload === "object" && payload.message
-        ? payload.message
-        : `Error del backend GPS (${response.status}).`;
-
-    throw new Error(errorMessage);
+    throw new Error("No se pudo conectar con el backend GPS.");
   }
 
   if (!payload) {

@@ -241,15 +241,18 @@
   align-items: center;
   gap: 6px;
   padding: 8px 12px;
-  border: 1px solid currentColor;
+  border: 1px solid #DC2626;
   border-radius: 8px;
-  background: transparent;
-  color: var(--alert-icon);
+  background: #DC2626;
+  color: #FFFFFF;
   cursor: pointer;
 }
 
 .modal__add-campus {
   align-self: flex-start;
+  padding: 8px 12px;
+  background: #FFFFFF;
+  color: #1A2E4A;
 }
 
 /* INPUTS + SELECTS */

@@ -50,15 +50,19 @@ test('familyService only resolves families for the guardian role', async () => {
   assert.deepEqual(calls, []);
 });
 
-test('familyService returns each linked child with its resolved name', async () => {
-  const { service } = await loadFamilyService((path) => {
+test('familyService returns each linked child named from the students list', async () => {
+  const { service, calls } = await loadFamilyService((path) => {
     if (path === '/families') return [{ id: 'family-1' }, { id: 'family-2' }];
-    if (path === '/families/family-2') return { parentProfileId: 'someone-else', children: ['x'] };
-    if (path === '/families/family-1') {
-      return { parentProfileId: 'parent-profile', children: ['child-a', 'child-b'] };
+    if (path === '/families/family-1') return { parentProfileId: 'someone-else', children: ['x'] };
+    if (path === '/families/family-2') {
+      return { parentProfileId: 'parent-profile', children: ['profile-a', 'profile-b'] };
     }
-    if (path === '/students/child-a') return { profileId: 'profile-a', name: 'Ana', lastName: 'Diaz' };
-    if (path === '/students/child-b') return { profileId: 'profile-b', name: 'Beto', lastName: '' };
+    if (path === '/students') {
+      return [
+        { id: 'person-a', profileId: 'profile-a', name: 'Ana', lastName: 'Diaz' },
+        { id: 'person-b', profileId: 'profile-b', name: 'Beto', lastName: '' },
+      ];
+    }
     throw new Error(`unexpected path ${path}`);
   });
 
@@ -66,22 +70,35 @@ test('familyService returns each linked child with its resolved name', async () 
     { profileId: 'profile-a', name: 'Ana Diaz' },
     { profileId: 'profile-b', name: 'Beto' },
   ]);
+  assert.ok(!calls.some((path) => path.startsWith('/students/')), 'no per-id student lookups');
 });
 
-test('familyService skips a child that cannot be resolved without losing the rest', async () => {
+test('familyService keeps every child when the students list fails', async () => {
   const { service } = await loadFamilyService((path) => {
     if (path === '/families') return [{ id: 'family-1' }];
     if (path === '/families/family-1') {
-      return { parentProfileId: 'parent-person', children: ['child-a', 'child-b'] };
+      return { parentProfileId: 'parent-person', children: ['profile-a', 'profile-b'] };
     }
-    if (path === '/students/child-a') throw new Error('student service down');
-    if (path === '/students/child-b') return { profileId: 'profile-b', name: 'Beto', lastName: 'Ruiz' };
+    if (path === '/students') throw new Error('student service down');
     throw new Error(`unexpected path ${path}`);
   });
 
   assert.deepEqual(plain(await service.getLinkedStudents(PARENT)), [
-    { profileId: 'profile-b', name: 'Beto Ruiz' },
+    { profileId: 'profile-a', name: 'profile-a' },
+    { profileId: 'profile-b', name: 'profile-b' },
   ]);
+});
+
+test('findMyFamily matches a student by its profileId', async () => {
+  const { service } = await loadFamilyService((path) => {
+    if (path === '/families') return [{ id: 'family-1' }];
+    if (path === '/families/family-1') return { parentProfileId: 'p', children: ['student-profile'] };
+    throw new Error(`unexpected path ${path}`);
+  });
+
+  const family = await service.findMyFamily({ roleId: 2, profileId: 'student-profile' });
+  assert.equal(family.parentProfileId, 'p');
+  assert.equal(await service.findMyFamily(null), null);
 });
 
 test('familyService returns an empty list without a matching family or when the backend fails', async () => {

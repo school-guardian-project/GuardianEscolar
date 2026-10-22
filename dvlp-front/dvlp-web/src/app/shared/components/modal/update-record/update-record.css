@@ -236,7 +236,16 @@
 }
 
 .modal__remove-campus {
-  margin-left: auto;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid currentColor;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--alert-icon);
+  cursor: pointer;
 }
 
 .modal__add-campus {

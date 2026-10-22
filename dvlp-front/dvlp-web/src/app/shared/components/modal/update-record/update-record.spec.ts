@@ -21,6 +21,44 @@ describe('UpdateRecord', () => {
     expect(component).toBeTruthy();
   });
 
+  it('renders a remove button below each saved campus address and submits only its id for removal', () => {
+    component.type = 'schools';
+    component.record = {
+      id: 'school-1', name: 'School', city: 'city-1', address: 'School street',
+      phone: '3001234567', schooling: 'Primaria', email: 'school@test.com', status: 'Active',
+      campuses: [
+        { id: 'campus-1', name: 'Main', address: 'Main street', latitude: null, longitude: null },
+        { id: 'campus-2', name: 'North', address: 'North street', latitude: null, longitude: null },
+      ],
+    };
+    component.ngOnInit();
+    fixture.detectChanges();
+    const buttons: NodeListOf<HTMLButtonElement> = fixture.nativeElement.querySelectorAll('.modal__remove-campus');
+    expect(buttons.length).toBe(2);
+    expect(buttons[0].previousElementSibling?.id).toBe('editCampusAddress0');
+    component.campusMapOpenIndex = 1;
+    const saved = vi.fn();
+    component.saved.subscribe(saved);
+    buttons[0].click();
+    expect(saved).not.toHaveBeenCalled();
+    expect(component.campusMapOpenIndex).toBe(0);
+    component.onSubmit();
+    expect(saved).toHaveBeenCalledWith(expect.objectContaining({
+      removedCampusIds: ['campus-1'],
+      campuses: [expect.objectContaining({ id: 'campus-2' })],
+    }));
+    expect(component.record['campuses']).toHaveLength(2);
+  });
+
+  it('does not send new campuses for deactivation and closes the removed campus map', () => {
+    component.addCampus();
+    component.campusMapOpenIndex = 0;
+    component.removeCampus(0);
+    expect(component.campuses).toEqual([]);
+    expect(component.removedCampusIds).toEqual([]);
+    expect(component.campusMapOpenIndex).toBeNull();
+  });
+
   it('keeps all existing children and adds multiple children without duplicates', async () => {
     component.type = 'family';
     component.record = { id: 'family-id', name: 'Family', guardian: 'guardian-id', student: ['Ana', 'Luis'] };

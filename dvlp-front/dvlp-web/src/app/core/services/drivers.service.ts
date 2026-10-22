@@ -8,7 +8,7 @@ import { PersonListDto, PersonRequestDto, CreatePersonRequestDto, PersonResponse
   providedIn: 'root',
 })
 export class DriversService {
-  private readonly base = `${environment.apiUrl}/user/api/drivers`;
+  private readonly base = `${environment.apiUrl}/user/api/v1/drivers`;
 
   constructor(private http: HttpClient) {}
 

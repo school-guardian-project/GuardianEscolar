@@ -64,7 +64,9 @@ export async function apiRequestAt(baseUrl, path, options = {}, retry = false, a
     throw error;
   }
 
-  return response.status === 204 ? null : response.json();
+  // 204, o un 200 sin cuerpo (ms-gps cuando aún no tiene ubicación): no hay JSON que leer.
+  const text = await response.text();
+  return text ? JSON.parse(text) : null;
 }
 
 /**

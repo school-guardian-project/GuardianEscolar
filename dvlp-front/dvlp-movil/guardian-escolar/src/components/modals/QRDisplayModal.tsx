@@ -15,7 +15,16 @@ type CredentialState =
   | { phase: "idle" }
   | { phase: "loading" }
   | { phase: "ready"; credential: Credential }
-  | { phase: "error" };
+  | { phase: "error"; message: string };
+
+// Motivos que ms-notification devuelve en 409; el resto cae al mensaje genérico.
+const CREDENTIAL_ERRORS: Record<string, string> = {
+  "Student has no active route assigned":
+    "Aún no tienes una ruta asignada. Pide al colegio que te asigne una.",
+  "Student is not assigned to a stop on their route":
+    "Tu ruta no tiene una parada asignada para ti. Avisa al colegio.",
+};
+const GENERIC_ERROR = "No se pudo generar el código. Cierra e intenta de nuevo.";
 
 export default function QRDisplayModal({
   visible,
@@ -41,9 +50,13 @@ export default function QRDisplayModal({
           setState({ phase: "ready", credential });
         }
       })
-      .catch(() => {
+      .catch((error) => {
         if (!cancelled) {
-          setState({ phase: "error" });
+          const reason = error?.data?.message;
+          setState({
+            phase: "error",
+            message: (reason && CREDENTIAL_ERRORS[reason]) || GENERIC_ERROR,
+          });
         }
       });
 
@@ -71,9 +84,7 @@ export default function QRDisplayModal({
 
     return (
       <Text style={[styles.placeholder, { color: theme.textSecondary }]}>
-        {state.phase === "error"
-          ? "No se pudo generar el código. Cierra e intenta de nuevo."
-          : "Sin datos del estudiante."}
+        {state.phase === "error" ? state.message : "Sin datos del estudiante."}
       </Text>
     );
   };

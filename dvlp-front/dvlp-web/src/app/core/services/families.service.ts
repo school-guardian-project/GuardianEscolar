@@ -8,7 +8,7 @@ import { FamilyListDto, FamilyRequestDto, FamilyResponseDto } from '../models/fa
   providedIn: 'root',
 })
 export class FamiliesService {
-  private readonly base = `${environment.apiUrl}/user/api/families`;
+  private readonly base = `${environment.apiUrl}/user/api/v1/families`;
 
   constructor(private http: HttpClient) {}
 

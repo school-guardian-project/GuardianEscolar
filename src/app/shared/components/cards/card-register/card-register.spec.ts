@@ -39,6 +39,24 @@ describe('CardRegister', () => {
     expect(component).toBeTruthy();
   });
 
+  it('renders labeled campus actions below the address instead of a name-field remove icon', () => {
+    TestBed.inject(CitiesService).list = vi.fn(() => of([]));
+    component.type = 'schools';
+    component.addCampusName();
+    fixture.detectChanges();
+    const campus: HTMLElement = fixture.nativeElement.querySelector('.card-register__campus');
+    expect(campus.querySelector('.card-register__campus-row button')).toBeNull();
+    const remove = campus.querySelector<HTMLButtonElement>('.card-register__delete-campus')!;
+    expect(remove.textContent).toContain('register.schools.deleteCampus');
+    expect(remove.previousElementSibling).toBe(campus.querySelectorAll('input')[1]);
+    expect(fixture.nativeElement.querySelector('.card-register__add-campus').textContent)
+      .toContain('register.schools.addCampus');
+
+    remove.click();
+
+    expect(component.campuses).toEqual([]);
+  });
+
   it('validates school fields as values change', () => {
     component.type = 'schools';
     component.formData = { name: '', website: '' };

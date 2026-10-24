@@ -18,11 +18,16 @@ export function RoleSwitcherProvider({ children }) {
     useEffect(() => {
         let mounted = true;
         (async () => {
-            const session = await getSession();
-            if (mounted && session?.roleId) {
-                setRole(roleKeyFromRoleId(session.roleId));
+            try {
+                const session = await getSession();
+                if (mounted && session?.roleId) {
+                    setRole(roleKeyFromRoleId(session.roleId));
+                }
+            } catch (e) {
+                console.warn("[RoleSwitcher] Error loading session:", e);
+            } finally {
+                if (mounted) setInitialized(true);
             }
-            if (mounted) setInitialized(true);
         })();
         return () => { mounted = false; };
     }, []);

@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-manage';
 import { CardRegister } from '@shared/components/cards/card-register/card-register';
@@ -90,6 +91,7 @@ function toCreatePayload(form: RecordData): CreatePersonRequestDto {
     MatButtonModule,
     MatToolbarModule,
     CommonModule,
+    TranslateModule,
     NavbarManage,
     CardRegister,
     CardList,
@@ -104,6 +106,7 @@ function toCreatePayload(form: RecordData): CreatePersonRequestDto {
 })
 export class Guardians implements OnInit {
   private parentsService = inject(ParentsService);
+  private translate = inject(TranslateService);
 
   @ViewChild(CardRegister) register?: CardRegister;
 
@@ -118,7 +121,7 @@ export class Guardians implements OnInit {
     this.parentsService.list().subscribe({
       next: (list) => this.guardians.set(list.map(fromApi)),
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudieron cargar los acudientes.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.guardians.load'));
       },
     });
   }
@@ -132,7 +135,7 @@ export class Guardians implements OnInit {
     this.parentsService.search(query).subscribe({
       next: (list) => this.guardians.set(list.map(fromApi)),
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudieron buscar los acudientes.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.guardians.search'));
       },
     });
   }
@@ -146,7 +149,7 @@ export class Guardians implements OnInit {
       },
       error: (err) => {
         this.register?.setValidationMessage(
-          describeProblem(err, 'No se pudo registrar el acudiente. Verifica que el backend esté disponible.')
+          describeProblem(err, this.translate.instant('errors.guardians.create'))
         );
       },
     });
@@ -164,7 +167,7 @@ export class Guardians implements OnInit {
         this.showModal = true;
       },
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudo cargar el acudiente.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.guardians.get'));
       },
     });
   }
@@ -186,7 +189,7 @@ export class Guardians implements OnInit {
         this.showUpdateModal = true;
       },
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudo cargar el acudiente para actualizarlo.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.guardians.getForUpdate'));
       },
     });
   }
@@ -211,7 +214,7 @@ export class Guardians implements OnInit {
         this.load();
       },
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudo actualizar el acudiente.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.guardians.update'));
       },
     });
   }
@@ -244,7 +247,7 @@ export class Guardians implements OnInit {
         this.load();
       },
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudo eliminar el acudiente.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.guardians.delete'));
       },
     });
   }

@@ -43,7 +43,7 @@ export interface IncidentFilters {
 
 @Injectable({ providedIn: 'root' })
 export class IncidentsService {
-  private readonly base = `${environment.apiUrl}/notification/api/v1/incidents`;
+  private readonly base = `${environment.apiUrl}/notification/api/v1/notifications/incidents`;
 
   constructor(private http: HttpClient) {}
 

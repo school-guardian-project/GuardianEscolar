@@ -227,7 +227,10 @@
     "school": "School",
     "scanBoarded": "Boarding registered. The guardian was notified.",
     "scanAlighted": "Alighting registered. The guardian was notified.",
-    "scanAlready": "Already notified. No duplicate was created."
+    "scanAlready": "Already notified. No duplicate was created.",
+    "startRoute": "Start Route",
+    "endRoute": "End Route",
+    "tripEnded": "Trip ended successfully"
   },
 
   "incidents": {

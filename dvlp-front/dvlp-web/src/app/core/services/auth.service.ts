@@ -90,7 +90,6 @@ const EMPTY_SESSION: Session = {
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly base = `${environment.apiUrl}/api/v1/auth`;
-  private readonly TOKEN_KEY = 'sg_access_token';
 
   private accessToken: string | null = null;
   private refreshInFlight: Observable<string> | null = null;
@@ -99,20 +98,12 @@ export class AuthService {
   constructor(
     private http: HttpClient,
     @Inject(PLATFORM_ID) private platformId: object,
-  ) {
-    if (isPlatformBrowser(this.platformId)) {
-      this.accessToken = localStorage.getItem(this.TOKEN_KEY);
-    }
-  }
+  ) {}
 
   login(email: string, password: string): Observable<void> {
     return this.http
       .post<LoginResponse>(`${this.base}/login`, { email, password }, { withCredentials: true })
-      .pipe(map((res) => { 
-        this.accessToken = res.accessToken; 
-        this.persistToken();
-        this.applySession(res); 
-      }));
+      .pipe(map((res) => { this.accessToken = res.accessToken; this.applySession(res); }));
   }
 
   /** Single-flight: varias llamadas concurrentes comparten una sola rotación. */
@@ -126,7 +117,6 @@ export class AuthService {
         .pipe(
           map((res) => {
             this.accessToken = res.accessToken;
-            this.persistToken();
             this.applySession(res);
             return res.accessToken;
           }),
@@ -134,7 +124,6 @@ export class AuthService {
           switchMap((token) => this.userSession.email ? of(token) : this.loadEmail(token)),
           catchError((err) => {
             this.accessToken = null;
-            this.persistToken();
             this.userSession = { ...EMPTY_SESSION };
             return throwError(() => err);
           }),
@@ -164,7 +153,6 @@ export class AuthService {
       .post<void>(`${this.base}/logout`, null, { withCredentials: true, headers })
       .pipe(finalize(() => {
         this.accessToken = null;
-        this.persistToken();
         this.userSession = { ...EMPTY_SESSION };
       }));
   }
@@ -185,16 +173,6 @@ export class AuthService {
 
   getToken(): string | null {
     return this.accessToken;
-  }
-
-  private persistToken(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      if (this.accessToken) {
-        localStorage.setItem(this.TOKEN_KEY, this.accessToken);
-      } else {
-        localStorage.removeItem(this.TOKEN_KEY);
-      }
-    }
   }
 
   isAuthenticated(): boolean {

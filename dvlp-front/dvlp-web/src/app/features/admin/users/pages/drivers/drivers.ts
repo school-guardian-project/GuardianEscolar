@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-manage';
 import { CardRegister } from '@shared/components/cards/card-register/card-register';
@@ -94,6 +95,7 @@ function toCreatePayload(form: RecordData): CreatePersonRequestDto {
     MatButtonModule,
     MatToolbarModule,
     CommonModule,
+    TranslateModule,
     NavbarManage,
     CardRegister,
     CardList,
@@ -108,6 +110,7 @@ function toCreatePayload(form: RecordData): CreatePersonRequestDto {
 })
 export class Drivers implements OnInit {
   private driversService = inject(DriversService);
+  private translate = inject(TranslateService);
 
   @ViewChild(CardRegister) register?: CardRegister;
 
@@ -122,7 +125,7 @@ export class Drivers implements OnInit {
     this.driversService.list().subscribe({
       next: (list) => this.drivers.set(list.map(fromApi)),
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudieron cargar los conductores.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.drivers.load'));
       },
     });
   }
@@ -136,7 +139,7 @@ export class Drivers implements OnInit {
     this.driversService.search(query).subscribe({
       next: (list) => this.drivers.set(list.map(fromApi)),
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudieron buscar los conductores.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.drivers.search'));
       },
     });
   }
@@ -150,7 +153,7 @@ export class Drivers implements OnInit {
       },
       error: (err) => {
         this.register?.setValidationMessage(
-          describeProblem(err, 'No se pudo registrar el conductor. Verifica que el backend esté disponible.')
+          describeProblem(err, this.translate.instant('errors.drivers.create'))
         );
       },
     });
@@ -168,7 +171,7 @@ export class Drivers implements OnInit {
         this.showModal = true;
       },
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudo cargar el conductor.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.drivers.get'));
       },
     });
   }
@@ -190,7 +193,7 @@ export class Drivers implements OnInit {
         this.showUpdateModal = true;
       },
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudo cargar el conductor para actualizarlo.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.drivers.getForUpdate'));
       },
     });
   }
@@ -215,7 +218,7 @@ export class Drivers implements OnInit {
         this.load();
       },
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudo actualizar el conductor.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.drivers.update'));
       },
     });
   }
@@ -248,7 +251,7 @@ export class Drivers implements OnInit {
         this.load();
       },
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudo eliminar el conductor.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.drivers.delete'));
       },
     });
   }

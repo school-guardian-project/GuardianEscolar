@@ -227,7 +227,10 @@
     "school": "Escola",
     "scanBoarded": "Embarque registrado. O responsável foi notificado.",
     "scanAlighted": "Desembarque registrado. O responsável foi notificado.",
-    "scanAlready": "Já foi notificado. Nenhum registro duplicado foi criado."
+    "scanAlready": "Já foi notificado. Nenhum registro duplicado foi criado.",
+    "startRoute": "Iniciar Rota",
+    "endRoute": "Terminar Rota",
+    "tripEnded": "Viagem finalizada com sucesso"
   },
 
   "incidents": {

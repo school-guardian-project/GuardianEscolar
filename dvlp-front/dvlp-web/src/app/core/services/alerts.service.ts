@@ -42,7 +42,7 @@ export interface AlertFilters {
 
 @Injectable({ providedIn: 'root' })
 export class AlertsService {
-  private readonly base = `${environment.apiUrl}/api/v1/alerts`;
+  private readonly base = `${environment.apiUrl}/notification/api/v1/alerts`;
 
   constructor(private http: HttpClient) {}
 

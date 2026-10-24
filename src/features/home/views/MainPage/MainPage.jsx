@@ -108,9 +108,15 @@ export default function MainPage() {
   const insets = useSafeAreaInsets();
   const horizontalPadding = width < 360 ? 12 : 16;
   const navigation = useNavigation();
-  const { role } = useSession();
+  const { role, initialized } = useSession();
   const { t } = useTranslation();
   const isFocused = useIsFocused();
+  
+  // Esperar a que el rol esté inicializado desde SecureStore
+  if (!initialized) {
+    return null; // o un spinner si prefieres
+  }
+  
   const config = roleConfig[role];
   const [modalType, setModalType] = useState(null);
   const [incidentOpen, setIncidentOpen] = useState(false);

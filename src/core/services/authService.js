@@ -1,4 +1,5 @@
 import * as SecureStore from "expo-secure-store";
+import { notifyAuthRoleChange } from "@core/dev/RoleSwitcherContext";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 if (!API_URL) {
@@ -160,6 +161,10 @@ export async function refresh() {
   await getSession();
   await saveSession({});
   await saveRefresh(data.refreshToken);
+  
+  // Notificar al contexto React para que actualice el rol (claims pueden haber cambiado)
+  notifyAuthRoleChange();
+  
   return data.accessToken;
 }
 

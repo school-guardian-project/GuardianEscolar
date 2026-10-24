@@ -21,3 +21,8 @@ export async function putRouteApi(path, body) {
 export async function deleteRouteApi(path) {
   return apiDelete(`${PREFIX}${path}`);
 }
+
+/** GET sugerencia de ruta (geometría vial) a través del API Gateway. */
+export async function getRouteSuggestionApi(routeId) {
+  return getRouteApi(`/routes/${routeId}/suggestion`);
+}

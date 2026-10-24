@@ -18,7 +18,8 @@ import QRDisplayModal from "@components/modals/QRDisplayModal";
 import QRScannerModal from "@components/modals/QRScannerModal";
 import IncidentReportModal from "@components/modals/IncidentReportModal";
 import { getSession } from "@core/services/authService";
-import { getRouteApi } from "@core/services/routeApi";
+import { getRouteApi, getRouteSuggestionApi } from "@core/services/routeApi";
+import { startTripApi } from "@core/services/tripApi";
 import { getLinkedStudents } from "@core/services/familyService";
 import { scanCredential } from "@core/services/notificationApi";
 
@@ -114,10 +115,12 @@ export default function MainPage() {
   const [incidentOpen, setIncidentOpen] = useState(false);
   const [routeInfo, setRouteInfo] = useState(null);
   const [routeStops, setRouteStops] = useState([]);
+  const [routeGeometry, setRouteGeometry] = useState([]);
   const [, setLoading] = useState(true);
   const [scanMode, setScanMode] = useState("ON_BOARD");
   const [status, setStatus] = useState(null);
   const [scanFeedback, setScanFeedback] = useState(null);
+  const [tripStarted, setTripStarted] = useState(false);
   const mapRef = useRef(null);
   const mapReadyRef = useRef(false);
   const stopsRef = useRef([]);
@@ -149,6 +152,32 @@ export default function MainPage() {
 
   const handleOpenModal = (type) => setModalType(type);
   const handleCloseModal = () => setModalType(null);
+
+  const handleStartTrip = async () => {
+    try {
+      const session = await getSession();
+      if (!session?.profileId || !routeInfo) return;
+
+      // Payload based on TripController.cs: RouteId, BusId, DriverId
+      const payload = {
+        routeId: routeInfo.routeId,
+        busId: routeInfo.busId,
+        driverId: session.profileId,
+      };
+
+      await startTripApi(payload);
+      setTripStarted(true);
+      setScanFeedback({
+        type: "success",
+        message: t("cards.tripStarted") || "Viaje iniciado correctamente",
+      });
+    } catch (error) {
+      setScanFeedback({
+        type: "error",
+        message: error?.data?.message ?? t("serviceErrors.requestFailed"),
+      });
+    }
+  };
 
   const handleQrScan = async (qrToken) => {
     try {
@@ -200,8 +229,20 @@ export default function MainPage() {
         if (!route) {
           stopsRef.current = [];
           setRouteStops([]);
+          setRouteGeometry([]);
           setRouteInfo(null);
           return;
+        }
+
+        // Fetch street-level route geometry from OSRM
+        try {
+          const suggestion = await getRouteSuggestionApi(route.id);
+          if (suggestion?.geometry) {
+            // Assuming geometry is a list of {latitude, longitude} points
+            setRouteGeometry(suggestion.geometry);
+          }
+        } catch (err) {
+          console.error("Error loading route geometry:", err);
         }
 
         // RouteDetailDto ya incluye el bus asignado con su conductor
@@ -269,17 +310,24 @@ export default function MainPage() {
           fitStopsOnMap();
         }}
       >
-        {/* Trazo de la ruta (paradas) */}
-        {routeStops.length >= 2 && (
+        {/* Trazo de la ruta (usando geometría vial de OSRM) */}
+        {routeGeometry.length >= 2 ? (
+          <Polyline
+            coordinates={routeGeometry}
+            strokeColor="#1A56DB"
+            strokeWidth={4}
+          />
+        ) : routeStops.length >= 2 ? (
           <Polyline
             coordinates={routeStops.map(({ latitude, longitude }) => ({
               latitude,
               longitude,
             }))}
-            strokeColor="#1A56DB"
-            strokeWidth={4}
+            strokeColor="#B0C4DE"
+            strokeWidth={2}
+            lineDashPattern={[5, 5]}
           />
-        )}
+        ) : null}
 
         {/* Marcadores de paradas */}
         {routeStops.map((stop, index) => (
@@ -376,6 +424,14 @@ export default function MainPage() {
           />
         </View>
         <View style={styles.qrButtonContainer} pointerEvents="box-none">
+          {role === "driver" && !tripStarted && (
+            <Pressable
+              style={[styles.startTripButton, { marginRight: 12 }]}
+              onPress={handleStartTrip}
+            >
+              <Text style={styles.startTripButtonText}>{t("cards.startRoute") || "Iniciar Ruta"}</Text>
+            </Pressable>
+          )}
           <QRButtom config={config.card} onOpenModel={handleOpenModal} />
         </View>
 

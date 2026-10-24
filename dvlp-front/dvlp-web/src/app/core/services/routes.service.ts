@@ -8,7 +8,7 @@ import { RouteListDto, RouteRequestDto, RouteResponseDto, StudentRouteStopDto } 
   providedIn: 'root',
 })
 export class RoutesService {
-  private readonly base = `${environment.apiUrl}/route/api/routes`;
+  private readonly base = `${environment.apiUrl}/api/routes`;
 
   constructor(private http: HttpClient) {}
 
@@ -54,5 +54,9 @@ export class RoutesService {
 
   getStudentStop(routeId: string, studentProfileId: string): Observable<StudentRouteStopDto> {
     return this.http.get<StudentRouteStopDto>(`${this.base}/${routeId}/students/${studentProfileId}`);
+  }
+
+  getRouteSuggestion(routeId: string): Observable<{ stops: any[], geometry: string }> {
+    return this.http.get<{ stops: any[], geometry: string }>(`${this.base}/${routeId}/suggestion`);
   }
 }

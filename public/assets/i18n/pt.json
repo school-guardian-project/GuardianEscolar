@@ -1124,6 +1124,47 @@
       "create": "Não foi possível registrar o ônibus.",
       "update": "Não foi possível atualizar o ônibus.",
       "driverNotAssigned": "Não foi possível atribuir o motorista."
+    },
+    "students": {
+      "load": "Não foi possível carregar os estudantes.",
+      "search": "Não foi possível buscar os estudantes.",
+      "create": "Não foi possível registrar o estudante. Verifique se o backend está disponível.",
+      "get": "Não foi possível carregar o estudante.",
+      "getForUpdate": "Não foi possível carregar o estudante para atualização.",
+      "update": "Não foi possível atualizar o estudante.",
+      "delete": "Não foi possível excluir o estudante.",
+      "invalidForm": "Verifique os dados: todos os campos são obrigatórios e devem ter um formato válido.",
+      "invalidUpdate": "Verifique os dados obrigatórios do estudante antes de salvar."
+    },
+    "guardians": {
+      "load": "Não foi possível carregar os responsáveis.",
+      "search": "Não foi possível buscar os responsáveis.",
+      "create": "Não foi possível registrar o responsável. Verifique se o backend está disponível.",
+      "get": "Não foi possível carregar o responsável.",
+      "getForUpdate": "Não foi possível carregar o responsável para atualização.",
+      "update": "Não foi possível atualizar o responsável.",
+      "delete": "Não foi possível excluir o responsável."
+    },
+    "drivers": {
+      "load": "Não foi possível carregar os motoristas.",
+      "search": "Não foi possível buscar os motoristas.",
+      "create": "Não foi possível registrar o motorista. Verifique se o backend está disponível.",
+      "get": "Não foi possível carregar o motorista.",
+      "getForUpdate": "Não foi possível carregar o motorista para atualização.",
+      "update": "Não foi possível atualizar o motorista.",
+      "delete": "Não foi possível excluir o motorista."
+    },
+    "families": {
+      "load": "Não foi possível carregar as famílias.",
+      "search": "Não foi possível buscar as famílias.",
+      "create": "Não foi possível registrar a família. Verifique se o backend está disponível.",
+      "get": "Não foi possível carregar a família.",
+      "getForUpdate": "Não foi possível carregar a família para atualização.",
+      "update": "Não foi possível atualizar a família.",
+      "delete": "Não foi possível excluir a família.",
+      "invalidForm": "Selecione o nome da família, o responsável e pelo menos um estudante.",
+      "invalidUpdate": "Selecione o nome da família, o responsável e pelo menos um estudante.",
+      "updateConflict": "Não foi possível alterar o filho porque ele já está atribuído a outra família. Desvincule-o dessa família antes de adicioná-lo aqui."
     }
   }
 }

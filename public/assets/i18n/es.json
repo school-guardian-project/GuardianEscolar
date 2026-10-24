@@ -1124,12 +1124,50 @@
       "create": "No se pudo registrar el bus.",
       "update": "No se pudo actualizar el bus.",
       "driverNotAssigned": "No se pudo asignar el conductor."
+    },
+    "students": {
+      "load": "No se pudieron cargar los estudiantes.",
+      "search": "No se pudieron buscar los estudiantes.",
+      "create": "No se pudo registrar el estudiante. Verifica que el backend esté disponible.",
+      "get": "No se pudo cargar el estudiante.",
+      "getForUpdate": "No se pudo cargar el estudiante para actualizarlo.",
+      "update": "No se pudo actualizar el estudiante.",
+      "delete": "No se pudo eliminar el estudiante.",
+      "invalidForm": "Revisa los datos: todos los campos son obligatorios y deben tener un formato válido.",
+      "invalidUpdate": "Revisa los datos obligatorios del estudiante antes de guardar."
+    },
+    "guardians": {
+      "load": "No se pudieron cargar los acudientes.",
+      "search": "No se pudieron buscar los acudientes.",
+      "create": "No se pudo registrar el acudiente. Verifica que el backend esté disponible.",
+      "get": "No se pudo cargar el acudiente.",
+      "getForUpdate": "No se pudo cargar el acudiente para actualizarlo.",
+      "update": "No se pudo actualizar el acudiente.",
+      "delete": "No se pudo eliminar el acudiente."
+    },
+    "drivers": {
+      "load": "No se pudieron cargar los conductores.",
+      "search": "No se pudieron buscar los conductores.",
+      "create": "No se pudo registrar el conductor. Verifica que el backend esté disponible.",
+      "get": "No se pudo cargar el conductor.",
+      "getForUpdate": "No se pudo cargar el conductor para actualizarlo.",
+      "update": "No se pudo actualizar el conductor.",
+      "delete": "No se pudo eliminar el conductor."
+    },
+    "families": {
+      "load": "No se pudieron cargar las familias.",
+      "search": "No se pudieron buscar las familias.",
+      "create": "No se pudo registrar la familia. Verifica que el backend esté disponible.",
+      "get": "No se pudo cargar la familia.",
+      "getForUpdate": "No se pudo cargar la familia para actualizarla.",
+      "update": "No se pudo actualizar la familia.",
+      "delete": "No se pudo eliminar la familia.",
+      "invalidForm": "Selecciona el nombre de la familia, el acudiente y al menos un estudiante.",
+      "invalidUpdate": "Selecciona el nombre de la familia, el acudiente y al menos un estudiante.",
+      "updateConflict": "No se pudo cambiar el hijo porque ya está asignado a otra familia. Desvincúlalo de esa familia antes de agregarlo aquí."
     }
   },
-  "sidebar": {
-    "alerts": "Alertas",
-    "incidents": "Incidentes"
-  },
+  
   "alerts": {
     "title": "Gestión de Alertas",
     "subtitle": "Monitoreo y confirmación de eventos de abordaje, descenso e incidentes",

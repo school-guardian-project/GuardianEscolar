@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 
 import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-manage';
@@ -41,6 +42,7 @@ function labelOf(person: PersonListDto): string {
     MatButtonModule,
     MatToolbarModule,
     CommonModule,
+    TranslateModule,
     NavbarManage,
     CardRegister,
     CardList,
@@ -57,6 +59,7 @@ export class Families implements OnInit {
   private familiesService = inject(FamiliesService);
   private parentsService = inject(ParentsService);
   private studentsService = inject(StudentsService);
+  private translate = inject(TranslateService);
 
   @ViewChild(CardRegister) register?: CardRegister;
 
@@ -113,7 +116,7 @@ export class Families implements OnInit {
         this.load();
       },
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudieron cargar los acudientes y estudiantes para el formulario.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.families.load'));
         this.load();
       },
     });
@@ -123,7 +126,7 @@ export class Families implements OnInit {
     this.familiesService.list().subscribe({
       next: (list) => this.families.set(list.map((api) => this.fromApi(api))),
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudieron cargar las familias.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.families.load'));
       },
     });
   }
@@ -137,7 +140,7 @@ export class Families implements OnInit {
     this.familiesService.search(query).subscribe({
       next: (list) => this.families.set(list.map((api) => this.fromApi(api))),
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudieron buscar las familias.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.families.search'));
       },
     });
   }
@@ -209,7 +212,7 @@ export class Families implements OnInit {
     const payload = this.toPayload(form);
     if (!payload) {
       this.register?.setValidationMessage(
-        'Selecciona el nombre de la familia, el acudiente y al menos un estudiante.'
+        this.translate.instant('errors.families.invalidForm')
       );
       return;
     }
@@ -222,7 +225,7 @@ export class Families implements OnInit {
       },
       error: (err) => {
         this.register?.setValidationMessage(
-          describeProblem(err, 'No se pudo registrar la familia. Verifica que el backend esté disponible.')
+          describeProblem(err, this.translate.instant('errors.families.create'))
         );
       },
     });
@@ -243,7 +246,7 @@ export class Families implements OnInit {
         this.showModal = true;
       },
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudo cargar la familia.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.families.get'));
       },
     });
   }
@@ -276,7 +279,7 @@ export class Families implements OnInit {
         this.showUpdateModal = true;
       },
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudo cargar la familia para actualizarla.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.families.getForUpdate'));
       },
     });
   }
@@ -299,7 +302,7 @@ export class Families implements OnInit {
 
     const payload = this.toPayload(updatedRecord);
     if (!payload) {
-      this.updateError = 'Selecciona el nombre de la familia, el acudiente y al menos un estudiante.';
+      this.updateError = this.translate.instant('errors.families.invalidUpdate');
       return;
     }
 
@@ -310,9 +313,9 @@ export class Families implements OnInit {
         this.load();
       },
       error: (error) => {
-        const message = describeProblem(error, 'No se pudo actualizar la familia.');
+        const message = describeProblem(error, this.translate.instant('errors.families.update'));
         this.updateError = /profiles already associated with another family/i.test(message)
-          ? 'No se pudo cambiar el hijo porque ya está asignado a otra familia. Desvincúlalo de esa familia antes de agregarlo aquí.'
+          ? this.translate.instant('errors.families.updateConflict')
           : message;
       },
     });
@@ -348,7 +351,7 @@ export class Families implements OnInit {
         this.load();
       },
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudo eliminar la familia.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.families.delete'));
       },
     });
   }

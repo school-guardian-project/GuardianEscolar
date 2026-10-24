@@ -1124,6 +1124,47 @@
       "create": "Le bus n’a pas pu être enregistré.",
       "update": "Le bus n’a pas pu être mis à jour.",
       "driverNotAssigned": "Le chauffeur n’a pas pu être attribué."
+    },
+    "students": {
+      "load": "Impossible de charger les étudiants.",
+      "search": "Impossible de rechercher les étudiants.",
+      "create": "Impossible d’enregistrer l’étudiant. Vérifiez que le backend est disponible.",
+      "get": "Impossible de charger l’étudiant.",
+      "getForUpdate": "Impossible de charger l’étudiant pour la mise à jour.",
+      "update": "Impossible de mettre à jour l’étudiant.",
+      "delete": "Impossible de supprimer l’étudiant.",
+      "invalidForm": "Vérifiez les données : tous les champs sont obligatoires et doivent avoir un format valide.",
+      "invalidUpdate": "Vérifiez les données obligatoires de l’étudiant avant de sauvegarder."
+    },
+    "guardians": {
+      "load": "Impossible de charger les tuteurs.",
+      "search": "Impossible de rechercher les tuteurs.",
+      "create": "Impossible d’enregistrer le tuteur. Vérifiez que le backend est disponible.",
+      "get": "Impossible de charger le tuteur.",
+      "getForUpdate": "Impossible de charger le tuteur pour la mise à jour.",
+      "update": "Impossible de mettre à jour le tuteur.",
+      "delete": "Impossible de supprimer le tuteur."
+    },
+    "drivers": {
+      "load": "Impossible de charger les chauffeurs.",
+      "search": "Impossible de rechercher les chauffeurs.",
+      "create": "Impossible d’enregistrer le chauffeur. Vérifiez que le backend est disponible.",
+      "get": "Impossible de charger le chauffeur.",
+      "getForUpdate": "Impossible de charger le chauffeur pour la mise à jour.",
+      "update": "Impossible de mettre à jour le chauffeur.",
+      "delete": "Impossible de supprimer le chauffeur."
+    },
+    "families": {
+      "load": "Impossible de charger les familles.",
+      "search": "Impossible de rechercher les familles.",
+      "create": "Impossible d’enregistrer la famille. Vérifiez que le backend est disponible.",
+      "get": "Impossible de charger la famille.",
+      "getForUpdate": "Impossible de charger la famille pour la mise à jour.",
+      "update": "Impossible de mettre à jour la famille.",
+      "delete": "Impossible de supprimer la famille.",
+      "invalidForm": "Sélectionnez le nom de la famille, le tuteur et au moins un étudiant.",
+      "invalidUpdate": "Sélectionnez le nom de la famille, le tuteur et au moins un étudiant.",
+      "updateConflict": "Impossible de changer l'enfant car il est déjà assigné à une autre famille. Détachez-le d'abord de cette famille."
     }
   }
 }

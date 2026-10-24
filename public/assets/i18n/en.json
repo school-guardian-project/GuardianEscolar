@@ -1124,12 +1124,50 @@
       "create": "The bus could not be registered.",
       "update": "The bus could not be updated.",
       "driverNotAssigned": "The driver could not be assigned."
+    },
+    "students": {
+      "load": "Could not load students.",
+      "search": "Could not search students.",
+      "create": "Could not register the student. Check that the backend is available.",
+      "get": "Could not load the student.",
+      "getForUpdate": "Could not load the student for update.",
+      "update": "Could not update the student.",
+      "delete": "Could not delete the student.",
+      "invalidForm": "Check the data: all fields are required and must have a valid format.",
+      "invalidUpdate": "Check the required student data before saving."
+    },
+    "guardians": {
+      "load": "Could not load guardians.",
+      "search": "Could not search guardians.",
+      "create": "Could not register the guardian. Check that the backend is available.",
+      "get": "Could not load the guardian.",
+      "getForUpdate": "Could not load the guardian for update.",
+      "update": "Could not update the guardian.",
+      "delete": "Could not delete the guardian."
+    },
+    "drivers": {
+      "load": "Could not load drivers.",
+      "search": "Could not search drivers.",
+      "create": "Could not register the driver. Check that the backend is available.",
+      "get": "Could not load the driver.",
+      "getForUpdate": "Could not load the driver for update.",
+      "update": "Could not update the driver.",
+      "delete": "Could not delete the driver."
+    },
+    "families": {
+      "load": "Could not load families.",
+      "search": "Could not search families.",
+      "create": "Could not register the family. Check that the backend is available.",
+      "get": "Could not load the family.",
+      "getForUpdate": "Could not load the family for update.",
+      "update": "Could not update the family.",
+      "delete": "Could not delete the family.",
+      "invalidForm": "Select the family name, guardian, and at least one student.",
+      "invalidUpdate": "Select the family name, guardian, and at least one student.",
+      "updateConflict": "Could not change the child because they are already assigned to another family. Unlink them from that family first."
     }
   },
-  "sidebar": {
-    "alerts": "Alerts",
-    "incidents": "Incidents"
-  },
+  
   "alerts": {
     "title": "Alert Management",
     "subtitle": "Monitoring and confirmation of boarding, alighting and incident events",

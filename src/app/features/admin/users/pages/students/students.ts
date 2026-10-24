@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { CommonModule } from '@angular/common';
+import { TranslateModule, TranslateService } from '@ngx-translate/core';
 
 import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-manage';
 import { CardRegister } from '@shared/components/cards/card-register/card-register';
@@ -154,6 +155,7 @@ function isValidStudentForm(form: RecordData, includeCampus = true): boolean {
     MatButtonModule,
     MatToolbarModule,
     CommonModule,
+    TranslateModule,
     NavbarManage,
     CardRegister,
     CardList,
@@ -169,6 +171,7 @@ function isValidStudentForm(form: RecordData, includeCampus = true): boolean {
 })
 export class Students implements OnInit {
   private studentsService = inject(StudentsService);
+  private translate = inject(TranslateService);
 
   @ViewChild(CardRegister) register?: CardRegister;
 
@@ -183,7 +186,7 @@ export class Students implements OnInit {
     this.studentsService.list().subscribe({
       next: (list) => this.students.set(list.map(fromApi)),
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudieron cargar los estudiantes.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.students.load'));
       },
     });
   }
@@ -197,7 +200,7 @@ export class Students implements OnInit {
     this.studentsService.search(query).subscribe({
       next: (list) => this.students.set(list.map(fromApi)),
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudieron buscar los estudiantes.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.students.search'));
       },
     });
   }
@@ -205,7 +208,7 @@ export class Students implements OnInit {
   onCreated(form: RecordData): void {
     if (!isValidStudentForm(form)) {
       this.register?.setValidationMessage(
-        'Revisa los datos: todos los campos son obligatorios y deben tener un formato válido.'
+        this.translate.instant('errors.students.invalidForm')
       );
       return;
     }
@@ -218,7 +221,7 @@ export class Students implements OnInit {
       },
       error: (err) => {
         this.register?.setValidationMessage(
-          describeProblem(err, 'No se pudo registrar el estudiante. Verifica que el backend esté disponible.')
+          describeProblem(err, this.translate.instant('errors.students.create'))
         );
       },
     });
@@ -238,7 +241,7 @@ export class Students implements OnInit {
         this.showModal = true;
       },
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudo cargar el estudiante.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.students.get'));
       },
     });
   }
@@ -262,7 +265,7 @@ export class Students implements OnInit {
         this.showUpdateModal = true;
       },
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudo cargar el estudiante para actualizarlo.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.students.getForUpdate'));
       },
     });
   }
@@ -281,7 +284,7 @@ export class Students implements OnInit {
     }
 
     if (!isValidStudentForm(updatedRecord, false)) {
-      this.actionError = 'Revisa los datos obligatorios del estudiante antes de guardar.';
+      this.actionError = this.translate.instant('errors.students.invalidUpdate');
       return;
     }
 
@@ -292,7 +295,7 @@ export class Students implements OnInit {
         this.load();
       },
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudo actualizar el estudiante.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.students.update'));
       },
     });
   }
@@ -327,7 +330,7 @@ export class Students implements OnInit {
         this.load();
       },
       error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudo eliminar el estudiante.');
+        this.actionError = describeProblem(error, this.translate.instant('errors.students.delete'));
       },
     });
   }

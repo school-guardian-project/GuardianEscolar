@@ -1,6 +1,6 @@
 import { apiPost } from "./apiClient";
 
-const PREFIX = "/trip/api";
+const PREFIX = "/route/api/trips";
 
 /** POST para iniciar un viaje (Trip). */
 export async function startTripApi(body) {

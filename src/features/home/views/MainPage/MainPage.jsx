@@ -22,6 +22,7 @@ import { getRouteApi, getRouteSuggestionApi } from "@core/services/routeApi";
 import { startTripApi } from "@core/services/tripApi";
 import { getLinkedStudents } from "@core/services/familyService";
 import { scanCredential } from "@core/services/notificationApi";
+import { apiPost } from "@core/services/apiClient";
 
 import styles from "./MainPage.style";
 
@@ -121,6 +122,9 @@ export default function MainPage() {
   const [status, setStatus] = useState(null);
   const [scanFeedback, setScanFeedback] = useState(null);
   const [tripStarted, setTripStarted] = useState(false);
+  const [tripEnded, setTripEnded] = useState(false);
+  const [routeSchedule, setRouteSchedule] = useState({ startTime: null, endTime: null });
+  const [currentTripId, setCurrentTripId] = useState(null);
   const mapRef = useRef(null);
   const mapReadyRef = useRef(false);
   const stopsRef = useRef([]);
@@ -158,18 +162,45 @@ export default function MainPage() {
       const session = await getSession();
       if (!session?.profileId || !routeInfo) return;
 
-      // Payload based on TripController.cs: RouteId, BusId, DriverId
       const payload = {
         routeId: routeInfo.routeId,
         busId: routeInfo.busId,
         driverId: session.profileId,
       };
 
-      await startTripApi(payload);
+      const result = await startTripApi(payload);
       setTripStarted(true);
+      if (result?.id) {
+        setCurrentTripId(result.id);
+      } else if (result?.tripId) {
+        setCurrentTripId(result.tripId);
+      }
       setScanFeedback({
         type: "success",
         message: t("cards.tripStarted") || "Viaje iniciado correctamente",
+      });
+    } catch (error) {
+      setScanFeedback({
+        type: "error",
+        message: error?.data?.message ?? t("serviceErrors.requestFailed"),
+      });
+    }
+  };
+
+  const handleEndTrip = async () => {
+    try {
+      if (!currentTripId) {
+        setScanFeedback({
+          type: "error",
+          message: t("serviceErrors.requestFailed") || "No hay un viaje activo para finalizar.",
+        });
+        return;
+      }
+      await apiPost(`/route/api/trips/end?tripId=${currentTripId}`, {});
+      setTripEnded(true);
+      setScanFeedback({
+        type: "success",
+        message: t("cards.tripEnded") || "Viaje finalizado correctamente",
       });
     } catch (error) {
       setScanFeedback({
@@ -264,12 +295,20 @@ export default function MainPage() {
               : "—";
 
         setRouteInfo({
+          routeId: route.id,
+          busId: route.bus?.id,
           routeName: route.name ?? "",
           driverName: route.bus?.driverName ?? "",
           plate: route.bus?.plate ?? "",
           schedule,
           stopsCount,
           finalDestination: route.targetSector ?? "",
+          startTime: route.startTime,
+          endTime: route.endTime,
+        });
+        setRouteSchedule({
+          startTime: route.startTime,
+          endTime: route.endTime,
         });
       } catch (error) {
         console.error("Error loading route info:", error);
@@ -424,14 +463,45 @@ export default function MainPage() {
           />
         </View>
         <View style={styles.qrButtonContainer} pointerEvents="box-none">
-          {role === "driver" && !tripStarted && (
-            <Pressable
-              style={[styles.startTripButton, { marginRight: 12 }]}
-              onPress={handleStartTrip}
-            >
-              <Text style={styles.startTripButtonText}>{t("cards.startRoute") || "Iniciar Ruta"}</Text>
-            </Pressable>
-          )}
+          {role === "driver" && !tripStarted && !tripEnded && (() => {
+            const now = new Date();
+            const [sh, sm] = (routeSchedule.startTime || "").split(":").map(Number);
+            const [eh, em] = (routeSchedule.endTime || "").split(":").map(Number);
+            let showStart = true;
+            if (!isNaN(sh)) {
+              const start = new Date();
+              start.setHours(sh, sm || 0, 0, 0);
+              const diff = (start - now) / 60000;
+              showStart = diff <= 5 && diff >= -60;
+            }
+            return showStart ? (
+              <Pressable
+                style={[styles.startTripButton, { marginRight: 12 }]}
+                onPress={handleStartTrip}
+              >
+                <Text style={styles.startTripButtonText}>{t("cards.startRoute") || "Iniciar Ruta"}</Text>
+              </Pressable>
+            ) : null;
+          })()}
+          {role === "driver" && tripStarted && !tripEnded && (() => {
+            const now = new Date();
+            const [eh, em] = (routeSchedule.endTime || "").split(":").map(Number);
+            let showEnd = false;
+            if (!isNaN(eh)) {
+              const end = new Date();
+              end.setHours(eh, em || 0, 0, 0);
+              const diff = (end - now) / 60000;
+              showEnd = diff <= 10 && diff >= -60;
+            }
+            return showEnd ? (
+              <Pressable
+                style={[styles.startTripButton, { marginRight: 12 }]}
+                onPress={handleEndTrip}
+              >
+                <Text style={styles.startTripButtonText}>{t("cards.endRoute") || "Terminar Ruta"}</Text>
+              </Pressable>
+            ) : null;
+          })()}
           <QRButtom config={config.card} onOpenModel={handleOpenModal} />
         </View>
 

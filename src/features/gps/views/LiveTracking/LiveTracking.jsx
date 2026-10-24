@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { View, Text, Pressable } from "react-native";
 import { FontAwesome5, Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -9,6 +9,8 @@ import NotificationButton from "@components/buttons/NotificationButton";
 import BottomTabBar from "@components/layout/BottomTabBar";
 import GpsMap from "@features/gps/components/GpsMap";
 import useGpsTracking from "@features/gps/hooks/useGpsTracking";
+import { getSession } from "@core/services/authService";
+import { getRouteApi, getRouteSuggestionApi } from "@core/services/routeApi";
 import styles from "./LiveTracking.style";
 
 function formatDateInBogota(dateValue) {
@@ -21,6 +23,40 @@ function formatDateInBogota(dateValue) {
   }).format(date);
 }
 
+/** Normaliza paradas igual que en MainPage. */
+function normalizeStops(route) {
+  const stops = Array.isArray(route?.stops) ? route.stops : [];
+  return stops
+    .map((stop, index) => {
+      const latitude = Number(stop?.latitude);
+      const longitude = Number(stop?.longitude);
+      return {
+        id: stop?.id ?? index,
+        name: stop?.name ?? "",
+        address: stop?.address ?? "",
+        orderSequence: stop?.orderSequence ?? index,
+        latitude,
+        longitude,
+      };
+    })
+    .filter(
+      (stop) =>
+        Number.isFinite(stop.latitude) &&
+        Number.isFinite(stop.longitude) &&
+        !(stop.latitude === 0 && stop.longitude === 0),
+    )
+    .sort((a, b) => a.orderSequence - b.orderSequence);
+}
+
+/** GET a ms-route que devuelve null en vez de propagar el error. */
+async function fetchRoute(path) {
+  try {
+    return await getRouteApi(path);
+  } catch {
+    return null;
+  }
+}
+
 export default function LiveTracking() {
   const { t } = useTranslation();
   const insets = useSafeAreaInsets();
@@ -28,6 +64,10 @@ export default function LiveTracking() {
   const navigation = useNavigation();
   const mapRef = useRef(null);
   const { location, error, loading, lastUpdated, fallbackLocation } = useGpsTracking();
+
+  // Estado para ruta del conductor + sugerencia OSRM
+  const [routeStops, setRouteStops] = useState([]);
+  const [routeGeometry, setRouteGeometry] = useState([]);
 
   const statusText = location?.status;
   const speedValue = location?.speed;
@@ -37,11 +77,52 @@ export default function LiveTracking() {
   const updatedAt = formatDateInBogota(
     lastUpdated || location?.receivedAt || location?.gpsDateTime || location?.dateTime,
   );
+
+  // Cargar ruta del conductor + sugerencia OSRM solo si es conductor
+  useEffect(() => {
+    let mounted = true;
+    async function loadDriverRoute() {
+      try {
+        const session = await getSession();
+        if (!session?.profileId) return;
+
+        // Solo para conductor: obtener ruta del día
+        const today = await fetchRoute(`/routes/today?driverId=${session.profileId}`);
+        if (!today?.route) return;
+
+        const route = today.route;
+
+        // 1) Geometría vial OSRM (sugerencia de ruta)
+        try {
+          const suggestion = await getRouteSuggestionApi(route.id);
+          if (suggestion?.geometry && mounted) {
+            setRouteGeometry(suggestion.geometry);
+          }
+        } catch (err) {
+          console.error("[LiveTracking] Error loading route geometry:", err);
+        }
+
+        // 2) Paradas normalizadas
+        const stops = normalizeStops(route);
+        if (mounted) {
+          setRouteStops(stops);
+        }
+      } catch (err) {
+        console.error("[LiveTracking] Error loading driver route:", err);
+      }
+    }
+
+    loadDriverRoute();
+    return () => { mounted = false; };
+  }, []);
+
   return (
     <View style={styles.container}>
       <GpsMap
         ref={mapRef}
         location={location || null}
+        routeStops={routeStops}
+        routeGeometry={routeGeometry}
         fallbackRegion={{
           latitude: fallbackLocation.latitude,
           longitude: fallbackLocation.longitude,

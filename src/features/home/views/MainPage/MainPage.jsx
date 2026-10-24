@@ -265,23 +265,32 @@ export default function MainPage() {
           return;
         }
 
-        // Fetch street-level route geometry from OSRM
-        try {
-          const suggestion = await getRouteSuggestionApi(route.id);
-          if (suggestion?.geometry) {
-            // Assuming geometry is a list of {latitude, longitude} points
-            setRouteGeometry(suggestion.geometry);
+        // SOLO para conductor: cargar geometría OSRM (sugerencia de ruta) y paradas en el mapa
+        const isDriver = role === "driver";
+        if (isDriver) {
+          // Fetch street-level route geometry from OSRM
+          try {
+            const suggestion = await getRouteSuggestionApi(route.id);
+            if (suggestion?.geometry) {
+              // Assuming geometry is a list of {latitude, longitude} points
+              setRouteGeometry(suggestion.geometry);
+            }
+          } catch (err) {
+            console.error("Error loading route geometry:", err);
           }
-        } catch (err) {
-          console.error("Error loading route geometry:", err);
-        }
 
-        // RouteDetailDto ya incluye el bus asignado con su conductor
-        // (ms-route lo resuelve vía gRPC a ms-fleet), así que el móvil
-        // no necesita consultar la flota directamente.
-        const stops = normalizeStops(route);
-        stopsRef.current = stops;
-        setRouteStops(stops);
+          // RouteDetailDto ya incluye el bus asignado con su conductor
+          // (ms-route lo resuelve vía gRPC a ms-fleet), así que el móvil
+          // no necesita consultar la flota directamente.
+          const stops = normalizeStops(route);
+          stopsRef.current = stops;
+          setRouteStops(stops);
+        } else {
+          // Para student/father: no mostrar paradas ni geometría en el mapa
+          stopsRef.current = [];
+          setRouteStops([]);
+          setRouteGeometry([]);
+        }
 
         const schedule =
           route.startTime && route.endTime
@@ -349,38 +358,43 @@ export default function MainPage() {
           fitStopsOnMap();
         }}
       >
-        {/* Trazo de la ruta (usando geometría vial de OSRM) */}
-        {routeGeometry.length >= 2 ? (
-          <Polyline
-            coordinates={routeGeometry}
-            strokeColor="#1A56DB"
-            strokeWidth={4}
-          />
-        ) : routeStops.length >= 2 ? (
-          <Polyline
-            coordinates={routeStops.map(({ latitude, longitude }) => ({
-              latitude,
-              longitude,
-            }))}
-            strokeColor="#B0C4DE"
-            strokeWidth={2}
-            lineDashPattern={[5, 5]}
-          />
-        ) : null}
+        {/* Trazo de la ruta y paradas: SOLO para conductor */}
+        {role === "driver" && (
+          <>
+            {/* Trazo de la ruta (usando geometría vial de OSRM) */}
+            {routeGeometry.length >= 2 ? (
+              <Polyline
+                coordinates={routeGeometry}
+                strokeColor="#1A56DB"
+                strokeWidth={4}
+              />
+            ) : routeStops.length >= 2 ? (
+              <Polyline
+                coordinates={routeStops.map(({ latitude, longitude }) => ({
+                  latitude,
+                  longitude,
+                }))}
+                strokeColor="#B0C4DE"
+                strokeWidth={2}
+                lineDashPattern={[5, 5]}
+              />
+            ) : null}
 
-        {/* Marcadores de paradas */}
-        {routeStops.map((stop, index) => (
-          <Marker
-            key={stop.id}
-            coordinate={{
-              latitude: stop.latitude,
-              longitude: stop.longitude,
-            }}
-            title={stop.name || `${t("cards.stops")} ${index + 1}`}
-            description={stop.address || undefined}
-            tracksViewChanges={false}
-          />
-        ))}
+            {/* Marcadores de paradas */}
+            {routeStops.map((stop, index) => (
+              <Marker
+                key={stop.id}
+                coordinate={{
+                  latitude: stop.latitude,
+                  longitude: stop.longitude,
+                }}
+                title={stop.name || `${t("cards.stops")} ${index + 1}`}
+                description={stop.address || undefined}
+                tracksViewChanges={false}
+              />
+            ))}
+          </>
+        )}
 
         {/* Bus en tiempo real (ms-gps) */}
         {busCoordinate && (

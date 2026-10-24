@@ -15,7 +15,7 @@ export const roleConfig = {
       showIncidentReport: false,
     },
     MapMarkers: {
-      showRouteStops: true,
+      showRouteStops: false, // Solo conductor ve paradas en el mapa
       showStudentMarker: true,
       showDriverMarker: false,
       showGeofence: true,
@@ -34,7 +34,7 @@ export const roleConfig = {
       showIncidentReport: true,
     },
     MapMarkers: {
-      showRouteStops: true,
+      showRouteStops: true, // Conductor ve paradas + sugerencia OSRM
       showStudentMarker: false,
       showDriverMarker: true,
       showGeofence: false,
@@ -53,7 +53,7 @@ export const roleConfig = {
       showIncidentReport: false,
     },
     MapMarkers: {
-      showRouteStops: true,
+      showRouteStops: false, // Solo conductor ve paradas en el mapa
       showStudentMarker: true,
       showDriverMarker: true,
       showGeofence: true,

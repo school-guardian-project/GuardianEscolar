@@ -1,6 +1,6 @@
 import React, { forwardRef, useEffect, useImperativeHandle, useRef } from "react";
 import { StyleSheet, View } from "react-native";
-import MapView, { Marker } from "react-native-maps";
+import MapView, { Marker, Polyline } from "react-native-maps";
 import { FontAwesome5 } from "@expo/vector-icons";
 
 const DEFAULT_FALLBACK_REGION = {
@@ -10,11 +10,17 @@ const DEFAULT_FALLBACK_REGION = {
   longitudeDelta: 0.08,
 };
 
-const GpsMap = forwardRef(function GpsMap({ location, fallbackRegion = DEFAULT_FALLBACK_REGION }, ref) {
+const GpsMap = forwardRef(function GpsMap({ 
+  location, 
+  routeStops = [], 
+  routeGeometry = [], 
+  fallbackRegion = DEFAULT_FALLBACK_REGION 
+}, ref) {
   const mapRef = useRef(null);
   const previousLocationRef = useRef(null);
   const mapReadyRef = useRef(false);
   const pendingRegionRef = useRef(null);
+  const stopsRef = useRef([]);
 
   useEffect(() => {
     const latitude = Number(location?.latitude);
@@ -50,6 +56,26 @@ const GpsMap = forwardRef(function GpsMap({ location, fallbackRegion = DEFAULT_F
     }
   }, [location]);
 
+  // Mantener referencia de paradas para fitToCoordinates
+  useEffect(() => {
+    stopsRef.current = routeStops;
+  }, [routeStops]);
+
+  // Ajustar mapa a las paradas cuando cambien
+  useEffect(() => {
+    if (!mapReadyRef.current || routeStops.length === 0) return;
+    mapRef.current?.fitToCoordinates(
+      routeStops.map((stop) => ({
+        latitude: stop.latitude,
+        longitude: stop.longitude,
+      })),
+      {
+        edgePadding: { top: 90, right: 40, bottom: 280, left: 40 },
+        animated: true,
+      },
+    );
+  }, [routeStops, mapReadyRef.current]);
+
   const hasLocation =
     location?.latitude != null &&
     location?.longitude != null &&
@@ -74,6 +100,19 @@ const GpsMap = forwardRef(function GpsMap({ location, fallbackRegion = DEFAULT_F
         longitudeDelta: 0.01,
       }, 500);
     },
+    fitStopsOnMap() {
+      if (!mapReadyRef.current || stopsRef.current.length === 0) return;
+      mapRef.current?.fitToCoordinates(
+        stopsRef.current.map((stop) => ({
+          latitude: stop.latitude,
+          longitude: stop.longitude,
+        })),
+        {
+          edgePadding: { top: 90, right: 40, bottom: 280, left: 40 },
+          animated: true,
+        },
+      );
+    },
   }), [markerCoordinate]);
 
   return (
@@ -88,21 +127,69 @@ const GpsMap = forwardRef(function GpsMap({ location, fallbackRegion = DEFAULT_F
           mapRef.current?.animateToRegion(region, 500);
           pendingRegionRef.current = null;
         }
+        // Si hay paradas, encuadrarlas al cargar el mapa
+        if (stopsRef.current.length > 0) {
+          mapRef.current?.fitToCoordinates(
+            stopsRef.current.map((stop) => ({
+              latitude: stop.latitude,
+              longitude: stop.longitude,
+            })),
+            {
+              edgePadding: { top: 90, right: 40, bottom: 280, left: 40 },
+              animated: true,
+            },
+          );
+        }
       }}
       onError={(event) => console.error("[GpsMap] map error:", event.nativeEvent || event)}
       showsCompass
       showsMyLocationButton={false}
       showsScale={false}
     >
+      {/* Trazo de la ruta (geometría vial OSRM) */}
+      {routeGeometry.length >= 2 ? (
+        <Polyline
+          coordinates={routeGeometry}
+          strokeColor="#1A56DB"
+          strokeWidth={4}
+        />
+      ) : routeStops.length >= 2 ? (
+        <Polyline
+          coordinates={routeStops.map(({ latitude, longitude }) => ({
+            latitude,
+            longitude,
+          }))}
+          strokeColor="#B0C4DE"
+          strokeWidth={2}
+          lineDashPattern={[5, 5]}
+        />
+      ) : null}
+
+      {/* Marcadores de paradas */}
+      {routeStops.map((stop, index) => (
+        <Marker
+          key={stop.id}
+          coordinate={{
+            latitude: stop.latitude,
+            longitude: stop.longitude,
+          }}
+          title={stop.name || `Parada ${index + 1}`}
+          description={stop.address || undefined}
+          tracksViewChanges={false}
+        >
+          <View style={styles.stopMarker}>
+            <FontAwesome5 name="map-marker-alt" size={20} color="#1A56DB" />
+          </View>
+        </Marker>
+      ))}
+
+      {/* Bus en tiempo real (ms-gps) */}
       {markerCoordinate && (
         <Marker
-          coordinate={{
-            latitude: Number(location.latitude),
-            longitude: Number(location.longitude),
-          }}
-          title="VT03F"
-          description="Ubicación actual"
+          coordinate={markerCoordinate}
+          title="Ubicación actual del bus"
           rotation={Number(location.course) || 0}
+          anchor={{ x: 0.5, y: 0.5 }}
         >
           <View style={styles.busMarker}>
             <FontAwesome5 name="bus" size={19} color="#FFFFFF" />
@@ -136,5 +223,20 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+  },
+  stopMarker: {
+    width: 32,
+    height: 32,
+    borderRadius: 16,
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "#FFFFFF",
+    borderWidth: 2,
+    borderColor: "#1A56DB",
+    shadowColor: "#0F172A",
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 2,
+    elevation: 3,
   },
 });

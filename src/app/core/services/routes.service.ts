@@ -8,7 +8,7 @@ import { RouteListDto, RouteRequestDto, RouteResponseDto, StudentRouteStopDto } 
   providedIn: 'root',
 })
 export class RoutesService {
-  private readonly base = `${environment.apiUrl}/api/routes`;
+  private readonly base = `${environment.apiUrl}/route/api/routes`;
 
   constructor(private http: HttpClient) {}
 

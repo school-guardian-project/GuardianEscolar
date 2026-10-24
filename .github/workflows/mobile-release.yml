@@ -3,12 +3,20 @@ name: Mobile release
 on:
   workflow_dispatch:
     inputs:
+      profile:
+        description: Build profile (preview = debug APK via artifact, production = publish to GitHub Release)
+        required: true
+        type: choice
+        options:
+          - preview
+          - production
+        default: preview
       notes:
-        description: Notas del release
+        description: Release/build notes
         required: true
       min_version_code:
-        description: versionCode mínimo soportado
-        required: true
+        description: Minimum supported versionCode
+        required: false
         default: "1"
 
 permissions:
@@ -41,28 +49,32 @@ jobs:
 
       - run: npm ci
 
-      # El android/ que genera prebuild deja a Gradle con 2 GiB y 512 MiB de metaspace,
-      # y el lint de release se queda sin memoria. ~/.gradle/gradle.properties tiene
-      # prioridad sobre el del proyecto, así que aquí se sube el límite.
-      # También se compila solo para ARM: x86 y x86_64 son para emuladores y
-      # sumaban unos 56 MB al APK sin servirle a ningún teléfono real.
-      - name: Dar más memoria a Gradle
+      - name: Increase Gradle memory
         run: |
           mkdir -p ~/.gradle
           echo "org.gradle.jvmargs=-Xmx6g -XX:MaxMetaspaceSize=2g -Dfile.encoding=UTF-8" >> ~/.gradle/gradle.properties
           echo "reactNativeArchitectures=armeabi-v7a,arm64-v8a" >> ~/.gradle/gradle.properties
 
-      - name: Compilar APK en el runner (no gasta builds de EAS)
-        run: eas build -p android --profile production --local --non-interactive --output guardian-escolar.apk
+      - name: Build Android APK locally
+        run: eas build -p android --profile ${{ inputs.profile }} --local --non-interactive --output guardian-escolar-${{ inputs.profile }}.apk
 
-      - name: Leer la versión del APK
+      - name: Read APK version info
         run: |
           AAPT="$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -1)aapt"
-          BADGING="$("$AAPT" dump badging guardian-escolar.apk | head -1)"
+          BADGING="$("$AAPT" dump badging guardian-escolar-${{ inputs.profile }}.apk | head -1)"
           echo "VERSION_CODE=$(echo "$BADGING" | sed -n "s/.*versionCode='\([0-9]*\)'.*/\1/p")" >> "$GITHUB_ENV"
           echo "VERSION_NAME=$(echo "$BADGING" | sed -n "s/.*versionName='\([^']*\)'.*/\1/p")" >> "$GITHUB_ENV"
 
-      - name: Preparar latest.json
+      - name: Upload APK as artifact (preview only)
+        if: ${{ inputs.profile == 'preview' }}
+        uses: actions/upload-artifact@v4
+        with:
+          name: guardian-escolar-preview-${{ github.run_number }}
+          path: dvlp-front/dvlp-movil/guardian-escolar/guardian-escolar-preview.apk
+          retention-days: 7
+
+      - name: Prepare latest.json (production only)
+        if: ${{ inputs.profile == 'production' }}
         env:
           NOTES: ${{ inputs.notes }}
           MIN_CODE: ${{ inputs.min_version_code }}
@@ -73,12 +85,13 @@ jobs:
             --arg notes "$NOTES" \
             '{versionName:$vn, versionCode:$vc, minVersionCode:$min, apkUrl:$url, notes:$notes}' > latest.json
 
-      - name: Publicar release
+      - name: Publish GitHub Release (production only)
+        if: ${{ inputs.profile == 'production' }}
         env:
           GH_TOKEN: ${{ github.token }}
           NOTES: ${{ inputs.notes }}
         run: |
           gh release create "mobile-v${VERSION_NAME}-${VERSION_CODE}" \
-            guardian-escolar.apk latest.json \
-            --title "App móvil ${VERSION_NAME} (${VERSION_CODE})" \
+            guardian-escolar-production.apk latest.json \
+            --title "Mobile app ${VERSION_NAME} (${VERSION_CODE})" \
             --notes "$NOTES" --latest

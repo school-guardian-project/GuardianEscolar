@@ -1,17 +1,10 @@
 import React, { useState } from "react";
-
-import {
-  ScrollView,
-  View,
-  Text,
-} from "react-native";
-
+import { ScrollView, View, Text } from "react-native";
 import { Asset } from "expo-asset";
 import { SvgUri } from "react-native-svg";
 import { styles } from "./Login.styles";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
-
 import InputField from "@components/inputs/InputField";
 import PrimaryButton from "@components/buttons/PrimaryButton";
 import { validateEmail, validateRequired } from "@core/validation/validators";
@@ -22,14 +15,11 @@ import { registerPushDevice } from "@core/services/pushService";
 import LegalInfoModal from "./LegalInfoModal";
 import useSession from "@core/hooks/useSession";
 
-const logoUri = Asset.fromModule(
-  require("../../../../../assets/logo-blue.svg")
-).uri;
+const logoUri = Asset.fromModule(require("../../../../../assets/logo-blue.svg")).uri;
 
 export default function Login({ navigation }) {
   const { t } = useTranslation();
   const { theme } = useTheme();
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -41,63 +31,61 @@ export default function Login({ navigation }) {
 
   const handleEmailChange = (value) => {
     setEmail(value);
-
-    if (emailError) {
-      setEmailError("");
-    }
+    if (emailError) setEmailError("");
   };
 
   const handlePasswordChange = (value) => {
     setPassword(value);
-
-    if (passwordError) {
-      setPasswordError("");
-    }
+    if (passwordError) setPasswordError("");
   };
 
   const signIn = async () => {
-    if (submitting) {
-      return;
-    }
-
+    if (submitting) return;
     setSubmitting(true);
     setFormError("");
 
     try {
       await login(email, password);
       applyAuthRole();
-      // Loguearse es aceptar: se registra la evidencia en backend sin fricción.
-      // El estudiante no se acepta a sí mismo: entra solo si su acudiente ya lo autorizó.
+
       try {
         const session = await getSession();
         if (session?.roleId === 2) {
-          const status = await getTermsStatus();
-          if (!status?.accepted) {
-            await clearSession();
-            setFormError(t("accept.blocked"));
-            return;
+          try {
+            const status = await getTermsStatus();
+            if (!status?.accepted) {
+              await clearSession();
+              setFormError(t("accept.blocked"));
+              setSubmitting(false);
+              return;
+            }
+          } catch (e) {
+            console.warn("[Login] getTermsStatus failed due to network, skipping:", e?.message);
           }
         } else {
-          const pending = await getPendingAcceptance();
-          if (pending.ownMissing || pending.minors.length > 0) {
-            if (pending.minors.length > 0) {
-              await acceptTerms(
-                pending.termsVersion,
-                pending.minors.map((m) => m.profileId)
-              );
+          try {
+            const pending = await getPendingAcceptance();
+            if (pending?.ownMissing || (pending?.minors && pending.minors.length > 0)) {
+              if (pending.minors?.length > 0) {
+                await acceptTerms(pending.termsVersion, pending.minors.map((m) => m.profileId));
+              }
+              if (pending.ownMissing) {
+                await acceptTerms(pending.termsVersion, []);
+              }
             }
-            if (pending.ownMissing) {
-              await acceptTerms(pending.termsVersion, []);
-            }
+          } catch (e) {
+            console.warn("[Login] getPendingAcceptance/acceptTerms failed due to network, skipping:", e?.message);
           }
         }
       } catch (e) {
-        if (!e?.status) {
-          throw e;
+        if (e?.status) {
+          setFormError(t("accept.error"));
+          setSubmitting(false);
+          return;
         }
-        setFormError(t("accept.error"));
-        return;
+        console.warn("[Login] Post-login flow failed due to network, continuing:", e?.message);
       }
+
       navigation.navigate("MainPage");
       registerPushDevice();
     } catch (error) {
@@ -113,19 +101,11 @@ export default function Login({ navigation }) {
 
   const handleSubmit = () => {
     const nextEmailError = validateEmail(email);
-    const nextPasswordError = validateRequired(
-      password,
-      "Ingresa tu contraseña"
-    );
-
+    const nextPasswordError = validateRequired(password, "Enter your password");
     setEmailError(nextEmailError);
     setPasswordError(nextPasswordError);
     setFormError("");
-
-    if (nextEmailError || nextPasswordError) {
-      return;
-    }
-
+    if (nextEmailError || nextPasswordError) return;
     signIn();
   };
 
@@ -135,36 +115,17 @@ export default function Login({ navigation }) {
       contentContainerStyle={styles.container}
       keyboardShouldPersistTaps="handled"
     >
-      {/* Logo oficial de Guardian Escolar */}
-      <SvgUri
-        uri={logoUri}
-        width={92}
-        height={113}
-        style={styles.icon}
-      />
-
-      {/* Título */}
-      <Text
-        style={[
-          styles.title,
-          { color: theme.titleColor },
-        ]}
-      >
-        {t("login.title")}
-      </Text>
-
+      <SvgUri uri={logoUri} width={92} height={113} style={styles.icon} />
+      <Text style={[styles.title, { color: theme.titleColor }]}>{t("login.title")}</Text>
       <View style={styles.form}>
-        {/* Correo */}
         <InputField
           label={t("inputs.title.email")}
-          placeholder="ejemplo@gmail.com"
+          placeholder="example@gmail.com"
           value={email}
           onChangeText={handleEmailChange}
           keyboardType="email-address"
           error={emailError}
         />
-
-        {/* Contraseña */}
         <InputField
           label={t("inputs.title.password")}
           placeholder="••••••••"
@@ -173,57 +134,27 @@ export default function Login({ navigation }) {
           secureTextEntry
           error={passwordError}
         />
-
-        {/* Olvidó contraseña */}
         <Text
-          style={[
-            styles.forgotPassword,
-            { color: theme.navbarColor },
-          ]}
+          style={[styles.forgotPassword, { color: theme.navbarColor }]}
           onPress={() => navigation.navigate("ForgotPassword")}
         >
           {t("login.ForgotPassword")}
         </Text>
-
-        {/* Error del formulario */}
-        {formError ? (
-          <Text style={styles.error}>
-            {formError}
-          </Text>
-        ) : null}
-
-        {/* Botón */}
+        {formError ? <Text style={styles.error}>{formError}</Text> : null}
         <View style={styles.buttonWrap}>
-          <PrimaryButton
-            text={t("button.enter")}
-            onPress={handleSubmit}
-            disabled={submitting}
-          />
+          <PrimaryButton text={t("button.enter")} onPress={handleSubmit} disabled={submitting} />
         </View>
-
-        {/* Documentos legales pre-login (solo lectura) */}
         <View style={styles.legalRow}>
-          <Text
-            style={[styles.legalLink, { color: theme.navbarColor }]}
-            onPress={() => setLegalDoc("terms")}
-          >
+          <Text style={[styles.legalLink, { color: theme.navbarColor }]} onPress={() => setLegalDoc("terms")}>
             {t("inputs.terms")}
           </Text>
           <Text style={styles.legalSeparator}> · </Text>
-          <Text
-            style={[styles.legalLink, { color: theme.navbarColor }]}
-            onPress={() => setLegalDoc("privacy")}
-          >
+          <Text style={[styles.legalLink, { color: theme.navbarColor }]} onPress={() => setLegalDoc("privacy")}>
             {t("inputs.privacity")}
           </Text>
         </View>
       </View>
-
-      <LegalInfoModal
-        visible={legalDoc !== null}
-        doc={legalDoc ?? "terms"}
-        onClose={() => setLegalDoc(null)}
-      />
+      <LegalInfoModal visible={legalDoc !== null} doc={legalDoc ?? "terms"} onClose={() => setLegalDoc(null)} />
     </ScrollView>
   );
 }

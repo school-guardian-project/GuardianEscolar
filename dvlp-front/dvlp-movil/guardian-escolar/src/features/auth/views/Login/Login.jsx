@@ -100,6 +100,7 @@ export default function Login({ navigation }) {
   };
 
   const handleSubmit = () => {
+    console.log('[DEBUG] handleSubmit called', { email, submitting });
     const nextEmailError = validateEmail(email);
     const nextPasswordError = validateRequired(password, "Enter your password");
     setEmailError(nextEmailError);

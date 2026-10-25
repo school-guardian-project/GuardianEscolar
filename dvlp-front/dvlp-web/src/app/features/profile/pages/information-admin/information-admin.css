@@ -131,6 +131,7 @@
   align-items: center;
   min-width: 200px;
   gap: 8px;
+  position: relative;
 }
 
 .avatar-wrapper {
@@ -167,8 +168,8 @@
 
 .avatar-edit-btn {
   position: absolute;
-  bottom: 2px;
-  right: -2px;
+  bottom: -6px;
+  right: -6px;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -178,6 +179,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  z-index: 10;
 }
 
 .avatar-edit-btn mat-icon {

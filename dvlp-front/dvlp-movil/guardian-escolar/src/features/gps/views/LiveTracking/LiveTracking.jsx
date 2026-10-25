@@ -52,7 +52,12 @@ function normalizeStops(route) {
 async function fetchRoute(path) {
   try {
     return await getRouteApi(path);
-  } catch {
+  } catch (error) {
+    console.error(`[LiveTracking/fetchRoute] Error fetching ${path}:`, {
+      status: error?.status,
+      message: error?.message,
+      data: error?.data,
+    });
     return null;
   }
 }
@@ -95,8 +100,15 @@ export default function LiveTracking() {
         // 1) Geometría vial OSRM (sugerencia de ruta)
         try {
           const suggestion = await getRouteSuggestionApi(route.id);
-          if (suggestion?.geometry && mounted) {
-            setRouteGeometry(suggestion.geometry);
+          // Backend devuelve RouteSuggestionGeometryDto con Points (PascalCase)
+          // GeoPointDto tiene Latitude/Longitude -> transformar a lowercase para Polyline
+          if (suggestion?.geometry?.Points && mounted) {
+            setRouteGeometry(
+              suggestion.geometry.Points.map((p) => ({
+                latitude: p.Latitude,
+                longitude: p.Longitude,
+              }))
+            );
           }
         } catch (err) {
           console.error("[LiveTracking] Error loading route geometry:", err);

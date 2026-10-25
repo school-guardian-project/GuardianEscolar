@@ -173,8 +173,37 @@ export default function App() {
           setInitialRoute("MainPage");
           registerPushDevice({ prompt: false });
         }
-      } catch {
-        await clearSession();
+      } catch (error) {
+        // Distinguir tipos de error:
+        // - Error de red (status 0, isNetworkError): MANTENER sesión, no hacer clearSession
+        // - 401/403 (TOKEN_EXPIRED_OR_REVOKED, TOKEN_FORBIDDEN): Token inválido → clearSession
+        // - Otros errores: loggear pero mantener sesión por seguridad
+        
+        const isNetworkError = error?.isNetworkError === true || error?.status === 0;
+        const isTokenInvalid = error?.status === 401 || error?.status === 403;
+        const isTokenRevoked = error?.code === "TOKEN_EXPIRED_OR_REVOKED" || error?.code === "TOKEN_FORBIDDEN";
+        
+        console.log("[App.initialize] Refresh error caught", {
+          message: error?.message,
+          status: error?.status,
+          code: error?.code,
+          isNetworkError,
+          isTokenInvalid,
+          isTokenRevoked,
+        });
+
+        if (isTokenInvalid || isTokenRevoked) {
+          // Token definitivamente inválido/expirado/revocado → limpiar sesión
+          console.warn("[App.initialize] Invalid token detected, clearing session");
+          await clearSession();
+        } else if (isNetworkError) {
+          // Error de red: MANTENER la sesión, el usuario puede reintentar luego
+          console.warn("[App.initialize] Network error during refresh, keeping session for retry");
+          // NO hacemos clearSession() - la sesión persiste en SecureStore
+        } else {
+          // Error desconocido: por seguridad no limpiamos, loggeamos para investigación
+          console.error("[App.initialize] Unexpected error during refresh, keeping session", error);
+        }
       }
 
       setReady(true);

@@ -61,6 +61,13 @@ export class InformationAdmin implements OnInit {
     this.loadProfile();
   }
 
+  loadProfilePhoto(): void {
+    const savedPhoto = localStorage.getItem(`profilePhoto_${this.user?.id}`);
+    if (savedPhoto) {
+      this.imageUrl = savedPhoto;
+    }
+  }
+
   loadProfile(): void {
     this.loading = true;
     this.loadFailed = false;
@@ -89,6 +96,7 @@ export class InformationAdmin implements OnInit {
     ).subscribe({
       next: (user) => {
         this.user = user;
+        this.loadProfilePhoto();
       },
       error: (error: unknown) => {
         console.error('Could not load the authenticated admin profile:', error);
@@ -152,6 +160,10 @@ export class InformationAdmin implements OnInit {
 
       reader.onload = () => {
         this.imageUrl = reader.result;
+        // Guardar en localStorage con la clave del usuario actual
+        if (this.user?.id) {
+          localStorage.setItem(`profilePhoto_${this.user.id}`, reader.result as string);
+        }
       };
 
       reader.readAsDataURL(file);

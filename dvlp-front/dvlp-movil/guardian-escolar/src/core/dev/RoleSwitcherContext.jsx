@@ -1,25 +1,24 @@
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { getSession } from "@core/services/authService";
 import { roleKeyFromRoleId } from "@core/config/roles/roleConfig";
 
 const RoleSwitcherContext = createContext(null);
 
-// Callback global que authService llama tras refresh para actualizar el rol
 let onAuthRoleChange = null;
 
 export function RoleSwitcherProvider({ children }) {
-    // Inicializar desde sesión persistida (SecureStore) para tener rol correcto al arrancar
-    const [role, setRole] = useState(() => "student"); // default temporal
+    const [role, setRole] = useState(() => "student");
     const [initialized, setInitialized] = useState(false);
-    
-    const applyAuthRole = () => setRole(roleKeyFromRoleId(getRoleId()));
-    
-    // Cargar rol real desde SecureStore al montar
+
+    const applyAuthRole = () => {
+        // Role gets updated via notifyAuthRoleChange after refresh/login
+    };
+
     useEffect(() => {
         let mounted = true;
         (async () => {
             try {
-                const session = await getSession();
+                const authService = await import("@core/services/authService");
+                const session = await authService.getSession();
                 if (mounted && session?.roleId) {
                     setRole(roleKeyFromRoleId(session.roleId));
                 }
@@ -31,10 +30,15 @@ export function RoleSwitcherProvider({ children }) {
         })();
         return () => { mounted = false; };
     }, []);
-    
-    // Registrar callback para que authService nos avise tras refresh
+
     useEffect(() => {
-        onAuthRoleChange = applyAuthRole;
+        onAuthRoleChange = () => {
+            setTimeout(() => {
+                import("@core/services/authService").then(auth =>
+                    auth.getSession().then(s => s?.roleId && setRole(roleKeyFromRoleId(s.roleId)))
+                ).catch(console.warn);
+            }, 0);
+        };
         return () => { onAuthRoleChange = null; };
     }, []);
 
@@ -47,11 +51,10 @@ export function RoleSwitcherProvider({ children }) {
 
 export function useRoleSwitcher() {
     const ctx = useContext(RoleSwitcherContext);
-    if (!ctx) throw new Error("useRoleSwitcher debe usarse dentro de RoleSwitcherProvider");
+    if (!ctx) throw new Error("useRoleSwitcher must be used within RoleSwitcherProvider");
     return ctx;
 }
 
-// Llamado por authService tras refresh exitoso
 export function notifyAuthRoleChange() {
     if (onAuthRoleChange) onAuthRoleChange();
 }

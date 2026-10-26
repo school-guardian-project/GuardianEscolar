@@ -717,7 +717,8 @@
         "endTime": "Heure de fin",
         "destination": "Destination",
         "routeSector": "Secteur de l'itinéraire",
-        "campus": "Site"
+        "campus": "Site",
+        "daysOfWeek": "Jours de la semaine"
       }
     },
     "admins": {
@@ -759,6 +760,13 @@
   "register": {
     "select": "Sélectionner un élève",
     "button": "Enregistrer",
+    "daysOfWeek": {
+      "Monday": "Lundi",
+      "Tuesday": "Mardi",
+      "Wednesday": "Mercredi",
+      "Thursday": "Jeudi",
+      "Friday": "Vendredi"
+    },
     "student": {
       "title": "Enregistrer l'élève",
       "fields": {
@@ -853,7 +861,8 @@
         "destination": "Destination",
         "routeSector": "Secteur",
         "bus": "Bus",
-        "campus": "Site"
+        "campus": "Site",
+        "daysOfWeek": "Jours de la semaine"
       }
     },
     "admins": {

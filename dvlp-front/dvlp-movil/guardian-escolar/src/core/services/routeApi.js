@@ -8,12 +8,20 @@ export async function getRouteApi(path) {
 }
 
 /** POST a ms-route a través del API Gateway. */
-export async function postRouteApi(path, body) {
+export async function postRouteApi(path, routeData) {
+  const body = {
+    ...routeData,
+    daysOfWeek: routeData.daysOfWeek ?? ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+  };
   return apiPost(`${PREFIX}${path}`, body);
 }
 
 /** PUT a ms-route a través del API Gateway. */
-export async function putRouteApi(path, body) {
+export async function putRouteApi(path, routeData) {
+  const body = {
+    ...routeData,
+    daysOfWeek: routeData.daysOfWeek ?? ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday']
+  };
   return apiPut(`${PREFIX}${path}`, body);
 }
 

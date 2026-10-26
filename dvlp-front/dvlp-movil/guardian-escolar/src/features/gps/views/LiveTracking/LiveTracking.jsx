@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
 import { useNavigation } from "@react-navigation/native";
 import NotificationButton from "@components/buttons/NotificationButton";
+import BottomTabBar from "@components/layout/BottomTabBar";
 import TripActionButton from "@components/buttons/TripActionButton";
 import GpsMap from "@features/gps/components/GpsMap";
 import useGpsTracking from "@features/gps/hooks/useGpsTracking";
@@ -303,6 +304,13 @@ export default function LiveTracking() {
             showWhenEnded={false}
           />
         )}
+      </View>
+      <View style={styles.bottomBarOverlay} pointerEvents="box-none">
+        <BottomTabBar
+          onRoutePress={() => navigation.navigate("MainPage")}
+          onLocationPress={() => navigation.navigate("LiveTracking")}
+          onProfilePress={() => navigation.navigate("Profile")}
+        />
       </View>
     </View>
   );

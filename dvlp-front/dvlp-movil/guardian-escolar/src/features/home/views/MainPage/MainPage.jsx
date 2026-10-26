@@ -14,6 +14,7 @@ import useSession from "@core/hooks/useSession";
 import useGpsTracking from "@features/gps/hooks/useGpsTracking";
 import QRButtom from "@components/buttons/QRButtom";
 import IncidentReportButton from "@components/buttons/IncidentReportButton";
+import TripActionButton from "@components/buttons/TripActionButton";
 import QRDisplayModal from "@components/modals/QRDisplayModal";
 import QRScannerModal from "@components/modals/QRScannerModal";
 import IncidentReportModal from "@components/modals/IncidentReportModal";
@@ -99,12 +100,12 @@ export default function MainPage() {
   const { role, initialized } = useSession();
   const { t } = useTranslation();
   const isFocused = useIsFocused();
-  
+
   // Esperar a que el rol esté inicializado desde SecureStore
   if (!initialized) {
     return null; // o un spinner si prefieres
   }
-  
+
   const config = roleConfig[role];
   const [modalType, setModalType] = useState(null);
   const [incidentOpen, setIncidentOpen] = useState(false);
@@ -113,10 +114,13 @@ export default function MainPage() {
   const [scanMode, setScanMode] = useState("ON_BOARD");
   const [status, setStatus] = useState(null);
   const [scanFeedback, setScanFeedback] = useState(null);
-  const [tripStarted, setTripStarted] = useState(false);
-  const [tripEnded, setTripEnded] = useState(false);
-  const [routeSchedule, setRouteSchedule] = useState({ startTime: null, endTime: null });
+
+  // Estado unificado del viaje (reemplaza tripStarted, tripEnded, routeSchedule, currentTripId separados)
+  const [tripStatus, setTripStatus] = useState("idle"); // 'idle' | 'active' | 'ended'
   const [currentTripId, setCurrentTripId] = useState(null);
+  const [tripDirection, setTripDirection] = useState(null); // 'Ida' | 'Vuelta'
+  const [tripSchedule, setTripSchedule] = useState({ startTime: null, endTime: null });
+
   const mapRef = useRef(null);
 
   // GPS Tracking (solo si está enfocada la pantalla)
@@ -143,12 +147,12 @@ export default function MainPage() {
       };
 
       const result = await startTripApi(payload);
-      setTripStarted(true);
       if (result?.id) {
         setCurrentTripId(result.id);
       } else if (result?.tripId) {
         setCurrentTripId(result.tripId);
       }
+      setTripStatus("active");
       setScanFeedback({
         type: "success",
         message: t("cards.tripStarted") || "Viaje iniciado correctamente",
@@ -171,7 +175,8 @@ export default function MainPage() {
         return;
       }
       await apiPost(`/route/api/trips/end?tripId=${currentTripId}`, {});
-      setTripEnded(true);
+      setTripStatus("ended");
+      setCurrentTripId(null);
       setScanFeedback({
         type: "success",
         message: t("cards.tripEnded") || "Viaje finalizado correctamente",
@@ -249,6 +254,9 @@ export default function MainPage() {
             ? String(route.stopsCount)
             : "—";
 
+        // Extraer dirección del primer schedule (Ida/Vuelta)
+        const direction = route.Schedules?.[0]?.Direction ?? null;
+
         setRouteInfo({
           routeId: route.id,
           busId: route.bus?.id,
@@ -261,10 +269,11 @@ export default function MainPage() {
           startTime: route.startTime,
           endTime: route.endTime,
         });
-        setRouteSchedule({
+        setTripSchedule({
           startTime: route.startTime,
           endTime: route.endTime,
         });
+        setTripDirection(direction);
       } catch (error) {
         console.error("Error loading route info:", error);
         setStatus("No fue posible verificar la ruta asignada.");
@@ -376,46 +385,19 @@ export default function MainPage() {
             onProfilePress={() => navigation.navigate("Profile")}
           />
         </View>
+
         <View style={styles.qrButtonContainer} pointerEvents="box-none">
-          {role === "driver" && !tripStarted && !tripEnded && (() => {
-            const now = new Date();
-            const [sh, sm] = (routeSchedule.startTime || "").split(":").map(Number);
-            const [eh, em] = (routeSchedule.endTime || "").split(":").map(Number);
-            let showStart = true;
-            if (!isNaN(sh)) {
-              const start = new Date();
-              start.setHours(sh, sm || 0, 0, 0);
-              const diff = (start - now) / 60000;
-              showStart = diff <= 5 && diff >= -60;
-            }
-            return showStart ? (
-              <Pressable
-                style={[styles.startTripButton, { marginRight: 12 }]}
-                onPress={handleStartTrip}
-              >
-                <Text style={styles.startTripButtonText}>{t("cards.startRoute") || "Iniciar Ruta"}</Text>
-              </Pressable>
-            ) : null;
-          })()}
-          {role === "driver" && tripStarted && !tripEnded && (() => {
-            const now = new Date();
-            const [eh, em] = (routeSchedule.endTime || "").split(":").map(Number);
-            let showEnd = false;
-            if (!isNaN(eh)) {
-              const end = new Date();
-              end.setHours(eh, em || 0, 0, 0);
-              const diff = (end - now) / 60000;
-              showEnd = diff <= 10 && diff >= -60;
-            }
-            return showEnd ? (
-              <Pressable
-                style={[styles.startTripButton, { marginRight: 12 }]}
-                onPress={handleEndTrip}
-              >
-                <Text style={styles.startTripButtonText}>{t("cards.endRoute") || "Terminar Ruta"}</Text>
-              </Pressable>
-            ) : null;
-          })()}
+          {/* Botón contextual unificado Iniciar/Terminar - solo para driver */}
+          {role === "driver" && (
+            <TripActionButton
+              status={tripStatus}
+              direction={tripDirection}
+              schedule={tripSchedule}
+              onStart={handleStartTrip}
+              onEnd={handleEndTrip}
+              showWhenEnded={false}
+            />
+          )}
           <QRButtom config={config.card} onOpenModel={handleOpenModal} />
         </View>
 

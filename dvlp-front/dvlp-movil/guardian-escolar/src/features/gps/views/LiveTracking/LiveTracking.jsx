@@ -7,10 +7,13 @@ import { useTheme } from "@core/services/ThemeService";
 import { useNavigation } from "@react-navigation/native";
 import NotificationButton from "@components/buttons/NotificationButton";
 import BottomTabBar from "@components/layout/BottomTabBar";
+import TripActionButton from "@components/buttons/TripActionButton";
 import GpsMap from "@features/gps/components/GpsMap";
 import useGpsTracking from "@features/gps/hooks/useGpsTracking";
 import { getSession } from "@core/services/authService";
 import { getRouteApi, getRouteSuggestionApi } from "@core/services/routeApi";
+import { startTripApi } from "@core/services/tripApi";
+import { apiPost } from "@core/services/apiClient";
 import styles from "./LiveTracking.style";
 
 function formatDateInBogota(dateValue) {
@@ -74,6 +77,12 @@ export default function LiveTracking() {
   const [routeStops, setRouteStops] = useState([]);
   const [routeGeometry, setRouteGeometry] = useState([]);
 
+  // Estado unificado del viaje (igual que MainPage)
+  const [tripStatus, setTripStatus] = useState("idle"); // 'idle' | 'active' | 'ended'
+  const [currentTripId, setCurrentTripId] = useState(null);
+  const [tripDirection, setTripDirection] = useState(null); // 'Ida' | 'Vuelta'
+  const [tripSchedule, setTripSchedule] = useState({ startTime: null, endTime: null });
+
   const statusText = location?.status;
   const speedValue = location?.speed;
   const speed = speedValue != null && speedValue !== "" && Number.isFinite(Number(speedValue))
@@ -119,6 +128,16 @@ export default function LiveTracking() {
         if (mounted) {
           setRouteStops(stops);
         }
+
+        // 3) Info de horario y dirección para TripActionButton
+        if (mounted) {
+          const direction = route.Schedules?.[0]?.Direction ?? null;
+          setTripDirection(direction);
+          setTripSchedule({
+            startTime: route.startTime,
+            endTime: route.endTime,
+          });
+        }
       } catch (err) {
         console.error("[LiveTracking] Error loading driver route:", err);
       }
@@ -127,6 +146,45 @@ export default function LiveTracking() {
     loadDriverRoute();
     return () => { mounted = false; };
   }, []);
+
+  const handleStartTrip = async () => {
+    try {
+      const session = await getSession();
+      if (!session?.profileId) return;
+
+      // Obtener routeId y busId de la ruta de hoy
+      const today = await fetchRoute(`/routes/today?driverId=${session.profileId}`);
+      if (!today?.route) return;
+
+      const route = today.route;
+      const payload = {
+        routeId: route.id,
+        busId: route.bus?.id,
+        driverId: session.profileId,
+      };
+
+      const result = await startTripApi(payload);
+      if (result?.id) {
+        setCurrentTripId(result.id);
+      } else if (result?.tripId) {
+        setCurrentTripId(result.tripId);
+      }
+      setTripStatus("active");
+    } catch (error) {
+      console.error("[LiveTracking] Error starting trip:", error);
+    }
+  };
+
+  const handleEndTrip = async () => {
+    try {
+      if (!currentTripId) return;
+      await apiPost(`/route/api/trips/end?tripId=${currentTripId}`, {});
+      setTripStatus("ended");
+      setCurrentTripId(null);
+    } catch (error) {
+      console.error("[LiveTracking] Error ending trip:", error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -183,7 +241,6 @@ export default function LiveTracking() {
             ]}
           >
             <View style={styles.cardHeader}>
-              
               <Text style={[styles.cardTitle, { color: theme.titleColor }]}>
                 {t("gps.vehicleLocation")}
               </Text>
@@ -209,6 +266,18 @@ export default function LiveTracking() {
           </View>
         </View>
       )}
+
+      {/* Botón contextual Iniciar/Terminar - posicionado arriba del BottomTabBar */}
+      <View style={styles.tripButtonContainer} pointerEvents="box-none">
+        <TripActionButton
+          status={tripStatus}
+          direction={tripDirection}
+          schedule={tripSchedule}
+          onStart={handleStartTrip}
+          onEnd={handleEndTrip}
+          showWhenEnded={false}
+        />
+      </View>
 
       <View style={styles.bottomBarOverlay} pointerEvents="box-none">
         <BottomTabBar

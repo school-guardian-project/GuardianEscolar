@@ -120,4 +120,13 @@ export default StyleSheet.create({
     zIndex: 3,
     elevation: 7,
   },
+  tripButtonContainer: {
+    position: "absolute",
+    left: 16,
+    right: 16,
+    bottom: 88, // Above BottomTabBar (~72px) + margin
+    zIndex: 3,
+    elevation: 5,
+    alignItems: "center",
+  },
 });

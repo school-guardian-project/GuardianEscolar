@@ -76,15 +76,6 @@ export default function LiveTracking() {
   const mapRef = useRef(null);
   const { location, error, loading, lastUpdated, fallbackLocation } = useGpsTracking();
 
-  // Esperar a que la sesión esté inicializada (rol cargado desde SecureStore)
-  if (!initialized) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ color: theme.navbarColor, marginTop: 12 }}>Cargando sesión...</Text>
-      </View>
-    );
-  }
-
   // Estado para ruta del conductor/padre + sugerencia OSRM
   const [routeStops, setRouteStops] = useState([]);
   const [routeGeometry, setRouteGeometry] = useState([]);
@@ -171,6 +162,17 @@ export default function LiveTracking() {
     loadRoute();
     return () => { mounted = false; };
   }, [role]);
+
+  // Esperar a que la sesión esté inicializada (rol cargado desde SecureStore).
+  // Va DESPUÉS de todos los hooks: así la cantidad de hooks no cambia entre
+  // renders (rules of hooks) mientras se muestra el loading.
+  if (!initialized) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ color: theme.navbarColor, marginTop: 12 }}>Cargando sesión...</Text>
+      </View>
+    );
+  }
 
   const handleStartTrip = async () => {
     try {

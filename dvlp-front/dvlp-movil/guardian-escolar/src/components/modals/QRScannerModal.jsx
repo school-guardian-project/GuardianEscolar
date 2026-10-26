@@ -12,8 +12,6 @@ import { useTheme } from "@core/services/ThemeService";
  *   - visible: boolean → Controla si el modal está abierto
  *   - onClose: function → Cierra el modal
  *   - onScan: function → Devuelve el contenido del QR escaneado al padre
- *   - scanMode: "ON_BOARD" | "OFF_BOARD" → Modo activo del escaneo
- *   - onScanModeChange: function → Cambia el modo desde dentro del modal
  *
  * Flujo:
  *   1. Al abrir, verifica si tiene permiso de cámara
@@ -21,17 +19,10 @@ import { useTheme } from "@core/services/ThemeService";
  *   3. Si tiene permiso, abre la cámara con vista de escaneo
  *   4. Al detectar un QR, envía los datos y cierra el modal
  *
- * El selector de modo vive ACÁ y no en MainPage: <Modal> de React Native es una
- * ventana nativa que tapa toda la app, así que cualquier botón hermano queda
- * invisible e intocable mientras la cámara está abierta.
+ * No hay selector de subida/bajada: el backend determina el tipo de movimiento
+ * a partir del estado del viaje, así que acá solo se escanea.
  */
-export default function QRScannerModal({
-  visible,
-  onClose,
-  onScan,
-  scanMode,
-  onScanModeChange,
-}) {
+export default function QRScannerModal({ visible, onClose, onScan }) {
   const { theme } = useTheme();
 
   // Hook de expo-camera para gestionar permisos de cámara
@@ -154,31 +145,6 @@ export default function QRScannerModal({
           {scanned ? "Codigo detectado..." : "Apunta la camara al codigo QR"}
         </Text>
 
-        {onScanModeChange ? (
-          <View style={styles.modeContainer}>
-            <Pressable
-              style={[styles.modeButton, scanMode === "ON_BOARD" && styles.modeButtonActive]}
-              onPress={() => onScanModeChange("ON_BOARD")}
-            >
-              <Text
-                style={[styles.modeText, scanMode === "ON_BOARD" && styles.modeTextActive]}
-              >
-                ABORDAR
-              </Text>
-            </Pressable>
-            <Pressable
-              style={[styles.modeButton, scanMode === "OFF_BOARD" && styles.modeButtonActive]}
-              onPress={() => onScanModeChange("OFF_BOARD")}
-            >
-              <Text
-                style={[styles.modeText, scanMode === "OFF_BOARD" && styles.modeTextActive]}
-              >
-                DESCENDER
-              </Text>
-            </Pressable>
-          </View>
-        ) : null}
-
         <Pressable style={styles.closeButton} onPress={onClose}>
           <Ionicons name="close" size={28} color="#FFFFFF" />
         </Pressable>
@@ -224,37 +190,6 @@ const styles = StyleSheet.create({
     color: "#FFFFFF",
     fontSize: 14,
     fontWeight: "500",
-  },
-  // Selector ABORDAR/DESCENDER: por encima del hint y del encuadre, dentro del
-  // Modal (único lugar donde es visible/tocable mientras la cámara está abierta).
-  modeContainer: {
-    position: "absolute",
-    bottom: 130,
-    left: 0,
-    right: 0,
-    flexDirection: "row",
-    justifyContent: "center",
-    gap: 16,
-  },
-  modeButton: {
-    paddingHorizontal: 24,
-    paddingVertical: 12,
-    borderRadius: 8,
-    backgroundColor: "rgba(255,255,255,0.92)",
-    borderWidth: 2,
-    borderColor: "rgba(255,255,255,0.5)",
-  },
-  modeButtonActive: {
-    borderColor: "#00E676",
-    backgroundColor: "#E8F5E9",
-  },
-  modeText: {
-    fontSize: 16,
-    fontWeight: "bold",
-    color: "#333",
-  },
-  modeTextActive: {
-    color: "#1B5E20",
   },
   closeButton: {
     position: "absolute",

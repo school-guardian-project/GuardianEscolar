@@ -92,31 +92,20 @@ async function resolveRouteForRole(role, session) {
   return { route: first, note: null };
 }
 
-export default function MainPage() {
+function MainPageContent() {
   const { width } = useWindow();
   const insets = useSafeAreaInsets();
   const horizontalPadding = width < 360 ? 12 : 16;
   const navigation = useNavigation();
-  const { role, initialized } = useSession();
+  const { role } = useSession();
   const { t } = useTranslation();
   const isFocused = useIsFocused();
-  
-  // Esperar a que el rol esté inicializado desde SecureStore
-  if (!initialized) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="#1A56DB" />
-        <Text style={{ marginTop: 12, color: "#666" }}>Cargando sesión...</Text>
-      </View>
-    );
-  }
-  
+
   const config = roleConfig[role];
   const [modalType, setModalType] = useState(null);
   const [incidentOpen, setIncidentOpen] = useState(false);
   const [routeInfo, setRouteInfo] = useState(null);
   const [, setLoading] = useState(true);
-  const [scanMode, setScanMode] = useState("ON_BOARD");
   const [status, setStatus] = useState(null);
   const [scanFeedback, setScanFeedback] = useState(null);
   const [tripStatus, setTripStatus] = useState("idle"); // 'idle' | 'active' | 'ended'
@@ -193,9 +182,10 @@ export default function MainPage() {
 
   const handleQrScan = async (qrToken) => {
     try {
-      // Contrato de ms-notification (FR-4.1): { qrToken, boardingType }.
-      // scanMode ya usa los valores del enum ON_BOARD/OFF_BOARD.
-      const result = await scanCredential(qrToken, scanMode);
+      // Contrato de ms-notification: solo qrToken. El backend resuelve viaje,
+      // parada, estudiante y el tipo de movimiento (subida/bajada) a partir del
+      // estado del viaje, y lo devuelve en `boardingType` para elegir el mensaje.
+      const result = await scanCredential(qrToken);
       handleCloseModal();
 
       // El driver necesita saber que el sistema ya hizo lo suyo: sin esto el
@@ -205,7 +195,7 @@ export default function MainPage() {
         type: "success",
         message: result?.alreadyProcessed
           ? t("cards.scanAlready")
-          : scanMode === "OFF_BOARD"
+          : result?.boardingType === "OFF_BOARD"
             ? t("cards.scanAlighted")
             : t("cards.scanBoarded"),
       });
@@ -430,9 +420,29 @@ export default function MainPage() {
         visible={modalType === "qrScanner"}
         onClose={handleCloseModal}
         onScan={handleQrScan}
-        scanMode={scanMode}
-        onScanModeChange={setScanMode}
       />
     </View>
   );
+}
+
+/**
+ * Puerta de sesión: el contenido solo monta cuando `initialized` (rol leído
+ * desde SecureStore por RoleSwitcherProvider) ya es true. El early return vive
+ * en un componente que solo usa useSession, así la cantidad de hooks NO cambia
+ * entre renders (rules of hooks) y mientras carga no se abren efectos ni GPS.
+ */
+export default function MainPage() {
+  const { initialized } = useSession();
+
+  // Esperar a que el rol esté inicializado desde SecureStore
+  if (!initialized) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#1A56DB" />
+        <Text style={{ marginTop: 12, color: "#666" }}>Cargando sesión...</Text>
+      </View>
+    );
+  }
+
+  return <MainPageContent />;
 }

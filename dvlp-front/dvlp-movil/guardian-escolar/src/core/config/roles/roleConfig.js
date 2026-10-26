@@ -62,10 +62,31 @@ export const roleConfig = {
       showFamily: true,
     },
   },
+  // Admin (1) y SuperAdmin (5) del catálogo Iam.Role: perfil de gestión.
+  // Sin QR de estudiante ni reporte de incidente, y sin "Mi familia".
+  admin: {
+    topBar: {
+      showNotifications: true,
+    },
+    card: {
+      showQR: false,
+      qrMode: null,
+      showIncidentReport: false,
+    },
+    MapMarkers: {
+      showRouteStops: false,
+      showStudentMarker: false,
+      showDriverMarker: false,
+      showGeofence: false,
+    },
+    profile: {
+      showFamily: false,
+    },
+  },
 };
 
 // roleId del JWT (catálogo Iam.Role) -> clave local de roleConfig.
-const ROLE_ID_TO_KEY = { 2: "student", 3: "driver", 4: "parent" };
+const ROLE_ID_TO_KEY = { 1: "admin", 2: "student", 3: "driver", 4: "parent", 5: "admin" };
 
 export function roleKeyFromRoleId(roleId) {
   return ROLE_ID_TO_KEY[roleId] ?? "student";

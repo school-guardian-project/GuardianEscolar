@@ -15,7 +15,7 @@ import { getRouteApi, getRouteSuggestionApi } from "@core/services/routeApi";
 import { getLinkedStudents } from "@core/services/familyService";
 import { startTripApi } from "@core/services/tripApi";
 import { apiPost } from "@core/services/apiClient";
-import { useSession } from "@core/hooks/useSession";
+import useSession from "@core/hooks/useSession";
 import styles from "./LiveTracking.style";
 
 function formatDateInBogota(dateValue) {

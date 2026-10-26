@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, ActivityIndicator, Pressable } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -251,10 +251,11 @@ export default function MainPage() {
           route.startTime && route.endTime
             ? `${route.startTime} - ${route.endTime}`
             : "";
+        // /routes/today y /routes/student/{id} devuelven RouteDetailDto: no traen
+        // stopsCount, sino el listado stops. /routes (respaldo) sí trae stopsCount.
+        const stopsTotal = route.stops?.length ?? route.stopsCount;
         const stopsCount =
-          route.stopsCount != null && route.stopsCount !== ""
-            ? String(route.stopsCount)
-            : "—";
+          stopsTotal != null && stopsTotal !== "" ? String(stopsTotal) : "—";
 
         setRouteInfo({
           routeId: route.id,
@@ -264,6 +265,7 @@ export default function MainPage() {
           plate: route.bus?.plate ?? "",
           schedule,
           stopsCount,
+          direction: route.schedules?.[0]?.direction ?? null,
           finalDestination: route.targetSector ?? "",
           startTime: route.startTime,
           endTime: route.endTime,
@@ -281,8 +283,8 @@ export default function MainPage() {
 
   // Extract direction from route schedules
   useEffect(() => {
-    if (routeInfo?.Schedules?.[0]?.Direction) {
-      setTripDirection(routeInfo.Schedules[0].Direction);
+    if (routeInfo?.direction) {
+      setTripDirection(routeInfo.direction);
     }
     if (routeInfo?.startTime && routeInfo?.endTime) {
       setTripSchedule({ startTime: routeInfo.startTime, endTime: routeInfo.endTime });
@@ -424,32 +426,12 @@ export default function MainPage() {
         visible={modalType === "activeQR"}
         onClose={handleCloseModal}
       />
-      {modalType === "qrScanner" && (
-        <View style={styles.scanModeContainer}>
-          <Pressable
-            style={[
-              styles.scanModeButton,
-              scanMode === "ON_BOARD" && styles.scanModeActive,
-            ]}
-            onPress={() => setScanMode("ON_BOARD")}
-          >
-            <Text style={styles.scanModeText}>ABORDAR</Text>
-          </Pressable>
-          <Pressable
-            style={[
-              styles.scanModeButton,
-              scanMode === "OFF_BOARD" && styles.scanModeActive,
-            ]}
-            onPress={() => setScanMode("OFF_BOARD")}
-          >
-            <Text style={styles.scanModeText}>DESCENDER</Text>
-          </Pressable>
-        </View>
-      )}
       <QRScannerModal
         visible={modalType === "qrScanner"}
         onClose={handleCloseModal}
         onScan={handleQrScan}
+        scanMode={scanMode}
+        onScanModeChange={setScanMode}
       />
     </View>
   );

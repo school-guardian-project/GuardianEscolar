@@ -6,7 +6,6 @@ import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
 import { useNavigation } from "@react-navigation/native";
 import NotificationButton from "@components/buttons/NotificationButton";
-import BottomTabBar from "@components/layout/BottomTabBar";
 import TripActionButton from "@components/buttons/TripActionButton";
 import GpsMap from "@features/gps/components/GpsMap";
 import useGpsTracking from "@features/gps/hooks/useGpsTracking";
@@ -72,9 +71,18 @@ export default function LiveTracking() {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
   const navigation = useNavigation();
-  const { role } = useSession();
+  const { role, initialized } = useSession();
   const mapRef = useRef(null);
   const { location, error, loading, lastUpdated, fallbackLocation } = useGpsTracking();
+
+  // Esperar a que la sesión esté inicializada (rol cargado desde SecureStore)
+  if (!initialized) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ color: theme.navbarColor, marginTop: 12 }}>Cargando sesión...</Text>
+      </View>
+    );
+  }
 
   // Estado para ruta del conductor/padre + sugerencia OSRM
   const [routeStops, setRouteStops] = useState([]);
@@ -284,23 +292,17 @@ export default function LiveTracking() {
       )}
 
 
-      {/* Botón contextual Iniciar/Terminar - posicionado arriba del BottomTabBar */}
       <View style={styles.tripButtonContainer} pointerEvents="box-none">
-        <TripActionButton
-          status={tripStatus}
-          direction={tripDirection}
-          schedule={tripSchedule}
-          onStart={handleStartTrip}
-          onEnd={handleEndTrip}
-          showWhenEnded={false}
-        />
-      </View>
-      <View style={styles.bottomBarOverlay} pointerEvents="box-none">
-        <BottomTabBar
-          onRoutePress={() => navigation.navigate("MainPage")}
-          onLocationPress={() => navigation.navigate("LiveTracking")}
-          onProfilePress={() => navigation.navigate("Profile")}
-        />
+        {routeStops.length > 0 && (
+          <TripActionButton
+            status={tripStatus}
+            direction={tripDirection}
+            schedule={tripSchedule}
+            onStart={handleStartTrip}
+            onEnd={handleEndTrip}
+            showWhenEnded={false}
+          />
+        )}
       </View>
     </View>
   );

@@ -394,14 +394,21 @@ export default function MainPage() {
           />
         </View>
         <View style={styles.qrButtonContainer} pointerEvents="box-none">
-          <TripActionButton
-            status={tripStatus}
-            direction={tripDirection}
-            schedule={tripSchedule}
-            onStart={handleStartTrip}
-            onEnd={handleEndTrip}
-            showWhenEnded={false}
-          />
+          {/* QR Scanner for driver (qrMode: "scan") */}
+          {config.card.showQR && config.card.qrMode === "scan" && (
+            <QRButtom config={config.card} onOpenModel={handleOpenModal} />
+          )}
+          {/* Trip buttons only when route is assigned */}
+          {routeInfo && (
+            <TripActionButton
+              status={tripStatus}
+              direction={tripDirection}
+              schedule={tripSchedule}
+              onStart={handleStartTrip}
+              onEnd={handleEndTrip}
+              showWhenEnded={false}
+            />
+          )}
         </View>
 
         {config.card.showIncidentReport && (

@@ -13,6 +13,9 @@ import { getSession } from "@core/services/authService";
 import { getRouteApi, getRouteSuggestionApi } from "@core/services/routeApi";
 import { getLinkedStudents } from "@core/services/familyService";
 import { useSession } from "@core/hooks/useSession";
+import TripActionButton from "@components/buttons/TripActionButton";
+import { startTripApi } from "@core/services/tripApi";
+import { apiPost } from "@core/services/apiClient";
 import styles from "./LiveTracking.style";
 
 function formatDateInBogota(dateValue) {
@@ -76,6 +79,12 @@ export default function LiveTracking() {
   // Estado para ruta del conductor/padre + sugerencia OSRM
   const [routeStops, setRouteStops] = useState([]);
   const [routeGeometry, setRouteGeometry] = useState([]);
+  
+  // Unified trip state
+  const [tripStatus, setTripStatus] = useState("idle"); // 'idle' | 'active' | 'ended'
+  const [tripDirection, setTripDirection] = useState(null); // 'Ida' | 'Vuelta'
+  const [tripSchedule, setTripSchedule] = useState({ startTime: null, endTime: null });
+  const [currentTripId, setCurrentTripId] = useState(null);
 
   const statusText = location?.status;
   const speedValue = location?.speed;
@@ -85,6 +94,48 @@ export default function LiveTracking() {
   const updatedAt = formatDateInBogota(
     lastUpdated || location?.receivedAt || location?.gpsDateTime || location?.dateTime,
   );
+
+  const handleStartTrip = async () => {
+    try {
+      const session = await getSession();
+      if (!session?.profileId) return;
+
+      // Need to get route info for driver
+      let route = null;
+      if (role === "driver") {
+        const today = await fetchRoute(`/routes/today?driverId=${session.profileId}`);
+        if (!today?.route) return;
+        route = today.route;
+      }
+      if (!route) return;
+
+      const payload = {
+        routeId: route.id,
+        busId: route.bus?.id,
+        driverId: session.profileId,
+      };
+
+      const result = await startTripApi(payload);
+      setTripStatus("active");
+      if (result?.id) {
+        setCurrentTripId(result.id);
+      } else if (result?.tripId) {
+        setCurrentTripId(result.tripId);
+      }
+    } catch (err) {
+      console.error("[LiveTracking] Error starting trip:", err);
+    }
+  };
+
+  const handleEndTrip = async () => {
+    try {
+      if (!currentTripId) return;
+      await apiPost(`/route/api/trips/end?tripId=${currentTripId}`, {});
+      setTripStatus("ended");
+    } catch (err) {
+      console.error("[LiveTracking] Error ending trip:", err);
+    }
+  };
 
   // Cargar ruta del conductor o padre + sugerencia OSRM
   useEffect(() => {
@@ -110,6 +161,16 @@ export default function LiveTracking() {
           route = routeData;
         } else {
           return; // Otros roles no cargan ruta en LiveTracking
+        }
+
+        // Extract Direction and Schedule from route
+        const direction = route.Schedules?.[0]?.Direction ?? null;
+        if (mounted) {
+          setTripDirection(direction);
+          setTripSchedule({
+            startTime: route.startTime,
+            endTime: route.endTime,
+          });
         }
 
         // 1) Geometría vial OSRM (sugerencia de ruta)
@@ -222,6 +283,20 @@ export default function LiveTracking() {
               </View>
             )}
           </View>
+        </View>
+      )}
+
+      {/* Trip Action Button for driver */}
+      {role === "driver" && (
+        <View style={styles.tripButtonContainer} pointerEvents="box-none">
+          <TripActionButton
+            tripStatus={tripStatus}
+            tripDirection={tripDirection}
+            tripSchedule={tripSchedule}
+            onStartTrip={handleStartTrip}
+            onEndTrip={handleEndTrip}
+            showWhenEnded={false}
+          />
         </View>
       )}
 

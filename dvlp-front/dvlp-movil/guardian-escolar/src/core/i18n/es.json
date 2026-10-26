@@ -230,7 +230,9 @@
     "scanAlready": "Ya fue notificado. No se duplicó el registro.",
     "startRoute": "Iniciar Ruta",
     "endRoute": "Terminar Ruta",
-    "tripEnded": "Viaje finalizado correctamente"
+    "tripEnded": "Viaje finalizado correctamente",
+    "endAtSchool": "Terminar en Colegio",
+    "endAtLastStop": "Terminar en Última Parada"
   },
 
   "incidents": {

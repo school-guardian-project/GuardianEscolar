@@ -120,4 +120,13 @@ export default StyleSheet.create({
     zIndex: 3,
     elevation: 7,
   },
+  tripButtonContainer: {
+    position: "absolute",
+    left: 16,
+    right: 16,
+    bottom: 90,
+    zIndex: 4,
+    elevation: 8,
+    alignItems: "center",
+  },
 });

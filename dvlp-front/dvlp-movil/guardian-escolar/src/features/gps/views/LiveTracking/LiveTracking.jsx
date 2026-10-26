@@ -83,7 +83,7 @@ export default function LiveTracking() {
     lastUpdated || location?.receivedAt || location?.gpsDateTime || location?.dateTime,
   );
 
-  // Cargar ruta del conductor + sugerencia OSRM solo si es conductor
+  // Cargar ruta del conductor + sugerencia OSRM si es conductor o padre
   useEffect(() => {
     let mounted = true;
     async function loadDriverRoute() {
@@ -91,8 +91,12 @@ export default function LiveTracking() {
         const session = await getSession();
         if (!session?.profileId) return;
 
-        // Solo para conductor: obtener ruta del día
-        const today = await fetchRoute(`/routes/today?driverId=${session.profileId}`);
+        // Para conductor: endpoint /routes/today?driverId=
+        // Para padre: endpoint /routes/student/{profileId} (igual que MainPage)
+        const endpoint = session.role === 'driver'
+          ? `/routes/today?driverId=${session.profileId}`
+          : `/routes/student/${session.profileId}`;
+        const today = await fetchRoute(endpoint);
         if (!today?.route) return;
 
         const route = today.route;

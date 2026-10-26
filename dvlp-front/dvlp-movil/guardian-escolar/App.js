@@ -95,6 +95,15 @@ function HomeTabs() {
       />
 
       <Tab.Screen
+        name="LiveTracking"
+        component={LiveTracking}
+        options={{
+          tabBarLabel: "Mapa",
+          tabBarIcon: () => "📍",
+        }}
+      />
+
+      <Tab.Screen
         name="Profile"
         component={Profile}
         options={{

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
@@ -102,7 +102,12 @@ export default function MainPage() {
   
   // Esperar a que el rol esté inicializado desde SecureStore
   if (!initialized) {
-    return null; // o un spinner si prefieres
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#1A56DB" />
+        <Text style={{ marginTop: 12, color: "#666" }}>Cargando sesión...</Text>
+      </View>
+    );
   }
   
   const config = roleConfig[role];

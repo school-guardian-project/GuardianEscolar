@@ -45,7 +45,7 @@ async function fetchRoute(path) {
  * no hay una que mostrar:
  * - student: su propia ruta asignada.
  * - driver:  su ruta del día, solo dentro de la ventana activa.
- * - father:  la ruta del estudiante vinculado (FR-9.1).
+ * - parent:  la ruta del estudiante vinculado (FR-9.1).
  * - otros:   primera ruta, como respaldo.
  */
 async function resolveRouteForRole(role, session) {
@@ -76,7 +76,7 @@ async function resolveRouteForRole(role, session) {
     return { route: null, note: "No hay una ruta asignada." };
   }
 
-  if (role === "father") {
+  if (role === "parent") {
     const [student] = await getLinkedStudents(session);
     if (!student) {
       return { route: null, note: "No hay estudiantes vinculados a tu cuenta." };

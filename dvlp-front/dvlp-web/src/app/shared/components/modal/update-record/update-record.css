@@ -353,3 +353,73 @@ select.modal__info-value {
     grid-column: span 1;
   }
 }
+
+/* ── DAYS OF WEEK CHIPS (Lunes a Viernes) ───────────────── */
+.modal__days-of-week {
+  width: 100%;
+}
+
+.modal__days-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+}
+
+.modal__day-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 20px;
+  background-color: var(--card-secondary-bg);
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  min-height: 40px;
+}
+
+.modal__day-chip:hover:not(.modal__day-chip--invalid) {
+  border-color: var(--accent-color);
+  background-color: color-mix(in srgb, var(--accent-color) 10%, var(--card-bg));
+  color: var(--accent-color);
+}
+
+.modal__day-chip:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent-color) 20%, transparent);
+}
+
+.modal__day-chip--selected {
+  border-color: var(--accent-color);
+  background-color: var(--accent-color);
+  color: var(--card-bg);
+}
+
+.modal__day-chip--selected:hover {
+  background-color: var(--contrast-color);
+  border-color: var(--contrast-color);
+}
+
+.modal__day-chip--invalid {
+  border-color: var(--alert-icon);
+  color: var(--alert-icon);
+}
+
+.modal__day-chip-label {
+  display: none;
+}
+
+.modal__day-chip:hover .modal__day-chip-label {
+  display: inline;
+}
+
+/* En pantallas más anchas, mostrar la etiqueta completa */
+@media (min-width: 480px) {
+  .modal__day-chip-label {
+    display: inline;
+  }
+}

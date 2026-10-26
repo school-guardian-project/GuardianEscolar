@@ -4,7 +4,14 @@ import { catchError, switchMap, throwError } from 'rxjs';
 import { AuthService } from './auth.service';
 
 function withBearer(req: HttpRequest<unknown>, token: string): HttpRequest<unknown> {
-  return req.clone({ setHeaders: { Authorization: `Bearer ${token}` } });
+  return req.clone({ 
+    setHeaders: { Authorization: `Bearer ${token}` },
+    withCredentials: true  // Ensure cookies are sent cross-origin
+  });
+}
+
+function withCredentials(req: HttpRequest<unknown>): HttpRequest<unknown> {
+  return req.clone({ withCredentials: true });
 }
 
 export const authInterceptor: HttpInterceptorFn = (req, next) => {
@@ -14,11 +21,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   // Endpoints públicos que NO requieren token
   const publicEndpoints = ['/api/v1/auth/login', '/api/v1/auth/refresh'];
   if (publicEndpoints.some(ep => req.url.includes(ep))) {
-    return next(req);
+    return next(withCredentials(req));
   }
 
   let retried = false;
-  const send = (token: string | null) => next(token ? withBearer(req, token) : req);
+  const send = (token: string | null) => next(token ? withBearer(req, token) : withCredentials(req));
 
   return send(auth.getToken()).pipe(
     catchError((error: unknown) => {

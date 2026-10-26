@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, Pressable } from "react-native";
-import MapView, { Marker, Polyline } from "react-native-maps";
-import { FontAwesome5 } from "@expo/vector-icons";
+import { View, Text } from "react-native";
+import MapView, { Marker } from "react-native-maps";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import RouteInfoCard from "@components/cards/RouteInfoCard";
@@ -17,8 +16,9 @@ import IncidentReportButton from "@components/buttons/IncidentReportButton";
 import QRDisplayModal from "@components/modals/QRDisplayModal";
 import QRScannerModal from "@components/modals/QRScannerModal";
 import IncidentReportModal from "@components/modals/IncidentReportModal";
+import TripActionButton from "@components/buttons/TripActionButton";
 import { getSession } from "@core/services/authService";
-import { getRouteApi, getRouteSuggestionApi } from "@core/services/routeApi";
+import { getRouteApi } from "@core/services/routeApi";
 import { startTripApi } from "@core/services/tripApi";
 import { getLinkedStudents } from "@core/services/familyService";
 import { scanCredential } from "@core/services/notificationApi";
@@ -26,35 +26,16 @@ import { apiPost } from "@core/services/apiClient";
 
 import styles from "./MainPage.style";
 
-function normalizeStops(route) {
-  const stops = Array.isArray(route?.stops) ? route.stops : [];
-  return stops
-    .map((stop, index) => {
-      const latitude = Number(stop?.latitude);
-      const longitude = Number(stop?.longitude);
-      return {
-        id: stop?.id ?? index,
-        name: stop?.name ?? "",
-        address: stop?.address ?? "",
-        orderSequence: stop?.orderSequence ?? index,
-        latitude,
-        longitude,
-      };
-    })
-    .filter(
-      (stop) =>
-        Number.isFinite(stop.latitude) &&
-        Number.isFinite(stop.longitude) &&
-        !(stop.latitude === 0 && stop.longitude === 0),
-    )
-    .sort((a, b) => a.orderSequence - b.orderSequence);
-}
-
 /** GET a ms-route que devuelve null en vez de propagar el error. */
 async function fetchRoute(path) {
   try {
     return await getRouteApi(path);
-  } catch {
+  } catch (error) {
+    console.error(`[fetchRoute] Error fetching ${path}:`, {
+      status: error?.status,
+      message: error?.message,
+      data: error?.data,
+    });
     return null;
   }
 }
@@ -64,22 +45,27 @@ async function fetchRoute(path) {
  * no hay una que mostrar:
  * - student: su propia ruta asignada.
  * - driver:  su ruta del día, solo dentro de la ventana activa.
- * - father:  la ruta del estudiante vinculado (FR-9.1).
+ * - parent:  la ruta del estudiante vinculado (FR-9.1).
  * - otros:   primera ruta, como respaldo.
  */
 async function resolveRouteForRole(role, session) {
+  // Validador: asegura que la respuesta tenga id (RouteDto mínimo)
+  const isValidRoute = (r) => r && typeof r === "object" && (r.id || r.routeId);
+
   if (role === "student") {
     const route = await fetchRoute(`/routes/student/${session.profileId}`);
-    return { route, note: route ? null : "Aún no tienes una ruta asignada." };
+    const valid = isValidRoute(route) ? route : null;
+    return { route: valid, note: valid ? null : "Aún no tienes una ruta asignada." };
   }
 
   if (role === "driver") {
     const today = await fetchRoute(`/routes/today?driverId=${session.profileId}`);
-    if (today?.status === "ACTIVE") {
-      return { route: today.route ?? null, note: null };
+    // Estructura esperada: { status: "ACTIVE"|"SCHEDULED", route: RouteDto, nextOccurrence?: string }
+    if (today && typeof today === "object" && today.status === "ACTIVE" && isValidRoute(today.route)) {
+      return { route: today.route, note: null };
     }
     // SCHEDULED trae la próxima salida: decir "sin ruta" confundía al conductor.
-    if (today?.status === "SCHEDULED" && today.nextOccurrence) {
+    if (today && typeof today === "object" && today.status === "SCHEDULED" && today.nextOccurrence) {
       const next = new Date(today.nextOccurrence).toLocaleString("es-CO", {
         weekday: "long",
         hour: "2-digit",
@@ -90,17 +76,19 @@ async function resolveRouteForRole(role, session) {
     return { route: null, note: "No hay una ruta asignada." };
   }
 
-  if (role === "father") {
+  if (role === "parent") {
     const [student] = await getLinkedStudents(session);
     if (!student) {
       return { route: null, note: "No hay estudiantes vinculados a tu cuenta." };
     }
     const route = await fetchRoute(`/routes/student/${student.profileId}`);
-    return { route, note: route ? null : "El estudiante aún no tiene una ruta asignada." };
+    const valid = isValidRoute(route) ? route : null;
+    return { route: valid, note: valid ? null : "El estudiante aún no tiene una ruta asignada." };
   }
 
   const routes = await fetchRoute("/routes");
-  return { route: Array.isArray(routes) ? (routes[0] ?? null) : null, note: null };
+  const first = Array.isArray(routes) && routes.length > 0 && isValidRoute(routes[0]) ? routes[0] : null;
+  return { route: first, note: null };
 }
 
 export default function MainPage() {
@@ -121,19 +109,15 @@ export default function MainPage() {
   const [modalType, setModalType] = useState(null);
   const [incidentOpen, setIncidentOpen] = useState(false);
   const [routeInfo, setRouteInfo] = useState(null);
-  const [routeStops, setRouteStops] = useState([]);
-  const [routeGeometry, setRouteGeometry] = useState([]);
   const [, setLoading] = useState(true);
   const [scanMode, setScanMode] = useState("ON_BOARD");
   const [status, setStatus] = useState(null);
   const [scanFeedback, setScanFeedback] = useState(null);
-  const [tripStarted, setTripStarted] = useState(false);
-  const [tripEnded, setTripEnded] = useState(false);
-  const [routeSchedule, setRouteSchedule] = useState({ startTime: null, endTime: null });
+  const [tripStatus, setTripStatus] = useState("idle"); // 'idle' | 'active' | 'ended'
+  const [tripDirection, setTripDirection] = useState(null); // 'Ida' | 'Vuelta'
+  const [tripSchedule, setTripSchedule] = useState({ startTime: null, endTime: null });
   const [currentTripId, setCurrentTripId] = useState(null);
   const mapRef = useRef(null);
-  const mapReadyRef = useRef(false);
-  const stopsRef = useRef([]);
 
   // GPS Tracking (solo si está enfocada la pantalla)
   const { location } = useGpsTracking(undefined, isFocused);
@@ -143,22 +127,6 @@ export default function MainPage() {
     location && Number.isFinite(busLatitude) && Number.isFinite(busLongitude)
       ? { latitude: busLatitude, longitude: busLongitude }
       : null;
-
-  // Encuadra el mapa sobre las paradas de la ruta (si las hay).
-  const fitStopsOnMap = () => {
-    const stops = stopsRef.current;
-    if (!mapReadyRef.current || stops.length === 0) return;
-    mapRef.current?.fitToCoordinates(
-      stops.map((stop) => ({
-        latitude: stop.latitude,
-        longitude: stop.longitude,
-      })),
-      {
-        edgePadding: { top: 90, right: 40, bottom: 280, left: 40 },
-        animated: true,
-      },
-    );
-  };
 
   const handleOpenModal = (type) => setModalType(type);
   const handleCloseModal = () => setModalType(null);
@@ -175,7 +143,7 @@ export default function MainPage() {
       };
 
       const result = await startTripApi(payload);
-      setTripStarted(true);
+      setTripStatus("active");
       if (result?.id) {
         setCurrentTripId(result.id);
       } else if (result?.tripId) {
@@ -203,7 +171,8 @@ export default function MainPage() {
         return;
       }
       await apiPost(`/route/api/trips/end?tripId=${currentTripId}`, {});
-      setTripEnded(true);
+      setTripStatus("ended");
+      setCurrentTripId(null);
       setScanFeedback({
         type: "success",
         message: t("cards.tripEnded") || "Viaje finalizado correctamente",
@@ -264,39 +233,13 @@ export default function MainPage() {
         setStatus(note);
 
         if (!route) {
-          stopsRef.current = [];
-          setRouteStops([]);
-          setRouteGeometry([]);
           setRouteInfo(null);
           return;
         }
 
-        // SOLO para conductor: cargar geometría OSRM (sugerencia de ruta) y paradas en el mapa
-        const isDriver = role === "driver";
-        if (isDriver) {
-          // Fetch street-level route geometry from OSRM
-          try {
-            const suggestion = await getRouteSuggestionApi(route.id);
-            if (suggestion?.geometry) {
-              // Assuming geometry is a list of {latitude, longitude} points
-              setRouteGeometry(suggestion.geometry);
-            }
-          } catch (err) {
-            console.error("Error loading route geometry:", err);
-          }
-
-          // RouteDetailDto ya incluye el bus asignado con su conductor
-          // (ms-route lo resuelve vía gRPC a ms-fleet), así que el móvil
-          // no necesita consultar la flota directamente.
-          const stops = normalizeStops(route);
-          stopsRef.current = stops;
-          setRouteStops(stops);
-        } else {
-          // Para student/father: no mostrar paradas ni geometría en el mapa
-          stopsRef.current = [];
-          setRouteStops([]);
-          setRouteGeometry([]);
-        }
+        // MainPage NO carga geometría OSRM ni paradas en el mapa.
+        // Solo muestra info de la ruta (nombre, conductor, bus, horario) + ubicación bus GPS.
+        // La sugerencia de ruta (OSRM) es solo para LiveTracking (vista GPS).
 
         const schedule =
           route.startTime && route.endTime
@@ -305,9 +248,7 @@ export default function MainPage() {
         const stopsCount =
           route.stopsCount != null && route.stopsCount !== ""
             ? String(route.stopsCount)
-            : stops.length > 0
-              ? String(stops.length)
-              : "—";
+            : "—";
 
         setRouteInfo({
           routeId: route.id,
@@ -336,9 +277,15 @@ export default function MainPage() {
     loadRouteInfo();
   }, [role]);
 
+  // Extract direction from route schedules
   useEffect(() => {
-    fitStopsOnMap();
-  }, [routeStops]);
+    if (routeInfo?.Schedules?.[0]?.Direction) {
+      setTripDirection(routeInfo.Schedules[0].Direction);
+    }
+    if (routeInfo?.startTime && routeInfo?.endTime) {
+      setTripSchedule({ startTime: routeInfo.startTime, endTime: routeInfo.endTime });
+    }
+  }, [routeInfo]);
 
   // El aviso del escaneo se retira solo: el driver no debe cerrarlo a mano
   // para volver a la operación.
@@ -359,50 +306,8 @@ export default function MainPage() {
           latitudeDelta: 0.08,
           longitudeDelta: 0.08,
         }}
-        onMapReady={() => {
-          mapReadyRef.current = true;
-          fitStopsOnMap();
-        }}
       >
-        {/* Trazo de la ruta y paradas: SOLO para conductor */}
-        {role === "driver" && (
-          <>
-            {/* Trazo de la ruta (usando geometría vial de OSRM) */}
-            {routeGeometry.length >= 2 ? (
-              <Polyline
-                coordinates={routeGeometry}
-                strokeColor="#1A56DB"
-                strokeWidth={4}
-              />
-            ) : routeStops.length >= 2 ? (
-              <Polyline
-                coordinates={routeStops.map(({ latitude, longitude }) => ({
-                  latitude,
-                  longitude,
-                }))}
-                strokeColor="#B0C4DE"
-                strokeWidth={2}
-                lineDashPattern={[5, 5]}
-              />
-            ) : null}
-
-            {/* Marcadores de paradas */}
-            {routeStops.map((stop, index) => (
-              <Marker
-                key={stop.id}
-                coordinate={{
-                  latitude: stop.latitude,
-                  longitude: stop.longitude,
-                }}
-                title={stop.name || `${t("cards.stops")} ${index + 1}`}
-                description={stop.address || undefined}
-                tracksViewChanges={false}
-              />
-            ))}
-          </>
-        )}
-
-        {/* Bus en tiempo real (ms-gps) */}
+        {/* Bus en tiempo real (ms-gps) - ÚNICO elemento en el mapa en MainPage */}
         {busCoordinate && (
           <Marker
             coordinate={busCoordinate}
@@ -483,46 +388,14 @@ export default function MainPage() {
           />
         </View>
         <View style={styles.qrButtonContainer} pointerEvents="box-none">
-          {role === "driver" && !tripStarted && !tripEnded && (() => {
-            const now = new Date();
-            const [sh, sm] = (routeSchedule.startTime || "").split(":").map(Number);
-            const [eh, em] = (routeSchedule.endTime || "").split(":").map(Number);
-            let showStart = true;
-            if (!isNaN(sh)) {
-              const start = new Date();
-              start.setHours(sh, sm || 0, 0, 0);
-              const diff = (start - now) / 60000;
-              showStart = diff <= 5 && diff >= -60;
-            }
-            return showStart ? (
-              <Pressable
-                style={[styles.startTripButton, { marginRight: 12 }]}
-                onPress={handleStartTrip}
-              >
-                <Text style={styles.startTripButtonText}>{t("cards.startRoute") || "Iniciar Ruta"}</Text>
-              </Pressable>
-            ) : null;
-          })()}
-          {role === "driver" && tripStarted && !tripEnded && (() => {
-            const now = new Date();
-            const [eh, em] = (routeSchedule.endTime || "").split(":").map(Number);
-            let showEnd = false;
-            if (!isNaN(eh)) {
-              const end = new Date();
-              end.setHours(eh, em || 0, 0, 0);
-              const diff = (end - now) / 60000;
-              showEnd = diff <= 10 && diff >= -60;
-            }
-            return showEnd ? (
-              <Pressable
-                style={[styles.startTripButton, { marginRight: 12 }]}
-                onPress={handleEndTrip}
-              >
-                <Text style={styles.startTripButtonText}>{t("cards.endRoute") || "Terminar Ruta"}</Text>
-              </Pressable>
-            ) : null;
-          })()}
-          <QRButtom config={config.card} onOpenModel={handleOpenModal} />
+          <TripActionButton
+            status={tripStatus}
+            direction={tripDirection}
+            schedule={tripSchedule}
+            onStart={handleStartTrip}
+            onEnd={handleEndTrip}
+            showWhenEnded={false}
+          />
         </View>
 
         {config.card.showIncidentReport && (

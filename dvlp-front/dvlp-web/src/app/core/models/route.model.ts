@@ -6,6 +6,7 @@ export interface RouteRequestDto {
   targetSector: string;
   startTime: string;
   endTime: string;
+  daysOfWeek: string[];  // NUEVO: ["Monday","Tuesday","Wednesday","Thursday","Friday"]
 }
 
 export interface RouteListDto {

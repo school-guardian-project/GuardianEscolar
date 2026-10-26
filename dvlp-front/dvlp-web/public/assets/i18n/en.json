@@ -717,7 +717,8 @@
         "endTime": "End time",
         "destination": "Destination",
         "routeSector": "Route sector",
-        "campus": "Campus"
+        "campus": "Campus",
+        "daysOfWeek": "Days of the week"
       }
     },
     "admins": {
@@ -759,6 +760,13 @@
   "register": {
     "select": "Select…",
     "button": "Register",
+    "daysOfWeek": {
+      "Monday": "Monday",
+      "Tuesday": "Tuesday",
+      "Wednesday": "Wednesday",
+      "Thursday": "Thursday",
+      "Friday": "Friday"
+    },
     "student": {
       "title": "Register student",
       "fields": {
@@ -853,7 +861,8 @@
         "destination": "Destination",
         "routeSector": "Sector",
         "bus": "Bus",
-        "campus": "Campus"
+        "campus": "Campus",
+        "daysOfWeek": "Days of the week"
       }
     },
     "admins": {

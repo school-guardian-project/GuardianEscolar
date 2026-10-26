@@ -53,6 +53,7 @@ function toPayload(form: RecordData): RouteRequestDto {
     targetSector: String(form['destination'] ?? '').trim(),
     startTime: toTime(form['startTime']),
     endTime: toTime(form['endTime']),
+    daysOfWeek: form['daysOfWeek'] ?? [],  // NUEVO
   };
 }
 
@@ -103,6 +104,7 @@ export class RoutesPage implements OnInit {
   ngOnInit(): void {
     this.load();
     this.loadCampusOptions();
+    this.initDaysOfWeekOptions();
   }
 
   private load(): void {
@@ -142,6 +144,19 @@ export class RoutesPage implements OnInit {
       ...route,
       campusName: this.fieldOptionLabels['campus']?.[route.campuseId ?? ''] ?? '',
     };
+  }
+
+  private initDaysOfWeekOptions(): void {
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'];
+    const labels: Record<string, string> = {
+      Monday: 'Lunes',
+      Tuesday: 'Martes',
+      Wednesday: 'Miércoles',
+      Thursday: 'Jueves',
+      Friday: 'Viernes',
+    };
+    this.fieldOptions = { ...this.fieldOptions, daysOfWeek: days };
+    this.fieldOptionLabels = { ...this.fieldOptionLabels, daysOfWeek: labels };
   }
 
   onCreated(form: RecordData): void {

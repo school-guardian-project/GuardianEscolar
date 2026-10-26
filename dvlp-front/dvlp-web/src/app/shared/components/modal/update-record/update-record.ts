@@ -36,6 +36,7 @@ export interface Field {
   options?: string[];
   optionLabels?: Record<string, string>;
   halfWidth?: boolean;
+  optionLabelPrefix?: string;
 }
 
 interface ModalConfig {
@@ -114,6 +115,7 @@ const UPDATE_FIELDS: Record<RegisterType, Field[]> = {
     { name: 'startTime', type: 'time' },
     { name: 'endTime', type: 'time' },
     { name: 'destination', type: 'text' },
+    { name: 'daysOfWeek', type: 'select', options: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], optionLabelPrefix: 'register.daysOfWeek.' },
   ],
 
   admins: [
@@ -169,7 +171,7 @@ const UPDATE_RULES: Record<RegisterType, Record<string, ValidationRule>> = {
     name: R({ minLength: 2, maxLength: 30 }), city: R(), school: R(),
     address: R({ minLength: 5, maxLength: 255 }),
   },
-  route: { name: R({ minLength: 2 }), campus: R(), startTime: R(), endTime: R(), destination: R() },
+  route: { name: R({ minLength: 2 }), campus: R(), startTime: R(), endTime: R(), destination: R(), daysOfWeek: R() },
   admins: {
     name: R({ minLength: 2 }), lastNames: R({ minLength: 2 }), city: R(), school: R(),
     email: R({ pattern: 'email' }), identification: R({ pattern: 'number', minLength: 5 }),
@@ -217,7 +219,7 @@ export class UpdateRecord implements OnInit, OnChanges {
   @Output() saved = new EventEmitter<RecordData>();
   @Output() closed = new EventEmitter<void>();
 
-  formData: Record<string, string> = {};
+  formData: Record<string, string | string[]> = {};
   selectedStudents: string[] = [];
   campuses: CampusFormData[] = [];
   schoolMapOpen = false;
@@ -226,6 +228,35 @@ export class UpdateRecord implements OnInit, OnChanges {
   campusErrorKey = '';
   campusErrorName = '';
   fieldErrors: Record<string, string> = {};
+
+  /** Obtiene los días de la semana seleccionados como array. */
+  getDaysOfWeek(): string[] {
+    const value = this.formData['daysOfWeek'];
+    return Array.isArray(value) ? value : [];
+  }
+
+  /** Verifica si un día está seleccionado. */
+  isDaySelected(day: string): boolean {
+    return this.getDaysOfWeek().includes(day);
+  }
+
+  /** Obtiene la dirección como string para el mapa. */
+  getAddress(): string {
+    const value = this.formData['address'];
+    return typeof value === 'string' ? value : '';
+  }
+
+  /** Obtiene la latitud como string para el mapa. */
+  getLatitude(): string {
+    const value = this.formData['latitude'];
+    return typeof value === 'string' ? value : '';
+  }
+
+  /** Obtiene la longitud como string para el mapa. */
+  getLongitude(): string {
+    const value = this.formData['longitude'];
+    return typeof value === 'string' ? value : '';
+  }
 
   get config() {
     return MODAL_CONFIGS[this.type];
@@ -327,10 +358,21 @@ export class UpdateRecord implements OnInit, OnChanges {
     });
 
     this.fields.forEach(f => {
+      // daysOfWeek se maneja por separado para mantenerlo como array
+      if (f.name === 'daysOfWeek') return;
       this.formData[f.name] = this.type === 'family' && f.name === 'student' ? '' : String(this.record[f.name] ?? '');
       // <input type="time"> espera HH:mm; el backend devuelve HH:mm:ss.
       if (f.type === 'time') this.formData[f.name] = this.formData[f.name].slice(0, 5);
     });
+    // Inicializar daysOfWeek como array para el tipo route
+    if (this.type === 'route' && this.record['daysOfWeek']) {
+      const daysValue = this.record['daysOfWeek'];
+      this.formData['daysOfWeek'] = Array.isArray(daysValue)
+        ? daysValue.filter((d): d is string => typeof d === 'string')
+        : [];
+    } else if (this.type === 'route') {
+      this.formData['daysOfWeek'] = [];
+    }
     if (this.type === 'family') {
       const children = this.record['student'];
       this.selectedStudents = Array.isArray(children)
@@ -392,6 +434,20 @@ export class UpdateRecord implements OnInit, OnChanges {
 
   removeStudent(student: string): void {
     this.selectedStudents = this.selectedStudents.filter(value => value !== student);
+  }
+
+  /** Alterna la selección de un día de la semana (multi-select para rutas). */
+  toggleDay(fieldName: string, day: string): void {
+    const currentValue = this.formData[fieldName];
+    const days: string[] = Array.isArray(currentValue) ? currentValue : [];
+    const index = days.indexOf(day);
+    if (index >= 0) {
+      days.splice(index, 1);
+    } else {
+      days.push(day);
+    }
+    this.formData[fieldName] = [...days];
+    delete this.fieldErrors[fieldName];
   }
 
   onLocationChange(coordinates: { latitude: number; longitude: number }): void {

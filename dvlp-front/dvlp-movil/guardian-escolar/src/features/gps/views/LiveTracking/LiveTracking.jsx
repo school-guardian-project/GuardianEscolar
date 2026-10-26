@@ -11,6 +11,8 @@ import GpsMap from "@features/gps/components/GpsMap";
 import useGpsTracking from "@features/gps/hooks/useGpsTracking";
 import { getSession } from "@core/services/authService";
 import { getRouteApi, getRouteSuggestionApi } from "@core/services/routeApi";
+import { getLinkedStudents } from "@core/services/familyService";
+import { useSession } from "@core/hooks/useSession";
 import styles from "./LiveTracking.style";
 
 function formatDateInBogota(dateValue) {
@@ -67,10 +69,11 @@ export default function LiveTracking() {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
   const navigation = useNavigation();
+  const { role } = useSession();
   const mapRef = useRef(null);
   const { location, error, loading, lastUpdated, fallbackLocation } = useGpsTracking();
 
-  // Estado para ruta del conductor + sugerencia OSRM
+  // Estado para ruta del conductor/padre + sugerencia OSRM
   const [routeStops, setRouteStops] = useState([]);
   const [routeGeometry, setRouteGeometry] = useState([]);
 
@@ -83,19 +86,31 @@ export default function LiveTracking() {
     lastUpdated || location?.receivedAt || location?.gpsDateTime || location?.dateTime,
   );
 
-  // Cargar ruta del conductor + sugerencia OSRM solo si es conductor
+  // Cargar ruta del conductor o padre + sugerencia OSRM
   useEffect(() => {
     let mounted = true;
-    async function loadDriverRoute() {
+    async function loadRoute() {
       try {
         const session = await getSession();
         if (!session?.profileId) return;
 
-        // Solo para conductor: obtener ruta del día
-        const today = await fetchRoute(`/routes/today?driverId=${session.profileId}`);
-        if (!today?.route) return;
+        let route = null;
 
-        const route = today.route;
+        if (role === "driver") {
+          // Conductor: obtener ruta del día
+          const today = await fetchRoute(`/routes/today?driverId=${session.profileId}`);
+          if (!today?.route) return;
+          route = today.route;
+        } else if (role === "parent") {
+          // Padre: obtener ruta del estudiante vinculado
+          const [student] = await getLinkedStudents(session);
+          if (!student?.profileId) return;
+          const routeData = await fetchRoute(`/routes/student/${student.profileId}`);
+          if (!routeData) return;
+          route = routeData;
+        } else {
+          return; // Otros roles no cargan ruta en LiveTracking
+        }
 
         // 1) Geometría vial OSRM (sugerencia de ruta)
         try {
@@ -120,13 +135,13 @@ export default function LiveTracking() {
           setRouteStops(stops);
         }
       } catch (err) {
-        console.error("[LiveTracking] Error loading driver route:", err);
+        console.error("[LiveTracking] Error loading route:", err);
       }
     }
 
-    loadDriverRoute();
+    loadRoute();
     return () => { mounted = false; };
-  }, []);
+  }, [role]);
 
   return (
     <View style={styles.container}>

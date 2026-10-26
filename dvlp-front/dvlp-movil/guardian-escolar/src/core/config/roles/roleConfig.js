@@ -53,7 +53,7 @@ export const roleConfig = {
       showIncidentReport: false,
     },
     MapMarkers: {
-      showRouteStops: false, // Solo conductor ve paradas en el mapa
+      showRouteStops: true, // Parent ve paradas de sus hijos en el mapa
       showStudentMarker: true,
       showDriverMarker: true,
       showGeofence: true,

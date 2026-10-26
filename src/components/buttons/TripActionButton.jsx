@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { View, Text, Pressable, StyleSheet } from "react-native";
 import { useTheme } from "@core/services/ThemeService";
 
-export default function TripActionButton({ status, direction, schedule, onStart, onEnd, showWhenEnded = false }) {
+function TripActionButton({ status, direction, schedule, onStart, onEnd, showWhenEnded = false }) {
   const { theme } = useTheme();
 
   const label = useMemo(() => {

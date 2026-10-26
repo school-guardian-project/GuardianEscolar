@@ -1,0 +1,102 @@
+<div class="terms-acceptance-modal" role="dialog" aria-modal="true" aria-labelledby="terms-acceptance-title">
+  <header class="modal-header">
+    <h2 id="terms-acceptance-title">{{ 'accept.title' | translate }}</h2>
+    <button type="button" class="close-button" (click)="onClose()" aria-label="{{ 'common.close' | translate }}">
+      <mat-icon>close</mat-icon>
+    </button>
+  </header>
+
+  <div class="modal-content">
+    <!-- Subtítulo explicativo -->
+    <p class="subtitle">{{ 'accept.subtitle' | translate }}</p>
+
+    <!-- Aviso legal Ley 1581 -->
+    <div class="notice-container" role="alert">
+      <mat-icon class="notice-icon">gavel</mat-icon>
+      <p class="notice-text">{{ 'accept.minorDataNotice' | translate }}</p>
+    </div>
+
+    <!-- Checkbox de aceptación -->
+    <div class="checkbox-container">
+      <mat-checkbox
+        [(ngModel)]="acceptedCheckbox"
+        [disabled]="false"
+        class="accept-checkbox"
+        aria-label="{{ 'accept.checkboxLabel' | translate }}"
+      >
+        <span class="checkbox-label">{{ 'accept.checkboxLabel' | translate }}</span>
+      </mat-checkbox>
+    </div>
+
+    <!-- Enlaces a documentos completos -->
+    <div class="links-container">
+      <button
+        type="button"
+        class="link-button"
+        (click)="toggleTerms()"
+        [attr.aria-expanded]="showTerms"
+      >
+        <mat-icon>description</mat-icon>
+        {{ 'accept.termsLink' | translate }}
+      </button>
+      <span class="link-separator" aria-hidden="true">·</span>
+      <button
+        type="button"
+        class="link-button"
+        (click)="togglePrivacy()"
+        [attr.aria-expanded]="showPrivacy"
+      >
+        <mat-icon>shield</mat-icon>
+        {{ 'accept.privacyLink' | translate }}
+      </button>
+    </div>
+
+    <!-- Documentos expandibles -->
+    @if (showTerms) {
+      <div class="document-section" role="region" aria-label="{{ 'accept.termsLink' | translate }}">
+        @for (section of TERMS_SECTIONS; track section.title) {
+          <div class="section">
+            <h3>{{ section.title | translate }}</h3>
+            <p>{{ section.body | translate }}</p>
+          </div>
+        }
+      </div>
+    }
+
+    @if (showPrivacy) {
+      <div class="document-section" role="region" aria-label="{{ 'accept.privacyLink' | translate }}">
+        @for (section of PRIVACY_SECTIONS; track section.title) {
+          <div class="section">
+            <h3>{{ section.title | translate }}</h3>
+            <p>{{ section.body | translate }}</p>
+          </div>
+        }
+      </div>
+    }
+
+    <!-- Información de menores -->
+    @if (minors.length > 0) {
+      <div class="minors-info">
+        <mat-icon>child_care</mat-icon>
+        <p>{{ getMinorsText() }}</p>
+      </div>
+    }
+
+    @if (!acceptedCheckbox || minors.length === 0) {
+      <p class="must-accept">{{ 'accept.mustAccept' | translate }}</p>
+    }
+  </div>
+
+  <footer class="modal-footer">
+    <button
+      type="button"
+      mat-raised-button
+      color="primary"
+      class="accept-button"
+      [disabled]="!acceptedCheckbox"
+      (click)="onAccept()"
+    >
+      {{ 'accept.acceptButton' | translate }}
+    </button>
+  </footer>
+</div>

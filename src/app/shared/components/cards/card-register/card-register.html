@@ -76,7 +76,7 @@
             salen las opciones y si el valor es el id o el texto, asi que no hace
             falta condicionar por nombre de campo.
           -->
-          <select *ngIf="group.type === 'select'"
+          <select *ngIf="group.type === 'select' && group.name !== 'daysOfWeek'"
                   class="card-register__input"
                   [class.card-register__input--invalid]="type === 'schools' && !!getFieldError(group.name)"
                   [attr.aria-invalid]="type === 'schools' ? !!getFieldError(group.name) : null"
@@ -88,12 +88,32 @@
             <option *ngFor="let opt of getOptions(group)" [value]="opt.value">{{ opt.label }}</option>
           </select>
 
+          <!-- Multi-select chips para daysOfWeek (Lunes a Viernes) -->
+          <div *ngIf="group.type === 'select' && group.name === 'daysOfWeek'"
+               class="card-register__days-of-week"
+               role="group"
+               [attr.aria-label]="getLabelKey(group.name) | translate"
+               [attr.aria-invalid]="!!getFieldError(group.name)">
+            <div class="card-register__days-chips">
+              <button *ngFor="let opt of getOptions(group)"
+                      type="button"
+                      class="card-register__day-chip"
+                      [class.card-register__day-chip--selected]="isDaySelected(opt.value)"
+                      [class.card-register__day-chip--invalid]="!!getFieldError(group.name)"
+                      (click)="toggleDay(opt.value)"
+                      [attr.aria-pressed]="isDaySelected(opt.value)">
+                {{ opt.label.charAt(0) }}
+                <span class="card-register__day-chip-label">{{ opt.label }}</span>
+              </button>
+            </div>
+          </div>
+
           <!--
             Mejor un aviso que un dropdown vacio: un select obligatorio sin
             opciones se lee como bug y el usuario no sabe si debe esperar o
             denunciarlo.
           -->
-          <p *ngIf="group.type === 'select' && showOptionsUnavailable(group)"
+          <p *ngIf="group.type === 'select' && group.name !== 'daysOfWeek' && showOptionsUnavailable(group)"
              class="card-register__options-empty"
              role="status">
             {{ optionsUnavailableKey(group) | translate }}

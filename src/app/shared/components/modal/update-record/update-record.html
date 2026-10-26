@@ -38,20 +38,42 @@
 
         <ng-container [ngSwitch]="field.type">
 
-          <!-- SELECT -->
-          <select *ngSwitchCase="'select'" class="modal__info-value" [(ngModel)]="formData[field.name]"
-            [class.modal__info-value--invalid]="getFieldError(field.name)"
-            [name]="field.name" (ngModelChange)="onFieldChange(field.name, $event)">
+          <!-- SELECT (except daysOfWeek) -->
+          <ng-container *ngSwitchCase="'select'">
+            <select *ngIf="field.name !== 'daysOfWeek'" class="modal__info-value" [(ngModel)]="formData[field.name]"
+              [class.modal__info-value--invalid]="getFieldError(field.name)"
+              [name]="field.name" (ngModelChange)="onFieldChange(field.name, $event)">
 
-            <option value="" disabled>
-              {{ 'update_record.buttons.select' | translate }}
-            </option>
+              <option value="" disabled>
+                {{ 'update_record.buttons.select' | translate }}
+              </option>
 
-            <option *ngFor="let opt of getFieldOptions(field)" [value]="opt"
-              [disabled]="type === 'family' && field.name === 'student' && selectedStudents.includes(opt)">
-              {{ type === 'schools' && field.name === 'status' ? (('update_record.schools.statusValues.' + opt) | translate) : (field.optionLabels?.[opt] ?? opt) }}
-            </option>
-          </select>
+              <option *ngFor="let opt of getFieldOptions(field)" [value]="opt"
+                [disabled]="type === 'family' && field.name === 'student' && selectedStudents.includes(opt)">
+                {{ type === 'schools' && field.name === 'status' ? (('update_record.schools.statusValues.' + opt) | translate) : (field.optionLabels?.[opt] ?? opt) }}
+              </option>
+            </select>
+
+            <!-- Multi-select chips para daysOfWeek (Lunes a Viernes) -->
+            <div *ngIf="field.name === 'daysOfWeek'"
+                 class="modal__days-of-week"
+                 role="group"
+                 [attr.aria-label]="getLabelKey(field) | translate"
+                 [attr.aria-invalid]="!!getFieldError(field.name)">
+              <div class="modal__days-chips">
+                <button *ngFor="let opt of getFieldOptions(field)"
+                        type="button"
+                        class="modal__day-chip"
+                        [class.modal__day-chip--selected]="isDaySelected(opt)"
+                        [class.modal__day-chip--invalid]="!!getFieldError(field.name)"
+                        (click)="toggleDay(field.name, opt)"
+                        [attr.aria-pressed]="isDaySelected(opt)">
+                  {{ (field.optionLabels?.[opt] ?? opt).charAt(0) }}
+                  <span class="modal__day-chip-label">{{ field.optionLabels?.[opt] ?? opt }}</span>
+                </button>
+              </div>
+            </div>
+          </ng-container>
 
           <!-- INPUT -->
           <input *ngSwitchDefault class="modal__info-value" [type]="field.type" [name]="field.name"
@@ -76,9 +98,9 @@
     <p *ngIf="generalError" class="modal__error" role="alert">{{ generalError }}</p>
 
     <app-location-map *ngIf="type === 'schools' && schoolMapOpen"
-      [address]="formData['address']"
-      [latitude]="formData['latitude']"
-      [longitude]="formData['longitude']"
+      [address]="getAddress()"
+      [latitude]="getLatitude()"
+      [longitude]="getLongitude()"
       (coordinatesChange)="onLocationChange($event)"
       (addressChange)="onAddressChange($event)">
     </app-location-map>
@@ -133,9 +155,9 @@
     </section>
 
     <app-location-map *ngIf="type === 'stop'"
-      [address]="formData['address']"
-      [latitude]="formData['latitude']"
-      [longitude]="formData['longitude']"
+      [address]="getAddress()"
+      [latitude]="getLatitude()"
+      [longitude]="getLongitude()"
       (coordinatesChange)="onLocationChange($event)"
       (addressChange)="onAddressChange($event)">
     </app-location-map>

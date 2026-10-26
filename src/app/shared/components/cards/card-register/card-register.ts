@@ -137,6 +137,7 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { name: 'startTime', type: 'time' },
     { name: 'endTime', type: 'time' },
     { name: 'destination', type: 'text' },
+    { name: 'daysOfWeek', type: 'select', options: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], optionLabelPrefix: 'register.daysOfWeek.', halfWidth: false },
   ],
 
   admins: [
@@ -233,6 +234,7 @@ const VALIDATION_SCHEMAS: Record<RegisterType, ValidationSchema> = {
     startTime: { required: true },
     endTime: { required: true },
     destination: { required: true },
+    daysOfWeek: { required: true },
   },
   admins: {
     name: { required: true, pattern: 'text', minLength: 2 },
@@ -338,7 +340,8 @@ export class CardRegister implements OnInit, OnChanges {
     this.groupedFields = this.buildGroupedFields();
     for (const field of FIELDS[this.type]) {
       if (this.formData[field.name] === undefined) {
-        this.formData[field.name] = '';
+        // Initialize daysOfWeek as empty array for multi-select
+        this.formData[field.name] = field.name === 'daysOfWeek' ? [] : '';
       }
     }
 
@@ -569,6 +572,26 @@ export class CardRegister implements OnInit, OnChanges {
     } else {
       delete this.fieldErrors[fieldName];
     }
+  }
+
+  /** Alterna la selección de un día de la semana (multi-select para rutas). */
+  toggleDay(day: string): void {
+    const days: string[] = this.formData['daysOfWeek'] ?? [];
+    const index = days.indexOf(day);
+    if (index >= 0) {
+      days.splice(index, 1);
+    } else {
+      days.push(day);
+    }
+    this.formData['daysOfWeek'] = [...days];
+    this.validateField('daysOfWeek');
+    delete this.fieldErrors['daysOfWeek'];
+  }
+
+  /** Verifica si un día está seleccionado. */
+  isDaySelected(day: string): boolean {
+    const days: string[] = this.formData['daysOfWeek'] ?? [];
+    return days.includes(day);
   }
 
   onLogoSelected(event: Event): void {

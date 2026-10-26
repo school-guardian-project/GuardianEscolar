@@ -7,10 +7,15 @@ import { useTheme } from "@core/services/ThemeService";
 import { useNavigation } from "@react-navigation/native";
 import NotificationButton from "@components/buttons/NotificationButton";
 import BottomTabBar from "@components/layout/BottomTabBar";
+import TripActionButton from "@components/buttons/TripActionButton";
 import GpsMap from "@features/gps/components/GpsMap";
 import useGpsTracking from "@features/gps/hooks/useGpsTracking";
 import { getSession } from "@core/services/authService";
 import { getRouteApi, getRouteSuggestionApi } from "@core/services/routeApi";
+import { getLinkedStudents } from "@core/services/familyService";
+import { startTripApi } from "@core/services/tripApi";
+import { apiPost } from "@core/services/apiClient";
+import { useSession } from "@core/hooks/useSession";
 import styles from "./LiveTracking.style";
 
 function formatDateInBogota(dateValue) {
@@ -52,7 +57,12 @@ function normalizeStops(route) {
 async function fetchRoute(path) {
   try {
     return await getRouteApi(path);
-  } catch {
+  } catch (error) {
+    console.error(`[LiveTracking/fetchRoute] Error fetching ${path}:`, {
+      status: error?.status,
+      message: error?.message,
+      data: error?.data,
+    });
     return null;
   }
 }
@@ -62,12 +72,19 @@ export default function LiveTracking() {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
   const navigation = useNavigation();
+  const { role } = useSession();
   const mapRef = useRef(null);
   const { location, error, loading, lastUpdated, fallbackLocation } = useGpsTracking();
 
-  // Estado para ruta del conductor + sugerencia OSRM
+  // Estado para ruta del conductor/padre + sugerencia OSRM
   const [routeStops, setRouteStops] = useState([]);
   const [routeGeometry, setRouteGeometry] = useState([]);
+
+  // Estado unificado del viaje (igual que MainPage)
+  const [tripStatus, setTripStatus] = useState("idle"); // 'idle' | 'active' | 'ended'
+  const [currentTripId, setCurrentTripId] = useState(null);
+  const [tripDirection, setTripDirection] = useState(null); // 'Ida' | 'Vuelta'
+  const [tripSchedule, setTripSchedule] = useState({ startTime: null, endTime: null });
 
   const statusText = location?.status;
   const speedValue = location?.speed;
@@ -78,25 +95,44 @@ export default function LiveTracking() {
     lastUpdated || location?.receivedAt || location?.gpsDateTime || location?.dateTime,
   );
 
-  // Cargar ruta del conductor + sugerencia OSRM solo si es conductor
+  // Cargar ruta del conductor o padre + sugerencia OSRM
   useEffect(() => {
     let mounted = true;
-    async function loadDriverRoute() {
+    async function loadRoute() {
       try {
         const session = await getSession();
         if (!session?.profileId) return;
 
-        // Solo para conductor: obtener ruta del día
-        const today = await fetchRoute(`/routes/today?driverId=${session.profileId}`);
-        if (!today?.route) return;
+        let route = null;
 
-        const route = today.route;
+        if (role === "driver") {
+          // Conductor: obtener ruta del día
+          const today = await fetchRoute(`/routes/today?driverId=${session.profileId}`);
+          if (!today?.route) return;
+          route = today.route;
+        } else if (role === "parent") {
+          // Padre: obtener ruta del estudiante vinculado
+          const [student] = await getLinkedStudents(session);
+          if (!student?.profileId) return;
+          const routeData = await fetchRoute(`/routes/student/${student.profileId}`);
+          if (!routeData) return;
+          route = routeData;
+        } else {
+          return; // Otros roles no cargan ruta en LiveTracking
+        }
 
         // 1) Geometría vial OSRM (sugerencia de ruta)
         try {
           const suggestion = await getRouteSuggestionApi(route.id);
-          if (suggestion?.geometry && mounted) {
-            setRouteGeometry(suggestion.geometry);
+          // Backend devuelve RouteSuggestionGeometryDto con Points (PascalCase)
+          // GeoPointDto tiene Latitude/Longitude -> transformar a lowercase para Polyline
+          if (suggestion?.geometry?.Points && mounted) {
+            setRouteGeometry(
+              suggestion.geometry.Points.map((p) => ({
+                latitude: p.Latitude,
+                longitude: p.Longitude,
+              }))
+            );
           }
         } catch (err) {
           console.error("[LiveTracking] Error loading route geometry:", err);
@@ -107,14 +143,63 @@ export default function LiveTracking() {
         if (mounted) {
           setRouteStops(stops);
         }
+
+        // 3) Info de horario y dirección para TripActionButton
+        if (mounted) {
+          const direction = route.Schedules?.[0]?.Direction ?? null;
+          setTripDirection(direction);
+          setTripSchedule({
+            startTime: route.startTime,
+            endTime: route.endTime,
+          });
+        }
       } catch (err) {
-        console.error("[LiveTracking] Error loading driver route:", err);
+        console.error("[LiveTracking] Error loading route:", err);
       }
     }
 
-    loadDriverRoute();
+    loadRoute();
     return () => { mounted = false; };
-  }, []);
+  }, [role]);
+
+  const handleStartTrip = async () => {
+    try {
+      const session = await getSession();
+      if (!session?.profileId) return;
+
+      // Obtener routeId y busId de la ruta de hoy
+      const today = await fetchRoute(`/routes/today?driverId=${session.profileId}`);
+      if (!today?.route) return;
+
+      const route = today.route;
+      const payload = {
+        routeId: route.id,
+        busId: route.bus?.id,
+        driverId: session.profileId,
+      };
+
+      const result = await startTripApi(payload);
+      if (result?.id) {
+        setCurrentTripId(result.id);
+      } else if (result?.tripId) {
+        setCurrentTripId(result.tripId);
+      }
+      setTripStatus("active");
+    } catch (error) {
+      console.error("[LiveTracking] Error starting trip:", error);
+    }
+  };
+
+  const handleEndTrip = async () => {
+    try {
+      if (!currentTripId) return;
+      await apiPost(`/route/api/trips/end?tripId=${currentTripId}`, {});
+      setTripStatus("ended");
+      setCurrentTripId(null);
+    } catch (error) {
+      console.error("[LiveTracking] Error ending trip:", error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -198,6 +283,18 @@ export default function LiveTracking() {
         </View>
       )}
 
+
+      {/* Botón contextual Iniciar/Terminar - posicionado arriba del BottomTabBar */}
+      <View style={styles.tripButtonContainer} pointerEvents="box-none">
+        <TripActionButton
+          status={tripStatus}
+          direction={tripDirection}
+          schedule={tripSchedule}
+          onStart={handleStartTrip}
+          onEnd={handleEndTrip}
+          showWhenEnded={false}
+        />
+      </View>
       <View style={styles.bottomBarOverlay} pointerEvents="box-none">
         <BottomTabBar
           onRoutePress={() => navigation.navigate("MainPage")}

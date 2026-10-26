@@ -228,9 +228,9 @@
     "scanBoarded": "Abordaje registrado. Se notificó al acudiente.",
     "scanAlighted": "Descenso registrado. Se notificó al acudiente.",
     "scanAlready": "Ya fue notificado. No se duplicó el registro.",
-    "startRoute": "Iniciar Ruta",
-    "endRoute": "Terminar Ruta",
-    "tripEnded": "Viaje finalizado correctamente"
+    "startRoute": "Comenzar ruta",
+    "endRoute": "Terminar ruta",
+    "tripEnded": "Viaje finalizado"
   },
 
   "incidents": {

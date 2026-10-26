@@ -131,11 +131,28 @@
   align-items: center;
   min-width: 200px;
   gap: 8px;
+  position: relative;
 }
 
 .avatar-wrapper {
   position: relative;
   margin-bottom: 10px;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-color);
+  flex-shrink: 0;
+}
+
+.avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
 }
 
 .photo-icon {
@@ -146,12 +163,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-shrink: 0;
 }
 
 .avatar-edit-btn {
   position: absolute;
-  bottom: 2px;
-  right: -2px;
+  bottom: -6px;
+  right: -6px;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -161,6 +179,7 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  z-index: 10;
 }
 
 .avatar-edit-btn mat-icon {

@@ -1,0 +1,288 @@
+.terms-acceptance-modal {
+  display: flex;
+  flex-direction: column;
+  max-width: 480px;
+  min-width: 320px;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--surface-color, #ffffff);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--border-color, #e0e0e0);
+  background: var(--surface-variant, #fafafa);
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--on-surface, #1a1a1a);
+  flex: 1;
+  text-align: center;
+}
+
+.close-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: none;
+  background: transparent;
+  color: var(--on-surface-variant, #666);
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.close-button:hover {
+  background: var(--hover-state, rgba(0, 0, 0, 0.04));
+  color: var(--on-surface, #1a1a1a);
+}
+
+.modal-content {
+  padding: 24px;
+  max-height: 65vh;
+  overflow-y: auto;
+}
+
+.subtitle {
+  margin: 0 0 20px;
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: var(--on-surface-variant, #555);
+  text-align: center;
+}
+
+/* Notice container for legal warning */
+.notice-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  background: #fff8e1;
+  border-radius: 8px;
+  border-left: 4px solid #ffb300;
+}
+
+.notice-icon {
+  flex-shrink: 0;
+  color: #f57c00;
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+  margin-top: 2px;
+}
+
+.notice-text {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #5d4037;
+}
+
+/* Checkbox container */
+.checkbox-container {
+  margin-bottom: 20px;
+}
+
+.accept-checkbox {
+  width: 100%;
+}
+
+.checkbox-label {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--on-surface, #1a1a1a);
+  cursor: pointer;
+}
+
+/* Links container */
+.links-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.link-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: none;
+  background: transparent;
+  color: var(--primary-color, #1976d2);
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.link-button:hover {
+  background: rgba(25, 118, 210, 0.08);
+}
+
+.link-button mat-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
+
+.link-separator {
+  color: var(--on-surface-variant, #999);
+  font-size: 1rem;
+}
+
+/* Document sections */
+.document-section {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-color, #e0e0e0);
+  animation: slideDown 0.2s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.section {
+  margin-bottom: 16px;
+}
+
+.section h3 {
+  margin: 0 0 6px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--on-surface, #1a1a1a);
+}
+
+.section p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--on-surface-variant, #444);
+}
+
+/* Minors info */
+.minors-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  margin: 20px 0;
+  background: #e3f2fd;
+  border-radius: 8px;
+  border: 1px solid #bbdefb;
+}
+
+.minors-info mat-icon {
+  color: #1565c0;
+  font-size: 22px;
+  width: 22px;
+  height: 22px;
+}
+
+.minors-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: #1565c0;
+}
+
+/* Must accept message */
+.must-accept {
+  margin: 12px 0 0;
+  font-size: 0.8rem;
+  text-align: center;
+  color: var(--error-color, #d32f2f);
+}
+
+/* Footer */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: 16px 24px;
+  border-top: 1px solid var(--border-color, #e0e0e0);
+  background: var(--surface-variant, #fafafa);
+}
+
+.accept-button {
+  min-width: 160px;
+  height: 44px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-transform: none;
+}
+
+.accept-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .terms-acceptance-modal {
+    min-width: 0;
+    border-radius: 0;
+    max-height: 100vh;
+  }
+
+  .modal-header,
+  .modal-content,
+  .modal-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .link-button {
+    padding: 6px 8px;
+    font-size: 0.85rem;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .terms-acceptance-modal {
+    background: var(--surface-color, #1e1e1e);
+  }
+
+  .notice-container {
+    background: #3e2723;
+    border-left-color: #ffb300;
+  }
+
+  .notice-text {
+    color: #ffcc80;
+  }
+
+  .minors-info {
+    background: #0d47a1;
+    border-color: #1565c0;
+  }
+
+  .minors-info p {
+    color: #90caf9;
+  }
+
+  .link-button:hover {
+    background: rgba(25, 118, 210, 0.15);
+  }
+}

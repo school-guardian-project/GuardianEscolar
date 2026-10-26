@@ -1,4 +1,5 @@
 import * as SecureStore from "expo-secure-store";
+import { notifyAuthRoleChange } from "@core/dev/RoleSwitcherContext";
 
 const API_URL = process.env.EXPO_PUBLIC_API_URL;
 if (!API_URL) {
@@ -145,21 +146,111 @@ export async function login(email, password) {
 /** Rotación one-way: el refresh token viaja en Authorization, no en cookie. */
 export async function refresh() {
   const stored = await loadRefresh();
-  if (!stored) {
+  
+  // Validar que existe y no está vacío
+  if (!stored || stored.trim() === "") {
+    console.warn("[authService.refresh] No refresh token stored or empty");
     const error = new Error("no refresh token");
     error.status = 401;
+    error.code = "NO_REFRESH_TOKEN";
     throw error;
   }
 
-  const data = await request("/refresh", {
-    method: "POST",
-    headers: jsonBody({ Authorization: `Bearer ${stored}` }),
+  console.log("[authService.refresh] Attempting token refresh", {
+    hasToken: true,
+    tokenPrefix: stored.substring(0, 10) + "...",
+    tokenLength: stored.length,
   });
 
+  let response;
+  try {
+    response = await fetch(`${API_URL}/api/v1/auth/refresh`, {
+      method: "POST",
+      headers: jsonBody({ Authorization: `Bearer ${stored}` }),
+      signal: AbortSignal.timeout(15000),
+    });
+  } catch (fetchError) {
+    // Error de red (timeout, sin conexión, DNS, etc.)
+    console.error("[authService.refresh] Network error during refresh", {
+      message: fetchError.message,
+      name: fetchError.name,
+      code: fetchError.code,
+    });
+    const error = new Error(`Network error: ${fetchError.message}`);
+    error.status = 0;
+    error.code = "NETWORK_ERROR";
+    error.isNetworkError = true;
+    throw error;
+  }
+
+  // Log completo de la respuesta
+  console.log("[authService.refresh] Response received", {
+    status: response.status,
+    statusText: response.statusText,
+    headers: Object.fromEntries(response.headers.entries()),
+  });
+
+  let data;
+  try {
+    data = response.status === 204 ? null : await response.json();
+  } catch (parseError) {
+    console.error("[authService.refresh] Failed to parse response JSON", {
+      error: parseError.message,
+      status: response.status,
+    });
+    const error = new Error("Invalid response format");
+    error.status = response.status;
+    error.code = "INVALID_RESPONSE";
+    throw error;
+  }
+
+  console.log("[authService.refresh] Response data", {
+    hasAccessToken: !!data?.accessToken,
+    hasRefreshToken: !!data?.refreshToken,
+    accessTokenPrefix: data?.accessToken?.substring(0, 10) + "...",
+  });
+
+  if (!response.ok) {
+    // Manejar errores HTTP específicos
+    const error = new Error(`auth request failed: ${response.status}`);
+    error.status = response.status;
+    error.data = data;
+    
+    // Clasificar el tipo de error
+    if (response.status === 401) {
+      error.code = "TOKEN_EXPIRED_OR_REVOKED";
+      console.warn("[authService.refresh] Refresh token expired or revoked (401)");
+    } else if (response.status === 403) {
+      error.code = "TOKEN_FORBIDDEN";
+      console.warn("[authService.refresh] Refresh token forbidden (403)");
+    } else if (response.status >= 500) {
+      error.code = "SERVER_ERROR";
+      error.isNetworkError = true; // Tratar 5xx como error de red para retry
+      console.error("[authService.refresh] Server error (5xx)", { status: response.status });
+    } else {
+      error.code = `HTTP_${response.status}`;
+      console.warn("[authService.refresh] HTTP error", { status: response.status, data });
+    }
+    
+    throw error;
+  }
+
+  // Éxito: actualizar tokens y sesión
   accessToken = data.accessToken;
   await getSession();
   await saveSession({});
-  await saveRefresh(data.refreshToken);
+  
+  if (data.refreshToken) {
+    await saveRefresh(data.refreshToken);
+    console.log("[authService.refresh] New refresh token saved");
+  } else {
+    console.warn("[authService.refresh] No new refresh token in response - keeping existing");
+  }
+  
+  // Notificar al contexto React para que actualice el rol (claims pueden haber cambiado)
+  notifyAuthRoleChange();
+  
+  console.log("[authService.refresh] Token refresh successful");
   return data.accessToken;
 }
 

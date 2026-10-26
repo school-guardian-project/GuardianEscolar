@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator, Pressable } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -265,10 +265,6 @@ export default function MainPage() {
           schedule,
           stopsCount,
           finalDestination: route.targetSector ?? "",
-          startTime: route.startTime,
-          endTime: route.endTime,
-        });
-        setRouteSchedule({
           startTime: route.startTime,
           endTime: route.endTime,
         });

@@ -41,7 +41,7 @@ export default function BottomTabBar({
       {/* Ubicación */}
       <Pressable
         style={styles.tab}
-        onPress={onLocationPress}
+        onPress={onLocationPress ?? (() => navigation.navigate("LiveTracking"))}
       >
         <MaterialIcons name="place" size={24} color="#FFFFFF" />
         <Text style={styles.label}>{t("bottom.location")}</Text>

@@ -133,13 +133,14 @@ export default function LiveTracking() {
         // 1) Geometría vial OSRM (sugerencia de ruta)
         try {
           const suggestion = await getRouteSuggestionApi(route.id);
-          // Backend devuelve RouteSuggestionGeometryDto con Points (PascalCase)
-          // GeoPointDto tiene Latitude/Longitude -> transformar a lowercase para Polyline
-          if (suggestion?.geometry?.Points && mounted) {
+          // ASP.NET Core serializa camelCase: geometry.points con {latitude, longitude}.
+          // PascalCase es el nombre del DTO en C#, no el del JSON que llega acá.
+          const points = suggestion?.geometry?.points ?? [];
+          if (points.length > 0 && mounted) {
             setRouteGeometry(
-              suggestion.geometry.Points.map((p) => ({
-                latitude: p.Latitude,
-                longitude: p.Longitude,
+              points.map((p) => ({
+                latitude: p.latitude,
+                longitude: p.longitude,
               }))
             );
           }
@@ -155,7 +156,7 @@ export default function LiveTracking() {
 
         // 3) Info de horario y dirección para TripActionButton
         if (mounted) {
-          const direction = route.Schedules?.[0]?.Direction ?? null;
+          const direction = route.schedules?.[0]?.direction ?? null;
           setTripDirection(direction);
           setTripSchedule({
             startTime: route.startTime,

@@ -272,6 +272,10 @@ export default function App() {
 
             <Stack.Screen name="MainPage" component={MainPage} />
 
+            {/* Sin esta entrada, navigate("LiveTracking") desde MainPage no se
+                maneja en ningún navigator y la pestaña "Ubicación" no abre. */}
+            <Stack.Screen name="LiveTracking" component={LiveTracking} />
+
             <Stack.Screen name="Notifications" component={Notifications} />
 
             <Stack.Screen name="Profile" component={Profile} />

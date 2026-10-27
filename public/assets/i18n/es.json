@@ -4,7 +4,6 @@
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú",
     "dashboard": "Ir al dashboard",
-    "comments": "Abrir comentarios",
     "editSchool": "Actualizar colegio",
     "language": "Cambiar idioma",
     "theme": "Cambiar tema"
@@ -405,13 +404,10 @@
     "metrics": {
       "admins": "Administradores",
       "schools": "Colegios registrados",
-      "comments": "Comentarios hoy",
-      "month": "+12 este mes",
-      "active": "Todas operando",
-      "attention": "Requieren atención"
-    },
-    "alerts": {
-      "title": "Últimas alertas"
+      "loading": "Cargando cantidad...",
+      "adminsError": "No se pudo cargar la cantidad de administradores.",
+      "schoolsError": "No se pudo cargar la cantidad de colegios.",
+      "retry": "Reintentar"
     }
   },
   "sidebar": {
@@ -436,22 +432,6 @@
     "bus": "Buses",
     "route": "Rutas",
     "bus-stops": "Paradas"
-  },
-  "comments_modal": {
-    "title": "¿Tienes algún inconveniente?",
-    "subtitle": "Comunícanoslo",
-    "label": "Coméntanos tu problema",
-    "placeholder": "Insertar texto",
-    "error": "Por favor escribe tu inconveniente antes de enviar",
-    "buttons": {
-      "cancel": "Cancelar",
-      "submit": "Enviar",
-      "exit": "Salir"
-    },
-    "success": {
-      "title": "¡Mensaje enviado!",
-      "description": "Gracias por comentarnos tu inconveniente. Haremos lo posible por solucionarlo cuanto antes"
-    }
   },
   "update_school": {
     "loading": "Cargando la información del colegio...",

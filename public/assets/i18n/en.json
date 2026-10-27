@@ -4,7 +4,6 @@
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "dashboard": "Go to dashboard",
-    "comments": "Open comments",
     "editSchool": "Update school",
     "language": "Change language",
     "theme": "Change theme"
@@ -405,13 +404,10 @@
     "metrics": {
       "admins": "Admins",
       "schools": "Registered schools",
-      "comments": "Comments today",
-      "month": "+12 this month",
-      "active": "All operating",
-      "attention": "Require attention"
-    },
-    "alerts": {
-      "title": "Latest alerts"
+      "loading": "Loading count...",
+      "adminsError": "Could not load the administrator count.",
+      "schoolsError": "Could not load the school count.",
+      "retry": "Retry"
     }
   },
   "sidebar": {
@@ -436,22 +432,6 @@
     "bus": "Buses",
     "route": "Routes",
     "bus-stops": "Stops"
-  },
-  "comments_modal": {
-    "title": "Do you have any issue?",
-    "subtitle": "Let us know",
-    "label": "Tell us your problem",
-    "placeholder": "Enter text",
-    "error": "Please describe your issue before submitting",
-    "buttons": {
-      "cancel": "Cancel",
-      "submit": "Send",
-      "exit": "Close"
-    },
-    "success": {
-      "title": "Message sent!",
-      "description": "Thank you for sharing your issue. We will do our best to resolve it as soon as possible"
-    }
   },
   "update_school": {
     "loading": "Loading school information...",

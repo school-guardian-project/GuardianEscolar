@@ -34,6 +34,15 @@ reloads all three counts. Failed counts show an unavailable value instead of zer
 with a visible error; successful empty responses show zero. No counts are requested
 without an assigned school.
 
+The superadministrator dashboard contains only two live totals: registered
+schools and administrators, loaded from their existing list APIs. Each count has
+an independent loading/error state and an error-only retry action; failed
+requests do not appear as zero. The former comments metric, empty alerts panel,
+and placeholder monthly/operating captions have been removed. The unused issue
+reporting modal and its administrator-dashboard trigger are retired, including
+their component files and translations in all four languages. The administrator's
+persisted school alerts remain available.
+
 The signed-in profile page first fetches `/api/v1/auth/profile`, then uses its
 `personId` to load personal details from `/user/api/admins/{personId}`.
 City and school come from IAM; contact details come from user management.

@@ -4,7 +4,6 @@
     "openMenu": "Ouvrir le menu",
     "closeMenu": "Fermer le menu",
     "dashboard": "Aller au tableau de bord",
-    "comments": "Ouvrir les commentaires",
     "editSchool": "Modifier l'école",
     "language": "Changer la langue",
     "theme": "Changer le thème"
@@ -405,13 +404,10 @@
     "metrics": {
       "admins": "Administrateurs",
       "schools": "Écoles enregistrées",
-      "comments": "Commentaires aujourd'hui",
-      "month": "+12 ce mois-ci",
-      "active": "Toutes en service",
-      "attention": "Nécessitent de l'attention"
-    },
-    "alerts": {
-      "title": "Dernières alertes"
+      "loading": "Chargement du total...",
+      "adminsError": "Impossible de charger le nombre d'administrateurs.",
+      "schoolsError": "Impossible de charger le nombre d'écoles.",
+      "retry": "Réessayer"
     }
   },
   "sidebar": {
@@ -436,22 +432,6 @@
     "bus": "Bus",
     "route": "Itinéraires",
     "bus-stops": "Arrêts"
-  },
-  "comments_modal": {
-    "title": "Avez-vous un problème ?",
-    "subtitle": "Faites-le-nous savoir",
-    "label": "Décrivez votre problème",
-    "placeholder": "Saisissez le texte",
-    "error": "Veuillez décrire votre problème avant d'envoyer.",
-    "buttons": {
-      "cancel": "Annuler",
-      "submit": "Envoyer",
-      "exit": "Fermer"
-    },
-    "success": {
-      "title": "Message envoyé !",
-      "description": "Merci de nous avoir signalé votre problème. Nous ferons de notre mieux pour le résoudre au plus vite."
-    }
   },
   "update_school": {
     "loading": "Chargement des informations de l’école...",

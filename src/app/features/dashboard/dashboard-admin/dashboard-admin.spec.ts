@@ -103,6 +103,13 @@ describe('DashboardAdmin', () => {
     expect(element.querySelector('.metrics')?.getAttribute('aria-busy')).toBe('false');
   });
 
+  it('no longer renders the retired issue modal or its trigger', () => {
+    const element: HTMLElement = fixture.nativeElement;
+    expect(element.querySelector('app-comments')).toBeNull();
+    expect(Array.from(element.querySelectorAll('.right-sidebar mat-icon'), node => node.textContent?.trim()))
+      .toEqual(['info', 'edit']);
+  });
+
   it('renders zero only for successful empty results', () => {
     listStudents.mockReturnValueOnce(of([]));
     component.loadMetrics();

@@ -13,7 +13,8 @@ prefixes, then rebuild the Vercel deployment. Browser preflights are handled by
 Kong's shared CORS policy.
 
 The administrator dashboard loads persisted alerts from the notification API in
-a searchable card, with database-backed alert-type filters and ten alerts per
+a searchable card, with filters containing only types already used by persisted
+alerts in the authorized school and ten alerts per
 page (newest first). It resolves the school from the current IAM profile, not a
 stale session value. Loading, empty, missing-school and API-error states are
 visible and failures can be retried. Deploy the notification API alongside this
@@ -23,6 +24,15 @@ Card controls, status messages and catalog type labels (both filter options and
 alert badges) support Spanish, English, French and Portuguese. New catalog names
 without a translation retain their database label. Free-text alert descriptions,
 student names and route names are displayed as recorded, not machine-translated.
+
+The administrator's three metric cards show registered students, active routes,
+and the all-time school alert total. Student and route lists are scoped by the
+authenticated administrator's school on their APIs; the route list excludes
+inactive routes. Alerts use the unfiltered `totalElements` for the current school,
+independently of table search, type filters, and pagination. "Refresh metrics"
+reloads all three counts. Failed counts show an unavailable value instead of zero,
+with a visible error; successful empty responses show zero. No counts are requested
+without an assigned school.
 
 The signed-in profile page first fetches `/api/v1/auth/profile`, then uses its
 `personId` to load personal details from `/user/api/admins/{personId}`.

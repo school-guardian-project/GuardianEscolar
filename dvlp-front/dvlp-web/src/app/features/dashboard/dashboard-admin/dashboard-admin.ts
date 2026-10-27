@@ -14,8 +14,10 @@ import {  RecordInformation,  RecordData} from '@shared/components/modal/record-
 import { AuthService } from '@core/services/auth.service';
 import { SchoolsService } from '@core/services/schools.service';
 import { ProfileService } from '@core/services/profile.service';
+import { StudentsService } from '@core/services/students.service';
+import { RoutesService } from '@core/services/routes.service';
 import { Alert, AlertType, AlertsService } from '@core/services/alerts.service';
-import { map, of, switchMap, catchError, takeUntil, Subject, debounceTime, finalize } from 'rxjs';
+import { map, of, switchMap, catchError, takeUntil, Subject, debounceTime, finalize, forkJoin, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard-admin',
@@ -54,6 +56,15 @@ export class DashboardAdmin implements OnInit, OnDestroy {
   alertsErrorKey = '';
   alertTypesError = false;
 
+  studentsTotal: number | null = null;
+  activeRoutesTotal: number | null = null;
+  schoolAlertsTotal: number | null = null;
+  loadingMetrics = false;
+  metricsErrorKey = '';
+  studentsError = false;
+  routesError = false;
+  totalAlertsError = false;
+
   showComments = false;
   showUpdateInformation = false;
   showInformation = false;
@@ -70,6 +81,8 @@ export class DashboardAdmin implements OnInit, OnDestroy {
     private readonly profileService: ProfileService,
     private readonly alertsService: AlertsService,
     private readonly translate: TranslateService,
+    private readonly studentsService: StudentsService,
+    private readonly routesService: RoutesService,
   ) { }
 
   ngOnInit(): void {
@@ -111,6 +124,61 @@ export class DashboardAdmin implements OnInit, OnDestroy {
       .subscribe(() => this.filterAlerts());
     this.loadAlertTypes();
     this.loadAlerts();
+    this.loadMetrics();
+  }
+
+  loadMetrics(): void {
+    if (this.loadingMetrics) return;
+    this.loadingMetrics = true;
+    this.metricsErrorKey = '';
+    this.studentsError = false;
+    this.routesError = false;
+    this.totalAlertsError = false;
+    this.studentsTotal = null;
+    this.activeRoutesTotal = null;
+    this.schoolAlertsTotal = null;
+
+    this.profileService.getProfile().pipe(
+      map(profile => this.resolveSchoolId(profile.schoolId)),
+      switchMap(schoolId => {
+        if (!schoolId) {
+          this.metricsErrorKey = 'dashboard.metrics.noSchool';
+          return of(null);
+        }
+        return forkJoin({
+          students: this.metricCount(
+            this.studentsService.list().pipe(map(students => students.length)), 'students'),
+          routes: this.metricCount(
+            // The route API lists only active routes within the administrator's school.
+            this.routesService.list().pipe(map(routes => routes.length)),
+            'routes'),
+          alerts: this.metricCount(
+            this.alertsService.getAlerts({ schoolId, page: 0, size: 1 })
+              .pipe(map(response => response.totalElements)), 'alerts'),
+        });
+      }),
+      catchError((error: unknown) => {
+        console.error('Could not load the school dashboard metrics.', error);
+        this.metricsErrorKey = 'dashboard.metrics.loadError';
+        return of(null);
+      }),
+      takeUntil(this.destroy$),
+      finalize(() => { this.loadingMetrics = false; }),
+    ).subscribe(metrics => {
+      this.studentsTotal = metrics?.students ?? null;
+      this.activeRoutesTotal = metrics?.routes ?? null;
+      this.schoolAlertsTotal = metrics?.alerts ?? null;
+    });
+  }
+
+  private metricCount(request: Observable<number>, metric: 'students' | 'routes' | 'alerts'): Observable<number | null> {
+    return request.pipe(catchError((error: unknown) => {
+      console.error(`Could not load the school ${metric} count.`, error);
+      if (metric === 'students') this.studentsError = true;
+      if (metric === 'routes') this.routesError = true;
+      if (metric === 'alerts') this.totalAlertsError = true;
+      return of(null);
+    }));
   }
 
   loadAlertTypes(): void {

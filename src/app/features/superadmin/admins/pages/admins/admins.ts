@@ -25,6 +25,7 @@ interface AdminView extends RecordData {
   id?: string;
   name: string;
   lastName: string;
+  fullName: string;
   identification: string;
   phone: string;
   email?: string;
@@ -43,6 +44,7 @@ function fromApi(api: AdminListDto): AdminView {
     id: api.id,
     name: api.name ?? '',
     lastName: api.lastName ?? '',
+    fullName: [api.name, api.lastName].map((part) => part?.trim()).filter(Boolean).join(' '),
     lastNames: api.lastName ?? '',
     identification: api.identificationNumber ?? '',
     phone: api.phone != null ? String(api.phone) : '',

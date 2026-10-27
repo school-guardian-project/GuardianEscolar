@@ -46,6 +46,7 @@ export class DeleteRecord {
 
   get displayName(): string {
     return (
+      (this.type === 'admins' && (this.record['fullName'] as string)) ||
       (this.record['name'] as string) ||
       (this.record['names'] as string) ||
       (this.record['lastNames'] as string) ||

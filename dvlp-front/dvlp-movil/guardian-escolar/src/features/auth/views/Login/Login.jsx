@@ -46,7 +46,7 @@ export default function Login({ navigation }) {
 
     try {
       await login(email, password);
-      applyAuthRole();
+      await applyAuthRole();
 
       try {
         const session = await getSession();

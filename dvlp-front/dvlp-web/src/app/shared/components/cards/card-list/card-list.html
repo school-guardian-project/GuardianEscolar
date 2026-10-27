@@ -7,6 +7,11 @@
 
   <!-- Buscador -->
   <div class="card-list__search">
+    <select *ngIf="statusFilterEnabled && statusOptions.length > 1"
+      class="card-list__status-filter" [attr.aria-label]="'record_status.filter' | translate"
+      [ngModel]="selectedStatus" (ngModelChange)="changeStatusFilter($event)">
+      <option *ngFor="let status of statusOptions" [value]="status">{{ ('record_status.' + status) | translate }}</option>
+    </select>
     <input class="card-list__search-input" type="text" [placeholder]="'search.search' | translate"
       [ngModel]="searchText" (ngModelChange)="onSearchChange($event)" />
 
@@ -71,8 +76,12 @@
 
         <!-- Acciones -->
         <div class="card-list__actions">
-          <button class="card-list__btn" (click)="deleteDetails(item)" title="Eliminar">
+          <button *ngIf="type !== 'schools' || item.status !== 'Inactive'" class="card-list__btn" (click)="deleteDetails(item)" title="Eliminar">
             <mat-icon>delete</mat-icon>
+          </button>
+          <button *ngIf="type === 'schools' && item.status === 'Inactive'" class="card-list__btn"
+            (click)="reactivateItem.emit(item)" [title]="'record_status.reactivate' | translate">
+            <mat-icon>restore</mat-icon>
           </button>
           <button class="card-list__btn" (click)="showDetails(item)" title="Ver detalles">
             <mat-icon>visibility</mat-icon>

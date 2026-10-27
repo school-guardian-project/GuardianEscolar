@@ -30,6 +30,7 @@ export interface SchoolCampusRequestDto {
   address: string;
   latitude: number | null;
   longitude: number | null;
+  status?: 'Active' | 'Inactive';
 }
 
 export interface SchoolWithCampusesResponseDto {

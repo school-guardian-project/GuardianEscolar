@@ -21,6 +21,49 @@ describe('CardList', () => {
     expect(component).toBeTruthy();
   });
 
+  it('filters schools by available status independently of search and replaces deletion with reactivation', () => {
+    fixture.componentRef.setInput('type', 'schools');
+    fixture.componentRef.setInput('statusFilterEnabled', true);
+    fixture.componentRef.setInput('data', [
+      { id: 'active', name: 'Active school', status: 'Active' },
+      { id: 'inactive', name: 'Closed school', status: 'Inactive' },
+    ]);
+    fixture.detectChanges();
+    expect(component.filteredItems.map(item => item.id)).toEqual(['active']);
+    const selector: HTMLSelectElement = fixture.nativeElement.querySelector('.card-list__status-filter');
+    expect(selector.options.length).toBe(3);
+    expect(selector.compareDocumentPosition(fixture.nativeElement.querySelector('input')) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    component.changeStatusFilter('Inactive');
+    fixture.detectChanges();
+    expect(component.filteredItems.map(item => item.id)).toEqual(['inactive']);
+    expect(fixture.nativeElement.querySelector('button[title="Eliminar"]')).toBeNull();
+    const reactivate = vi.fn();
+    component.reactivateItem.subscribe(reactivate);
+    fixture.nativeElement.querySelector('.card-list__actions button').click();
+    expect(reactivate).toHaveBeenCalledWith(expect.objectContaining({ id: 'inactive' }));
+    component.changeStatusFilter('All');
+    component.onSearchChange('Closed');
+    fixture.detectChanges();
+    expect(component.filteredItems).toHaveLength(1);
+    expect(component.statusOptions).toEqual(['Active', 'Inactive', 'All']);
+    expect(component.currentPage).toBe(1);
+  });
+
+  it('hides school status selectors when one state exists and updates after the last reactivation', () => {
+    fixture.componentRef.setInput('type', 'schools');
+    fixture.componentRef.setInput('statusFilterEnabled', true);
+    fixture.componentRef.setInput('data', [{ id: '1', name: 'School', status: 'Inactive' }]);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.card-list__status-filter')).toBeNull();
+    expect(component.filteredItems).toHaveLength(1);
+    component.changeStatusFilter('Inactive');
+    fixture.componentRef.setInput('data', [{ id: '1', name: 'School', status: 'Active' }]);
+    fixture.detectChanges();
+    expect(component.selectedStatus).toBe('Active');
+    expect(component.filteredItems).toHaveLength(1);
+    expect(fixture.nativeElement.querySelector('button[title="Eliminar"]')).not.toBeNull();
+  });
+
   it('displays the administrator full name without changing the action payload', () => {
     const admin = { id: 'admin-1', name: 'Maria Elena', lastName: 'Perez Gomez', fullName: 'Maria Elena Perez Gomez' };
     fixture.componentRef.setInput('type', 'admins');

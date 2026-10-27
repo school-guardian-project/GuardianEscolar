@@ -9,6 +9,7 @@ export interface CampusListDto {
   address: string;
   latitude: number | null;
   longitude: number | null;
+  status?: 'Active' | 'Inactive';
 }
 
 @Injectable({ providedIn: 'root' })
@@ -17,8 +18,9 @@ export class CampusesService {
 
   constructor(private http: HttpClient) {}
 
-  listBySchool(schoolId: string): Observable<CampusListDto[]> {
-    return this.http.get<CampusListDto[]>(`${this.base}/schools/${schoolId}/campuses`);
+  listBySchool(schoolId: string, includeInactive = false): Observable<CampusListDto[]> {
+    const url = `${this.base}/schools/${schoolId}/campuses`;
+    return this.http.get<CampusListDto[]>(includeInactive ? `${url}?includeInactive=true` : url);
   }
 
   updateBySchool(schoolId: string, campuses: CampusListDto[]): Observable<void> {

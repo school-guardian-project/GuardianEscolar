@@ -43,6 +43,12 @@ reporting modal and its administrator-dashboard trigger are retired, including
 their component files and translations in all four languages. The administrator's
 persisted school alerts remain available.
 
+Administrator management cards and delete confirmations display names and surnames
+together; editing keeps both fields separate. Deletion calls
+`DELETE /user/api/v1/admins/{personId}` and requires the superadministrator role.
+The backend performs a logical deletion of the person and deactivates associated
+IAM profiles; failed requests remain visible inside the confirmation dialog.
+
 The signed-in profile page first fetches `/api/v1/auth/profile`, then uses its
 `personId` to load personal details from `/user/api/admins/{personId}`.
 City and school come from IAM; contact details come from user management.

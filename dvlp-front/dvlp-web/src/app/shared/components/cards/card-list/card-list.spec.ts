@@ -21,6 +21,19 @@ describe('CardList', () => {
     expect(component).toBeTruthy();
   });
 
+  it('displays the administrator full name without changing the action payload', () => {
+    const admin = { id: 'admin-1', name: 'Maria Elena', lastName: 'Perez Gomez', fullName: 'Maria Elena Perez Gomez' };
+    fixture.componentRef.setInput('type', 'admins');
+    fixture.componentRef.setInput('data', [admin]);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.card-list__name').textContent.trim()).toBe(admin.fullName);
+    const edit = vi.fn();
+    component.editItem.subscribe(edit);
+    fixture.nativeElement.querySelector('button[title="Editar"]').click();
+    expect(edit).toHaveBeenCalledWith(admin);
+  });
+
   function setRecords(count: number): void {
     fixture.componentRef.setInput('data', Array.from({ length: count }, (_, index) => ({
       id: `record-${index + 1}`, name: `User ${index + 1}`,

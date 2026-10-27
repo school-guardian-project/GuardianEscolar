@@ -85,7 +85,7 @@ const ITEM_FIELDS: Record<CardType, ItemField[]> = {
     { key: 'endTime', labelKey: 'card_list.labels.endTime', halfWidth: true },
   ],
   admins: [
-    { key: 'name' },
+    { key: 'fullName' },
     { key: 'identification' },
     { key: 'email', labelKey: 'card_list.labels.email', halfWidth: true },
     { key: 'phone', halfWidth: true },

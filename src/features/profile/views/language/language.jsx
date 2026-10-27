@@ -74,7 +74,7 @@ export default function Language() {
                         onPress={() => changeLanguage("en")}
                         rightContent={renderRadio("en")}
                     />
-                    </View>5
+                    </View>
                     <View style={styles.card}>
 
                     <SettingsItem

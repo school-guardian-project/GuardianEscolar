@@ -30,7 +30,7 @@ export default function Login({ navigation }) {
   const { applyAuthRole } = useSession();
 
   const handleEmailChange = (value) => {
-    setEmail(value);
+    setEmail(value.trim());
     if (emailError) setEmailError("");
   };
 
@@ -46,7 +46,7 @@ export default function Login({ navigation }) {
 
     try {
       await login(email, password);
-      applyAuthRole();
+      await applyAuthRole();
 
       try {
         const session = await getSession();

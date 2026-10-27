@@ -8,7 +8,8 @@
     "rateUs": "Évaluez-nous",
     "cancel": "Annuler",
     "send": "Envoyer",
-    "update": "Mettre à jour"
+    "update": "Mettre à jour",
+    "retry": "Réessayer"
   },
   "accept": {
     "blocked": "Ton compte n'est pas encore autorisé par ton responsable. Demande-lui d'accepter les Termes dans sa session.",

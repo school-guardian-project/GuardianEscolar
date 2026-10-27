@@ -8,7 +8,8 @@
     "rateUs": "Rate us",
     "cancel": "Cancel",
     "send": "Send",
-    "update": "Update"
+    "update": "Update",
+    "retry": "Retry"
   },
   "accept": {
     "blocked": "Your account is not yet authorized by your guardian. Ask them to accept the Terms in their session.",

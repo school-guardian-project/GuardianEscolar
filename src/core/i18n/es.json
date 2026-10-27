@@ -8,7 +8,8 @@
     "rateUs": "Califícanos",
     "cancel": "Cancelar",
     "send": "Enviar",
-    "update": "Actualizar"
+    "update": "Actualizar",
+    "retry": "Reintentar"
   },
   "accept": {
     "blocked": "Tu cuenta aún no está autorizada por tu acudiente. Pídele que acepte los Términos en su sesión.",

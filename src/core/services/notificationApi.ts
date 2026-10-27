@@ -1,6 +1,5 @@
 import { apiGet, apiPost } from "./apiClient";
 import type {
-  BoardingType,
   Credential,
   GuardianNotification,
   IncidentResponse,
@@ -38,15 +37,10 @@ export async function generateCredential(): Promise<Credential> {
   return (await getNotificationApi(CREDENTIAL)) as Credential;
 }
 
-/** Registra el escaneo de un QR. El backend resuelve viaje, parada y estudiante. */
-export async function scanCredential(
-  qrToken: string,
-  boardingType: BoardingType
-): Promise<ScanResponse> {
-  return (await postNotificationApi(SCAN, {
-    qrToken,
-    boardingType,
-  })) as ScanResponse;
+/** Registra el escaneo de un QR. El backend resuelve viaje, parada,
+ * estudiante y el tipo de movimiento (abordaje/descenso). */
+export async function scanCredential(qrToken: string): Promise<ScanResponse> {
+  return (await postNotificationApi(SCAN, { qrToken })) as ScanResponse;
 }
 
 /** Alta idempotente del dispositivo para recibir push. */

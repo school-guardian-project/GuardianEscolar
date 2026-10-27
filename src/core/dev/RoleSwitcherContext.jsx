@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { roleKeyFromRoleId } from "@core/config/roles/roleConfig";
 
 const RoleSwitcherContext = createContext(null);
@@ -9,38 +9,41 @@ export function RoleSwitcherProvider({ children }) {
     const [role, setRole] = useState(() => "student");
     const [initialized, setInitialized] = useState(false);
 
-    const applyAuthRole = () => {
-        // Role gets updated via notifyAuthRoleChange after refresh/login
-    };
+    const loadRoleFromSession = useCallback(async () => {
+        try {
+            const authService = await import("@core/services/authService");
+            const session = await authService.getSession();
+            if (session?.roleId) {
+                setRole(roleKeyFromRoleId(session.roleId));
+            }
+        } catch (e) {
+            console.warn("[RoleSwitcher] Error loading session:", e);
+        }
+    }, []);
+
+    const applyAuthRole = useCallback(async () => {
+        await loadRoleFromSession();
+    }, [loadRoleFromSession]);
 
     useEffect(() => {
         let mounted = true;
         (async () => {
             try {
-                const authService = await import("@core/services/authService");
-                const session = await authService.getSession();
-                if (mounted && session?.roleId) {
-                    setRole(roleKeyFromRoleId(session.roleId));
-                }
-            } catch (e) {
-                console.warn("[RoleSwitcher] Error loading session:", e);
+                await loadRoleFromSession();
             } finally {
                 if (mounted) setInitialized(true);
             }
         })();
         return () => { mounted = false; };
-    }, []);
+    }, [loadRoleFromSession]);
 
     useEffect(() => {
         onAuthRoleChange = () => {
-            setTimeout(() => {
-                import("@core/services/authService").then(auth =>
-                    auth.getSession().then(s => s?.roleId && setRole(roleKeyFromRoleId(s.roleId)))
-                ).catch(console.warn);
-            }, 0);
+            // Synchronous role update - no setTimeout
+            loadRoleFromSession();
         };
         return () => { onAuthRoleChange = null; };
-    }, []);
+    }, [loadRoleFromSession]);
 
     const value = { role, setRole, applyAuthRole, userId: null, childId: null, initialized };
 

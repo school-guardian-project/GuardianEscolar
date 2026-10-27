@@ -72,7 +72,7 @@ export default function LiveTracking() {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
   const navigation = useNavigation();
-  const { role } = useSession();
+  const { role, initialized } = useSession();
   const mapRef = useRef(null);
   const { location, error, loading, lastUpdated, fallbackLocation } = useGpsTracking();
 
@@ -95,7 +95,7 @@ export default function LiveTracking() {
     lastUpdated || location?.receivedAt || location?.gpsDateTime || location?.dateTime,
   );
 
-  // Cargar ruta del conductor o padre + sugerencia OSRM
+  // Cargar ruta del conductor/padre + sugerencia OSRM
   useEffect(() => {
     let mounted = true;
     async function loadRoute() {
@@ -146,7 +146,7 @@ export default function LiveTracking() {
 
         // 3) Info de horario y dirección para TripActionButton
         if (mounted) {
-          const direction = route.Schedules?.[0]?.Direction ?? null;
+          const direction = route.schedules?.[0]?.direction ?? route.Schedules?.[0]?.Direction ?? null;
           setTripDirection(direction);
           setTripSchedule({
             startTime: route.startTime,
@@ -161,6 +161,17 @@ export default function LiveTracking() {
     loadRoute();
     return () => { mounted = false; };
   }, [role]);
+
+  // Esperar a que la sesión esté inicializada (rol cargado desde SecureStore).
+  // Va DESPUÉS de todos los hooks: así la cantidad de hooks no cambia entre
+  // renders (rules of hooks) mientras se muestra el loading.
+  if (!initialized) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ color: theme.navbarColor, marginTop: 12 }}>Cargando sesión...</Text>
+      </View>
+    );
+  }
 
   const handleStartTrip = async () => {
     try {
@@ -216,7 +227,18 @@ export default function LiveTracking() {
         }}
       />
 
-      <View style={[styles.topControls, { top: Math.max(insets.top, 12) }]}>
+      <View style={styles.topControls}>
+        <View style={styles.titlePill}>
+          <Text numberOfLines={1} style={[styles.title, { color: theme.titleColor }]}>
+            {t("gps.vehicleLocation")}
+          </Text>
+        </View>
+        <View style={styles.notificationButton}>
+          <NotificationButton onPress={() => navigation.navigate("Notifications")} />
+        </View>
+      </View>
+
+      <View style={styles.topControls}>
         <View style={styles.titlePill}>
           <Text numberOfLines={1} style={[styles.title, { color: theme.titleColor }]}>
             {t("gps.vehicleLocation")}
@@ -283,17 +305,18 @@ export default function LiveTracking() {
         </View>
       )}
 
-
       {/* Botón contextual Iniciar/Terminar - posicionado arriba del BottomTabBar */}
       <View style={styles.tripButtonContainer} pointerEvents="box-none">
-        <TripActionButton
-          status={tripStatus}
-          direction={tripDirection}
-          schedule={tripSchedule}
-          onStart={handleStartTrip}
-          onEnd={handleEndTrip}
-          showWhenEnded={false}
-        />
+        {routeStops.length > 0 && (
+          <TripActionButton
+            status={tripStatus}
+            direction={tripDirection}
+            schedule={tripSchedule}
+            onStart={handleStartTrip}
+            onEnd={handleEndTrip}
+            showWhenEnded={false}
+          />
+        )}
       </View>
       <View style={styles.bottomBarOverlay} pointerEvents="box-none">
         <BottomTabBar

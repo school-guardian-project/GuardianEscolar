@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { View, Text } from "react-native";
 import MapView, { Marker } from "react-native-maps";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import RouteInfoCard from "@components/cards/RouteInfoCard";
@@ -19,7 +20,7 @@ import IncidentReportModal from "@components/modals/IncidentReportModal";
 import TripActionButton from "@components/buttons/TripActionButton";
 import { getSession } from "@core/services/authService";
 import { getRouteApi } from "@core/services/routeApi";
-import { startTripApi } from "@core/services/tripApi";
+import { startTripApi, getTripStatusApi } from "@core/services/tripApi";
 import { getLinkedStudents } from "@core/services/familyService";
 import { scanCredential } from "@core/services/notificationApi";
 import { apiPost } from "@core/services/apiClient";
@@ -113,10 +114,16 @@ export default function MainPage() {
   const [scanMode, setScanMode] = useState("ON_BOARD");
   const [status, setStatus] = useState(null);
   const [scanFeedback, setScanFeedback] = useState(null);
-  const [tripStatus, setTripStatus] = useState("idle"); // 'idle' | 'active' | 'ended'
+  // Estados del viaje - ahora controlados por backend
+  const [tripStatus, setTripStatus] = useState("idle"); // 'idle' | 'ready_to_start' | 'active' | 'ended'
   const [tripDirection, setTripDirection] = useState(null); // 'Ida' | 'Vuelta'
   const [tripSchedule, setTripSchedule] = useState({ startTime: null, endTime: null });
   const [currentTripId, setCurrentTripId] = useState(null);
+  // Nuevos estados para control de botones desde backend
+  const [canStart, setCanStart] = useState(false);
+  const [canEnd, setCanEnd] = useState(false);
+  const [endConditionDetail, setEndConditionDetail] = useState(null);
+  
   const mapRef = useRef(null);
 
   // GPS Tracking (solo si está enfocada la pantalla)
@@ -127,6 +134,62 @@ export default function MainPage() {
     location && Number.isFinite(busLatitude) && Number.isFinite(busLongitude)
       ? { latitude: busLatitude, longitude: busLongitude }
       : null;
+
+  // Polling del estado del viaje desde backend (solo para conductor)
+  const pollTripStatus = useCallback(async () => {
+    if (role !== "driver") return;
+    
+    try {
+      const session = await getSession();
+      if (!session?.profileId) return;
+
+      const tripStatusData = await getTripStatusApi(session.profileId);
+      if (tripStatusData) {
+        setCanStart(tripStatusData.CanStart ?? false);
+        setCanEnd(tripStatusData.CanEnd ?? false);
+        setEndConditionDetail(tripStatusData.EndConditionDetail ?? null);
+        
+        // Mapear status del backend a estado local
+        if (tripStatusData.Status === "Ended") {
+          setTripStatus("ended");
+        } else if (tripStatusData.Status === "InProgress" || tripStatusData.Status === "ReadyToEnd") {
+          setTripStatus("active");
+        } else if (tripStatusData.Status === "ReadyToStart" || tripStatusData.CanStart) {
+          setTripStatus("ready_to_start");
+        } else {
+          setTripStatus("idle");
+        }
+        
+        if (tripStatusData.TripId && tripStatusData.TripId !== "00000000-0000-0000-0000-000000000000") {
+          setCurrentTripId(tripStatusData.TripId);
+        }
+        if (tripStatusData.Direction) {
+          setTripDirection(tripStatusData.Direction);
+        }
+        if (tripStatusData.ScheduleStartTime) {
+          setTripSchedule({
+            startTime: tripStatusData.ScheduleStartTime,
+            endTime: tripStatusData.NextScheduleTime
+          });
+        }
+      }
+    } catch (error) {
+      console.warn("Error polling trip status:", error);
+    }
+  }, [role]);
+
+  // Iniciar polling cuando la pantalla está enfocada y el rol es conductor
+  useEffect(() => {
+    if (!isFocused || role !== "driver") return;
+
+    // Ejecutar inmediatamente
+    pollTripStatus();
+    
+    // Polling cada 10 segundos
+    const interval = setInterval(pollTripStatus, 10000);
+    
+    return () => clearInterval(interval);
+  }, [isFocused, role, pollTripStatus]);
 
   const handleOpenModal = (type) => setModalType(type);
   const handleCloseModal = () => setModalType(null);
@@ -143,6 +206,7 @@ export default function MainPage() {
       };
 
       const result = await startTripApi(payload);
+      // Actualizar estado local optimistamente, el polling confirmará
       setTripStatus("active");
       if (result?.id) {
         setCurrentTripId(result.id);
@@ -153,6 +217,8 @@ export default function MainPage() {
         type: "success",
         message: t("cards.tripStarted") || "Viaje iniciado correctamente",
       });
+      // Forzar polling inmediato
+      pollTripStatus();
     } catch (error) {
       setScanFeedback({
         type: "error",
@@ -171,12 +237,12 @@ export default function MainPage() {
         return;
       }
       await apiPost(`/route/api/trips/end?tripId=${currentTripId}`, {});
-      setTripStatus("ended");
-      setCurrentTripId(null);
+      // El polling actualizará a "ended"
       setScanFeedback({
         type: "success",
         message: t("cards.tripEnded") || "Viaje finalizado correctamente",
       });
+      pollTripStatus();
     } catch (error) {
       setScanFeedback({
         type: "error",
@@ -395,6 +461,9 @@ export default function MainPage() {
             onStart={handleStartTrip}
             onEnd={handleEndTrip}
             showWhenEnded={false}
+            canStart={canStart}
+            canEnd={canEnd}
+            endConditionDetail={endConditionDetail}
           />
         </View>
 

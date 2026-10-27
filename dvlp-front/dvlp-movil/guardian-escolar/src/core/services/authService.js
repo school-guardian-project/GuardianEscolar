@@ -140,10 +140,10 @@ export async function login(email, password) {
   if (data.refreshToken) {
     await saveRefresh(data.refreshToken);
   }
-  
+
   // Notificar al contexto React para que recargue la sesión y actualice el rol
   notifyAuthRoleChange();
-  
+
   return data;
 }
 

@@ -91,6 +91,20 @@ and align at the top while their heights follow their respective contents.
 
 ## Responsive web layouts
 
+School management defaults to active schools. A status selector to the left of
+search offers Active, Inactive and All only when both states exist, independently
+of the search text. Inactive schools show Reactivate instead of Delete; errors
+are reported on the page. Search and pagination apply to the selected status.
+
+Both school editing dialogs request campuses with `includeInactive=true` and
+provide an independent status filter for that school's campuses. Add campus
+stays below the section title, beside the filter and above the campus rows
+(also in registration). Inactive campuses show Reactivate instead of Delete.
+Campus changes, including reactivation, take effect only when saving; cancelling
+does not persist them. Normal registration/assignment campus selectors still
+request active campuses only. Deploy the school-management API and web changes
+together so inactive statuses are returned and preserved on update.
+
 At widths up to 1024px, the management toolbar opens a keyboard-accessible
 navigation drawer using the existing administrator or superadministrator menus.
 It traps focus, restores it on close, and closes on Escape, backdrop click,

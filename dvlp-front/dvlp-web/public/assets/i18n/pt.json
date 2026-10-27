@@ -1,4 +1,11 @@
 {
+  "record_status": {
+    "filter": "Filtrar por estado",
+    "Active": "Ativas",
+    "Inactive": "Inativas",
+    "All": "Todas",
+    "reactivate": "Reativar"
+  },
   "responsive": {
     "navigation": "Navegação",
     "openMenu": "Abrir menu",

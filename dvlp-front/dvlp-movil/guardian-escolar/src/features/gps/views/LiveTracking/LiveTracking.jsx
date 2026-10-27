@@ -15,7 +15,7 @@ import { getRouteApi, getRouteSuggestionApi } from "@core/services/routeApi";
 import { getLinkedStudents } from "@core/services/familyService";
 import { startTripApi } from "@core/services/tripApi";
 import { apiPost } from "@core/services/apiClient";
-import useSession from "@core/hooks/useSession";
+import { useSession } from "@core/hooks/useSession";
 import styles from "./LiveTracking.style";
 
 function formatDateInBogota(dateValue) {
@@ -95,7 +95,7 @@ export default function LiveTracking() {
     lastUpdated || location?.receivedAt || location?.gpsDateTime || location?.dateTime,
   );
 
-  // Cargar ruta del conductor o padre + sugerencia OSRM
+  // Cargar ruta del conductor/padre + sugerencia OSRM
   useEffect(() => {
     let mounted = true;
     async function loadRoute() {
@@ -124,14 +124,13 @@ export default function LiveTracking() {
         // 1) Geometría vial OSRM (sugerencia de ruta)
         try {
           const suggestion = await getRouteSuggestionApi(route.id);
-          // ASP.NET Core serializa camelCase: geometry.points con {latitude, longitude}.
-          // PascalCase es el nombre del DTO en C#, no el del JSON que llega acá.
-          const points = suggestion?.geometry?.points ?? [];
-          if (points.length > 0 && mounted) {
+          // Backend devuelve RouteSuggestionGeometryDto con Points (PascalCase)
+          // GeoPointDto tiene Latitude/Longitude -> transformar a lowercase para Polyline
+          if (suggestion?.geometry?.Points && mounted) {
             setRouteGeometry(
-              points.map((p) => ({
-                latitude: p.latitude,
-                longitude: p.longitude,
+              suggestion.geometry.Points.map((p) => ({
+                latitude: p.Latitude,
+                longitude: p.Longitude,
               }))
             );
           }
@@ -147,7 +146,7 @@ export default function LiveTracking() {
 
         // 3) Info de horario y dirección para TripActionButton
         if (mounted) {
-          const direction = route.schedules?.[0]?.direction ?? null;
+          const direction = route.schedules?.[0]?.direction ?? route.Schedules?.[0]?.Direction ?? null;
           setTripDirection(direction);
           setTripSchedule({
             startTime: route.startTime,
@@ -228,7 +227,18 @@ export default function LiveTracking() {
         }}
       />
 
-      <View style={[styles.topControls, { top: Math.max(insets.top, 12) }]}>
+      <View style={styles.topControls}>
+        <View style={styles.titlePill}>
+          <Text numberOfLines={1} style={[styles.title, { color: theme.titleColor }]}>
+            {t("gps.vehicleLocation")}
+          </Text>
+        </View>
+        <View style={styles.notificationButton}>
+          <NotificationButton onPress={() => navigation.navigate("Notifications")} />
+        </View>
+      </View>
+
+      <View style={styles.topControls}>
         <View style={styles.titlePill}>
           <Text numberOfLines={1} style={[styles.title, { color: theme.titleColor }]}>
             {t("gps.vehicleLocation")}
@@ -295,7 +305,7 @@ export default function LiveTracking() {
         </View>
       )}
 
-
+      {/* Botón contextual Iniciar/Terminar - posicionado arriba del BottomTabBar */}
       <View style={styles.tripButtonContainer} pointerEvents="box-none">
         {routeStops.length > 0 && (
           <TripActionButton

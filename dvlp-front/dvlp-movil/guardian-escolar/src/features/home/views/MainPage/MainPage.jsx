@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useCallback } from "react";
 import { View, Text, ActivityIndicator } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -20,7 +20,7 @@ import IncidentReportModal from "@components/modals/IncidentReportModal";
 import TripActionButton from "@components/buttons/TripActionButton";
 import { getSession } from "@core/services/authService";
 import { getRouteApi } from "@core/services/routeApi";
-import { startTripApi } from "@core/services/tripApi";
+import { startTripApi, getTripStatusApi } from "@core/services/tripApi";
 import { getLinkedStudents } from "@core/services/familyService";
 import { scanCredential } from "@core/services/notificationApi";
 import { apiPost } from "@core/services/apiClient";
@@ -97,18 +97,28 @@ function MainPageContent() {
   const insets = useSafeAreaInsets();
   const horizontalPadding = width < 360 ? 12 : 16;
   const navigation = useNavigation();
-  const { role } = useSession();
+  const { role, initialized } = useSession();
   const { t } = useTranslation();
   const isFocused = useIsFocused();
+
+  // Esperar a que el rol esté inicializado desde SecureStore
+  if (!initialized) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#1A56DB" />
+        <Text style={{ marginTop: 12, color: "#666" }}>Cargando sesión...</Text>
+      </View>
+    );
+  }
 
   const config = roleConfig[role];
   const [modalType, setModalType] = useState(null);
   const [incidentOpen, setIncidentOpen] = useState(false);
   const [routeInfo, setRouteInfo] = useState(null);
   const [, setLoading] = useState(true);
-  const [status, setStatus] = useState(null);
   const [scanFeedback, setScanFeedback] = useState(null);
-  const [tripStatus, setTripStatus] = useState("idle"); // 'idle' | 'active' | 'ended'
+  // Estados del viaje - ahora controlados por backend
+  const [tripStatus, setTripStatus] = useState("idle"); // 'idle' | 'ready_to_start' | 'active' | 'ended'
   const [tripDirection, setTripDirection] = useState(null); // 'Ida' | 'Vuelta'
   const [tripSchedule, setTripSchedule] = useState({ startTime: null, endTime: null });
   const [currentTripId, setCurrentTripId] = useState(null);
@@ -230,8 +240,7 @@ function MainPageContent() {
         return;
       }
       await apiPost(`/route/api/trips/end?tripId=${currentTripId}`, {});
-      setTripStatus("ended");
-      setCurrentTripId(null);
+      // El polling actualizará a "ended"
       setScanFeedback({
         type: "success",
         message: t("cards.tripEnded") || "Viaje finalizado correctamente",
@@ -447,10 +456,6 @@ function MainPageContent() {
           />
         </View>
         <View style={styles.qrButtonContainer} pointerEvents="box-none">
-          {/* QR Scanner for driver (qrMode: "scan") */}
-          {config.card.showQR && config.card.qrMode === "scan" && (
-            <QRButtom config={config.card} onOpenModel={handleOpenModal} />
-          )}
           {/* Trip buttons only when route is assigned */}
           {routeInfo && (
             <TripActionButton
@@ -460,6 +465,9 @@ function MainPageContent() {
               onStart={handleStartTrip}
               onEnd={handleEndTrip}
               showWhenEnded={false}
+              canStart={canStart}
+              canEnd={canEnd}
+              endConditionDetail={endConditionDetail}
             />
           )}
         </View>

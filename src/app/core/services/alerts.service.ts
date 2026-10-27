@@ -5,11 +5,13 @@ import { environment } from '../../../environments/environment';
 
 export interface Alert {
   id: string;
-  studentId: string;
+  profileId: string;
   studentName: string;
-  routeId: string;
+  routeExecutionId: string;
   routeName: string;
-  alertType: 'BOARDING' | 'ALIGHTING' | 'INCIDENT' | 'DELAY' | 'DEVIATION';
+  alertType: string | number;
+  alertTypeId: number;
+  alertTypeName: string;
   message: string;
   timestamp: string;
   acknowledged: boolean;
@@ -34,10 +36,17 @@ export interface AlertFilters {
   size?: number;
   sort?: string;
   alertType?: string;
+  alertTypeId?: number;
+  schoolId?: string;
   acknowledged?: boolean;
   dateFrom?: string;
   dateTo?: string;
   search?: string;
+}
+
+export interface AlertType {
+  id: number;
+  name: string;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -53,12 +62,18 @@ export class AlertsService {
       .set('sort', filters.sort ?? 'timestamp,desc');
 
     if (filters.alertType) params = params.set('alertType', filters.alertType);
+    if (filters.alertTypeId !== undefined) params = params.set('alertTypeId', filters.alertTypeId);
+    if (filters.schoolId) params = params.set('schoolId', filters.schoolId);
     if (filters.acknowledged !== undefined) params = params.set('acknowledged', filters.acknowledged.toString());
     if (filters.dateFrom) params = params.set('dateFrom', filters.dateFrom);
     if (filters.dateTo) params = params.set('dateTo', filters.dateTo);
     if (filters.search) params = params.set('search', filters.search);
 
     return this.http.get<AlertsResponse>(this.base, { params });
+  }
+
+  getAlertTypes(): Observable<AlertType[]> {
+    return this.http.get<AlertType[]>(`${environment.apiUrl}/notification/api/v1/notifications/alert-types`);
   }
 
   acknowledgeAlert(id: string): Observable<void> {

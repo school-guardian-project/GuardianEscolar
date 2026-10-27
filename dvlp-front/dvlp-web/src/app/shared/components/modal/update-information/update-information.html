@@ -86,7 +86,7 @@
         <div class="modal__campus" *ngIf="campusVisible(campus)">
           <div>
             <div class="modal_form-label-row">
-              <label class="modal_form-label">{{ 'register.schools.campusNamePlaceholder' | translate }}</label>
+              <label class="modal_form-label" [for]="'schoolCampusName' + i">{{ 'register.schools.campusNamePlaceholder' | translate }}</label>
               <button type="button" class="modal_map-btn"
                 [disabled]="campus.status === 'Inactive'"
                 [attr.aria-label]="'register.schools.chooseCampusLocation' | translate: {name: campus.name}"
@@ -94,11 +94,11 @@
                 <mat-icon>location_on</mat-icon>
               </button>
             </div>
-            <input class="modal_form-input" [(ngModel)]="campus.name" [disabled]="campus.status === 'Inactive'">
+            <input class="modal_form-input" [id]="'schoolCampusName' + i" [(ngModel)]="campus.name" [disabled]="campus.status === 'Inactive'">
           </div>
           <div>
-            <label class="modal_form-label">{{ 'update_school.fields.address' | translate }}</label>
-            <input class="modal_form-input" maxlength="255" [(ngModel)]="campus.address" [disabled]="campus.status === 'Inactive'">
+            <label class="modal_form-label" [for]="'schoolCampusAddress' + i">{{ 'update_school.fields.address' | translate }}</label>
+            <input class="modal_form-input" [id]="'schoolCampusAddress' + i" maxlength="255" [(ngModel)]="campus.address" [disabled]="campus.status === 'Inactive'">
           </div>
           <app-location-map *ngIf="campusMaps[i]" [address]="campus.address"
             [latitude]="campus.latitude" [longitude]="campus.longitude"

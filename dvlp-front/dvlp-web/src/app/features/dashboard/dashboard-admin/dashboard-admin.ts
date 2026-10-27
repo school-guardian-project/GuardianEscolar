@@ -7,7 +7,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { NavbarManage } from '@shared/components/navbar/navbar-manage/navbar-manage';
-import { Comments } from '@shared/components/modal/comments/comments';
 import { UpdateInformation } from '@shared/components/modal/update-information/update-information';
 import { SidebarAdmin } from '@shared/components/navbar/sidebar-admin/sidebar-admin';
 import {  RecordInformation,  RecordData} from '@shared/components/modal/record-information/record-information';
@@ -30,7 +29,6 @@ import { map, of, switchMap, catchError, takeUntil, Subject, debounceTime, final
     MatButtonModule,
     MatIconModule,
     RouterModule,
-    Comments,
     UpdateInformation,
     SidebarAdmin,
     RecordInformation,
@@ -65,7 +63,6 @@ export class DashboardAdmin implements OnInit, OnDestroy {
   routesError = false;
   totalAlertsError = false;
 
-  showComments = false;
   showUpdateInformation = false;
   showInformation = false;
 

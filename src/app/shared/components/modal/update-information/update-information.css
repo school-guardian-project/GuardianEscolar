@@ -258,6 +258,25 @@ select:focus {
   color: var(--alert-icon);
 }
 
+.modal__campus-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.modal__campus-toolbar select {
+  min-width: 0;
+  max-width: 100%;
+  padding: 10px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--card-bg);
+  color: var(--text-color);
+  font: inherit;
+}
+
 .modal_footer {
   display: flex;
   gap: 12px;

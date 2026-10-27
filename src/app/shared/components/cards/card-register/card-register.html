@@ -165,6 +165,13 @@
         {{ 'register.schools.campusNamesHint' | translate }}
       </p>
 
+      <div class="card-register__campus-row card-register__campus-row--actions">
+        <button type="button" class="card-register__add-campus"
+                (click)="addCampusName()"
+                [attr.aria-label]="'register.schools.addCampus' | translate">
+          {{ 'register.schools.addCampus' | translate }}
+        </button>
+      </div>
       <div class="card-register__campus-rows">
         <div class="card-register__campus" *ngFor="let campus of campuses; let i = index">
           <div class="card-register__label-row">
@@ -211,14 +218,6 @@
           </button>
         </div>
 
-        <div class="card-register__campus-row card-register__campus-row--actions">
-          <button type="button"
-                  class="card-register__add-campus"
-                  (click)="addCampusName()"
-                  [attr.aria-label]="'register.schools.addCampus' | translate">
-            {{ 'register.schools.addCampus' | translate }}
-          </button>
-        </div>
       </div>
 
       <small class="card-register__error" *ngIf="campusNamesError">

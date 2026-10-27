@@ -5,6 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ValidationRule, validateField } from '@core/validators/form-validators';
 import { LocationMap } from '@shared/components/location-map/location-map';
+import { StatusFilter, statusOptions, effectiveStatusFilter, matchesStatus } from '@core/models/record-status';
 
 export type RegisterType =
   | 'student'
@@ -27,6 +28,7 @@ interface CampusFormData extends RecordData {
   address: string;
   latitude: number | null;
   longitude: number | null;
+  status: 'Active' | 'Inactive';
 }
 
 export interface Field {
@@ -393,6 +395,7 @@ export class UpdateRecord implements OnInit, OnChanges {
             address: campus.address ?? '',
             latitude: campus.latitude == null ? null : Number(campus.latitude),
             longitude: campus.longitude == null ? null : Number(campus.longitude),
+            status: campus.status === 'Inactive' ? 'Inactive' as const : 'Active' as const,
           };
         })
       : [];
@@ -469,7 +472,16 @@ export class UpdateRecord implements OnInit, OnChanges {
   }
 
   addCampus(): void {
-    this.campuses = [...this.campuses, { id: '', name: '', address: '', latitude: null, longitude: null }];
+    this.campusFilter = 'Active';
+    this.campuses = [...this.campuses, { id: '', name: '', address: '', latitude: null, longitude: null, status: 'Active' }];
+  }
+
+  campusFilter: StatusFilter = 'Active';
+  get campusStatusOptions(): StatusFilter[] { return statusOptions(this.campuses); }
+  get selectedCampusStatus(): StatusFilter { return effectiveStatusFilter(this.campusFilter, this.campusStatusOptions); }
+  campusVisible(campus: CampusFormData): boolean { return matchesStatus(campus.status, this.selectedCampusStatus); }
+  reactivateCampus(index: number): void {
+    this.campuses[index].status = 'Active';
   }
 
   removedCampusIds: string[] = [];
@@ -488,6 +500,7 @@ export class UpdateRecord implements OnInit, OnChanges {
     if (this.type === 'schools') {
       const names = new Set<string>();
       for (const campus of this.campuses) {
+        if (campus.status === 'Inactive') continue;
         const name = campus.name.trim();
         const address = campus.address.trim();
         if (!name || name.length > 30 || address.length < 5 || address.length > 255) {

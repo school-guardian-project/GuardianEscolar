@@ -10,6 +10,7 @@ import { CitiesService } from '@core/services/cities.service';
 import { CampusesService, CampusListDto } from '@core/services/campuses.service';
 import { SchoolsService } from '@core/services/schools.service';
 import { LocationMap } from '@shared/components/location-map/location-map';
+import { StatusFilter, statusOptions, effectiveStatusFilter, matchesStatus } from '@core/models/record-status';
 
 @Component({
   selector: 'app-update-information',
@@ -58,7 +59,7 @@ export class UpdateInformation implements OnInit {
 
     forkJoin({
       school: this.schoolsService.get(this.schoolId),
-      campuses: this.campusesService.listBySchool(this.schoolId),
+      campuses: this.campusesService.listBySchool(this.schoolId, true),
       cities: this.citiesService.list(),
     }).subscribe({
       next: ({ school, campuses, cities }) => {
@@ -91,8 +92,17 @@ export class UpdateInformation implements OnInit {
   }
 
   addCampus(): void {
-    this.campuses.push({ id: '', name: '', address: '', latitude: null, longitude: null });
+    this.campusFilter = 'Active';
+    this.campuses.push({ id: '', name: '', address: '', latitude: null, longitude: null, status: 'Active' });
     this.campusMaps.push(false);
+  }
+
+  campusFilter: StatusFilter = 'Active';
+  get campusStatusOptions(): StatusFilter[] { return statusOptions(this.campuses); }
+  get selectedCampusStatus(): StatusFilter { return effectiveStatusFilter(this.campusFilter, this.campusStatusOptions); }
+  campusVisible(campus: CampusListDto): boolean { return matchesStatus(campus.status, this.selectedCampusStatus); }
+  reactivateCampus(index: number): void {
+    this.campuses[index].status = 'Active';
   }
 
   removeCampus(index: number): void {
@@ -122,12 +132,12 @@ export class UpdateInformation implements OnInit {
   update(): void {
     if (!this.schoolId || !this.nombreEscuela.trim() || !this.ciudad || !this.direccion.trim()
       || !this.telefono.trim() || !this.email.trim()
-      || this.campuses.some((campus) => !campus.name.trim() || campus.name.trim().length > 30
-        || campus.address.trim().length < 5 || campus.address.trim().length > 255)) {
+      || this.campuses.some((campus) => campus.status !== 'Inactive' && (!campus.name.trim() || campus.name.trim().length > 30
+        || campus.address.trim().length < 5 || campus.address.trim().length > 255))) {
       this.mostrandoError = true;
       return;
     }
-    const campusNames = this.campuses.map((campus) => campus.name.trim().toLowerCase());
+    const campusNames = this.campuses.filter(campus => campus.status !== 'Inactive').map((campus) => campus.name.trim().toLowerCase());
     if (new Set(campusNames).size !== campusNames.length) {
       this.mostrandoError = true;
       return;
@@ -135,12 +145,13 @@ export class UpdateInformation implements OnInit {
 
     this.mostrandoError = false;
     this.saving = true;
-    const campuses: SchoolCampusRequestDto[] = this.campuses.map(({ id, name, address, latitude, longitude }) => ({
+    const campuses: SchoolCampusRequestDto[] = this.campuses.map(({ id, name, address, latitude, longitude, status }) => ({
       ...(id ? { id } : {}),
       name: name.trim(),
       address: address.trim(),
       latitude,
       longitude,
+      status: status ?? 'Active',
     }));
     const payload: SchoolWithCampusesRequestDto = {
       cityId: this.ciudad,

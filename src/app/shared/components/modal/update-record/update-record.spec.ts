@@ -21,6 +21,58 @@ describe('UpdateRecord', () => {
     expect(component).toBeTruthy();
   });
 
+  it('keeps campus controls above rows and independently filters inactive campuses before reactivating on save', () => {
+    component.type = 'schools';
+    component.record = {
+      id: 'school-1', name: 'School', city: 'city-1', address: 'School street',
+      phone: '3001234567', schooling: 'Primaria', email: 'school@test.com', status: 'Active',
+      campuses: [
+        { id: 'active', name: 'Main', address: 'Main street', latitude: null, longitude: null, status: 'Active' },
+        { id: 'inactive', name: 'North', address: 'North street', latitude: null, longitude: null, status: 'Inactive' },
+      ],
+    };
+    component.ngOnInit();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelectorAll('.modal__campus')).toHaveLength(1);
+    const toolbar: HTMLElement = fixture.nativeElement.querySelector('.modal__campus-toolbar');
+    expect(toolbar.previousElementSibling?.tagName).toBe('H3');
+    expect(toolbar.querySelector('select')?.options.length).toBe(3);
+    expect(toolbar.compareDocumentPosition(fixture.nativeElement.querySelector('.modal__campus')) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    component.campusFilter = 'Inactive';
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.modal__remove-campus')).toBeNull();
+    const saved = vi.fn();
+    component.saved.subscribe(saved);
+    fixture.nativeElement.querySelector('.modal__campus .modal__add-campus').click();
+    expect(saved).not.toHaveBeenCalled();
+    component.onSubmit();
+    expect(saved).toHaveBeenCalledWith(expect.objectContaining({
+      campuses: [
+        expect.objectContaining({ id: 'active', status: 'Active' }),
+        expect.objectContaining({ id: 'inactive', status: 'Active' }),
+      ],
+    }));
+    expect((component.record['campuses'] as { status: string }[])[1].status).toBe('Inactive');
+    fixture.detectChanges();
+    expect(toolbar.querySelector('select')).toBeNull();
+  });
+
+  it('does not silently reactivate hidden campuses when saving school fields', () => {
+    component.type = 'schools';
+    component.record = {
+      name: 'School', city: 'city-1', address: 'School street', phone: '3001234567',
+      schooling: 'Primaria', email: 'school@test.com', status: 'Active',
+      campuses: [{ id: 'inactive', name: 'North', address: 'North street', status: 'Inactive' }],
+    };
+    component.ngOnInit();
+    const saved = vi.fn();
+    component.saved.subscribe(saved);
+    component.onSubmit();
+    expect(saved).toHaveBeenCalledWith(expect.objectContaining({
+      campuses: [expect.objectContaining({ id: 'inactive', status: 'Inactive' })],
+    }));
+  });
+
   it('renders a remove button below each saved campus address and submits only its id for removal', () => {
     component.type = 'schools';
     component.record = {

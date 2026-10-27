@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, switchMap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { SchoolListDto, SchoolRequestDto, SchoolResponseDto, SchoolWithCampusesRequestDto, SchoolWithCampusesResponseDto } from '../models/school.model';
 
@@ -53,5 +53,16 @@ export class SchoolsService {
 
   remove(id: string): Observable<void> {
     return this.http.delete<void>(`${this.base}/${id}`);
+  }
+
+  reactivate(id: string): Observable<void> {
+    return this.get(id).pipe(
+      switchMap((school) => this.update(id, {
+        cityId: school.cityId, logo: school.logo, name: school.name,
+        address: school.address, latitude: school.latitude, longitude: school.longitude,
+        phone: school.phone, email: school.email, website: school.website,
+        theme: school.theme, status: 'Active',
+      })),
+    );
   }
 }

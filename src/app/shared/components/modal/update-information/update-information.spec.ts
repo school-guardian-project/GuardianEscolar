@@ -62,6 +62,42 @@ describe('UpdateInformation', () => {
     expect(component).toBeTruthy();
   });
 
+  it('filters only this school campuses and saves explicit reactivation without changing the input records', () => {
+    component.schoolId = 'school-1';
+    component.ngOnInit();
+    component.campuses.push({
+      id: 'inactive', name: 'North', address: 'North street', latitude: null, longitude: null, status: 'Inactive',
+    });
+    fixture.detectChanges();
+    const toolbar: HTMLElement = fixture.nativeElement.querySelector('.modal__campus-toolbar');
+    expect(toolbar.previousElementSibling?.tagName).toBe('H3');
+    expect(toolbar.querySelector('select')?.options.length).toBe(3);
+    expect(fixture.nativeElement.querySelectorAll('.modal__campus')).toHaveLength(1);
+    component.campusFilter = 'Inactive';
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.modal__remove-campus')).toBeNull();
+    fixture.nativeElement.querySelector('.modal__campus .modal__add-campus').click();
+    expect(updateWithCampuses).not.toHaveBeenCalled();
+    component.update();
+    expect(updateWithCampuses).toHaveBeenCalledWith('school-1', expect.objectContaining({
+      campuses: [
+        expect.objectContaining({ id: 'campus-1', status: 'Active' }),
+        expect.objectContaining({ id: 'inactive', status: 'Active' }),
+      ],
+    }));
+  });
+
+  it('hides filters for active-only campuses and never persists reactivation on cancel', () => {
+    component.schoolId = 'school-1';
+    component.ngOnInit();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.modal__campus-toolbar select')).toBeNull();
+    component.campuses[0].status = 'Inactive';
+    component.reactivateCampus(0);
+    component.close();
+    expect(updateWithCampuses).not.toHaveBeenCalled();
+  });
+
   it('loads school campuses and saves their map coordinates together', () => {
     component.schoolId = 'school-1';
     component.ngOnInit();
@@ -82,6 +118,7 @@ describe('UpdateInformation', () => {
         address: 'Campus address',
         latitude: 4.7,
         longitude: -74.3,
+        status: 'Active',
       }],
     }));
   });

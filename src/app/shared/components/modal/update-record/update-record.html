@@ -107,13 +107,24 @@
 
     <section *ngIf="type === 'schools'" class="modal__campuses">
       <h3>{{ 'register.schools.fields.campusNames' | translate }}</h3>
-      <div *ngFor="let campus of campuses; let i = index" class="modal__campus">
+      <div class="modal__campus-toolbar">
+        <button type="button" class="modal__add-campus" (click)="addCampus()">
+          {{ 'register.schools.addCampus' | translate }}
+        </button>
+        <select *ngIf="campusStatusOptions.length > 1" [attr.aria-label]="'record_status.filter' | translate"
+          [ngModel]="selectedCampusStatus" (ngModelChange)="campusFilter = $event" name="campusStatusFilter">
+          <option *ngFor="let status of campusStatusOptions" [value]="status">{{ ('record_status.' + status) | translate }}</option>
+        </select>
+      </div>
+      <ng-container *ngFor="let campus of campuses; let i = index">
+      <div *ngIf="campusVisible(campus)" class="modal__campus">
         <div class="modal__info-label-row">
           <label class="modal__info-label" [for]="'editCampusName' + i">
             {{ 'register.schools.campusNamePlaceholder' | translate }}
           </label>
           <button type="button"
                   class="modal__map-btn"
+                  [disabled]="campus.status === 'Inactive'"
                   [attr.aria-expanded]="campusMapOpenIndex === i"
                   [attr.aria-label]="'register.schools.chooseCampusLocation' | translate: { name: campus.name }"
                   (click)="campusMapOpenIndex = campusMapOpenIndex === i ? null : i">
@@ -123,6 +134,7 @@
         <input class="modal__info-value"
                [id]="'editCampusName' + i"
                [(ngModel)]="campus.name"
+               [disabled]="campus.status === 'Inactive'"
                [name]="'editCampusName' + i"
                maxlength="30" />
         <label class="modal__info-label" [for]="'editCampusAddress' + i">
@@ -131,6 +143,7 @@
         <input class="modal__info-value"
                [id]="'editCampusAddress' + i"
                [(ngModel)]="campus.address"
+               [disabled]="campus.status === 'Inactive'"
                [name]="'editCampusAddress' + i"
                maxlength="255" />
         <app-location-map *ngIf="campusMapOpenIndex === i"
@@ -140,15 +153,18 @@
           (coordinatesChange)="onCampusLocationChange(i, $event)"
           (addressChange)="onCampusAddressChange(i, $event)">
         </app-location-map>
-        <button type="button" class="modal__remove-campus"
+        <button *ngIf="campus.status !== 'Inactive'" type="button" class="modal__remove-campus"
                 (click)="removeCampus(i)">
           <mat-icon>delete_outline</mat-icon>
           {{ 'register.schools.deleteCampus' | translate }}
         </button>
+        <button *ngIf="campus.status === 'Inactive'" type="button" class="modal__add-campus"
+                (click)="reactivateCampus(i)">
+          <mat-icon>restore</mat-icon>
+          {{ 'record_status.reactivate' | translate }}
+        </button>
       </div>
-      <button type="button" class="modal__add-campus" (click)="addCampus()">
-        {{ 'register.schools.addCampus' | translate }}
-      </button>
+      </ng-container>
       <p *ngIf="campusErrorKey" class="modal__campus-error" role="alert">
         {{ campusErrorKey | translate: {name: campusErrorName} }}
       </p>

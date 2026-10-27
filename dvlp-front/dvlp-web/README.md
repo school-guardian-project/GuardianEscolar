@@ -4,6 +4,18 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 ## Development server
 
+The administrator dashboard loads persisted alerts from the notification API in
+a searchable card, with database-backed alert-type filters and ten alerts per
+page (newest first). It resolves the school from the current IAM profile, not a
+stale session value. Loading, empty, missing-school and API-error states are
+visible and failures can be retried. Deploy the notification API alongside this
+frontend: it enforces the active administrator-school assignment before counting
+or paginating and exposes `/notification/api/v1/notifications/alert-types`.
+Card controls, status messages and catalog type labels (both filter options and
+alert badges) support Spanish, English, French and Portuguese. New catalog names
+without a translation retain their database label. Free-text alert descriptions,
+student names and route names are displayed as recorded, not machine-translated.
+
 The signed-in profile page first fetches `/api/v1/auth/profile`, then uses its
 `personId` to load personal details from `/user/api/admins/{personId}`.
 City and school come from IAM; contact details come from user management.

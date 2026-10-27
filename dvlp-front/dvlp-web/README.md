@@ -4,6 +4,51 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 ## Development server
 
+Public password recovery (`/api/v1/password/forgot`, `/forgot/verify` and `/reset`)
+bypasses automatic Bearer injection and token refresh in the HTTP interceptor.
+Login and refresh retain credentialed cookie requests; protected profile changes
+and dashboard APIs retain their authenticated retry behavior. When using Kong,
+set `API_URL` and `API_FORGOT_INFORMATION_URL` to its HTTPS origin without API path
+prefixes, then rebuild the Vercel deployment. Browser preflights are handled by
+Kong's shared CORS policy.
+
+The administrator dashboard loads persisted alerts from the notification API in
+a searchable card, with filters containing only types already used by persisted
+alerts in the authorized school and ten alerts per
+page (newest first). It resolves the school from the current IAM profile, not a
+stale session value. Loading, empty, missing-school and API-error states are
+visible and failures can be retried. Deploy the notification API alongside this
+frontend: it enforces the active administrator-school assignment before counting
+or paginating and exposes `/notification/api/v1/notifications/alert-types`.
+Card controls, status messages and catalog type labels (both filter options and
+alert badges) support Spanish, English, French and Portuguese. New catalog names
+without a translation retain their database label. Free-text alert descriptions,
+student names and route names are displayed as recorded, not machine-translated.
+
+The administrator's three metric cards show registered students, active routes,
+and the all-time school alert total. Student and route lists are scoped by the
+authenticated administrator's school on their APIs; the route list excludes
+inactive routes. Alerts use the unfiltered `totalElements` for the current school,
+independently of table search, type filters, and pagination. "Refresh metrics"
+reloads all three counts. Failed counts show an unavailable value instead of zero,
+with a visible error; successful empty responses show zero. No counts are requested
+without an assigned school.
+
+The superadministrator dashboard contains only two live totals: registered
+schools and administrators, loaded from their existing list APIs. Each count has
+an independent loading/error state and an error-only retry action; failed
+requests do not appear as zero. The former comments metric, empty alerts panel,
+and placeholder monthly/operating captions have been removed. The unused issue
+reporting modal and its administrator-dashboard trigger are retired, including
+their component files and translations in all four languages. The administrator's
+persisted school alerts remain available.
+
+Administrator management cards and delete confirmations display names and surnames
+together; editing keeps both fields separate. Deletion calls
+`DELETE /user/api/v1/admins/{personId}` and requires the superadministrator role.
+The backend performs a logical deletion of the person and deactivates associated
+IAM profiles; failed requests remain visible inside the confirmation dialog.
+
 The signed-in profile page first fetches `/api/v1/auth/profile`, then uses its
 `personId` to load personal details from `/user/api/admins/{personId}`.
 City and school come from IAM; contact details come from user management.
@@ -45,6 +90,20 @@ Registration and list cards share the same responsive width (up to 640px)
 and align at the top while their heights follow their respective contents.
 
 ## Responsive web layouts
+
+School management defaults to active schools. A status selector to the left of
+search offers Active, Inactive and All only when both states exist, independently
+of the search text. Inactive schools show Reactivate instead of Delete; errors
+are reported on the page. Search and pagination apply to the selected status.
+
+Both school editing dialogs request campuses with `includeInactive=true` and
+provide an independent status filter for that school's campuses. Add campus
+stays below the section title, beside the filter and above the campus rows
+(also in registration). Inactive campuses show Reactivate instead of Delete.
+Campus changes, including reactivation, take effect only when saving; cancelling
+does not persist them. Normal registration/assignment campus selectors still
+request active campuses only. Deploy the school-management API and web changes
+together so inactive statuses are returned and preserved on update.
 
 At widths up to 1024px, the management toolbar opens a keyboard-accessible
 navigation drawer using the existing administrator or superadministrator menus.

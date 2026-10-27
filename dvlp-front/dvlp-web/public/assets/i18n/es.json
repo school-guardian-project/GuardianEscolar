@@ -1,10 +1,16 @@
 {
+  "record_status": {
+    "filter": "Filtrar por estado",
+    "Active": "Activas",
+    "Inactive": "Inactivas",
+    "All": "Todas",
+    "reactivate": "Reactivar"
+  },
   "responsive": {
     "navigation": "Navegación",
     "openMenu": "Abrir menú",
     "closeMenu": "Cerrar menú",
     "dashboard": "Ir al dashboard",
-    "comments": "Abrir comentarios",
     "editSchool": "Actualizar colegio",
     "language": "Cambiar idioma",
     "theme": "Cambiar tema"
@@ -79,7 +85,7 @@
     "steps": [
       {
         "title": "Registro de institución",
-        "description": "Crea tu cuenta, agrega tus rutas y conductores en minutos."
+        "description": "Solicita tu cuenta, agrega tus rutas y conductores en minutos."
       },
       {
         "title": "Instálalo en los buses",
@@ -337,13 +343,66 @@
     "metrics": {
       "students": "Estudiantes",
       "routes": "Rutas activas",
+      "totalAlerts": "Alertas totales",
+      "registered": "Registrados en la institución",
+      "activeInSchool": "Con estado activo en el colegio",
+      "allSchoolAlerts": "Todos los tipos y fechas",
+      "loading": "Cargando indicadores...",
+      "loadError": "No se pudieron cargar los indicadores. Intenta de nuevo.",
+      "noSchool": "No tienes un colegio asignado para consultar indicadores.",
+      "refresh": "Actualizar indicadores",
       "alerts": "Alertas hoy",
       "month": "+12 este mes",
       "operating": "Todas operando",
       "attention": "Requieren atención"
     },
     "alerts": {
-      "title": "Últimas alertas"
+      "title": "Alertas del colegio",
+      "refresh": "Actualizar",
+      "search": "Buscar alertas",
+      "searchPlaceholder": "Buscar en la descripción...",
+      "type": "Tipo de alerta",
+      "allTypes": "Todos los tipos",
+      "typesError": "No se pudieron cargar los tipos de alerta.",
+      "retry": "Reintentar",
+      "loading": "Cargando alertas...",
+      "loadError": "No se pudieron cargar las alertas. Intenta de nuevo.",
+      "noSchool": "No tienes un colegio asignado para consultar alertas.",
+      "empty": "No hay alertas que coincidan con los filtros.",
+      "results": "{{total}} alertas encontradas",
+      "unknownType": "Sin tipo",
+      "pagination": "Paginación de alertas",
+      "previous": "Anterior",
+      "next": "Siguiente",
+      "page": "Página {{current}} de {{total}}",
+      "types": {
+        "Bus Delay": "Retraso del bus",
+        "Route Deviation": "Desviación de ruta",
+        "Missed Stop": "Parada omitida",
+        "Speed Alert": "Exceso de velocidad",
+        "Geofence Enter": "Entrada a la zona del colegio",
+        "Geofence Exit": "Salida de la zona del colegio",
+        "No Boarding": "Abordaje no registrado",
+        "Unexpected Boarding": "Abordaje no previsto",
+        "Engine Off": "Motor apagado",
+        "Device Offline": "Dispositivo desconectado",
+        "Late Departure": "Salida tardía",
+        "Early Arrival": "Llegada anticipada",
+        "Overcapacity": "Exceso de pasajeros",
+        "Seatbelt Alert": "Alerta de cinturón de seguridad",
+        "Hard Braking": "Frenado brusco",
+        "Sharp Turn": "Giro brusco",
+        "Low Fuel": "Combustible bajo",
+        "Prolonged Stop": "Parada prolongada",
+        "Driver Absence": "Ausencia del conductor",
+        "Route Cancellation": "Cancelación de ruta",
+        "Accident": "Accidente",
+        "Medical Emergency": "Emergencia médica",
+        "Mechanical Breakdown": "Falla mecánica",
+        "Security Incident": "Incidente de seguridad",
+        "On Board": "Abordaje",
+        "Off Board": "Descenso"
+      }
     }
   },
   "superadmin_dashboard": {
@@ -352,13 +411,10 @@
     "metrics": {
       "admins": "Administradores",
       "schools": "Colegios registrados",
-      "comments": "Comentarios hoy",
-      "month": "+12 este mes",
-      "active": "Todas operando",
-      "attention": "Requieren atención"
-    },
-    "alerts": {
-      "title": "Últimas alertas"
+      "loading": "Cargando cantidad...",
+      "adminsError": "No se pudo cargar la cantidad de administradores.",
+      "schoolsError": "No se pudo cargar la cantidad de colegios.",
+      "retry": "Reintentar"
     }
   },
   "sidebar": {
@@ -383,22 +439,6 @@
     "bus": "Buses",
     "route": "Rutas",
     "bus-stops": "Paradas"
-  },
-  "comments_modal": {
-    "title": "¿Tienes algún inconveniente?",
-    "subtitle": "Comunícanoslo",
-    "label": "Coméntanos tu problema",
-    "placeholder": "Insertar texto",
-    "error": "Por favor escribe tu inconveniente antes de enviar",
-    "buttons": {
-      "cancel": "Cancelar",
-      "submit": "Enviar",
-      "exit": "Salir"
-    },
-    "success": {
-      "title": "¡Mensaje enviado!",
-      "description": "Gracias por comentarnos tu inconveniente. Haremos lo posible por solucionarlo cuanto antes"
-    }
   },
   "update_school": {
     "loading": "Cargando la información del colegio...",

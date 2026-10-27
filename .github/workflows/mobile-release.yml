@@ -25,6 +25,8 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
+    env:
+      APK_NAME: ${{ inputs.profile == 'production' && 'guardian-escolar.apk' || 'guardian-escolar-preview.apk' }}
     defaults:
       run:
         working-directory: dvlp-front/dvlp-movil/guardian-escolar
@@ -56,12 +58,12 @@ jobs:
           echo "reactNativeArchitectures=armeabi-v7a,arm64-v8a" >> ~/.gradle/gradle.properties
 
       - name: Build Android APK locally
-        run: eas build -p android --profile ${{ inputs.profile }} --local --non-interactive --output guardian-escolar-${{ inputs.profile }}.apk
+        run: eas build -p android --profile ${{ inputs.profile }} --local --non-interactive --output "$APK_NAME"
 
       - name: Read APK version info
         run: |
           AAPT="$(ls -d "$ANDROID_HOME"/build-tools/*/ | sort -V | tail -1)aapt"
-          BADGING="$("$AAPT" dump badging guardian-escolar-${{ inputs.profile }}.apk | head -1)"
+          BADGING="$("$AAPT" dump badging "$APK_NAME" | head -1)"
           echo "VERSION_CODE=$(echo "$BADGING" | sed -n "s/.*versionCode='\([0-9]*\)'.*/\1/p")" >> "$GITHUB_ENV"
           echo "VERSION_NAME=$(echo "$BADGING" | sed -n "s/.*versionName='\([^']*\)'.*/\1/p")" >> "$GITHUB_ENV"
 
@@ -70,7 +72,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: guardian-escolar-preview-${{ github.run_number }}
-          path: dvlp-front/dvlp-movil/guardian-escolar/guardian-escolar-preview.apk
+          path: dvlp-front/dvlp-movil/guardian-escolar/${{ env.APK_NAME }}
           retention-days: 7
 
       - name: Prepare latest.json (production only)
@@ -92,6 +94,6 @@ jobs:
           NOTES: ${{ inputs.notes }}
         run: |
           gh release create "mobile-v${VERSION_NAME}-${VERSION_CODE}" \
-            guardian-escolar-production.apk latest.json \
+            "$APK_NAME" latest.json \
             --title "Mobile app ${VERSION_NAME} (${VERSION_CODE})" \
             --notes "$NOTES" --latest

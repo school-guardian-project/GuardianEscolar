@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { RecordData } from '@shared/components/modal/record-information/record-information.types';
 import { TranslateModule } from '@ngx-translate/core';
 import { Subject, Subscription, debounceTime, distinctUntilChanged } from 'rxjs';
+import { StatusFilter, statusOptions, effectiveStatusFilter, matchesStatus } from '@core/models/record-status';
 
 export type CardType =
   | 'student' | 'guardian' | 'driver' | 'family'
@@ -85,7 +86,7 @@ const ITEM_FIELDS: Record<CardType, ItemField[]> = {
     { key: 'endTime', labelKey: 'card_list.labels.endTime', halfWidth: true },
   ],
   admins: [
-    { key: 'name' },
+    { key: 'fullName' },
     { key: 'identification' },
     { key: 'email', labelKey: 'card_list.labels.email', halfWidth: true },
     { key: 'phone', halfWidth: true },
@@ -109,11 +110,28 @@ export class CardList implements OnInit, OnDestroy, OnChanges {
   /** Datos externos; si es null la lista queda vacía. */
   @Input() data: any[] | null = null;
   @Input() remoteSearch = false;
+  @Input() statusFilterEnabled = false;
 
   @Output() viewItem = new EventEmitter<RecordData>();
   @Output() editItem = new EventEmitter<RecordData>();
   @Output() deleteItem = new EventEmitter<RecordData>();
   @Output() search = new EventEmitter<string>();
+  @Output() reactivateItem = new EventEmitter<RecordData>();
+
+  statusFilter: StatusFilter = 'Active';
+
+  get statusOptions(): StatusFilter[] {
+    return statusOptions(this.items);
+  }
+
+  get selectedStatus(): StatusFilter {
+    return effectiveStatusFilter(this.statusFilter, this.statusOptions);
+  }
+
+  changeStatusFilter(filter: StatusFilter): void {
+    this.statusFilter = filter;
+    this.currentPage = 1;
+  }
 
   searchText = '';
   readonly pageSize = 10;
@@ -193,10 +211,12 @@ export class CardList implements OnInit, OnDestroy, OnChanges {
   }
 
   get filteredItems(): any[] {
-    if (this.remoteSearch) return this.items;
-    if (!this.searchText?.trim()) return this.items;
+    const items = this.statusFilterEnabled
+      ? this.items.filter(item => matchesStatus(item.status, this.selectedStatus)) : this.items;
+    if (this.remoteSearch) return items;
+    if (!this.searchText?.trim()) return items;
     const term = this.searchText.toLowerCase().trim();
-    return this.items.filter(item =>
+    return items.filter(item =>
       Object.values(item).some(value =>
         value?.toString().toLowerCase().includes(term)
       )

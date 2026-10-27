@@ -73,36 +73,50 @@
 
       <section class="modal__campuses">
         <h3>{{ 'register.schools.fields.campusNames' | translate }}</h3>
-        <div class="modal__campus" *ngFor="let campus of campuses; let i = index">
+        <div class="modal__campus-toolbar">
+          <button type="button" class="modal__add-campus" [disabled]="saving" (click)="addCampus()">
+            {{ 'register.schools.addCampus' | translate }}
+          </button>
+          <select *ngIf="campusStatusOptions.length > 1" [attr.aria-label]="'record_status.filter' | translate"
+            [ngModel]="selectedCampusStatus" (ngModelChange)="campusFilter = $event">
+            <option *ngFor="let status of campusStatusOptions" [value]="status">{{ ('record_status.' + status) | translate }}</option>
+          </select>
+        </div>
+        <ng-container *ngFor="let campus of campuses; let i = index">
+        <div class="modal__campus" *ngIf="campusVisible(campus)">
           <div>
             <div class="modal_form-label-row">
-              <label class="modal_form-label">{{ 'register.schools.campusNamePlaceholder' | translate }}</label>
+              <label class="modal_form-label" [for]="'schoolCampusName' + i">{{ 'register.schools.campusNamePlaceholder' | translate }}</label>
               <button type="button" class="modal_map-btn"
+                [disabled]="campus.status === 'Inactive'"
                 [attr.aria-label]="'register.schools.chooseCampusLocation' | translate: {name: campus.name}"
                 (click)="campusMaps[i] = !campusMaps[i]">
                 <mat-icon>location_on</mat-icon>
               </button>
             </div>
-            <input class="modal_form-input" [(ngModel)]="campus.name">
+            <input class="modal_form-input" [id]="'schoolCampusName' + i" [(ngModel)]="campus.name" [disabled]="campus.status === 'Inactive'">
           </div>
           <div>
-            <label class="modal_form-label">{{ 'update_school.fields.address' | translate }}</label>
-            <input class="modal_form-input" maxlength="255" [(ngModel)]="campus.address">
+            <label class="modal_form-label" [for]="'schoolCampusAddress' + i">{{ 'update_school.fields.address' | translate }}</label>
+            <input class="modal_form-input" [id]="'schoolCampusAddress' + i" maxlength="255" [(ngModel)]="campus.address" [disabled]="campus.status === 'Inactive'">
           </div>
           <app-location-map *ngIf="campusMaps[i]" [address]="campus.address"
             [latitude]="campus.latitude" [longitude]="campus.longitude"
           (coordinatesChange)="updateCampusLocation(i, $event)"
           (addressChange)="updateCampusAddress(i, $event)">
           </app-location-map>
-          <button type="button" class="modal__remove-campus" [disabled]="saving"
+          <button *ngIf="campus.status !== 'Inactive'" type="button" class="modal__remove-campus" [disabled]="saving"
             (click)="removeCampus(i)">
             <mat-icon>delete_outline</mat-icon>
             {{ 'register.schools.deleteCampus' | translate }}
           </button>
+          <button *ngIf="campus.status === 'Inactive'" type="button" class="modal__add-campus" [disabled]="saving"
+            (click)="reactivateCampus(i)">
+            <mat-icon>restore</mat-icon>
+            {{ 'record_status.reactivate' | translate }}
+          </button>
         </div>
-        <button type="button" class="modal__add-campus" (click)="addCampus()">
-          {{ 'register.schools.addCampus' | translate }}
-        </button>
+        </ng-container>
       </section>
 
       <div *ngIf="mostrandoError" class="error-message" role="alert">

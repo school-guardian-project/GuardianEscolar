@@ -2,7 +2,6 @@ export type BoardingType = "ON_BOARD" | "OFF_BOARD";
 
 export interface ScanRequest {
   qrToken: string;
-  boardingType: BoardingType;
 }
 
 /** Respuesta de `POST /notifications/scan` (FR-4.1). */
@@ -12,6 +11,8 @@ export interface ScanResponse {
   parentsNotified: number;
   /** true cuando el movimiento ya estaba registrado y no se volvió a notificar. */
   alreadyProcessed: boolean;
+  /** Tipo resuelto por el backend (el cliente no envía el tipo de movimiento). */
+  boardingType?: BoardingType | null;
 }
 
 export interface Credential {

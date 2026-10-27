@@ -74,6 +74,7 @@ function toCampuses(value: unknown): SchoolCampusRequestDto[] {
       address: String(campus['address'] ?? '').trim(),
       latitude: toCoordinate(campus['latitude']),
       longitude: toCoordinate(campus['longitude']),
+      status: campus['status'] === 'Inactive' ? 'Inactive' : 'Active',
     };
   });
 }
@@ -148,20 +149,6 @@ export class Schools implements OnInit {
     });
   }
 
-  onSearch(term: string): void {
-    const query = term.trim();
-    if (!query) {
-      this.load();
-      return;
-    }
-    this.schoolsService.search(query).subscribe({
-      next: (list) => this.schools.set(list.map(fromApi)),
-      error: (error: unknown) => {
-        this.actionError = describeProblem(error, 'No se pudieron buscar las escuelas.');
-      },
-    });
-  }
-
   onCreated(form: RecordData): void {
     this.schoolsService.createWithCampuses(toCreatePayload(form)).subscribe({
       next: (created) => {
@@ -213,7 +200,7 @@ export class Schools implements OnInit {
     this.actionError = '';
     forkJoin({
       detail: this.schoolsService.get(String(id)),
-      campuses: this.campusesService.listBySchool(String(id)),
+      campuses: this.campusesService.listBySchool(String(id), true),
       cities: this.citiesService.list(),
     }).subscribe({
       next: ({ detail, campuses, cities }) => {
@@ -264,6 +251,24 @@ export class Schools implements OnInit {
   }
 
   actionError = '';
+  reactivating = false;
+
+  reactivate(school: RecordData): void {
+    const id = school['id'];
+    if (!id || this.reactivating) return;
+    this.actionError = '';
+    this.reactivating = true;
+    this.schoolsService.reactivate(String(id)).subscribe({
+      next: () => {
+        this.reactivating = false;
+        this.load();
+      },
+      error: (error: unknown) => {
+        this.reactivating = false;
+        this.actionError = describeProblem(error, 'No se pudo reactivar el colegio.');
+      },
+    });
+  }
 
   showDeleteModal = false;
 

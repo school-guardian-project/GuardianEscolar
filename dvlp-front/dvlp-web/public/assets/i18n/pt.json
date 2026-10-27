@@ -4,7 +4,6 @@
     "openMenu": "Abrir menu",
     "closeMenu": "Fechar menu",
     "dashboard": "Ir para o painel",
-    "comments": "Abrir comentários",
     "editSchool": "Atualizar escola",
     "language": "Alterar idioma",
     "theme": "Alterar tema"
@@ -405,13 +404,10 @@
     "metrics": {
       "admins": "Administradores",
       "schools": "Escolas cadastradas",
-      "comments": "Comentários hoje",
-      "month": "+12 este mês",
-      "active": "Todas em operação",
-      "attention": "Requerem atenção"
-    },
-    "alerts": {
-      "title": "Últimos alertas"
+      "loading": "Carregando quantidade...",
+      "adminsError": "Não foi possível carregar a quantidade de administradores.",
+      "schoolsError": "Não foi possível carregar a quantidade de escolas.",
+      "retry": "Tentar novamente"
     }
   },
   "sidebar": {
@@ -436,22 +432,6 @@
     "bus": "Ônibus",
     "route": "Rotas",
     "bus-stops": "Paradas"
-  },
-  "comments_modal": {
-    "title": "Tem algum problema?",
-    "subtitle": "Conte para nós",
-    "label": "Descreva o seu problema",
-    "placeholder": "Insira o texto",
-    "error": "Por favor, descreva seu problema antes de enviar.",
-    "buttons": {
-      "cancel": "Cancelar",
-      "submit": "Enviar",
-      "exit": "Fechar"
-    },
-    "success": {
-      "title": "Mensagem enviada!",
-      "description": "Obrigado por nos contar o seu problema. Faremos o possível para resolvê-lo o quanto antes."
-    }
   },
   "update_school": {
     "loading": "Carregando as informações da escola...",

@@ -15,7 +15,7 @@ import { getRouteApi, getRouteSuggestionApi } from "@core/services/routeApi";
 import { getLinkedStudents } from "@core/services/familyService";
 import { startTripApi } from "@core/services/tripApi";
 import { apiPost } from "@core/services/apiClient";
-import { useSession } from "@core/hooks/useSession";
+import useSession from "@core/hooks/useSession";
 import styles from "./LiveTracking.style";
 
 function formatDateInBogota(dateValue) {
@@ -72,7 +72,7 @@ export default function LiveTracking() {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
   const navigation = useNavigation();
-  const { role } = useSession();
+  const { role, initialized } = useSession();
   const mapRef = useRef(null);
   const { location, error, loading, lastUpdated, fallbackLocation } = useGpsTracking();
 
@@ -124,13 +124,14 @@ export default function LiveTracking() {
         // 1) Geometría vial OSRM (sugerencia de ruta)
         try {
           const suggestion = await getRouteSuggestionApi(route.id);
-          // Backend devuelve RouteSuggestionGeometryDto con Points (PascalCase)
-          // GeoPointDto tiene Latitude/Longitude -> transformar a lowercase para Polyline
-          if (suggestion?.geometry?.Points && mounted) {
+          // ASP.NET Core serializa camelCase: geometry.points con {latitude, longitude}.
+          // PascalCase es el nombre del DTO en C#, no el del JSON que llega acá.
+          const points = suggestion?.geometry?.points ?? [];
+          if (points.length > 0 && mounted) {
             setRouteGeometry(
-              suggestion.geometry.Points.map((p) => ({
-                latitude: p.Latitude,
-                longitude: p.Longitude,
+              points.map((p) => ({
+                latitude: p.latitude,
+                longitude: p.longitude,
               }))
             );
           }
@@ -146,7 +147,7 @@ export default function LiveTracking() {
 
         // 3) Info de horario y dirección para TripActionButton
         if (mounted) {
-          const direction = route.Schedules?.[0]?.Direction ?? null;
+          const direction = route.schedules?.[0]?.direction ?? null;
           setTripDirection(direction);
           setTripSchedule({
             startTime: route.startTime,
@@ -161,6 +162,17 @@ export default function LiveTracking() {
     loadRoute();
     return () => { mounted = false; };
   }, [role]);
+
+  // Esperar a que la sesión esté inicializada (rol cargado desde SecureStore).
+  // Va DESPUÉS de todos los hooks: así la cantidad de hooks no cambia entre
+  // renders (rules of hooks) mientras se muestra el loading.
+  if (!initialized) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ color: theme.navbarColor, marginTop: 12 }}>Cargando sesión...</Text>
+      </View>
+    );
+  }
 
   const handleStartTrip = async () => {
     try {
@@ -284,16 +296,17 @@ export default function LiveTracking() {
       )}
 
 
-      {/* Botón contextual Iniciar/Terminar - posicionado arriba del BottomTabBar */}
       <View style={styles.tripButtonContainer} pointerEvents="box-none">
-        <TripActionButton
-          status={tripStatus}
-          direction={tripDirection}
-          schedule={tripSchedule}
-          onStart={handleStartTrip}
-          onEnd={handleEndTrip}
-          showWhenEnded={false}
-        />
+        {routeStops.length > 0 && (
+          <TripActionButton
+            status={tripStatus}
+            direction={tripDirection}
+            schedule={tripSchedule}
+            onStart={handleStartTrip}
+            onEnd={handleEndTrip}
+            showWhenEnded={false}
+          />
+        )}
       </View>
       <View style={styles.bottomBarOverlay} pointerEvents="box-none">
         <BottomTabBar

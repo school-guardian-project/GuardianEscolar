@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
-import { View, Text } from "react-native";
+import React, { useState, useEffect, useRef } from "react";
+import { View, Text, ActivityIndicator } from "react-native";
 import MapView, { Marker } from "react-native-maps";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -20,7 +20,7 @@ import IncidentReportModal from "@components/modals/IncidentReportModal";
 import TripActionButton from "@components/buttons/TripActionButton";
 import { getSession } from "@core/services/authService";
 import { getRouteApi } from "@core/services/routeApi";
-import { startTripApi, getTripStatusApi } from "@core/services/tripApi";
+import { startTripApi } from "@core/services/tripApi";
 import { getLinkedStudents } from "@core/services/familyService";
 import { scanCredential } from "@core/services/notificationApi";
 import { apiPost } from "@core/services/apiClient";
@@ -92,30 +92,23 @@ async function resolveRouteForRole(role, session) {
   return { route: first, note: null };
 }
 
-export default function MainPage() {
+function MainPageContent() {
   const { width } = useWindow();
   const insets = useSafeAreaInsets();
   const horizontalPadding = width < 360 ? 12 : 16;
   const navigation = useNavigation();
-  const { role, initialized } = useSession();
+  const { role } = useSession();
   const { t } = useTranslation();
   const isFocused = useIsFocused();
-  
-  // Esperar a que el rol esté inicializado desde SecureStore
-  if (!initialized) {
-    return null; // o un spinner si prefieres
-  }
-  
+
   const config = roleConfig[role];
   const [modalType, setModalType] = useState(null);
   const [incidentOpen, setIncidentOpen] = useState(false);
   const [routeInfo, setRouteInfo] = useState(null);
   const [, setLoading] = useState(true);
-  const [scanMode, setScanMode] = useState("ON_BOARD");
   const [status, setStatus] = useState(null);
   const [scanFeedback, setScanFeedback] = useState(null);
-  // Estados del viaje - ahora controlados por backend
-  const [tripStatus, setTripStatus] = useState("idle"); // 'idle' | 'ready_to_start' | 'active' | 'ended'
+  const [tripStatus, setTripStatus] = useState("idle"); // 'idle' | 'active' | 'ended'
   const [tripDirection, setTripDirection] = useState(null); // 'Ida' | 'Vuelta'
   const [tripSchedule, setTripSchedule] = useState({ startTime: null, endTime: null });
   const [currentTripId, setCurrentTripId] = useState(null);
@@ -237,7 +230,8 @@ export default function MainPage() {
         return;
       }
       await apiPost(`/route/api/trips/end?tripId=${currentTripId}`, {});
-      // El polling actualizará a "ended"
+      setTripStatus("ended");
+      setCurrentTripId(null);
       setScanFeedback({
         type: "success",
         message: t("cards.tripEnded") || "Viaje finalizado correctamente",
@@ -253,9 +247,10 @@ export default function MainPage() {
 
   const handleQrScan = async (qrToken) => {
     try {
-      // Contrato de ms-notification (FR-4.1): { qrToken, boardingType }.
-      // scanMode ya usa los valores del enum ON_BOARD/OFF_BOARD.
-      const result = await scanCredential(qrToken, scanMode);
+      // Contrato de ms-notification: solo qrToken. El backend resuelve viaje,
+      // parada, estudiante y el tipo de movimiento (subida/bajada) a partir del
+      // estado del viaje, y lo devuelve en `boardingType` para elegir el mensaje.
+      const result = await scanCredential(qrToken);
       handleCloseModal();
 
       // El driver necesita saber que el sistema ya hizo lo suyo: sin esto el
@@ -265,7 +260,7 @@ export default function MainPage() {
         type: "success",
         message: result?.alreadyProcessed
           ? t("cards.scanAlready")
-          : scanMode === "OFF_BOARD"
+          : result?.boardingType === "OFF_BOARD"
             ? t("cards.scanAlighted")
             : t("cards.scanBoarded"),
       });
@@ -311,10 +306,11 @@ export default function MainPage() {
           route.startTime && route.endTime
             ? `${route.startTime} - ${route.endTime}`
             : "";
+        // /routes/today y /routes/student/{id} devuelven RouteDetailDto: no traen
+        // stopsCount, sino el listado stops. /routes (respaldo) sí trae stopsCount.
+        const stopsTotal = route.stops?.length ?? route.stopsCount;
         const stopsCount =
-          route.stopsCount != null && route.stopsCount !== ""
-            ? String(route.stopsCount)
-            : "—";
+          stopsTotal != null && stopsTotal !== "" ? String(stopsTotal) : "—";
 
         setRouteInfo({
           routeId: route.id,
@@ -324,11 +320,8 @@ export default function MainPage() {
           plate: route.bus?.plate ?? "",
           schedule,
           stopsCount,
+          direction: route.schedules?.[0]?.direction ?? null,
           finalDestination: route.targetSector ?? "",
-          startTime: route.startTime,
-          endTime: route.endTime,
-        });
-        setRouteSchedule({
           startTime: route.startTime,
           endTime: route.endTime,
         });
@@ -345,8 +338,8 @@ export default function MainPage() {
 
   // Extract direction from route schedules
   useEffect(() => {
-    if (routeInfo?.Schedules?.[0]?.Direction) {
-      setTripDirection(routeInfo.Schedules[0].Direction);
+    if (routeInfo?.direction) {
+      setTripDirection(routeInfo.direction);
     }
     if (routeInfo?.startTime && routeInfo?.endTime) {
       setTripSchedule({ startTime: routeInfo.startTime, endTime: routeInfo.endTime });
@@ -454,17 +447,21 @@ export default function MainPage() {
           />
         </View>
         <View style={styles.qrButtonContainer} pointerEvents="box-none">
-          <TripActionButton
-            status={tripStatus}
-            direction={tripDirection}
-            schedule={tripSchedule}
-            onStart={handleStartTrip}
-            onEnd={handleEndTrip}
-            showWhenEnded={false}
-            canStart={canStart}
-            canEnd={canEnd}
-            endConditionDetail={endConditionDetail}
-          />
+          {/* QR Scanner for driver (qrMode: "scan") */}
+          {config.card.showQR && config.card.qrMode === "scan" && (
+            <QRButtom config={config.card} onOpenModel={handleOpenModal} />
+          )}
+          {/* Trip buttons only when route is assigned */}
+          {routeInfo && (
+            <TripActionButton
+              status={tripStatus}
+              direction={tripDirection}
+              schedule={tripSchedule}
+              onStart={handleStartTrip}
+              onEnd={handleEndTrip}
+              showWhenEnded={false}
+            />
+          )}
         </View>
 
         {config.card.showIncidentReport && (
@@ -484,28 +481,6 @@ export default function MainPage() {
         visible={modalType === "activeQR"}
         onClose={handleCloseModal}
       />
-      {modalType === "qrScanner" && (
-        <View style={styles.scanModeContainer}>
-          <Pressable
-            style={[
-              styles.scanModeButton,
-              scanMode === "ON_BOARD" && styles.scanModeActive,
-            ]}
-            onPress={() => setScanMode("ON_BOARD")}
-          >
-            <Text style={styles.scanModeText}>ABORDAR</Text>
-          </Pressable>
-          <Pressable
-            style={[
-              styles.scanModeButton,
-              scanMode === "OFF_BOARD" && styles.scanModeActive,
-            ]}
-            onPress={() => setScanMode("OFF_BOARD")}
-          >
-            <Text style={styles.scanModeText}>DESCENDER</Text>
-          </Pressable>
-        </View>
-      )}
       <QRScannerModal
         visible={modalType === "qrScanner"}
         onClose={handleCloseModal}
@@ -513,4 +488,26 @@ export default function MainPage() {
       />
     </View>
   );
+}
+
+/**
+ * Puerta de sesión: el contenido solo monta cuando `initialized` (rol leído
+ * desde SecureStore por RoleSwitcherProvider) ya es true. El early return vive
+ * en un componente que solo usa useSession, así la cantidad de hooks NO cambia
+ * entre renders (rules of hooks) y mientras carga no se abren efectos ni GPS.
+ */
+export default function MainPage() {
+  const { initialized } = useSession();
+
+  // Esperar a que el rol esté inicializado desde SecureStore
+  if (!initialized) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#1A56DB" />
+        <Text style={{ marginTop: 12, color: "#666" }}>Cargando sesión...</Text>
+      </View>
+    );
+  }
+
+  return <MainPageContent />;
 }

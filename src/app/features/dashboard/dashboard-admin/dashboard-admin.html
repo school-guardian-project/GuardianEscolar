@@ -27,14 +27,14 @@
           </p>
           <p *ngIf="schoolErrorKey" role="alert">{{ schoolErrorKey | translate }}</p>
 
-          <div class="metrics">
+          <div class="metrics" [attr.aria-busy]="loadingMetrics">
             <div class="metric-card">
               <p class="metric-label">
                 {{ 'dashboard.metrics.students' | translate }}
               </p>
-              <p class="metric-value"></p>
+              <p class="metric-value">{{ studentsTotal === null ? '—' : (studentsTotal | number) }}</p>
               <p class="metric-sub">
-                {{ 'dashboard.metrics.month' | translate }}
+                {{ (studentsError ? 'dashboard.metrics.loadError' : 'dashboard.metrics.registered') | translate }}
               </p>
             </div>
 
@@ -42,11 +42,29 @@
               <p class="metric-label">
                 {{ 'dashboard.metrics.routes' | translate }}
               </p>
-              <p class="metric-value"></p>
+              <p class="metric-value">{{ activeRoutesTotal === null ? '—' : (activeRoutesTotal | number) }}</p>
               <p class="metric-sub">
-                {{ 'dashboard.metrics.operating' | translate }}
+                {{ (routesError ? 'dashboard.metrics.loadError' : 'dashboard.metrics.activeInSchool') | translate }}
               </p>
             </div>
+
+            <div class="metric-card">
+              <p class="metric-label">{{ 'dashboard.metrics.totalAlerts' | translate }}</p>
+              <p class="metric-value">{{ schoolAlertsTotal === null ? '—' : (schoolAlertsTotal | number) }}</p>
+              <p class="metric-sub">
+                {{ (totalAlertsError ? 'dashboard.metrics.loadError' : 'dashboard.metrics.allSchoolAlerts') | translate }}
+              </p>
+            </div>
+          </div>
+          <div class="metrics-status">
+            <p *ngIf="loadingMetrics" role="status">{{ 'dashboard.metrics.loading' | translate }}</p>
+            <p *ngIf="metricsErrorKey" role="alert">{{ metricsErrorKey | translate }}</p>
+            <p *ngIf="studentsError || routesError || totalAlertsError" role="alert">
+              {{ 'dashboard.metrics.loadError' | translate }}
+            </p>
+            <button type="button" class="alerts-button" (click)="loadMetrics()" [disabled]="loadingMetrics">
+              {{ 'dashboard.metrics.refresh' | translate }}
+            </button>
           </div>
 
           <section class="alerts-card" aria-labelledby="school-alerts-title" [attr.aria-busy]="loadingAlerts">

@@ -59,6 +59,7 @@
 }
 
 .metric-card {
+  min-width: 0;
   background: var(--card-bg);
   border-radius: 10px;
   border: 0.5px solid var(--border-color);
@@ -91,6 +92,17 @@
 
 .metric-sub.danger {
   color: #c40000;
+}
+
+.metrics-status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: -12px 0 24px;
+  color: var(--text-secondary);
+  font-size: 13px;
 }
 
 /* SIDEBAR DERECHA */
@@ -234,6 +246,10 @@ mat-icon {
 }
 
 @media (max-width: 600px) {
+  .metrics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .alerts-card {
     padding: 14px;
   }

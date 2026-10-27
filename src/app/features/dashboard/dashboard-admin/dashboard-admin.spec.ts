@@ -1,10 +1,15 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { provideRouter } from '@angular/router';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { provideRouter, RouterModule } from '@angular/router';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { of, Subject, throwError } from 'rxjs';
 import { AuthService } from '@core/services/auth.service';
 import { SchoolsService } from '@core/services/schools.service';
 import { ProfileService } from '@core/services/profile.service';
+import { StudentsService } from '@core/services/students.service';
+import { RoutesService } from '@core/services/routes.service';
 import { SchoolResponseDto } from '@core/models/school.model';
 import { RecordInformation } from '@shared/components/modal/record-information/record-information';
 import { Alert, AlertsResponse, AlertsService } from '@core/services/alerts.service';
@@ -20,6 +25,8 @@ describe('DashboardAdmin', () => {
   let updateSessionSchoolId: ReturnType<typeof vi.fn>;
   let getAlerts: ReturnType<typeof vi.fn>;
   let getAlertTypes: ReturnType<typeof vi.fn>;
+  let listStudents: ReturnType<typeof vi.fn>;
+  let listRoutes: ReturnType<typeof vi.fn>;
   const alert: Alert = {
     id: 'alert-1', profileId: 'student-1', routeExecutionId: 'trip-1',
     studentName: 'Ana', routeName: 'Ruta 1', alertType: 1,
@@ -46,6 +53,11 @@ describe('DashboardAdmin', () => {
     updateSessionSchoolId = vi.fn((schoolId: string | null) => { session.schoolId = schoolId; });
     getAlerts = vi.fn(() => of(response));
     getAlertTypes = vi.fn(() => of([{ id: 1, name: 'Bus Delay' }, { id: 25, name: 'On Board' }]));
+    listStudents = vi.fn(() => of([{ id: 'student-1' }, { id: 'student-2' }]));
+    listRoutes = vi.fn(() => of([
+      { id: 'route-1' },
+      { id: 'route-2' },
+    ]));
     await TestBed.configureTestingModule({
       imports: [DashboardAdmin, RecordInformation, TranslateModule.forRoot()],
       providers: [
@@ -54,17 +66,150 @@ describe('DashboardAdmin', () => {
         { provide: SchoolsService, useValue: { get: getSchool } },
         { provide: ProfileService, useValue: { getProfile } },
         { provide: AlertsService, useValue: { getAlerts, getAlertTypes } },
+        { provide: StudentsService, useValue: { list: listStudents } },
+        { provide: RoutesService, useValue: { list: listRoutes } },
       ],
-    }).overrideComponent(DashboardAdmin, { set: { template: '' } }).compileComponents();
+    }).overrideComponent(DashboardAdmin, {
+      set: {
+        imports: [CommonModule, FormsModule, RouterModule, TranslateModule],
+        schemas: [CUSTOM_ELEMENTS_SCHEMA],
+      },
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DashboardAdmin);
     component = fixture.componentInstance;
+    vi.spyOn(component, 'isChildRouteActive').mockReturnValue(false);
     fixture.detectChanges();
     await fixture.whenStable();
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('counts registered students, only active routes, and all school alerts', () => {
+    expect(component.studentsTotal).toBe(2);
+    expect(component.activeRoutesTotal).toBe(2);
+    expect(component.schoolAlertsTotal).toBe(21);
+    expect(component.loadingMetrics).toBe(false);
+    expect(getAlerts).toHaveBeenCalledWith({ schoolId: 'school-1', page: 0, size: 1 });
+  });
+
+  it('renders the three real metric values side by side', () => {
+    const element: HTMLElement = fixture.nativeElement;
+    expect(element.querySelectorAll('.metrics .metric-card')).toHaveLength(3);
+    expect(Array.from(element.querySelectorAll('.metric-value'), node => node.textContent?.trim()))
+      .toEqual(['2', '2', '21']);
+    expect(element.querySelector('.metrics')?.getAttribute('aria-busy')).toBe('false');
+  });
+
+  it('renders zero only for successful empty results', () => {
+    listStudents.mockReturnValueOnce(of([]));
+    component.loadMetrics();
+    fixture.detectChanges();
+    const element: HTMLElement = fixture.nativeElement;
+    expect(element.querySelector('.metric-value')?.textContent?.trim()).toBe('0');
+  });
+
+  it('renders unavailable counts and a visible error instead of misleading zeros', () => {
+    const log = vi.spyOn(console, 'error').mockImplementation(() => {});
+    listStudents.mockReturnValueOnce(throwError(() => new Error('Unavailable')));
+    component.loadMetrics();
+    fixture.detectChanges();
+    const element: HTMLElement = fixture.nativeElement;
+    expect(element.querySelector('.metric-value')?.textContent?.trim()).toBe('—');
+    expect(element.querySelector('.metrics-status [role="alert"]')).not.toBeNull();
+    log.mockRestore();
+  });
+
+  it('refreshes real counts from the metrics button', () => {
+    listStudents.mockReturnValueOnce(of([{ id: 'student-1' }]));
+    const element: HTMLElement = fixture.nativeElement;
+    element.querySelector<HTMLButtonElement>('.metrics-status button')?.click();
+    fixture.detectChanges();
+    expect(element.querySelector('.metric-value')?.textContent?.trim()).toBe('1');
+  });
+
+  it('keeps the all-time school alert total independent of table filters and pages', () => {
+    getAlerts.mockReturnValueOnce(of({ ...response, totalElements: 1, totalPages: 1 }));
+    component.alertSearch = 'demora';
+    component.selectedAlertType = 1;
+    component.filterAlerts();
+    expect(component.alertsTotal).toBe(1);
+    expect(component.schoolAlertsTotal).toBe(21);
+  });
+
+  it('shows real zeros for empty successful responses', () => {
+    listStudents.mockReturnValueOnce(of([]));
+    listRoutes.mockReturnValueOnce(of([]));
+    getAlerts.mockReturnValueOnce(of({ ...response, content: [], totalElements: 0, totalPages: 0 }));
+    component.loadMetrics();
+    expect(component.studentsTotal).toBe(0);
+    expect(component.activeRoutesTotal).toBe(0);
+    expect(component.schoolAlertsTotal).toBe(0);
+  });
+
+  it('does not request metrics without an assigned school', () => {
+    listStudents.mockClear();
+    listRoutes.mockClear();
+    getAlerts.mockClear();
+    getProfile.mockReturnValueOnce(of({ schoolId: null }));
+    component.loadMetrics();
+    expect(listStudents).not.toHaveBeenCalled();
+    expect(listRoutes).not.toHaveBeenCalled();
+    expect(getAlerts).not.toHaveBeenCalled();
+    expect(component.metricsErrorKey).toBe('dashboard.metrics.noSchool');
+    expect(component.studentsTotal).toBeNull();
+    expect(component.activeRoutesTotal).toBeNull();
+    expect(component.schoolAlertsTotal).toBeNull();
+  });
+
+  it.each(['students', 'routes', 'alerts'])('keeps other metrics when %s fails and recovers on refresh', metric => {
+    const log = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const request = metric === 'students' ? listStudents : metric === 'routes' ? listRoutes : getAlerts;
+    request.mockReturnValueOnce(throwError(() => new Error('Unavailable')));
+    component.loadMetrics();
+    expect(component.studentsTotal).toBe(metric === 'students' ? null : 2);
+    expect(component.activeRoutesTotal).toBe(metric === 'routes' ? null : 2);
+    expect(component.schoolAlertsTotal).toBe(metric === 'alerts' ? null : 21);
+    expect(component.studentsError).toBe(metric === 'students');
+    expect(component.routesError).toBe(metric === 'routes');
+    expect(component.totalAlertsError).toBe(metric === 'alerts');
+    component.loadMetrics();
+    expect(component.studentsError || component.routesError || component.totalAlertsError).toBe(false);
+    expect(component.studentsTotal).toBe(2);
+    expect(component.activeRoutesTotal).toBe(2);
+    expect(component.schoolAlertsTotal).toBe(21);
+    log.mockRestore();
+  });
+
+  it('does not request metrics when the profile cannot be resolved', () => {
+    const log = vi.spyOn(console, 'error').mockImplementation(() => {});
+    listStudents.mockClear();
+    listRoutes.mockClear();
+    getAlerts.mockClear();
+    getProfile.mockReturnValueOnce(throwError(() => new Error('Unavailable')));
+    component.loadMetrics();
+    expect(listStudents).not.toHaveBeenCalled();
+    expect(listRoutes).not.toHaveBeenCalled();
+    expect(getAlerts).not.toHaveBeenCalled();
+    expect(component.metricsErrorKey).toBe('dashboard.metrics.loadError');
+    expect(component.schoolAlertsTotal).toBeNull();
+    expect(component.loadingMetrics).toBe(false);
+    log.mockRestore();
+  });
+
+  it('prevents duplicate metrics requests and cancels them on destroy', () => {
+    const pending = new Subject<[]>();
+    listStudents.mockReturnValueOnce(pending);
+    component.loadMetrics();
+    const calls = listStudents.mock.calls.length;
+    component.loadMetrics();
+    expect(listStudents).toHaveBeenCalledTimes(calls);
+    expect(component.loadingMetrics).toBe(true);
+    fixture.destroy();
+    expect(pending.observed).toBe(false);
+    expect(component.loadingMetrics).toBe(false);
   });
 
   it('updates catalog labels when switching among the four supported languages', () => {

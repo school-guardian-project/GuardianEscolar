@@ -4,6 +4,14 @@ This project was generated using [Angular CLI](https://github.com/angular/angula
 
 ## Development server
 
+Public password recovery (`/api/v1/password/forgot`, `/forgot/verify` and `/reset`)
+bypasses automatic Bearer injection and token refresh in the HTTP interceptor.
+Login and refresh retain credentialed cookie requests; protected profile changes
+and dashboard APIs retain their authenticated retry behavior. When using Kong,
+set `API_URL` and `API_FORGOT_INFORMATION_URL` to its HTTPS origin without API path
+prefixes, then rebuild the Vercel deployment. Browser preflights are handled by
+Kong's shared CORS policy.
+
 The administrator dashboard loads persisted alerts from the notification API in
 a searchable card, with database-backed alert-type filters and ten alerts per
 page (newest first). It resolves the school from the current IAM profile, not a

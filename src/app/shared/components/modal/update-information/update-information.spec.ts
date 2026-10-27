@@ -62,6 +62,24 @@ describe('UpdateInformation', () => {
     expect(component).toBeTruthy();
   });
 
+  it('associates each campus input with a unique visible label', () => {
+    component.schoolId = 'school-1';
+    component.ngOnInit();
+    component.addCampus();
+    fixture.detectChanges();
+
+    const inputs: NodeListOf<HTMLInputElement> = fixture.nativeElement.querySelectorAll('.modal__campus input');
+    expect(inputs).toHaveLength(4);
+    expect(new Set(Array.from(inputs, input => input.id)).size).toBe(4);
+    for (const input of Array.from(inputs)) {
+      expect(input.id).not.toBe('');
+      const label: HTMLLabelElement = fixture.nativeElement.querySelector(`label[for="${input.id}"]`);
+      expect(label).not.toBeNull();
+      expect(label.control).toBe(input);
+      expect(label.textContent?.trim()).not.toBe('');
+    }
+  });
+
   it('filters only this school campuses and saves explicit reactivation without changing the input records', () => {
     component.schoolId = 'school-1';
     component.ngOnInit();

@@ -18,9 +18,15 @@ describe('school and campus status requests', () => {
   it('keeps assignment lists active-only and explicitly includes inactive campuses for management', () => {
     const service = TestBed.inject(CampusesService);
     service.listBySchool('school-1').subscribe();
-    http.expectOne(`${base}/schools/school-1/campuses`).flush([]);
+    const activeRequest = http.expectOne(`${base}/schools/school-1/campuses`);
+    expect(activeRequest.request.method).toBe('GET');
+    expect(activeRequest.request.urlWithParams).not.toContain('includeInactive');
+    activeRequest.flush([]);
     service.listBySchool('school-1', true).subscribe();
-    http.expectOne(`${base}/schools/school-1/campuses?includeInactive=true`).flush([]);
+    const managementRequest = http.expectOne(`${base}/schools/school-1/campuses?includeInactive=true`);
+    expect(managementRequest.request.method).toBe('GET');
+    expect(managementRequest.request.urlWithParams).toContain('includeInactive=true');
+    managementRequest.flush([]);
   });
 
   it('reactivates a school without changing the saved contact or location fields', () => {

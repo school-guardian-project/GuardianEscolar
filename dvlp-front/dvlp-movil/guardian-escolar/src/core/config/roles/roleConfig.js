@@ -62,6 +62,27 @@ export const roleConfig = {
       showFamily: true,
     },
   },
+  // Admin (1) y SuperAdmin (5) del catálogo Iam.Role: perfil de gestión.
+  // Sin QR de estudiante ni reporte de incidente, y sin "Mi familia".
+  admin: {
+    topBar: {
+      showNotifications: true,
+    },
+    card: {
+      showQR: false,
+      qrMode: null,
+      showIncidentReport: false,
+    },
+    MapMarkers: {
+      showRouteStops: false,
+      showStudentMarker: false,
+      showDriverMarker: false,
+      showGeofence: false,
+    },
+    profile: {
+      showFamily: false,
+    },
+  },
 };
 
 // roleId del JWT (catálogo Iam.Role) -> clave local de roleConfig.

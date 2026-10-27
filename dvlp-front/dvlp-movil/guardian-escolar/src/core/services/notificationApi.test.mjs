@@ -66,29 +66,18 @@ async function loadNotificationApi(handler, env = {}) {
  */
 const plain = (value) => JSON.parse(JSON.stringify(value));
 
-test('scanCredential registra el abordaje con el token y el tipo de movimiento', async () => {
+test('scanCredential manda solo el token: el backend resuelve el tipo de movimiento', async () => {
   const { service, calls } = await loadNotificationApi(() => undefined);
 
-  await service.scanCredential('qr-token-1', 'ON_BOARD');
+  await service.scanCredential('qr-token-1');
 
   assert.deepEqual(plain(calls), [
     {
       method: 'POST',
       path: '/notification/api/v1/notifications/scan',
-      body: { qrToken: 'qr-token-1', boardingType: 'ON_BOARD' },
+      body: { qrToken: 'qr-token-1' },
     },
   ]);
-});
-
-test('scanCredential distingue el descenso del abordaje', async () => {
-  const { service, calls } = await loadNotificationApi(() => undefined);
-
-  await service.scanCredential('qr-token-2', 'OFF_BOARD');
-
-  assert.deepEqual(plain(calls[0].body), {
-    qrToken: 'qr-token-2',
-    boardingType: 'OFF_BOARD',
-  });
 });
 
 test('scanCredential propaga el error del backend para que la pantalla lo muestre', async () => {
@@ -96,7 +85,7 @@ test('scanCredential propaga el error del backend para que la pantalla lo muestr
     throw Object.assign(new Error('conflict'), { status: 409 });
   });
 
-  await assert.rejects(() => service.scanCredential('qr-token-3', 'ON_BOARD'), {
+  await assert.rejects(() => service.scanCredential('qr-token-3'), {
     status: 409,
   });
 });
@@ -107,10 +96,11 @@ test('scanCredential devuelve el resultado para que el conductor vea la confirma
     alertId: 'alert-1',
     parentsNotified: 2,
     alreadyProcessed: true,
+    boardingType: 'OFF_BOARD',
   };
   const { service } = await loadNotificationApi(() => result);
 
-  assert.deepEqual(plain(await service.scanCredential('qr-token-4', 'ON_BOARD')), result);
+  assert.deepEqual(plain(await service.scanCredential('qr-token-4')), result);
 });
 
 test('generateCredential devuelve la credencial del backend', async () => {

@@ -1,8 +1,13 @@
-import { apiPost } from "./apiClient";
+import { apiPost, apiGet } from "./apiClient";
 
-const PREFIX = "/route/api/trips";
+const TRIP_PREFIX = "/route/api/trips";
 
 /** POST para iniciar un viaje (Trip). */
 export async function startTripApi(body) {
-  return apiPost(`${PREFIX}/start`, body);
+  return apiPost(`${TRIP_PREFIX}/start`, body);
+}
+
+/** GET estado del viaje para conductor (CanStart, CanEnd, EndConditionDetail). */
+export async function getTripStatusApi(driverId) {
+  return apiGet(`${TRIP_PREFIX}/status?driverId=${driverId}`);
 }

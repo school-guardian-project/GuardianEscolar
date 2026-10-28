@@ -114,7 +114,7 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { name: 'capacity', type: 'text' },
     { name: 'soat', type: 'date' },
     // GPS libres (GET /fleet/api/gps-devices): el valor es el id y se muestra el IMEI.
-    { name: 'gps', type: 'select', options: [] },
+    { name: 'gps', type: 'text' },
     // Alternativa al select: IMEI de un GPS nuevo (ms-fleet lo crea al vuelo).
     { name: 'gpsImei', type: 'text' },
     { name: 'gpsStatus', type: 'select', options: ['true', 'false'], optionLabelPrefix: 'register.bus.gpsStatusValues.' },

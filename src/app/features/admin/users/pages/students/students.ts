@@ -237,7 +237,10 @@ export class Students implements OnInit {
     }
     this.studentsService.get(String(id)).subscribe({
       next: (detail) => {
-        this.studentSelected = fromDetail(detail);
+        this.studentSelected = {
+          ...fromDetail(detail),
+          profileId: detail.profileId ?? student['profileId'] ?? null,
+        };
         this.showModal = true;
       },
       error: (error: unknown) => {

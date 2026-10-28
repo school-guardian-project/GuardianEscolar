@@ -173,6 +173,18 @@ This will compile your project and store the build artifacts in the `dist/` dire
 
 ## Running unit tests
 
+Student route assignment uses the IAM `profileId`, not the person `id`. Opening
+student details preserves the list profile when an older API omits it; current
+user-management details also return the associated profile. The assignment modal
+blocks missing, malformed or empty-GUID profiles with a translated error rather
+than sending an invalid `studentId`. Students without an associated IAM profile
+must have that association resolved before they can be assigned.
+
+License expiration and bus insurance validation use the existing future-date
+message; birth-date errors keep their separate age-range message. Both field
+validation and form submission use the validator's identity to select the
+translation, instead of treating every date error as a birth-date error.
+
 To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
 
 ```bash

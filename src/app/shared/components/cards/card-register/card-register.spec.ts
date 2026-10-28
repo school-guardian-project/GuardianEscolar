@@ -39,6 +39,45 @@ describe('CardRegister', () => {
     expect(component).toBeTruthy();
   });
 
+  it('uses the future-date error for expired licenses on validation and submission', () => {
+    component.type = 'driver';
+    component.onInputChange('licenseExpiration', '2000-01-01');
+    component.validateField('licenseExpiration');
+    expect(component.getFieldError('licenseExpiration')).toBe('validation.futureDate');
+    component.onSubmit();
+    expect(component.getFieldError('licenseExpiration')).toBe('validation.futureDate');
+
+    const future = new Date();
+    future.setFullYear(future.getFullYear() + 1);
+    component.onInputChange('licenseExpiration', future.toISOString().slice(0, 10));
+    component.validateField('licenseExpiration');
+    expect(component.getFieldError('licenseExpiration')).toBe('');
+    component.onSubmit();
+    expect(component.getFieldError('licenseExpiration')).toBe('');
+  });
+
+  it('keeps birth-date and required errors separate from expiration dates', () => {
+    component.type = 'driver';
+    component.onInputChange('birthDate', '1800-01-01');
+    component.validateField('birthDate');
+    expect(component.getFieldError('birthDate')).toBe('validation.birthDate');
+    component.onInputChange('birthDate', '2099-01-01');
+    component.validateField('birthDate');
+    expect(component.getFieldError('birthDate')).toBe('validation.birthDate');
+    component.onInputChange('licenseExpiration', '');
+    component.validateField('licenseExpiration');
+    expect(component.getFieldError('licenseExpiration')).toBe('validation.required');
+  });
+
+  it('uses the same future-date message for expired bus insurance', () => {
+    component.type = 'bus';
+    component.onInputChange('soat', '2000-01-01');
+    component.validateField('soat');
+    expect(component.getFieldError('soat')).toBe('validation.futureDate');
+    component.onSubmit();
+    expect(component.getFieldError('soat')).toBe('validation.futureDate');
+  });
+
   it('renders labeled campus actions below the address instead of a name-field remove icon', () => {
     TestBed.inject(CitiesService).list = vi.fn(() => of([]));
     component.type = 'schools';

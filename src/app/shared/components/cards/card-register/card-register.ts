@@ -2,7 +2,7 @@
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
-import { validateField, validateBirthDate, validateFutureDate, ValidationSchema } from '@core/validators/form-validators';
+import { validateField, validateBirthDate, validateFutureDate, ValidationRule, ValidationSchema } from '@core/validators/form-validators';
 import { LocationMap } from '@shared/components/location-map/location-map';
 import { CampusesService } from '@core/services/campuses.service';
 import { CitiesService } from '@core/services/cities.service';
@@ -706,14 +706,16 @@ export class CardRegister implements OnInit, OnChanges {
     const error = validateField(value, rule);
 
     if (error) {
-      this.fieldErrors[fieldName] = this.translate.instant(`validation.${this.getErrorKey(error)}`, { min: rule.minLength ?? rule.min, max: rule.maxLength ?? rule.max });
+      this.fieldErrors[fieldName] = this.translate.instant(`validation.${this.getErrorKey(error, rule)}`, { min: rule.minLength ?? rule.min, max: rule.maxLength ?? rule.max });
     } else {
       delete this.fieldErrors[fieldName];
     }
   }
 
-  private getErrorKey(error: string): string {
+  private getErrorKey(error: string, rule: ValidationRule): string {
     if (error.includes('requerido') || error.includes('required')) return 'required';
+    if (rule.custom === validateFutureDate) return 'futureDate';
+    if (rule.custom === validateBirthDate) return 'birthDate';
     if (error.includes('Correo') || error.includes('email')) return 'email';
     if (error.includes('URL') || error.includes('url')) return 'url';
     if (error.includes('Teléfono') || error.includes('phone')) return 'phone';
@@ -721,7 +723,6 @@ export class CardRegister implements OnInit, OnChanges {
     if (error.includes('Máximo') || error.includes('Maximum')) return 'maxLength';
     if (error.includes('número') || error.includes('number')) return 'number';
     if (error.includes('letras') || error.includes('letters')) return 'text';
-    if (error.includes('futura') || error.includes('future')) return 'birthDate';
     return 'required';
   }
 
@@ -800,7 +801,7 @@ export class CardRegister implements OnInit, OnChanges {
       const error = validateField(value, rule);
 
       if (error) {
-        this.fieldErrors[field.name] = this.translate.instant(`validation.${this.getErrorKey(error)}`, { min: rule.minLength ?? rule.min, max: rule.maxLength ?? rule.max });
+        this.fieldErrors[field.name] = this.translate.instant(`validation.${this.getErrorKey(error, rule)}`, { min: rule.minLength ?? rule.min, max: rule.maxLength ?? rule.max });
       }
     }
 

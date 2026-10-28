@@ -964,7 +964,8 @@
       "stop": "Ponto de embarque",
       "selectRoute": "Selecione uma rota",
       "selectStop": "Selecione um ponto",
-      "title": "Atribuir rota ao aluno"
+      "title": "Atribuir rota ao aluno",
+      "missingProfile": "O aluno não possui um perfil válido para atribuir uma rota. Atualize a lista e tente novamente."
     },
     "bus": {
       "driver": "Motorista",

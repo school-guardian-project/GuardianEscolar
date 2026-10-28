@@ -964,7 +964,8 @@
       "stop": "Arrêt de montée",
       "selectRoute": "Sélectionnez un itinéraire",
       "selectStop": "Sélectionnez un arrêt",
-      "title": "Attribuer un itinéraire à l’élève"
+      "title": "Attribuer un itinéraire à l’élève",
+      "missingProfile": "L’élève ne dispose pas d’un profil valide pour cette affectation. Actualisez la liste et réessayez."
     },
     "bus": {
       "driver": "Conducteur",

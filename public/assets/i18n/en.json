@@ -603,7 +603,9 @@
         "endTime": "End time",
         "destination": "Destination",
         "routeSector": "Route sector",
-        "campusName": "Campus"
+        "campusName": "Campus",
+        "busPlate": "Assigned bus",
+        "driver": "Driver"
       }
     },
     "admins": {

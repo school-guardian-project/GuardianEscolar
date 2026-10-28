@@ -641,7 +641,9 @@
         "endTime": "Hora de término",
         "destination": "Destino",
         "routeSector": "Setor da rota",
-        "campusName": "Unidade"
+        "campusName": "Unidade",
+        "busPlate": "Ônibus atribuído",
+        "driver": "Motorista"
       }
     },
     "admins": {

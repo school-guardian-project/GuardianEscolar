@@ -603,7 +603,9 @@
         "endTime": "Heure de fin",
         "destination": "Destination",
         "routeSector": "Secteur de l'itinéraire",
-        "campusName": "Site"
+        "campusName": "Site",
+        "busPlate": "Bus assigné",
+        "driver": "Conducteur"
       }
     },
     "admins": {

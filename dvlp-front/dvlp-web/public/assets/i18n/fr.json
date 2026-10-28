@@ -507,7 +507,12 @@
     },
     "student": {
       "title": "Informations sur l'élève",
+      "unassigned": "Non attribué",
+      "assignmentError": "Impossible de charger l'itinéraire et l'arrêt attribués.",
       "fields": {
+        "route": "Itinéraire attribué",
+        "stop": "Arrêt attribué",
+        "busPlate": "Bus attribué",
         "names": "Prénoms",
         "lastNames": "Noms de famille",
         "documentType": "Type de document",
@@ -965,7 +970,8 @@
       "selectRoute": "Sélectionnez un itinéraire",
       "selectStop": "Sélectionnez un arrêt",
       "title": "Attribuer un itinéraire à l’élève",
-      "missingProfile": "L’élève ne dispose pas d’un profil valide pour cette affectation. Actualisez la liste et réessayez."
+      "missingProfile": "L’élève ne dispose pas d’un profil valide pour cette affectation. Actualisez la liste et réessayez.",
+      "assignmentNotVerified": "La demande a été enregistrée, mais l'itinéraire et l'arrêt de l'élève n'ont pas pu être vérifiés. Rechargez l'affectation avant de réessayer."
     },
     "bus": {
       "driver": "Conducteur",

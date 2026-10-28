@@ -507,7 +507,12 @@
     },
     "student": {
       "title": "Student information",
+      "unassigned": "Not assigned",
+      "assignmentError": "The saved route and stop assignment could not be loaded.",
       "fields": {
+        "route": "Assigned route",
+        "stop": "Assigned stop",
+        "busPlate": "Assigned bus",
         "names": "Names",
         "lastNames": "Last names",
         "documentType": "ID type",
@@ -965,7 +970,8 @@
       "selectRoute": "Select a route",
       "selectStop": "Select a stop",
       "title": "Assign route to student",
-      "missingProfile": "The student does not have a valid profile for route assignment. Refresh the list and try again."
+      "missingProfile": "The student does not have a valid profile for route assignment. Refresh the list and try again.",
+      "assignmentNotVerified": "The save request succeeded, but the student's route and stop could not be verified. Reload the assignment before retrying."
     },
     "bus": {
       "driver": "Driver",

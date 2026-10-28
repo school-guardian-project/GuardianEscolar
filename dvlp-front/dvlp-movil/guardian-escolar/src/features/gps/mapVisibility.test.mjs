@@ -107,6 +107,40 @@ const route = { id: "route", name: "School route", stops: [
 ] };
 const settle = () => new Promise(resolve => setImmediate(resolve));
 
+for (const screen of ["features/home/views/MainPage/MainPage.jsx", "features/gps/views/LiveTracking/LiveTracking.jsx"]) {
+  test(`${screen} reloads the student assignment on focus and ignores an obsolete response`, async () => {
+    let focused = true;
+    const pending = [];
+    const view = harness(screen, {
+      "@react-navigation/native": { useNavigation: () => ({}), useIsFocused: () => focused },
+      "@core/hooks/useSession": () => ({ role: "student", initialized: true }),
+      "@core/services/visibleRouteService": { resolveRouteForRole: () =>
+        new Promise(resolve => pending.push(resolve)) },
+      "@core/services/routeApi": { getRouteSuggestionApi: async () => null },
+    });
+    view.render();
+    await settle();
+    assert.equal(pending.length, 1);
+    focused = false;
+    view.render();
+    pending[0]({ route, note: null });
+    await settle();
+    focused = true;
+    view.render();
+    await settle();
+    assert.equal(pending.length, 2);
+    const updated = { ...route, id: "new-route", stops: [{ ...route.stops[0], id: "new-stop" }] };
+    pending[1]({ route: updated, note: null });
+    await settle();
+    const tree = view.render();
+    const map = nodes(tree).find(node => node.type === "@features/home/components/RouteMap"
+      || node.type === "@features/gps/components/GpsMap");
+    assert.ok(map);
+    const displayedStops = map.props.stops ?? map.props.routeStops;
+    assert.equal(displayedStops[0].id, "new-stop");
+  });
+}
+
 function loadMainStyles() {
   const compiled = transformSync(readFileSync(new URL(
     "features/home/views/MainPage/MainPage.style.jsx", sourceRoot,

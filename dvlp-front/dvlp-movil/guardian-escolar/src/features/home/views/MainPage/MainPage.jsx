@@ -206,6 +206,7 @@ function MainPageContent() {
   };
 
   useEffect(() => {
+    if (!isFocused) return;
     let mounted = true;
     setRouteInfo(null);
     setRouteStops([]);
@@ -260,7 +261,7 @@ function MainPageContent() {
 
     loadRouteInfo();
     return () => { mounted = false; };
-  }, [role]);
+  }, [role, isFocused]);
 
   // Extract direction from route schedules
   useEffect(() => {

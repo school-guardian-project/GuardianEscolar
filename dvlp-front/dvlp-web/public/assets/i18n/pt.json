@@ -545,7 +545,12 @@
     },
     "student": {
       "title": "Informações do estudante",
+      "unassigned": "Sem atribuição",
+      "assignmentError": "Não foi possível consultar a rota e a parada atribuídas.",
       "fields": {
+        "route": "Rota atribuída",
+        "stop": "Parada atribuída",
+        "busPlate": "Ônibus atribuído",
         "names": "Nomes",
         "lastNames": "Sobrenomes",
         "documentType": "Tipo de documento",
@@ -965,7 +970,8 @@
       "selectRoute": "Selecione uma rota",
       "selectStop": "Selecione um ponto",
       "title": "Atribuir rota ao aluno",
-      "missingProfile": "O aluno não possui um perfil válido para atribuir uma rota. Atualize a lista e tente novamente."
+      "missingProfile": "O aluno não possui um perfil válido para atribuir uma rota. Atualize a lista e tente novamente.",
+      "assignmentNotVerified": "A solicitação foi salva, mas não foi possível verificar a rota e a parada do aluno. Recarregue a atribuição antes de tentar novamente."
     },
     "bus": {
       "driver": "Motorista",

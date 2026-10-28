@@ -17,3 +17,15 @@ regressions, including login keyboard dismissal, all four home roles and bottom
 insets of 0, 24 and 34 points. These tests do not measure native layout: verify
 login with the keyboard open, device rotation, small screens and gesture/button
 navigation on Android/iOS before declaring the visual issue resolved on-device.
+
+## Student route assignment visibility
+
+The home and live-tracking screens reload the student's assigned route whenever
+navigation focuses them again, and discard responses from the previous focus.
+This reflects assignments made while the user was on another screen without
+requiring a new login. Routes still resolve through the session's IAM profile,
+then its assigned route-stop link, then the route and assigned bus.
+
+Regression checks cover switching focus while an old request is pending.
+The mobile suite (113 tests) and Android Hermes export pass locally. Device
+behavior and access to deployed services still require runtime verification.

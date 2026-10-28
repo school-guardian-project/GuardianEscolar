@@ -195,6 +195,20 @@ assignment-failure message. That browser run also emitted Angular `NG0103`
 runtime sign-off. Real database persistence and deployed/mobile behavior have
 not been revalidated for this correction.
 
+Student details now read the saved assignment by IAM profile and display its
+route, assigned stop and bus plate. Only 404 is treated as unassigned; other
+query failures remain explicit errors. The assignment modal discards stale
+route-stop catalogs, and reads back the profile/route/stop association after a
+successful POST before reporting success. This read-back uses the existing
+student-stop endpoint and does not change request contracts.
+
+The updated Angular suite passes 259 tests; TypeScript and the development
+build also pass. An isolated browser flow performed one assignment POST,
+verified its read-back, reopened student details and displayed the assigned
+route, stop and bus plate. The shared-form `NG0103` error still appears during
+that development-browser run, so this is not a clean whole-application runtime
+sign-off or proof of deployed database persistence.
+
 License expiration and bus insurance validation use the existing future-date
 message; birth-date errors keep their separate age-range message. Both field
 validation and form submission use the validator's identity to select the

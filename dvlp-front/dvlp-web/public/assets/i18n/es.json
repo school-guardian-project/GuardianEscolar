@@ -545,7 +545,12 @@
     },
     "student": {
       "title": "Información del estudiante",
+      "unassigned": "Sin asignar",
+      "assignmentError": "No se pudo consultar la asignación guardada de ruta y parada.",
       "fields": {
+        "route": "Ruta asignada",
+        "stop": "Parada asignada",
+        "busPlate": "Bus asignado",
         "names": "Nombres",
         "lastNames": "Apellidos",
         "documentType": "Tipo identificación",
@@ -965,7 +970,8 @@
       "selectRoute": "Selecciona una ruta",
       "selectStop": "Selecciona una parada",
       "title": "Asignar ruta al estudiante",
-      "missingProfile": "El estudiante no tiene un perfil válido para asignar una ruta. Actualiza el listado e inténtalo de nuevo."
+      "missingProfile": "El estudiante no tiene un perfil válido para asignar una ruta. Actualiza el listado e inténtalo de nuevo.",
+      "assignmentNotVerified": "La solicitud de guardado fue exitosa, pero no se pudo verificar la ruta y la parada del estudiante. Recarga la asignación antes de reintentar."
     },
     "bus": {
       "driver": "Conductor",

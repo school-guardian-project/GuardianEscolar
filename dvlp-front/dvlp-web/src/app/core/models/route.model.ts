@@ -28,6 +28,7 @@ export interface RouteResponseDto {
   endTime: string;
   status: RouteStatus;
   busId?: string | null;
+  bus?: { id: string; plate: string; driverName?: string } | null;
   stops?: RouteStopDetailDto[];
 }
 

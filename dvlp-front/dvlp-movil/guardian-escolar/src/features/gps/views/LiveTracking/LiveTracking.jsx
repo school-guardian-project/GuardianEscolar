@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
-import { useNavigation } from "@react-navigation/native";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
 import NotificationButton from "@components/buttons/NotificationButton";
 import BottomTabBar from "@components/layout/BottomTabBar";
 import TripActionButton from "@components/buttons/TripActionButton";
@@ -48,6 +48,7 @@ export default function LiveTracking() {
   const insets = useSafeAreaInsets();
   const { theme } = useTheme();
   const navigation = useNavigation();
+  const isFocused = useIsFocused();
   const { role, initialized } = useSession();
   const mapRef = useRef(null);
   const { location, error, loading, lastUpdated, fallbackLocation } = useGpsTracking();
@@ -72,6 +73,7 @@ export default function LiveTracking() {
   );
 
   useEffect(() => {
+    if (!isFocused) return;
     let mounted = true;
     setRouteStops([]);
     setRouteGeometry([]);
@@ -106,7 +108,7 @@ export default function LiveTracking() {
 
     loadRoute();
     return () => { mounted = false; };
-  }, [role, initialized]);
+  }, [role, initialized, isFocused]);
 
   // Esperar a que la sesión esté inicializada (rol cargado desde SecureStore).
   // Va DESPUÉS de todos los hooks: así la cantidad de hooks no cambia entre

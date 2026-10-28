@@ -8,6 +8,7 @@ import { RoutesService } from '@core/services/routes.service';
 import { BusesService } from '@core/services/buses.service';
 import { DriversService } from '@core/services/drivers.service';
 import { HttpErrorResponse } from '@angular/common/http';
+import { describeProblem } from '@core/http/problem-detail';
 
 export type AssignType = 'route' | 'student' | 'bus';
 
@@ -78,7 +79,9 @@ export class AssignRecord implements OnInit {
   get canSubmit(): boolean {
     if (this.submitting) return false;
     if (this.type === 'route') return !this.routeHasBus && !!this.selectedBusId;
-    if (this.type === 'student') return !!this.studentProfileId && !!this.selectedRouteId && !!this.selectedStopId;
+    if (this.type === 'student') return !!this.studentProfileId
+      && this.selectedRouteId === this.stopsRouteId
+      && this.stops.some(stop => stop.id === this.selectedStopId);
     return !this.currentDriver && !!this.selectedDriverProfileId;
   }
 
@@ -117,22 +120,25 @@ export class AssignRecord implements OnInit {
 
     this.routesService.getStudentRoute(profileId).subscribe({
       next: (route) => {
+        if (this.selectedRouteId) return;
         this.selectedRouteId = String(route.id);
         this.stops = (route.stops ?? []).map((s) => ({ id: String(s.id), label: s.name || s.address }));
         this.stopsRouteId = this.selectedRouteId;
 
         this.routesService.getStudentStop(this.selectedRouteId, profileId).subscribe({
-          next: (stop) => (this.selectedStopId = String(stop.stopId)),
+          next: (stop) => {
+            if (this.selectedRouteId === route.id) this.selectedStopId = String(stop.stopId);
+          },
           error: (error: unknown) => {
             if (!(error instanceof HttpErrorResponse) || error.status !== 404) {
-              this.message = 'assign_record.genericError';
+              this.message = describeProblem(error, 'assign_record.genericError');
             }
           },
         });
       },
       error: (error: unknown) => {
         if (!(error instanceof HttpErrorResponse) || error.status !== 404) {
-          this.message = 'assign_record.genericError';
+          this.message = describeProblem(error, 'assign_record.genericError');
         }
       },
     });
@@ -154,15 +160,22 @@ export class AssignRecord implements OnInit {
   }
 
   onRouteChange(routeId: string): void {
+    this.selectedRouteId = routeId;
     this.selectedStopId = '';
-    if (!routeId || routeId === this.stopsRouteId) return;
+    if (routeId && routeId === this.stopsRouteId) return;
+    this.stops = [];
+    this.stopsRouteId = '';
+    if (!routeId) return;
 
     this.routesService.get(routeId).subscribe({
       next: (detail) => {
+        if (this.selectedRouteId !== routeId) return;
         this.stops = (detail.stops ?? []).map((s) => ({ id: String(s.id), label: s.name || s.address }));
         this.stopsRouteId = routeId;
       },
-      error: () => (this.message = 'assign_record.genericError'),
+      error: (error: unknown) => {
+        if (this.selectedRouteId === routeId) this.message = describeProblem(error, 'assign_record.genericError');
+      },
     });
   }
 
@@ -194,13 +207,30 @@ export class AssignRecord implements OnInit {
     if (!this.canSubmit) return;
 
     this.submitting = true;
+    const routeId = this.selectedRouteId;
+    const stopId = this.selectedStopId;
     this.routesService
-      .assignStudent(this.selectedRouteId, {
+      .assignStudent(routeId, {
         studentId: profileId,
-        stopId: this.selectedStopId,
+        stopId,
       })
       .subscribe({
-        next: () => this.done(),
+        next: () => this.routesService.getStudentStop(routeId, profileId).subscribe({
+          next: (saved) => {
+            if (saved.studentProfileId?.toLowerCase() === profileId.toLowerCase()
+              && saved.routeId?.toLowerCase() === routeId.toLowerCase()
+              && saved.stopId?.toLowerCase() === stopId.toLowerCase()) {
+              this.done();
+            } else {
+              this.message = 'assign_record.student.assignmentNotVerified';
+              this.submitting = false;
+            }
+          },
+          error: () => {
+            this.message = 'assign_record.student.assignmentNotVerified';
+            this.submitting = false;
+          },
+        }),
         error: (err) => this.fail(err),
       });
   }
@@ -227,8 +257,7 @@ export class AssignRecord implements OnInit {
   }
 
   private fail(err: unknown): void {
-    const body = (err as { error?: unknown })?.error;
-    this.message = typeof body === 'string' && body ? body : 'assign_record.genericError';
+    this.message = describeProblem(err, 'assign_record.genericError');
     this.submitting = false;
   }
 

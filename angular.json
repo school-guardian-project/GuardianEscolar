@@ -87,7 +87,10 @@
           }
         },
         "test": {
-          "builder": "@ngx-env/builder:unit-test"
+          "builder": "@ngx-env/builder:unit-test",
+          "options": {
+            "providersFile": "src/testing/providers.ts"
+          }
         }
       }
     }

@@ -22,7 +22,7 @@ describe('ForgotInformationService', () => {
 
     const request = httpMock.expectOne((req) => req.url.endsWith('/api/v1/password/forgot'));
     expect(request.request.method).toBe('POST');
-    expect(request.request.body).toEqual({ email: 'person@school.com' });
+    expect(request.request.body).toEqual({ email: 'person@school.com', isPasswordChange: false });
     expect(service.hasRequestedReset).toBe(false);
 
     request.flush({ message: 'If the email exists, a code will be sent.' });
@@ -60,6 +60,18 @@ describe('ForgotInformationService', () => {
     expect(() => service.verifyPasswordResetCode('123456')).toThrowError(
       'A password reset must be requested before verifying a code.',
     );
+  });
+
+  it('preserves the authenticated password-change flag when resending a code', () => {
+    service.requestPasswordReset(' PERSON@SCHOOL.COM ', true).subscribe();
+    const request = httpMock.expectOne((req) => req.url.endsWith('/forgot'));
+    expect(request.request.body).toEqual({ email: 'person@school.com', isPasswordChange: true });
+    request.flush({});
+
+    service.resendCode().subscribe();
+    const resend = httpMock.expectOne((req) => req.url.endsWith('/forgot'));
+    expect(resend.request.body).toEqual({ email: 'person@school.com', isPasswordChange: true });
+    resend.flush({});
   });
 
   it('does not allow password reset before verifying a code', () => {

@@ -580,7 +580,10 @@ export class CardRegister implements OnInit, OnChanges {
 
   /** Alterna la selección de un día de la semana (multi-select para rutas). */
   toggleDay(day: string): void {
-    const days: string[] = this.formData['daysOfWeek'] ?? [];
+    const currentDays = this.formData['daysOfWeek'];
+    const days: string[] = Array.isArray(currentDays)
+      ? currentDays.filter((value): value is string => typeof value === 'string')
+      : [];
     const index = days.indexOf(day);
     if (index >= 0) {
       days.splice(index, 1);
@@ -594,8 +597,8 @@ export class CardRegister implements OnInit, OnChanges {
 
   /** Verifica si un día está seleccionado. */
   isDaySelected(day: string): boolean {
-    const days: string[] = this.formData['daysOfWeek'] ?? [];
-    return days.includes(day);
+    const days = this.formData['daysOfWeek'];
+    return Array.isArray(days) && days.includes(day);
   }
 
   onLogoSelected(event: Event): void {
@@ -873,7 +876,7 @@ export class CardRegister implements OnInit, OnChanges {
     this.schoolMapOpen = false;
     this.campusMapOpenIndex = null;
     for (const field of FIELDS[this.type]) {
-      this.formData[field.name] = '';
+      this.formData[field.name] = field.name === 'daysOfWeek' ? [] : '';
     }
     if (this.automaticCampusId) this.formData['campus'] = this.automaticCampusId;
   }

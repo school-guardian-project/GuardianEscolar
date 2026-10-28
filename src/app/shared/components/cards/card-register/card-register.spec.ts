@@ -24,7 +24,7 @@ describe('CardRegister', () => {
       providers: [
         { provide: AuthService, useValue: { session: { schoolId: null } } },
         { provide: CampusesService, useValue: {} },
-        { provide: CitiesService, useValue: {} },
+        { provide: CitiesService, useValue: { list: () => of([]) } },
         { provide: SchoolsService, useValue: {} },
         { provide: VehicleTypesService, useValue: {} },
       ],
@@ -37,6 +37,33 @@ describe('CardRegister', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('submits selected route workdays and keeps the selector usable after reset', () => {
+    component.type = 'route';
+    component.formData = {
+      name: 'Morning route',
+      campus: 'campus-id',
+      startTime: '07:00',
+      endTime: '08:00',
+      destination: 'North sector',
+      daysOfWeek: [],
+    };
+    const submit = vi.fn();
+    component.formSubmit.subscribe(submit);
+
+    component.toggleDay('Monday');
+    component.toggleDay('Wednesday');
+    component.onSubmit();
+
+    expect(submit).toHaveBeenCalledWith(expect.objectContaining({
+      daysOfWeek: ['Monday', 'Wednesday'],
+    }));
+
+    component.resetForm();
+    expect(component.formData['daysOfWeek']).toEqual([]);
+    expect(() => component.toggleDay('Thursday')).not.toThrow();
+    expect(component.formData['daysOfWeek']).toEqual(['Thursday']);
   });
 
   it('uses the future-date error for expired licenses on validation and submission', () => {
@@ -194,7 +221,7 @@ describe('CardRegister', () => {
       expect(component.formData['campus']).toBe('central-id');
       Object.assign(component.formData, {
         names: 'Ana', lastNames: 'Perez', documentType: 'CC', identification: '123456',
-        birthDate: '2000-01-01', phone: '3001234567', address: 'Central street 123',
+        birthDate: '2000-01-01', city: 'city-id', phone: '3001234567', address: 'Central street 123',
         email: 'ana@example.com', licenseExpiration: '2099-01-01', licenseNumber: '123456',
       });
       const submit = vi.fn();

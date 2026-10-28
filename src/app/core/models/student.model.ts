@@ -13,6 +13,9 @@ export interface PersonRequestDto {
   residenceAddress: string;
   dateBirth: string;
   cityId?: string | null;
+  /** Solo conductores: el backend las guarda en DriverLicense. */
+  licenseNumber?: string;
+  licenseExpirationDate?: string;
 }
 
 /**

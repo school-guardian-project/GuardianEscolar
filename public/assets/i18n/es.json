@@ -565,6 +565,8 @@
     "guardian": {
       "title": "Información del acudiente",
       "fields": {
+        "names": "Nombres",
+        "campusName": "Sede",
         "name": "Nombre",
         "lastNames": "Apellidos",
         "email": "Correo Electrónico",
@@ -1163,6 +1165,7 @@
     "birthDate": "La fecha no puede ser futura ni anterior a hace 100 años",
     "futureDate": "La fecha debe ser futura",
     "timeOrder": "La hora final debe ser posterior a la inicial",
+    "time24": "Usa formato militar de 24 horas HH:mm (ej. 06:30 o 14:45)",
     "imei": "El IMEI debe tener 15 dígitos"
   },
   "resend_code": {

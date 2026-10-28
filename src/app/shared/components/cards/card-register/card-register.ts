@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { validateField, validateBirthDate, validateFutureDate, ValidationRule, ValidationSchema } from '@core/validators/form-validators';
+import { formatTime24Input, isValidTime24 } from '@core/validators/time24';
 import { LocationMap } from '@shared/components/location-map/location-map';
 import { CampusesService } from '@core/services/campuses.service';
 import { CitiesService } from '@core/services/cities.service';
@@ -567,7 +568,8 @@ export class CardRegister implements OnInit, OnChanges {
   }
 
   onInputChange(fieldName: string, value: string): void {
-    this.formData[fieldName] = value;
+    const field = FIELDS[this.type]?.flat().find((f) => f.name === fieldName);
+    this.formData[fieldName] = field?.type === 'time' ? formatTime24Input(value) : value;
     if (this.type === 'schools') {
       this.validateField(fieldName);
       this.validationMessage = '';
@@ -804,6 +806,14 @@ export class CardRegister implements OnInit, OnChanges {
 
       if (error) {
         this.fieldErrors[field.name] = this.translate.instant(`validation.${this.getErrorKey(error, rule)}`, { min: rule.minLength ?? rule.min, max: rule.maxLength ?? rule.max });
+      }
+    }
+
+    if (this.type === 'route') {
+      for (const name of ['startTime', 'endTime']) {
+        if (!this.fieldErrors[name] && !isValidTime24(this.formData[name])) {
+          this.fieldErrors[name] = this.translate.instant('validation.time24');
+        }
       }
     }
 

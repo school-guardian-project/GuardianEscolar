@@ -80,6 +80,8 @@ function toPayload(form: RecordData): PersonRequestDto {
     cityId: String(form['city'] ?? form['cityId'] ?? '').trim(),
     residenceAddress: String(form['address'] ?? '').trim(),
     dateBirth: String(form['birthDate'] ?? '').trim(),
+    licenseNumber: String(form['licenseNumber'] ?? '').trim() || undefined,
+    licenseExpirationDate: String(form['licenseExpiration'] ?? '').trim() || undefined,
   };
 }
 

@@ -527,6 +527,8 @@
     "guardian": {
       "title": "Guardian information",
       "fields": {
+        "names": "Names",
+        "campusName": "Campus",
         "name": "Name",
         "lastNames": "Last names",
         "email": "Email",
@@ -1163,6 +1165,7 @@
     "birthDate": "Date cannot be in the future or more than 100 years ago",
     "futureDate": "Date must be in the future",
     "timeOrder": "End time must be after start time",
+    "time24": "Use 24-hour format HH:mm (e.g. 06:30 or 14:45)",
     "imei": "The IMEI must have 15 digits"
   },
   "resend_code": {

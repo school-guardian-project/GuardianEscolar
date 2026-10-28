@@ -13,7 +13,17 @@
   },
   "accept": {
     "blocked": "Tu cuenta aún no está autorizada por tu acudiente. Pídele que acepte los Términos en su sesión.",
-    "error": "No se pudo registrar la aceptación. Intenta de nuevo."
+    "error": "No se pudo registrar la aceptación. Intenta de nuevo.",
+    "title": "Términos y privacidad",
+    "subtitle": "Para continuar, lee y acepta los Términos y Condiciones y la Política de Privacidad.",
+    "minorDataNotice": "Conforme a la Ley 1581 de 2012, autorizas el tratamiento de tus datos personales y, si eres acudiente, el de los datos de los menores a tu cargo.",
+    "checkboxLabel": "He leído y acepto los Términos y Condiciones y la Política de Privacidad.",
+    "termsLink": "Ver términos",
+    "privacyLink": "Ver privacidad",
+    "coveringMinors_one": "Esta aceptación también cubre a {{count}} menor vinculado.",
+    "coveringMinors_other": "Esta aceptación también cubre a {{count}} menores vinculados.",
+    "mustAccept": "Debes marcar la casilla para continuar.",
+    "acceptButton": "Aceptar y continuar"
   },
   "serviceErrors": {
     "required": "Este campo es obligatorio.",

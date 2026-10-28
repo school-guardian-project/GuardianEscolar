@@ -53,6 +53,14 @@ export class AssignRecord implements OnInit {
 
   private stopsRouteId = '';
 
+  private get studentProfileId(): string {
+    const value = this.record['profileId'];
+    return typeof value === 'string'
+      && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(value)
+      && value !== '00000000-0000-0000-0000-000000000000'
+      ? value : '';
+  }
+
   get titleKey(): string {
     return `assign_record.${this.type}.title`;
   }
@@ -70,7 +78,7 @@ export class AssignRecord implements OnInit {
   get canSubmit(): boolean {
     if (this.submitting) return false;
     if (this.type === 'route') return !this.routeHasBus && !!this.selectedBusId;
-    if (this.type === 'student') return !!this.selectedRouteId && !!this.selectedStopId;
+    if (this.type === 'student') return !!this.studentProfileId && !!this.selectedRouteId && !!this.selectedStopId;
     return !this.currentDriver && !!this.selectedDriverProfileId;
   }
 
@@ -96,13 +104,16 @@ export class AssignRecord implements OnInit {
   }
 
   private loadStudent(): void {
+    const profileId = this.studentProfileId;
+    if (!profileId) {
+      this.message = 'assign_record.student.missingProfile';
+      return;
+    }
+
     this.routesService.list().subscribe({
       next: (list) => (this.routes = list.map((r) => ({ id: String(r.id), label: r.name ?? '' }))),
       error: () => (this.message = 'assign_record.genericError'),
     });
-
-    const profileId = String(this.record['profileId'] ?? '');
-    if (!profileId) return;
 
     this.routesService.getStudentRoute(profileId).subscribe({
       next: (route) => {
@@ -175,10 +186,17 @@ export class AssignRecord implements OnInit {
   }
 
   private submitStudent(): void {
+    const profileId = this.studentProfileId;
+    if (!profileId) {
+      this.message = 'assign_record.student.missingProfile';
+      return;
+    }
+    if (!this.canSubmit) return;
+
     this.submitting = true;
     this.routesService
       .assignStudent(this.selectedRouteId, {
-        studentId: String(this.record['profileId'] ?? ''),
+        studentId: profileId,
         stopId: this.selectedStopId,
       })
       .subscribe({

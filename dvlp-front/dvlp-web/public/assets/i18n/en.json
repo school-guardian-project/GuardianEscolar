@@ -964,7 +964,8 @@
       "stop": "Boarding stop",
       "selectRoute": "Select a route",
       "selectStop": "Select a stop",
-      "title": "Assign route to student"
+      "title": "Assign route to student",
+      "missingProfile": "The student does not have a valid profile for route assignment. Refresh the list and try again."
     },
     "bus": {
       "driver": "Driver",

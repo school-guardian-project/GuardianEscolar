@@ -15,6 +15,7 @@ export default function BottomTabBar({
   onRoutePress,
   onLocationPress,
   onProfilePress,
+  bottomInset = 0,
 }) {
   const { t } = useTranslation();
   const { theme } = useTheme();
@@ -26,6 +27,8 @@ export default function BottomTabBar({
         styles.container,
         {
           backgroundColor: theme.navbarColor,
+          height: 72 + bottomInset,
+          paddingBottom: bottomInset,
         },
       ]}
     >
@@ -62,6 +65,7 @@ export default function BottomTabBar({
 const styles = StyleSheet.create({
   container: {
     height: 72,
+    flexShrink: 0,
     flexDirection: "row",
   },
 

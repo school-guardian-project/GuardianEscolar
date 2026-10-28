@@ -4,7 +4,6 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     width: "100%",
-    height: "100%",
     position: "relative",
   },
   map: {
@@ -76,12 +75,13 @@ export default StyleSheet.create({
     zIndex: 1,
     elevation: 5,
   },
-  spacer: {
-    flex: 1,
-  },
   bottomSection: {
-    alignSelf: "stretch",
-    flex: 0,
+    position: "absolute",
+    left: 0,
+    right: 0,
+    bottom: 0,
+    zIndex: 2,
+    elevation: 6,
   },
   qrButtonContainer: {
     position: "absolute",

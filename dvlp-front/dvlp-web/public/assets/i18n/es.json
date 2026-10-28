@@ -964,7 +964,8 @@
       "stop": "Parada de embarque",
       "selectRoute": "Selecciona una ruta",
       "selectStop": "Selecciona una parada",
-      "title": "Asignar ruta al estudiante"
+      "title": "Asignar ruta al estudiante",
+      "missingProfile": "El estudiante no tiene un perfil válido para asignar una ruta. Actualiza el listado e inténtalo de nuevo."
     },
     "bus": {
       "driver": "Conductor",

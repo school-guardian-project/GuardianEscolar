@@ -4,6 +4,7 @@ import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { runInNewContext } from "node:vm";
 import * as mapData from "./routeMapData.js";
+import * as loginValidators from "../../core/validation/validators.js";
 
 const require = createRequire(import.meta.url);
 const { transformSync } = require("@babel/core");
@@ -42,11 +43,11 @@ function harness(file, overrides = {}) {
   const common = {
     react: React,
     "react-native": {
-      View: "View", Text: "Text", Pressable: "Pressable", ActivityIndicator: "ActivityIndicator",
+      View: "View", Text: "Text", Pressable: "Pressable", ScrollView: "ScrollView", ActivityIndicator: "ActivityIndicator",
       StyleSheet: { create: value => value, absoluteFill: {}, absoluteFillObject: {} },
     },
     "react-native-maps": { __esModule: true, default: "MapView", Marker: "Marker", Polyline: "Polyline" },
-    "@expo/vector-icons": { FontAwesome5: "Icon", Ionicons: "Icon" },
+    "@expo/vector-icons": { FontAwesome5: "Icon", Ionicons: "Icon", MaterialIcons: "Icon" },
     "react-native-safe-area-context": { useSafeAreaInsets: () => ({ top: 24, bottom: 0 }) },
     "react-i18next": { useTranslation: () => ({ t: key => key }) },
     "@react-navigation/native": { useNavigation: () => ({ navigate() {} }), useIsFocused: () => true },
@@ -72,7 +73,7 @@ function harness(file, overrides = {}) {
   }).code;
   const module = { exports: {} };
   runInNewContext(compiled, {
-    module, exports: module.exports, console: { error() {}, warn() {} },
+    module, exports: module.exports, console: { error() {}, warn() {}, log() {} },
     setInterval: () => 1, clearInterval() {}, setTimeout: () => 1, clearTimeout() {},
     require(specifier) {
       if (specifier in common) return common[specifier];
@@ -105,6 +106,125 @@ const route = { id: "route", name: "School route", stops: [
   { id: "stop", name: "School", address: "School street", latitude: 2.9, longitude: -75.2, orderSequence: 1 },
 ] };
 const settle = () => new Promise(resolve => setImmediate(resolve));
+
+function loadMainStyles() {
+  const compiled = transformSync(readFileSync(new URL(
+    "features/home/views/MainPage/MainPage.style.jsx", sourceRoot,
+  ), "utf8"), {
+    babelrc: false, configFile: false,
+    plugins: ["@babel/plugin-transform-modules-commonjs"],
+  }).code;
+  const module = { exports: {} };
+  runInNewContext(compiled, {
+    module, exports: module.exports,
+    require: () => ({ StyleSheet: {
+      create: value => value,
+      absoluteFillObject: { position: "absolute", top: 0, bottom: 0, left: 0, right: 0 },
+    } }),
+  });
+  return module.exports.default;
+}
+
+for (const role of ["student", "parent", "driver", "admin"]) {
+  for (const bottom of [0, 24, 34]) {
+    test(`MainPage: ${role} keeps its bottom dock anchored while loading with inset ${bottom}`, async () => {
+      let resolveRoute;
+      const styles = loadMainStyles();
+      const view = harness("features/home/views/MainPage/MainPage.jsx", {
+        "./MainPage.style": styles,
+        "@core/hooks/useSession": () => ({ role, initialized: true }),
+        "react-native-safe-area-context": { useSafeAreaInsets: () => ({ top: 24, bottom }) },
+        "@core/services/visibleRouteService": { resolveRouteForRole: () =>
+          new Promise(resolve => { resolveRoute = resolve; }) },
+      });
+      function assertDock(tree) {
+        const dock = tree.props.children.find(child => child?.props?.style === styles.bottomSection);
+        assert.ok(dock, "The dock must be a direct child, independent of the action overlay");
+        assert.equal(dock.props.style.position, "absolute");
+        assert.equal(dock.props.style.bottom, 0);
+        assert.equal(dock.props.style.left, 0);
+        assert.equal(dock.props.style.right, 0);
+        assert.equal(styles.container.flex, 1);
+        assert.equal(styles.container.height, undefined, "Do not retain a stale percentage screen height");
+        const tabs = nodes(dock).find(node => node.type === "@components/layout/BottomTabBar");
+        assert.equal(tabs.props.bottomInset, bottom);
+        assert.equal(nodes(tree).filter(node => node.type === "@components/layout/BottomTabBar").length, 1);
+      }
+      assertDock(view.render());
+      await settle();
+      resolveRoute({ route, note: null });
+      await settle();
+      assertDock(view.render());
+    });
+  }
+}
+
+for (const bottomInset of [0, 24, 34]) {
+  test(`BottomTabBar: preserves 72px controls above the ${bottomInset}px system inset`, () => {
+    const destinations = [];
+    const view = harness("components/layout/BottomTabBar.jsx", {
+      "@react-navigation/native": { useNavigation: () => ({
+        navigate: name => destinations.push(name),
+      }) },
+    });
+    const tree = view.render({ bottomInset, onLocationPress: () => destinations.push("LiveTracking") });
+    const style = Object.assign({}, ...tree.props.style);
+    assert.equal(style.height, 72 + bottomInset);
+    assert.equal(style.paddingBottom, bottomInset);
+    assert.equal(style.height - style.paddingBottom, 72);
+    assert.equal(style.flexShrink, 0);
+    nodes(tree).filter(node => node.type === "Pressable").forEach(tab => tab.props.onPress());
+    assert.deepEqual(destinations, ["MainPage", "LiveTracking", "Profile"]);
+  });
+}
+
+function loginHarness(events) {
+  return harness("features/auth/views/Login/Login.jsx", {
+    "react-native": {
+      ScrollView: "ScrollView", View: "View", Text: "Text",
+      Keyboard: { dismiss: () => events.push("dismiss") },
+    },
+    "expo-asset": { Asset: { fromModule: () => ({ uri: "local-logo" }) } },
+    "react-native-svg": { SvgUri: "SvgUri" },
+    "./Login.styles": { styles: {} },
+    "./LegalInfoModal": "LegalInfoModal",
+    "./TermsAcceptanceModal": "TermsAcceptanceModal",
+    "../../../../../assets/logo-blue.svg": 1,
+    "@core/validation/validators": loginValidators,
+    "@core/services/authService": {
+      login: async () => { events.push("login"); },
+      getSession: async () => ({ roleId: 2 }),
+    },
+    "@core/services/termsService": { CURRENT_TERMS_VERSION: "1" },
+    "@core/services/familyService": {},
+    "@core/services/pushService": { registerPushDevice() {} },
+    "@react-native-async-storage/async-storage": {},
+    "@core/hooks/useSession": () => ({ applyAuthRole: async () => { events.push("role"); } }),
+  });
+}
+
+test("Login dismisses the keyboard before authenticating and opening MainPage", async () => {
+  const events = [];
+  const view = loginHarness(events);
+  const props = { navigation: { navigate: name => events.push(name) } };
+  const inputs = nodes(view.render(props)).filter(node => node.type === "@components/inputs/InputField");
+  inputs[0].props.onChangeText("student@example.com");
+  inputs[1].props.onChangeText("password");
+  nodes(view.render(props)).find(node => node.type === "@components/buttons/PrimaryButton").props.onPress();
+  await settle();
+  assert.deepEqual(events, ["dismiss", "login", "role", "MainPage"]);
+});
+
+test("Login keeps validation failures on the form without authenticating or dismissing the keyboard", () => {
+  const events = [];
+  const view = loginHarness(events);
+  const props = { navigation: { navigate: name => events.push(name) } };
+  nodes(view.render(props)).find(node => node.type === "@components/buttons/PrimaryButton").props.onPress();
+  const inputs = nodes(view.render(props)).filter(node => node.type === "@components/inputs/InputField");
+  assert.equal(inputs[0].props.error, loginValidators.validateEmail(""));
+  assert.equal(inputs[1].props.error, loginValidators.validateRequired("", "Enter your password"));
+  assert.deepEqual(events, []);
+});
 
 for (const role of ["student", "parent", "driver", "admin"]) {
   for (const [file, mapType, stopsProp] of [

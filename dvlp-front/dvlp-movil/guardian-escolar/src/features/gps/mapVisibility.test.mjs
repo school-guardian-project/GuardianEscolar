@@ -107,6 +107,55 @@ const route = { id: "route", name: "School route", stops: [
 ] };
 const settle = () => new Promise(resolve => setImmediate(resolve));
 
+test("driver sees their bus without a route, without stops or trip actions", async () => {
+  const view = harness("features/home/views/MainPage/MainPage.jsx", {
+    "@core/hooks/useSession": () => ({ role: "driver", initialized: true }),
+    "@core/services/visibleRouteService": { resolveRouteForRole: async () => ({
+      route: null, bus: { id: "bus-1", plate: "ABC123", driverName: "Test Driver" },
+      note: "Bus asignado sin ruta activa.",
+    }) },
+    "@core/services/tripApi": { getTripStatusApi: async () => ({ CanStart: true }) },
+  });
+  view.render();
+  await settle();
+  const tree = view.render();
+  const card = nodes(tree).find(node => node.type === "@components/cards/RouteInfoCard");
+  assert.equal(card.props.plate, "ABC123");
+  assert.equal(card.props.driverName, "Test Driver");
+  assert.equal(card.props.routeName, "");
+  assert.equal(nodes(tree).some(node => node.type === "@components/buttons/TripActionButton"), false);
+  const map = nodes(tree).find(node => node.type === "@features/home/components/RouteMap");
+  assert.equal(map.props.stops.length, 0);
+});
+
+for (const note of ["Tu próximo recorrido es mañana.", "Tu ruta aún no tiene horarios activos."]) {
+  test(`driver summary preserves bus and driver metadata without enabling trip actions: ${note}`, async () => {
+    const assigned = {
+      ...route, stops: [], startTime: "06:00:00", endTime: "08:00:00",
+      bus: { id: "bus-1", plate: "ABC123", driverName: "Test Driver" },
+    };
+    const view = harness("features/home/views/MainPage/MainPage.jsx", {
+      "@core/hooks/useSession": () => ({ role: "driver", initialized: true }),
+      "@core/services/visibleRouteService": { resolveRouteForRole: async () => ({ route: assigned, note }) },
+      "@core/services/tripApi": { getTripStatusApi: async () => ({ CanStart: false, CanEnd: false }) },
+    });
+    view.render();
+    await settle();
+    const tree = view.render();
+    const card = nodes(tree).find(node => node.type === "@components/cards/RouteInfoCard");
+    assert.equal(card.props.plate, "ABC123");
+    assert.equal(card.props.driverName, "Test Driver");
+    assert.equal(card.props.routeName, route.name);
+    const actions = nodes(tree).find(node => node.type === "@components/buttons/TripActionButton");
+    assert.equal(actions.props.canStart, false);
+    assert.equal(actions.props.canEnd, false);
+    assert.equal(actions.props.status, "idle");
+    const map = nodes(tree).find(node => node.type === "@features/home/components/RouteMap");
+    assert.equal(map.props.stops.length, 0);
+    assert.ok(nodes(tree).some(node => node.type === "Text" && node.props.children.includes(note)));
+  });
+}
+
 for (const screen of ["features/home/views/MainPage/MainPage.jsx", "features/gps/views/LiveTracking/LiveTracking.jsx"]) {
   test(`${screen} reloads the student assignment on focus and ignores an obsolete response`, async () => {
     let focused = true;

@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CodeSecond } from './code-second';
+import { provideRouter, Router } from '@angular/router';
+import { Email } from '../email/email';
 
 describe('CodeSecond', () => {
   let component: CodeSecond;
@@ -9,6 +11,7 @@ describe('CodeSecond', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [CodeSecond],
+      providers: [provideRouter([{ path: 'admin/change-email/email', component: Email }])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CodeSecond);
@@ -18,5 +21,6 @@ describe('CodeSecond', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    expect(TestBed.inject(Router).url).toBe('/admin/change-email/email');
   });
 });

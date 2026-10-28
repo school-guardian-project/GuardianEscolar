@@ -1,9 +1,11 @@
 import { HttpErrorResponse } from '@angular/common/http';
 
-import { describeProblem } from './problem-detail';
+import { describeProblem, problemField, setProblemTranslator } from './problem-detail';
 
 describe('describeProblem', () => {
-  it('prefers validation errors over the generic ASP.NET title', () => {
+  afterEach(() => setProblemTranslator((key) => key));
+
+  it('does not expose technical JSON binding errors or the generic ASP.NET title', () => {
     const error = new HttpErrorResponse({
       status: 400,
       error: {
@@ -14,12 +16,11 @@ describe('describeProblem', () => {
       },
     });
 
-    expect(describeProblem(error, 'Fallback')).toBe(
-      'Phone: The JSON value could not be converted to System.Int32.',
-    );
+    expect(describeProblem(error, 'Fallback')).toBe('Fallback');
+    expect(describeProblem(error, 'Fallback')).not.toContain('System.Int32');
   });
 
-  it('shows the JSON binding error before ASP.NET’s generic required-request error', () => {
+  it('keeps readable validation while hiding technical JSON binding details', () => {
     const error = new HttpErrorResponse({
       status: 400,
       error: {
@@ -32,8 +33,9 @@ describe('describeProblem', () => {
     });
 
     expect(describeProblem(error, 'Fallback')).toBe(
-      '$: The JSON value could not be converted to System.Byte[].',
+      'request: The request field is required.',
     );
+    expect(describeProblem(error, 'Fallback')).not.toContain('System.Byte');
   });
 
   it('preserves plain-text errors returned by an API', () => {
@@ -45,5 +47,12 @@ describe('describeProblem', () => {
     expect(describeProblem(error, 'Fallback')).toBe(
       'Profiles already associated with another family: 123',
     );
+  });
+
+  it('translates a known error and identifies its form field', () => {
+    setProblemTranslator((key) => key === 'errors.backend.plateExists' ? 'Plate already registered' : key);
+    const error = new HttpErrorResponse({ status: 409, error: { detail: 'Plate already exists.' } });
+    expect(describeProblem(error, 'Fallback')).toBe('Plate already registered');
+    expect(problemField(error)).toBe('plate');
   });
 });

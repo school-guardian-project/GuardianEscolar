@@ -28,7 +28,10 @@ describe('InformationAdmin', () => {
       providers: [
         provideHttpClient(), provideHttpClientTesting(),
         { provide: Router, useValue: { navigate: () => Promise.resolve(true) } },
-        { provide: AuthService, useValue: { session: { personId: 'stale-person' }, roleId: 1 } },
+        { provide: AuthService, useValue: {
+          session: { personId: 'stale-person' }, roleId: 1,
+          updateSessionSchoolId: vi.fn(),
+        } },
       ],
     }).overrideComponent(InformationAdmin, {
       set: { imports: [], template: '{{ name }} {{ phone }} {{ city }} {{ school }}' },
@@ -44,6 +47,7 @@ describe('InformationAdmin', () => {
   it('loads the authenticated person, not a stale session ID, and shows all details', () => {
     expect(component.loading).toBe(true);
     http.expectOne(req => req.url.endsWith('/auth/profile')).flush(profile);
+    expect(TestBed.inject(AuthService).updateSessionSchoolId).toHaveBeenCalledWith('school-current');
     http.expectOne(req => req.url.endsWith('/admins/person-current')).flush(person);
     expect(component.name).toBe('Current User');
     expect(component.phone).toBe('3001234567');

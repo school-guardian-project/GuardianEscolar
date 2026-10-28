@@ -64,7 +64,7 @@
 
           <ng-container *ngFor="let field of itemFields.slice(1)">
             <span class="card-list__detail" *ngIf="!field.halfWidth">
-              {{ field.label ? (field.labelKey | translate) + ': ' : '' }}{{ (type === 'schools' || type === 'bus') && field.key === 'status' ? (((type === 'schools' ? 'school_status.' : 'bus_status.') + item[field.key]) | translate) : item[field.key] }}
+              {{ field.label ? (field.labelKey | translate) + ': ' : '' }}{{ (type === 'schools' || type === 'bus') && field.key === 'status' ? (((type === 'schools' ? 'school_status.' : 'bus_status.') + item[field.key]) | translate) : displayValue(item[field.key]) }}
             </span>
           </ng-container>
 

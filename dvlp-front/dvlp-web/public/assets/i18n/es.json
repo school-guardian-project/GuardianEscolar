@@ -1021,6 +1021,7 @@
       "finalDestination": "Destino final",
       "startTime": "Hora inicio",
       "endTime": "Hora final",
+      "daysOfWeek": "Días de trabajo",
       "email": "Correo electrónico",
       "city": "Ciudad",
       "school": "Colegio",

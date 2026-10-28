@@ -84,6 +84,7 @@ const ITEM_FIELDS: Record<CardType, ItemField[]> = {
     { key: 'destination', labelKey: 'card_list.labels.finalDestination' },
     { key: 'startTime', labelKey: 'card_list.labels.startTime', halfWidth: true },
     { key: 'endTime', labelKey: 'card_list.labels.endTime', halfWidth: true },
+    { key: 'daysOfWeek', labelKey: 'card_list.labels.daysOfWeek' },
   ],
   admins: [
     { key: 'fullName' },
@@ -208,6 +209,10 @@ export class CardList implements OnInit, OnDestroy, OnChanges {
 
   get items(): any[] {
     return this.data ?? [];
+  }
+
+  displayValue(value: unknown): string {
+    return Array.isArray(value) ? value.join(', ') : String(value ?? '');
   }
 
   get filteredItems(): any[] {

@@ -77,6 +77,22 @@ describe('CardList', () => {
     expect(edit).toHaveBeenCalledWith(admin);
   });
 
+  it('displays configured route workdays', () => {
+    fixture.componentRef.setInput('type', 'route');
+    fixture.componentRef.setInput('data', [{
+      id: 'route-1',
+      name: 'Morning route',
+      destination: 'North sector',
+      startTime: '07:00',
+      endTime: '08:00',
+      daysOfWeek: ['Monday', 'Wednesday'],
+    }]);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('.card-list__info').textContent)
+      .toContain('Monday, Wednesday');
+  });
+
   function setRecords(count: number): void {
     fixture.componentRef.setInput('data', Array.from({ length: count }, (_, index) => ({
       id: `record-${index + 1}`, name: `User ${index + 1}`,

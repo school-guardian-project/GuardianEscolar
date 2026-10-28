@@ -3,7 +3,9 @@ import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import { createContext, SourceTextModule, SyntheticModule } from "node:vm";
 
-async function loadService(handler, students = []) {
+async function loadService(handler, students = [], fleetHandler = () => {
+  throw Object.assign(new Error("No assigned bus"), { status: 404 });
+}) {
   const calls = [];
   const context = createContext({});
   const module = new SourceTextModule(
@@ -12,7 +14,9 @@ async function loadService(handler, students = []) {
   await module.link(specifier => {
     const exports = specifier === "./routeApi"
       ? { getRouteApi: async path => { calls.push(path); return handler(path); } }
-      : { getLinkedStudents: async () => students };
+      : specifier === "./fleetApi"
+        ? { getFleetApi: async path => { calls.push(`fleet:${path}`); return fleetHandler(path); } }
+        : { getLinkedStudents: async () => students };
     return new SyntheticModule(Object.keys(exports), function () {
       for (const [name, value] of Object.entries(exports)) this.setExport(name, value);
     }, { context });
@@ -45,14 +49,68 @@ test("admin fetches route detail because list entries do not contain stops", asy
   assert.deepEqual(calls, ["/routes", "/routes/route-1"]);
 });
 
-test("scheduled driver retains the backend time window and sees the next trip notice", async () => {
+test("scheduled driver sees the assigned bus and route summary without activating the trip", async () => {
+  const scheduledRoute = {
+    id: route.id, stops: [], bus: { id: "bus-1", plate: "ABC123", driverName: "Driver" },
+  };
   const { resolve, calls } = await loadService(() => ({
-    status: "SCHEDULED", route: { id: route.id }, nextOccurrence: "2026-10-28T07:00:00-05:00",
+    status: "SCHEDULED", route: scheduledRoute, nextOccurrence: "2026-10-28T07:00:00-05:00",
   }));
   const result = await resolve("driver", { profileId: "driver-1" });
-  assert.equal(result.route, null);
+  assert.equal(result.route, scheduledRoute);
+  assert.equal(result.route.bus.plate, "ABC123");
+  assert.deepEqual(result.route.stops, []);
   assert.match(result.note, /próximo recorrido/);
   assert.equal(calls.length, 1);
+});
+
+test("driver without active schedules still sees the assigned route and bus with an explicit notice", async () => {
+  const assignedRoute = { id: route.id, stops: [], bus: { id: "bus-1", plate: "ABC123" } };
+  const { resolve } = await loadService(() => ({ status: "NO_SCHEDULE", route: assignedRoute }));
+  const result = await resolve("driver", { profileId: "driver-1" });
+  assert.equal(result.route, assignedRoute);
+  assert.match(result.note, /no tiene horarios activos/);
+});
+
+test("unassigned driver does not receive a made-up route or bus", async () => {
+  const { resolve } = await loadService(() => ({ status: "NO_ROUTE", route: null }));
+  const result = await resolve("driver", { profileId: "driver-1" });
+  assert.equal(result.route, null);
+  assert.equal(result.bus, null);
+  assert.ok(result.note);
+});
+
+test("driver sees their assigned bus even when the bus has no active route", async () => {
+  const bus = { id: "bus-1", plate: "ABC123", driverName: "Driver" };
+  const { resolve, calls } = await loadService(
+    () => ({ status: "NO_ROUTE", route: null }), [], () => bus);
+  const result = await resolve("driver", { profileId: "driver-1" });
+  assert.equal(result.bus, bus);
+  assert.equal(result.route, null);
+  assert.match(result.note, /no tiene una ruta activa/);
+  assert.deepEqual(calls, [
+    "/routes/today?driverId=driver-1", "fleet:/buses/assigned/driver-1", "fleet:/buses/bus-1",
+  ]);
+});
+
+for (const status of [403, 500]) {
+  test(`bus lookup failure ${status} is not presented as a missing assignment`, async () => {
+    const error = Object.assign(new Error("Bus request failed"), { status });
+    const { resolve } = await loadService(
+      () => ({ status: "NO_ROUTE", route: null }), [], () => { throw error; });
+    await assert.rejects(resolve("driver", { profileId: "driver-1" }), error);
+  });
+}
+
+test("malformed or mismatched fleet responses are errors, not an unassigned driver", async () => {
+  for (const fleetHandler of [
+    () => ({}),
+    path => path.includes("/assigned/") ? { id: "bus-1" } : { id: "other-bus" },
+  ]) {
+    const { resolve } = await loadService(
+      () => ({ status: "NO_ROUTE", route: null }), [], fleetHandler);
+    await assert.rejects(resolve("driver", { profileId: "driver-1" }));
+  }
 });
 
 test("missing session, unlinked parent and empty admin list return explicit notices", async () => {

@@ -1,4 +1,5 @@
 import { getRouteApi } from "./routeApi";
+import { getFleetApi } from "./fleetApi";
 import { getLinkedStudents } from "./familyService";
 
 export async function resolveRouteForRole(role, session) {
@@ -20,7 +21,18 @@ export async function resolveRouteForRole(role, session) {
       const next = new Date(today.nextOccurrence).toLocaleString("es-CO", {
         weekday: "long", hour: "2-digit", minute: "2-digit",
       });
-      return { route: null, note: `Tu próximo recorrido es el ${next}.` };
+      return { route: today.route?.id ? today.route : null, note: `Tu próximo recorrido es el ${next}.` };
+    }
+    if (today?.status === "NO_SCHEDULE" && today.route?.id) {
+      return { route: today.route, note: "Tu ruta y bus están asignados, pero la ruta aún no tiene horarios activos." };
+    }
+    if (today?.status === "NO_ROUTE") {
+      const bus = await getAssignedBus(session.profileId);
+      return {
+        route: null,
+        bus,
+        note: bus ? "Tienes un bus asignado, pero aún no tiene una ruta activa asignada." : "No tienes un bus asignado.",
+      };
     }
     return { route: null, note: "No hay una ruta asignada." };
   }
@@ -43,6 +55,19 @@ export async function resolveRouteForRole(role, session) {
   }
 
   throw new Error("Unsupported route role");
+}
+
+async function getAssignedBus(profileId) {
+  try {
+    const assigned = await getFleetApi(`/buses/assigned/${profileId}`);
+    if (!assigned?.id) throw new Error("El servicio de flota devolvió una asignación sin ID de bus.");
+    const bus = await getFleetApi(`/buses/${assigned.id}`);
+    if (bus?.id !== assigned.id) throw new Error("El detalle del bus no corresponde a la asignación del conductor.");
+    return bus;
+  } catch (error) {
+    if (error?.status === 404) return null;
+    throw error;
+  }
 }
 
 async function getAssignedRoute(profileId) {

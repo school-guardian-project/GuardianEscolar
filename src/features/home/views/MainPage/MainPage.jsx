@@ -118,7 +118,7 @@ function MainPageContent() {
   const handleStartTrip = async () => {
     try {
       const session = await getSession();
-      if (!session?.profileId || !routeInfo) return;
+      if (!session?.profileId || !routeInfo?.routeId) return;
 
       const payload = {
         routeId: routeInfo.routeId,
@@ -217,12 +217,12 @@ function MainPageContent() {
         // Resuelve la ruta visible por rol con los endpoints reales de
         // ms-route: el padre usa la ruta del estudiante vinculado (FR-9.1)
         // en lugar de caer al listado general, que exige permisos de admin.
-        const { route, note } = await resolveRouteForRole(role, session);
+        const { route, bus, note } = await resolveRouteForRole(role, session);
         if (!mounted) return;
         setStatus(note);
 
         if (!route) {
-          setRouteInfo(null);
+          setRouteInfo(bus ? { busId: bus.id, plate: bus.plate ?? "", driverName: bus.driverName ?? "" } : null);
           return;
         }
 
@@ -351,7 +351,7 @@ function MainPageContent() {
       >
         <View style={[styles.qrButtonContainer, { bottom: 280 + insets.bottom }]} pointerEvents="box-none">
           {/* Trip buttons only when route is assigned */}
-          {role === "driver" && routeInfo && (
+          {role === "driver" && routeInfo?.routeId && (
             <TripActionButton
               status={tripStatus}
               direction={tripDirection}

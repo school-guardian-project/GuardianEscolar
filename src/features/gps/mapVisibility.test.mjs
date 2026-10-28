@@ -189,10 +189,61 @@ test("LiveTracking does not request routes until session initialization complete
     typeof c === "string" && c.includes("Se muestran las paradas"))));
 });
 
-test("LiveTracking clears old stops and ignores an in-flight response after changing roles", async () => {
+test("MainPage keeps a visible loading state and delays route requests until session initialization", async () => {
+  let initialized = false;
+  let calls = 0;
+  const view = harness("features/home/views/MainPage/MainPage.jsx", {
+    "@core/hooks/useSession": () => ({ role: "student", initialized }),
+    "@core/services/visibleRouteService": { resolveRouteForRole: async () => {
+      calls++;
+      return { route, note: null };
+    } },
+  });
+  const loading = nodes(view.render());
+  assert.ok(loading.some(node => node.type === "ActivityIndicator"));
+  assert.ok(loading.some(node => node.type === "Text" && node.props.children.includes("Cargando sesión...")));
+  await settle();
+  assert.equal(calls, 0);
+  initialized = true;
+  view.render();
+  await settle();
+  const map = nodes(view.render()).find(node => node.type === "@features/home/components/RouteMap");
+  assert.equal(calls, 1);
+  assert.equal(map.props.stops.length, 1);
+});
+
+for (const [file, mapType, stopsProp] of [
+  ["features/home/views/MainPage/MainPage.jsx", "@features/home/components/RouteMap", "stops"],
+  ["features/gps/views/LiveTracking/LiveTracking.jsx", "@features/gps/components/GpsMap", "routeStops"],
+]) {
+  for (const failed of [false, true]) {
+    test(`${file}: route ${failed ? "failure" : "absence"} leaves the map, navigation and status visible`, async () => {
+      const view = harness(file, {
+        "@core/hooks/useSession": () => ({ role: "student", initialized: true }),
+        "@core/services/visibleRouteService": { resolveRouteForRole: async () => {
+          if (failed) throw new Error("Route API offline");
+          return { route: null, note: "No assigned route" };
+        } },
+        "@core/services/routeApi": { getRouteSuggestionApi: async () => {
+          assert.fail("A missing route must not request road geometry");
+        } },
+      });
+      view.render();
+      await settle();
+      const tree = nodes(view.render());
+      const map = tree.find(node => node.type === mapType);
+      assert.equal(map.props[stopsProp].length, 0);
+      assert.ok(tree.some(node => node.type === "@components/layout/BottomTabBar"));
+      assert.ok(tree.some(node => node.type === "Text" && node.props.children.includes(
+        failed ? "No fue posible verificar la ruta asignada." : "No assigned route",
+      )));
+    });
+  }
+
+test(`${file}: clears old stops and ignores an in-flight response after changing roles`, async () => {
   let role = "student";
   let resolveStudent;
-  const view = harness("features/gps/views/LiveTracking/LiveTracking.jsx", {
+  const view = harness(file, {
     "@core/hooks/useSession": () => ({ role, initialized: true }),
     "@core/services/visibleRouteService": { resolveRouteForRole: async currentRole => {
       if (currentRole === "student") return new Promise(resolve => { resolveStudent = resolve; });
@@ -207,6 +258,7 @@ test("LiveTracking clears old stops and ignores an in-flight response after chan
   await settle();
   resolveStudent({ route, note: null });
   await settle();
-  const map = nodes(view.render()).find(n => n.type === "@features/gps/components/GpsMap");
-  assert.equal(map.props.routeStops.length, 0);
+  const map = nodes(view.render()).find(n => n.type === mapType);
+  assert.equal(map.props[stopsProp].length, 0);
 });
+}

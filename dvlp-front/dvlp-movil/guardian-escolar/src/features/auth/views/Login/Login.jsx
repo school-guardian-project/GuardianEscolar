@@ -9,11 +9,16 @@ import InputField from "@components/inputs/InputField";
 import PrimaryButton from "@components/buttons/PrimaryButton";
 import { validateEmail, validateRequired } from "@core/validation/validators";
 import { login } from "@core/services/authService";
-import { getSession, clearSession } from "@core/services/authService";
-import { acceptTerms, getPendingAcceptance, getTermsStatus } from "@core/services/termsService";
+import { getSession } from "@core/services/authService";
+import { acceptTerms, CURRENT_TERMS_VERSION } from "@core/services/termsService";
+import { getLinkedStudents } from "@core/services/familyService";
 import { registerPushDevice } from "@core/services/pushService";
 import LegalInfoModal from "./LegalInfoModal";
+import TermsAcceptanceModal from "./TermsAcceptanceModal";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import useSession from "@core/hooks/useSession";
+
+const TERMS_ACCEPTED_KEY = "@guardian_terms_accepted";
 
 const logoUri = Asset.fromModule(require("../../../../../assets/logo-blue.svg")).uri;
 
@@ -27,6 +32,8 @@ export default function Login({ navigation }) {
   const [formError, setFormError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [legalDoc, setLegalDoc] = useState(null);
+  const [termsModalVisible, setTermsModalVisible] = useState(false);
+  const [minorsCount, setMinorsCount] = useState(0);
   const { applyAuthRole } = useSession();
 
   const handleEmailChange = (value) => {
@@ -50,44 +57,48 @@ export default function Login({ navigation }) {
 
       try {
         const session = await getSession();
-        if (session?.roleId === 2) {
-          try {
-            const status = await getTermsStatus();
-            if (!status?.accepted) {
-              await clearSession();
-              setFormError(t("accept.blocked"));
-              setSubmitting(false);
-              return;
-            }
-          } catch (e) {
-            console.warn("[Login] getTermsStatus failed due to network, skipping:", e?.message);
-          }
-        } else {
-          try {
-            const pending = await getPendingAcceptance();
-            if (pending?.ownMissing || (pending?.minors && pending.minors.length > 0)) {
-              if (pending.minors?.length > 0) {
-                await acceptTerms(pending.termsVersion, pending.minors.map((m) => m.profileId));
-              }
-              if (pending.ownMissing) {
-                await acceptTerms(pending.termsVersion, []);
-              }
-            }
-          } catch (e) {
-            console.warn("[Login] getPendingAcceptance/acceptTerms failed due to network, skipping:", e?.message);
-          }
-        }
-      } catch (e) {
-        if (e?.status) {
-          setFormError(t("accept.error"));
-          setSubmitting(false);
+        const roleId = session?.roleId;
+
+        // Estudiantes (roleId 2) no ven el modal: el padre/tutor ya aceptó el tratamiento
+        // de datos de sus hijos al aceptar él mismo.
+        if (roleId === 2) {
+          navigation.navigate("MainPage");
+          registerPushDevice();
           return;
         }
-        console.warn("[Login] Post-login flow failed due to network, continuing:", e?.message);
-      }
 
-      navigation.navigate("MainPage");
-      registerPushDevice();
+        // Solo driver (3) y parent (4) pasan por aceptación de términos y privacidad.
+        if (roleId === 3 || roleId === 4) {
+          const alreadyAccepted = await AsyncStorage.getItem(TERMS_ACCEPTED_KEY);
+          if (alreadyAccepted === CURRENT_TERMS_VERSION) {
+            navigation.navigate("MainPage");
+            registerPushDevice();
+            return;
+          }
+
+          // Si es parent, calcular cuántos hijos vinculados tiene para aceptar por ellos.
+          let studentProfileIds = [];
+          if (roleId === 4) {
+            try {
+              const linked = await getLinkedStudents(session);
+              studentProfileIds = linked.map((m) => m.profileId);
+            } catch {
+              studentProfileIds = [];
+            }
+          }
+
+          setMinorsCount(studentProfileIds.length);
+          setTermsModalVisible(true);
+        } else {
+          // Admin y otros roles: no se muestra el modal de términos.
+          navigation.navigate("MainPage");
+          registerPushDevice();
+        }
+      } catch (e) {
+        console.warn("[Login] Post-login terms flow failed due to network, continuing:", e?.message);
+        navigation.navigate("MainPage");
+        registerPushDevice();
+      }
     } catch (error) {
       setFormError(
         error?.status === 401 || error?.status === 400 || error?.status === 403
@@ -95,6 +106,32 @@ export default function Login({ navigation }) {
           : t("login.networkError")
       );
     } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const handleTermsAccept = async () => {
+    try {
+      const session = await getSession();
+      const roleId = session?.roleId;
+
+      let studentProfileIds = [];
+      if (roleId === 4) {
+        try {
+          const linked = await getLinkedStudents(session);
+          studentProfileIds = linked.map((m) => m.profileId);
+        } catch {
+          studentProfileIds = [];
+        }
+      }
+
+      await acceptTerms(CURRENT_TERMS_VERSION, studentProfileIds);
+      await AsyncStorage.setItem(TERMS_ACCEPTED_KEY, CURRENT_TERMS_VERSION);
+      setTermsModalVisible(false);
+      navigation.navigate("MainPage");
+      registerPushDevice();
+    } catch (e) {
+      setFormError(t("accept.error"));
       setSubmitting(false);
     }
   };
@@ -156,6 +193,13 @@ export default function Login({ navigation }) {
         </View>
       </View>
       <LegalInfoModal visible={legalDoc !== null} doc={legalDoc ?? "terms"} onClose={() => setLegalDoc(null)} />
+
+      <TermsAcceptanceModal
+        visible={termsModalVisible}
+        onClose={() => setTermsModalVisible(false)}
+        onAccept={handleTermsAccept}
+        minorsCount={minorsCount}
+      />
     </ScrollView>
   );
 }

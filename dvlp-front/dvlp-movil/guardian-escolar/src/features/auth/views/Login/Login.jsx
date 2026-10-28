@@ -55,50 +55,53 @@ export default function Login({ navigation }) {
       await login(email, password);
       await applyAuthRole();
 
-      try {
-        const session = await getSession();
-        const roleId = session?.roleId;
+      const session = await getSession();
+      const roleId = session?.roleId;
 
-        // Estudiantes (roleId 2) no ven el modal: el padre/tutor ya aceptó el tratamiento
-        // de datos de sus hijos al aceptar él mismo.
-        if (roleId === 2) {
-          navigation.navigate("MainPage");
-          registerPushDevice();
-          return;
-        }
-
-        // Solo driver (3) y parent (4) pasan por aceptación de términos y privacidad.
-        if (roleId === 3 || roleId === 4) {
-          const alreadyAccepted = await AsyncStorage.getItem(TERMS_ACCEPTED_KEY);
-          if (alreadyAccepted === CURRENT_TERMS_VERSION) {
-            navigation.navigate("MainPage");
-            registerPushDevice();
-            return;
-          }
-
-          // Si es parent, calcular cuántos hijos vinculados tiene para aceptar por ellos.
-          let studentProfileIds = [];
-          if (roleId === 4) {
-            try {
-              const linked = await getLinkedStudents(session);
-              studentProfileIds = linked.map((m) => m.profileId);
-            } catch {
-              studentProfileIds = [];
-            }
-          }
-
-          setMinorsCount(studentProfileIds.length);
-          setTermsModalVisible(true);
-        } else {
-          // Admin y otros roles: no se muestra el modal de términos.
-          navigation.navigate("MainPage");
-          registerPushDevice();
-        }
-      } catch (e) {
-        console.warn("[Login] Post-login terms flow failed due to network, continuing:", e?.message);
+      // Estudiantes (roleId 2) no ven el modal: el padre/tutor ya aceptó el tratamiento
+      // de datos de sus hijos al aceptar él mismo.
+      if (roleId === 2) {
         navigation.navigate("MainPage");
         registerPushDevice();
+        return;
       }
+
+      // Admin y otros roles que no son driver ni parent: entran directo.
+      if (roleId !== 3 && roleId !== 4) {
+        navigation.navigate("MainPage");
+        registerPushDevice();
+        return;
+      }
+
+      // Driver (3) y Parent (4): verificar si ya aceptó la versión vigente.
+      let alreadyAccepted = false;
+      try {
+        const stored = await AsyncStorage.getItem(TERMS_ACCEPTED_KEY);
+        alreadyAccepted = stored === CURRENT_TERMS_VERSION;
+      } catch {
+        // Si AsyncStorage falla, tratamos como si no hubiera aceptado.
+        alreadyAccepted = false;
+      }
+
+      if (alreadyAccepted) {
+        navigation.navigate("MainPage");
+        registerPushDevice();
+        return;
+      }
+
+      // Si es parent, calcular cuántos hijos vinculados tiene para aceptar por ellos.
+      let studentProfileIds = [];
+      if (roleId === 4) {
+        try {
+          const linked = await getLinkedStudents(session);
+          studentProfileIds = linked.map((m) => m.profileId);
+        } catch {
+          studentProfileIds = [];
+        }
+      }
+
+      setMinorsCount(studentProfileIds.length);
+      setTermsModalVisible(true);
     } catch (error) {
       setFormError(
         error?.status === 401 || error?.status === 400 || error?.status === 403
@@ -126,13 +129,17 @@ export default function Login({ navigation }) {
       }
 
       await acceptTerms(CURRENT_TERMS_VERSION, studentProfileIds);
-      await AsyncStorage.setItem(TERMS_ACCEPTED_KEY, CURRENT_TERMS_VERSION);
+      try {
+        await AsyncStorage.setItem(TERMS_ACCEPTED_KEY, CURRENT_TERMS_VERSION);
+      } catch {
+        // Si no se puede guardar en local, aún así se registró en el backend.
+      }
       setTermsModalVisible(false);
       navigation.navigate("MainPage");
       registerPushDevice();
     } catch (e) {
       setFormError(t("accept.error"));
-      setSubmitting(false);
+      // El modal permanece abierto para que el usuario intente de nuevo.
     }
   };
 

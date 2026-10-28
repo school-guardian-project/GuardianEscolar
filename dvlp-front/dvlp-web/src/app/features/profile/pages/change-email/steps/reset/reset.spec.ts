@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Reset } from './reset';
+import { provideRouter, Router } from '@angular/router';
+import { Email } from '../email/email';
 
 describe('Reset', () => {
   let component: Reset;
@@ -9,6 +11,7 @@ describe('Reset', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Reset],
+      providers: [provideRouter([{ path: 'admin/change-email/email', component: Email }])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(Reset);
@@ -18,5 +21,6 @@ describe('Reset', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+    expect(TestBed.inject(Router).url).toBe('/admin/change-email/email');
   });
 });

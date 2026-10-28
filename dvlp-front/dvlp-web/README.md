@@ -12,6 +12,16 @@ set `API_URL` and `API_FORGOT_INFORMATION_URL` to its HTTPS origin without API p
 prefixes, then rebuild the Vercel deployment. Browser preflights are handled by
 Kong's shared CORS policy.
 
+The ngx-env build also requires the public `API_APK_DOWNLOAD_URL` value used by
+the landing page. Supply the approved download URL in the build environment
+before compiling; do not put credentials in any of these public variables.
+A successful build alone does not verify this configuration: when this key is
+absent, the current bundle can fail at browser startup while reading
+`import.meta.env.API_APK_DOWNLOAD_URL`. Check startup in a browser after setting
+the build values. Local validation with loopback API URLs and an explicit
+non-production download URL does not validate deployment configuration or
+backend connectivity.
+
 The administrator dashboard loads persisted alerts from the notification API in
 a searchable card, with filters containing only types already used by persisted
 alerts in the authorized school and ten alerts per
@@ -166,8 +176,23 @@ This will compile your project and store the build artifacts in the `dist/` dire
 To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
 
 ```bash
-ng test
+npm test -- --watch=false
 ```
+
+The Angular test target loads [test providers](src/testing/providers.ts): real
+translation and router services plus Angular's HTTP testing backend. Unit tests
+never contact the configured API. HTTP-focused tests still flush and verify
+their own requests; dialog tests provide their own dialog data/reference.
+Recovery-step tests register their redirect destinations and assert navigation
+when the required previous step is missing. This checks the state guard instead
+of suppressing unhandled router errors.
+
+The root test asserts the actual router outlet, not the retired CLI starter
+title. Problem-detail tests preserve the current policy of hiding technical
+binding messages while checking readable validation and known translations.
+These tests do not establish browser, deployed API or mobile-device behavior.
+Use the declared Node 22.x environment for CI; the custom ngx-env unit-test
+builder can still emit Angular's unsupported-build-target warning.
 
 ## Running end-to-end tests
 

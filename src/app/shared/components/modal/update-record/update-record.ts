@@ -78,8 +78,10 @@ const UPDATE_FIELDS: Record<RegisterType, Field[]> = {
     { name: 'documentType', type: 'select', options: ['CC', 'CE'] },
     { name: 'identification', type: 'text' },
     { name: 'birthDate', type: 'date' },
+    { name: 'city', type: 'select', options: [] },
     { name: 'licenseExpiration', type: 'date', halfWidth: true },
     { name: 'licenseNumber', type: 'text', halfWidth: true },
+    { name: 'phone', type: 'tel' },
     { name: 'address', type: 'text' },
     { name: 'email', type: 'email' },
   ],
@@ -96,7 +98,6 @@ const UPDATE_FIELDS: Record<RegisterType, Field[]> = {
     { name: 'driver', type: 'select', options: [] },
     { name: 'capacity', type: 'text' },
     { name: 'soat', type: 'date' },
-    { name: 'gps', type: 'select', options: [] },
     { name: 'gpsImei', type: 'text' },
     { name: 'gpsStatus', type: 'select', options: [] },
   ],
@@ -161,8 +162,9 @@ const UPDATE_RULES: Record<RegisterType, Record<string, ValidationRule>> = {
   driver: {
     names: R({ minLength: 2 }), lastNames: R({ minLength: 2 }), documentType: R(),
     identification: R({ pattern: 'number', minLength: 5 }), birthDate: R(),
+    city: R(),
     licenseExpiration: R(), licenseNumber: R({ minLength: 5 }), address: R({ minLength: 5 }),
-    email: R({ pattern: 'email' }),
+    phone: R({ minLength: 7 }), email: R({ pattern: 'email' }),
   },
   family: { name: R({ minLength: 2 }), guardian: R() },
   bus: {
@@ -311,8 +313,6 @@ export class UpdateRecord implements OnInit, OnChanges {
       const imei = String(this.formData['gpsImei'] ?? '').trim();
       if (imei && !/^\d{15}$/.test(imei)) {
         errors['gpsImei'] = this.translate.instant('validation.imei');
-      } else if (!imei && !this.formData['gps']) {
-        errors['gps'] = this.translate.instant('validation.gpsRequired');
       }
     }
     this.fieldErrors = errors;
@@ -333,7 +333,7 @@ export class UpdateRecord implements OnInit, OnChanges {
 
   ngOnInit(): void {
     this.fields = UPDATE_FIELDS[this.type].map((field) => {
-      if (this.type === 'admins' && field.name === 'city') {
+      if ((this.type === 'admins' || this.type === 'driver') && field.name === 'city') {
         return {
           ...field,
           options: this.cityOptions.map((city) => city.id),

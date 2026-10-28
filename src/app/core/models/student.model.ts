@@ -12,6 +12,7 @@ export interface PersonRequestDto {
   phone: number;
   residenceAddress: string;
   dateBirth: string;
+  cityId?: string | null;
 }
 
 /**
@@ -37,6 +38,7 @@ export interface PersonListDto {
   /** Solo conductores: UserManagement.DriverLicense */
   licenseNumber?: string | null;
   licenseExpirationDate?: string | null;
+  cityId?: string | null;
 }
 
 export interface PersonResponseDto extends PersonListDto {

@@ -583,6 +583,8 @@
         "documentType": "Tipo de documento",
         "identification": "Identificação",
         "birthDate": "Data de nascimento",
+        "cityName": "Cidade",
+        "phone": "Telefone",
         "licenseExpiration": "Validade da habilitação",
         "licenseNumber": "Habilitação",
         "address": "Endereço",
@@ -704,6 +706,8 @@
         "documentType": "Tipo de documento",
         "identification": "Identificação",
         "birthDate": "Data de nascimento",
+        "city": "Cidade",
+        "phone": "Telefone",
         "licenseExpiration": "Validade da habilitação",
         "licenseNumber": "Habilitação",
         "address": "Endereço",
@@ -730,7 +734,6 @@
         "brand": "Marca",
         "capacity": "Capacidade",
         "soat": "SOAT",
-        "gps": "Dispositivo GPS (IMEI)",
         "gpsImei": "IMEI do novo GPS (opcional)",
         "gpsStatus": "Status do GPS"
       },
@@ -849,8 +852,10 @@
         "documentType": "Tipo de documento",
         "identification": "Número de identificação",
         "birthDate": "Data de nascimento",
+        "city": "Cidade",
         "licenseExpiration": "Validade da habilitação",
         "licenseNumber": "Número da habilitação",
+        "phone": "Telefone",
         "address": "Endereço",
         "email": "E-mail",
         "campus": "Unidade"
@@ -876,7 +881,6 @@
         "brand": "Marca",
         "capacity": "Capacidade",
         "soat": "Validade do SOAT",
-        "gps": "Dispositivo GPS (IMEI)",
         "gpsImei": "IMEI do novo GPS (opcional)",
         "gpsStatus": "Status do GPS"
       },
@@ -1159,8 +1163,7 @@
     "birthDate": "A data não pode ser futura nem anterior a 100 anos atrás",
     "futureDate": "A data deve ser futura",
     "timeOrder": "O horário final deve ser posterior ao inicial",
-    "imei": "O IMEI deve ter 15 dígitos",
-    "gpsRequired": "Selecione um GPS ou digite o IMEI de um novo"
+    "imei": "O IMEI deve ter 15 dígitos"
   },
   "resend_code": {
     "button": "Solicitar novo código",

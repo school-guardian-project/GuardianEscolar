@@ -89,9 +89,11 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { name: 'documentType', type: 'select', options: ['CC','CE'] },
     { name: 'identification', type: 'text' },
     { name: 'birthDate', type: 'date' },
+    { name: 'city', type: 'select', optionsSource: 'city' },
     { name: 'campus', type: 'select', optionsSource: 'campus' },
     { name: 'licenseExpiration', type: 'date', halfWidth: true },
     { name: 'licenseNumber', type: 'text', halfWidth: true },
+    { name: 'phone', type: 'tel' },
     { name: 'address', type: 'text' },
     { name: 'email', type: 'email' },
   ],
@@ -113,8 +115,6 @@ const FIELDS: Record<RegisterType, Field[]> = {
     { name: 'model', type: 'select', optionsSource: 'model' },
     { name: 'capacity', type: 'text' },
     { name: 'soat', type: 'date' },
-    // GPS libres (GET /fleet/api/gps-devices): el valor es el id y se muestra el IMEI.
-    { name: 'gps', type: 'text' },
     // Alternativa al select: IMEI de un GPS nuevo (ms-fleet lo crea al vuelo).
     { name: 'gpsImei', type: 'text' },
     { name: 'gpsStatus', type: 'select', options: ['true', 'false'], optionLabelPrefix: 'register.bus.gpsStatusValues.' },
@@ -197,9 +197,11 @@ const VALIDATION_SCHEMAS: Record<RegisterType, ValidationSchema> = {
     documentType: { required: true },
     identification: { required: true, pattern: 'number', minLength: 5 },
     birthDate: { required: true, custom: validateBirthDate },
+    city: { required: true },
     campus: { required: true },
     licenseExpiration: { required: true, custom: validateFutureDate },
     licenseNumber: { required: true, minLength: 5 },
+    phone: { required: true, pattern: 'phone' },
     address: { required: true, minLength: 5 },
     email: { required: true, pattern: 'email' },
   },
@@ -269,7 +271,7 @@ const VALIDATION_SCHEMAS: Record<RegisterType, ValidationSchema> = {
 export class CardRegister implements OnInit, OnChanges {
   @Input() type: RegisterType = 'student';
   @Input() fieldOptions: Record<string, string[]> = {};
-  /** Opciones con id como valor y texto propio (p. ej. GPS: id -> IMEI). */
+  /** Opciones dinámicas con un valor de envío y una etiqueta visible distintos. */
   @Input() fieldSelectOptions: Record<string, SelectOption[]> = {};
   @Output() formSubmit = new EventEmitter<Record<string, any>>();
 
@@ -814,8 +816,6 @@ export class CardRegister implements OnInit, OnChanges {
       const imei = String(this.formData['gpsImei'] ?? '').trim();
       if (imei && !/^\d{15}$/.test(imei)) {
         this.fieldErrors['gpsImei'] = this.translate.instant('validation.imei');
-      } else if (!imei && !this.formData['gps']) {
-        this.fieldErrors['gps'] = this.translate.instant('validation.gpsRequired');
       }
     }
 

@@ -583,6 +583,8 @@
         "documentType": "Tipo identificación",
         "identification": "Identificación",
         "birthDate": "Fecha nacimiento",
+        "cityName": "Ciudad",
+        "phone": "Teléfono",
         "licenseExpiration": "Vencimiento licencia",
         "licenseNumber": "Licencia conducción",
         "address": "Dirección",
@@ -704,6 +706,8 @@
         "documentType": "Tipo identificación",
         "identification": "Identificación",
         "birthDate": "Fecha nacimiento",
+        "city": "Ciudad",
+        "phone": "Teléfono",
         "licenseExpiration": "Vencimiento licencia",
         "licenseNumber": "Licencia conducción",
         "address": "Dirección residencia",
@@ -730,7 +734,6 @@
         "brand": "Marca",
         "capacity": "Capacidad máxima",
         "soat": "Vigencia SOAT",
-        "gps": "Dispositivo GPS (IMEI)",
         "gpsImei": "IMEI de GPS nuevo (opcional)",
         "gpsStatus": "Estado del GPS"
       },
@@ -849,8 +852,10 @@
         "documentType": "Tipo de identificación",
         "identification": "Número de identificación",
         "birthDate": "Fecha de nacimiento",
+        "city": "Ciudad",
         "licenseExpiration": "Vencimiento de licencia",
         "licenseNumber": "Número de licencia",
+        "phone": "Teléfono",
         "address": "Dirección",
         "email": "Correo Electrónico",
         "campus": "Sede"
@@ -876,7 +881,6 @@
         "brand": "Marca",
         "capacity": "Capacidad",
         "soat": "Vigencia SOAT",
-        "gps": "Dispositivo GPS (IMEI)",
         "gpsImei": "IMEI de GPS nuevo (opcional)",
         "gpsStatus": "Estado del GPS"
       },
@@ -1159,8 +1163,7 @@
     "birthDate": "La fecha no puede ser futura ni anterior a hace 100 años",
     "futureDate": "La fecha debe ser futura",
     "timeOrder": "La hora final debe ser posterior a la inicial",
-    "imei": "El IMEI debe tener 15 dígitos",
-    "gpsRequired": "Selecciona un GPS o escribe el IMEI de uno nuevo"
+    "imei": "El IMEI debe tener 15 dígitos"
   },
   "resend_code": {
     "button": "Solicitar nuevo código",

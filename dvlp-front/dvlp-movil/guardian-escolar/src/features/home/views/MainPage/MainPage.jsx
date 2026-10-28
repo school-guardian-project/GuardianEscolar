@@ -105,7 +105,7 @@ export default function MainPage() {
     return null; // o un spinner si prefieres
   }
   
-  const config = roleConfig[role];
+  const config = roleConfig[role] ?? roleConfig["student"];
   const [modalType, setModalType] = useState(null);
   const [incidentOpen, setIncidentOpen] = useState(false);
   const [routeInfo, setRouteInfo] = useState(null);

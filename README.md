@@ -44,3 +44,14 @@ not "unassigned" results.
 and unchanged trip-action gating. These tests do not certify deployed SQL data
 or native rendering; no credentials, service addresses or database records were
 changed.
+
+The driver Profile screen also shows the assigned bus plate and route name,
+reloads them on navigation focus, and ignores responses from previous visits.
+If the route endpoint fails but fleet independently confirms the assigned bus,
+both Profile and Home retain that bus with an explicit route-query failure
+notice (including the HTTP status). A route failure is not reported as an
+unassigned driver. These checks use the session's IAM profile ID, not Person.Id.
+
+Mobile changes require an updated app build or an explicitly published
+compatible OTA update; pushing `main` alone does not update an installed APK.
+The `Mobile release` workflow is manual (`workflow_dispatch`), not push-triggered.

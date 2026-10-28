@@ -107,6 +107,103 @@ const route = { id: "route", name: "School route", stops: [
 ] };
 const settle = () => new Promise(resolve => setImmediate(resolve));
 
+test("driver profile displays the assigned route and bus and reloads them on focus", async () => {
+  let focused = true;
+  const pending = [];
+  const view = harness("features/profile/views/Profile/Profile.jsx", {
+    "@core/hooks/useSession": () => ({ role: "driver" }),
+    "@react-navigation/native": { useNavigation: () => ({}), useIsFocused: () => focused },
+    "@core/services/visibleRouteService": { resolveRouteForRole: () => new Promise(resolve => pending.push(resolve)) },
+  });
+  view.render();
+  await settle();
+  pending[0]({ route: { id: "r1", name: "North", bus: { id: "b1", plate: "ABC123" } } });
+  await settle();
+  let tree = view.render();
+  const values = () => nodes(tree).filter(node => node.type === "@components/cards/InfoRow").map(node => node.props.value);
+  assert.ok(values().includes("ABC123"));
+  assert.ok(values().includes("North"));
+  focused = false;
+  view.render();
+  focused = true;
+  view.render();
+  await settle();
+  assert.equal(pending.length, 2);
+  pending[1]({ route: { id: "r2", name: "South", bus: { id: "b2", plate: "DEF456" } } });
+  await settle();
+  tree = view.render();
+  assert.ok(values().includes("DEF456"));
+  assert.ok(values().includes("South"));
+  assert.equal(values().includes("ABC123"), false);
+});
+
+test("driver profile shows a query error instead of claiming there is no assignment", async () => {
+  const view = harness("features/profile/views/Profile/Profile.jsx", {
+    "@core/hooks/useSession": () => ({ role: "driver" }),
+    "@core/services/visibleRouteService": { resolveRouteForRole: async () => {
+      throw Object.assign(new Error("Forbidden"), { status: 403 });
+    } },
+  });
+  view.render();
+  await settle();
+  const tree = view.render();
+  const alert = nodes(tree).find(node => node.props.accessibilityRole === "alert");
+  assert.ok(alert);
+  assert.ok(alert.props.children.includes("HTTP 403"));
+});
+
+test("student profile does not query or display driver assignments", async () => {
+  let calls = 0;
+  const view = harness("features/profile/views/Profile/Profile.jsx", {
+    "@core/hooks/useSession": () => ({ role: "student" }),
+    "@core/services/visibleRouteService": { resolveRouteForRole: async () => { calls++; } },
+  });
+  const tree = view.render();
+  await settle();
+  assert.equal(calls, 0);
+  assert.equal(nodes(tree).some(node => node.type === "@components/cards/InfoRow"), false);
+});
+
+test("driver profile displays a verified bus with the route error notice", async () => {
+  const note = "El bus está asignado, pero no fue posible consultar su ruta (HTTP 409).";
+  const view = harness("features/profile/views/Profile/Profile.jsx", {
+    "@core/hooks/useSession": () => ({ role: "driver" }),
+    "@core/services/visibleRouteService": { resolveRouteForRole: async () => ({
+      route: null, bus: { id: "b1", plate: "ABC123" }, note,
+    }) },
+  });
+  view.render();
+  await settle();
+  const tree = view.render();
+  assert.ok(nodes(tree).some(node => node.type === "@components/cards/InfoRow" && node.props.value === "ABC123"));
+  assert.ok(nodes(tree).some(node => node.type === "Text" && node.props.children.includes(note)));
+});
+
+test("driver profile ignores an assignment response from the previous focus", async () => {
+  let focused = true;
+  const pending = [];
+  const view = harness("features/profile/views/Profile/Profile.jsx", {
+    "@core/hooks/useSession": () => ({ role: "driver" }),
+    "@react-navigation/native": { useNavigation: () => ({}), useIsFocused: () => focused },
+    "@core/services/visibleRouteService": { resolveRouteForRole: () => new Promise(resolve => pending.push(resolve)) },
+  });
+  view.render();
+  await settle();
+  focused = false;
+  view.render();
+  focused = true;
+  view.render();
+  await settle();
+  pending[1]({ route: { name: "Current", bus: { plate: "NEW123" } } });
+  await settle();
+  pending[0]({ route: { name: "Obsolete", bus: { plate: "OLD123" } } });
+  await settle();
+  const tree = view.render();
+  const values = nodes(tree).filter(node => node.type === "@components/cards/InfoRow").map(node => node.props.value);
+  assert.ok(values.includes("NEW123"));
+  assert.equal(values.includes("OLD123"), false);
+});
+
 test("driver sees their bus without a route, without stops or trip actions", async () => {
   const view = harness("features/home/views/MainPage/MainPage.jsx", {
     "@core/hooks/useSession": () => ({ role: "driver", initialized: true }),

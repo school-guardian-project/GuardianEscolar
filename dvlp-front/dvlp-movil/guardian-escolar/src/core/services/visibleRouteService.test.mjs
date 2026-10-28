@@ -7,7 +7,7 @@ async function loadService(handler, students = [], fleetHandler = () => {
   throw Object.assign(new Error("No assigned bus"), { status: 404 });
 }) {
   const calls = [];
-  const context = createContext({});
+  const context = createContext({ console: { error() {} } });
   const module = new SourceTextModule(
     readFileSync(new URL("./visibleRouteService.js", import.meta.url), "utf8"), { context },
   );
@@ -111,6 +111,24 @@ test("malformed or mismatched fleet responses are errors, not an unassigned driv
       () => ({ status: "NO_ROUTE", route: null }), [], fleetHandler);
     await assert.rejects(resolve("driver", { profileId: "driver-1" }));
   }
+});
+
+for (const status of [403, 409, 500]) {
+  test(`driver still sees the assigned bus with an explicit notice when route lookup fails ${status}`, async () => {
+    const error = Object.assign(new Error("Route service failure"), { status });
+    const bus = { id: "bus-1", plate: "ABC123" };
+    const { resolve } = await loadService(() => { throw error; }, [], () => bus);
+    const result = await resolve("driver", { profileId: "driver-1" });
+    assert.equal(result.bus, bus);
+    assert.equal(result.route, null);
+    assert.ok(result.note.includes(`HTTP ${status}`));
+  });
+}
+
+test("route failure is still an error when no assigned bus can be verified", async () => {
+  const error = Object.assign(new Error("Route service failure"), { status: 500 });
+  const { resolve } = await loadService(() => { throw error; });
+  await assert.rejects(resolve("driver", { profileId: "driver-1" }), error);
 });
 
 test("missing session, unlinked parent and empty admin list return explicit notices", async () => {

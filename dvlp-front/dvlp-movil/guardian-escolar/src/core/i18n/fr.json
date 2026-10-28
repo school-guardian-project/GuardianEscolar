@@ -148,7 +148,10 @@
   },
   "profile": {
     "title": "Mon profil",
-    "subtitle": "Gérez votre compte et vos préférences"
+    "subtitle": "Gérez votre compte et vos préférences",
+    "assignedBus": "Bus affecté",
+    "assignmentLoading": "Chargement de l'affectation...",
+    "assignmentError": "Impossible de vérifier le bus et l'itinéraire affectés."
   },
   "notifications": {
     "title": "Notifications",

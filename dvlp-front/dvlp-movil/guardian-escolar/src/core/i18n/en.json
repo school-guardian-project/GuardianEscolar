@@ -148,7 +148,10 @@
   },
   "profile": {
     "title": "My profile",
-    "subtitle": "Manage your account and preferences"
+    "subtitle": "Manage your account and preferences",
+    "assignedBus": "Assigned bus",
+    "assignmentLoading": "Loading assignment...",
+    "assignmentError": "Unable to verify the assigned bus and route."
   },
   "notifications": {
     "title": "Notifications",

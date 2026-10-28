@@ -1102,6 +1102,19 @@
     }
   },
   "right_index": {
+    "preview": {
+      "description": "Aperçu illustratif du tableau de bord administratif et de la carte mobile de Guardian Escolar",
+      "caption": "Aperçu illustratif du produit · Sans données en direct",
+      "routes": "Itinéraires",
+      "alertsPlaceholder": "Consultez les alertes de votre établissement",
+      "vehicleLocation": "Position du véhicule",
+      "mapIllustration": "Carte illustrative · Neiva",
+      "vehicle": "Véhicule scolaire",
+      "status": "État",
+      "lastUpdate": "Dernière mise à jour",
+      "location": "Position",
+      "profile": "Profil"
+    },
     "brand": "Guardian Escolar",
     "dashboardTitle": "Suivi en direct",
     "allVehicles": "Tous les véhicules",

@@ -18,7 +18,7 @@ module.exports = ({ config }) => {
     ...config,
     extra: {
       ...config.extra,
-      gpsImei: process.env.GPS_IMEI,
+      gpsImei: process.env.EXPO_PUBLIC_GPS_IMEI,
     },
   };
 

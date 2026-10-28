@@ -16,6 +16,7 @@ export interface RouteListDto {
   targetSector: string;
   startTime: string;
   endTime: string;
+  daysOfWeek?: string[];
   stopsCount: number;
 }
 
@@ -26,6 +27,7 @@ export interface RouteResponseDto {
   targetSector: string;
   startTime: string;
   endTime: string;
+  daysOfWeek?: string[];
   status: RouteStatus;
   busId?: string | null;
   bus?: { id: string; plate: string; driverName?: string } | null;

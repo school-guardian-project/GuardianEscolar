@@ -36,6 +36,7 @@ function fromApi(api: RouteListDto): RouteView {
     destination: api.targetSector ?? '',
     startTime: api.startTime ?? '',
     endTime: api.endTime ?? '',
+    daysOfWeek: Array.isArray(api.daysOfWeek) ? api.daysOfWeek : [],
     campuseId: api.campuseId,
   };
 }
@@ -47,13 +48,16 @@ function toTime(value: unknown): string {
 }
 
 function toPayload(form: RecordData): RouteRequestDto {
+  const daysOfWeek = form['daysOfWeek'];
   return {
     campuseId: String(form['campus'] ?? form['campuseId'] ?? '').trim(),
     name: String(form['name'] ?? '').trim(),
     targetSector: String(form['destination'] ?? '').trim(),
     startTime: toTime(form['startTime']),
     endTime: toTime(form['endTime']),
-    daysOfWeek: form['daysOfWeek'] ?? [],  // NUEVO
+    daysOfWeek: Array.isArray(daysOfWeek)
+      ? daysOfWeek.filter((day): day is string => typeof day === 'string')
+      : [],
   };
 }
 
@@ -203,6 +207,7 @@ export class RoutesPage implements OnInit {
           name: detail.name,
           startTime: detail.startTime,
           endTime: detail.endTime,
+          daysOfWeek: detail.daysOfWeek ?? route['daysOfWeek'] ?? [],
           busPlate: detail.bus?.plate ?? '',
           driver: detail.bus?.driverName ?? '',
         } as RouteView);
@@ -226,6 +231,7 @@ export class RoutesPage implements OnInit {
           destination: detail.targetSector,
           startTime: detail.startTime,
           endTime: detail.endTime,
+          daysOfWeek: detail.daysOfWeek ?? route['daysOfWeek'] ?? [],
         };
         this.showUpdateModal = true;
       },

@@ -21,6 +21,7 @@ import { resolveRouteForRole } from "@core/services/visibleRouteService";
 import { normalizeStops } from "@features/gps/routeMapData";
 import RouteMap from "@features/home/components/RouteMap";
 import { startTripApi, getTripStatusApi } from "@core/services/tripApi";
+import { normalizeTripStatus, localTripState } from "@core/services/tripStatus";
 import { scanCredential } from "@core/services/notificationApi";
 import { apiPost } from "@core/services/apiClient";
 
@@ -64,33 +65,23 @@ function MainPageContent() {
       const session = await getSession();
       if (!session?.profileId) return;
 
-      const tripStatusData = await getTripStatusApi(session.profileId);
-      if (tripStatusData) {
-        setCanStart(tripStatusData.CanStart ?? false);
-        setCanEnd(tripStatusData.CanEnd ?? false);
-        setEndConditionDetail(tripStatusData.EndConditionDetail ?? null);
-        
-        // Mapear status del backend a estado local
-        if (tripStatusData.Status === "Ended") {
-          setTripStatus("ended");
-        } else if (tripStatusData.Status === "InProgress" || tripStatusData.Status === "ReadyToEnd") {
-          setTripStatus("active");
-        } else if (tripStatusData.Status === "ReadyToStart" || tripStatusData.CanStart) {
-          setTripStatus("ready_to_start");
-        } else {
-          setTripStatus("idle");
+      const trip = normalizeTripStatus(await getTripStatusApi(session.profileId));
+      if (trip) {
+        setCanStart(trip.canStart);
+        setCanEnd(trip.canEnd);
+        setEndConditionDetail(trip.endConditionDetail);
+        setTripStatus(localTripState(trip));
+
+        if (trip.tripId && trip.tripId !== "00000000-0000-0000-0000-000000000000") {
+          setCurrentTripId(trip.tripId);
         }
-        
-        if (tripStatusData.TripId && tripStatusData.TripId !== "00000000-0000-0000-0000-000000000000") {
-          setCurrentTripId(tripStatusData.TripId);
+        if (trip.direction) {
+          setTripDirection(trip.direction);
         }
-        if (tripStatusData.Direction) {
-          setTripDirection(tripStatusData.Direction);
-        }
-        if (tripStatusData.ScheduleStartTime) {
+        if (trip.scheduleStartTime) {
           setTripSchedule({
-            startTime: tripStatusData.ScheduleStartTime,
-            endTime: tripStatusData.NextScheduleTime
+            startTime: trip.scheduleStartTime,
+            endTime: trip.nextScheduleTime
           });
         }
       }
@@ -350,7 +341,10 @@ function MainPageContent() {
         ]}
         pointerEvents="box-none"
       >
-        <View style={[styles.qrButtonContainer, { bottom: 280 + insets.bottom }]} pointerEvents="box-none">
+        <View style={[styles.qrButtonContainer, { bottom: 280 + insets.bottom, flexDirection: "row", alignItems: "flex-end", gap: 12 }]} pointerEvents="box-none">
+          {config.card.showQR && (
+            <QRButtom config={config.card} onOpenModel={handleOpenModal} />
+          )}
           {/* Trip buttons only when route is assigned */}
           {role === "driver" && routeInfo?.routeId && (
             <TripActionButton

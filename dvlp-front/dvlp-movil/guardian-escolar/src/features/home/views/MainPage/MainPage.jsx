@@ -327,7 +327,6 @@ function MainPageContent() {
           styles.overlay,
           {
             paddingHorizontal: horizontalPadding,
-            paddingBottom: 0,
           },
         ]}
         pointerEvents="box-none"

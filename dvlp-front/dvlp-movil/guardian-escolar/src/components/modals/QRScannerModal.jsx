@@ -30,12 +30,15 @@ export default function QRScannerModal({ visible, onClose, onScan }) {
 
   // Estado para evitar que se escanee múltiples veces el mismo código
   const [scanned, setScanned] = useState(false);
+  const [lastScannedToken, setLastScannedToken] = useState(null);
+  const SCAN_COOLDOWN_MS = 3000;
 
   const scanLine = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
     if (visible) {
       setScanned(false);
+      setLastScannedToken(null);
     }
   }, [visible]);
 
@@ -74,7 +77,9 @@ export default function QRScannerModal({ visible, onClose, onScan }) {
   // Handler que se ejecuta cuando la cámara detecta un código QR
   const handleBarCodeScanned = ({ data }) => {
     if (scanned) return; // Evita doble escaneo
+    if (data === lastScannedToken) return; // Mismo QR escaneado recientemente
     setScanned(true); // Marca como escaneado
+    setLastScannedToken(data); // Recordar el token escaneado
     onScan(data); // Envía los datos del QR al componente padre
     onClose(); // Cierra el modal
   };

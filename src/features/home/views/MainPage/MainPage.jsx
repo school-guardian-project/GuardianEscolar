@@ -110,8 +110,7 @@ function MainPageContent() {
       </View>
     );
   }
-
-  const config = roleConfig[role];
+  const config = roleConfig[role] ?? roleConfig["student"];
   const [modalType, setModalType] = useState(null);
   const [incidentOpen, setIncidentOpen] = useState(false);
   const [routeInfo, setRouteInfo] = useState(null);

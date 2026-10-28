@@ -50,46 +50,51 @@ async function fetchRoute(path) {
  * - otros:   primera ruta, como respaldo.
  */
 async function resolveRouteForRole(role, session) {
-  // Validador: asegura que la respuesta tenga id (RouteDto mínimo)
-  const isValidRoute = (r) => r && typeof r === "object" && (r.id || r.routeId);
+  try {
+    // Validador: asegura que la respuesta tenga id (RouteDto mínimo)
+    const isValidRoute = (r) => r && typeof r === "object" && (r.id || r.routeId);
 
-  if (role === "student") {
-    const route = await fetchRoute(`/routes/student/${session.profileId}`);
-    const valid = isValidRoute(route) ? route : null;
-    return { route: valid, note: valid ? null : "Aún no tienes una ruta asignada." };
-  }
-
-  if (role === "driver") {
-    const today = await fetchRoute(`/routes/today?driverId=${session.profileId}`);
-    // Estructura esperada: { status: "ACTIVE"|"SCHEDULED", route: RouteDto, nextOccurrence?: string }
-    if (today && typeof today === "object" && today.status === "ACTIVE" && isValidRoute(today.route)) {
-      return { route: today.route, note: null };
+    if (role === "student") {
+      const route = await fetchRoute(`/routes/student/${session.profileId}`);
+      const valid = isValidRoute(route) ? route : null;
+      return { route: valid, note: valid ? null : "Aún no tienes una ruta asignada." };
     }
-    // SCHEDULED trae la próxima salida: decir "sin ruta" confundía al conductor.
-    if (today && typeof today === "object" && today.status === "SCHEDULED" && today.nextOccurrence) {
-      const next = new Date(today.nextOccurrence).toLocaleString("es-CO", {
-        weekday: "long",
-        hour: "2-digit",
-        minute: "2-digit",
-      });
-      return { route: null, note: `Tu próximo recorrido es el ${next}.` };
-    }
-    return { route: null, note: "No hay una ruta asignada." };
-  }
 
-  if (role === "parent") {
-    const [student] = await getLinkedStudents(session);
-    if (!student) {
-      return { route: null, note: "No hay estudiantes vinculados a tu cuenta." };
+    if (role === "driver") {
+      const today = await fetchRoute(`/routes/today?driverId=${session.profileId}`);
+      // Estructura esperada: { status: "ACTIVE"|"SCHEDULED", route: RouteDto, nextOccurrence?: string }
+      if (today && typeof today === "object" && today.status === "ACTIVE" && isValidRoute(today.route)) {
+        return { route: today.route, note: null };
+      }
+      // SCHEDULED trae la próxima salida: decir "sin ruta" confundía al conductor.
+      if (today && typeof today === "object" && today.status === "SCHEDULED" && today.nextOccurrence) {
+        const next = new Date(today.nextOccurrence).toLocaleString("es-CO", {
+          weekday: "long",
+          hour: "2-digit",
+          minute: "2-digit",
+        });
+        return { route: null, note: `Tu próximo recorrido es el ${next}.` };
+      }
+      return { route: null, note: "No hay una ruta asignada." };
     }
-    const route = await fetchRoute(`/routes/student/${student.profileId}`);
-    const valid = isValidRoute(route) ? route : null;
-    return { route: valid, note: valid ? null : "El estudiante aún no tiene una ruta asignada." };
-  }
 
-  const routes = await fetchRoute("/routes");
-  const first = Array.isArray(routes) && routes.length > 0 && isValidRoute(routes[0]) ? routes[0] : null;
-  return { route: first, note: null };
+    if (role === "parent") {
+      const [student] = await getLinkedStudents(session);
+      if (!student) {
+        return { route: null, note: "No hay estudiantes vinculados a tu cuenta." };
+      }
+      const route = await fetchRoute(`/routes/student/${student.profileId}`);
+      const valid = isValidRoute(route) ? route : null;
+      return { route: valid, note: valid ? null : "El estudiante aún no tiene una ruta asignada." };
+    }
+
+    const routes = await fetchRoute("/routes");
+    const first = Array.isArray(routes) && routes.length > 0 && isValidRoute(routes[0]) ? routes[0] : null;
+    return { route: first, note: null };
+  } catch (error) {
+    console.error("[resolveRouteForRole] Error:", error);
+    return { route: null, note: null };
+  }
 }
 
 function MainPageContent() {

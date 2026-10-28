@@ -55,6 +55,7 @@ function MainPageContent() {
   const [canStart, setCanStart] = useState(false);
   const [canEnd, setCanEnd] = useState(false);
   const [endConditionDetail, setEndConditionDetail] = useState(null);
+  const [tripMessage, setTripMessage] = useState(null);
   
   // GPS Tracking (solo si está enfocada la pantalla)
   const { location } = useGpsTracking(undefined, isFocused);
@@ -72,6 +73,7 @@ function MainPageContent() {
         setCanStart(trip.canStart);
         setCanEnd(trip.canEnd);
         setEndConditionDetail(trip.endConditionDetail);
+        setTripMessage(trip.message);
         setTripStatus(localTripState(trip));
 
         if (trip.tripId && trip.tripId !== "00000000-0000-0000-0000-000000000000") {
@@ -359,7 +361,8 @@ function MainPageContent() {
         pointerEvents="box-none"
       >
         <View style={[styles.qrButtonContainer, { bottom: 280 + insets.bottom, flexDirection: "row", alignItems: "flex-end", gap: 12 }]} pointerEvents="box-none">
-          {config.card.showQR && (
+          {/* El conductor escanea solo con el viaje en curso (botón más abajo). */}
+          {config.card.showQR && config.card.qrMode !== "scan" && (
             <QRButtom config={config.card} onOpenModel={handleOpenModal} />
           )}
           {/* Trip buttons only when route is assigned */}
@@ -374,6 +377,7 @@ function MainPageContent() {
               canStart={canStart}
               canEnd={canEnd}
               endConditionDetail={endConditionDetail}
+              statusMessage={tripMessage}
             />
           )}
           {role === "driver" && routeInfo && tripStatus === "active" && (

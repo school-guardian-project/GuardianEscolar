@@ -19,3 +19,19 @@ test("ended and idle states", () => {
   assert.equal(localTripState(normalizeTripStatus({ status: 0 })), "idle");
   assert.equal(normalizeTripStatus(null), null);
 });
+
+test("exposes the backend message in camelCase and PascalCase", () => {
+  const waiting = normalizeTripStatus({
+    status: 0,
+    canStart: false,
+    message: "Ruta programada para 06:30. El botón de inicio estará disponible 10 minutos antes.",
+  });
+  assert.equal(waiting.message, "Ruta programada para 06:30. El botón de inicio estará disponible 10 minutos antes.");
+
+  const inProgress = normalizeTripStatus({
+    Status: 2,
+    EndConditionDetail: { CanEnd: false, Message: "Faltan 2 estudiantes por descender." },
+  });
+  assert.deepEqual({ ...inProgress.endConditionDetail }, { canEnd: false, message: "Faltan 2 estudiantes por descender." });
+  assert.equal(normalizeTripStatus({ status: 0, message: "" }).message, null);
+});

@@ -12,7 +12,9 @@ export default function TripActionButton({
   // Nuevas props del backend
   canStart = false,
   canEnd = false,
-  endConditionDetail = null
+  endConditionDetail = null,
+  // Mensaje de ms-route cuando aún no se puede iniciar (ventana de inicio, sin horario...)
+  statusMessage = null
 }) {
   const { theme } = useTheme();
 
@@ -35,14 +37,14 @@ export default function TripActionButton({
 
   // Mensaje informativo para el botón deshabilitado
   const helperText = useMemo(() => {
-    if (status === "active" && !canEnd && endConditionDetail?.Message) {
-      return endConditionDetail.Message;
+    if (status === "active" && !canEnd && endConditionDetail?.message) {
+      return endConditionDetail.message;
     }
-    if (status === "idle" && !canStart && endConditionDetail?.Message) {
-      return endConditionDetail.Message;
+    if ((status === "idle" || status === "ready_to_start") && !canStart && statusMessage) {
+      return statusMessage;
     }
     return null;
-  }, [status, canStart, canEnd, endConditionDetail]);
+  }, [status, canStart, canEnd, endConditionDetail, statusMessage]);
 
   if (!label && !helperText) return null;
 
@@ -55,6 +57,15 @@ export default function TripActionButton({
     : isActive
     ? theme.alertIcon
     : theme.buttonApply;
+
+  // Sin acción disponible solo se explica el motivo, sin un botón vacío.
+  if (!label) {
+    return (
+      <View style={styles.container}>
+        <Text style={[styles.helperText, styles.notice]}>{helperText}</Text>
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
@@ -106,6 +117,15 @@ const styles = StyleSheet.create({
     color: "#666",
     textAlign: "center",
     maxWidth: 280,
+  },
+  notice: {
+    marginTop: 0,
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 8,
+    backgroundColor: "#FFFFFFEE",
+    color: "#333",
+    fontSize: 12,
   },
 });
 

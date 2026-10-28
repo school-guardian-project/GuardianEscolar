@@ -14,11 +14,21 @@ export function normalizeTripStatus(data) {
     status: status ?? "NotStarted",
     canStart: pick(data, "CanStart") ?? false,
     canEnd: pick(data, "CanEnd") ?? false,
-    endConditionDetail: pick(data, "EndConditionDetail") ?? null,
+    endConditionDetail: normalizeEndCondition(pick(data, "EndConditionDetail")),
+    // Explica por qué el botón no está disponible (p. ej. "disponible 10 minutos antes").
+    message: pick(data, "Message") || null,
     tripId: pick(data, "TripId") ?? null,
     direction: pick(data, "Direction") ?? null,
     scheduleStartTime: pick(data, "ScheduleStartTime") ?? null,
     nextScheduleTime: pick(data, "NextScheduleTime") ?? null,
+  };
+}
+
+function normalizeEndCondition(detail) {
+  if (!detail) return null;
+  return {
+    canEnd: pick(detail, "CanEnd") ?? false,
+    message: pick(detail, "Message") || null,
   };
 }
 

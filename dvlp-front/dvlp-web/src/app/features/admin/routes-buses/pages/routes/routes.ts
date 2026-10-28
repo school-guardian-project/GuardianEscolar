@@ -203,6 +203,8 @@ export class RoutesPage implements OnInit {
           name: detail.name,
           startTime: detail.startTime,
           endTime: detail.endTime,
+          busPlate: detail.bus?.plate ?? '',
+          driver: detail.bus?.driverName ?? '',
         } as RouteView);
         this.showModal = true;
       },

@@ -12,7 +12,7 @@ const RECORD_CONFIG: Record<RegisterType, { icon: string; fields: string[] }> = 
   family: { icon: 'family_restroom', fields: ['name', 'guardian', 'student', 'observations'] },
   bus: { icon: 'directions_bus', fields: ['plate', 'driver', 'campusName', 'brand', 'model', 'capacity', 'soat', 'gps', 'gpsStatus', 'status'] },
   stop: { icon: 'location_on', fields: ['name', 'student', 'city', 'school', 'address', 'route'] },
-  route: { icon: 'route', fields: ['name', 'campusName', 'startTime', 'endTime', 'destination'] },
+  route: { icon: 'route', fields: ['name', 'campusName', 'startTime', 'endTime', 'destination', 'busPlate', 'driver'] },
   admins: { icon: 'admin_panel_settings', fields: ['name', 'lastNames', 'cityName', 'schoolName', 'email', 'identification', 'birthDate', 'phone', 'address'] },
   schools: { icon: 'school', fields: ['name', 'city', 'address', 'phone', 'schooling', 'email', 'website', 'status'] },
 };

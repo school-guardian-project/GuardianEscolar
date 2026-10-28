@@ -44,6 +44,8 @@ function MainPageContent() {
   const [status, setStatus] = useState(null);
   const [, setLoading] = useState(true);
   const [scanFeedback, setScanFeedback] = useState(null);
+  const [lastScanTime, setLastScanTime] = useState(0);
+  const SCAN_COOLDOWN_MS = 3000;
   // Estados del viaje - ahora controlados por backend
   const [tripStatus, setTripStatus] = useState("idle"); // 'idle' | 'ready_to_start' | 'active' | 'ended'
   const [tripDirection, setTripDirection] = useState(null); // 'Ida' | 'Vuelta'
@@ -165,6 +167,21 @@ function MainPageContent() {
 
   const handleQrScan = async (qrToken) => {
     try {
+      // Validar que haya un viaje activo antes de permitir escaneo
+      if (tripStatus !== "active") {
+        setScanFeedback({
+          type: "error",
+          message: t("serviceErrors.noActiveTrip") || "No active trip to scan.",
+        });
+        return;
+      }
+      // Cooldown para prevenir escaneos duplicados rápidos
+      const now = Date.now();
+      if (now - lastScanTime < SCAN_COOLDOWN_MS) {
+        return;
+      }
+      setLastScanTime(now);
+
       // Contrato de ms-notification: solo qrToken. El backend resuelve viaje,
       // parada, estudiante y el tipo de movimiento (subida/bajada) a partir del
       // estado del viaje, y lo devuelve en `boardingType` para elegir el mensaje.
@@ -358,6 +375,9 @@ function MainPageContent() {
               canEnd={canEnd}
               endConditionDetail={endConditionDetail}
             />
+          )}
+          {role === "driver" && routeInfo && tripStatus === "active" && (
+            <QRButtom config={config.card} onOpenModel={handleOpenModal} />
           )}
         </View>
 

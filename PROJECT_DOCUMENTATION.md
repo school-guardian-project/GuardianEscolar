@@ -533,61 +533,34 @@ return (
 
 ### 6.2 `src/features/home/views/MainPage/MainPage.jsx`
 
-```js
-import React from 'react';
-import { View } from 'react-native';
-import MapView from 'react-native-maps';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import SearchInput from '@components/inputs/SearchInput';
-import NotificationButton from '@components/buttons/NotificationButton';
-import RouteInfoCard from '@components/cards/RouteInfoCard';
-import BottomTabBar from '@components/layout/BottomTabBar';
-import useWindow from '@core/hooks/useWindow';
-import styles from './MainPage.style';
-```
+The Route (`MainPage`) and Location (`LiveTracking`) screens resolve the same
+route through `src/core/services/visibleRouteService.js`:
 
-- Importa un mapa y componentes de UI.
-- `useSafeAreaInsets()` evita que el contenido quede detrás de la barra superior o cámara.
+- Student: their assigned route.
+- Guardian: the first linked student's route, preserving the existing selection.
+- Driver: today's route, respecting the backend's `ACTIVE` time window.
+  Outside that window, the next-trip notice remains visible.
+- Administrator and superadministrator: the detail of the first route returned
+  by the authorized backend list. JWT roles 1 and 5 map to `admin`, not student.
 
-```js
-export default function MainPage() {
-  const { width } = useWindow();
-  const insets = useSafeAreaInsets();
-  const horizontalPadding = width < 360 ? 12 : 16;
-```
+Route reuses `RouteMap` to display ordered stops, names and addresses, along with
+the bus when a valid position is available. Location uses `GpsMap` and also
+requests optional road geometry. Both show stops without waiting for OSRM,
+even when the bus GPS signal is unavailable.
 
-- `useWindow()` devuelve el ancho de pantalla.
-- Ajusta el `horizontalPadding` según el ancho.
+`src/features/gps/routeMapData.js` validates coordinates and normalizes stops.
+Maps frame stops when loaded; Location preserves that framing during GPS
+updates and retains the existing control to center on the bus.
+Trip action buttons remain restricted to drivers.
 
-```js
-return (
-  <View style={styles.container}>
-    <MapView style={styles.map} initialRegion={{ latitude: 2.9273, longitude: -75.2819, latitudeDelta: 0.08, longitudeDelta: 0.08 }} />
-```
+Backend permissions are unchanged. Students, guardians and drivers never fall
+back to the global route list. Request failures are logged and displayed as
+notices, and changing roles clears previous stops.
+`BottomTabBar` navigates between `MainPage`, `LiveTracking` and `Profile`.
 
-- `MapView` muestra el mapa con una región inicial fija.
-- `latitudeDelta` y `longitudeDelta` controlan el zoom.
-
-```js
-<View pointerEvents='box-none' style={[styles.overlay, { paddingHorizontal: horizontalPadding, paddingTop: Math.max(insets.top, 12), paddingBottom: 0 }]}>
-```
-
-- `pointerEvents='box-none'` permite que el mapa reciba toques fuera del contenedor superpuesto.
-- Ajusta el padding con la zona segura.
-
-```js
-<View style={styles.topBar}> <View style={styles.searchWrapper}><SearchInput /></View> <NotificationButton /></View>
-```
-
-- Muestra el campo de búsqueda y el botón de notificación.
-
-```js
-<BottomTabBar onRoutePress={() => navigation.navigate('MainPage')} onLocationPress={() => navigation.navigate('Location')} onProfilePress={() => navigation.navigate('Profile')} />
-```
-
-- Este bloque intenta pasar callbacks de navegación.
-- En la implementación actual de `MainPage` no existe `navigation`, por lo que esta parte está incompleta.
-- `BottomTabBar` sin embargo navega internamente a `MainPage` y `Profile`.
+Local validation: `npm test` includes role-based resolution, coordinate
+boundaries and screen rendering tests with mocked native modules.
+These tests do not replace checking native maps on Android/iOS devices.
 
 ### 6.3 `src/features/profile/views/Profile/Profile.jsx`
 

@@ -47,3 +47,9 @@ test("the student shows its QR and the driver scans it", () => {
   assert.equal(roleConfig.parent.card.qrMode, null);
   assert.equal(roleConfig.admin.card.qrMode, null);
 });
+
+test("route stop visibility is enabled for every mobile role", () => {
+  for (const config of Object.values(roleConfig)) {
+    assert.equal(config.MapMarkers.showRouteStops, true);
+  }
+});

@@ -3,6 +3,7 @@ import { StyleSheet, View } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
 import MapView, { Marker } from "react-native-maps";
+import { toValidCoordinate } from "@features/gps/routeMapData";
 
 const DEFAULT_REGION = {
   latitude: 2.9273,
@@ -10,22 +11,6 @@ const DEFAULT_REGION = {
   latitudeDelta: 0.08,
   longitudeDelta: 0.08,
 };
-
-function toValidCoordinate(location) {
-  const latitude = Number(location?.latitude);
-  const longitude = Number(location?.longitude);
-
-  if (
-    location?.latitude == null || location?.latitude === "" ||
-    location?.longitude == null || location?.longitude === "" ||
-    !Number.isFinite(latitude) || !Number.isFinite(longitude) ||
-    latitude < -90 || latitude > 90 || longitude < -180 || longitude > 180
-  ) {
-    return null;
-  }
-
-  return { latitude, longitude };
-}
 
 export default function RouteMap({ stops, vehicleLocation }) {
   const { t } = useTranslation();

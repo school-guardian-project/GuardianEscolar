@@ -1,6 +1,5 @@
 <div class="container">
   <!-- MODALES -->
-  <app-comments *ngIf="showComments" (closed)="showComments = false"></app-comments>
   <app-update-information *ngIf="showUpdateInformation" [schoolId]="schoolIdForUpdate"
     (closed)="showUpdateInformation = false"></app-update-information>
   <app-record-information *ngIf="showInformation" type="schools" [record]="schoolSelected" (closed)="closeModal()">
@@ -27,14 +26,14 @@
           </p>
           <p *ngIf="schoolErrorKey" role="alert">{{ schoolErrorKey | translate }}</p>
 
-          <div class="metrics">
+          <div class="metrics" [attr.aria-busy]="loadingMetrics">
             <div class="metric-card">
               <p class="metric-label">
                 {{ 'dashboard.metrics.students' | translate }}
               </p>
-              <p class="metric-value"></p>
+              <p class="metric-value">{{ studentsTotal === null ? '—' : (studentsTotal | number) }}</p>
               <p class="metric-sub">
-                {{ 'dashboard.metrics.month' | translate }}
+                {{ (studentsError ? 'dashboard.metrics.loadError' : 'dashboard.metrics.registered') | translate }}
               </p>
             </div>
 
@@ -42,12 +41,90 @@
               <p class="metric-label">
                 {{ 'dashboard.metrics.routes' | translate }}
               </p>
-              <p class="metric-value"></p>
+              <p class="metric-value">{{ activeRoutesTotal === null ? '—' : (activeRoutesTotal | number) }}</p>
               <p class="metric-sub">
-                {{ 'dashboard.metrics.operating' | translate }}
+                {{ (routesError ? 'dashboard.metrics.loadError' : 'dashboard.metrics.activeInSchool') | translate }}
+              </p>
+            </div>
+
+            <div class="metric-card">
+              <p class="metric-label">{{ 'dashboard.metrics.totalAlerts' | translate }}</p>
+              <p class="metric-value">{{ schoolAlertsTotal === null ? '—' : (schoolAlertsTotal | number) }}</p>
+              <p class="metric-sub">
+                {{ (totalAlertsError ? 'dashboard.metrics.loadError' : 'dashboard.metrics.allSchoolAlerts') | translate }}
               </p>
             </div>
           </div>
+          <div class="metrics-status">
+            <p *ngIf="loadingMetrics" role="status">{{ 'dashboard.metrics.loading' | translate }}</p>
+            <p *ngIf="metricsErrorKey" role="alert">{{ metricsErrorKey | translate }}</p>
+            <p *ngIf="studentsError || routesError || totalAlertsError" role="alert">
+              {{ 'dashboard.metrics.loadError' | translate }}
+            </p>
+            <button type="button" class="alerts-button" (click)="loadMetrics()" [disabled]="loadingMetrics">
+              {{ 'dashboard.metrics.refresh' | translate }}
+            </button>
+          </div>
+
+          <section class="alerts-card" aria-labelledby="school-alerts-title" [attr.aria-busy]="loadingAlerts">
+              <header class="alerts-heading">
+                <h2 id="school-alerts-title">{{ 'dashboard.alerts.title' | translate }}</h2>
+                <button type="button" class="alerts-button" (click)="loadAlerts()" [disabled]="loadingAlerts">
+                  {{ 'dashboard.alerts.refresh' | translate }}
+                </button>
+              </header>
+
+              <div class="alerts-filters">
+                <label for="alert-search">
+                  <span>{{ 'dashboard.alerts.search' | translate }}</span>
+                  <input id="alert-search" type="search" [(ngModel)]="alertSearch" (ngModelChange)="searchAlerts()"
+                    [placeholder]="'dashboard.alerts.searchPlaceholder' | translate">
+                </label>
+                <label for="alert-type">
+                  <span>{{ 'dashboard.alerts.type' | translate }}</span>
+                  <select id="alert-type" [(ngModel)]="selectedAlertType" (ngModelChange)="filterAlerts()">
+                    <option [ngValue]="null">{{ 'dashboard.alerts.allTypes' | translate }}</option>
+                    <option *ngFor="let type of alertTypes" [ngValue]="type.id">{{ alertTypeLabel(type.name) }}</option>
+                  </select>
+                </label>
+              </div>
+
+              <p *ngIf="alertTypesError" class="alerts-status" role="alert">
+                {{ 'dashboard.alerts.typesError' | translate }}
+                <button type="button" class="alerts-button" (click)="loadAlertTypes()">
+                  {{ 'dashboard.alerts.retry' | translate }}
+                </button>
+              </p>
+              <p *ngIf="loadingAlerts" class="alerts-status" role="status">{{ 'dashboard.alerts.loading' | translate }}</p>
+              <p *ngIf="!loadingAlerts && alertsErrorKey" class="alerts-status" role="alert">
+                {{ alertsErrorKey | translate }}
+                <button type="button" class="alerts-button" (click)="loadAlerts()">
+                  {{ 'dashboard.alerts.retry' | translate }}
+                </button>
+              </p>
+              <ng-container *ngIf="!loadingAlerts && !alertsErrorKey">
+                <p class="alerts-status" role="status">{{ 'dashboard.alerts.results' | translate:{ total: alertsTotal } }}</p>
+                <p *ngIf="!alerts.length" class="alerts-status">{{ 'dashboard.alerts.empty' | translate }}</p>
+                <ul class="alerts-list">
+                  <li *ngFor="let alert of alerts">
+                    <div class="alert-heading">
+                      <span class="alert-type">{{ alertTypeLabel(alert.alertTypeName) }}</span>
+                      <time [attr.datetime]="alert.timestamp">{{ alert.timestamp | date:'short' }}</time>
+                    </div>
+                    <p class="alert-message">{{ alert.message }}</p>
+                    <p class="alert-context">{{ alert.studentName }} · {{ alert.routeName }}</p>
+                  </li>
+                </ul>
+                <nav *ngIf="alertsTotalPages > 1" class="alerts-pagination"
+                  [attr.aria-label]="'dashboard.alerts.pagination' | translate">
+                  <button type="button" class="alerts-button" (click)="changeAlertsPage(alertsPage - 1)"
+                    [disabled]="alertsPage === 0">{{ 'dashboard.alerts.previous' | translate }}</button>
+                  <span>{{ 'dashboard.alerts.page' | translate:{ current: alertsPage + 1, total: alertsTotalPages } }}</span>
+                  <button type="button" class="alerts-button" (click)="changeAlertsPage(alertsPage + 1)"
+                    [disabled]="alertsPage + 1 >= alertsTotalPages">{{ 'dashboard.alerts.next' | translate }}</button>
+                </nav>
+              </ng-container>
+          </section>
 
         </ng-container>
 
@@ -57,11 +134,6 @@
 
     <!-- SIDEBAR DERECHA -->
     <div class="right-sidebar">
-      <button type="button" class="icon-circle" (click)="showComments = true"
-        [attr.aria-label]="'responsive.comments' | translate">
-        <mat-icon>chat</mat-icon>
-      </button>
-
       <button type="button" class="icon-circle" (click)="showDetails()"
         [disabled]="loadingSchool"
         [attr.aria-busy]="loadingSchool"

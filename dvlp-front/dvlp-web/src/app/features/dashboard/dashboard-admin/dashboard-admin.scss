@@ -59,6 +59,7 @@
 }
 
 .metric-card {
+  min-width: 0;
   background: var(--card-bg);
   border-radius: 10px;
   border: 0.5px solid var(--border-color);
@@ -91,6 +92,17 @@
 
 .metric-sub.danger {
   color: #c40000;
+}
+
+.metrics-status {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: -12px 0 24px;
+  color: var(--text-secondary);
+  font-size: 13px;
 }
 
 /* SIDEBAR DERECHA */
@@ -135,4 +147,114 @@
 /* FIX GLOBAL ICONOS */
 mat-icon {
   line-height: 1;
+}
+
+.alerts-card {
+  background: var(--card-bg);
+  color: var(--title-color);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.alerts-heading, .alert-heading, .alerts-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.alerts-heading h2 {
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.alerts-filters {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+  gap: 12px;
+  margin: 20px 0;
+}
+
+.alerts-filters label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+  font-size: 13px;
+}
+
+.alerts-filters input, .alerts-filters select, .alerts-button {
+  min-height: 44px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 8px 12px;
+  background: var(--card-bg);
+  color: var(--title-color);
+  font: inherit;
+}
+
+.alerts-filters input, .alerts-filters select {
+  width: 100%;
+}
+
+.alerts-button {
+  cursor: pointer;
+  font-size: 13px;
+}
+
+.alerts-button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.alerts-status, .alert-context, .alert-heading time {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+.alerts-status {
+  margin: 12px 0;
+}
+
+.alerts-list {
+  list-style: none;
+}
+
+.alerts-list li {
+  border-top: 1px solid var(--border-color);
+  padding: 16px 0;
+  overflow-wrap: anywhere;
+}
+
+.alert-type {
+  background: var(--bg-color);
+  border-radius: 6px;
+  padding: 4px 8px;
+  font-size: 12px;
+}
+
+.alert-message {
+  margin: 10px 0 6px;
+  white-space: pre-line;
+}
+
+.alerts-pagination {
+  margin-top: 16px;
+  font-size: 13px;
+}
+
+@media (max-width: 600px) {
+  .metrics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .alerts-card {
+    padding: 14px;
+  }
+
+  .alerts-filters {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

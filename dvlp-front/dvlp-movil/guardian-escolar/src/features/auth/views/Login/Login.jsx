@@ -30,7 +30,7 @@ export default function Login({ navigation }) {
   const { applyAuthRole } = useSession();
 
   const handleEmailChange = (value) => {
-    setEmail(value);
+    setEmail(value.trim());
     if (emailError) setEmailError("");
   };
 

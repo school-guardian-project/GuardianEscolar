@@ -1,10 +1,16 @@
 {
+  "record_status": {
+    "filter": "Filter by status",
+    "Active": "Active",
+    "Inactive": "Inactive",
+    "All": "All",
+    "reactivate": "Reactivate"
+  },
   "responsive": {
     "navigation": "Navigation",
     "openMenu": "Open menu",
     "closeMenu": "Close menu",
     "dashboard": "Go to dashboard",
-    "comments": "Open comments",
     "editSchool": "Update school",
     "language": "Change language",
     "theme": "Change theme"
@@ -79,7 +85,7 @@
     "steps": [
       {
         "title": "Register your institution",
-        "description": "Create your account, add your routes and drivers in minutes."
+        "description": "Request your account, add your routes and drivers in minutes."
       },
       {
         "title": "Install on the buses",
@@ -337,13 +343,66 @@
     "metrics": {
       "students": "Students",
       "routes": "Active routes",
+      "totalAlerts": "Total alerts",
+      "registered": "Registered at the school",
+      "activeInSchool": "With active status at the school",
+      "allSchoolAlerts": "All types and dates",
+      "loading": "Loading metrics...",
+      "loadError": "Could not load metrics. Try again.",
+      "noSchool": "You have no assigned school to view metrics.",
+      "refresh": "Refresh metrics",
       "alerts": "Alerts today",
       "month": "+12 this month",
       "operating": "All operating",
       "attention": "Require attention"
     },
     "alerts": {
-      "title": "Latest alerts"
+      "title": "School alerts",
+      "refresh": "Refresh",
+      "search": "Search alerts",
+      "searchPlaceholder": "Search descriptions...",
+      "type": "Alert type",
+      "allTypes": "All types",
+      "typesError": "Could not load alert types.",
+      "retry": "Retry",
+      "loading": "Loading alerts...",
+      "loadError": "Could not load alerts. Try again.",
+      "noSchool": "You have no assigned school to view alerts.",
+      "empty": "No alerts match the filters.",
+      "results": "{{total}} alerts found",
+      "unknownType": "Unknown type",
+      "pagination": "Alert pagination",
+      "previous": "Previous",
+      "next": "Next",
+      "page": "Page {{current}} of {{total}}",
+      "types": {
+        "Bus Delay": "Bus delay",
+        "Route Deviation": "Route deviation",
+        "Missed Stop": "Missed stop",
+        "Speed Alert": "Speed alert",
+        "Geofence Enter": "School zone entry",
+        "Geofence Exit": "School zone exit",
+        "No Boarding": "Boarding not registered",
+        "Unexpected Boarding": "Unexpected boarding",
+        "Engine Off": "Engine off",
+        "Device Offline": "Device offline",
+        "Late Departure": "Late departure",
+        "Early Arrival": "Early arrival",
+        "Overcapacity": "Overcapacity",
+        "Seatbelt Alert": "Seatbelt alert",
+        "Hard Braking": "Hard braking",
+        "Sharp Turn": "Sharp turn",
+        "Low Fuel": "Low fuel",
+        "Prolonged Stop": "Prolonged stop",
+        "Driver Absence": "Driver absence",
+        "Route Cancellation": "Route cancellation",
+        "Accident": "Accident",
+        "Medical Emergency": "Medical emergency",
+        "Mechanical Breakdown": "Mechanical breakdown",
+        "Security Incident": "Security incident",
+        "On Board": "Boarding",
+        "Off Board": "Alighting"
+      }
     }
   },
   "superadmin_dashboard": {
@@ -352,13 +411,10 @@
     "metrics": {
       "admins": "Admins",
       "schools": "Registered schools",
-      "comments": "Comments today",
-      "month": "+12 this month",
-      "active": "All operating",
-      "attention": "Require attention"
-    },
-    "alerts": {
-      "title": "Latest alerts"
+      "loading": "Loading count...",
+      "adminsError": "Could not load the administrator count.",
+      "schoolsError": "Could not load the school count.",
+      "retry": "Retry"
     }
   },
   "sidebar": {
@@ -383,22 +439,6 @@
     "bus": "Buses",
     "route": "Routes",
     "bus-stops": "Stops"
-  },
-  "comments_modal": {
-    "title": "Do you have any issue?",
-    "subtitle": "Let us know",
-    "label": "Tell us your problem",
-    "placeholder": "Enter text",
-    "error": "Please describe your issue before submitting",
-    "buttons": {
-      "cancel": "Cancel",
-      "submit": "Send",
-      "exit": "Close"
-    },
-    "success": {
-      "title": "Message sent!",
-      "description": "Thank you for sharing your issue. We will do our best to resolve it as soon as possible"
-    }
   },
   "update_school": {
     "loading": "Loading school information...",

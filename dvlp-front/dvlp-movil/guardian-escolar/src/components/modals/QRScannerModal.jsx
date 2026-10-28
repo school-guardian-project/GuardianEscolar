@@ -18,6 +18,9 @@ import { useTheme } from "@core/services/ThemeService";
  *   2. Si no tiene permiso, muestra pantalla para concederlo
  *   3. Si tiene permiso, abre la cámara con vista de escaneo
  *   4. Al detectar un QR, envía los datos y cierra el modal
+ *
+ * No hay selector de subida/bajada: el backend determina el tipo de movimiento
+ * a partir del estado del viaje, así que acá solo se escanea.
  */
 export default function QRScannerModal({ visible, onClose, onScan }) {
   const { theme } = useTheme();

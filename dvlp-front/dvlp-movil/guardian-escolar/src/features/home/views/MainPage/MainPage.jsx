@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
-import { View, Text } from "react-native";
+import React, { useState, useEffect, useRef, useCallback } from "react";
+import { View, Text, ActivityIndicator } from "react-native";
 import MapView, { Marker } from "react-native-maps";
+import { FontAwesome5 } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import RouteInfoCard from "@components/cards/RouteInfoCard";
@@ -19,7 +20,7 @@ import IncidentReportModal from "@components/modals/IncidentReportModal";
 import TripActionButton from "@components/buttons/TripActionButton";
 import { getSession } from "@core/services/authService";
 import { getRouteApi } from "@core/services/routeApi";
-import { startTripApi } from "@core/services/tripApi";
+import { startTripApi, getTripStatusApi } from "@core/services/tripApi";
 import { getLinkedStudents } from "@core/services/familyService";
 import { scanCredential } from "@core/services/notificationApi";
 import { apiPost } from "@core/services/apiClient";
@@ -91,7 +92,7 @@ async function resolveRouteForRole(role, session) {
   return { route: first, note: null };
 }
 
-export default function MainPage() {
+function MainPageContent() {
   const { width } = useWindow();
   const insets = useSafeAreaInsets();
   const horizontalPadding = width < 360 ? 12 : 16;
@@ -99,24 +100,38 @@ export default function MainPage() {
   const { role, initialized } = useSession();
   const { t } = useTranslation();
   const isFocused = useIsFocused();
-  
+
   // Esperar a que el rol esté inicializado desde SecureStore
   if (!initialized) {
-    return null; // o un spinner si prefieres
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#1A56DB" />
+        <Text style={{ marginTop: 12, color: "#666" }}>Cargando sesión...</Text>
+      </View>
+    );
   }
+<<<<<<< HEAD
   
   const config = roleConfig[role] ?? roleConfig["student"];
+=======
+
+  const config = roleConfig[role];
+>>>>>>> 2723a2cc77df4a63c4bbaa69d3727fad908809f5
   const [modalType, setModalType] = useState(null);
   const [incidentOpen, setIncidentOpen] = useState(false);
   const [routeInfo, setRouteInfo] = useState(null);
   const [, setLoading] = useState(true);
-  const [scanMode, setScanMode] = useState("ON_BOARD");
-  const [status, setStatus] = useState(null);
   const [scanFeedback, setScanFeedback] = useState(null);
-  const [tripStatus, setTripStatus] = useState("idle"); // 'idle' | 'active' | 'ended'
+  // Estados del viaje - ahora controlados por backend
+  const [tripStatus, setTripStatus] = useState("idle"); // 'idle' | 'ready_to_start' | 'active' | 'ended'
   const [tripDirection, setTripDirection] = useState(null); // 'Ida' | 'Vuelta'
   const [tripSchedule, setTripSchedule] = useState({ startTime: null, endTime: null });
   const [currentTripId, setCurrentTripId] = useState(null);
+  // Nuevos estados para control de botones desde backend
+  const [canStart, setCanStart] = useState(false);
+  const [canEnd, setCanEnd] = useState(false);
+  const [endConditionDetail, setEndConditionDetail] = useState(null);
+  
   const mapRef = useRef(null);
 
   // GPS Tracking (solo si está enfocada la pantalla)
@@ -127,6 +142,62 @@ export default function MainPage() {
     location && Number.isFinite(busLatitude) && Number.isFinite(busLongitude)
       ? { latitude: busLatitude, longitude: busLongitude }
       : null;
+
+  // Polling del estado del viaje desde backend (solo para conductor)
+  const pollTripStatus = useCallback(async () => {
+    if (role !== "driver") return;
+    
+    try {
+      const session = await getSession();
+      if (!session?.profileId) return;
+
+      const tripStatusData = await getTripStatusApi(session.profileId);
+      if (tripStatusData) {
+        setCanStart(tripStatusData.CanStart ?? false);
+        setCanEnd(tripStatusData.CanEnd ?? false);
+        setEndConditionDetail(tripStatusData.EndConditionDetail ?? null);
+        
+        // Mapear status del backend a estado local
+        if (tripStatusData.Status === "Ended") {
+          setTripStatus("ended");
+        } else if (tripStatusData.Status === "InProgress" || tripStatusData.Status === "ReadyToEnd") {
+          setTripStatus("active");
+        } else if (tripStatusData.Status === "ReadyToStart" || tripStatusData.CanStart) {
+          setTripStatus("ready_to_start");
+        } else {
+          setTripStatus("idle");
+        }
+        
+        if (tripStatusData.TripId && tripStatusData.TripId !== "00000000-0000-0000-0000-000000000000") {
+          setCurrentTripId(tripStatusData.TripId);
+        }
+        if (tripStatusData.Direction) {
+          setTripDirection(tripStatusData.Direction);
+        }
+        if (tripStatusData.ScheduleStartTime) {
+          setTripSchedule({
+            startTime: tripStatusData.ScheduleStartTime,
+            endTime: tripStatusData.NextScheduleTime
+          });
+        }
+      }
+    } catch (error) {
+      console.warn("Error polling trip status:", error);
+    }
+  }, [role]);
+
+  // Iniciar polling cuando la pantalla está enfocada y el rol es conductor
+  useEffect(() => {
+    if (!isFocused || role !== "driver") return;
+
+    // Ejecutar inmediatamente
+    pollTripStatus();
+    
+    // Polling cada 10 segundos
+    const interval = setInterval(pollTripStatus, 10000);
+    
+    return () => clearInterval(interval);
+  }, [isFocused, role, pollTripStatus]);
 
   const handleOpenModal = (type) => setModalType(type);
   const handleCloseModal = () => setModalType(null);
@@ -143,6 +214,7 @@ export default function MainPage() {
       };
 
       const result = await startTripApi(payload);
+      // Actualizar estado local optimistamente, el polling confirmará
       setTripStatus("active");
       if (result?.id) {
         setCurrentTripId(result.id);
@@ -153,6 +225,8 @@ export default function MainPage() {
         type: "success",
         message: t("cards.tripStarted") || "Viaje iniciado correctamente",
       });
+      // Forzar polling inmediato
+      pollTripStatus();
     } catch (error) {
       setScanFeedback({
         type: "error",
@@ -171,12 +245,12 @@ export default function MainPage() {
         return;
       }
       await apiPost(`/route/api/trips/end?tripId=${currentTripId}`, {});
-      setTripStatus("ended");
-      setCurrentTripId(null);
+      // El polling actualizará a "ended"
       setScanFeedback({
         type: "success",
         message: t("cards.tripEnded") || "Viaje finalizado correctamente",
       });
+      pollTripStatus();
     } catch (error) {
       setScanFeedback({
         type: "error",
@@ -187,9 +261,10 @@ export default function MainPage() {
 
   const handleQrScan = async (qrToken) => {
     try {
-      // Contrato de ms-notification (FR-4.1): { qrToken, boardingType }.
-      // scanMode ya usa los valores del enum ON_BOARD/OFF_BOARD.
-      const result = await scanCredential(qrToken, scanMode);
+      // Contrato de ms-notification: solo qrToken. El backend resuelve viaje,
+      // parada, estudiante y el tipo de movimiento (subida/bajada) a partir del
+      // estado del viaje, y lo devuelve en `boardingType` para elegir el mensaje.
+      const result = await scanCredential(qrToken);
       handleCloseModal();
 
       // El driver necesita saber que el sistema ya hizo lo suyo: sin esto el
@@ -199,7 +274,7 @@ export default function MainPage() {
         type: "success",
         message: result?.alreadyProcessed
           ? t("cards.scanAlready")
-          : scanMode === "OFF_BOARD"
+          : result?.boardingType === "OFF_BOARD"
             ? t("cards.scanAlighted")
             : t("cards.scanBoarded"),
       });
@@ -245,10 +320,11 @@ export default function MainPage() {
           route.startTime && route.endTime
             ? `${route.startTime} - ${route.endTime}`
             : "";
+        // /routes/today y /routes/student/{id} devuelven RouteDetailDto: no traen
+        // stopsCount, sino el listado stops. /routes (respaldo) sí trae stopsCount.
+        const stopsTotal = route.stops?.length ?? route.stopsCount;
         const stopsCount =
-          route.stopsCount != null && route.stopsCount !== ""
-            ? String(route.stopsCount)
-            : "—";
+          stopsTotal != null && stopsTotal !== "" ? String(stopsTotal) : "—";
 
         setRouteInfo({
           routeId: route.id,
@@ -258,11 +334,8 @@ export default function MainPage() {
           plate: route.bus?.plate ?? "",
           schedule,
           stopsCount,
+          direction: route.schedules?.[0]?.direction ?? null,
           finalDestination: route.targetSector ?? "",
-          startTime: route.startTime,
-          endTime: route.endTime,
-        });
-        setRouteSchedule({
           startTime: route.startTime,
           endTime: route.endTime,
         });
@@ -279,8 +352,8 @@ export default function MainPage() {
 
   // Extract direction from route schedules
   useEffect(() => {
-    if (routeInfo?.Schedules?.[0]?.Direction) {
-      setTripDirection(routeInfo.Schedules[0].Direction);
+    if (routeInfo?.direction) {
+      setTripDirection(routeInfo.direction);
     }
     if (routeInfo?.startTime && routeInfo?.endTime) {
       setTripSchedule({ startTime: routeInfo.startTime, endTime: routeInfo.endTime });
@@ -388,14 +461,20 @@ export default function MainPage() {
           />
         </View>
         <View style={styles.qrButtonContainer} pointerEvents="box-none">
-          <TripActionButton
-            status={tripStatus}
-            direction={tripDirection}
-            schedule={tripSchedule}
-            onStart={handleStartTrip}
-            onEnd={handleEndTrip}
-            showWhenEnded={false}
-          />
+          {/* Trip buttons only when route is assigned */}
+          {routeInfo && (
+            <TripActionButton
+              status={tripStatus}
+              direction={tripDirection}
+              schedule={tripSchedule}
+              onStart={handleStartTrip}
+              onEnd={handleEndTrip}
+              showWhenEnded={false}
+              canStart={canStart}
+              canEnd={canEnd}
+              endConditionDetail={endConditionDetail}
+            />
+          )}
         </View>
 
         {config.card.showIncidentReport && (
@@ -415,28 +494,6 @@ export default function MainPage() {
         visible={modalType === "activeQR"}
         onClose={handleCloseModal}
       />
-      {modalType === "qrScanner" && (
-        <View style={styles.scanModeContainer}>
-          <Pressable
-            style={[
-              styles.scanModeButton,
-              scanMode === "ON_BOARD" && styles.scanModeActive,
-            ]}
-            onPress={() => setScanMode("ON_BOARD")}
-          >
-            <Text style={styles.scanModeText}>ABORDAR</Text>
-          </Pressable>
-          <Pressable
-            style={[
-              styles.scanModeButton,
-              scanMode === "OFF_BOARD" && styles.scanModeActive,
-            ]}
-            onPress={() => setScanMode("OFF_BOARD")}
-          >
-            <Text style={styles.scanModeText}>DESCENDER</Text>
-          </Pressable>
-        </View>
-      )}
       <QRScannerModal
         visible={modalType === "qrScanner"}
         onClose={handleCloseModal}
@@ -444,4 +501,26 @@ export default function MainPage() {
       />
     </View>
   );
+}
+
+/**
+ * Puerta de sesión: el contenido solo monta cuando `initialized` (rol leído
+ * desde SecureStore por RoleSwitcherProvider) ya es true. El early return vive
+ * en un componente que solo usa useSession, así la cantidad de hooks NO cambia
+ * entre renders (rules of hooks) y mientras carga no se abren efectos ni GPS.
+ */
+export default function MainPage() {
+  const { initialized } = useSession();
+
+  // Esperar a que el rol esté inicializado desde SecureStore
+  if (!initialized) {
+    return (
+      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <ActivityIndicator size="large" color="#1A56DB" />
+        <Text style={{ marginTop: 12, color: "#666" }}>Cargando sesión...</Text>
+      </View>
+    );
+  }
+
+  return <MainPageContent />;
 }

@@ -76,11 +76,21 @@
 
 .card-list__search-input {
   flex: 1;
+  min-width: 0;
   border: none;
   outline: none;
   font-size: 0.85rem;
   background: transparent;
   color: var(--text-color);
+}
+
+.card-list__status-filter {
+  max-width: 45%;
+  min-width: 0;
+  border: 0;
+  background: var(--card-bg);
+  color: var(--text-color);
+  font: inherit;
 }
 
 .card-list__search-icon {

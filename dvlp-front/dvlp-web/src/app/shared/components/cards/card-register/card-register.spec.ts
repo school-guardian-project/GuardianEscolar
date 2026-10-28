@@ -51,10 +51,17 @@ describe('CardRegister', () => {
     expect(remove.previousElementSibling).toBe(campus.querySelectorAll('input')[1]);
     expect(fixture.nativeElement.querySelector('.card-register__add-campus').textContent)
       .toContain('register.schools.addCampus');
+    const addButton: HTMLElement = fixture.nativeElement.querySelector('.card-register__add-campus');
+    expect(addButton.compareDocumentPosition(campus) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+    component.addCampusName();
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelectorAll('.card-register__campus')).toHaveLength(2);
+    expect(addButton.compareDocumentPosition(fixture.nativeElement.querySelectorAll('.card-register__campus')[1])
+      & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
 
     remove.click();
 
-    expect(component.campuses).toEqual([]);
+    expect(component.campuses).toHaveLength(1);
   });
 
   it('validates school fields as values change', () => {

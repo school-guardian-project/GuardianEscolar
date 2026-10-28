@@ -263,6 +263,10 @@
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
 
+    body.internal-page .superadmin-metrics {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
     body app-main .section-start-index {
       flex-direction: column;
     }
@@ -313,7 +317,8 @@
   }
 
   @media (max-width: 600px) {
-    body.internal-page .metrics {
+    body.internal-page .metrics,
+    body.internal-page .superadmin-metrics {
       grid-template-columns: 1fr;
     }
 

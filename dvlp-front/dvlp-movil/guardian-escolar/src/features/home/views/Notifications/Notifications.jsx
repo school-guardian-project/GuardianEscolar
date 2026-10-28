@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from "react";
-import { FlatList, Modal, Pressable, Text, View } from "react-native";
+import { ActivityIndicator, FlatList, Modal, Pressable, Text, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { Ionicons } from "@expo/vector-icons";
 import { useTranslation } from "react-i18next";
@@ -26,18 +26,27 @@ export default function Notifications() {
   const [notifications, setNotifications] = useState([]);
   const [selectedFilter, setSelectedFilter] = useState("all");
   const [filtersVisible, setFiltersVisible] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
+  // Cambiarlo dispara la recarga: así el botón de reintentar tiene efecto.
+  const [reloadKey, setReloadKey] = useState(0);
 
   useFocusEffect(
     useCallback(() => {
       let active = true;
 
       async function loadNotifications() {
+        setLoading(true);
         try {
           const session = await getSession();
-          if (!session?.profileId) return;
+          if (!session?.profileId) {
+            setNotifications([]);
+            return;
+          }
 
           const data = await getGuardianNotifications();
           if (!active) return;
+          setLoadError(false);
 
           setNotifications(data.map((item) => {
             const incidentLabelKey = incidentTypeLabelKey(item.alert?.alertTypeId);
@@ -67,6 +76,11 @@ export default function Notifications() {
           }));
         } catch (error) {
           console.error("Error loading notifications:", error);
+          // Un fallo de red o un 4xx/5xx NO es "sin notificaciones": se marca
+          // como error para que la UI ofrezca reintentar en vez de mentir.
+          if (active) setLoadError(true);
+        } finally {
+          if (active) setLoading(false);
         }
       }
 
@@ -75,7 +89,7 @@ export default function Notifications() {
       return () => {
         active = false;
       };
-    }, []),
+    }, [reloadKey]),
   );
 
   const toggleSaved = (notificationId) => {
@@ -185,18 +199,48 @@ export default function Notifications() {
         keyExtractor={(item) => item.id}
         contentContainerStyle={styles.list}
         ListEmptyComponent={
-          <View style={styles.emptyState}>
-            <Ionicons
-              name="notifications-off-outline"
-              size={48}
-              color={theme.textSecondary}
-            />
-            <Text style={[styles.emptyText, { color: theme.textSecondary }]}>
-              {selectedFilter === "saved"
-                ? t("notifications.emptySaved")
-                : t("notifications.empty")}
-            </Text>
-          </View>
+          loading ? (
+            <View style={styles.emptyState}>
+              <ActivityIndicator size="large" color={theme.accentColor} />
+            </View>
+          ) : loadError ? (
+            <View style={styles.emptyState}>
+              <Ionicons
+                name="cloud-offline-outline"
+                size={48}
+                color={theme.textSecondary}
+              />
+              <Text style={[styles.emptyText, { color: theme.textSecondary }]}>
+                {t("serviceErrors.requestFailed")}
+              </Text>
+              <Pressable
+                onPress={() => setReloadKey((key) => key + 1)}
+                style={[
+                  styles.filterButton,
+                  { borderColor: theme.borderColor, backgroundColor: theme.cardBg },
+                ]}
+                accessibilityLabel={t("button.retry")}
+              >
+                <Ionicons name="refresh-outline" size={18} color={theme.iconColor} />
+                <Text style={[styles.filterButtonText, { color: theme.textColor }]}>
+                  {t("button.retry")}
+                </Text>
+              </Pressable>
+            </View>
+          ) : (
+            <View style={styles.emptyState}>
+              <Ionicons
+                name="notifications-off-outline"
+                size={48}
+                color={theme.textSecondary}
+              />
+              <Text style={[styles.emptyText, { color: theme.textSecondary }]}>
+                {selectedFilter === "saved"
+                  ? t("notifications.emptySaved")
+                  : t("notifications.empty")}
+              </Text>
+            </View>
+          )
         }
         showsVerticalScrollIndicator={false}
       />

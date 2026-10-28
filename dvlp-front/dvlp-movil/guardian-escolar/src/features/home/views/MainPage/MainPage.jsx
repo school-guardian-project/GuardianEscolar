@@ -102,23 +102,15 @@ function MainPageContent() {
   const insets = useSafeAreaInsets();
   const horizontalPadding = width < 360 ? 12 : 16;
   const navigation = useNavigation();
-  const { role, initialized } = useSession();
+  const { role } = useSession();
   const { t } = useTranslation();
   const isFocused = useIsFocused();
 
-  // Esperar a que el rol esté inicializado desde SecureStore
-  if (!initialized) {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <ActivityIndicator size="large" color="#1A56DB" />
-        <Text style={{ marginTop: 12, color: "#666" }}>Cargando sesión...</Text>
-      </View>
-    );
-  }
   const config = roleConfig[role] ?? roleConfig["student"];
   const [modalType, setModalType] = useState(null);
   const [incidentOpen, setIncidentOpen] = useState(false);
   const [routeInfo, setRouteInfo] = useState(null);
+  const [status, setStatus] = useState(null);
   const [, setLoading] = useState(true);
   const [scanFeedback, setScanFeedback] = useState(null);
   // Estados del viaje - ahora controlados por backend

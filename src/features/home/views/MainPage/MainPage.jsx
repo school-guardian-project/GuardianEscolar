@@ -350,7 +350,10 @@ function MainPageContent() {
         ]}
         pointerEvents="box-none"
       >
-        <View style={[styles.qrButtonContainer, { bottom: 280 + insets.bottom }]} pointerEvents="box-none">
+        <View style={[styles.qrButtonContainer, { bottom: 280 + insets.bottom, flexDirection: "row", alignItems: "flex-end", gap: 12 }]} pointerEvents="box-none">
+          {config.card.showQR && (
+            <QRButtom config={config.card} onOpenModel={handleOpenModal} />
+          )}
           {/* Trip buttons only when route is assigned */}
           {role === "driver" && routeInfo?.routeId && (
             <TripActionButton

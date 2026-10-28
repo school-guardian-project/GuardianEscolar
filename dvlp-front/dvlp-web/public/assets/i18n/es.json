@@ -641,7 +641,9 @@
         "endTime": "Hora finalización",
         "destination": "Lugar destino",
         "routeSector": "Sector",
-        "campusName": "Sede"
+        "campusName": "Sede",
+        "busPlate": "Bus asignado",
+        "driver": "Conductor"
       }
     },
     "admins": {

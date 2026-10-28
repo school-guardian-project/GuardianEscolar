@@ -43,9 +43,54 @@ describe('AssignRecord student route assignment', () => {
     expect(request.request.body).toEqual({ studentId: profileId, stopId });
     expect(request.request.body.studentId).not.toBe(personId);
     request.flush({ studentId: profileId, stopId });
+    expect(assigned).not.toHaveBeenCalled();
+    http.expectOne(req => req.url.endsWith(`/routes/${routeId}/students/${profileId}`))
+      .flush({ routeId, studentProfileId: profileId, stopId });
     expect(assigned).toHaveBeenCalledOnce();
     expect(closed).toHaveBeenCalledOnce();
   });
+
+  it('clears stale stops and ignores late responses when changing routes', () => {
+    const component = TestBed.createComponent(AssignRecord).componentInstance;
+    component.type = 'student';
+    component.record = { id: personId, profileId };
+    const otherRoute = '55555555-5555-5555-5555-555555555555';
+    component.onRouteChange(routeId);
+    const oldRequest = http.expectOne(req => req.url.endsWith(`/routes/${routeId}`));
+    component.onRouteChange(otherRoute);
+    const newRequest = http.expectOne(req => req.url.endsWith(`/routes/${otherRoute}`));
+    newRequest.flush({ id: otherRoute, stops: [{ id: stopId, name: 'New stop' }] });
+    component.selectedStopId = stopId;
+    oldRequest.flush({ id: routeId, stops: [{ id: 'old-stop', name: 'Old stop' }] });
+    expect(component.stops).toEqual([{ id: stopId, label: 'New stop' }]);
+    expect(component.canSubmit).toBe(true);
+    component.onRouteChange(routeId);
+    expect(component.stops).toEqual([]);
+    expect(component.canSubmit).toBe(false);
+    http.expectOne(req => req.url.endsWith(`/routes/${routeId}`)).flush({ stops: [] });
+  });
+
+  for (const result of ['mismatched', 'unavailable']) {
+    it(`does not report success when the saved association is ${result}`, () => {
+      const component = TestBed.createComponent(AssignRecord).componentInstance;
+      component.type = 'student';
+      component.record = { id: personId, profileId };
+      component.onRouteChange(routeId);
+      http.expectOne(req => req.url.endsWith(`/routes/${routeId}`))
+        .flush({ stops: [{ id: stopId, name: 'Stop' }] });
+      component.selectedStopId = stopId;
+      const assigned = vi.fn();
+      component.assigned.subscribe(assigned);
+      component.submit();
+      http.expectOne(req => req.url.endsWith(`/routes/${routeId}/students`)).flush({});
+      const verify = http.expectOne(req => req.url.endsWith(`/routes/${routeId}/students/${profileId}`));
+      if (result === 'mismatched') verify.flush({ routeId, studentProfileId: profileId, stopId: personId });
+      else verify.flush(null, { status: 500, statusText: 'Internal Server Error' });
+      expect(assigned).not.toHaveBeenCalled();
+      expect(component.message).toBe('assign_record.student.assignmentNotVerified');
+      expect(component.submitting).toBe(false);
+    });
+  }
 
   for (const invalidProfile of [undefined, null, '', 'not-a-guid', '00000000-0000-0000-0000-000000000000']) {
     it(`blocks assignment and shows an explicit error for profile ${invalidProfile}`, () => {

@@ -18,6 +18,8 @@ import { AssignRecord } from '@shared/components/modal/assign-record/assign-reco
 import { StudentsService } from '@core/services/students.service';
 import { PersonListDto, PersonRequestDto, CreatePersonRequestDto, PersonResponseDto } from '@core/models/student.model';
 import { describeProblem } from '@core/http/problem-detail';
+import { HttpErrorResponse } from '@angular/common/http';
+import { RoutesService } from '@core/services/routes.service';
 
 interface StudentView extends RecordData {
   id?: string;
@@ -170,6 +172,7 @@ function isValidStudentForm(form: RecordData, includeCampus = true): boolean {
   styleUrl: './students.scss',
 })
 export class Students implements OnInit {
+  private readonly routesService = inject(RoutesService);
   private studentsService = inject(StudentsService);
   private translate = inject(TranslateService);
 
@@ -231,6 +234,7 @@ export class Students implements OnInit {
   studentSelected: RecordData = {};
 
   showDetails(student: RecordData): void {
+    this.actionError = '';
     const id = student['id'];
     if (!id) {
       return;
@@ -242,6 +246,7 @@ export class Students implements OnInit {
           profileId: detail.profileId ?? student['profileId'] ?? null,
         };
         this.showModal = true;
+        this.loadStudentAssignment(this.studentSelected);
       },
       error: (error: unknown) => {
         this.actionError = describeProblem(error, this.translate.instant('errors.students.get'));
@@ -252,6 +257,40 @@ export class Students implements OnInit {
   closeModal(): void {
     this.showModal = false;
     this.studentSelected = {};
+  }
+
+  private loadStudentAssignment(student: RecordData): void {
+    const profileId = student['profileId'];
+    if (typeof profileId !== 'string' || !profileId) return;
+    this.routesService.getStudentRoute(profileId).subscribe({
+      next: (route) => {
+        if (!this.showModal || this.studentSelected !== student) return;
+        student['route'] = route.name;
+        student['busPlate'] = route.bus?.plate ?? '';
+        this.routesService.getStudentStop(route.id, profileId).subscribe({
+          next: (stop) => {
+            if (this.showModal && this.studentSelected === student) student['stop'] = stop.stopName;
+          },
+          error: (error: unknown) => this.assignmentLoadFailed(student, error),
+        });
+      },
+      error: (error: unknown) => {
+        if (error instanceof HttpErrorResponse && error.status === 404) {
+          if (this.showModal && this.studentSelected === student) {
+            student['route'] = this.translate.instant('record_information.student.unassigned');
+          }
+          return;
+        }
+        this.assignmentLoadFailed(student, error);
+      },
+    });
+  }
+
+  private assignmentLoadFailed(student: RecordData, error: unknown): void {
+    if (this.showModal && this.studentSelected === student) {
+      this.actionError = describeProblem(error,
+        this.translate.instant('record_information.student.assignmentError'));
+    }
   }
 
   showUpdateModal = false;

@@ -148,7 +148,10 @@
   },
   "profile": {
     "title": "Mi perfil",
-    "subtitle": "Gestiona tu cuenta y preferencias"
+    "subtitle": "Gestiona tu cuenta y preferencias",
+    "assignedBus": "Bus asignado",
+    "assignmentLoading": "Consultando asignación...",
+    "assignmentError": "No fue posible verificar el bus y la ruta asignados."
   },
   "notifications": {
     "title": "Notificaciones",

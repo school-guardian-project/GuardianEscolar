@@ -13,7 +13,19 @@ export async function resolveRouteForRole(role, session) {
   }
 
   if (role === "driver") {
-    const today = await getRouteApi(`/routes/today?driverId=${session.profileId}`);
+    let today;
+    try {
+      today = await getRouteApi(`/routes/today?driverId=${session.profileId}`);
+    } catch (error) {
+      const bus = await getAssignedBus(session.profileId);
+      if (!bus) throw error;
+      console.error("No se pudo consultar la ruta del conductor:", error);
+      return {
+        route: null,
+        bus,
+        note: `El bus está asignado, pero no fue posible consultar su ruta${error?.status ? ` (HTTP ${error.status})` : ""}.`,
+      };
+    }
     if (today?.status === "ACTIVE" && today.route?.id) {
       return { route: today.route, note: null };
     }

@@ -148,7 +148,10 @@
   },
   "profile": {
     "title": "Meu perfil",
-    "subtitle": "Gerencie sua conta e preferências"
+    "subtitle": "Gerencie sua conta e preferências",
+    "assignedBus": "Ônibus atribuído",
+    "assignmentLoading": "Consultando atribuição...",
+    "assignmentError": "Não foi possível verificar o ônibus e a rota atribuídos."
   },
   "notifications": {
     "title": "Notificações",

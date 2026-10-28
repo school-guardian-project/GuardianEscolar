@@ -15,7 +15,7 @@ export const roleConfig = {
       showIncidentReport: false,
     },
     MapMarkers: {
-      showRouteStops: false, // Solo conductor ve paradas en el mapa
+      showRouteStops: true,
       showStudentMarker: true,
       showDriverMarker: false,
       showGeofence: true,
@@ -74,7 +74,7 @@ export const roleConfig = {
       showIncidentReport: false,
     },
     MapMarkers: {
-      showRouteStops: false,
+      showRouteStops: true,
       showStudentMarker: false,
       showDriverMarker: false,
       showGeofence: false,
@@ -86,7 +86,7 @@ export const roleConfig = {
 };
 
 // roleId del JWT (catálogo Iam.Role) -> clave local de roleConfig.
-const ROLE_ID_TO_KEY = { 2: "student", 3: "driver", 4: "parent" };
+const ROLE_ID_TO_KEY = { 1: "admin", 2: "student", 3: "driver", 4: "parent", 5: "admin" };
 
 export function roleKeyFromRoleId(roleId) {
   return ROLE_ID_TO_KEY[roleId] ?? "student";

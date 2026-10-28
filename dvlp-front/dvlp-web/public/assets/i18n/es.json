@@ -1102,6 +1102,19 @@
     }
   },
   "right_index": {
+    "preview": {
+      "description": "Vista ilustrativa del panel administrativo y del mapa de la aplicación móvil de Guardian Escolar",
+      "caption": "Vista ilustrativa del producto · Sin datos en tiempo real",
+      "routes": "Rutas",
+      "alertsPlaceholder": "Consulta las alertas de tu institución",
+      "vehicleLocation": "Ubicación del vehículo",
+      "mapIllustration": "Mapa ilustrativo · Neiva",
+      "vehicle": "Vehículo escolar",
+      "status": "Estado",
+      "lastUpdate": "Última actualización",
+      "location": "Ubicación",
+      "profile": "Perfil"
+    },
     "brand": "Guardian Escolar",
     "dashboardTitle": "Seguimiento en vivo",
     "allVehicles": "Todos los vehículos",

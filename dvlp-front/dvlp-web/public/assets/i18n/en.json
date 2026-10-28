@@ -1102,6 +1102,19 @@
     }
   },
   "right_index": {
+    "preview": {
+      "description": "Illustrative view of the Guardian Escolar admin dashboard and mobile app map",
+      "caption": "Illustrative product preview · No live data",
+      "routes": "Routes",
+      "alertsPlaceholder": "View your school's alerts",
+      "vehicleLocation": "Vehicle location",
+      "mapIllustration": "Illustrative map · Neiva",
+      "vehicle": "School vehicle",
+      "status": "Status",
+      "lastUpdate": "Last updated",
+      "location": "Location",
+      "profile": "Profile"
+    },
     "brand": "Guardian Escolar",
     "dashboardTitle": "Live tracking",
     "allVehicles": "All vehicles",

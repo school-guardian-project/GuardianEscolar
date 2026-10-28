@@ -11,7 +11,7 @@ import { environment } from '../../../environments/environment.development';
   selector: 'app-main',
   imports: [MatToolbarModule, MatButtonModule, MatIconModule, TranslateModule, CommonModule, RouterLink],
   templateUrl: './main.html',
-  styleUrl: './main.css',
+  styleUrls: ['./main.css', './main-preview.css'],
 })
 export class Main {
   readonly apkDownloadUrl = environment.apkDownloadUrl;

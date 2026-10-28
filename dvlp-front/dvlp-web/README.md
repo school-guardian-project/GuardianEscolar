@@ -2,6 +2,26 @@
 
 This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.2.2.
 
+## Landing product preview
+
+The hero's `right-index` contains two independent static interfaces: an
+administrator dashboard (sidebar, three metrics and school alerts) and a
+foreground phone showing an illustrative dark vehicle map, telemetry fields
+and bottom navigation. Layout rules are scoped in `shared/main/main-preview.css`;
+container queries retain the phone on narrow screens without hiding it or
+scaling the entire hero.
+
+The preview uses the existing local logo, Material icons and translated labels.
+The map is an inline schematic SVG, not geographic tiles or a live GPS position.
+No reference screenshots were available in the supplied assets. Counts and
+telemetry use unavailable-value placeholders rather than invented school data;
+a visible caption identifies the illustration. Preview controls are static
+spans, not focusable buttons or links. No dashboard/map components are mounted,
+and no API requests, map libraries or new dependencies are added by the preview.
+The hero text, navbar, download link and remaining sections are unchanged.
+
+Focused regression: `npm test -- --watch=false --include=src/app/shared/main/main.spec.ts`.
+
 ## Development server
 
 Public password recovery (`/api/v1/password/forgot`, `/forgot/verify` and `/reset`)

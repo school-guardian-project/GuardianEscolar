@@ -91,6 +91,7 @@ export class Stops implements OnInit {
   private cityIdByLabel: Record<string, string> = {};
   private schoolIdByLabel: Record<string, string> = {};
   private routeIdByLabel: Record<string, string> = {};
+  private studentProfileIdByLabel: Record<string, string | null> = {};
   private cityLabelById: Record<string, string> = {};
   private schoolLabelById: Record<string, string> = {};
 
@@ -107,14 +108,19 @@ export class Stops implements OnInit {
         this.routeIdByLabel = Object.fromEntries(routes.map((route) => [route.name, route.id]));
         this.cityLabelById = Object.fromEntries(cities.map((city) => [city.id, city.name]));
         this.schoolLabelById = Object.fromEntries(schools.map((school) => [school.id, school.name]));
+        this.studentProfileIdByLabel = Object.fromEntries(students.map(student => [
+          `${student.name ?? ''} ${student.lastName ?? ''} (${student.identificationNumber || student.id})`.trim(),
+          student.profileId
+            && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(student.profileId)
+            && student.profileId !== '00000000-0000-0000-0000-000000000000'
+            ? student.profileId : null,
+        ]));
 
         this.fieldOptions = {
           city: Object.keys(this.cityIdByLabel),
           school: Object.keys(this.schoolIdByLabel),
           route: Object.keys(this.routeIdByLabel),
-          student: students
-            .map((s) => `${s.name ?? ''} ${s.lastName ?? ''}`.trim())
-            .filter(Boolean),
+          student: Object.keys(this.studentProfileIdByLabel),
         };
 
         this.load();
@@ -191,6 +197,12 @@ export class Stops implements OnInit {
     const cityId = this.cityIdByLabel[String(form['city'] ?? '')];
     const schoolId = this.schoolIdByLabel[String(form['school'] ?? '')];
     const routeId = this.routeIdByLabel[String(form['route'] ?? '')];
+    const studentLabel = String(form['student'] ?? '');
+    const studentProfileId = this.studentProfileIdByLabel[studentLabel];
+    if (studentLabel && (!studentProfileId || !routeId)) {
+      this.register?.setValidationMessage('Selecciona una ruta y un estudiante con perfil válido.');
+      return;
+    }
     const latitude = this.toCoordinate(form['latitude']);
     const longitude = this.toCoordinate(form['longitude']);
 
@@ -213,7 +225,7 @@ export class Stops implements OnInit {
     };
 
     this.stopsService.create(payload).subscribe({
-      next: (created) => this.attachToRoute(created.id, routeId),
+      next: (created) => this.attachToRoute(created.id, routeId, studentProfileId),
       error: (error: unknown) => {
         const message = describeProblem(error, 'No se pudo registrar la parada.');
         const field = problemField(error);
@@ -223,7 +235,7 @@ export class Stops implements OnInit {
     });
   }
 
-  private attachToRoute(stopId: string, routeId: string): void {
+  private attachToRoute(stopId: string, routeId: string, studentProfileId?: string | null): void {
     if (!routeId) {
       this.register?.setValidationMessage('Selecciona una ruta válida.');
       this.load();
@@ -231,7 +243,18 @@ export class Stops implements OnInit {
     }
 
     this.routesService.addStop(routeId, stopId).subscribe({
-      next: () => this.finishRegistration(''),
+      next: () => {
+        if (!studentProfileId) {
+          this.finishRegistration('');
+          return;
+        }
+        this.routesService.assignStudent(routeId, { studentId: studentProfileId, stopId }).subscribe({
+          next: () => this.finishRegistration(''),
+          error: (error: unknown) => this.finishRegistration(
+            `La parada y la ruta se guardaron, pero no se pudo asignar el estudiante. Reintenta desde el detalle del estudiante. ${describeProblem(error, '')}`.trim()
+          ),
+        });
+      },
       error: (error: unknown) => this.finishRegistration(
         `La parada se creó, pero no se pudo agregar a la ruta. ${describeProblem(error, '')}`.trim()
       ),
@@ -297,6 +320,13 @@ export class Stops implements OnInit {
     };
     const routeId = this.routeIdByLabel[String(updatedRecord['route'] ?? '')] ?? '';
     const previousRouteId = String(this.stopSelected['routeId'] ?? '');
+    const assignmentRouteId = routeId || previousRouteId;
+    const studentLabel = String(updatedRecord['student'] ?? '');
+    const studentProfileId = this.studentProfileIdByLabel[studentLabel];
+    if (studentLabel && (!studentProfileId || !assignmentRouteId)) {
+      this.actionError = 'Selecciona una ruta y un estudiante con perfil válido.';
+      return;
+    }
     if (routeId && routeId !== previousRouteId) {
       payload.routeId = routeId;
       if (previousRouteId) payload.previousRouteId = previousRouteId;
@@ -306,8 +336,24 @@ export class Stops implements OnInit {
     this.saveFieldErrors = {};
     this.stopsService.update(String(id), payload).subscribe({
       next: () => {
-        this.closeUpdateModal();
-        this.load();
+        if (!studentProfileId) {
+          this.closeUpdateModal();
+          this.load();
+          return;
+        }
+        this.routesService.assignStudent(assignmentRouteId, {
+          studentId: studentProfileId, stopId: String(id),
+        }).subscribe({
+          next: () => {
+            this.closeUpdateModal();
+            this.load();
+          },
+          error: (error: unknown) => {
+            this.stopSelected = { ...this.stopSelected, ...updatedRecord, routeId: assignmentRouteId };
+            this.actionError = `La parada se actualizó, pero no se pudo asignar el estudiante. Reintenta la asignación. ${describeProblem(error, '')}`.trim();
+            this.load();
+          },
+        });
       },
       error: (error: unknown) => {
         this.actionError = describeProblem(error, 'No se pudo actualizar la parada.');

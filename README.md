@@ -180,6 +180,21 @@ blocks missing, malformed or empty-GUID profiles with a translated error rather
 than sending an invalid `studentId`. Students without an associated IAM profile
 must have that association resolved before they can be assigned.
 
+Stop creation now persists an optional selected student after attaching the
+created stop to its route. Stop editing also assigns the selected profile after
+the stop update succeeds. Student labels include identification to distinguish
+matching names; the API receives the associated profile ID. A student without a
+profile or route is rejected before saving. Partial failures are reported
+explicitly: creating or updating a stop does not imply its student assignment
+succeeded. Existing assignments can be retried from the student assignment modal.
+
+Local regression validation: 253 Angular tests and the development build pass.
+An isolated browser/API-fixture run verified creation, editing and an explicit
+assignment-failure message. That browser run also emitted Angular `NG0103`
+(infinite change detection) while using the shared forms; it is not a clean
+runtime sign-off. Real database persistence and deployed/mobile behavior have
+not been revalidated for this correction.
+
 License expiration and bus insurance validation use the existing future-date
 message; birth-date errors keep their separate age-range message. Both field
 validation and form submission use the validator's identity to select the

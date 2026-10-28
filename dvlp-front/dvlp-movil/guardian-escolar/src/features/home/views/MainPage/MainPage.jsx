@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useRef, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, ActivityIndicator } from "react-native";
-import MapView, { Marker } from "react-native-maps";
-import { FontAwesome5 } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import RouteInfoCard from "@components/cards/RouteInfoCard";
@@ -19,83 +17,14 @@ import QRScannerModal from "@components/modals/QRScannerModal";
 import IncidentReportModal from "@components/modals/IncidentReportModal";
 import TripActionButton from "@components/buttons/TripActionButton";
 import { getSession } from "@core/services/authService";
-import { getRouteApi } from "@core/services/routeApi";
+import { resolveRouteForRole } from "@core/services/visibleRouteService";
+import { normalizeStops } from "@features/gps/routeMapData";
+import RouteMap from "@features/home/components/RouteMap";
 import { startTripApi, getTripStatusApi } from "@core/services/tripApi";
-import { getLinkedStudents } from "@core/services/familyService";
 import { scanCredential } from "@core/services/notificationApi";
 import { apiPost } from "@core/services/apiClient";
 
 import styles from "./MainPage.style";
-
-/** GET a ms-route que devuelve null en vez de propagar el error. */
-async function fetchRoute(path) {
-  try {
-    return await getRouteApi(path);
-  } catch (error) {
-    console.error(`[fetchRoute] Error fetching ${path}:`, {
-      status: error?.status,
-      message: error?.message,
-      data: error?.data,
-    });
-    return null;
-  }
-}
-
-/**
- * Ruta visible para el rol autenticado, con el aviso que corresponde cuando
- * no hay una que mostrar:
- * - student: su propia ruta asignada.
- * - driver:  su ruta del día, solo dentro de la ventana activa.
- * - parent:  la ruta del estudiante vinculado (FR-9.1).
- * - otros:   primera ruta, como respaldo.
- */
-async function resolveRouteForRole(role, session) {
-  try {
-    // Validador: asegura que la respuesta tenga id (RouteDto mínimo)
-    const isValidRoute = (r) => r && typeof r === "object" && (r.id || r.routeId);
-
-    if (role === "student") {
-      const route = await fetchRoute(`/routes/student/${session.profileId}`);
-      const valid = isValidRoute(route) ? route : null;
-      return { route: valid, note: valid ? null : "Aún no tienes una ruta asignada." };
-    }
-
-    if (role === "driver") {
-      const today = await fetchRoute(`/routes/today?driverId=${session.profileId}`);
-      // Estructura esperada: { status: "ACTIVE"|"SCHEDULED", route: RouteDto, nextOccurrence?: string }
-      if (today && typeof today === "object" && today.status === "ACTIVE" && isValidRoute(today.route)) {
-        return { route: today.route, note: null };
-      }
-      // SCHEDULED trae la próxima salida: decir "sin ruta" confundía al conductor.
-      if (today && typeof today === "object" && today.status === "SCHEDULED" && today.nextOccurrence) {
-        const next = new Date(today.nextOccurrence).toLocaleString("es-CO", {
-          weekday: "long",
-          hour: "2-digit",
-          minute: "2-digit",
-        });
-        return { route: null, note: `Tu próximo recorrido es el ${next}.` };
-      }
-      return { route: null, note: "No hay una ruta asignada." };
-    }
-
-    if (role === "parent") {
-      const [student] = await getLinkedStudents(session);
-      if (!student) {
-        return { route: null, note: "No hay estudiantes vinculados a tu cuenta." };
-      }
-      const route = await fetchRoute(`/routes/student/${student.profileId}`);
-      const valid = isValidRoute(route) ? route : null;
-      return { route: valid, note: valid ? null : "El estudiante aún no tiene una ruta asignada." };
-    }
-
-    const routes = await fetchRoute("/routes");
-    const first = Array.isArray(routes) && routes.length > 0 && isValidRoute(routes[0]) ? routes[0] : null;
-    return { route: first, note: null };
-  } catch (error) {
-    console.error("[resolveRouteForRole] Error:", error);
-    return { route: null, note: null };
-  }
-}
 
 function MainPageContent() {
   const { width } = useWindow();
@@ -110,6 +39,7 @@ function MainPageContent() {
   const [modalType, setModalType] = useState(null);
   const [incidentOpen, setIncidentOpen] = useState(false);
   const [routeInfo, setRouteInfo] = useState(null);
+  const [routeStops, setRouteStops] = useState([]);
   const [status, setStatus] = useState(null);
   const [, setLoading] = useState(true);
   const [scanFeedback, setScanFeedback] = useState(null);
@@ -123,16 +53,8 @@ function MainPageContent() {
   const [canEnd, setCanEnd] = useState(false);
   const [endConditionDetail, setEndConditionDetail] = useState(null);
   
-  const mapRef = useRef(null);
-
   // GPS Tracking (solo si está enfocada la pantalla)
   const { location } = useGpsTracking(undefined, isFocused);
-  const busLatitude = Number(location?.latitude);
-  const busLongitude = Number(location?.longitude);
-  const busCoordinate =
-    location && Number.isFinite(busLatitude) && Number.isFinite(busLongitude)
-      ? { latitude: busLatitude, longitude: busLongitude }
-      : null;
 
   // Polling del estado del viaje desde backend (solo para conductor)
   const pollTripStatus = useCallback(async () => {
@@ -284,18 +206,18 @@ function MainPageContent() {
   };
 
   useEffect(() => {
+    let mounted = true;
+    setRouteInfo(null);
+    setRouteStops([]);
+    setStatus(null);
     async function loadRouteInfo() {
       try {
         const session = await getSession();
-        if (!session?.profileId) {
-          setStatus("No se pudo verificar la ruta asignada.");
-          return;
-        }
-
         // Resuelve la ruta visible por rol con los endpoints reales de
         // ms-route: el padre usa la ruta del estudiante vinculado (FR-9.1)
         // en lugar de caer al listado general, que exige permisos de admin.
         const { route, note } = await resolveRouteForRole(role, session);
+        if (!mounted) return;
         setStatus(note);
 
         if (!route) {
@@ -303,9 +225,7 @@ function MainPageContent() {
           return;
         }
 
-        // MainPage NO carga geometría OSRM ni paradas en el mapa.
-        // Solo muestra info de la ruta (nombre, conductor, bus, horario) + ubicación bus GPS.
-        // La sugerencia de ruta (OSRM) es solo para LiveTracking (vista GPS).
+        setRouteStops(normalizeStops(route));
 
         const schedule =
           route.startTime && route.endTime
@@ -332,13 +252,14 @@ function MainPageContent() {
         });
       } catch (error) {
         console.error("Error loading route info:", error);
-        setStatus("No fue posible verificar la ruta asignada.");
+        if (mounted) setStatus("No fue posible verificar la ruta asignada.");
       } finally {
-        setLoading(false);
+        if (mounted) setLoading(false);
       }
     }
 
     loadRouteInfo();
+    return () => { mounted = false; };
   }, [role]);
 
   // Extract direction from route schedules
@@ -361,30 +282,7 @@ function MainPageContent() {
 
   return (
     <View style={styles.container}>
-      <MapView
-        ref={mapRef}
-        style={styles.map}
-        initialRegion={{
-          latitude: 2.9273,
-          longitude: -75.2819,
-          latitudeDelta: 0.08,
-          longitudeDelta: 0.08,
-        }}
-      >
-        {/* Bus en tiempo real (ms-gps) - ÚNICO elemento en el mapa en MainPage */}
-        {busCoordinate && (
-          <Marker
-            coordinate={busCoordinate}
-            title={t("gps.vehicleLocation")}
-            rotation={Number(location.course) || 0}
-            anchor={{ x: 0.5, y: 0.5 }}
-          >
-            <View style={styles.busMarker}>
-              <FontAwesome5 name="bus" size={19} color="#FFFFFF" />
-            </View>
-          </Marker>
-        )}
-      </MapView>
+      <RouteMap stops={routeStops} vehicleLocation={location} />
 
       {/* Encabezado */}
       <View
@@ -453,7 +351,7 @@ function MainPageContent() {
         </View>
         <View style={styles.qrButtonContainer} pointerEvents="box-none">
           {/* Trip buttons only when route is assigned */}
-          {routeInfo && (
+          {role === "driver" && routeInfo && (
             <TripActionButton
               status={tripStatus}
               direction={tripDirection}

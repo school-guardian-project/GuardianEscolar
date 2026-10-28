@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { View, Text, Pressable } from "react-native";
-import { FontAwesome5, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
@@ -12,7 +12,8 @@ import GpsMap from "@features/gps/components/GpsMap";
 import useGpsTracking from "@features/gps/hooks/useGpsTracking";
 import { getSession } from "@core/services/authService";
 import { getRouteApi, getRouteSuggestionApi } from "@core/services/routeApi";
-import { getLinkedStudents } from "@core/services/familyService";
+import { resolveRouteForRole } from "@core/services/visibleRouteService";
+import { normalizeStops, normalizeGeometry } from "@features/gps/routeMapData";
 import { startTripApi } from "@core/services/tripApi";
 import { apiPost } from "@core/services/apiClient";
 import useSession from "@core/hooks/useSession";
@@ -26,31 +27,6 @@ function formatDateInBogota(dateValue) {
     timeZone: "America/Bogota",
     timeStyle: "short",
   }).format(date);
-}
-
-/** Normaliza paradas igual que en MainPage. */
-function normalizeStops(route) {
-  const stops = Array.isArray(route?.stops) ? route.stops : [];
-  return stops
-    .map((stop, index) => {
-      const latitude = Number(stop?.latitude);
-      const longitude = Number(stop?.longitude);
-      return {
-        id: stop?.id ?? index,
-        name: stop?.name ?? "",
-        address: stop?.address ?? "",
-        orderSequence: stop?.orderSequence ?? index,
-        latitude,
-        longitude,
-      };
-    })
-    .filter(
-      (stop) =>
-        Number.isFinite(stop.latitude) &&
-        Number.isFinite(stop.longitude) &&
-        !(stop.latitude === 0 && stop.longitude === 0),
-    )
-    .sort((a, b) => a.orderSequence - b.orderSequence);
 }
 
 /** GET a ms-route que devuelve null en vez de propagar el error. */
@@ -76,9 +52,9 @@ export default function LiveTracking() {
   const mapRef = useRef(null);
   const { location, error, loading, lastUpdated, fallbackLocation } = useGpsTracking();
 
-  // Estado para ruta del conductor/padre + sugerencia OSRM
   const [routeStops, setRouteStops] = useState([]);
   const [routeGeometry, setRouteGeometry] = useState([]);
+  const [routeStatus, setRouteStatus] = useState(null);
 
   // Estado unificado del viaje (igual que MainPage)
   const [tripStatus, setTripStatus] = useState("idle"); // 'idle' | 'active' | 'ended'
@@ -95,72 +71,42 @@ export default function LiveTracking() {
     lastUpdated || location?.receivedAt || location?.gpsDateTime || location?.dateTime,
   );
 
-  // Cargar ruta del conductor/padre + sugerencia OSRM
   useEffect(() => {
     let mounted = true;
+    setRouteStops([]);
+    setRouteGeometry([]);
+    setRouteStatus(null);
+    setTripDirection(null);
+    setTripSchedule({ startTime: null, endTime: null });
+    if (!initialized) return;
     async function loadRoute() {
       try {
         const session = await getSession();
-        if (!session?.profileId) return;
+        const { route, note } = await resolveRouteForRole(role, session);
+        if (!mounted) return;
+        setRouteStatus(note);
+        if (!route) return;
+        setRouteStops(normalizeStops(route));
+        setTripDirection(route.schedules?.[0]?.direction ?? null);
+        setTripSchedule({ startTime: route.startTime, endTime: route.endTime });
 
-        let route = null;
-
-        if (role === "driver") {
-          // Conductor: obtener ruta del día
-          const today = await fetchRoute(`/routes/today?driverId=${session.profileId}`);
-          if (!today?.route) return;
-          route = today.route;
-        } else if (role === "parent") {
-          // Padre: obtener ruta del estudiante vinculado
-          const [student] = await getLinkedStudents(session);
-          if (!student?.profileId) return;
-          const routeData = await fetchRoute(`/routes/student/${student.profileId}`);
-          if (!routeData) return;
-          route = routeData;
-        } else {
-          return; // Otros roles no cargan ruta en LiveTracking
-        }
-
-        // 1) Geometría vial OSRM (sugerencia de ruta)
+        // Stops are available even if the optional road geometry is slow or unavailable.
         try {
           const suggestion = await getRouteSuggestionApi(route.id);
-          // Backend devuelve RouteSuggestionGeometryDto con Points (PascalCase)
-          // GeoPointDto tiene Latitude/Longitude -> transformar a lowercase para Polyline
-          if (suggestion?.geometry?.Points && mounted) {
-            setRouteGeometry(
-              suggestion.geometry.Points.map((p) => ({
-                latitude: p.Latitude,
-                longitude: p.Longitude,
-              }))
-            );
-          }
+          if (mounted) setRouteGeometry(normalizeGeometry(suggestion));
         } catch (err) {
           console.error("[LiveTracking] Error loading route geometry:", err);
-        }
-
-        // 2) Paradas normalizadas
-        const stops = normalizeStops(route);
-        if (mounted) {
-          setRouteStops(stops);
-        }
-
-        // 3) Info de horario y dirección para TripActionButton
-        if (mounted) {
-          const direction = route.schedules?.[0]?.direction ?? route.Schedules?.[0]?.Direction ?? null;
-          setTripDirection(direction);
-          setTripSchedule({
-            startTime: route.startTime,
-            endTime: route.endTime,
-          });
+          if (mounted) setRouteStatus("No fue posible cargar el trazado vial. Se muestran las paradas.");
         }
       } catch (err) {
         console.error("[LiveTracking] Error loading route:", err);
+        if (mounted) setRouteStatus("No fue posible verificar la ruta asignada.");
       }
     }
 
     loadRoute();
     return () => { mounted = false; };
-  }, [role]);
+  }, [role, initialized]);
 
   // Esperar a que la sesión esté inicializada (rol cargado desde SecureStore).
   // Va DESPUÉS de todos los hooks: así la cantidad de hooks no cambia entre
@@ -227,7 +173,7 @@ export default function LiveTracking() {
         }}
       />
 
-      <View style={styles.topControls}>
+      <View style={[styles.topControls, { top: Math.max(insets.top, 12) }]}>
         <View style={styles.titlePill}>
           <Text numberOfLines={1} style={[styles.title, { color: theme.titleColor }]}>
             {t("gps.vehicleLocation")}
@@ -238,21 +184,10 @@ export default function LiveTracking() {
         </View>
       </View>
 
-      <View style={styles.topControls}>
-        <View style={styles.titlePill}>
-          <Text numberOfLines={1} style={[styles.title, { color: theme.titleColor }]}>
-            {t("gps.vehicleLocation")}
-          </Text>
-        </View>
-        <View style={styles.notificationButton}>
-          <NotificationButton onPress={() => navigation.navigate("Notifications")} />
-        </View>
-      </View>
-
-      {!location && (loading || error) && (
+      {(routeStatus || (!location && (loading || error))) && (
         <View style={[styles.loadingContainer, { top: Math.max(insets.top, 12) + 60 }]}>
           <Text style={styles.loadingText}>
-            {loading ? t("gps.loadingLocation") : error || t("gps.loadingLocation")}
+            {routeStatus || (loading ? t("gps.loadingLocation") : error || t("gps.loadingLocation"))}
           </Text>
         </View>
       )}
@@ -307,7 +242,7 @@ export default function LiveTracking() {
 
       {/* Botón contextual Iniciar/Terminar - posicionado arriba del BottomTabBar */}
       <View style={styles.tripButtonContainer} pointerEvents="box-none">
-        {routeStops.length > 0 && (
+        {role === "driver" && routeStops.length > 0 && (
           <TripActionButton
             status={tripStatus}
             direction={tripDirection}

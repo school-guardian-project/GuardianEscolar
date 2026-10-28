@@ -2,6 +2,7 @@ import React, { forwardRef, useEffect, useImperativeHandle, useRef } from "react
 import { StyleSheet, View } from "react-native";
 import MapView, { Marker, Polyline } from "react-native-maps";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { toValidCoordinate } from "@features/gps/routeMapData";
 
 const DEFAULT_FALLBACK_REGION = {
   latitude: 2.9273,
@@ -23,12 +24,9 @@ const GpsMap = forwardRef(function GpsMap({
   const stopsRef = useRef([]);
 
   useEffect(() => {
-    const latitude = Number(location?.latitude);
-    const longitude = Number(location?.longitude);
-
-    if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) {
-      return;
-    }
+    const coordinate = toValidCoordinate(location);
+    if (!coordinate || routeStops.length > 0) return;
+    const { latitude, longitude } = coordinate;
 
     const previous = previousLocationRef.current;
     const shouldUpdateRegion =
@@ -54,18 +52,22 @@ const GpsMap = forwardRef(function GpsMap({
         longitude,
       };
     }
-  }, [location]);
+  }, [location, routeStops]);
 
-  // Mantener referencia de paradas para fitToCoordinates
-  useEffect(() => {
-    stopsRef.current = routeStops;
-  }, [routeStops]);
-
-  // Ajustar mapa a las paradas cuando cambien
-  useEffect(() => {
-    if (!mapReadyRef.current || routeStops.length === 0) return;
+  const fitStopsOnMap = () => {
+    const stops = stopsRef.current;
+    if (!mapReadyRef.current || stops.length === 0) return;
+    if (stops.length === 1) {
+      mapRef.current?.animateToRegion({
+        latitude: stops[0].latitude,
+        longitude: stops[0].longitude,
+        latitudeDelta: 0.01,
+        longitudeDelta: 0.01,
+      }, 500);
+      return;
+    }
     mapRef.current?.fitToCoordinates(
-      routeStops.map((stop) => ({
+      stops.map((stop) => ({
         latitude: stop.latitude,
         longitude: stop.longitude,
       })),
@@ -74,22 +76,14 @@ const GpsMap = forwardRef(function GpsMap({
         animated: true,
       },
     );
-  }, [routeStops, mapReadyRef.current]);
+  };
 
-  const hasLocation =
-    location?.latitude != null &&
-    location?.longitude != null &&
-    location.latitude !== "" &&
-    location.longitude !== "" &&
-    Number.isFinite(Number(location?.latitude)) &&
-    Number.isFinite(Number(location?.longitude));
+  useEffect(() => {
+    stopsRef.current = routeStops;
+    fitStopsOnMap();
+  }, [routeStops]);
 
-  const markerCoordinate = hasLocation
-    ? {
-        latitude: Number(location.latitude),
-        longitude: Number(location.longitude),
-      }
-    : null;
+  const markerCoordinate = toValidCoordinate(location);
 
   useImperativeHandle(ref, () => ({
     centerOnLocation() {
@@ -100,19 +94,7 @@ const GpsMap = forwardRef(function GpsMap({
         longitudeDelta: 0.01,
       }, 500);
     },
-    fitStopsOnMap() {
-      if (!mapReadyRef.current || stopsRef.current.length === 0) return;
-      mapRef.current?.fitToCoordinates(
-        stopsRef.current.map((stop) => ({
-          latitude: stop.latitude,
-          longitude: stop.longitude,
-        })),
-        {
-          edgePadding: { top: 90, right: 40, bottom: 280, left: 40 },
-          animated: true,
-        },
-      );
-    },
+    fitStopsOnMap,
   }), [markerCoordinate]);
 
   return (
@@ -123,23 +105,11 @@ const GpsMap = forwardRef(function GpsMap({
       onMapReady={() => {
         mapReadyRef.current = true;
         const region = pendingRegionRef.current;
-        if (region) {
+        if (region && stopsRef.current.length === 0) {
           mapRef.current?.animateToRegion(region, 500);
           pendingRegionRef.current = null;
         }
-        // Si hay paradas, encuadrarlas al cargar el mapa
-        if (stopsRef.current.length > 0) {
-          mapRef.current?.fitToCoordinates(
-            stopsRef.current.map((stop) => ({
-              latitude: stop.latitude,
-              longitude: stop.longitude,
-            })),
-            {
-              edgePadding: { top: 90, right: 40, bottom: 280, left: 40 },
-              animated: true,
-            },
-          );
-        }
+        fitStopsOnMap();
       }}
       onError={(event) => console.error("[GpsMap] map error:", event.nativeEvent || event)}
       showsCompass
@@ -168,19 +138,15 @@ const GpsMap = forwardRef(function GpsMap({
       {/* Marcadores de paradas */}
       {routeStops.map((stop, index) => (
         <Marker
-          key={stop.id}
+          key={`${stop.id}-${stop.originalIndex}`}
           coordinate={{
             latitude: stop.latitude,
             longitude: stop.longitude,
           }}
           title={stop.name || `Parada ${index + 1}`}
           description={stop.address || undefined}
-          tracksViewChanges={false}
-        >
-          <View style={styles.stopMarker}>
-            <FontAwesome5 name="map-marker-alt" size={20} color="#1A56DB" />
-          </View>
-        </Marker>
+          pinColor="#1A56DB"
+        />
       ))}
 
       {/* Bus en tiempo real (ms-gps) */}
@@ -223,20 +189,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
-  },
-  stopMarker: {
-    width: 32,
-    height: 32,
-    borderRadius: 16,
-    alignItems: "center",
-    justifyContent: "center",
-    backgroundColor: "#FFFFFF",
-    borderWidth: 2,
-    borderColor: "#1A56DB",
-    shadowColor: "#0F172A",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.2,
-    shadowRadius: 2,
-    elevation: 3,
   },
 });

@@ -360,7 +360,7 @@ function MainPageContent() {
         ]}
         pointerEvents="box-none"
       >
-        <View style={[styles.qrButtonContainer, { bottom: 280 + insets.bottom, flexDirection: "row", alignItems: "flex-end", gap: 12 }]} pointerEvents="box-none">
+        <View style={[styles.qrButtonContainer, { bottom: 400 + insets.bottom, flexDirection: "row", alignItems: "flex-end", gap: 12 }]} pointerEvents="box-none">
           {/* El conductor escanea solo con el viaje en curso (botón más abajo). */}
           {config.card.showQR && config.card.qrMode !== "scan" && (
             <QRButtom config={config.card} onOpenModel={handleOpenModal} />

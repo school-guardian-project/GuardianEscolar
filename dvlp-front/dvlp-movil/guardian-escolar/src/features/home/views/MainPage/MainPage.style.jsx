@@ -86,7 +86,8 @@ export default StyleSheet.create({
   qrButtonContainer: {
     position: "absolute",
     left: 16,
-    bottom: 280,
+    // Por encima de la tarjeta de ruta con lista de paradas (~380 px con la barra inferior).
+    bottom: 400,
     zIndex: 3,
     elevation: 8,
   },

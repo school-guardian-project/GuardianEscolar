@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, ScrollView, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
 
@@ -10,6 +10,7 @@ export default function RouteInfoCard({
   schedule = "",
   stopsCount = "",
   finalDestination = "",
+  stops = [],
 }) {
   const { t } = useTranslation();
   const { theme } = useTheme();
@@ -120,6 +121,31 @@ export default function RouteInfoCard({
         </View>
 
       </View>
+
+      {stops.length > 0 && (
+        <ScrollView style={styles.stopsList} nestedScrollEnabled>
+          {stops.map((stop, index) => (
+            <View key={String(stop.id ?? index)} style={styles.stopRow}>
+              <Text style={[styles.stopOrder, { color: theme.titleColor }]}>
+                {stop.orderSequence ?? index + 1}
+              </Text>
+              <View style={styles.stopText}>
+                <Text style={[styles.stopName, { color: theme.textColor }]}>
+                  {stop.name}
+                </Text>
+                {!!stop.address && (
+                  <Text style={[styles.value, { color: theme.textSecondary }]}>
+                    {stop.address}
+                  </Text>
+                )}
+                <Text style={[styles.value, { color: theme.textSecondary }]}>
+                  {`${stop.latitude}, ${stop.longitude}`}
+                </Text>
+              </View>
+            </View>
+          ))}
+        </ScrollView>
+      )}
     </View>
   );
 }
@@ -192,5 +218,29 @@ const styles = StyleSheet.create({
   value: {
     fontSize: 12,
     marginTop: 4,
+  },
+
+  stopsList: {
+    maxHeight: 120,
+    marginTop: 10,
+  },
+
+  stopRow: {
+    flexDirection: "row",
+    marginBottom: 8,
+  },
+
+  stopOrder: {
+    width: 24,
+    fontWeight: "bold",
+  },
+
+  stopText: {
+    flex: 1,
+    minWidth: 0,
+  },
+
+  stopName: {
+    fontWeight: "600",
   },
 });

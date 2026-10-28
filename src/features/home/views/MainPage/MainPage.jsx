@@ -331,6 +331,7 @@ function MainPageContent() {
           schedule={routeInfo?.schedule ?? ""}
           stopsCount={routeInfo?.stopsCount ?? ""}
           finalDestination={routeInfo?.finalDestination ?? ""}
+          stops={routeStops}
         />
         <BottomTabBar
           bottomInset={insets.bottom}

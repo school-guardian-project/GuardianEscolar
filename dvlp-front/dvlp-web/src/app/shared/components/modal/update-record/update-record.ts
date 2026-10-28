@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
 import { ValidationRule, validateField } from '@core/validators/form-validators';
+import { formatTime24Input, isValidTime24 } from '@core/validators/time24';
 import { LocationMap } from '@shared/components/location-map/location-map';
 import { StatusFilter, statusOptions, effectiveStatusFilter, matchesStatus } from '@core/models/record-status';
 
@@ -305,6 +306,13 @@ export class UpdateRecord implements OnInit, OnChanges {
         });
       }
     }
+    if (this.type === 'route') {
+      for (const name of ['startTime', 'endTime']) {
+        if (!errors[name] && !isValidTime24(this.formData[name])) {
+          errors[name] = this.translate.instant('validation.time24');
+        }
+      }
+    }
     if (this.type === 'route' && !errors['startTime'] && !errors['endTime']
       && this.formData['endTime'] <= this.formData['startTime']) {
       errors['endTime'] = this.translate.instant('validation.timeOrder');
@@ -418,7 +426,9 @@ export class UpdateRecord implements OnInit, OnChanges {
       this.formData['student'] = '';
       return;
     }
-    this.formData[fieldName] = value;
+    this.formData[fieldName] = this.fields.find((f) => f.name === fieldName)?.type === 'time'
+      ? formatTime24Input(value)
+      : value;
     delete this.fieldErrors[fieldName];
     if (this.type === 'admins' && fieldName === 'city') {
       const selectedSchool = this.schoolOptions.find((school) => school.id === this.formData['school']);

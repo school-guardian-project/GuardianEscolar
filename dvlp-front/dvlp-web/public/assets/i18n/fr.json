@@ -527,6 +527,8 @@
     "guardian": {
       "title": "Informations sur le responsable",
       "fields": {
+        "names": "Prénoms",
+        "campusName": "Site",
         "name": "Nom",
         "lastNames": "Noms de famille",
         "email": "E-mail",
@@ -1163,6 +1165,7 @@
     "birthDate": "La date ne peut pas être future ni remonter à plus de 100 ans",
     "futureDate": "La date doit être future",
     "timeOrder": "L’heure de fin doit être postérieure à l’heure de début",
+    "time24": "Utilisez le format 24 heures HH:mm (ex. 06:30 ou 14:45)",
     "imei": "L’IMEI doit comporter 15 chiffres"
   },
   "resend_code": {

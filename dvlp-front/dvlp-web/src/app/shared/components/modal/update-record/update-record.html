@@ -76,7 +76,11 @@
           </ng-container>
 
           <!-- INPUT -->
-          <input *ngSwitchDefault class="modal__info-value" [type]="field.type" [name]="field.name"
+          <input *ngSwitchDefault class="modal__info-value" [type]="field.type === 'time' ? 'text' : field.type" [name]="field.name"
+            [attr.inputmode]="field.type === 'time' ? 'numeric' : null"
+            [attr.maxlength]="field.type === 'time' ? 5 : null"
+            [attr.placeholder]="field.type === 'time' ? 'HH:mm' : null"
+            [attr.autocomplete]="field.type === 'time' ? 'off' : null"
             [class.modal__info-value--invalid]="getFieldError(field.name)"
             [(ngModel)]="formData[field.name]" (ngModelChange)="onFieldChange(field.name, $event)" />
 

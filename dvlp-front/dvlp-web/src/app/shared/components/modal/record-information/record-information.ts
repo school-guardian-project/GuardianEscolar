@@ -8,7 +8,7 @@ export type { RecordData, RegisterType } from './record-information.types';
 const RECORD_CONFIG: Record<RegisterType, { icon: string; fields: string[] }> = {
   student: { icon: 'person', fields: ['names', 'lastNames', 'documentType', 'identification', 'birthDate', 'campusName', 'phone', 'address', 'email', 'route', 'stop', 'busPlate'] },
   guardian: { icon: 'people', fields: ['names', 'lastNames', 'email', 'documentType', 'identification', 'birthDate', 'campusName', 'phone', 'address'] },
-  driver: { icon: 'directions_car', fields: ['names', 'lastNames', 'documentType', 'identification', 'birthDate', 'campusName', 'licenseExpiration', 'licenseNumber', 'address', 'email'] },
+  driver: { icon: 'directions_car', fields: ['names', 'lastNames', 'documentType', 'identification', 'birthDate', 'cityName', 'campusName', 'phone', 'licenseExpiration', 'licenseNumber', 'address', 'email'] },
   family: { icon: 'family_restroom', fields: ['name', 'guardian', 'student', 'observations'] },
   bus: { icon: 'directions_bus', fields: ['plate', 'driver', 'campusName', 'brand', 'model', 'capacity', 'soat', 'gps', 'gpsStatus', 'status'] },
   stop: { icon: 'location_on', fields: ['name', 'student', 'city', 'school', 'address', 'route'] },

@@ -545,6 +545,8 @@
         "documentType": "ID type",
         "identification": "Identification",
         "birthDate": "Date of birth",
+        "cityName": "City",
+        "phone": "Phone",
         "licenseExpiration": "License expiration",
         "licenseNumber": "License",
         "address": "Address",
@@ -704,6 +706,8 @@
         "documentType": "ID type",
         "identification": "Identification",
         "birthDate": "Date of birth",
+        "city": "City",
+        "phone": "Phone",
         "licenseExpiration": "License expiration",
         "licenseNumber": "License",
         "address": "Address",
@@ -729,7 +733,6 @@
         "model": "Model",
         "brand": "Brand",
         "capacity": "Capacity",
-        "gps": "GPS device (IMEI)",
         "soat": "SOAT",
         "gpsImei": "New GPS IMEI (optional)",
         "gpsStatus": "GPS status"
@@ -849,8 +852,10 @@
         "documentType": "ID type",
         "identification": "Identification number",
         "birthDate": "Date of birth",
+        "city": "City",
         "licenseExpiration": "License expiration",
         "licenseNumber": "License number",
+        "phone": "Phone",
         "address": "Address",
         "email": "Email",
         "campus": "Campus"
@@ -876,7 +881,6 @@
         "brand": "Brand",
         "capacity": "Capacity",
         "soat": "SOAT validity",
-        "gps": "GPS device (IMEI)",
         "gpsImei": "New GPS IMEI (optional)",
         "gpsStatus": "GPS status"
       },
@@ -1159,8 +1163,7 @@
     "birthDate": "Date cannot be in the future or more than 100 years ago",
     "futureDate": "Date must be in the future",
     "timeOrder": "End time must be after start time",
-    "imei": "The IMEI must have 15 digits",
-    "gpsRequired": "Select a GPS or type the IMEI of a new one"
+    "imei": "The IMEI must have 15 digits"
   },
   "resend_code": {
     "button": "Request a new code",

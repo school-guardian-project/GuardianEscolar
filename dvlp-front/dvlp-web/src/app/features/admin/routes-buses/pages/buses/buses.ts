@@ -15,11 +15,10 @@ import { ErrorAlert } from '@shared/components/modal/error-alert/error-alert';
 import { AssignRecord } from '@shared/components/modal/assign-record/assign-record';
 import { BusesService } from '@core/services/buses.service';
 import { DriversService } from '@core/services/drivers.service';
-import { BusListDto, BusRequestDto, BusResponseDto, BusStatus, GpsDeviceDto } from '@core/models/bus.model';
+import { BusListDto, BusRequestDto, BusResponseDto, BusStatus } from '@core/models/bus.model';
 import { CampusesService } from '@core/services/campuses.service';
 import { AuthService } from '@core/services/auth.service';
 import { TranslateService } from '@ngx-translate/core';
-import { SelectOption } from '@shared/components/cards/card-register/card-register';
 import { describeProblem, problemField } from '@core/http/problem-detail';
 
 interface BusView extends RecordData {
@@ -61,8 +60,8 @@ const NO_DRIVER = 'none';
 
 /**
  * Payload del POST /fleet/api/buses. `campus` y `model` vienen de selects con
- * `optionsSource`, asi que su valor ya es el id. El GPS sale del select de
- * dispositivos libres o, si se escribe, de un IMEI nuevo que ms-fleet crea.
+ * `optionsSource`, asi que su valor ya es el id. El GPS puede omitirse o
+ * registrarse con el IMEI de un dispositivo nuevo.
  */
 function toCreatePayload(form: RecordData): BusRequestDto {
   const imei = String(form['gpsImei'] ?? '').trim();
@@ -72,7 +71,6 @@ function toCreatePayload(form: RecordData): BusRequestDto {
     capacity: Number(form['capacity']),
     plate: String(form['matricula'] ?? '').trim(),
     modelId: Number(form['model']),
-    gpsDeviceId: imei ? undefined : String(form['gps'] ?? '').trim() || undefined,
     gpsImei: imei || undefined,
     gpsStatus: String(form['gpsStatus']) === 'true',
   };
@@ -109,12 +107,9 @@ export class Buses implements OnInit {
 
   buses: BusView[] = [];
   driverOptions: DriverOption[] = [];
-  gpsDevices: GpsDeviceDto[] = [];
   campusNames: Record<string, string> = {};
   /** Opciones del formulario de registro (el conductor se elige por nombre). */
   fieldOptions: Record<string, string[]> = {};
-  /** GPS libres para el registro: valor = id, etiqueta = IMEI. */
-  registerSelectOptions: Record<string, SelectOption[]> = {};
   /** Opciones del modal de edición: valores = ids, etiquetas legibles. */
   updateFieldOptions: Record<string, string[]> = {};
   updateFieldOptionLabels: Record<string, Record<string, string>> = {};
@@ -128,7 +123,6 @@ export class Buses implements OnInit {
   ngOnInit(): void {
     this.load();
     this.loadDrivers();
-    this.loadGpsDevices();
     this.loadCampuses();
   }
 
@@ -177,36 +171,14 @@ export class Buses implements OnInit {
     });
   }
 
-  private loadGpsDevices(): void {
-    this.busesService.listGpsDevices().subscribe({
-      next: (devices) => {
-        this.gpsDevices = devices;
-        this.registerSelectOptions = {
-          gps: devices.filter((d) => !d.assignedBusId).map((d) => ({ value: d.id, label: d.imei })),
-        };
-        this.buildUpdateOptions();
-      },
-      error: () => {
-        this.gpsDevices = [];
-        this.registerSelectOptions = { gps: [] };
-      },
-    });
-  }
-
   private driverName(profileId: string | null | undefined): string {
     return this.driverOptions.find((d) => d.profileId === profileId)?.label ?? '';
   }
 
-  /**
-   * Opciones del modal de edición. El GPS ofrece los libres más el que ya usa
-   * el bus abierto; el conductor ofrece todos más "sin conductor".
-   */
-  private buildUpdateOptions(currentBusId?: string): void {
-    const busId = currentBusId ?? String(this.busSelected['id'] ?? '');
-    const gps = this.gpsDevices.filter((d) => !d.assignedBusId || d.assignedBusId === busId);
+  /** Opciones del modal de edición: conductor y estado del GPS. */
+  private buildUpdateOptions(): void {
     this.updateFieldOptions = {
       driver: [NO_DRIVER, ...this.driverOptions.map((d) => d.profileId)],
-      gps: gps.map((d) => d.id),
       gpsStatus: ['true', 'false'],
     };
     this.updateFieldOptionLabels = {
@@ -214,7 +186,6 @@ export class Buses implements OnInit {
         [NO_DRIVER]: this.translate.instant('update_record.bus.noDriver'),
         ...Object.fromEntries(this.driverOptions.map((d) => [d.profileId, d.label])),
       },
-      gps: Object.fromEntries(gps.map((d) => [d.id, d.imei])),
       gpsStatus: {
         true: this.translate.instant('register.bus.gpsStatusValues.true'),
         false: this.translate.instant('register.bus.gpsStatusValues.false'),
@@ -262,8 +233,6 @@ export class Buses implements OnInit {
         const driver = this.driverOptions.find((d) => d.label === driverLabel);
         this.register?.setValidationMessage('');
         this.register?.resetForm();
-        this.loadGpsDevices();
-
         // El create no acepta conductor: se asigna ahora con PUT /buses/{id}/driver.
         if (driver) {
           this.busesService.assignDriver(String(busId), driver.profileId).subscribe({
@@ -355,7 +324,7 @@ export class Buses implements OnInit {
     this.saveFieldErrors = {};
     this.busesService.get(id).subscribe({
       next: (detail) => {
-        this.buildUpdateOptions(id);
+        this.buildUpdateOptions();
         this.busSelected = this.toEditView(detail);
         this.showUpdateModal = true;
       },
@@ -411,7 +380,6 @@ export class Buses implements OnInit {
         const finish = () => {
           this.closeUpdateModal();
           this.load();
-          this.loadGpsDevices();
         };
         if (driver === originalDriver) {
           finish();
@@ -424,7 +392,6 @@ export class Buses implements OnInit {
           next: finish,
           error: (error: unknown) => {
             this.load();
-            this.loadGpsDevices();
             this.failSave(error, 'errors.bus.driverNotAssigned');
             this.saveFieldErrors = { driver: this.actionError };
           },

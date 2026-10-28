@@ -34,6 +34,7 @@
   *ngIf="showUpdateModal"
   type="driver"
   [record]="driverSelected"
+  [cityOptions]="cityOptions"
   [saveError]="actionError"
   (saved)="onSaved($event)"
   (closed)="closeUpdateModal()">

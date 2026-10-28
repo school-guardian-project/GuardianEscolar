@@ -15,8 +15,11 @@ import { UpdateRecord } from '@shared/components/modal/update-record/update-reco
 import { DeleteRecord } from '@shared/components/modal/delete-record/delete-record';
 import { ErrorAlert } from '@shared/components/modal/error-alert/error-alert';
 import { DriversService } from '@core/services/drivers.service';
+import { CitiesService } from '@core/services/cities.service';
+import { CityListDto } from '@core/models/city.model';
 import { PersonListDto, PersonRequestDto, CreatePersonRequestDto, PersonResponseDto } from '@core/models/student.model';
 import { describeProblem } from '@core/http/problem-detail';
+import { forkJoin } from 'rxjs';
 
 interface DriverView extends RecordData {
   id?: string;
@@ -25,6 +28,9 @@ interface DriverView extends RecordData {
   name: string;
   identification: string;
   phone: string;
+  cityId?: string | null;
+  cityName?: string;
+  city?: string;
   licenseNumber?: string;
   licenseExpiration?: string;
   documentType?: string;
@@ -43,6 +49,7 @@ function fromApi(api: PersonListDto): DriverView {
     name: `${names} ${lastNames}`.trim(),
     identification: api.identificationNumber ?? '',
     phone: api.phone != null ? String(api.phone) : '',
+    cityId: api.cityId,
     licenseNumber: api.licenseNumber ?? '',
     licenseExpiration: api.licenseExpirationDate ?? '',
   };
@@ -55,6 +62,7 @@ function fromDetail(api: PersonResponseDto): DriverView {
     ...fromApi(api),
     documentType: IDENTIFICATION_LABELS[api.identificationType] ?? '',
     birthDate: api.dateBirth ?? '',
+    city: api.cityId ?? '',
     address: api.residenceAddress ?? '',
     email: api.email ?? '',
   };
@@ -69,6 +77,7 @@ function toPayload(form: RecordData): PersonRequestDto {
     identificationNumber: String(form['identification'] ?? '').trim(),
     email: String(form['email'] ?? '').trim(),
     phone: Number(digits),
+    cityId: String(form['city'] ?? form['cityId'] ?? '').trim(),
     residenceAddress: String(form['address'] ?? '').trim(),
     dateBirth: String(form['birthDate'] ?? '').trim(),
   };
@@ -110,20 +119,38 @@ function toCreatePayload(form: RecordData): CreatePersonRequestDto {
 })
 export class Drivers implements OnInit {
   private driversService = inject(DriversService);
+  private citiesService = inject(CitiesService);
   private translate = inject(TranslateService);
 
   @ViewChild(CardRegister) register?: CardRegister;
 
   drivers = signal<DriverView[]>([]);
+  cityOptions: CityListDto[] = [];
   actionError = '';
 
   ngOnInit(): void {
     this.load();
+    this.citiesService.list().subscribe({
+      next: (cities) => {
+        this.cityOptions = cities;
+        this.drivers.update((drivers) => drivers.map((driver) => this.withCityName(driver)));
+      },
+      error: (error: unknown) => {
+        this.actionError = describeProblem(error, this.translate.instant('errors.drivers.load'));
+      },
+    });
+  }
+
+  private withCityName(driver: DriverView): DriverView {
+    return {
+      ...driver,
+      cityName: this.cityOptions.find((city) => city.id === driver.cityId)?.name ?? '',
+    };
   }
 
   private load(): void {
     this.driversService.list().subscribe({
-      next: (list) => this.drivers.set(list.map(fromApi)),
+      next: (list) => this.drivers.set(list.map((driver) => this.withCityName(fromApi(driver)))),
       error: (error: unknown) => {
         this.actionError = describeProblem(error, this.translate.instant('errors.drivers.load'));
       },
@@ -137,7 +164,7 @@ export class Drivers implements OnInit {
       return;
     }
     this.driversService.search(query).subscribe({
-      next: (list) => this.drivers.set(list.map(fromApi)),
+      next: (list) => this.drivers.set(list.map((driver) => this.withCityName(fromApi(driver)))),
       error: (error: unknown) => {
         this.actionError = describeProblem(error, this.translate.instant('errors.drivers.search'));
       },
@@ -165,9 +192,13 @@ export class Drivers implements OnInit {
   showDetails(driver: RecordData): void {
     const id = driver['id'];
     if (!id) return;
-    this.driversService.get(String(id)).subscribe({
-      next: (detail) => {
-        this.driverSelected = fromDetail(detail);
+    forkJoin({
+      detail: this.driversService.get(String(id)),
+      cities: this.citiesService.list(),
+    }).subscribe({
+      next: ({ detail, cities }) => {
+        this.cityOptions = cities;
+        this.driverSelected = this.withCityName(fromDetail(detail));
         this.showModal = true;
       },
       error: (error: unknown) => {
@@ -187,9 +218,13 @@ export class Drivers implements OnInit {
     const id = driver['id'];
     if (!id) return;
     this.actionError = '';
-    this.driversService.get(String(id)).subscribe({
-      next: (detail) => {
-        this.driverSelected = fromDetail(detail);
+    forkJoin({
+      detail: this.driversService.get(String(id)),
+      cities: this.citiesService.list(),
+    }).subscribe({
+      next: ({ detail, cities }) => {
+        this.cityOptions = cities;
+        this.driverSelected = this.withCityName(fromDetail(detail));
         this.showUpdateModal = true;
       },
       error: (error: unknown) => {

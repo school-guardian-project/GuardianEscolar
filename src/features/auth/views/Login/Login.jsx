@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ScrollView, View, Text } from "react-native";
+import { ScrollView, View, Text, Keyboard } from "react-native";
 import { Asset } from "expo-asset";
 import { SvgUri } from "react-native-svg";
 import { styles } from "./Login.styles";
@@ -144,6 +144,7 @@ export default function Login({ navigation }) {
     setPasswordError(nextPasswordError);
     setFormError("");
     if (nextEmailError || nextPasswordError) return;
+    Keyboard.dismiss();
     signIn();
   };
 

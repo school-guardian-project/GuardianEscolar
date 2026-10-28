@@ -321,7 +321,24 @@ function MainPageContent() {
         </View>
       ) : null}
 
-      {/* Overlay: tarjeta de ruta + navegación */}
+      {/* Tarjeta y navegacion ancladas al borde inferior. */}
+      <View style={styles.bottomSection}>
+        <RouteInfoCard
+          routeName={routeInfo?.routeName ?? ""}
+          driverName={routeInfo?.driverName ?? ""}
+          plate={routeInfo?.plate ?? ""}
+          schedule={routeInfo?.schedule ?? ""}
+          stopsCount={routeInfo?.stopsCount ?? ""}
+          finalDestination={routeInfo?.finalDestination ?? ""}
+        />
+        <BottomTabBar
+          bottomInset={insets.bottom}
+          onRoutePress={() => navigation.navigate("MainPage")}
+          onLocationPress={() => navigation.navigate("LiveTracking")}
+          onProfilePress={() => navigation.navigate("Profile")}
+        />
+      </View>
+
       <View
         style={[
           styles.overlay,
@@ -331,24 +348,7 @@ function MainPageContent() {
         ]}
         pointerEvents="box-none"
       >
-        <View style={styles.spacer} />
-
-        <View style={[styles.bottomSection, { marginHorizontal: -horizontalPadding }]}>
-          <RouteInfoCard
-            routeName={routeInfo?.routeName ?? ""}
-            driverName={routeInfo?.driverName ?? ""}
-            plate={routeInfo?.plate ?? ""}
-            schedule={routeInfo?.schedule ?? ""}
-            stopsCount={routeInfo?.stopsCount ?? ""}
-            finalDestination={routeInfo?.finalDestination ?? ""}
-          />
-          <BottomTabBar
-            onRoutePress={() => navigation.navigate("MainPage")}
-            onLocationPress={() => navigation.navigate("LiveTracking")}
-            onProfilePress={() => navigation.navigate("Profile")}
-          />
-        </View>
-        <View style={styles.qrButtonContainer} pointerEvents="box-none">
+        <View style={[styles.qrButtonContainer, { bottom: 280 + insets.bottom }]} pointerEvents="box-none">
           {/* Trip buttons only when route is assigned */}
           {role === "driver" && routeInfo && (
             <TripActionButton
@@ -366,7 +366,7 @@ function MainPageContent() {
         </View>
 
         {config.card.showIncidentReport && (
-          <View style={styles.incidentButtonContainer} pointerEvents="box-none">
+          <View style={[styles.incidentButtonContainer, { bottom: 280 + insets.bottom }]} pointerEvents="box-none">
             <IncidentReportButton onPress={() => setIncidentOpen(true)} />
           </View>
         )}

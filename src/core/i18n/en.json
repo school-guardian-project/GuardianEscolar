@@ -13,7 +13,17 @@
   },
   "accept": {
     "blocked": "Your account is not yet authorized by your guardian. Ask them to accept the Terms in their session.",
-    "error": "Could not record the acceptance. Try again."
+    "error": "Could not record the acceptance. Try again.",
+    "title": "Terms and privacy",
+    "subtitle": "To continue, read and accept the Terms and Conditions and the Privacy Policy.",
+    "minorDataNotice": "Under Colombian Law 1581 of 2012, you authorize the processing of your personal data and, if you are a guardian, the data of the minors in your care.",
+    "checkboxLabel": "I have read and accept the Terms and Conditions and the Privacy Policy.",
+    "termsLink": "View terms",
+    "privacyLink": "View privacy",
+    "coveringMinors_one": "This acceptance also covers {{count}} linked minor.",
+    "coveringMinors_other": "This acceptance also covers {{count}} linked minors.",
+    "mustAccept": "You must check the box to continue.",
+    "acceptButton": "Accept and continue"
   },
   "serviceErrors": {
     "required": "This field is required.",

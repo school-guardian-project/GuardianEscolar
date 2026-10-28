@@ -8,17 +8,18 @@ import { useTheme } from "@core/services/ThemeService";
 import InputField from "@components/inputs/InputField";
 import PrimaryButton from "@components/buttons/PrimaryButton";
 import { validateEmail, validateRequired } from "@core/validation/validators";
-import { login } from "@core/services/authService";
-import { getSession } from "@core/services/authService";
-import { acceptTerms, CURRENT_TERMS_VERSION } from "@core/services/termsService";
-import { getLinkedStudents } from "@core/services/familyService";
+import { login, getSession, clearSession } from "@core/services/authService";
+import {
+  acceptPending,
+  CURRENT_TERMS_VERSION,
+  getPendingAcceptance,
+  hasPendingAcceptance,
+  requiresTermsModal,
+} from "@core/services/termsService";
 import { registerPushDevice } from "@core/services/pushService";
 import LegalInfoModal from "./LegalInfoModal";
 import TermsAcceptanceModal from "./TermsAcceptanceModal";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import useSession from "@core/hooks/useSession";
-
-const TERMS_ACCEPTED_KEY = "@guardian_terms_accepted";
 
 const logoUri = Asset.fromModule(require("../../../../../assets/logo-blue.svg")).uri;
 
@@ -32,8 +33,9 @@ export default function Login({ navigation }) {
   const [formError, setFormError] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [legalDoc, setLegalDoc] = useState(null);
-  const [termsModalVisible, setTermsModalVisible] = useState(false);
-  const [minorsCount, setMinorsCount] = useState(0);
+  const [pendingTerms, setPendingTerms] = useState(null);
+  const [acceptingTerms, setAcceptingTerms] = useState(false);
+  const [termsError, setTermsError] = useState("");
   const { applyAuthRole } = useSession();
 
   const handleEmailChange = (value) => {
@@ -55,50 +57,30 @@ export default function Login({ navigation }) {
       await login(email, password);
       await applyAuthRole();
 
-      try {
-        const session = await getSession();
-        const roleId = session?.roleId;
-
-        // Estudiantes (roleId 2) no ven el modal: el padre/tutor ya aceptó el tratamiento
-        // de datos de sus hijos al aceptar él mismo.
-        if (roleId === 2) {
-          navigation.navigate("MainPage");
-          registerPushDevice();
-          return;
-        }
-
-        // Solo driver (3) y parent (4) pasan por aceptación de términos y privacidad.
-        if (roleId === 3 || roleId === 4) {
-          const alreadyAccepted = await AsyncStorage.getItem(TERMS_ACCEPTED_KEY);
-          if (alreadyAccepted === CURRENT_TERMS_VERSION) {
-            navigation.navigate("MainPage");
-            registerPushDevice();
-            return;
-          }
-
-          // Si es parent, calcular cuántos hijos vinculados tiene para aceptar por ellos.
-          let studentProfileIds = [];
-          if (roleId === 4) {
-            try {
-              const linked = await getLinkedStudents(session);
-              studentProfileIds = linked.map((m) => m.profileId);
-            } catch {
-              studentProfileIds = [];
-            }
-          }
-
-          setMinorsCount(studentProfileIds.length);
-          setTermsModalVisible(true);
-        } else {
-          // Admin y otros roles: no se muestra el modal de términos.
-          navigation.navigate("MainPage");
-          registerPushDevice();
-        }
-      } catch (e) {
-        console.warn("[Login] Post-login terms flow failed due to network, continuing:", e?.message);
-        navigation.navigate("MainPage");
-        registerPushDevice();
+      // Estudiantes y admin entran directo: el estudiante queda cubierto por la
+      // aceptación de su acudiente.
+      const session = await getSession();
+      if (!requiresTermsModal(session?.roleId)) {
+        enterApp();
+        return;
       }
+
+      // Conductor y acudiente: solo ven el modal si el backend no tiene registrada
+      // la versión vigente. Si la consulta falla, se muestra igual.
+      let pending;
+      try {
+        pending = await getPendingAcceptance();
+      } catch (e) {
+        console.warn("[Login] getPendingAcceptance failed, showing terms modal:", e?.message);
+        pending = { termsVersion: CURRENT_TERMS_VERSION, ownMissing: true, minors: [] };
+      }
+
+      if (!hasPendingAcceptance(pending)) {
+        enterApp();
+        return;
+      }
+
+      setPendingTerms(pending);
     } catch (error) {
       setFormError(
         error?.status === 401 || error?.status === 400 || error?.status === 403
@@ -110,30 +92,31 @@ export default function Login({ navigation }) {
     }
   };
 
+  const enterApp = () => {
+    navigation.navigate("MainPage");
+    registerPushDevice();
+  };
+
   const handleTermsAccept = async () => {
+    setTermsError("");
+    setAcceptingTerms(true);
     try {
-      const session = await getSession();
-      const roleId = session?.roleId;
-
-      let studentProfileIds = [];
-      if (roleId === 4) {
-        try {
-          const linked = await getLinkedStudents(session);
-          studentProfileIds = linked.map((m) => m.profileId);
-        } catch {
-          studentProfileIds = [];
-        }
-      }
-
-      await acceptTerms(CURRENT_TERMS_VERSION, studentProfileIds);
-      await AsyncStorage.setItem(TERMS_ACCEPTED_KEY, CURRENT_TERMS_VERSION);
-      setTermsModalVisible(false);
-      navigation.navigate("MainPage");
-      registerPushDevice();
+      await acceptPending(pendingTerms);
+      setPendingTerms(null);
+      enterApp();
     } catch (e) {
-      setFormError(t("accept.error"));
-      setSubmitting(false);
+      // El modal sigue abierto para reintentar.
+      setTermsError(t("accept.error"));
+    } finally {
+      setAcceptingTerms(false);
     }
+  };
+
+  // Cerrar el modal sin aceptar descarta la sesión ya guardada por login().
+  const handleTermsDismiss = async () => {
+    setPendingTerms(null);
+    setTermsError("");
+    await clearSession();
   };
 
   const handleSubmit = () => {
@@ -196,10 +179,12 @@ export default function Login({ navigation }) {
       <LegalInfoModal visible={legalDoc !== null} doc={legalDoc ?? "terms"} onClose={() => setLegalDoc(null)} />
 
       <TermsAcceptanceModal
-        visible={termsModalVisible}
-        onClose={() => setTermsModalVisible(false)}
+        visible={pendingTerms !== null}
+        onClose={handleTermsDismiss}
         onAccept={handleTermsAccept}
-        minorsCount={minorsCount}
+        minorsCount={pendingTerms?.minors.length ?? 0}
+        submitting={acceptingTerms}
+        error={termsError}
       />
     </ScrollView>
   );

@@ -178,7 +178,7 @@ for (const bottomInset of [0, 24, 34]) {
   });
 }
 
-function loginHarness(events) {
+function loginHarness(events, { roleId = 2, pending = null } = {}) {
   return harness("features/auth/views/Login/Login.jsx", {
     "react-native": {
       ScrollView: "ScrollView", View: "View", Text: "Text",
@@ -193,12 +193,17 @@ function loginHarness(events) {
     "@core/validation/validators": loginValidators,
     "@core/services/authService": {
       login: async () => { events.push("login"); },
-      getSession: async () => ({ roleId: 2 }),
+      getSession: async () => ({ roleId }),
+      clearSession: async () => { events.push("clearSession"); },
     },
-    "@core/services/termsService": { CURRENT_TERMS_VERSION: "1" },
-    "@core/services/familyService": {},
+    "@core/services/termsService": {
+      CURRENT_TERMS_VERSION: "1",
+      requiresTermsModal: id => id === 3 || id === 4,
+      getPendingAcceptance: async () => { events.push("pending"); return pending; },
+      hasPendingAcceptance: value => Boolean(value?.ownMissing || value?.minors?.length > 0),
+      acceptPending: async () => { events.push("accept"); },
+    },
     "@core/services/pushService": { registerPushDevice() {} },
-    "@react-native-async-storage/async-storage": {},
     "@core/hooks/useSession": () => ({ applyAuthRole: async () => { events.push("role"); } }),
   });
 }
@@ -213,6 +218,52 @@ test("Login dismisses the keyboard before authenticating and opening MainPage", 
   nodes(view.render(props)).find(node => node.type === "@components/buttons/PrimaryButton").props.onPress();
   await settle();
   assert.deepEqual(events, ["dismiss", "login", "role", "MainPage"]);
+});
+
+async function submitLogin(view, props) {
+  const inputs = nodes(view.render(props)).filter(node => node.type === "@components/inputs/InputField");
+  inputs[0].props.onChangeText("user@example.com");
+  inputs[1].props.onChangeText("password");
+  nodes(view.render(props)).find(node => node.type === "@components/buttons/PrimaryButton").props.onPress();
+  await settle();
+}
+
+const termsModal = (view, props) => nodes(view.render(props)).find(node => node.type === "TermsAcceptanceModal");
+
+test("Login lets a driver who already accepted the current terms straight into MainPage", async () => {
+  const events = [];
+  const view = loginHarness(events, { roleId: 3, pending: { ownMissing: false, minors: [] } });
+  const props = { navigation: { navigate: name => events.push(name) } };
+  await submitLogin(view, props);
+  assert.deepEqual(events, ["dismiss", "login", "role", "pending", "MainPage"]);
+  assert.equal(termsModal(view, props).props.visible, false);
+});
+
+test("Login holds a guardian with pending terms on the modal until they accept", async () => {
+  const events = [];
+  const view = loginHarness(events, { roleId: 4, pending: { ownMissing: true, minors: [{ profileId: "kid" }] } });
+  const props = { navigation: { navigate: name => events.push(name) } };
+  await submitLogin(view, props);
+  assert.deepEqual(events, ["dismiss", "login", "role", "pending"]);
+  const modal = termsModal(view, props);
+  assert.equal(modal.props.visible, true);
+  assert.equal(modal.props.minorsCount, 1);
+
+  modal.props.onAccept();
+  await settle();
+  assert.deepEqual(events.slice(4), ["accept", "MainPage"]);
+  assert.equal(termsModal(view, props).props.visible, false);
+});
+
+test("Login drops the stored session when the terms modal is closed without accepting", async () => {
+  const events = [];
+  const view = loginHarness(events, { roleId: 3, pending: { ownMissing: true, minors: [] } });
+  const props = { navigation: { navigate: name => events.push(name) } };
+  await submitLogin(view, props);
+  termsModal(view, props).props.onClose();
+  await settle();
+  assert.deepEqual(events.slice(4), ["clearSession"]);
+  assert.equal(termsModal(view, props).props.visible, false);
 });
 
 test("Login keeps validation failures on the form without authenticating or dismissing the keyboard", () => {

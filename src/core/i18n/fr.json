@@ -13,7 +13,17 @@
   },
   "accept": {
     "blocked": "Ton compte n'est pas encore autorisé par ton responsable. Demande-lui d'accepter les Termes dans sa session.",
-    "error": "Impossible d'enregistrer l'acceptation. Réessayez."
+    "error": "Impossible d'enregistrer l'acceptation. Réessayez.",
+    "title": "Conditions et confidentialité",
+    "subtitle": "Pour continuer, lisez et acceptez les Conditions générales et la Politique de confidentialité.",
+    "minorDataNotice": "Conformément à la loi colombienne 1581 de 2012, vous autorisez le traitement de vos données personnelles et, si vous êtes responsable, celui des données des mineurs à votre charge.",
+    "checkboxLabel": "J'ai lu et j'accepte les Conditions générales et la Politique de confidentialité.",
+    "termsLink": "Voir les conditions",
+    "privacyLink": "Voir la confidentialité",
+    "coveringMinors_one": "Cette acceptation couvre aussi {{count}} mineur lié.",
+    "coveringMinors_other": "Cette acceptation couvre aussi {{count}} mineurs liés.",
+    "mustAccept": "Vous devez cocher la case pour continuer.",
+    "acceptButton": "Accepter et continuer"
   },
   "serviceErrors": {
     "required": "Ce champ est obligatoire.",

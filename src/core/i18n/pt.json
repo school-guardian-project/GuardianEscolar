@@ -13,7 +13,17 @@
   },
   "accept": {
     "blocked": "Sua conta ainda não foi autorizada pelo seu responsável. Peça para aceitar os Termos na sessão dele.",
-    "error": "Não foi possível registrar a aceitação. Tente novamente."
+    "error": "Não foi possível registrar a aceitação. Tente novamente.",
+    "title": "Termos e privacidade",
+    "subtitle": "Para continuar, leia e aceite os Termos e Condições e a Política de Privacidade.",
+    "minorDataNotice": "Conforme a Lei colombiana 1581 de 2012, você autoriza o tratamento dos seus dados pessoais e, se for responsável, dos dados dos menores sob sua responsabilidade.",
+    "checkboxLabel": "Li e aceito os Termos e Condições e a Política de Privacidade.",
+    "termsLink": "Ver termos",
+    "privacyLink": "Ver privacidade",
+    "coveringMinors_one": "Esta aceitação também cobre {{count}} menor vinculado.",
+    "coveringMinors_other": "Esta aceitação também cobre {{count}} menores vinculados.",
+    "mustAccept": "Você deve marcar a caixa para continuar.",
+    "acceptButton": "Aceitar e continuar"
   },
   "serviceErrors": {
     "required": "Este campo é obrigatório.",

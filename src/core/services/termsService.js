@@ -24,6 +24,7 @@ export async function acceptTerms(termsVersion, studentProfileIds = []) {
   return apiPost("/api/v1/auth/terms/accept", {
     termsVersion,
     studentProfileIds,
+    channel: "mobile",
   });
 }
 
@@ -37,12 +38,8 @@ export async function getPendingAcceptance() {
     return { termsVersion: CURRENT_TERMS_VERSION, ownMissing: false, minors: [] };
   }
 
-  let acceptances = [];
-  try {
-    acceptances = await getAcceptances();
-  } catch {
-    acceptances = [];
-  }
+  // Si falla la consulta se propaga: un error de red no equivale a "no aceptó".
+  const acceptances = await getAcceptances();
   const current = (acceptances ?? []).filter(
     (a) => a.termsVersion === CURRENT_TERMS_VERSION
   );
@@ -58,4 +55,28 @@ export async function getPendingAcceptance() {
   }
 
   return { termsVersion: CURRENT_TERMS_VERSION, ownMissing, minors };
+}
+
+/** Roles que aceptan los Términos en el modal del login: conductor y acudiente. */
+export const TERMS_MODAL_ROLE_IDS = [3, PARENT_ROLE_ID];
+
+export function requiresTermsModal(roleId) {
+  return TERMS_MODAL_ROLE_IDS.includes(roleId);
+}
+
+export function hasPendingAcceptance(pending) {
+  return Boolean(pending?.ownMissing || pending?.minors?.length > 0);
+}
+
+/** Registra lo que falte de la versión vigente: primero los menores y luego la propia. */
+export async function acceptPending(pending) {
+  if (pending.minors.length > 0) {
+    await acceptTerms(
+      pending.termsVersion,
+      pending.minors.map((m) => m.profileId),
+    );
+  }
+  if (pending.ownMissing) {
+    await acceptTerms(pending.termsVersion, []);
+  }
 }

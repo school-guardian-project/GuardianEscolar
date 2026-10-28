@@ -151,14 +151,21 @@ export default function App() {
       configureNotificationHandling();
 
       // Recupera la sesión desde SecureStore y rota el access token antes de navegar.
-      // Loguearse es aceptar: también en sesión restaurada se registra la evidencia.
+      // La sesión restaurada no vuelve a pedir el checkbox: conductor y acudiente lo
+      // aceptan una vez en el login. Si quedó pendiente (cerró la app con el modal
+      // abierto), se cierra la sesión para que lo acepte al volver a ingresar.
       // El estudiante entra solo si su acudiente ya lo autorizó.
       try {
         if (await hasSession()) {
           await refresh();
           const { getSession } = await import("@core/services/authService");
-          const { getPendingAcceptance, acceptTerms, getTermsStatus } =
-            await import("@core/services/termsService");
+          const {
+            getPendingAcceptance,
+            acceptPending,
+            getTermsStatus,
+            hasPendingAcceptance,
+            requiresTermsModal,
+          } = await import("@core/services/termsService");
           const session = await getSession();
           if (session?.roleId === 2) {
             const status = await getTermsStatus();
@@ -167,16 +174,13 @@ export default function App() {
             }
           } else {
             const pending = await getPendingAcceptance();
-            if (pending.ownMissing || pending.minors.length > 0) {
-              if (pending.minors.length > 0) {
-                await acceptTerms(
-                  pending.termsVersion,
-                  pending.minors.map((m) => m.profileId),
-                );
+            if (hasPendingAcceptance(pending)) {
+              if (requiresTermsModal(session?.roleId)) {
+                await clearSession();
+                setReady(true);
+                return;
               }
-              if (pending.ownMissing) {
-                await acceptTerms(pending.termsVersion, []);
-              }
+              await acceptPending(pending);
             }
           }
           setInitialRoute("MainPage");

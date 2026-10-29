@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { ScrollView, View, Text, Keyboard } from "react-native";
-import { Asset } from "expo-asset";
-import { SvgUri } from "react-native-svg";
+import { ScrollView, View, Text, Keyboard, Image } from "react-native";
+//import { Asset } from "expo-asset";
+//import { SvgUri } from "react-native-svg";
 import { styles } from "./Login.styles";
 import { useTranslation } from "react-i18next";
 import { useTheme } from "@core/services/ThemeService";
@@ -21,7 +21,7 @@ import LegalInfoModal from "./LegalInfoModal";
 import TermsAcceptanceModal from "./TermsAcceptanceModal";
 import useSession from "@core/hooks/useSession";
 
-const logoUri = Asset.fromModule(require("../../../../../assets/logo-blue.svg")).uri;
+
 
 export default function Login({ navigation }) {
   const { t } = useTranslation();
@@ -137,7 +137,13 @@ export default function Login({ navigation }) {
       contentContainerStyle={styles.container}
       keyboardShouldPersistTaps="handled"
     >
-      <SvgUri uri={logoUri} width={92} height={113} style={styles.icon} />
+      {/* <SvgUri uri={logoUri} width={92} height={113} style={styles.icon} /> */}
+
+      <Image
+          source={require("../../../../../assets/adaptive-icon.png")}
+          style={[styles.icon, { width: 92, height: 113 }]}
+          resizeMode="contain"
+        />
       <Text style={[styles.title, { color: theme.titleColor }]}>{t("login.title")}</Text>
       <View style={styles.form}>
         <InputField

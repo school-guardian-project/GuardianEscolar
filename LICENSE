@@ -1,0 +1,206 @@
+SCHOOL GUARDIAN
+LICENCIA DE SOFTWARE PROPIETARIO
+
+Versión 1.0 — 2026
+
+Copyright © 2026 School Guardian. Todos los derechos reservados por sus respectivos titulares.
+
+1. OBJETO Y ALCANCE
+
+La presente licencia establece las condiciones de uso del software School Guardian y de los materiales originales que lo componen, incluidos sus desarrollos, módulos, aplicaciones, microservicios, interfaces, estructuras, diseños y documentación técnica.
+
+Esta licencia tiene por objeto regular los permisos concedidos a los usuarios y proteger los derechos de propiedad intelectual sobre los componentes del software cuyos derechos patrimoniales correspondan legítimamente a sus titulares.
+
+La licencia se aplica a los materiales originales de School Guardian identificados como tales en los repositorios y entregables correspondientes. No se extiende a componentes, herramientas, bibliotecas, frameworks ni otros materiales pertenecientes a terceros.
+
+2. TITULARIDAD Y RESERVA DE DERECHOS
+
+Los derechos patrimoniales sobre los componentes originales de School Guardian pertenecen a sus respectivos titulares legítimos.
+
+La publicación, consulta, descarga o disponibilidad del código en repositorios no implica transferencia de titularidad ni autorización general para utilizar, reproducir, modificar, distribuir o explotar el software.
+
+Salvo los permisos expresamente concedidos, todos los derechos de propiedad intelectual sobre el software y sus materiales originales quedan reservados a sus titulares.
+
+Esta licencia no supone renuncia, cesión ni transferencia de derechos patrimoniales o morales.
+
+3. AUTORIZACIÓN DE USO
+
+Se concede al usuario autorizado un permiso limitado, no exclusivo, no transferible y no sublicenciable para utilizar School Guardian dentro de las funcionalidades, finalidades y condiciones expresamente autorizadas.
+
+En el marco de la prestación del servicio, las instituciones educativas podrán utilizar la plataforma y habilitar el acceso de sus usuarios vinculados, incluidos acudientes, estudiantes, conductores y personal administrativo autorizado.
+
+El alcance de dicha autorización estará limitado a la utilización de las funcionalidades disponibles y a las condiciones del servicio contratado.
+
+Esta licencia no concede derechos de propiedad sobre el software, su código fuente, arquitectura, diseños ni demás materiales protegidos.
+
+Cualquier uso distinto del expresamente autorizado requerirá aprobación previa y escrita de los titulares correspondientes.
+
+4. RESTRICCIONES DE USO
+
+Salvo autorización expresa de los titulares o cuando exista una excepción legal aplicable, queda prohibido:
+
+a) Reproducir, copiar o distribuir el software o sus materiales protegidos.
+
+b) Modificar, adaptar, traducir o crear obras derivadas del software.
+
+c) Comercializar, revender, sublicenciar, arrendar o transferir el software a terceros.
+
+d) Incorporar el software o sus componentes originales en otros productos o servicios.
+
+e) Eliminar, alterar u ocultar avisos de propiedad intelectual o identificación de titularidad.
+
+f) Utilizar el software para desarrollar o explotar productos que incorporen materiales protegidos sin autorización.
+
+g) Intentar obtener, extraer o reconstruir el código fuente mediante procedimientos no autorizados.
+
+h) Eludir mecanismos de seguridad, control de acceso o restricciones técnicas del software.
+
+i) Utilizar marcas, nombres, logotipos o elementos de identificación de School Guardian sin autorización.
+
+Las restricciones anteriores no se interpretarán como una prohibición de los actos que legalmente no puedan restringirse.
+
+5. CÓDIGO FUENTE Y CÓDIGO OBJETO
+
+El código fuente y el código objeto de School Guardian forman parte de los materiales protegidos por esta licencia cuando sus derechos patrimoniales correspondan a sus titulares.
+
+El acceso al código fuente, incluso cuando se encuentre disponible públicamente en plataformas de alojamiento de repositorios, no concede por sí mismo autorización para modificarlo, reproducirlo, distribuirlo o explotarlo.
+
+La disponibilidad de versiones compiladas, ejecutables o desplegadas tampoco concede derechos sobre el código fuente ni sobre los materiales utilizados para su desarrollo.
+
+La utilización de cualquier forma del software estará sujeta a los permisos expresamente concedidos.
+
+6. MODIFICACIONES Y OBRAS DERIVADAS
+
+La modificación, adaptación, transformación o creación de obras derivadas a partir de los materiales protegidos requiere autorización previa y escrita de los titulares correspondientes, salvo las excepciones legalmente aplicables.
+
+Las autorizaciones particulares deberán establecer el alcance de los cambios permitidos, las condiciones de utilización de los resultados y el tratamiento de los derechos patrimoniales sobre las modificaciones.
+
+La participación de una persona en actividades de desarrollo, mantenimiento o colaboración no implica por sí misma una transferencia de derechos patrimoniales ni una autorización general de explotación.
+
+La titularidad y los permisos sobre las contribuciones deberán estar respaldados por los instrumentos correspondientes.
+
+7. DISTRIBUCIÓN Y COMERCIALIZACIÓN
+
+Ningún usuario podrá publicar, entregar, transferir, distribuir, comercializar o poner a disposición de terceros copias del software o de sus materiales protegidos sin autorización previa y escrita de los titulares correspondientes.
+
+La autorización para utilizar la plataforma no concede facultades para revender el servicio, ofrecer copias independientes del software o conceder acceso a terceros por fuera del alcance autorizado.
+
+Cualquier modalidad de distribución expresamente autorizada deberá establecer sus destinatarios, condiciones, alcance y limitaciones.
+
+La distribución autorizada no supondrá transferencia de titularidad sobre los materiales protegidos.
+
+8. CONTRIBUCIONES Y COLABORACIONES
+
+Las contribuciones realizadas por desarrolladores, colaboradores o terceros deberán contar con las autorizaciones y condiciones documentales correspondientes.
+
+La presentación, aceptación o incorporación de una contribución a un repositorio no se interpretará, por sí sola, como una cesión de derechos patrimoniales ni como una autorización ilimitada de explotación.
+
+Las condiciones de titularidad, utilización, modificación y distribución de las contribuciones deberán establecerse mediante los instrumentos aplicables a cada colaboración.
+
+Los colaboradores conservarán los derechos que legítimamente les correspondan, de acuerdo con las condiciones bajo las cuales se haya realizado y autorizado su contribución.
+
+9. COMPONENTES Y LICENCIAS DE TERCEROS
+
+School Guardian puede incorporar bibliotecas, frameworks, herramientas, dependencias y otros componentes desarrollados o distribuidos por terceros.
+
+Dichos componentes conservarán sus respectivas titularidades y estarán sujetos a las licencias y condiciones que les sean aplicables.
+
+Esta licencia no sustituye, modifica ni amplía los permisos concedidos por los titulares de componentes externos.
+
+Cuando un componente de terceros esté sujeto a una licencia independiente, su utilización deberá respetar las condiciones correspondientes.
+
+Las obligaciones derivadas de las licencias de terceros se aplicarán a sus respectivos componentes y no convertirán automáticamente el conjunto de School Guardian en software sujeto a dichas licencias.
+
+10. MARCAS Y ELEMENTOS DE IDENTIDAD
+
+El nombre School Guardian, sus logotipos, signos distintivos y demás elementos de identidad del proyecto no se encuentran autorizados para su utilización comercial o institucional por el simple hecho de acceder al software o a sus repositorios.
+
+La presente licencia no concede derechos sobre marcas, nombres comerciales, signos distintivos ni otros elementos de propiedad industrial.
+
+Cualquier utilización de dichos elementos requerirá autorización expresa de sus respectivos titulares, salvo los usos permitidos legalmente.
+
+11. ACCESO A LA PLATAFORMA Y PRESTACIÓN DEL SERVICIO
+
+School Guardian se desarrolla bajo un modelo de prestación de servicios de software como servicio (SaaS).
+
+El acceso a la plataforma se proporciona a las instituciones educativas mediante las condiciones comerciales y contractuales correspondientes.
+
+La institución educativa podrá habilitar usuarios dentro de su entorno de operación, de acuerdo con los perfiles y permisos disponibles en el sistema.
+
+El acceso de acudientes, estudiantes, conductores, personal autorizado y administradores tiene como finalidad utilizar las funcionalidades habilitadas para cada perfil.
+
+La prestación del servicio no implica entrega del código fuente, transferencia de derechos patrimoniales ni autorización para desarrollar, distribuir o explotar versiones independientes del software.
+
+Las condiciones relativas a contratación, facturación, disponibilidad, soporte, operación y demás aspectos comerciales del servicio se regularán mediante los instrumentos correspondientes, independientes de esta licencia.
+
+12. GARANTÍAS Y RESPONSABILIDAD
+
+El software se proporciona en las condiciones y funcionalidades disponibles al momento de su utilización, sin que esta licencia constituya por sí misma una garantía de funcionamiento ininterrumpido, ausencia absoluta de errores o disponibilidad permanente.
+
+Las condiciones particulares de soporte, mantenimiento, disponibilidad, actualizaciones y niveles de servicio se establecerán en los acuerdos correspondientes.
+
+Los titulares no asumirán responsabilidad por usos no autorizados, modificaciones realizadas sin aprobación, integraciones ajenas al alcance autorizado o intervenciones de terceros que afecten el funcionamiento del software.
+
+Ninguna disposición de esta sección tendrá como finalidad excluir responsabilidades que legalmente no puedan excluirse ni limitar derechos irrenunciables.
+
+13. VIGENCIA Y TERMINACIÓN DE LAS AUTORIZACIONES
+
+Los permisos concedidos bajo esta licencia permanecerán vigentes mientras se mantengan las condiciones que dieron lugar a su autorización.
+
+La autorización podrá terminar cuando:
+
+a) Se incumplan las condiciones establecidas en esta licencia.
+
+b) Se utilice el software fuera del alcance autorizado.
+
+c) Se reproduzca, modifique, distribuya o comercialice el software sin autorización.
+
+d) Se transfieran o sublicencien permisos sin consentimiento.
+
+e) Se incumplan las condiciones particulares de una autorización concedida.
+
+Cuando termine una autorización, el usuario deberá cesar las actividades que dependan de ella y dejar de utilizar los materiales protegidos en la medida correspondiente.
+
+La terminación de una autorización no extinguirá las obligaciones que por su naturaleza deban continuar vigentes, especialmente las relativas a titularidad, confidencialidad y protección de la propiedad intelectual.
+
+La terminación no afectará los derechos independientes que correspondan a terceros sobre sus propios componentes.
+
+14. AUSENCIA DE TRANSFERENCIA Y DERECHOS NO CONCEDIDOS
+
+La presente licencia no constituye una compraventa, cesión de derechos patrimoniales, transferencia de titularidad ni autorización general de explotación del software.
+
+Los permisos concedidos se limitan a los expresamente establecidos en este documento o en las autorizaciones particulares correspondientes.
+
+La posesión de copias, el acceso a repositorios, la participación en el desarrollo o la utilización de la plataforma no generan derechos adicionales por sí mismos.
+
+Los derechos no concedidos expresamente permanecen reservados a sus respectivos titulares.
+
+15. ACTUALIZACIONES Y MODIFICACIONES DE LA LICENCIA
+
+Los titulares podrán publicar nuevas versiones de esta licencia para actualizar sus condiciones o incorporar disposiciones adicionales.
+
+Cada versión deberá identificarse mediante su correspondiente número y fecha de publicación.
+
+Las nuevas versiones se aplicarán a las autorizaciones que expresamente las incorporen o a aquellas que se concedan bajo ellas.
+
+La publicación de una versión posterior no modificará automáticamente las condiciones de autorizaciones anteriores, salvo que exista un mecanismo válido previamente acordado entre las partes.
+
+16. INTEGRIDAD Y ALCANCE DE LA LICENCIA
+
+Esta licencia constituye el instrumento que establece las condiciones generales de autorización de uso y protección de los materiales originales de School Guardian.
+
+Las autorizaciones particulares podrán complementar sus disposiciones, siempre que consten expresamente y sean compatibles con los derechos de sus titulares.
+
+La falta de ejercicio de un derecho no se interpretará como renuncia al mismo.
+
+Si alguna disposición resultara inaplicable, ello no afectará automáticamente la validez de las demás disposiciones.
+
+La presente licencia no sustituye los acuerdos particulares que regulen la prestación de servicios, las colaboraciones, las contribuciones o las autorizaciones específicas.
+
+17. RESERVA FINAL DE DERECHOS
+
+Todos los derechos sobre los materiales originales de School Guardian que no hayan sido expresamente concedidos mediante esta licencia o mediante autorización independiente permanecen reservados a sus respectivos titulares.
+
+Ninguna persona podrá interpretar el acceso al software, su código fuente, sus repositorios o sus funcionalidades como una autorización implícita de explotación.
+
+FIN DE LA LICENCIA

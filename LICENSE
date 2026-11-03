@@ -1,206 +1,204 @@
 SCHOOL GUARDIAN
-LICENCIA DE SOFTWARE PROPIETARIO
+PROPRIETARY SOFTWARE LICENSE
 
-Versión 1.0 — 2026
+Version 1.0 — 2026
 
-Copyright © 2026 School Guardian. Todos los derechos reservados por sus respectivos titulares.
+Copyright © 2026 School Guardian. All rights reserved by their respective holders.
 
-1. OBJETO Y ALCANCE
+1. PURPOSE AND SCOPE
 
-La presente licencia establece las condiciones de uso del software School Guardian y de los materiales originales que lo componen, incluidos sus desarrollos, módulos, aplicaciones, microservicios, interfaces, estructuras, diseños y documentación técnica.
+This license establishes the terms governing the use of School Guardian software and the original materials comprising it, including its developments, modules, applications, microservices, interfaces, structures, designs, and technical documentation.
 
-Esta licencia tiene por objeto regular los permisos concedidos a los usuarios y proteger los derechos de propiedad intelectual sobre los componentes del software cuyos derechos patrimoniales correspondan legítimamente a sus titulares.
+The purpose of this license is to regulate the permissions granted to users and protect the intellectual property rights in the software components whose economic rights legitimately belong to their respective holders.
 
-La licencia se aplica a los materiales originales de School Guardian identificados como tales en los repositorios y entregables correspondientes. No se extiende a componentes, herramientas, bibliotecas, frameworks ni otros materiales pertenecientes a terceros.
+This license applies to the original School Guardian materials identified as such in the relevant repositories and deliverables. It does not extend to components, tools, libraries, frameworks, or other materials belonging to third parties.
 
-2. TITULARIDAD Y RESERVA DE DERECHOS
+2. OWNERSHIP AND RESERVATION OF RIGHTS
 
-Los derechos patrimoniales sobre los componentes originales de School Guardian pertenecen a sus respectivos titulares legítimos.
+The economic rights in the original School Guardian components belong to their respective lawful holders.
 
-La publicación, consulta, descarga o disponibilidad del código en repositorios no implica transferencia de titularidad ni autorización general para utilizar, reproducir, modificar, distribuir o explotar el software.
+The publication, viewing, downloading, or availability of the code in repositories does not imply a transfer of ownership or a general authorization to use, reproduce, modify, distribute, or exploit the software.
 
-Salvo los permisos expresamente concedidos, todos los derechos de propiedad intelectual sobre el software y sus materiales originales quedan reservados a sus titulares.
+Except for the permissions expressly granted, all intellectual property rights in the software and its original materials are reserved to their respective holders.
 
-Esta licencia no supone renuncia, cesión ni transferencia de derechos patrimoniales o morales.
+This license does not constitute a waiver, assignment, or transfer of economic or moral rights.
 
-3. AUTORIZACIÓN DE USO
+3. AUTHORIZATION TO USE
 
-Se concede al usuario autorizado un permiso limitado, no exclusivo, no transferible y no sublicenciable para utilizar School Guardian dentro de las funcionalidades, finalidades y condiciones expresamente autorizadas.
+An authorized user is granted a limited, non-exclusive, non-transferable, and non-sublicensable permission to use School Guardian within the features, purposes, and conditions expressly authorized.
 
-En el marco de la prestación del servicio, las instituciones educativas podrán utilizar la plataforma y habilitar el acceso de sus usuarios vinculados, incluidos acudientes, estudiantes, conductores y personal administrativo autorizado.
+As part of the provision of the service, educational institutions may use the platform and enable access for their associated users, including parents or legal guardians, students, drivers, and authorized administrative personnel.
 
-El alcance de dicha autorización estará limitado a la utilización de las funcionalidades disponibles y a las condiciones del servicio contratado.
+The scope of this authorization is limited to the use of the available features and the terms of the contracted service.
 
-Esta licencia no concede derechos de propiedad sobre el software, su código fuente, arquitectura, diseños ni demás materiales protegidos.
+This license does not grant any ownership rights in the software, its source code, architecture, designs, or other protected materials.
 
-Cualquier uso distinto del expresamente autorizado requerirá aprobación previa y escrita de los titulares correspondientes.
+Any use beyond that expressly authorized requires the prior written approval of the relevant holders.
 
-4. RESTRICCIONES DE USO
+4. RESTRICTIONS ON USE
 
-Salvo autorización expresa de los titulares o cuando exista una excepción legal aplicable, queda prohibido:
+Unless expressly authorized by the relevant holders or permitted under an applicable legal exception, the following are prohibited:
 
-a) Reproducir, copiar o distribuir el software o sus materiales protegidos.
+a) Reproducing, copying, or distributing the software or its protected materials.
 
-b) Modificar, adaptar, traducir o crear obras derivadas del software.
+b) Modifying, adapting, translating, or creating derivative works of the software.
 
-c) Comercializar, revender, sublicenciar, arrendar o transferir el software a terceros.
+c) Commercializing, reselling, sublicensing, leasing, or transferring the software to third parties.
 
-d) Incorporar el software o sus componentes originales en otros productos o servicios.
+d) Incorporating the software or its original components into other products or services.
 
-e) Eliminar, alterar u ocultar avisos de propiedad intelectual o identificación de titularidad.
+e) Removing, altering, or concealing intellectual property notices or ownership identification.
 
-f) Utilizar el software para desarrollar o explotar productos que incorporen materiales protegidos sin autorización.
+f) Using the software to develop or exploit products that incorporate protected materials without authorization.
 
-g) Intentar obtener, extraer o reconstruir el código fuente mediante procedimientos no autorizados.
+g) Attempting to obtain, extract, or reconstruct the source code through unauthorized procedures.
 
-h) Eludir mecanismos de seguridad, control de acceso o restricciones técnicas del software.
+h) Circumventing security mechanisms, access controls, or technical restrictions of the software.
 
-i) Utilizar marcas, nombres, logotipos o elementos de identificación de School Guardian sin autorización.
+i) Using School Guardian trademarks, names, logos, or identifying elements without authorization.
 
-Las restricciones anteriores no se interpretarán como una prohibición de los actos que legalmente no puedan restringirse.
+The foregoing restrictions shall not be construed as prohibiting acts that cannot lawfully be restricted.
 
-5. CÓDIGO FUENTE Y CÓDIGO OBJETO
+5. SOURCE CODE AND OBJECT CODE
 
-El código fuente y el código objeto de School Guardian forman parte de los materiales protegidos por esta licencia cuando sus derechos patrimoniales correspondan a sus titulares.
+The source code and object code of School Guardian form part of the materials protected by this license where the economic rights in them belong to their respective holders.
 
-El acceso al código fuente, incluso cuando se encuentre disponible públicamente en plataformas de alojamiento de repositorios, no concede por sí mismo autorización para modificarlo, reproducirlo, distribuirlo o explotarlo.
+Access to the source code, including when it is publicly available on repository hosting platforms, does not in itself grant authorization to modify, reproduce, distribute, or exploit it.
 
-La disponibilidad de versiones compiladas, ejecutables o desplegadas tampoco concede derechos sobre el código fuente ni sobre los materiales utilizados para su desarrollo.
+The availability of compiled, executable, or deployed versions likewise does not grant rights in the source code or in the materials used to develop it.
 
-La utilización de cualquier forma del software estará sujeta a los permisos expresamente concedidos.
+Use of any form of the software is subject to the permissions expressly granted.
 
-6. MODIFICACIONES Y OBRAS DERIVADAS
+6. MODIFICATIONS AND DERIVATIVE WORKS
 
-La modificación, adaptación, transformación o creación de obras derivadas a partir de los materiales protegidos requiere autorización previa y escrita de los titulares correspondientes, salvo las excepciones legalmente aplicables.
+Any modification, adaptation, transformation, or creation of derivative works based on protected materials requires the prior written authorization of the relevant holders, except where legally applicable exceptions provide otherwise.
 
-Las autorizaciones particulares deberán establecer el alcance de los cambios permitidos, las condiciones de utilización de los resultados y el tratamiento de los derechos patrimoniales sobre las modificaciones.
+Specific authorizations must establish the scope of the permitted changes, the conditions governing the use of the resulting materials, and the treatment of the economic rights in those modifications.
 
-La participación de una persona en actividades de desarrollo, mantenimiento o colaboración no implica por sí misma una transferencia de derechos patrimoniales ni una autorización general de explotación.
+A person's participation in development, maintenance, or collaboration activities does not, by itself, imply a transfer of economic rights or a general authorization to exploit the software.
 
-La titularidad y los permisos sobre las contribuciones deberán estar respaldados por los instrumentos correspondientes.
+Ownership and permissions relating to contributions must be supported by the appropriate legal instruments.
 
-7. DISTRIBUCIÓN Y COMERCIALIZACIÓN
+7. DISTRIBUTION AND COMMERCIALIZATION
 
-Ningún usuario podrá publicar, entregar, transferir, distribuir, comercializar o poner a disposición de terceros copias del software o de sus materiales protegidos sin autorización previa y escrita de los titulares correspondientes.
+No user may publish, deliver, transfer, distribute, commercialize, or make copies of the software or its protected materials available to third parties without the prior written authorization of the relevant holders.
 
-La autorización para utilizar la plataforma no concede facultades para revender el servicio, ofrecer copias independientes del software o conceder acceso a terceros por fuera del alcance autorizado.
+Authorization to use the platform does not grant the right to resell the service, offer independent copies of the software, or provide access to third parties beyond the authorized scope.
 
-Cualquier modalidad de distribución expresamente autorizada deberá establecer sus destinatarios, condiciones, alcance y limitaciones.
+Any expressly authorized form of distribution must specify its recipients, terms, scope, and limitations.
 
-La distribución autorizada no supondrá transferencia de titularidad sobre los materiales protegidos.
+Authorized distribution does not entail a transfer of ownership of the protected materials.
 
-8. CONTRIBUCIONES Y COLABORACIONES
+8. CONTRIBUTIONS AND COLLABORATIONS
 
-Las contribuciones realizadas por desarrolladores, colaboradores o terceros deberán contar con las autorizaciones y condiciones documentales correspondientes.
+Contributions made by developers, collaborators, or third parties must be covered by the appropriate authorizations and documented terms.
 
-La presentación, aceptación o incorporación de una contribución a un repositorio no se interpretará, por sí sola, como una cesión de derechos patrimoniales ni como una autorización ilimitada de explotación.
+The submission, acceptance, or incorporation of a contribution into a repository shall not, by itself, be construed as an assignment of economic rights or as an unrestricted authorization to exploit that contribution.
 
-Las condiciones de titularidad, utilización, modificación y distribución de las contribuciones deberán establecerse mediante los instrumentos aplicables a cada colaboración.
+The ownership, use, modification, and distribution terms applicable to contributions must be established through the instruments governing each collaboration.
 
-Los colaboradores conservarán los derechos que legítimamente les correspondan, de acuerdo con las condiciones bajo las cuales se haya realizado y autorizado su contribución.
+Collaborators shall retain the rights to which they are lawfully entitled, in accordance with the terms under which their contributions were made and authorized.
 
-9. COMPONENTES Y LICENCIAS DE TERCEROS
+9. THIRD-PARTY COMPONENTS AND LICENSES
 
-School Guardian puede incorporar bibliotecas, frameworks, herramientas, dependencias y otros componentes desarrollados o distribuidos por terceros.
+School Guardian may incorporate libraries, frameworks, tools, dependencies, and other components developed or distributed by third parties.
 
-Dichos componentes conservarán sus respectivas titularidades y estarán sujetos a las licencias y condiciones que les sean aplicables.
+Such components retain their respective ownership, and their use is governed by the licenses and terms applicable to them.
 
-Esta licencia no sustituye, modifica ni amplía los permisos concedidos por los titulares de componentes externos.
+This license does not replace, modify, or expand the permissions granted by the holders of external components.
 
-Cuando un componente de terceros esté sujeto a una licencia independiente, su utilización deberá respetar las condiciones correspondientes.
+Where a third-party component is subject to a separate license, its use must comply with the terms of that license.
 
-Las obligaciones derivadas de las licencias de terceros se aplicarán a sus respectivos componentes y no convertirán automáticamente el conjunto de School Guardian en software sujeto a dichas licencias.
+Obligations arising from third-party licenses apply to their respective components and do not automatically make the entire School Guardian software subject to those licenses.
 
-10. MARCAS Y ELEMENTOS DE IDENTIDAD
+10. TRADEMARKS AND BRANDING ELEMENTS
 
-El nombre School Guardian, sus logotipos, signos distintivos y demás elementos de identidad del proyecto no se encuentran autorizados para su utilización comercial o institucional por el simple hecho de acceder al software o a sus repositorios.
+The School Guardian name, logos, distinctive signs, and other project identity elements are not authorized for commercial or institutional use merely by virtue of access to the software or its repositories.
 
-La presente licencia no concede derechos sobre marcas, nombres comerciales, signos distintivos ni otros elementos de propiedad industrial.
+This license does not grant any rights in trademarks, trade names, distinctive signs, or other industrial property.
 
-Cualquier utilización de dichos elementos requerirá autorización expresa de sus respectivos titulares, salvo los usos permitidos legalmente.
+Any use of such elements requires the express authorization of their respective holders, except for uses permitted by law.
 
-11. ACCESO A LA PLATAFORMA Y PRESTACIÓN DEL SERVICIO
+11. PLATFORM ACCESS AND SERVICE PROVISION
 
-School Guardian se desarrolla bajo un modelo de prestación de servicios de software como servicio (SaaS).
+School Guardian is developed under a software-as-a-service (SaaS) delivery model.
 
-El acceso a la plataforma se proporciona a las instituciones educativas mediante las condiciones comerciales y contractuales correspondientes.
+Access to the platform is provided to educational institutions under the applicable commercial and contractual terms.
 
-La institución educativa podrá habilitar usuarios dentro de su entorno de operación, de acuerdo con los perfiles y permisos disponibles en el sistema.
+An educational institution may enable users within its operating environment in accordance with the roles and permissions available in the system.
 
-El acceso de acudientes, estudiantes, conductores, personal autorizado y administradores tiene como finalidad utilizar las funcionalidades habilitadas para cada perfil.
+Access by parents or legal guardians, students, drivers, authorized personnel, and administrators is intended for the use of the features enabled for each user role.
 
-La prestación del servicio no implica entrega del código fuente, transferencia de derechos patrimoniales ni autorización para desarrollar, distribuir o explotar versiones independientes del software.
+The provision of the service does not entail delivery of the source code, transfer of economic rights, or authorization to develop, distribute, or exploit independent versions of the software.
 
-Las condiciones relativas a contratación, facturación, disponibilidad, soporte, operación y demás aspectos comerciales del servicio se regularán mediante los instrumentos correspondientes, independientes de esta licencia.
+Terms relating to contracting, billing, availability, support, operation, and other commercial aspects of the service shall be governed by the relevant agreements, which are separate from this license.
 
-12. GARANTÍAS Y RESPONSABILIDAD
+12. WARRANTIES AND LIABILITY
 
-El software se proporciona en las condiciones y funcionalidades disponibles al momento de su utilización, sin que esta licencia constituya por sí misma una garantía de funcionamiento ininterrumpido, ausencia absoluta de errores o disponibilidad permanente.
+The software is provided in the condition and with the features available at the time of use. This license does not, by itself, constitute a warranty of uninterrupted operation, complete absence of errors, or permanent availability.
 
-Las condiciones particulares de soporte, mantenimiento, disponibilidad, actualizaciones y niveles de servicio se establecerán en los acuerdos correspondientes.
+Specific terms concerning support, maintenance, availability, updates, and service levels shall be established in the applicable agreements.
 
-Los titulares no asumirán responsabilidad por usos no autorizados, modificaciones realizadas sin aprobación, integraciones ajenas al alcance autorizado o intervenciones de terceros que afecten el funcionamiento del software.
+The holders shall not be responsible for unauthorized uses, modifications made without approval, integrations outside the authorized scope, or third-party interventions that affect the operation of the software.
 
-Ninguna disposición de esta sección tendrá como finalidad excluir responsabilidades que legalmente no puedan excluirse ni limitar derechos irrenunciables.
+Nothing in this section is intended to exclude liability that cannot lawfully be excluded or to limit non-waivable rights.
 
-13. VIGENCIA Y TERMINACIÓN DE LAS AUTORIZACIONES
+13. TERM AND TERMINATION OF AUTHORIZATIONS
 
-Los permisos concedidos bajo esta licencia permanecerán vigentes mientras se mantengan las condiciones que dieron lugar a su autorización.
+The permissions granted under this license shall remain in effect for as long as the conditions giving rise to the authorization continue to be met.
 
-La autorización podrá terminar cuando:
+An authorization may terminate if:
 
-a) Se incumplan las condiciones establecidas en esta licencia.
+a) The terms established in this license are breached.
 
-b) Se utilice el software fuera del alcance autorizado.
+b) The software is used outside the authorized scope.
 
-c) Se reproduzca, modifique, distribuya o comercialice el software sin autorización.
+c) The software is reproduced, modified, distributed, or commercialized without authorization.
 
-d) Se transfieran o sublicencien permisos sin consentimiento.
+d) Permissions are transferred or sublicensed without consent.
 
-e) Se incumplan las condiciones particulares de una autorización concedida.
+e) The specific terms of an authorization are breached.
 
-Cuando termine una autorización, el usuario deberá cesar las actividades que dependan de ella y dejar de utilizar los materiales protegidos en la medida correspondiente.
+Upon termination of an authorization, the user must cease the activities that depend on it and stop using the protected materials to the extent applicable.
 
-La terminación de una autorización no extinguirá las obligaciones que por su naturaleza deban continuar vigentes, especialmente las relativas a titularidad, confidencialidad y protección de la propiedad intelectual.
+Termination of an authorization shall not extinguish obligations that, by their nature, are intended to survive, particularly those relating to ownership, confidentiality, and intellectual property protection.
 
-La terminación no afectará los derechos independientes que correspondan a terceros sobre sus propios componentes.
+Termination shall not affect the independent rights of third parties in their own components.
 
-14. AUSENCIA DE TRANSFERENCIA Y DERECHOS NO CONCEDIDOS
+14. NO TRANSFER AND RIGHTS NOT GRANTED
 
-La presente licencia no constituye una compraventa, cesión de derechos patrimoniales, transferencia de titularidad ni autorización general de explotación del software.
+This license does not constitute a sale, assignment of economic rights, transfer of ownership, or general authorization to exploit the software.
 
-Los permisos concedidos se limitan a los expresamente establecidos en este documento o en las autorizaciones particulares correspondientes.
+The permissions granted are limited to those expressly set out in this document or in the applicable specific authorizations.
 
-La posesión de copias, el acceso a repositorios, la participación en el desarrollo o la utilización de la plataforma no generan derechos adicionales por sí mismos.
+Possession of copies, access to repositories, participation in development, or use of the platform does not, by itself, create any additional rights.
 
-Los derechos no concedidos expresamente permanecen reservados a sus respectivos titulares.
+All rights not expressly granted remain reserved to their respective holders.
 
-15. ACTUALIZACIONES Y MODIFICACIONES DE LA LICENCIA
+15. UPDATES AND AMENDMENTS TO THE LICENSE
 
-Los titulares podrán publicar nuevas versiones de esta licencia para actualizar sus condiciones o incorporar disposiciones adicionales.
+The holders may publish new versions of this license to update its terms or include additional provisions.
 
-Cada versión deberá identificarse mediante su correspondiente número y fecha de publicación.
+Each version must be identified by its corresponding version number and publication date.
 
-Las nuevas versiones se aplicarán a las autorizaciones que expresamente las incorporen o a aquellas que se concedan bajo ellas.
+New versions shall apply to authorizations that expressly incorporate them or that are granted under those versions.
 
-La publicación de una versión posterior no modificará automáticamente las condiciones de autorizaciones anteriores, salvo que exista un mecanismo válido previamente acordado entre las partes.
+Publication of a later version shall not automatically modify the terms of previously granted authorizations, unless a valid mechanism previously agreed upon by the parties provides otherwise.
 
-16. INTEGRIDAD Y ALCANCE DE LA LICENCIA
+16. ENTIRE LICENSE AND SCOPE
 
-Esta licencia constituye el instrumento que establece las condiciones generales de autorización de uso y protección de los materiales originales de School Guardian.
+This license establishes the general terms governing authorization to use and protection of the original School Guardian materials.
 
-Las autorizaciones particulares podrán complementar sus disposiciones, siempre que consten expresamente y sean compatibles con los derechos de sus titulares.
+Specific authorizations may supplement its provisions, provided that they are expressly documented and consistent with the rights of their respective holders.
 
-La falta de ejercicio de un derecho no se interpretará como renuncia al mismo.
+Failure to exercise a right shall not be construed as a waiver of that right.
 
-Si alguna disposición resultara inaplicable, ello no afectará automáticamente la validez de las demás disposiciones.
+If any provision is found to be unenforceable, this shall not automatically affect the validity of the remaining provisions.
 
-La presente licencia no sustituye los acuerdos particulares que regulen la prestación de servicios, las colaboraciones, las contribuciones o las autorizaciones específicas.
+This license does not replace specific agreements governing the provision of services, collaborations, contributions, or particular authorizations.
 
-17. RESERVA FINAL DE DERECHOS
+17. FINAL RESERVATION OF RIGHTS
 
-Todos los derechos sobre los materiales originales de School Guardian que no hayan sido expresamente concedidos mediante esta licencia o mediante autorización independiente permanecen reservados a sus respectivos titulares.
+All rights in the original School Guardian materials that have not been expressly granted under this license or through a separate authorization remain reserved to their respective holders.
 
-Ninguna persona podrá interpretar el acceso al software, su código fuente, sus repositorios o sus funcionalidades como una autorización implícita de explotación.
-
-FIN DE LA LICENCIA
+No person may construe access to the software, its source code, its repositories, or its features as an implied authorization to exploit them.

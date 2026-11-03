@@ -1,57 +1,83 @@
-# GuardianEscolar
+# School Guardian — Frontend
 
-## Mobile home navigation
+School Guardian is a school transportation and student safety platform. This repository contains the frontend clients: an Angular web application for school staff and administrators, and a React Native / Expo mobile application for parents, students, drivers, and guardians, plus a local Docker Compose stack for running the web frontend.
 
-The mobile login dismisses the keyboard after successful form validation and
-before authentication starts, so the login keyboard is not carried into the
-home-screen transition. Invalid credentials fields remain on the form.
+## Getting Started
 
-The home route card and bottom navigation are anchored to the screen's bottom
-edge independently of the floating action overlay. The navigation reserves the
-device's bottom safe-area inset while retaining 72 points of tab content; route
-loading does not change the dock anchor. Driver actions retain their separation
-from the bottom dock. Other screens retain their existing bottom-bar spacing.
+These instructions will give you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on deploying the project on a live system.
 
-From `dvlp-front/dvlp-movil/guardian-escolar`, run `npm test` for component/hook
-regressions, including login keyboard dismissal, all four home roles and bottom
-insets of 0, 24 and 34 points. These tests do not measure native layout: verify
-login with the keyboard open, device rotation, small screens and gesture/button
-navigation on Android/iOS before declaring the visual issue resolved on-device.
+### Prerequisites
 
-## Student route assignment visibility
+Requirements for the software and other tools to build, test and push:
 
-The home and live-tracking screens reload the student's assigned route whenever
-navigation focuses them again, and discard responses from the previous focus.
-This reflects assignments made while the user was on another screen without
-requiring a new login. Routes still resolve through the session's IAM profile,
-then its assigned route-stop link, then the route and assigned bus.
+- [Docker](https://www.docker.com/)
+- [Docker Compose](https://docs.docker.com/compose/)
+- [Node.js](https://nodejs.org/)
 
-Regression checks cover switching focus while an old request is pending.
-The mobile suite (113 tests) and Android Hermes export pass locally. Device
-behavior and access to deployed services still require runtime verification.
+### Installing
 
-## Driver and bus assignment visibility
+A step by step series of examples that tell you how to get a development environment running.
 
-The driver home screen keeps the assigned route/bus summary visible when the
-route is scheduled or has no active schedules, with an explicit status notice.
-Stops remain restricted to the active route window and trip actions still use
-the backend's `CanStart`/`CanEnd` flags. An assigned bus without an active route
-is resolved through the existing authenticated fleet endpoints and displayed
-without stops or trip actions. Fleet authorization/server errors remain errors,
-not "unassigned" results.
+Clone the repository:
 
-`npm test` covers bus metadata in the home card, missing-route/schedule states,
-and unchanged trip-action gating. These tests do not certify deployed SQL data
-or native rendering; no credentials, service addresses or database records were
-changed.
+    git clone https://github.com/school-guardian-project/GuardianEscolar.git
 
-The driver Profile screen also shows the assigned bus plate and route name,
-reloads them on navigation focus, and ignores responses from previous visits.
-If the route endpoint fails but fleet independently confirms the assigned bus,
-both Profile and Home retain that bus with an explicit route-query failure
-notice (including the HTTP status). A route failure is not reported as an
-unassigned driver. These checks use the session's IAM profile ID, not Person.Id.
+Start the web frontend locally with Docker Compose:
 
-Mobile changes require an updated app build or an explicitly published
-compatible OTA update; pushing `main` alone does not update an installed APK.
-The `Mobile release` workflow is manual (`workflow_dispatch`), not push-triggered.
+    docker compose up -d
+
+The Angular dev server is exposed on port `4200` with live-reload volume mounts for `src`, `public`, and `.env`.
+
+Stop the stack:
+
+    docker compose down
+
+## Running the tests
+
+Explain how to run the automated tests for this system.
+
+### Mobile
+
+From `dvlp-front/dlvp-movil/guardian-escolar/`, run:
+
+    npm test
+
+These tests cover component and hook regressions. Device behavior and access to deployed services require runtime verification; tests do not certify native rendering.
+
+### Web
+
+Follow the testing instructions in `dvlp-front/dlvp-web/`.
+
+## Deployment
+
+Add additional notes to deploy this on a live system.
+
+### Web
+
+The Angular web application is deployed to **Vercel**. The `vercel.json` configuration file under `dvlp-front/dlvp-web/` defines the build and routing settings for the production deployment. Pushing changes to the configured branch triggers an automatic rebuild and deployment on Vercel.
+
+## Built With
+
+- [Angular](https://angular.io/) — Web frontend framework
+- [React Native](https://reactnative.dev/) / [Expo](https://expo.dev/) — Mobile application framework
+- [Docker](https://www.docker.com/) / [Docker Compose](https://docs.docker.com/compose/) — Local development stack
+
+## Contributing
+
+Pending — to be defined.
+
+## Versioning
+
+Pending — to be defined.
+
+## Authors
+
+Pending — to be defined.
+
+## License
+
+Pending — to be defined.
+
+## Acknowledgments
+
+Pending — to be defined.

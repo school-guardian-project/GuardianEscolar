@@ -64,20 +64,8 @@ The Angular web application is deployed to **Vercel**. The `vercel.json` configu
 
 ## Contributing
 
-Pending — to be defined.
-
-## Versioning
-
-Pending — to be defined.
-
-## Authors
-
-Pending — to be defined.
+Please read [CONTRIBUTING.md](https://github.com/school-guardian-project/.github/blob/main/CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
 
 ## License
 
-Pending — to be defined.
-
-## Acknowledgments
-
-Pending — to be defined.
+This project is licensed under the **SCHOOL GUARDIAN PROPRIETARY SOFTWARE LICENSE Version 1.0 — 2026**. See the [LICENSE](LICENSE) file for details.

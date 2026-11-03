@@ -1,6 +1,6 @@
 import { apiGet, apiPost, apiPut, apiDelete } from "./apiClient";
 
-const PREFIX = "/route/api";
+const PREFIX = "/route/api/v1";
 
 /** GET a ms-route a través del API Gateway. */
 export async function getRouteApi(path) {

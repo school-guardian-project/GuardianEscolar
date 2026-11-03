@@ -1,6 +1,6 @@
 import { apiGet, apiPost, apiPut, apiDelete } from "./apiClient";
 
-const PREFIX = "/fleet/api";
+const PREFIX = "/fleet/api/v1";
 
 /** GET a ms-fleet a través del API Gateway. */
 export async function getFleetApi(path) {

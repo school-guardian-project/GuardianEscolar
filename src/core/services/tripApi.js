@@ -1,6 +1,6 @@
 import { apiPost, apiGet } from "./apiClient";
 
-const TRIP_PREFIX = "/route/api/v1/trips";
+const TRIP_PREFIX = "/route/api/trips";
 
 /** POST para iniciar un viaje (Trip). */
 export async function startTripApi(body) {

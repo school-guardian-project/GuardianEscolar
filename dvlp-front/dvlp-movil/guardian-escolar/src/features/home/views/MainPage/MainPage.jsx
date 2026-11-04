@@ -376,7 +376,8 @@ function MainPageContent() {
               endConditionDetail={endConditionDetail}
             />
           )}
-          {role === "driver" && routeInfo && tripStatus === "active" && (
+          {/* Botón QR: conductor escanea, estudiante muestra su QR personal cuando el viaje está activo */}
+          {(role === "driver" || role === "student") && routeInfo && tripStatus === "active" && (
             <QRButtom config={config.card} onOpenModel={handleOpenModal} />
           )}
         </View>

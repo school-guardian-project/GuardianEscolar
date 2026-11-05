@@ -60,6 +60,10 @@
               <small class="error1">
                 {{ 'login.right.password.errors.required' | translate }}
               </small>
+            } @else if (accountLocked) {
+              <small class="error1" role="alert">
+                {{ 'login.right.account_locked' | translate }}
+              </small>
             } @else if (credentialsError) {
               <small class="error1" role="alert">
                 {{ 'login.right.credentials_error' | translate }}

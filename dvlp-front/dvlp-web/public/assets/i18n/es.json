@@ -194,7 +194,8 @@
       "terms": "Al ingresar aceptas nuestros",
       "terms_link": "Términos de uso",
       "and": "y",
-      "privacy_link": "Política de privacidad"
+      "privacy_link": "Política de privacidad",
+      "account_locked": "Cuenta bloqueada temporalmente por demasiados intentos fallidos. Intenta de nuevo más tarde."
     }
   },
   "change_contact": {

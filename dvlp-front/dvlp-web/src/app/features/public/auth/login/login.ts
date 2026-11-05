@@ -1,4 +1,5 @@
 ﻿import { Component } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { PasswordToggleDirective } from '@shared/directives/password-toggle.directive';
 import { NavComponent } from '@shared/components/navbar/nav-component/nav-component';
 import { MatIconModule } from '@angular/material/icon';
@@ -20,6 +21,7 @@ import { AuthService } from '@core/services/auth.service';
 export class Login {
   form: FormGroup;
   credentialsError = false;
+  accountLocked = false;
 
   constructor(
     private router: Router,
@@ -32,7 +34,10 @@ export class Login {
       email: ['', [Validators.required, Validators.pattern(emailPattern)]],
       password: ['', [Validators.required]]
     });
-    this.form.valueChanges.subscribe(() => this.credentialsError = false);
+    this.form.valueChanges.subscribe(() => {
+      this.credentialsError = false;
+      this.accountLocked = false;
+    });
   }
 
   login() {
@@ -42,10 +47,17 @@ export class Login {
     }
 
     this.credentialsError = false;
+    this.accountLocked = false;
     const { email, password } = this.form.value;
     this.authService.login(email, password).subscribe({
       next: () => this.router.navigateByUrl(this.authService.homeRoute()),
-      error: () => this.credentialsError = true,
+      error: (err: HttpErrorResponse) => {
+        if (err.status === 403 && err.error?.code === 'ACCOUNT_LOCKED') {
+          this.accountLocked = true;
+        } else {
+          this.credentialsError = true;
+        }
+      },
     });
   }
 

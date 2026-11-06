@@ -43,7 +43,6 @@ export class TermsAcceptance {
     { title: 'legal.terms.titleRoles', body: 'legal.terms.descriRoles' },
     { title: 'legal.terms.titleProperUse', body: 'legal.terms.descriProperUse' },
     { title: 'legal.terms.titleLocation', body: 'legal.terms.descriLocation' },
-    { title: 'legal.terms.titleQr', body: 'legal.terms.descriQr' },
     { title: 'legal.terms.titleLiability', body: 'legal.terms.descriLiability' },
     { title: 'legal.terms.titleAccounts', body: 'legal.terms.descriAccounts' },
     { title: 'legal.terms.titleContact', body: 'legal.terms.descriContact' },
